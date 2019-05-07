@@ -6,7 +6,7 @@ import pytest
 from tests import generated_test_request_transformers
 from tests import test_config_container  # noqa: F401
 from tests import util
-
+import vcr
 import oci_cli
 import os
 
@@ -27,6 +27,30 @@ def vcr_fixture(request):
 def test_create_key(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('key_management', 'CreateKey'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('key_management', 'KmsManagement', 'CreateKey')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_create_key.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_create_key', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_create_key.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_create_key'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_create_key.pem'])
+            config_file = 'tests/resources/config_for_test_create_key'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('kms_management_root_group.command_name', 'kms-management')
     resource_group_command_name = oci_cli.cli_util.override('key_group.command_name', 'key')
@@ -96,6 +120,10 @@ def test_create_key(cli_testing_service_client, runner, config_file, config_prof
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_create_key.pem'):
+                    os.remove('tests/resources/keyfile_for_test_create_key.pem')
+                if os.path.exists('tests/resources/config_for_test_create_key'):
+                    os.remove('tests/resources/config_for_test_create_key')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -114,6 +142,30 @@ def test_create_key(cli_testing_service_client, runner, config_file, config_prof
 def test_create_key_version(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('key_management', 'CreateKeyVersion'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('key_management', 'KmsManagement', 'CreateKeyVersion')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_create_key_version.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_create_key_version', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_create_key_version.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_create_key_version'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_create_key_version.pem'])
+            config_file = 'tests/resources/config_for_test_create_key_version'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('kms_management_root_group.command_name', 'kms-management')
     resource_group_command_name = oci_cli.cli_util.override('key_version_group.command_name', 'key_version')
@@ -175,6 +227,10 @@ def test_create_key_version(cli_testing_service_client, runner, config_file, con
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_create_key_version.pem'):
+                    os.remove('tests/resources/keyfile_for_test_create_key_version.pem')
+                if os.path.exists('tests/resources/config_for_test_create_key_version'):
+                    os.remove('tests/resources/config_for_test_create_key_version')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -193,6 +249,30 @@ def test_create_key_version(cli_testing_service_client, runner, config_file, con
 def test_disable_key(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('key_management', 'DisableKey'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('key_management', 'KmsManagement', 'DisableKey')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_disable_key.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_disable_key', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_disable_key.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_disable_key'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_disable_key.pem'])
+            config_file = 'tests/resources/config_for_test_disable_key'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('kms_management_root_group.command_name', 'kms-management')
     resource_group_command_name = oci_cli.cli_util.override('key_group.command_name', 'key')
@@ -254,6 +334,10 @@ def test_disable_key(cli_testing_service_client, runner, config_file, config_pro
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_disable_key.pem'):
+                    os.remove('tests/resources/keyfile_for_test_disable_key.pem')
+                if os.path.exists('tests/resources/config_for_test_disable_key'):
+                    os.remove('tests/resources/config_for_test_disable_key')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -272,6 +356,30 @@ def test_disable_key(cli_testing_service_client, runner, config_file, config_pro
 def test_enable_key(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('key_management', 'EnableKey'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('key_management', 'KmsManagement', 'EnableKey')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_enable_key.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_enable_key', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_enable_key.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_enable_key'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_enable_key.pem'])
+            config_file = 'tests/resources/config_for_test_enable_key'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('kms_management_root_group.command_name', 'kms-management')
     resource_group_command_name = oci_cli.cli_util.override('key_group.command_name', 'key')
@@ -333,6 +441,10 @@ def test_enable_key(cli_testing_service_client, runner, config_file, config_prof
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_enable_key.pem'):
+                    os.remove('tests/resources/keyfile_for_test_enable_key.pem')
+                if os.path.exists('tests/resources/config_for_test_enable_key'):
+                    os.remove('tests/resources/config_for_test_enable_key')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -351,6 +463,30 @@ def test_enable_key(cli_testing_service_client, runner, config_file, config_prof
 def test_get_key(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('key_management', 'GetKey'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('key_management', 'KmsManagement', 'GetKey')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_key.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_key', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_key.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_key'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_key.pem'])
+            config_file = 'tests/resources/config_for_test_get_key'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('kms_management_root_group.command_name', 'kms-management')
     resource_group_command_name = oci_cli.cli_util.override('key_group.command_name', 'key')
@@ -412,6 +548,10 @@ def test_get_key(cli_testing_service_client, runner, config_file, config_profile
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_key.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_key.pem')
+                if os.path.exists('tests/resources/config_for_test_get_key'):
+                    os.remove('tests/resources/config_for_test_get_key')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -430,6 +570,30 @@ def test_get_key(cli_testing_service_client, runner, config_file, config_profile
 def test_get_key_version(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('key_management', 'GetKeyVersion'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('key_management', 'KmsManagement', 'GetKeyVersion')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_key_version.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_key_version', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_key_version.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_key_version'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_key_version.pem'])
+            config_file = 'tests/resources/config_for_test_get_key_version'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('kms_management_root_group.command_name', 'kms-management')
     resource_group_command_name = oci_cli.cli_util.override('key_version_group.command_name', 'key_version')
@@ -491,6 +655,10 @@ def test_get_key_version(cli_testing_service_client, runner, config_file, config
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_key_version.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_key_version.pem')
+                if os.path.exists('tests/resources/config_for_test_get_key_version'):
+                    os.remove('tests/resources/config_for_test_get_key_version')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -509,6 +677,30 @@ def test_get_key_version(cli_testing_service_client, runner, config_file, config
 def test_list_key_versions(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('key_management', 'ListKeyVersions'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('key_management', 'KmsManagement', 'ListKeyVersions')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_key_versions.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_key_versions', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_key_versions.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_key_versions'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_key_versions.pem'])
+            config_file = 'tests/resources/config_for_test_list_key_versions'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('kms_management_root_group.command_name', 'kms-management')
     resource_group_command_name = oci_cli.cli_util.override('key_version_group.command_name', 'key_version')
@@ -570,6 +762,10 @@ def test_list_key_versions(cli_testing_service_client, runner, config_file, conf
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_key_versions.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_key_versions.pem')
+                if os.path.exists('tests/resources/config_for_test_list_key_versions'):
+                    os.remove('tests/resources/config_for_test_list_key_versions')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -588,6 +784,30 @@ def test_list_key_versions(cli_testing_service_client, runner, config_file, conf
 def test_list_keys(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('key_management', 'ListKeys'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('key_management', 'KmsManagement', 'ListKeys')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_keys.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_keys', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_keys.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_keys'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_keys.pem'])
+            config_file = 'tests/resources/config_for_test_list_keys'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('kms_management_root_group.command_name', 'kms-management')
     resource_group_command_name = oci_cli.cli_util.override('key_group.command_name', 'key')
@@ -649,6 +869,10 @@ def test_list_keys(cli_testing_service_client, runner, config_file, config_profi
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_keys.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_keys.pem')
+                if os.path.exists('tests/resources/config_for_test_list_keys'):
+                    os.remove('tests/resources/config_for_test_list_keys')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -667,6 +891,30 @@ def test_list_keys(cli_testing_service_client, runner, config_file, config_profi
 def test_update_key(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('key_management', 'UpdateKey'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('key_management', 'KmsManagement', 'UpdateKey')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_update_key.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_update_key', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_update_key.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_update_key'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_update_key.pem'])
+            config_file = 'tests/resources/config_for_test_update_key'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('kms_management_root_group.command_name', 'kms-management')
     resource_group_command_name = oci_cli.cli_util.override('key_group.command_name', 'key')
@@ -737,6 +985,10 @@ def test_update_key(cli_testing_service_client, runner, config_file, config_prof
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_update_key.pem'):
+                    os.remove('tests/resources/keyfile_for_test_update_key.pem')
+                if os.path.exists('tests/resources/config_for_test_update_key'):
+                    os.remove('tests/resources/config_for_test_update_key')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -752,7 +1004,7 @@ def test_update_key(cli_testing_service_client, runner, config_file, config_prof
 
 
 def invoke(runner, config_file, config_profile, params, debug=False, root_params=None, strip_progress_bar=True, strip_multipart_stderr_output=True, ** args):
-    root_params = ['--config-file', os.environ['OCI_CLI_CONFIG_FILE']]
+    root_params = ['--config-file', config_file]
 
     if config_profile:
         root_params.extend(['--profile', config_profile])

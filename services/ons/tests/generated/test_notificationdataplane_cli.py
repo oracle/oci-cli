@@ -6,7 +6,7 @@ import pytest
 from tests import generated_test_request_transformers
 from tests import test_config_container  # noqa: F401
 from tests import util
-
+import vcr
 import oci_cli
 import os
 
@@ -27,6 +27,30 @@ def vcr_fixture(request):
 def test_create_subscription(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('ons', 'CreateSubscription'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('ons', 'NotificationDataPlane', 'CreateSubscription')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_create_subscription.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_create_subscription', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_create_subscription.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_create_subscription'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_create_subscription.pem'])
+            config_file = 'tests/resources/config_for_test_create_subscription'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('notification_data_plane_root_group.command_name', 'notification-data-plane')
     resource_group_command_name = oci_cli.cli_util.override('subscription_group.command_name', 'subscription')
@@ -93,6 +117,10 @@ def test_create_subscription(cli_testing_service_client, runner, config_file, co
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_create_subscription.pem'):
+                    os.remove('tests/resources/keyfile_for_test_create_subscription.pem')
+                if os.path.exists('tests/resources/config_for_test_create_subscription'):
+                    os.remove('tests/resources/config_for_test_create_subscription')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -111,6 +139,30 @@ def test_create_subscription(cli_testing_service_client, runner, config_file, co
 def test_delete_subscription(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('ons', 'DeleteSubscription'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('ons', 'NotificationDataPlane', 'DeleteSubscription')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_delete_subscription.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_delete_subscription', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_delete_subscription.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_delete_subscription'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_delete_subscription.pem'])
+            config_file = 'tests/resources/config_for_test_delete_subscription'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('notification_data_plane_root_group.command_name', 'notification-data-plane')
     resource_group_command_name = oci_cli.cli_util.override('subscription_group.command_name', 'subscription')
@@ -170,6 +222,10 @@ def test_delete_subscription(cli_testing_service_client, runner, config_file, co
                     True
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_delete_subscription.pem'):
+                    os.remove('tests/resources/keyfile_for_test_delete_subscription.pem')
+                if os.path.exists('tests/resources/config_for_test_delete_subscription'):
+                    os.remove('tests/resources/config_for_test_delete_subscription')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -188,6 +244,30 @@ def test_delete_subscription(cli_testing_service_client, runner, config_file, co
 def test_get_confirm_subscription(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('ons', 'GetConfirmSubscription'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('ons', 'NotificationDataPlane', 'GetConfirmSubscription')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_confirm_subscription.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_confirm_subscription', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_confirm_subscription.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_confirm_subscription'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_confirm_subscription.pem'])
+            config_file = 'tests/resources/config_for_test_get_confirm_subscription'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('notification_data_plane_root_group.command_name', 'notification-data-plane')
     resource_group_command_name = oci_cli.cli_util.override('confirmation_result_group.command_name', 'confirmation_result')
@@ -246,6 +326,10 @@ def test_get_confirm_subscription(cli_testing_service_client, runner, config_fil
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_confirm_subscription.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_confirm_subscription.pem')
+                if os.path.exists('tests/resources/config_for_test_get_confirm_subscription'):
+                    os.remove('tests/resources/config_for_test_get_confirm_subscription')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -264,6 +348,30 @@ def test_get_confirm_subscription(cli_testing_service_client, runner, config_fil
 def test_get_subscription(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('ons', 'GetSubscription'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('ons', 'NotificationDataPlane', 'GetSubscription')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_subscription.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_subscription', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_subscription.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_subscription'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_subscription.pem'])
+            config_file = 'tests/resources/config_for_test_get_subscription'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('notification_data_plane_root_group.command_name', 'notification-data-plane')
     resource_group_command_name = oci_cli.cli_util.override('subscription_group.command_name', 'subscription')
@@ -322,6 +430,10 @@ def test_get_subscription(cli_testing_service_client, runner, config_file, confi
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_subscription.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_subscription.pem')
+                if os.path.exists('tests/resources/config_for_test_get_subscription'):
+                    os.remove('tests/resources/config_for_test_get_subscription')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -340,6 +452,30 @@ def test_get_subscription(cli_testing_service_client, runner, config_file, confi
 def test_get_unsubscription(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('ons', 'GetUnsubscription'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('ons', 'NotificationDataPlane', 'GetUnsubscription')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_unsubscription.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_unsubscription', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_unsubscription.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_unsubscription'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_unsubscription.pem'])
+            config_file = 'tests/resources/config_for_test_get_unsubscription'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('notification_data_plane_root_group.command_name', 'notification-data-plane')
     resource_group_command_name = oci_cli.cli_util.override('string_group.command_name', 'string')
@@ -398,6 +534,10 @@ def test_get_unsubscription(cli_testing_service_client, runner, config_file, con
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_unsubscription.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_unsubscription.pem')
+                if os.path.exists('tests/resources/config_for_test_get_unsubscription'):
+                    os.remove('tests/resources/config_for_test_get_unsubscription')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -416,6 +556,30 @@ def test_get_unsubscription(cli_testing_service_client, runner, config_file, con
 def test_list_subscriptions(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('ons', 'ListSubscriptions'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('ons', 'NotificationDataPlane', 'ListSubscriptions')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_subscriptions.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_subscriptions', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_subscriptions.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_subscriptions'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_subscriptions.pem'])
+            config_file = 'tests/resources/config_for_test_list_subscriptions'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('notification_data_plane_root_group.command_name', 'notification-data-plane')
     resource_group_command_name = oci_cli.cli_util.override('subscription_group.command_name', 'subscription')
@@ -474,6 +638,10 @@ def test_list_subscriptions(cli_testing_service_client, runner, config_file, con
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_subscriptions.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_subscriptions.pem')
+                if os.path.exists('tests/resources/config_for_test_list_subscriptions'):
+                    os.remove('tests/resources/config_for_test_list_subscriptions')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -492,6 +660,30 @@ def test_list_subscriptions(cli_testing_service_client, runner, config_file, con
 def test_publish_message(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('ons', 'PublishMessage'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('ons', 'NotificationDataPlane', 'PublishMessage')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_publish_message.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_publish_message', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_publish_message.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_publish_message'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_publish_message.pem'])
+            config_file = 'tests/resources/config_for_test_publish_message'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('notification_data_plane_root_group.command_name', 'notification-data-plane')
     resource_group_command_name = oci_cli.cli_util.override('publish_result_group.command_name', 'publish_result')
@@ -558,6 +750,10 @@ def test_publish_message(cli_testing_service_client, runner, config_file, config
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_publish_message.pem'):
+                    os.remove('tests/resources/keyfile_for_test_publish_message.pem')
+                if os.path.exists('tests/resources/config_for_test_publish_message'):
+                    os.remove('tests/resources/config_for_test_publish_message')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -576,6 +772,30 @@ def test_publish_message(cli_testing_service_client, runner, config_file, config
 def test_resend_subscription_confirmation(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('ons', 'ResendSubscriptionConfirmation'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('ons', 'NotificationDataPlane', 'ResendSubscriptionConfirmation')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_resend_subscription_confirmation.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_resend_subscription_confirmation', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_resend_subscription_confirmation.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_resend_subscription_confirmation'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_resend_subscription_confirmation.pem'])
+            config_file = 'tests/resources/config_for_test_resend_subscription_confirmation'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('notification_data_plane_root_group.command_name', 'notification-data-plane')
     resource_group_command_name = oci_cli.cli_util.override('subscription_group.command_name', 'subscription')
@@ -634,6 +854,10 @@ def test_resend_subscription_confirmation(cli_testing_service_client, runner, co
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_resend_subscription_confirmation.pem'):
+                    os.remove('tests/resources/keyfile_for_test_resend_subscription_confirmation.pem')
+                if os.path.exists('tests/resources/config_for_test_resend_subscription_confirmation'):
+                    os.remove('tests/resources/config_for_test_resend_subscription_confirmation')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -652,6 +876,30 @@ def test_resend_subscription_confirmation(cli_testing_service_client, runner, co
 def test_update_subscription(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('ons', 'UpdateSubscription'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('ons', 'NotificationDataPlane', 'UpdateSubscription')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_update_subscription.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_update_subscription', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_update_subscription.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_update_subscription'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_update_subscription.pem'])
+            config_file = 'tests/resources/config_for_test_update_subscription'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('notification_data_plane_root_group.command_name', 'notification-data-plane')
     resource_group_command_name = oci_cli.cli_util.override('update_subscription_details_group.command_name', 'update_subscription_details')
@@ -719,6 +967,10 @@ def test_update_subscription(cli_testing_service_client, runner, config_file, co
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_update_subscription.pem'):
+                    os.remove('tests/resources/keyfile_for_test_update_subscription.pem')
+                if os.path.exists('tests/resources/config_for_test_update_subscription'):
+                    os.remove('tests/resources/config_for_test_update_subscription')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -734,7 +986,7 @@ def test_update_subscription(cli_testing_service_client, runner, config_file, co
 
 
 def invoke(runner, config_file, config_profile, params, debug=False, root_params=None, strip_progress_bar=True, strip_multipart_stderr_output=True, ** args):
-    root_params = ['--config-file', os.environ['OCI_CLI_CONFIG_FILE']]
+    root_params = ['--config-file', config_file]
 
     if config_profile:
         root_params.extend(['--profile', config_profile])

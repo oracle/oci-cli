@@ -5,7 +5,7 @@ interactions:
       Accept: ['*/*']
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
-      User-Agent: [python-requests/2.18.4]
+      User-Agent: [python-requests/2.21.0]
     method: GET
     uri: http://localhost:8090/SDKTestingService/request/enable?apiName=DeletePolicy&serviceName=identity&lang=PythonCLI
   response:
@@ -13,8 +13,8 @@ interactions:
     headers:
       Content-Length: ['4']
       Content-Type: [text/plain]
-      Date: ['Wed, 20 Jun 2018 20:16:43 GMT']
-      Server: [Jetty(9.2.14.v20151106)]
+      Date: ['Tue, 23 Apr 2019 22:34:57 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
     status: {code: 200, message: OK}
 - request:
     body: null
@@ -22,16 +22,16 @@ interactions:
       Accept: ['*/*']
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
-      User-Agent: [python-requests/2.18.4]
+      User-Agent: [python-requests/2.21.0]
     method: GET
-    uri: http://localhost:8090/SDKTestingService/request?sessionId=0242&apiName=DeletePolicy&serviceName=identity&lang=PythonCLI
+    uri: http://localhost:8090/SDKTestingService/request?sessionId=0117&apiName=DeletePolicy&serviceName=identity&lang=PythonCLI
   response:
-    body: {string: '[{"containerId":"fbdc040f-47f1-4791-b39a-debc8b563dc9","request":{"policyId":"ocid1.policy.oc1..aaaaaaaazp3lwg2uadhvw763gbk6yh7e5k7v2ebwfts7oh4g2hmz7f7fmeuq"}}]'}
+    body: {string: '[{"containerId":"f04e77b0-d5c0-4605-b0ab-b5f81b746a26","request":{"policyId":"ocid1.policy.oc1..aaaaaaaaleuo4x7tgqdyjso63mbjxqpxwxabjy7w6i6lm32f2kqqawbpnzfq"}}]'}
     headers:
       Content-Length: ['160']
-      Content-Type: [application/json]
-      Date: ['Wed, 20 Jun 2018 20:16:43 GMT']
-      Server: [Jetty(9.2.14.v20151106)]
+      Content-Type: [text/plain]
+      Date: ['Tue, 23 Apr 2019 22:34:59 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
     status: {code: 200, message: OK}
 - request:
     body: null
@@ -39,45 +39,48 @@ interactions:
       accept: [application/json]
       accept-encoding: ['gzip, deflate']
       authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
-          host",keyId="ocid1.tenancy.oc1..aaaaaaaa5nfwo53cezleyy6t73v6rn6knhu3molvptnl3kcq34l5zb7ptiaq/ocid1.user.oc1..aaaaaaaa6xrg6lsdjhl5gelksi45uokpdtwtarben7z65mrb7uttv5al3oya/89:0d:e5:99:ab:f7:f2:12:a4:ba:c8:8f:70:13:e4:5f",signature="OmDlC28ZoC5pnReCYGMHvvJsrRXzdr+xKjHyFV/ea9Am+jZkVJiBh4+JhGjmbf34qeOX0n9o+S7F/7XAHqgMRwVSfKIO+DzeX4km0fLY2uAsE2qI53imnq9N2kbrBOqHOwkxOMecJcdIjFVepszJJ9Dil5kI9ue92CI+mxAcfFRCdnSD5nbA9GvxqKMUnJBBd1gXW41d/MlzbiGrpsRy+y/cVsim7jMTOALclBCEJSzursraGS+Dshs9Y9GbXo0W/muxTGBaWHB+kmVRYg2aDlQyOgQzTHEQL1H5IPMiopQ4JG+6pPhYZfLb9s4YTzEnFLZ3EXTBHawiMLg65gwJqw==",version="1"']
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq/ocid1.user.oc1..aaaaaaaae7by6r5rz3iw4otx6ukjauol6vlilvljmxdy5bgiz637gpo2zcpa/89:0d:e5:99:ab:f7:f2:12:a4:ba:c8:8f:70:13:e4:5f",signature="BeRiYnGCzsZtWiqmuXIchuMgfIdkPqF7h3zxXsBX27GjhW5r7PNUl/3zw+GEgTR9kV0W/A5MsUdL5NryKeluDx9p1QZlB6VFKeTtqoEgxxYPnlhoHshB9SRWbiQZplnqMslEQwDKzJVXXVw3XOsMjfSNOw8ga+bx9gKy98o9LDM4C+vTRkm+uoz0I9BWPAtUElxACVA0G41UAIVxrCtVvA7zOn9bPKILH5lx9OpWm4XEZHw63U5xmBgGgwy+N0GJgAVmpNSuI0eo40qe4ZB94jAGkyyMCYh7iLfI6MjER/noF1fztEtSgx9x1/+V7dRxXOj4NUfaHEx1xU40R4mZPQ==",version="1"']
       connection: [keep-alive]
       content-length: ['0']
       content-type: [application/json]
-      date: ['Wed, 20 Jun 2018 20:16:43 GMT']
+      date: ['Tue, 23 Apr 2019 22:35:02 GMT']
       host: [identity.us-phoenix-1.oraclecloud.com]
-      opc-client-info: [Oracle-PythonSDK/1.4.3+preview.1]
-      opc-request-id: [4D9516F31D134DCF916500B740D9AEC6]
-      user-agent: [Oracle-PythonSDK/1.4.3+preview.1 (python 3.5.1; x86_64-Darwin)
-          Oracle-PythonCLI/2.4.24+preview.1]
+      opc-client-info: [Oracle-PythonSDK/2.2.8+preview.1.791]
+      opc-request-id: [FFD9CCFB04BD44A08ED84622E97AD15D]
+      user-agent: [Oracle-PythonSDK/2.2.8+preview.1.791 (python 3.5.3; x86_64-Linux)
+          Oracle-PythonCLI/2.5.9+preview.1]
     method: DELETE
-    uri: https://identity.us-phoenix-1.oraclecloud.com/20160918/policies/ocid1.policy.oc1..aaaaaaaazp3lwg2uadhvw763gbk6yh7e5k7v2ebwfts7oh4g2hmz7f7fmeuq
+    uri: https://identity.us-phoenix-1.oraclecloud.com/20160918/policies/ocid1.policy.oc1..aaaaaaaaleuo4x7tgqdyjso63mbjxqpxwxabjy7w6i6lm32f2kqqawbpnzfq
   response:
     body: {string: ''}
     headers:
+      Cache-Control: ['no-cache, no-store, must-revalidate']
       Connection: [keep-alive]
       Content-Type: [application/json]
-      Date: ['Wed, 20 Jun 2018 20:16:44 GMT']
-      opc-request-id: [4D9516F31D134DCF916500B740D9AEC6/894E3B8BDF9BA1F151D66506C503E64D/5E737569A8021DD40D4C5F651CBE3380]
+      Date: ['Tue, 23 Apr 2019 22:35:13 GMT']
+      Pragma: [no-cache]
+      X-Content-Type-Options: [nosniff]
+      opc-request-id: [FFD9CCFB04BD44A08ED84622E97AD15D/544210B1648C8C61074058A42C867DA9/3E52F958E3E9157FD0F463A45048BDD0]
     status: {code: 204, message: No Content}
 - request:
-    body: '{"responseJson": "{\"opcRequestId\": \"C773B80D222A4E5CA96F1F57F99CBCD4\"}",
-      "requestJson": "{\"policyId\": \"ocid1.policy.oc1..aaaaaaaazp3lwg2uadhvw763gbk6yh7e5k7v2ebwfts7oh4g2hmz7f7fmeuq\"}",
-      "containerId": "fbdc040f-47f1-4791-b39a-debc8b563dc9", "requestClass": "com.oracle.bmc.identity.requests.DeletePolicyRequest",
+    body: '{"responseJson": "{\"opcRequestId\": \"B555160B8F2043638AEE62A08C281C8A\"}",
+      "requestJson": "{\"policyId\": \"ocid1.policy.oc1..aaaaaaaaleuo4x7tgqdyjso63mbjxqpxwxabjy7w6i6lm32f2kqqawbpnzfq\"}",
+      "containerId": "f04e77b0-d5c0-4605-b0ab-b5f81b746a26", "requestClass": "com.oracle.bmc.identity.requests.DeletePolicyRequest",
       "responseClass": "com.oracle.bmc.identity.responses.DeletePolicyResponse"}'
     headers:
       Accept: ['*/*']
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
       Content-Length: ['395']
-      User-Agent: [python-requests/2.18.4]
+      User-Agent: [python-requests/2.21.0]
     method: POST
-    uri: http://localhost:8090/SDKTestingService/response?sessionId=0242&lang=PythonCLI
+    uri: http://localhost:8090/SDKTestingService/response?sessionId=0117&lang=PythonCLI
   response:
     body: {string: ''}
     headers:
       Content-Length: ['0']
       Content-Type: [text/plain]
-      Date: ['Wed, 20 Jun 2018 20:16:44 GMT']
-      Server: [Jetty(9.2.14.v20151106)]
+      Date: ['Tue, 23 Apr 2019 22:35:05 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
     status: {code: 200, message: OK}
 version: 1

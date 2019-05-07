@@ -690,7 +690,7 @@ def get_object_etag(client, namespace, bucket_name, name, client_request_id, if_
 @cli_util.option('-ns', '--namespace', '--namespace-name', 'namespace', required=True, help='The top-level namespace used for the request.')
 @cli_util.option('-bn', '--bucket-name', required=True, help='The name of the bucket.')
 @cli_util.option('--name', required=True, help='The name of the object.')
-@cli_util.option('--file', type=click.File(mode='wb'), required=True,
+@cli_util.option('--file', type=click.File(mode='wb', lazy=False), required=True,
                  help="The name of the file that will receive the object content, or '-' to write to STDOUT.")
 @cli_util.option('--if-match', help='The entity tag to match.')
 @cli_util.option('--if-none-match', help='The entity tag to avoid matching.')
@@ -751,6 +751,7 @@ def object_get(ctx, from_json, namespace, bucket_name, name, file, if_match, if_
             if bar:
                 bar.update(len(chunk))
             file.write(chunk)
+
     else:
         transfer_manager = TransferManager(client, TransferManagerConfig(max_object_storage_requests=parallel_download_count, max_object_storage_multipart_requests=parallel_download_count))
 
@@ -965,7 +966,7 @@ def object_bulk_get(ctx, from_json, namespace, bucket_name, prefix, delimiter, d
                 # If it's not multipart, or it is but we would only have a single part then just download it, otherwise do a multipart get
                 # If the part size is somehow not known then use a multipart download by default (the multipart download will
                 # try and figure out the size via a HEAD and then take the appropriate action based on the size and threshold)
-                if not multipart_download_threshold or (multipart_download_threshold and (object_size and part_size >= object_size)):
+                if not multipart_download_threshold or (multipart_download_threshold and (object_size is not None and part_size >= object_size)):
                     transfer_manager.get_object(callbacks_container, **get_object_kwargs)
                 else:
                     if object_size:

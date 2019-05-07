@@ -376,7 +376,7 @@ def test_bulk_put_default_options():
 # Bulk puts objects with --content-type as auto
 @util.skip_while_rerecording
 def test_bulk_put_auto_content_type():
-    result = invoke(['os', 'object', 'bulk-upload', '--namespace', util.NAMESPACE, '--bucket-name', bulk_put_bucket_name, '--src-dir', root_bulk_put_folder, '--content-type', 'auto'])
+    result = invoke(['os', 'object', 'bulk-upload', '--namespace', util.NAMESPACE, '--bucket-name', bulk_put_bucket_name, '--src-dir', root_bulk_put_folder, '--content-type', 'auto', '--overwrite'])
 
     # No failures or skips and we uploaded everything
     parsed_result = parse_json_response_from_mixed_output(result.output)

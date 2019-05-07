@@ -6,7 +6,7 @@ import pytest
 from tests import generated_test_request_transformers
 from tests import test_config_container  # noqa: F401
 from tests import util
-
+import vcr
 import oci_cli
 import os
 
@@ -27,6 +27,30 @@ def vcr_fixture(request):
 def test_create_auto_scaling_configuration(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('autoscaling', 'CreateAutoScalingConfiguration'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('autoscaling', 'AutoScaling', 'CreateAutoScalingConfiguration')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_create_auto_scaling_configuration.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_create_auto_scaling_configuration', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_create_auto_scaling_configuration.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_create_auto_scaling_configuration'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_create_auto_scaling_configuration.pem'])
+            config_file = 'tests/resources/config_for_test_create_auto_scaling_configuration'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('autoscaling_root_group.command_name', 'autoscaling')
     resource_group_command_name = oci_cli.cli_util.override('auto_scaling_configuration_group.command_name', 'auto_scaling_configuration')
@@ -92,6 +116,10 @@ def test_create_auto_scaling_configuration(cli_testing_service_client, runner, c
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_create_auto_scaling_configuration.pem'):
+                    os.remove('tests/resources/keyfile_for_test_create_auto_scaling_configuration.pem')
+                if os.path.exists('tests/resources/config_for_test_create_auto_scaling_configuration'):
+                    os.remove('tests/resources/config_for_test_create_auto_scaling_configuration')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -110,6 +138,30 @@ def test_create_auto_scaling_configuration(cli_testing_service_client, runner, c
 def test_create_auto_scaling_policy(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('autoscaling', 'CreateAutoScalingPolicy'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('autoscaling', 'AutoScaling', 'CreateAutoScalingPolicy')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_create_auto_scaling_policy.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_create_auto_scaling_policy', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_create_auto_scaling_policy.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_create_auto_scaling_policy'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_create_auto_scaling_policy.pem'])
+            config_file = 'tests/resources/config_for_test_create_auto_scaling_policy'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('autoscaling_root_group.command_name', 'autoscaling')
     resource_group_command_name = oci_cli.cli_util.override('auto_scaling_policy_group.command_name', 'auto_scaling_policy')
@@ -185,6 +237,10 @@ def test_create_auto_scaling_policy(cli_testing_service_client, runner, config_f
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_create_auto_scaling_policy.pem'):
+                    os.remove('tests/resources/keyfile_for_test_create_auto_scaling_policy.pem')
+                if os.path.exists('tests/resources/config_for_test_create_auto_scaling_policy'):
+                    os.remove('tests/resources/config_for_test_create_auto_scaling_policy')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -203,6 +259,30 @@ def test_create_auto_scaling_policy(cli_testing_service_client, runner, config_f
 def test_delete_auto_scaling_configuration(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('autoscaling', 'DeleteAutoScalingConfiguration'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('autoscaling', 'AutoScaling', 'DeleteAutoScalingConfiguration')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_delete_auto_scaling_configuration.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_delete_auto_scaling_configuration', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_delete_auto_scaling_configuration.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_delete_auto_scaling_configuration'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_delete_auto_scaling_configuration.pem'])
+            config_file = 'tests/resources/config_for_test_delete_auto_scaling_configuration'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('autoscaling_root_group.command_name', 'autoscaling')
     resource_group_command_name = oci_cli.cli_util.override('auto_scaling_configuration_group.command_name', 'auto_scaling_configuration')
@@ -261,6 +341,10 @@ def test_delete_auto_scaling_configuration(cli_testing_service_client, runner, c
                     True
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_delete_auto_scaling_configuration.pem'):
+                    os.remove('tests/resources/keyfile_for_test_delete_auto_scaling_configuration.pem')
+                if os.path.exists('tests/resources/config_for_test_delete_auto_scaling_configuration'):
+                    os.remove('tests/resources/config_for_test_delete_auto_scaling_configuration')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -279,6 +363,30 @@ def test_delete_auto_scaling_configuration(cli_testing_service_client, runner, c
 def test_delete_auto_scaling_policy(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('autoscaling', 'DeleteAutoScalingPolicy'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('autoscaling', 'AutoScaling', 'DeleteAutoScalingPolicy')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_delete_auto_scaling_policy.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_delete_auto_scaling_policy', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_delete_auto_scaling_policy.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_delete_auto_scaling_policy'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_delete_auto_scaling_policy.pem'])
+            config_file = 'tests/resources/config_for_test_delete_auto_scaling_policy'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('autoscaling_root_group.command_name', 'autoscaling')
     resource_group_command_name = oci_cli.cli_util.override('auto_scaling_policy_group.command_name', 'auto_scaling_policy')
@@ -337,6 +445,10 @@ def test_delete_auto_scaling_policy(cli_testing_service_client, runner, config_f
                     True
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_delete_auto_scaling_policy.pem'):
+                    os.remove('tests/resources/keyfile_for_test_delete_auto_scaling_policy.pem')
+                if os.path.exists('tests/resources/config_for_test_delete_auto_scaling_policy'):
+                    os.remove('tests/resources/config_for_test_delete_auto_scaling_policy')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -355,6 +467,30 @@ def test_delete_auto_scaling_policy(cli_testing_service_client, runner, config_f
 def test_get_auto_scaling_configuration(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('autoscaling', 'GetAutoScalingConfiguration'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('autoscaling', 'AutoScaling', 'GetAutoScalingConfiguration')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_auto_scaling_configuration.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_auto_scaling_configuration', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_auto_scaling_configuration.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_auto_scaling_configuration'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_auto_scaling_configuration.pem'])
+            config_file = 'tests/resources/config_for_test_get_auto_scaling_configuration'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('autoscaling_root_group.command_name', 'autoscaling')
     resource_group_command_name = oci_cli.cli_util.override('auto_scaling_configuration_group.command_name', 'auto_scaling_configuration')
@@ -412,6 +548,10 @@ def test_get_auto_scaling_configuration(cli_testing_service_client, runner, conf
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_auto_scaling_configuration.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_auto_scaling_configuration.pem')
+                if os.path.exists('tests/resources/config_for_test_get_auto_scaling_configuration'):
+                    os.remove('tests/resources/config_for_test_get_auto_scaling_configuration')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -430,6 +570,30 @@ def test_get_auto_scaling_configuration(cli_testing_service_client, runner, conf
 def test_get_auto_scaling_policy(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('autoscaling', 'GetAutoScalingPolicy'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('autoscaling', 'AutoScaling', 'GetAutoScalingPolicy')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_auto_scaling_policy.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_auto_scaling_policy', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_auto_scaling_policy.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_auto_scaling_policy'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_auto_scaling_policy.pem'])
+            config_file = 'tests/resources/config_for_test_get_auto_scaling_policy'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('autoscaling_root_group.command_name', 'autoscaling')
     resource_group_command_name = oci_cli.cli_util.override('auto_scaling_policy_group.command_name', 'auto_scaling_policy')
@@ -487,6 +651,10 @@ def test_get_auto_scaling_policy(cli_testing_service_client, runner, config_file
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_auto_scaling_policy.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_auto_scaling_policy.pem')
+                if os.path.exists('tests/resources/config_for_test_get_auto_scaling_policy'):
+                    os.remove('tests/resources/config_for_test_get_auto_scaling_policy')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -505,6 +673,30 @@ def test_get_auto_scaling_policy(cli_testing_service_client, runner, config_file
 def test_list_auto_scaling_configurations(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('autoscaling', 'ListAutoScalingConfigurations'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('autoscaling', 'AutoScaling', 'ListAutoScalingConfigurations')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_auto_scaling_configurations.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_auto_scaling_configurations', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_auto_scaling_configurations.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_auto_scaling_configurations'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_auto_scaling_configurations.pem'])
+            config_file = 'tests/resources/config_for_test_list_auto_scaling_configurations'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('autoscaling_root_group.command_name', 'autoscaling')
     resource_group_command_name = oci_cli.cli_util.override('auto_scaling_configuration_group.command_name', 'auto_scaling_configuration')
@@ -562,6 +754,10 @@ def test_list_auto_scaling_configurations(cli_testing_service_client, runner, co
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_auto_scaling_configurations.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_auto_scaling_configurations.pem')
+                if os.path.exists('tests/resources/config_for_test_list_auto_scaling_configurations'):
+                    os.remove('tests/resources/config_for_test_list_auto_scaling_configurations')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -580,6 +776,30 @@ def test_list_auto_scaling_configurations(cli_testing_service_client, runner, co
 def test_list_auto_scaling_policies(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('autoscaling', 'ListAutoScalingPolicies'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('autoscaling', 'AutoScaling', 'ListAutoScalingPolicies')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_auto_scaling_policies.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_auto_scaling_policies', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_auto_scaling_policies.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_auto_scaling_policies'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_auto_scaling_policies.pem'])
+            config_file = 'tests/resources/config_for_test_list_auto_scaling_policies'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('autoscaling_root_group.command_name', 'autoscaling')
     resource_group_command_name = oci_cli.cli_util.override('auto_scaling_policy_group.command_name', 'auto_scaling_policy')
@@ -637,6 +857,10 @@ def test_list_auto_scaling_policies(cli_testing_service_client, runner, config_f
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_auto_scaling_policies.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_auto_scaling_policies.pem')
+                if os.path.exists('tests/resources/config_for_test_list_auto_scaling_policies'):
+                    os.remove('tests/resources/config_for_test_list_auto_scaling_policies')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -655,6 +879,30 @@ def test_list_auto_scaling_policies(cli_testing_service_client, runner, config_f
 def test_update_auto_scaling_configuration(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('autoscaling', 'UpdateAutoScalingConfiguration'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('autoscaling', 'AutoScaling', 'UpdateAutoScalingConfiguration')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_update_auto_scaling_configuration.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_update_auto_scaling_configuration', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_update_auto_scaling_configuration.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_update_auto_scaling_configuration'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_update_auto_scaling_configuration.pem'])
+            config_file = 'tests/resources/config_for_test_update_auto_scaling_configuration'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('autoscaling_root_group.command_name', 'autoscaling')
     resource_group_command_name = oci_cli.cli_util.override('auto_scaling_configuration_group.command_name', 'auto_scaling_configuration')
@@ -721,6 +969,10 @@ def test_update_auto_scaling_configuration(cli_testing_service_client, runner, c
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_update_auto_scaling_configuration.pem'):
+                    os.remove('tests/resources/keyfile_for_test_update_auto_scaling_configuration.pem')
+                if os.path.exists('tests/resources/config_for_test_update_auto_scaling_configuration'):
+                    os.remove('tests/resources/config_for_test_update_auto_scaling_configuration')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -739,6 +991,30 @@ def test_update_auto_scaling_configuration(cli_testing_service_client, runner, c
 def test_update_auto_scaling_policy(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('autoscaling', 'UpdateAutoScalingPolicy'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('autoscaling', 'AutoScaling', 'UpdateAutoScalingPolicy')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_update_auto_scaling_policy.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_update_auto_scaling_policy', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_update_auto_scaling_policy.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_update_auto_scaling_policy'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_update_auto_scaling_policy.pem'])
+            config_file = 'tests/resources/config_for_test_update_auto_scaling_policy'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('autoscaling_root_group.command_name', 'autoscaling')
     resource_group_command_name = oci_cli.cli_util.override('auto_scaling_policy_group.command_name', 'auto_scaling_policy')
@@ -815,6 +1091,10 @@ def test_update_auto_scaling_policy(cli_testing_service_client, runner, config_f
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_update_auto_scaling_policy.pem'):
+                    os.remove('tests/resources/keyfile_for_test_update_auto_scaling_policy.pem')
+                if os.path.exists('tests/resources/config_for_test_update_auto_scaling_policy'):
+                    os.remove('tests/resources/config_for_test_update_auto_scaling_policy')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -830,7 +1110,7 @@ def test_update_auto_scaling_policy(cli_testing_service_client, runner, config_f
 
 
 def invoke(runner, config_file, config_profile, params, debug=False, root_params=None, strip_progress_bar=True, strip_multipart_stderr_output=True, ** args):
-    root_params = ['--config-file', os.environ['OCI_CLI_CONFIG_FILE']]
+    root_params = ['--config-file', config_file]
 
     if config_profile:
         root_params.extend(['--profile', config_profile])

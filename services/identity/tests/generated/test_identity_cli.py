@@ -6,7 +6,7 @@ import pytest
 from tests import generated_test_request_transformers
 from tests import test_config_container  # noqa: F401
 from tests import util
-
+import vcr
 import oci_cli
 import os
 
@@ -27,6 +27,30 @@ def vcr_fixture(request):
 def test_activate_mfa_totp_device(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('identity', 'ActivateMfaTotpDevice'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('identity', 'Identity', 'ActivateMfaTotpDevice')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_activate_mfa_totp_device.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_activate_mfa_totp_device', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_activate_mfa_totp_device.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_activate_mfa_totp_device'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_activate_mfa_totp_device.pem'])
+            config_file = 'tests/resources/config_for_test_activate_mfa_totp_device'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('iam_root_group.command_name', 'iam')
     resource_group_command_name = oci_cli.cli_util.override('mfa_totp_device_group.command_name', 'mfa_totp_device')
@@ -92,6 +116,10 @@ def test_activate_mfa_totp_device(cli_testing_service_client, runner, config_fil
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_activate_mfa_totp_device.pem'):
+                    os.remove('tests/resources/keyfile_for_test_activate_mfa_totp_device.pem')
+                if os.path.exists('tests/resources/config_for_test_activate_mfa_totp_device'):
+                    os.remove('tests/resources/config_for_test_activate_mfa_totp_device')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -110,6 +138,30 @@ def test_activate_mfa_totp_device(cli_testing_service_client, runner, config_fil
 def test_add_user_to_group(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('identity', 'AddUserToGroup'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('identity', 'Identity', 'AddUserToGroup')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_add_user_to_group.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_add_user_to_group', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_add_user_to_group.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_add_user_to_group'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_add_user_to_group.pem'])
+            config_file = 'tests/resources/config_for_test_add_user_to_group'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('iam_root_group.command_name', 'iam')
     resource_group_command_name = oci_cli.cli_util.override('user_group_membership_group.command_name', 'user_group_membership')
@@ -175,6 +227,10 @@ def test_add_user_to_group(cli_testing_service_client, runner, config_file, conf
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_add_user_to_group.pem'):
+                    os.remove('tests/resources/keyfile_for_test_add_user_to_group.pem')
+                if os.path.exists('tests/resources/config_for_test_add_user_to_group'):
+                    os.remove('tests/resources/config_for_test_add_user_to_group')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -193,6 +249,30 @@ def test_add_user_to_group(cli_testing_service_client, runner, config_file, conf
 def test_change_tag_namespace_compartment(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('identity', 'ChangeTagNamespaceCompartment'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('identity', 'Identity', 'ChangeTagNamespaceCompartment')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_change_tag_namespace_compartment.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_change_tag_namespace_compartment', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_change_tag_namespace_compartment.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_change_tag_namespace_compartment'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_change_tag_namespace_compartment.pem'])
+            config_file = 'tests/resources/config_for_test_change_tag_namespace_compartment'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('iam_root_group.command_name', 'iam')
     resource_group_command_name = oci_cli.cli_util.override('tag_namespace_group.command_name', 'tag_namespace')
@@ -226,7 +306,7 @@ def test_change_tag_namespace_compartment(cli_testing_service_client, runner, co
                 params = util.get_command_list(
                     root_command_name,
                     resource_group_command_name,
-                    oci_cli.cli_util.override('change_tag_namespace_compartment.command_name', 'change-tag-namespace-compartment')
+                    oci_cli.cli_util.override('change_tag_namespace_compartment.command_name', 'change-compartment')
                 )
 
             if not params:
@@ -239,9 +319,9 @@ def test_change_tag_namespace_compartment(cli_testing_service_client, runner, co
                     'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
                     .format(
                         root_command_name, resource_group_command_name,
-                        oci_cli.cli_util.override('change_tag_namespace_compartment.command_name', 'change-tag-namespace-compartment'),
+                        oci_cli.cli_util.override('change_tag_namespace_compartment.command_name', 'change-compartment'),
                         root_command_name, resource_group_command_name,
-                        oci_cli.cli_util.override('change_tag_namespace_compartment.command_name', 'change-tag-namespace-compartment')))
+                        oci_cli.cli_util.override('change_tag_namespace_compartment.command_name', 'change-compartment')))
 
             params.extend(['--from-json', input_content])
             try:
@@ -258,6 +338,10 @@ def test_change_tag_namespace_compartment(cli_testing_service_client, runner, co
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_change_tag_namespace_compartment.pem'):
+                    os.remove('tests/resources/keyfile_for_test_change_tag_namespace_compartment.pem')
+                if os.path.exists('tests/resources/config_for_test_change_tag_namespace_compartment'):
+                    os.remove('tests/resources/config_for_test_change_tag_namespace_compartment')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -276,6 +360,30 @@ def test_change_tag_namespace_compartment(cli_testing_service_client, runner, co
 def test_create_auth_token(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('identity', 'CreateAuthToken'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('identity', 'Identity', 'CreateAuthToken')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_create_auth_token.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_create_auth_token', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_create_auth_token.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_create_auth_token'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_create_auth_token.pem'])
+            config_file = 'tests/resources/config_for_test_create_auth_token'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('iam_root_group.command_name', 'iam')
     resource_group_command_name = oci_cli.cli_util.override('auth_token_group.command_name', 'auth_token')
@@ -341,6 +449,10 @@ def test_create_auth_token(cli_testing_service_client, runner, config_file, conf
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_create_auth_token.pem'):
+                    os.remove('tests/resources/keyfile_for_test_create_auth_token.pem')
+                if os.path.exists('tests/resources/config_for_test_create_auth_token'):
+                    os.remove('tests/resources/config_for_test_create_auth_token')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -359,6 +471,30 @@ def test_create_auth_token(cli_testing_service_client, runner, config_file, conf
 def test_create_compartment(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('identity', 'CreateCompartment'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('identity', 'Identity', 'CreateCompartment')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_create_compartment.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_create_compartment', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_create_compartment.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_create_compartment'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_create_compartment.pem'])
+            config_file = 'tests/resources/config_for_test_create_compartment'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('iam_root_group.command_name', 'iam')
     resource_group_command_name = oci_cli.cli_util.override('compartment_group.command_name', 'compartment')
@@ -424,6 +560,10 @@ def test_create_compartment(cli_testing_service_client, runner, config_file, con
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_create_compartment.pem'):
+                    os.remove('tests/resources/keyfile_for_test_create_compartment.pem')
+                if os.path.exists('tests/resources/config_for_test_create_compartment'):
+                    os.remove('tests/resources/config_for_test_create_compartment')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -442,6 +582,30 @@ def test_create_compartment(cli_testing_service_client, runner, config_file, con
 def test_create_customer_secret_key(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('identity', 'CreateCustomerSecretKey'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('identity', 'Identity', 'CreateCustomerSecretKey')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_create_customer_secret_key.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_create_customer_secret_key', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_create_customer_secret_key.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_create_customer_secret_key'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_create_customer_secret_key.pem'])
+            config_file = 'tests/resources/config_for_test_create_customer_secret_key'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('iam_root_group.command_name', 'iam')
     resource_group_command_name = oci_cli.cli_util.override('customer_secret_key_group.command_name', 'customer_secret_key')
@@ -507,6 +671,10 @@ def test_create_customer_secret_key(cli_testing_service_client, runner, config_f
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_create_customer_secret_key.pem'):
+                    os.remove('tests/resources/keyfile_for_test_create_customer_secret_key.pem')
+                if os.path.exists('tests/resources/config_for_test_create_customer_secret_key'):
+                    os.remove('tests/resources/config_for_test_create_customer_secret_key')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -525,6 +693,30 @@ def test_create_customer_secret_key(cli_testing_service_client, runner, config_f
 def test_create_dynamic_group(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('identity', 'CreateDynamicGroup'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('identity', 'Identity', 'CreateDynamicGroup')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_create_dynamic_group.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_create_dynamic_group', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_create_dynamic_group.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_create_dynamic_group'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_create_dynamic_group.pem'])
+            config_file = 'tests/resources/config_for_test_create_dynamic_group'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('iam_root_group.command_name', 'iam')
     resource_group_command_name = oci_cli.cli_util.override('dynamic_group_group.command_name', 'dynamic_group')
@@ -590,6 +782,10 @@ def test_create_dynamic_group(cli_testing_service_client, runner, config_file, c
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_create_dynamic_group.pem'):
+                    os.remove('tests/resources/keyfile_for_test_create_dynamic_group.pem')
+                if os.path.exists('tests/resources/config_for_test_create_dynamic_group'):
+                    os.remove('tests/resources/config_for_test_create_dynamic_group')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -608,6 +804,30 @@ def test_create_dynamic_group(cli_testing_service_client, runner, config_file, c
 def test_create_group(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('identity', 'CreateGroup'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('identity', 'Identity', 'CreateGroup')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_create_group.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_create_group', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_create_group.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_create_group'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_create_group.pem'])
+            config_file = 'tests/resources/config_for_test_create_group'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('iam_root_group.command_name', 'iam')
     resource_group_command_name = oci_cli.cli_util.override('group_group.command_name', 'group')
@@ -673,6 +893,10 @@ def test_create_group(cli_testing_service_client, runner, config_file, config_pr
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_create_group.pem'):
+                    os.remove('tests/resources/keyfile_for_test_create_group.pem')
+                if os.path.exists('tests/resources/config_for_test_create_group'):
+                    os.remove('tests/resources/config_for_test_create_group')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -691,6 +915,30 @@ def test_create_group(cli_testing_service_client, runner, config_file, config_pr
 def test_create_identity_provider(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('identity', 'CreateIdentityProvider'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('identity', 'Identity', 'CreateIdentityProvider')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_create_identity_provider.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_create_identity_provider', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_create_identity_provider.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_create_identity_provider'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_create_identity_provider.pem'])
+            config_file = 'tests/resources/config_for_test_create_identity_provider'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('iam_root_group.command_name', 'iam')
     resource_group_command_name = oci_cli.cli_util.override('identity_provider_group.command_name', 'identity_provider')
@@ -766,6 +1014,10 @@ def test_create_identity_provider(cli_testing_service_client, runner, config_fil
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_create_identity_provider.pem'):
+                    os.remove('tests/resources/keyfile_for_test_create_identity_provider.pem')
+                if os.path.exists('tests/resources/config_for_test_create_identity_provider'):
+                    os.remove('tests/resources/config_for_test_create_identity_provider')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -784,6 +1036,30 @@ def test_create_identity_provider(cli_testing_service_client, runner, config_fil
 def test_create_idp_group_mapping(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('identity', 'CreateIdpGroupMapping'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('identity', 'Identity', 'CreateIdpGroupMapping')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_create_idp_group_mapping.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_create_idp_group_mapping', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_create_idp_group_mapping.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_create_idp_group_mapping'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_create_idp_group_mapping.pem'])
+            config_file = 'tests/resources/config_for_test_create_idp_group_mapping'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('iam_root_group.command_name', 'iam')
     resource_group_command_name = oci_cli.cli_util.override('idp_group_mapping_group.command_name', 'idp_group_mapping')
@@ -849,6 +1125,10 @@ def test_create_idp_group_mapping(cli_testing_service_client, runner, config_fil
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_create_idp_group_mapping.pem'):
+                    os.remove('tests/resources/keyfile_for_test_create_idp_group_mapping.pem')
+                if os.path.exists('tests/resources/config_for_test_create_idp_group_mapping'):
+                    os.remove('tests/resources/config_for_test_create_idp_group_mapping')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -867,6 +1147,30 @@ def test_create_idp_group_mapping(cli_testing_service_client, runner, config_fil
 def test_create_mfa_totp_device(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('identity', 'CreateMfaTotpDevice'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('identity', 'Identity', 'CreateMfaTotpDevice')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_create_mfa_totp_device.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_create_mfa_totp_device', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_create_mfa_totp_device.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_create_mfa_totp_device'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_create_mfa_totp_device.pem'])
+            config_file = 'tests/resources/config_for_test_create_mfa_totp_device'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('iam_root_group.command_name', 'iam')
     resource_group_command_name = oci_cli.cli_util.override('mfa_totp_device_group.command_name', 'mfa_totp_device')
@@ -924,6 +1228,10 @@ def test_create_mfa_totp_device(cli_testing_service_client, runner, config_file,
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_create_mfa_totp_device.pem'):
+                    os.remove('tests/resources/keyfile_for_test_create_mfa_totp_device.pem')
+                if os.path.exists('tests/resources/config_for_test_create_mfa_totp_device'):
+                    os.remove('tests/resources/config_for_test_create_mfa_totp_device')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -942,6 +1250,30 @@ def test_create_mfa_totp_device(cli_testing_service_client, runner, config_file,
 def test_create_or_reset_ui_password(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('identity', 'CreateOrResetUIPassword'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('identity', 'Identity', 'CreateOrResetUIPassword')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_create_or_reset_ui_password.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_create_or_reset_ui_password', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_create_or_reset_ui_password.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_create_or_reset_ui_password'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_create_or_reset_ui_password.pem'])
+            config_file = 'tests/resources/config_for_test_create_or_reset_ui_password'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('iam_root_group.command_name', 'iam')
     resource_group_command_name = oci_cli.cli_util.override('ui_password_group.command_name', 'ui_password')
@@ -999,6 +1331,10 @@ def test_create_or_reset_ui_password(cli_testing_service_client, runner, config_
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_create_or_reset_ui_password.pem'):
+                    os.remove('tests/resources/keyfile_for_test_create_or_reset_ui_password.pem')
+                if os.path.exists('tests/resources/config_for_test_create_or_reset_ui_password'):
+                    os.remove('tests/resources/config_for_test_create_or_reset_ui_password')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -1017,6 +1353,30 @@ def test_create_or_reset_ui_password(cli_testing_service_client, runner, config_
 def test_create_policy(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('identity', 'CreatePolicy'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('identity', 'Identity', 'CreatePolicy')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_create_policy.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_create_policy', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_create_policy.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_create_policy'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_create_policy.pem'])
+            config_file = 'tests/resources/config_for_test_create_policy'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('iam_root_group.command_name', 'iam')
     resource_group_command_name = oci_cli.cli_util.override('policy_group.command_name', 'policy')
@@ -1082,6 +1442,10 @@ def test_create_policy(cli_testing_service_client, runner, config_file, config_p
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_create_policy.pem'):
+                    os.remove('tests/resources/keyfile_for_test_create_policy.pem')
+                if os.path.exists('tests/resources/config_for_test_create_policy'):
+                    os.remove('tests/resources/config_for_test_create_policy')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -1100,6 +1464,30 @@ def test_create_policy(cli_testing_service_client, runner, config_file, config_p
 def test_create_region_subscription(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('identity', 'CreateRegionSubscription'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('identity', 'Identity', 'CreateRegionSubscription')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_create_region_subscription.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_create_region_subscription', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_create_region_subscription.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_create_region_subscription'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_create_region_subscription.pem'])
+            config_file = 'tests/resources/config_for_test_create_region_subscription'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('iam_root_group.command_name', 'iam')
     resource_group_command_name = oci_cli.cli_util.override('region_subscription_group.command_name', 'region_subscription')
@@ -1165,6 +1553,10 @@ def test_create_region_subscription(cli_testing_service_client, runner, config_f
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_create_region_subscription.pem'):
+                    os.remove('tests/resources/keyfile_for_test_create_region_subscription.pem')
+                if os.path.exists('tests/resources/config_for_test_create_region_subscription'):
+                    os.remove('tests/resources/config_for_test_create_region_subscription')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -1183,6 +1575,30 @@ def test_create_region_subscription(cli_testing_service_client, runner, config_f
 def test_create_smtp_credential(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('identity', 'CreateSmtpCredential'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('identity', 'Identity', 'CreateSmtpCredential')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_create_smtp_credential.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_create_smtp_credential', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_create_smtp_credential.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_create_smtp_credential'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_create_smtp_credential.pem'])
+            config_file = 'tests/resources/config_for_test_create_smtp_credential'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('iam_root_group.command_name', 'iam')
     resource_group_command_name = oci_cli.cli_util.override('smtp_credential_group.command_name', 'smtp_credential')
@@ -1248,6 +1664,10 @@ def test_create_smtp_credential(cli_testing_service_client, runner, config_file,
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_create_smtp_credential.pem'):
+                    os.remove('tests/resources/keyfile_for_test_create_smtp_credential.pem')
+                if os.path.exists('tests/resources/config_for_test_create_smtp_credential'):
+                    os.remove('tests/resources/config_for_test_create_smtp_credential')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -1266,6 +1686,30 @@ def test_create_smtp_credential(cli_testing_service_client, runner, config_file,
 def test_create_swift_password(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('identity', 'CreateSwiftPassword'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('identity', 'Identity', 'CreateSwiftPassword')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_create_swift_password.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_create_swift_password', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_create_swift_password.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_create_swift_password'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_create_swift_password.pem'])
+            config_file = 'tests/resources/config_for_test_create_swift_password'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('iam_root_group.command_name', 'iam')
     resource_group_command_name = oci_cli.cli_util.override('swift_password_group.command_name', 'swift_password')
@@ -1331,6 +1775,10 @@ def test_create_swift_password(cli_testing_service_client, runner, config_file, 
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_create_swift_password.pem'):
+                    os.remove('tests/resources/keyfile_for_test_create_swift_password.pem')
+                if os.path.exists('tests/resources/config_for_test_create_swift_password'):
+                    os.remove('tests/resources/config_for_test_create_swift_password')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -1349,6 +1797,30 @@ def test_create_swift_password(cli_testing_service_client, runner, config_file, 
 def test_create_tag(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('identity', 'CreateTag'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('identity', 'Identity', 'CreateTag')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_create_tag.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_create_tag', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_create_tag.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_create_tag'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_create_tag.pem'])
+            config_file = 'tests/resources/config_for_test_create_tag'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('iam_root_group.command_name', 'iam')
     resource_group_command_name = oci_cli.cli_util.override('tag_group.command_name', 'tag')
@@ -1414,6 +1886,10 @@ def test_create_tag(cli_testing_service_client, runner, config_file, config_prof
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_create_tag.pem'):
+                    os.remove('tests/resources/keyfile_for_test_create_tag.pem')
+                if os.path.exists('tests/resources/config_for_test_create_tag'):
+                    os.remove('tests/resources/config_for_test_create_tag')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -1432,6 +1908,30 @@ def test_create_tag(cli_testing_service_client, runner, config_file, config_prof
 def test_create_tag_default(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('identity', 'CreateTagDefault'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('identity', 'Identity', 'CreateTagDefault')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_create_tag_default.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_create_tag_default', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_create_tag_default.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_create_tag_default'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_create_tag_default.pem'])
+            config_file = 'tests/resources/config_for_test_create_tag_default'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('iam_root_group.command_name', 'iam')
     resource_group_command_name = oci_cli.cli_util.override('tag_default_group.command_name', 'tag_default')
@@ -1497,6 +1997,10 @@ def test_create_tag_default(cli_testing_service_client, runner, config_file, con
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_create_tag_default.pem'):
+                    os.remove('tests/resources/keyfile_for_test_create_tag_default.pem')
+                if os.path.exists('tests/resources/config_for_test_create_tag_default'):
+                    os.remove('tests/resources/config_for_test_create_tag_default')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -1515,6 +2019,30 @@ def test_create_tag_default(cli_testing_service_client, runner, config_file, con
 def test_create_tag_namespace(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('identity', 'CreateTagNamespace'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('identity', 'Identity', 'CreateTagNamespace')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_create_tag_namespace.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_create_tag_namespace', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_create_tag_namespace.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_create_tag_namespace'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_create_tag_namespace.pem'])
+            config_file = 'tests/resources/config_for_test_create_tag_namespace'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('iam_root_group.command_name', 'iam')
     resource_group_command_name = oci_cli.cli_util.override('tag_namespace_group.command_name', 'tag_namespace')
@@ -1580,6 +2108,10 @@ def test_create_tag_namespace(cli_testing_service_client, runner, config_file, c
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_create_tag_namespace.pem'):
+                    os.remove('tests/resources/keyfile_for_test_create_tag_namespace.pem')
+                if os.path.exists('tests/resources/config_for_test_create_tag_namespace'):
+                    os.remove('tests/resources/config_for_test_create_tag_namespace')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -1598,6 +2130,30 @@ def test_create_tag_namespace(cli_testing_service_client, runner, config_file, c
 def test_create_user(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('identity', 'CreateUser'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('identity', 'Identity', 'CreateUser')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_create_user.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_create_user', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_create_user.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_create_user'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_create_user.pem'])
+            config_file = 'tests/resources/config_for_test_create_user'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('iam_root_group.command_name', 'iam')
     resource_group_command_name = oci_cli.cli_util.override('user_group.command_name', 'user')
@@ -1663,6 +2219,10 @@ def test_create_user(cli_testing_service_client, runner, config_file, config_pro
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_create_user.pem'):
+                    os.remove('tests/resources/keyfile_for_test_create_user.pem')
+                if os.path.exists('tests/resources/config_for_test_create_user'):
+                    os.remove('tests/resources/config_for_test_create_user')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -1681,6 +2241,30 @@ def test_create_user(cli_testing_service_client, runner, config_file, config_pro
 def test_delete_api_key(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('identity', 'DeleteApiKey'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('identity', 'Identity', 'DeleteApiKey')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_delete_api_key.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_delete_api_key', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_delete_api_key.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_delete_api_key'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_delete_api_key.pem'])
+            config_file = 'tests/resources/config_for_test_delete_api_key'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('iam_root_group.command_name', 'iam')
     resource_group_command_name = oci_cli.cli_util.override('api_key_group.command_name', 'api_key')
@@ -1739,6 +2323,10 @@ def test_delete_api_key(cli_testing_service_client, runner, config_file, config_
                     True
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_delete_api_key.pem'):
+                    os.remove('tests/resources/keyfile_for_test_delete_api_key.pem')
+                if os.path.exists('tests/resources/config_for_test_delete_api_key'):
+                    os.remove('tests/resources/config_for_test_delete_api_key')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -1757,6 +2345,30 @@ def test_delete_api_key(cli_testing_service_client, runner, config_file, config_
 def test_delete_auth_token(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('identity', 'DeleteAuthToken'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('identity', 'Identity', 'DeleteAuthToken')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_delete_auth_token.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_delete_auth_token', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_delete_auth_token.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_delete_auth_token'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_delete_auth_token.pem'])
+            config_file = 'tests/resources/config_for_test_delete_auth_token'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('iam_root_group.command_name', 'iam')
     resource_group_command_name = oci_cli.cli_util.override('auth_token_group.command_name', 'auth_token')
@@ -1815,6 +2427,10 @@ def test_delete_auth_token(cli_testing_service_client, runner, config_file, conf
                     True
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_delete_auth_token.pem'):
+                    os.remove('tests/resources/keyfile_for_test_delete_auth_token.pem')
+                if os.path.exists('tests/resources/config_for_test_delete_auth_token'):
+                    os.remove('tests/resources/config_for_test_delete_auth_token')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -1833,6 +2449,30 @@ def test_delete_auth_token(cli_testing_service_client, runner, config_file, conf
 def test_delete_compartment(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('identity', 'DeleteCompartment'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('identity', 'Identity', 'DeleteCompartment')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_delete_compartment.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_delete_compartment', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_delete_compartment.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_delete_compartment'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_delete_compartment.pem'])
+            config_file = 'tests/resources/config_for_test_delete_compartment'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('iam_root_group.command_name', 'iam')
     resource_group_command_name = oci_cli.cli_util.override('compartment_group.command_name', 'compartment')
@@ -1891,6 +2531,10 @@ def test_delete_compartment(cli_testing_service_client, runner, config_file, con
                     True
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_delete_compartment.pem'):
+                    os.remove('tests/resources/keyfile_for_test_delete_compartment.pem')
+                if os.path.exists('tests/resources/config_for_test_delete_compartment'):
+                    os.remove('tests/resources/config_for_test_delete_compartment')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -1909,6 +2553,30 @@ def test_delete_compartment(cli_testing_service_client, runner, config_file, con
 def test_delete_customer_secret_key(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('identity', 'DeleteCustomerSecretKey'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('identity', 'Identity', 'DeleteCustomerSecretKey')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_delete_customer_secret_key.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_delete_customer_secret_key', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_delete_customer_secret_key.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_delete_customer_secret_key'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_delete_customer_secret_key.pem'])
+            config_file = 'tests/resources/config_for_test_delete_customer_secret_key'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('iam_root_group.command_name', 'iam')
     resource_group_command_name = oci_cli.cli_util.override('customer_secret_key_group.command_name', 'customer_secret_key')
@@ -1967,6 +2635,10 @@ def test_delete_customer_secret_key(cli_testing_service_client, runner, config_f
                     True
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_delete_customer_secret_key.pem'):
+                    os.remove('tests/resources/keyfile_for_test_delete_customer_secret_key.pem')
+                if os.path.exists('tests/resources/config_for_test_delete_customer_secret_key'):
+                    os.remove('tests/resources/config_for_test_delete_customer_secret_key')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -1985,6 +2657,30 @@ def test_delete_customer_secret_key(cli_testing_service_client, runner, config_f
 def test_delete_dynamic_group(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('identity', 'DeleteDynamicGroup'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('identity', 'Identity', 'DeleteDynamicGroup')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_delete_dynamic_group.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_delete_dynamic_group', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_delete_dynamic_group.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_delete_dynamic_group'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_delete_dynamic_group.pem'])
+            config_file = 'tests/resources/config_for_test_delete_dynamic_group'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('iam_root_group.command_name', 'iam')
     resource_group_command_name = oci_cli.cli_util.override('dynamic_group_group.command_name', 'dynamic_group')
@@ -2043,6 +2739,10 @@ def test_delete_dynamic_group(cli_testing_service_client, runner, config_file, c
                     True
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_delete_dynamic_group.pem'):
+                    os.remove('tests/resources/keyfile_for_test_delete_dynamic_group.pem')
+                if os.path.exists('tests/resources/config_for_test_delete_dynamic_group'):
+                    os.remove('tests/resources/config_for_test_delete_dynamic_group')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -2061,6 +2761,30 @@ def test_delete_dynamic_group(cli_testing_service_client, runner, config_file, c
 def test_delete_group(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('identity', 'DeleteGroup'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('identity', 'Identity', 'DeleteGroup')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_delete_group.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_delete_group', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_delete_group.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_delete_group'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_delete_group.pem'])
+            config_file = 'tests/resources/config_for_test_delete_group'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('iam_root_group.command_name', 'iam')
     resource_group_command_name = oci_cli.cli_util.override('group_group.command_name', 'group')
@@ -2119,6 +2843,10 @@ def test_delete_group(cli_testing_service_client, runner, config_file, config_pr
                     True
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_delete_group.pem'):
+                    os.remove('tests/resources/keyfile_for_test_delete_group.pem')
+                if os.path.exists('tests/resources/config_for_test_delete_group'):
+                    os.remove('tests/resources/config_for_test_delete_group')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -2137,6 +2865,30 @@ def test_delete_group(cli_testing_service_client, runner, config_file, config_pr
 def test_delete_identity_provider(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('identity', 'DeleteIdentityProvider'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('identity', 'Identity', 'DeleteIdentityProvider')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_delete_identity_provider.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_delete_identity_provider', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_delete_identity_provider.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_delete_identity_provider'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_delete_identity_provider.pem'])
+            config_file = 'tests/resources/config_for_test_delete_identity_provider'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('iam_root_group.command_name', 'iam')
     resource_group_command_name = oci_cli.cli_util.override('identity_provider_group.command_name', 'identity_provider')
@@ -2195,6 +2947,10 @@ def test_delete_identity_provider(cli_testing_service_client, runner, config_fil
                     True
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_delete_identity_provider.pem'):
+                    os.remove('tests/resources/keyfile_for_test_delete_identity_provider.pem')
+                if os.path.exists('tests/resources/config_for_test_delete_identity_provider'):
+                    os.remove('tests/resources/config_for_test_delete_identity_provider')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -2213,6 +2969,30 @@ def test_delete_identity_provider(cli_testing_service_client, runner, config_fil
 def test_delete_idp_group_mapping(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('identity', 'DeleteIdpGroupMapping'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('identity', 'Identity', 'DeleteIdpGroupMapping')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_delete_idp_group_mapping.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_delete_idp_group_mapping', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_delete_idp_group_mapping.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_delete_idp_group_mapping'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_delete_idp_group_mapping.pem'])
+            config_file = 'tests/resources/config_for_test_delete_idp_group_mapping'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('iam_root_group.command_name', 'iam')
     resource_group_command_name = oci_cli.cli_util.override('idp_group_mapping_group.command_name', 'idp_group_mapping')
@@ -2271,6 +3051,10 @@ def test_delete_idp_group_mapping(cli_testing_service_client, runner, config_fil
                     True
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_delete_idp_group_mapping.pem'):
+                    os.remove('tests/resources/keyfile_for_test_delete_idp_group_mapping.pem')
+                if os.path.exists('tests/resources/config_for_test_delete_idp_group_mapping'):
+                    os.remove('tests/resources/config_for_test_delete_idp_group_mapping')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -2289,6 +3073,30 @@ def test_delete_idp_group_mapping(cli_testing_service_client, runner, config_fil
 def test_delete_mfa_totp_device(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('identity', 'DeleteMfaTotpDevice'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('identity', 'Identity', 'DeleteMfaTotpDevice')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_delete_mfa_totp_device.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_delete_mfa_totp_device', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_delete_mfa_totp_device.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_delete_mfa_totp_device'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_delete_mfa_totp_device.pem'])
+            config_file = 'tests/resources/config_for_test_delete_mfa_totp_device'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('iam_root_group.command_name', 'iam')
     resource_group_command_name = oci_cli.cli_util.override('mfa_totp_device_group.command_name', 'mfa_totp_device')
@@ -2347,6 +3155,10 @@ def test_delete_mfa_totp_device(cli_testing_service_client, runner, config_file,
                     True
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_delete_mfa_totp_device.pem'):
+                    os.remove('tests/resources/keyfile_for_test_delete_mfa_totp_device.pem')
+                if os.path.exists('tests/resources/config_for_test_delete_mfa_totp_device'):
+                    os.remove('tests/resources/config_for_test_delete_mfa_totp_device')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -2365,6 +3177,30 @@ def test_delete_mfa_totp_device(cli_testing_service_client, runner, config_file,
 def test_delete_policy(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('identity', 'DeletePolicy'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('identity', 'Identity', 'DeletePolicy')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_delete_policy.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_delete_policy', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_delete_policy.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_delete_policy'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_delete_policy.pem'])
+            config_file = 'tests/resources/config_for_test_delete_policy'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('iam_root_group.command_name', 'iam')
     resource_group_command_name = oci_cli.cli_util.override('policy_group.command_name', 'policy')
@@ -2423,6 +3259,10 @@ def test_delete_policy(cli_testing_service_client, runner, config_file, config_p
                     True
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_delete_policy.pem'):
+                    os.remove('tests/resources/keyfile_for_test_delete_policy.pem')
+                if os.path.exists('tests/resources/config_for_test_delete_policy'):
+                    os.remove('tests/resources/config_for_test_delete_policy')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -2441,6 +3281,30 @@ def test_delete_policy(cli_testing_service_client, runner, config_file, config_p
 def test_delete_smtp_credential(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('identity', 'DeleteSmtpCredential'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('identity', 'Identity', 'DeleteSmtpCredential')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_delete_smtp_credential.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_delete_smtp_credential', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_delete_smtp_credential.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_delete_smtp_credential'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_delete_smtp_credential.pem'])
+            config_file = 'tests/resources/config_for_test_delete_smtp_credential'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('iam_root_group.command_name', 'iam')
     resource_group_command_name = oci_cli.cli_util.override('smtp_credential_group.command_name', 'smtp_credential')
@@ -2499,6 +3363,10 @@ def test_delete_smtp_credential(cli_testing_service_client, runner, config_file,
                     True
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_delete_smtp_credential.pem'):
+                    os.remove('tests/resources/keyfile_for_test_delete_smtp_credential.pem')
+                if os.path.exists('tests/resources/config_for_test_delete_smtp_credential'):
+                    os.remove('tests/resources/config_for_test_delete_smtp_credential')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -2517,6 +3385,30 @@ def test_delete_smtp_credential(cli_testing_service_client, runner, config_file,
 def test_delete_swift_password(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('identity', 'DeleteSwiftPassword'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('identity', 'Identity', 'DeleteSwiftPassword')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_delete_swift_password.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_delete_swift_password', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_delete_swift_password.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_delete_swift_password'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_delete_swift_password.pem'])
+            config_file = 'tests/resources/config_for_test_delete_swift_password'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('iam_root_group.command_name', 'iam')
     resource_group_command_name = oci_cli.cli_util.override('swift_password_group.command_name', 'swift_password')
@@ -2575,6 +3467,10 @@ def test_delete_swift_password(cli_testing_service_client, runner, config_file, 
                     True
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_delete_swift_password.pem'):
+                    os.remove('tests/resources/keyfile_for_test_delete_swift_password.pem')
+                if os.path.exists('tests/resources/config_for_test_delete_swift_password'):
+                    os.remove('tests/resources/config_for_test_delete_swift_password')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -2593,6 +3489,30 @@ def test_delete_swift_password(cli_testing_service_client, runner, config_file, 
 def test_delete_tag_default(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('identity', 'DeleteTagDefault'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('identity', 'Identity', 'DeleteTagDefault')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_delete_tag_default.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_delete_tag_default', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_delete_tag_default.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_delete_tag_default'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_delete_tag_default.pem'])
+            config_file = 'tests/resources/config_for_test_delete_tag_default'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('iam_root_group.command_name', 'iam')
     resource_group_command_name = oci_cli.cli_util.override('tag_default_group.command_name', 'tag_default')
@@ -2651,6 +3571,10 @@ def test_delete_tag_default(cli_testing_service_client, runner, config_file, con
                     True
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_delete_tag_default.pem'):
+                    os.remove('tests/resources/keyfile_for_test_delete_tag_default.pem')
+                if os.path.exists('tests/resources/config_for_test_delete_tag_default'):
+                    os.remove('tests/resources/config_for_test_delete_tag_default')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -2669,6 +3593,30 @@ def test_delete_tag_default(cli_testing_service_client, runner, config_file, con
 def test_delete_user(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('identity', 'DeleteUser'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('identity', 'Identity', 'DeleteUser')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_delete_user.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_delete_user', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_delete_user.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_delete_user'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_delete_user.pem'])
+            config_file = 'tests/resources/config_for_test_delete_user'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('iam_root_group.command_name', 'iam')
     resource_group_command_name = oci_cli.cli_util.override('user_group.command_name', 'user')
@@ -2727,6 +3675,10 @@ def test_delete_user(cli_testing_service_client, runner, config_file, config_pro
                     True
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_delete_user.pem'):
+                    os.remove('tests/resources/keyfile_for_test_delete_user.pem')
+                if os.path.exists('tests/resources/config_for_test_delete_user'):
+                    os.remove('tests/resources/config_for_test_delete_user')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -2745,6 +3697,30 @@ def test_delete_user(cli_testing_service_client, runner, config_file, config_pro
 def test_generate_totp_seed(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('identity', 'GenerateTotpSeed'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('identity', 'Identity', 'GenerateTotpSeed')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_generate_totp_seed.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_generate_totp_seed', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_generate_totp_seed.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_generate_totp_seed'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_generate_totp_seed.pem'])
+            config_file = 'tests/resources/config_for_test_generate_totp_seed'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('iam_root_group.command_name', 'iam')
     resource_group_command_name = oci_cli.cli_util.override('mfa_totp_device_group.command_name', 'mfa_totp_device')
@@ -2802,6 +3778,10 @@ def test_generate_totp_seed(cli_testing_service_client, runner, config_file, con
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_generate_totp_seed.pem'):
+                    os.remove('tests/resources/keyfile_for_test_generate_totp_seed.pem')
+                if os.path.exists('tests/resources/config_for_test_generate_totp_seed'):
+                    os.remove('tests/resources/config_for_test_generate_totp_seed')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -2820,6 +3800,30 @@ def test_generate_totp_seed(cli_testing_service_client, runner, config_file, con
 def test_get_authentication_policy(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('identity', 'GetAuthenticationPolicy'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('identity', 'Identity', 'GetAuthenticationPolicy')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_authentication_policy.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_authentication_policy', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_authentication_policy.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_authentication_policy'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_authentication_policy.pem'])
+            config_file = 'tests/resources/config_for_test_get_authentication_policy'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('iam_root_group.command_name', 'iam')
     resource_group_command_name = oci_cli.cli_util.override('authentication_policy_group.command_name', 'authentication_policy')
@@ -2877,6 +3881,10 @@ def test_get_authentication_policy(cli_testing_service_client, runner, config_fi
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_authentication_policy.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_authentication_policy.pem')
+                if os.path.exists('tests/resources/config_for_test_get_authentication_policy'):
+                    os.remove('tests/resources/config_for_test_get_authentication_policy')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -2895,6 +3903,30 @@ def test_get_authentication_policy(cli_testing_service_client, runner, config_fi
 def test_get_compartment(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('identity', 'GetCompartment'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('identity', 'Identity', 'GetCompartment')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_compartment.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_compartment', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_compartment.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_compartment'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_compartment.pem'])
+            config_file = 'tests/resources/config_for_test_get_compartment'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('iam_root_group.command_name', 'iam')
     resource_group_command_name = oci_cli.cli_util.override('compartment_group.command_name', 'compartment')
@@ -2952,6 +3984,10 @@ def test_get_compartment(cli_testing_service_client, runner, config_file, config
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_compartment.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_compartment.pem')
+                if os.path.exists('tests/resources/config_for_test_get_compartment'):
+                    os.remove('tests/resources/config_for_test_get_compartment')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -2970,6 +4006,30 @@ def test_get_compartment(cli_testing_service_client, runner, config_file, config
 def test_get_dynamic_group(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('identity', 'GetDynamicGroup'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('identity', 'Identity', 'GetDynamicGroup')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_dynamic_group.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_dynamic_group', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_dynamic_group.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_dynamic_group'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_dynamic_group.pem'])
+            config_file = 'tests/resources/config_for_test_get_dynamic_group'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('iam_root_group.command_name', 'iam')
     resource_group_command_name = oci_cli.cli_util.override('dynamic_group_group.command_name', 'dynamic_group')
@@ -3027,6 +4087,10 @@ def test_get_dynamic_group(cli_testing_service_client, runner, config_file, conf
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_dynamic_group.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_dynamic_group.pem')
+                if os.path.exists('tests/resources/config_for_test_get_dynamic_group'):
+                    os.remove('tests/resources/config_for_test_get_dynamic_group')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -3045,6 +4109,30 @@ def test_get_dynamic_group(cli_testing_service_client, runner, config_file, conf
 def test_get_group(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('identity', 'GetGroup'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('identity', 'Identity', 'GetGroup')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_group.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_group', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_group.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_group'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_group.pem'])
+            config_file = 'tests/resources/config_for_test_get_group'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('iam_root_group.command_name', 'iam')
     resource_group_command_name = oci_cli.cli_util.override('group_group.command_name', 'group')
@@ -3102,6 +4190,10 @@ def test_get_group(cli_testing_service_client, runner, config_file, config_profi
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_group.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_group.pem')
+                if os.path.exists('tests/resources/config_for_test_get_group'):
+                    os.remove('tests/resources/config_for_test_get_group')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -3120,6 +4212,30 @@ def test_get_group(cli_testing_service_client, runner, config_file, config_profi
 def test_get_identity_provider(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('identity', 'GetIdentityProvider'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('identity', 'Identity', 'GetIdentityProvider')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_identity_provider.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_identity_provider', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_identity_provider.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_identity_provider'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_identity_provider.pem'])
+            config_file = 'tests/resources/config_for_test_get_identity_provider'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('iam_root_group.command_name', 'iam')
     resource_group_command_name = oci_cli.cli_util.override('identity_provider_group.command_name', 'identity_provider')
@@ -3177,6 +4293,10 @@ def test_get_identity_provider(cli_testing_service_client, runner, config_file, 
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_identity_provider.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_identity_provider.pem')
+                if os.path.exists('tests/resources/config_for_test_get_identity_provider'):
+                    os.remove('tests/resources/config_for_test_get_identity_provider')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -3195,6 +4315,30 @@ def test_get_identity_provider(cli_testing_service_client, runner, config_file, 
 def test_get_idp_group_mapping(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('identity', 'GetIdpGroupMapping'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('identity', 'Identity', 'GetIdpGroupMapping')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_idp_group_mapping.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_idp_group_mapping', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_idp_group_mapping.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_idp_group_mapping'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_idp_group_mapping.pem'])
+            config_file = 'tests/resources/config_for_test_get_idp_group_mapping'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('iam_root_group.command_name', 'iam')
     resource_group_command_name = oci_cli.cli_util.override('idp_group_mapping_group.command_name', 'idp_group_mapping')
@@ -3252,6 +4396,10 @@ def test_get_idp_group_mapping(cli_testing_service_client, runner, config_file, 
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_idp_group_mapping.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_idp_group_mapping.pem')
+                if os.path.exists('tests/resources/config_for_test_get_idp_group_mapping'):
+                    os.remove('tests/resources/config_for_test_get_idp_group_mapping')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -3270,6 +4418,30 @@ def test_get_idp_group_mapping(cli_testing_service_client, runner, config_file, 
 def test_get_mfa_totp_device(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('identity', 'GetMfaTotpDevice'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('identity', 'Identity', 'GetMfaTotpDevice')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_mfa_totp_device.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_mfa_totp_device', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_mfa_totp_device.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_mfa_totp_device'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_mfa_totp_device.pem'])
+            config_file = 'tests/resources/config_for_test_get_mfa_totp_device'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('iam_root_group.command_name', 'iam')
     resource_group_command_name = oci_cli.cli_util.override('mfa_totp_device_group.command_name', 'mfa_totp_device')
@@ -3327,6 +4499,10 @@ def test_get_mfa_totp_device(cli_testing_service_client, runner, config_file, co
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_mfa_totp_device.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_mfa_totp_device.pem')
+                if os.path.exists('tests/resources/config_for_test_get_mfa_totp_device'):
+                    os.remove('tests/resources/config_for_test_get_mfa_totp_device')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -3345,6 +4521,30 @@ def test_get_mfa_totp_device(cli_testing_service_client, runner, config_file, co
 def test_get_policy(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('identity', 'GetPolicy'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('identity', 'Identity', 'GetPolicy')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_policy.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_policy', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_policy.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_policy'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_policy.pem'])
+            config_file = 'tests/resources/config_for_test_get_policy'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('iam_root_group.command_name', 'iam')
     resource_group_command_name = oci_cli.cli_util.override('policy_group.command_name', 'policy')
@@ -3402,6 +4602,10 @@ def test_get_policy(cli_testing_service_client, runner, config_file, config_prof
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_policy.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_policy.pem')
+                if os.path.exists('tests/resources/config_for_test_get_policy'):
+                    os.remove('tests/resources/config_for_test_get_policy')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -3420,6 +4624,30 @@ def test_get_policy(cli_testing_service_client, runner, config_file, config_prof
 def test_get_tag(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('identity', 'GetTag'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('identity', 'Identity', 'GetTag')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_tag.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_tag', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_tag.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_tag'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_tag.pem'])
+            config_file = 'tests/resources/config_for_test_get_tag'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('iam_root_group.command_name', 'iam')
     resource_group_command_name = oci_cli.cli_util.override('tag_group.command_name', 'tag')
@@ -3477,6 +4705,10 @@ def test_get_tag(cli_testing_service_client, runner, config_file, config_profile
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_tag.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_tag.pem')
+                if os.path.exists('tests/resources/config_for_test_get_tag'):
+                    os.remove('tests/resources/config_for_test_get_tag')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -3495,6 +4727,30 @@ def test_get_tag(cli_testing_service_client, runner, config_file, config_profile
 def test_get_tag_default(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('identity', 'GetTagDefault'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('identity', 'Identity', 'GetTagDefault')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_tag_default.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_tag_default', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_tag_default.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_tag_default'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_tag_default.pem'])
+            config_file = 'tests/resources/config_for_test_get_tag_default'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('iam_root_group.command_name', 'iam')
     resource_group_command_name = oci_cli.cli_util.override('tag_default_group.command_name', 'tag_default')
@@ -3552,6 +4808,10 @@ def test_get_tag_default(cli_testing_service_client, runner, config_file, config
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_tag_default.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_tag_default.pem')
+                if os.path.exists('tests/resources/config_for_test_get_tag_default'):
+                    os.remove('tests/resources/config_for_test_get_tag_default')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -3570,6 +4830,30 @@ def test_get_tag_default(cli_testing_service_client, runner, config_file, config
 def test_get_tag_namespace(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('identity', 'GetTagNamespace'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('identity', 'Identity', 'GetTagNamespace')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_tag_namespace.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_tag_namespace', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_tag_namespace.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_tag_namespace'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_tag_namespace.pem'])
+            config_file = 'tests/resources/config_for_test_get_tag_namespace'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('iam_root_group.command_name', 'iam')
     resource_group_command_name = oci_cli.cli_util.override('tag_namespace_group.command_name', 'tag_namespace')
@@ -3627,6 +4911,10 @@ def test_get_tag_namespace(cli_testing_service_client, runner, config_file, conf
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_tag_namespace.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_tag_namespace.pem')
+                if os.path.exists('tests/resources/config_for_test_get_tag_namespace'):
+                    os.remove('tests/resources/config_for_test_get_tag_namespace')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -3645,6 +4933,30 @@ def test_get_tag_namespace(cli_testing_service_client, runner, config_file, conf
 def test_get_tenancy(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('identity', 'GetTenancy'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('identity', 'Identity', 'GetTenancy')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_tenancy.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_tenancy', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_tenancy.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_tenancy'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_tenancy.pem'])
+            config_file = 'tests/resources/config_for_test_get_tenancy'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('iam_root_group.command_name', 'iam')
     resource_group_command_name = oci_cli.cli_util.override('tenancy_group.command_name', 'tenancy')
@@ -3702,6 +5014,10 @@ def test_get_tenancy(cli_testing_service_client, runner, config_file, config_pro
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_tenancy.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_tenancy.pem')
+                if os.path.exists('tests/resources/config_for_test_get_tenancy'):
+                    os.remove('tests/resources/config_for_test_get_tenancy')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -3720,6 +5036,30 @@ def test_get_tenancy(cli_testing_service_client, runner, config_file, config_pro
 def test_get_user(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('identity', 'GetUser'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('identity', 'Identity', 'GetUser')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_user.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_user', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_user.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_user'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_user.pem'])
+            config_file = 'tests/resources/config_for_test_get_user'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('iam_root_group.command_name', 'iam')
     resource_group_command_name = oci_cli.cli_util.override('user_group.command_name', 'user')
@@ -3777,6 +5117,10 @@ def test_get_user(cli_testing_service_client, runner, config_file, config_profil
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_user.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_user.pem')
+                if os.path.exists('tests/resources/config_for_test_get_user'):
+                    os.remove('tests/resources/config_for_test_get_user')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -3795,6 +5139,30 @@ def test_get_user(cli_testing_service_client, runner, config_file, config_profil
 def test_get_user_group_membership(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('identity', 'GetUserGroupMembership'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('identity', 'Identity', 'GetUserGroupMembership')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_user_group_membership.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_user_group_membership', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_user_group_membership.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_user_group_membership'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_user_group_membership.pem'])
+            config_file = 'tests/resources/config_for_test_get_user_group_membership'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('iam_root_group.command_name', 'iam')
     resource_group_command_name = oci_cli.cli_util.override('user_group_membership_group.command_name', 'user_group_membership')
@@ -3852,6 +5220,10 @@ def test_get_user_group_membership(cli_testing_service_client, runner, config_fi
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_user_group_membership.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_user_group_membership.pem')
+                if os.path.exists('tests/resources/config_for_test_get_user_group_membership'):
+                    os.remove('tests/resources/config_for_test_get_user_group_membership')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -3870,6 +5242,30 @@ def test_get_user_group_membership(cli_testing_service_client, runner, config_fi
 def test_get_work_request(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('identity', 'GetWorkRequest'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('identity', 'Identity', 'GetWorkRequest')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_work_request.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_work_request', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_work_request.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_work_request'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_work_request.pem'])
+            config_file = 'tests/resources/config_for_test_get_work_request'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('iam_root_group.command_name', 'iam')
     resource_group_command_name = oci_cli.cli_util.override('work_request_group.command_name', 'work_request')
@@ -3927,6 +5323,10 @@ def test_get_work_request(cli_testing_service_client, runner, config_file, confi
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_work_request.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_work_request.pem')
+                if os.path.exists('tests/resources/config_for_test_get_work_request'):
+                    os.remove('tests/resources/config_for_test_get_work_request')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -3945,6 +5345,30 @@ def test_get_work_request(cli_testing_service_client, runner, config_file, confi
 def test_list_api_keys(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('identity', 'ListApiKeys'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('identity', 'Identity', 'ListApiKeys')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_api_keys.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_api_keys', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_api_keys.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_api_keys'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_api_keys.pem'])
+            config_file = 'tests/resources/config_for_test_list_api_keys'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('iam_root_group.command_name', 'iam')
     resource_group_command_name = oci_cli.cli_util.override('api_key_group.command_name', 'api_key')
@@ -4002,6 +5426,10 @@ def test_list_api_keys(cli_testing_service_client, runner, config_file, config_p
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_api_keys.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_api_keys.pem')
+                if os.path.exists('tests/resources/config_for_test_list_api_keys'):
+                    os.remove('tests/resources/config_for_test_list_api_keys')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -4020,6 +5448,30 @@ def test_list_api_keys(cli_testing_service_client, runner, config_file, config_p
 def test_list_auth_tokens(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('identity', 'ListAuthTokens'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('identity', 'Identity', 'ListAuthTokens')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_auth_tokens.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_auth_tokens', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_auth_tokens.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_auth_tokens'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_auth_tokens.pem'])
+            config_file = 'tests/resources/config_for_test_list_auth_tokens'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('iam_root_group.command_name', 'iam')
     resource_group_command_name = oci_cli.cli_util.override('auth_token_group.command_name', 'auth_token')
@@ -4077,6 +5529,10 @@ def test_list_auth_tokens(cli_testing_service_client, runner, config_file, confi
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_auth_tokens.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_auth_tokens.pem')
+                if os.path.exists('tests/resources/config_for_test_list_auth_tokens'):
+                    os.remove('tests/resources/config_for_test_list_auth_tokens')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -4095,6 +5551,30 @@ def test_list_auth_tokens(cli_testing_service_client, runner, config_file, confi
 def test_list_availability_domains(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('identity', 'ListAvailabilityDomains'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('identity', 'Identity', 'ListAvailabilityDomains')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_availability_domains.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_availability_domains', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_availability_domains.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_availability_domains'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_availability_domains.pem'])
+            config_file = 'tests/resources/config_for_test_list_availability_domains'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('iam_root_group.command_name', 'iam')
     resource_group_command_name = oci_cli.cli_util.override('availability_domain_group.command_name', 'availability_domain')
@@ -4152,6 +5632,10 @@ def test_list_availability_domains(cli_testing_service_client, runner, config_fi
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_availability_domains.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_availability_domains.pem')
+                if os.path.exists('tests/resources/config_for_test_list_availability_domains'):
+                    os.remove('tests/resources/config_for_test_list_availability_domains')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -4170,6 +5654,30 @@ def test_list_availability_domains(cli_testing_service_client, runner, config_fi
 def test_list_compartments(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('identity', 'ListCompartments'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('identity', 'Identity', 'ListCompartments')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_compartments.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_compartments', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_compartments.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_compartments'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_compartments.pem'])
+            config_file = 'tests/resources/config_for_test_list_compartments'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('iam_root_group.command_name', 'iam')
     resource_group_command_name = oci_cli.cli_util.override('compartment_group.command_name', 'compartment')
@@ -4227,6 +5735,10 @@ def test_list_compartments(cli_testing_service_client, runner, config_file, conf
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_compartments.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_compartments.pem')
+                if os.path.exists('tests/resources/config_for_test_list_compartments'):
+                    os.remove('tests/resources/config_for_test_list_compartments')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -4245,6 +5757,30 @@ def test_list_compartments(cli_testing_service_client, runner, config_file, conf
 def test_list_cost_tracking_tags(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('identity', 'ListCostTrackingTags'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('identity', 'Identity', 'ListCostTrackingTags')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_cost_tracking_tags.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_cost_tracking_tags', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_cost_tracking_tags.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_cost_tracking_tags'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_cost_tracking_tags.pem'])
+            config_file = 'tests/resources/config_for_test_list_cost_tracking_tags'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('iam_root_group.command_name', 'iam')
     resource_group_command_name = oci_cli.cli_util.override('tag_group.command_name', 'tag')
@@ -4302,6 +5838,10 @@ def test_list_cost_tracking_tags(cli_testing_service_client, runner, config_file
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_cost_tracking_tags.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_cost_tracking_tags.pem')
+                if os.path.exists('tests/resources/config_for_test_list_cost_tracking_tags'):
+                    os.remove('tests/resources/config_for_test_list_cost_tracking_tags')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -4320,6 +5860,30 @@ def test_list_cost_tracking_tags(cli_testing_service_client, runner, config_file
 def test_list_customer_secret_keys(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('identity', 'ListCustomerSecretKeys'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('identity', 'Identity', 'ListCustomerSecretKeys')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_customer_secret_keys.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_customer_secret_keys', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_customer_secret_keys.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_customer_secret_keys'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_customer_secret_keys.pem'])
+            config_file = 'tests/resources/config_for_test_list_customer_secret_keys'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('iam_root_group.command_name', 'iam')
     resource_group_command_name = oci_cli.cli_util.override('customer_secret_key_group.command_name', 'customer_secret_key')
@@ -4377,6 +5941,10 @@ def test_list_customer_secret_keys(cli_testing_service_client, runner, config_fi
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_customer_secret_keys.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_customer_secret_keys.pem')
+                if os.path.exists('tests/resources/config_for_test_list_customer_secret_keys'):
+                    os.remove('tests/resources/config_for_test_list_customer_secret_keys')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -4395,6 +5963,30 @@ def test_list_customer_secret_keys(cli_testing_service_client, runner, config_fi
 def test_list_dynamic_groups(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('identity', 'ListDynamicGroups'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('identity', 'Identity', 'ListDynamicGroups')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_dynamic_groups.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_dynamic_groups', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_dynamic_groups.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_dynamic_groups'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_dynamic_groups.pem'])
+            config_file = 'tests/resources/config_for_test_list_dynamic_groups'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('iam_root_group.command_name', 'iam')
     resource_group_command_name = oci_cli.cli_util.override('dynamic_group_group.command_name', 'dynamic_group')
@@ -4452,6 +6044,10 @@ def test_list_dynamic_groups(cli_testing_service_client, runner, config_file, co
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_dynamic_groups.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_dynamic_groups.pem')
+                if os.path.exists('tests/resources/config_for_test_list_dynamic_groups'):
+                    os.remove('tests/resources/config_for_test_list_dynamic_groups')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -4470,6 +6066,30 @@ def test_list_dynamic_groups(cli_testing_service_client, runner, config_file, co
 def test_list_fault_domains(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('identity', 'ListFaultDomains'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('identity', 'Identity', 'ListFaultDomains')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_fault_domains.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_fault_domains', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_fault_domains.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_fault_domains'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_fault_domains.pem'])
+            config_file = 'tests/resources/config_for_test_list_fault_domains'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('iam_root_group.command_name', 'iam')
     resource_group_command_name = oci_cli.cli_util.override('fault_domain_group.command_name', 'fault_domain')
@@ -4527,6 +6147,10 @@ def test_list_fault_domains(cli_testing_service_client, runner, config_file, con
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_fault_domains.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_fault_domains.pem')
+                if os.path.exists('tests/resources/config_for_test_list_fault_domains'):
+                    os.remove('tests/resources/config_for_test_list_fault_domains')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -4545,6 +6169,30 @@ def test_list_fault_domains(cli_testing_service_client, runner, config_file, con
 def test_list_groups(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('identity', 'ListGroups'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('identity', 'Identity', 'ListGroups')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_groups.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_groups', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_groups.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_groups'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_groups.pem'])
+            config_file = 'tests/resources/config_for_test_list_groups'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('iam_root_group.command_name', 'iam')
     resource_group_command_name = oci_cli.cli_util.override('group_group.command_name', 'group')
@@ -4602,6 +6250,10 @@ def test_list_groups(cli_testing_service_client, runner, config_file, config_pro
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_groups.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_groups.pem')
+                if os.path.exists('tests/resources/config_for_test_list_groups'):
+                    os.remove('tests/resources/config_for_test_list_groups')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -4620,6 +6272,30 @@ def test_list_groups(cli_testing_service_client, runner, config_file, config_pro
 def test_list_identity_provider_groups(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('identity', 'ListIdentityProviderGroups'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('identity', 'Identity', 'ListIdentityProviderGroups')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_identity_provider_groups.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_identity_provider_groups', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_identity_provider_groups.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_identity_provider_groups'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_identity_provider_groups.pem'])
+            config_file = 'tests/resources/config_for_test_list_identity_provider_groups'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('iam_root_group.command_name', 'iam')
     resource_group_command_name = oci_cli.cli_util.override('identity_provider_group_group.command_name', 'identity_provider_group')
@@ -4677,6 +6353,10 @@ def test_list_identity_provider_groups(cli_testing_service_client, runner, confi
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_identity_provider_groups.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_identity_provider_groups.pem')
+                if os.path.exists('tests/resources/config_for_test_list_identity_provider_groups'):
+                    os.remove('tests/resources/config_for_test_list_identity_provider_groups')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -4695,6 +6375,30 @@ def test_list_identity_provider_groups(cli_testing_service_client, runner, confi
 def test_list_identity_providers(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('identity', 'ListIdentityProviders'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('identity', 'Identity', 'ListIdentityProviders')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_identity_providers.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_identity_providers', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_identity_providers.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_identity_providers'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_identity_providers.pem'])
+            config_file = 'tests/resources/config_for_test_list_identity_providers'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('iam_root_group.command_name', 'iam')
     resource_group_command_name = oci_cli.cli_util.override('identity_provider_group.command_name', 'identity_provider')
@@ -4752,6 +6456,10 @@ def test_list_identity_providers(cli_testing_service_client, runner, config_file
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_identity_providers.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_identity_providers.pem')
+                if os.path.exists('tests/resources/config_for_test_list_identity_providers'):
+                    os.remove('tests/resources/config_for_test_list_identity_providers')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -4770,6 +6478,30 @@ def test_list_identity_providers(cli_testing_service_client, runner, config_file
 def test_list_idp_group_mappings(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('identity', 'ListIdpGroupMappings'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('identity', 'Identity', 'ListIdpGroupMappings')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_idp_group_mappings.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_idp_group_mappings', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_idp_group_mappings.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_idp_group_mappings'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_idp_group_mappings.pem'])
+            config_file = 'tests/resources/config_for_test_list_idp_group_mappings'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('iam_root_group.command_name', 'iam')
     resource_group_command_name = oci_cli.cli_util.override('idp_group_mapping_group.command_name', 'idp_group_mapping')
@@ -4827,6 +6559,10 @@ def test_list_idp_group_mappings(cli_testing_service_client, runner, config_file
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_idp_group_mappings.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_idp_group_mappings.pem')
+                if os.path.exists('tests/resources/config_for_test_list_idp_group_mappings'):
+                    os.remove('tests/resources/config_for_test_list_idp_group_mappings')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -4845,6 +6581,30 @@ def test_list_idp_group_mappings(cli_testing_service_client, runner, config_file
 def test_list_mfa_totp_devices(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('identity', 'ListMfaTotpDevices'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('identity', 'Identity', 'ListMfaTotpDevices')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_mfa_totp_devices.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_mfa_totp_devices', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_mfa_totp_devices.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_mfa_totp_devices'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_mfa_totp_devices.pem'])
+            config_file = 'tests/resources/config_for_test_list_mfa_totp_devices'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('iam_root_group.command_name', 'iam')
     resource_group_command_name = oci_cli.cli_util.override('mfa_totp_device_group.command_name', 'mfa_totp_device')
@@ -4902,6 +6662,10 @@ def test_list_mfa_totp_devices(cli_testing_service_client, runner, config_file, 
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_mfa_totp_devices.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_mfa_totp_devices.pem')
+                if os.path.exists('tests/resources/config_for_test_list_mfa_totp_devices'):
+                    os.remove('tests/resources/config_for_test_list_mfa_totp_devices')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -4920,6 +6684,30 @@ def test_list_mfa_totp_devices(cli_testing_service_client, runner, config_file, 
 def test_list_policies(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('identity', 'ListPolicies'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('identity', 'Identity', 'ListPolicies')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_policies.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_policies', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_policies.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_policies'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_policies.pem'])
+            config_file = 'tests/resources/config_for_test_list_policies'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('iam_root_group.command_name', 'iam')
     resource_group_command_name = oci_cli.cli_util.override('policy_group.command_name', 'policy')
@@ -4977,6 +6765,10 @@ def test_list_policies(cli_testing_service_client, runner, config_file, config_p
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_policies.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_policies.pem')
+                if os.path.exists('tests/resources/config_for_test_list_policies'):
+                    os.remove('tests/resources/config_for_test_list_policies')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -4995,6 +6787,30 @@ def test_list_policies(cli_testing_service_client, runner, config_file, config_p
 def test_list_region_subscriptions(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('identity', 'ListRegionSubscriptions'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('identity', 'Identity', 'ListRegionSubscriptions')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_region_subscriptions.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_region_subscriptions', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_region_subscriptions.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_region_subscriptions'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_region_subscriptions.pem'])
+            config_file = 'tests/resources/config_for_test_list_region_subscriptions'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('iam_root_group.command_name', 'iam')
     resource_group_command_name = oci_cli.cli_util.override('region_subscription_group.command_name', 'region_subscription')
@@ -5052,6 +6868,10 @@ def test_list_region_subscriptions(cli_testing_service_client, runner, config_fi
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_region_subscriptions.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_region_subscriptions.pem')
+                if os.path.exists('tests/resources/config_for_test_list_region_subscriptions'):
+                    os.remove('tests/resources/config_for_test_list_region_subscriptions')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -5070,6 +6890,30 @@ def test_list_region_subscriptions(cli_testing_service_client, runner, config_fi
 def test_list_regions(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('identity', 'ListRegions'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('identity', 'Identity', 'ListRegions')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_regions.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_regions', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_regions.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_regions'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_regions.pem'])
+            config_file = 'tests/resources/config_for_test_list_regions'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('iam_root_group.command_name', 'iam')
     resource_group_command_name = oci_cli.cli_util.override('region_group.command_name', 'region')
@@ -5127,6 +6971,10 @@ def test_list_regions(cli_testing_service_client, runner, config_file, config_pr
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_regions.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_regions.pem')
+                if os.path.exists('tests/resources/config_for_test_list_regions'):
+                    os.remove('tests/resources/config_for_test_list_regions')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -5145,6 +6993,30 @@ def test_list_regions(cli_testing_service_client, runner, config_file, config_pr
 def test_list_smtp_credentials(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('identity', 'ListSmtpCredentials'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('identity', 'Identity', 'ListSmtpCredentials')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_smtp_credentials.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_smtp_credentials', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_smtp_credentials.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_smtp_credentials'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_smtp_credentials.pem'])
+            config_file = 'tests/resources/config_for_test_list_smtp_credentials'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('iam_root_group.command_name', 'iam')
     resource_group_command_name = oci_cli.cli_util.override('smtp_credential_group.command_name', 'smtp_credential')
@@ -5202,6 +7074,10 @@ def test_list_smtp_credentials(cli_testing_service_client, runner, config_file, 
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_smtp_credentials.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_smtp_credentials.pem')
+                if os.path.exists('tests/resources/config_for_test_list_smtp_credentials'):
+                    os.remove('tests/resources/config_for_test_list_smtp_credentials')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -5220,6 +7096,30 @@ def test_list_smtp_credentials(cli_testing_service_client, runner, config_file, 
 def test_list_swift_passwords(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('identity', 'ListSwiftPasswords'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('identity', 'Identity', 'ListSwiftPasswords')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_swift_passwords.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_swift_passwords', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_swift_passwords.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_swift_passwords'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_swift_passwords.pem'])
+            config_file = 'tests/resources/config_for_test_list_swift_passwords'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('iam_root_group.command_name', 'iam')
     resource_group_command_name = oci_cli.cli_util.override('swift_password_group.command_name', 'swift_password')
@@ -5277,6 +7177,10 @@ def test_list_swift_passwords(cli_testing_service_client, runner, config_file, c
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_swift_passwords.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_swift_passwords.pem')
+                if os.path.exists('tests/resources/config_for_test_list_swift_passwords'):
+                    os.remove('tests/resources/config_for_test_list_swift_passwords')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -5295,6 +7199,30 @@ def test_list_swift_passwords(cli_testing_service_client, runner, config_file, c
 def test_list_tag_defaults(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('identity', 'ListTagDefaults'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('identity', 'Identity', 'ListTagDefaults')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_tag_defaults.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_tag_defaults', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_tag_defaults.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_tag_defaults'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_tag_defaults.pem'])
+            config_file = 'tests/resources/config_for_test_list_tag_defaults'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('iam_root_group.command_name', 'iam')
     resource_group_command_name = oci_cli.cli_util.override('tag_default_group.command_name', 'tag_default')
@@ -5352,6 +7280,10 @@ def test_list_tag_defaults(cli_testing_service_client, runner, config_file, conf
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_tag_defaults.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_tag_defaults.pem')
+                if os.path.exists('tests/resources/config_for_test_list_tag_defaults'):
+                    os.remove('tests/resources/config_for_test_list_tag_defaults')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -5370,6 +7302,30 @@ def test_list_tag_defaults(cli_testing_service_client, runner, config_file, conf
 def test_list_tag_namespaces(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('identity', 'ListTagNamespaces'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('identity', 'Identity', 'ListTagNamespaces')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_tag_namespaces.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_tag_namespaces', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_tag_namespaces.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_tag_namespaces'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_tag_namespaces.pem'])
+            config_file = 'tests/resources/config_for_test_list_tag_namespaces'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('iam_root_group.command_name', 'iam')
     resource_group_command_name = oci_cli.cli_util.override('tag_namespace_group.command_name', 'tag_namespace')
@@ -5427,6 +7383,10 @@ def test_list_tag_namespaces(cli_testing_service_client, runner, config_file, co
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_tag_namespaces.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_tag_namespaces.pem')
+                if os.path.exists('tests/resources/config_for_test_list_tag_namespaces'):
+                    os.remove('tests/resources/config_for_test_list_tag_namespaces')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -5445,6 +7405,30 @@ def test_list_tag_namespaces(cli_testing_service_client, runner, config_file, co
 def test_list_tags(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('identity', 'ListTags'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('identity', 'Identity', 'ListTags')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_tags.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_tags', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_tags.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_tags'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_tags.pem'])
+            config_file = 'tests/resources/config_for_test_list_tags'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('iam_root_group.command_name', 'iam')
     resource_group_command_name = oci_cli.cli_util.override('tag_group.command_name', 'tag')
@@ -5502,6 +7486,10 @@ def test_list_tags(cli_testing_service_client, runner, config_file, config_profi
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_tags.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_tags.pem')
+                if os.path.exists('tests/resources/config_for_test_list_tags'):
+                    os.remove('tests/resources/config_for_test_list_tags')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -5520,6 +7508,30 @@ def test_list_tags(cli_testing_service_client, runner, config_file, config_profi
 def test_list_user_group_memberships(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('identity', 'ListUserGroupMemberships'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('identity', 'Identity', 'ListUserGroupMemberships')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_user_group_memberships.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_user_group_memberships', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_user_group_memberships.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_user_group_memberships'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_user_group_memberships.pem'])
+            config_file = 'tests/resources/config_for_test_list_user_group_memberships'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('iam_root_group.command_name', 'iam')
     resource_group_command_name = oci_cli.cli_util.override('user_group_membership_group.command_name', 'user_group_membership')
@@ -5577,6 +7589,10 @@ def test_list_user_group_memberships(cli_testing_service_client, runner, config_
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_user_group_memberships.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_user_group_memberships.pem')
+                if os.path.exists('tests/resources/config_for_test_list_user_group_memberships'):
+                    os.remove('tests/resources/config_for_test_list_user_group_memberships')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -5595,6 +7611,30 @@ def test_list_user_group_memberships(cli_testing_service_client, runner, config_
 def test_list_users(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('identity', 'ListUsers'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('identity', 'Identity', 'ListUsers')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_users.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_users', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_users.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_users'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_users.pem'])
+            config_file = 'tests/resources/config_for_test_list_users'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('iam_root_group.command_name', 'iam')
     resource_group_command_name = oci_cli.cli_util.override('user_group.command_name', 'user')
@@ -5652,6 +7692,10 @@ def test_list_users(cli_testing_service_client, runner, config_file, config_prof
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_users.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_users.pem')
+                if os.path.exists('tests/resources/config_for_test_list_users'):
+                    os.remove('tests/resources/config_for_test_list_users')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -5670,6 +7714,30 @@ def test_list_users(cli_testing_service_client, runner, config_file, config_prof
 def test_list_work_requests(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('identity', 'ListWorkRequests'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('identity', 'Identity', 'ListWorkRequests')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_work_requests.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_work_requests', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_work_requests.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_work_requests'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_work_requests.pem'])
+            config_file = 'tests/resources/config_for_test_list_work_requests'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('iam_root_group.command_name', 'iam')
     resource_group_command_name = oci_cli.cli_util.override('work_request_group.command_name', 'work_request')
@@ -5727,6 +7795,10 @@ def test_list_work_requests(cli_testing_service_client, runner, config_file, con
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_work_requests.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_work_requests.pem')
+                if os.path.exists('tests/resources/config_for_test_list_work_requests'):
+                    os.remove('tests/resources/config_for_test_list_work_requests')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -5745,6 +7817,30 @@ def test_list_work_requests(cli_testing_service_client, runner, config_file, con
 def test_remove_user_from_group(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('identity', 'RemoveUserFromGroup'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('identity', 'Identity', 'RemoveUserFromGroup')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_remove_user_from_group.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_remove_user_from_group', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_remove_user_from_group.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_remove_user_from_group'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_remove_user_from_group.pem'])
+            config_file = 'tests/resources/config_for_test_remove_user_from_group'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('iam_root_group.command_name', 'iam')
     resource_group_command_name = oci_cli.cli_util.override('user_group_membership_group.command_name', 'user_group_membership')
@@ -5803,6 +7899,10 @@ def test_remove_user_from_group(cli_testing_service_client, runner, config_file,
                     True
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_remove_user_from_group.pem'):
+                    os.remove('tests/resources/keyfile_for_test_remove_user_from_group.pem')
+                if os.path.exists('tests/resources/config_for_test_remove_user_from_group'):
+                    os.remove('tests/resources/config_for_test_remove_user_from_group')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -5821,6 +7921,30 @@ def test_remove_user_from_group(cli_testing_service_client, runner, config_file,
 def test_reset_idp_scim_client(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('identity', 'ResetIdpScimClient'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('identity', 'Identity', 'ResetIdpScimClient')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_reset_idp_scim_client.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_reset_idp_scim_client', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_reset_idp_scim_client.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_reset_idp_scim_client'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_reset_idp_scim_client.pem'])
+            config_file = 'tests/resources/config_for_test_reset_idp_scim_client'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('iam_root_group.command_name', 'iam')
     resource_group_command_name = oci_cli.cli_util.override('scim_client_credentials_group.command_name', 'scim_client_credentials')
@@ -5878,6 +8002,10 @@ def test_reset_idp_scim_client(cli_testing_service_client, runner, config_file, 
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_reset_idp_scim_client.pem'):
+                    os.remove('tests/resources/keyfile_for_test_reset_idp_scim_client.pem')
+                if os.path.exists('tests/resources/config_for_test_reset_idp_scim_client'):
+                    os.remove('tests/resources/config_for_test_reset_idp_scim_client')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -5896,6 +8024,30 @@ def test_reset_idp_scim_client(cli_testing_service_client, runner, config_file, 
 def test_update_auth_token(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('identity', 'UpdateAuthToken'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('identity', 'Identity', 'UpdateAuthToken')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_update_auth_token.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_update_auth_token', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_update_auth_token.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_update_auth_token'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_update_auth_token.pem'])
+            config_file = 'tests/resources/config_for_test_update_auth_token'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('iam_root_group.command_name', 'iam')
     resource_group_command_name = oci_cli.cli_util.override('auth_token_group.command_name', 'auth_token')
@@ -5961,6 +8113,10 @@ def test_update_auth_token(cli_testing_service_client, runner, config_file, conf
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_update_auth_token.pem'):
+                    os.remove('tests/resources/keyfile_for_test_update_auth_token.pem')
+                if os.path.exists('tests/resources/config_for_test_update_auth_token'):
+                    os.remove('tests/resources/config_for_test_update_auth_token')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -5979,6 +8135,30 @@ def test_update_auth_token(cli_testing_service_client, runner, config_file, conf
 def test_update_authentication_policy(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('identity', 'UpdateAuthenticationPolicy'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('identity', 'Identity', 'UpdateAuthenticationPolicy')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_update_authentication_policy.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_update_authentication_policy', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_update_authentication_policy.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_update_authentication_policy'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_update_authentication_policy.pem'])
+            config_file = 'tests/resources/config_for_test_update_authentication_policy'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('iam_root_group.command_name', 'iam')
     resource_group_command_name = oci_cli.cli_util.override('authentication_policy_group.command_name', 'authentication_policy')
@@ -6045,6 +8225,10 @@ def test_update_authentication_policy(cli_testing_service_client, runner, config
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_update_authentication_policy.pem'):
+                    os.remove('tests/resources/keyfile_for_test_update_authentication_policy.pem')
+                if os.path.exists('tests/resources/config_for_test_update_authentication_policy'):
+                    os.remove('tests/resources/config_for_test_update_authentication_policy')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -6063,6 +8247,30 @@ def test_update_authentication_policy(cli_testing_service_client, runner, config
 def test_update_compartment(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('identity', 'UpdateCompartment'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('identity', 'Identity', 'UpdateCompartment')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_update_compartment.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_update_compartment', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_update_compartment.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_update_compartment'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_update_compartment.pem'])
+            config_file = 'tests/resources/config_for_test_update_compartment'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('iam_root_group.command_name', 'iam')
     resource_group_command_name = oci_cli.cli_util.override('compartment_group.command_name', 'compartment')
@@ -6129,6 +8337,10 @@ def test_update_compartment(cli_testing_service_client, runner, config_file, con
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_update_compartment.pem'):
+                    os.remove('tests/resources/keyfile_for_test_update_compartment.pem')
+                if os.path.exists('tests/resources/config_for_test_update_compartment'):
+                    os.remove('tests/resources/config_for_test_update_compartment')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -6147,6 +8359,30 @@ def test_update_compartment(cli_testing_service_client, runner, config_file, con
 def test_update_customer_secret_key(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('identity', 'UpdateCustomerSecretKey'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('identity', 'Identity', 'UpdateCustomerSecretKey')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_update_customer_secret_key.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_update_customer_secret_key', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_update_customer_secret_key.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_update_customer_secret_key'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_update_customer_secret_key.pem'])
+            config_file = 'tests/resources/config_for_test_update_customer_secret_key'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('iam_root_group.command_name', 'iam')
     resource_group_command_name = oci_cli.cli_util.override('customer_secret_key_group.command_name', 'customer_secret_key')
@@ -6212,6 +8448,10 @@ def test_update_customer_secret_key(cli_testing_service_client, runner, config_f
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_update_customer_secret_key.pem'):
+                    os.remove('tests/resources/keyfile_for_test_update_customer_secret_key.pem')
+                if os.path.exists('tests/resources/config_for_test_update_customer_secret_key'):
+                    os.remove('tests/resources/config_for_test_update_customer_secret_key')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -6230,6 +8470,30 @@ def test_update_customer_secret_key(cli_testing_service_client, runner, config_f
 def test_update_dynamic_group(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('identity', 'UpdateDynamicGroup'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('identity', 'Identity', 'UpdateDynamicGroup')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_update_dynamic_group.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_update_dynamic_group', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_update_dynamic_group.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_update_dynamic_group'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_update_dynamic_group.pem'])
+            config_file = 'tests/resources/config_for_test_update_dynamic_group'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('iam_root_group.command_name', 'iam')
     resource_group_command_name = oci_cli.cli_util.override('dynamic_group_group.command_name', 'dynamic_group')
@@ -6296,6 +8560,10 @@ def test_update_dynamic_group(cli_testing_service_client, runner, config_file, c
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_update_dynamic_group.pem'):
+                    os.remove('tests/resources/keyfile_for_test_update_dynamic_group.pem')
+                if os.path.exists('tests/resources/config_for_test_update_dynamic_group'):
+                    os.remove('tests/resources/config_for_test_update_dynamic_group')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -6314,6 +8582,30 @@ def test_update_dynamic_group(cli_testing_service_client, runner, config_file, c
 def test_update_group(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('identity', 'UpdateGroup'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('identity', 'Identity', 'UpdateGroup')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_update_group.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_update_group', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_update_group.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_update_group'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_update_group.pem'])
+            config_file = 'tests/resources/config_for_test_update_group'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('iam_root_group.command_name', 'iam')
     resource_group_command_name = oci_cli.cli_util.override('group_group.command_name', 'group')
@@ -6380,6 +8672,10 @@ def test_update_group(cli_testing_service_client, runner, config_file, config_pr
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_update_group.pem'):
+                    os.remove('tests/resources/keyfile_for_test_update_group.pem')
+                if os.path.exists('tests/resources/config_for_test_update_group'):
+                    os.remove('tests/resources/config_for_test_update_group')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -6398,6 +8694,30 @@ def test_update_group(cli_testing_service_client, runner, config_file, config_pr
 def test_update_identity_provider(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('identity', 'UpdateIdentityProvider'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('identity', 'Identity', 'UpdateIdentityProvider')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_update_identity_provider.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_update_identity_provider', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_update_identity_provider.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_update_identity_provider'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_update_identity_provider.pem'])
+            config_file = 'tests/resources/config_for_test_update_identity_provider'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('iam_root_group.command_name', 'iam')
     resource_group_command_name = oci_cli.cli_util.override('identity_provider_group.command_name', 'identity_provider')
@@ -6474,6 +8794,10 @@ def test_update_identity_provider(cli_testing_service_client, runner, config_fil
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_update_identity_provider.pem'):
+                    os.remove('tests/resources/keyfile_for_test_update_identity_provider.pem')
+                if os.path.exists('tests/resources/config_for_test_update_identity_provider'):
+                    os.remove('tests/resources/config_for_test_update_identity_provider')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -6492,6 +8816,30 @@ def test_update_identity_provider(cli_testing_service_client, runner, config_fil
 def test_update_idp_group_mapping(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('identity', 'UpdateIdpGroupMapping'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('identity', 'Identity', 'UpdateIdpGroupMapping')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_update_idp_group_mapping.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_update_idp_group_mapping', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_update_idp_group_mapping.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_update_idp_group_mapping'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_update_idp_group_mapping.pem'])
+            config_file = 'tests/resources/config_for_test_update_idp_group_mapping'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('iam_root_group.command_name', 'iam')
     resource_group_command_name = oci_cli.cli_util.override('idp_group_mapping_group.command_name', 'idp_group_mapping')
@@ -6557,6 +8905,10 @@ def test_update_idp_group_mapping(cli_testing_service_client, runner, config_fil
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_update_idp_group_mapping.pem'):
+                    os.remove('tests/resources/keyfile_for_test_update_idp_group_mapping.pem')
+                if os.path.exists('tests/resources/config_for_test_update_idp_group_mapping'):
+                    os.remove('tests/resources/config_for_test_update_idp_group_mapping')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -6575,6 +8927,30 @@ def test_update_idp_group_mapping(cli_testing_service_client, runner, config_fil
 def test_update_policy(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('identity', 'UpdatePolicy'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('identity', 'Identity', 'UpdatePolicy')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_update_policy.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_update_policy', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_update_policy.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_update_policy'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_update_policy.pem'])
+            config_file = 'tests/resources/config_for_test_update_policy'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('iam_root_group.command_name', 'iam')
     resource_group_command_name = oci_cli.cli_util.override('policy_group.command_name', 'policy')
@@ -6641,6 +9017,10 @@ def test_update_policy(cli_testing_service_client, runner, config_file, config_p
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_update_policy.pem'):
+                    os.remove('tests/resources/keyfile_for_test_update_policy.pem')
+                if os.path.exists('tests/resources/config_for_test_update_policy'):
+                    os.remove('tests/resources/config_for_test_update_policy')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -6659,6 +9039,30 @@ def test_update_policy(cli_testing_service_client, runner, config_file, config_p
 def test_update_smtp_credential(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('identity', 'UpdateSmtpCredential'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('identity', 'Identity', 'UpdateSmtpCredential')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_update_smtp_credential.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_update_smtp_credential', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_update_smtp_credential.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_update_smtp_credential'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_update_smtp_credential.pem'])
+            config_file = 'tests/resources/config_for_test_update_smtp_credential'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('iam_root_group.command_name', 'iam')
     resource_group_command_name = oci_cli.cli_util.override('smtp_credential_group.command_name', 'smtp_credential')
@@ -6724,6 +9128,10 @@ def test_update_smtp_credential(cli_testing_service_client, runner, config_file,
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_update_smtp_credential.pem'):
+                    os.remove('tests/resources/keyfile_for_test_update_smtp_credential.pem')
+                if os.path.exists('tests/resources/config_for_test_update_smtp_credential'):
+                    os.remove('tests/resources/config_for_test_update_smtp_credential')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -6742,6 +9150,30 @@ def test_update_smtp_credential(cli_testing_service_client, runner, config_file,
 def test_update_swift_password(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('identity', 'UpdateSwiftPassword'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('identity', 'Identity', 'UpdateSwiftPassword')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_update_swift_password.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_update_swift_password', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_update_swift_password.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_update_swift_password'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_update_swift_password.pem'])
+            config_file = 'tests/resources/config_for_test_update_swift_password'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('iam_root_group.command_name', 'iam')
     resource_group_command_name = oci_cli.cli_util.override('swift_password_group.command_name', 'swift_password')
@@ -6807,6 +9239,10 @@ def test_update_swift_password(cli_testing_service_client, runner, config_file, 
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_update_swift_password.pem'):
+                    os.remove('tests/resources/keyfile_for_test_update_swift_password.pem')
+                if os.path.exists('tests/resources/config_for_test_update_swift_password'):
+                    os.remove('tests/resources/config_for_test_update_swift_password')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -6825,6 +9261,30 @@ def test_update_swift_password(cli_testing_service_client, runner, config_file, 
 def test_update_tag(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('identity', 'UpdateTag'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('identity', 'Identity', 'UpdateTag')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_update_tag.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_update_tag', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_update_tag.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_update_tag'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_update_tag.pem'])
+            config_file = 'tests/resources/config_for_test_update_tag'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('iam_root_group.command_name', 'iam')
     resource_group_command_name = oci_cli.cli_util.override('tag_group.command_name', 'tag')
@@ -6891,6 +9351,10 @@ def test_update_tag(cli_testing_service_client, runner, config_file, config_prof
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_update_tag.pem'):
+                    os.remove('tests/resources/keyfile_for_test_update_tag.pem')
+                if os.path.exists('tests/resources/config_for_test_update_tag'):
+                    os.remove('tests/resources/config_for_test_update_tag')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -6909,6 +9373,30 @@ def test_update_tag(cli_testing_service_client, runner, config_file, config_prof
 def test_update_tag_default(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('identity', 'UpdateTagDefault'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('identity', 'Identity', 'UpdateTagDefault')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_update_tag_default.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_update_tag_default', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_update_tag_default.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_update_tag_default'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_update_tag_default.pem'])
+            config_file = 'tests/resources/config_for_test_update_tag_default'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('iam_root_group.command_name', 'iam')
     resource_group_command_name = oci_cli.cli_util.override('tag_default_group.command_name', 'tag_default')
@@ -6974,6 +9462,10 @@ def test_update_tag_default(cli_testing_service_client, runner, config_file, con
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_update_tag_default.pem'):
+                    os.remove('tests/resources/keyfile_for_test_update_tag_default.pem')
+                if os.path.exists('tests/resources/config_for_test_update_tag_default'):
+                    os.remove('tests/resources/config_for_test_update_tag_default')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -6992,6 +9484,30 @@ def test_update_tag_default(cli_testing_service_client, runner, config_file, con
 def test_update_tag_namespace(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('identity', 'UpdateTagNamespace'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('identity', 'Identity', 'UpdateTagNamespace')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_update_tag_namespace.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_update_tag_namespace', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_update_tag_namespace.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_update_tag_namespace'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_update_tag_namespace.pem'])
+            config_file = 'tests/resources/config_for_test_update_tag_namespace'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('iam_root_group.command_name', 'iam')
     resource_group_command_name = oci_cli.cli_util.override('tag_namespace_group.command_name', 'tag_namespace')
@@ -7058,6 +9574,10 @@ def test_update_tag_namespace(cli_testing_service_client, runner, config_file, c
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_update_tag_namespace.pem'):
+                    os.remove('tests/resources/keyfile_for_test_update_tag_namespace.pem')
+                if os.path.exists('tests/resources/config_for_test_update_tag_namespace'):
+                    os.remove('tests/resources/config_for_test_update_tag_namespace')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -7076,6 +9596,30 @@ def test_update_tag_namespace(cli_testing_service_client, runner, config_file, c
 def test_update_user(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('identity', 'UpdateUser'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('identity', 'Identity', 'UpdateUser')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_update_user.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_update_user', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_update_user.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_update_user'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_update_user.pem'])
+            config_file = 'tests/resources/config_for_test_update_user'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('iam_root_group.command_name', 'iam')
     resource_group_command_name = oci_cli.cli_util.override('user_group.command_name', 'user')
@@ -7142,6 +9686,10 @@ def test_update_user(cli_testing_service_client, runner, config_file, config_pro
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_update_user.pem'):
+                    os.remove('tests/resources/keyfile_for_test_update_user.pem')
+                if os.path.exists('tests/resources/config_for_test_update_user'):
+                    os.remove('tests/resources/config_for_test_update_user')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -7160,6 +9708,30 @@ def test_update_user(cli_testing_service_client, runner, config_file, config_pro
 def test_update_user_capabilities(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('identity', 'UpdateUserCapabilities'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('identity', 'Identity', 'UpdateUserCapabilities')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_update_user_capabilities.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_update_user_capabilities', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_update_user_capabilities.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_update_user_capabilities'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_update_user_capabilities.pem'])
+            config_file = 'tests/resources/config_for_test_update_user_capabilities'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('iam_root_group.command_name', 'iam')
     resource_group_command_name = oci_cli.cli_util.override('user_group.command_name', 'user')
@@ -7225,6 +9797,10 @@ def test_update_user_capabilities(cli_testing_service_client, runner, config_fil
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_update_user_capabilities.pem'):
+                    os.remove('tests/resources/keyfile_for_test_update_user_capabilities.pem')
+                if os.path.exists('tests/resources/config_for_test_update_user_capabilities'):
+                    os.remove('tests/resources/config_for_test_update_user_capabilities')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -7243,6 +9819,30 @@ def test_update_user_capabilities(cli_testing_service_client, runner, config_fil
 def test_update_user_state(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('identity', 'UpdateUserState'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('identity', 'Identity', 'UpdateUserState')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_update_user_state.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_update_user_state', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_update_user_state.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_update_user_state'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_update_user_state.pem'])
+            config_file = 'tests/resources/config_for_test_update_user_state'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('iam_root_group.command_name', 'iam')
     resource_group_command_name = oci_cli.cli_util.override('user_group.command_name', 'user')
@@ -7308,6 +9908,10 @@ def test_update_user_state(cli_testing_service_client, runner, config_file, conf
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_update_user_state.pem'):
+                    os.remove('tests/resources/keyfile_for_test_update_user_state.pem')
+                if os.path.exists('tests/resources/config_for_test_update_user_state'):
+                    os.remove('tests/resources/config_for_test_update_user_state')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -7326,6 +9930,30 @@ def test_update_user_state(cli_testing_service_client, runner, config_file, conf
 def test_upload_api_key(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('identity', 'UploadApiKey'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('identity', 'Identity', 'UploadApiKey')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_upload_api_key.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_upload_api_key', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_upload_api_key.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_upload_api_key'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_upload_api_key.pem'])
+            config_file = 'tests/resources/config_for_test_upload_api_key'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('iam_root_group.command_name', 'iam')
     resource_group_command_name = oci_cli.cli_util.override('api_key_group.command_name', 'api_key')
@@ -7391,6 +10019,10 @@ def test_upload_api_key(cli_testing_service_client, runner, config_file, config_
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_upload_api_key.pem'):
+                    os.remove('tests/resources/keyfile_for_test_upload_api_key.pem')
+                if os.path.exists('tests/resources/config_for_test_upload_api_key'):
+                    os.remove('tests/resources/config_for_test_upload_api_key')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -7406,7 +10038,7 @@ def test_upload_api_key(cli_testing_service_client, runner, config_file, config_
 
 
 def invoke(runner, config_file, config_profile, params, debug=False, root_params=None, strip_progress_bar=True, strip_multipart_stderr_output=True, ** args):
-    root_params = ['--config-file', os.environ['OCI_CLI_CONFIG_FILE']]
+    root_params = ['--config-file', config_file]
 
     if config_profile:
         root_params.extend(['--profile', config_profile])

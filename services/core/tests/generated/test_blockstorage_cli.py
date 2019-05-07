@@ -6,7 +6,7 @@ import pytest
 from tests import generated_test_request_transformers
 from tests import test_config_container  # noqa: F401
 from tests import util
-
+import vcr
 import oci_cli
 import os
 
@@ -27,6 +27,30 @@ def vcr_fixture(request):
 def test_copy_volume_backup(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'CopyVolumeBackup'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'Blockstorage', 'CopyVolumeBackup')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_copy_volume_backup.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_copy_volume_backup', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_copy_volume_backup.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_copy_volume_backup'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_copy_volume_backup.pem'])
+            config_file = 'tests/resources/config_for_test_copy_volume_backup'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('blockstorage_root_group.command_name', 'blockstorage')
     resource_group_command_name = oci_cli.cli_util.override('volume_backup_group.command_name', 'volume_backup')
@@ -93,6 +117,10 @@ def test_copy_volume_backup(cli_testing_service_client, runner, config_file, con
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_copy_volume_backup.pem'):
+                    os.remove('tests/resources/keyfile_for_test_copy_volume_backup.pem')
+                if os.path.exists('tests/resources/config_for_test_copy_volume_backup'):
+                    os.remove('tests/resources/config_for_test_copy_volume_backup')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -111,6 +139,30 @@ def test_copy_volume_backup(cli_testing_service_client, runner, config_file, con
 def test_create_boot_volume(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'CreateBootVolume'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'Blockstorage', 'CreateBootVolume')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_create_boot_volume.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_create_boot_volume', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_create_boot_volume.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_create_boot_volume'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_create_boot_volume.pem'])
+            config_file = 'tests/resources/config_for_test_create_boot_volume'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('blockstorage_root_group.command_name', 'blockstorage')
     resource_group_command_name = oci_cli.cli_util.override('boot_volume_group.command_name', 'boot_volume')
@@ -177,6 +229,10 @@ def test_create_boot_volume(cli_testing_service_client, runner, config_file, con
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_create_boot_volume.pem'):
+                    os.remove('tests/resources/keyfile_for_test_create_boot_volume.pem')
+                if os.path.exists('tests/resources/config_for_test_create_boot_volume'):
+                    os.remove('tests/resources/config_for_test_create_boot_volume')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -195,6 +251,30 @@ def test_create_boot_volume(cli_testing_service_client, runner, config_file, con
 def test_create_boot_volume_backup(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'CreateBootVolumeBackup'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'Blockstorage', 'CreateBootVolumeBackup')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_create_boot_volume_backup.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_create_boot_volume_backup', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_create_boot_volume_backup.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_create_boot_volume_backup'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_create_boot_volume_backup.pem'])
+            config_file = 'tests/resources/config_for_test_create_boot_volume_backup'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('blockstorage_root_group.command_name', 'blockstorage')
     resource_group_command_name = oci_cli.cli_util.override('boot_volume_backup_group.command_name', 'boot_volume_backup')
@@ -261,6 +341,10 @@ def test_create_boot_volume_backup(cli_testing_service_client, runner, config_fi
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_create_boot_volume_backup.pem'):
+                    os.remove('tests/resources/keyfile_for_test_create_boot_volume_backup.pem')
+                if os.path.exists('tests/resources/config_for_test_create_boot_volume_backup'):
+                    os.remove('tests/resources/config_for_test_create_boot_volume_backup')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -279,6 +363,30 @@ def test_create_boot_volume_backup(cli_testing_service_client, runner, config_fi
 def test_create_volume(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'CreateVolume'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'Blockstorage', 'CreateVolume')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_create_volume.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_create_volume', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_create_volume.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_create_volume'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_create_volume.pem'])
+            config_file = 'tests/resources/config_for_test_create_volume'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('blockstorage_root_group.command_name', 'blockstorage')
     resource_group_command_name = oci_cli.cli_util.override('volume_group.command_name', 'volume')
@@ -345,6 +453,10 @@ def test_create_volume(cli_testing_service_client, runner, config_file, config_p
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_create_volume.pem'):
+                    os.remove('tests/resources/keyfile_for_test_create_volume.pem')
+                if os.path.exists('tests/resources/config_for_test_create_volume'):
+                    os.remove('tests/resources/config_for_test_create_volume')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -363,6 +475,30 @@ def test_create_volume(cli_testing_service_client, runner, config_file, config_p
 def test_create_volume_backup(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'CreateVolumeBackup'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'Blockstorage', 'CreateVolumeBackup')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_create_volume_backup.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_create_volume_backup', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_create_volume_backup.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_create_volume_backup'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_create_volume_backup.pem'])
+            config_file = 'tests/resources/config_for_test_create_volume_backup'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('blockstorage_root_group.command_name', 'blockstorage')
     resource_group_command_name = oci_cli.cli_util.override('volume_backup_group.command_name', 'volume_backup')
@@ -429,6 +565,10 @@ def test_create_volume_backup(cli_testing_service_client, runner, config_file, c
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_create_volume_backup.pem'):
+                    os.remove('tests/resources/keyfile_for_test_create_volume_backup.pem')
+                if os.path.exists('tests/resources/config_for_test_create_volume_backup'):
+                    os.remove('tests/resources/config_for_test_create_volume_backup')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -447,6 +587,30 @@ def test_create_volume_backup(cli_testing_service_client, runner, config_file, c
 def test_create_volume_backup_policy_assignment(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'CreateVolumeBackupPolicyAssignment'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'Blockstorage', 'CreateVolumeBackupPolicyAssignment')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_create_volume_backup_policy_assignment.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_create_volume_backup_policy_assignment', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_create_volume_backup_policy_assignment.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_create_volume_backup_policy_assignment'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_create_volume_backup_policy_assignment.pem'])
+            config_file = 'tests/resources/config_for_test_create_volume_backup_policy_assignment'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('blockstorage_root_group.command_name', 'blockstorage')
     resource_group_command_name = oci_cli.cli_util.override('volume_backup_policy_assignment_group.command_name', 'volume_backup_policy_assignment')
@@ -513,6 +677,10 @@ def test_create_volume_backup_policy_assignment(cli_testing_service_client, runn
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_create_volume_backup_policy_assignment.pem'):
+                    os.remove('tests/resources/keyfile_for_test_create_volume_backup_policy_assignment.pem')
+                if os.path.exists('tests/resources/config_for_test_create_volume_backup_policy_assignment'):
+                    os.remove('tests/resources/config_for_test_create_volume_backup_policy_assignment')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -531,6 +699,30 @@ def test_create_volume_backup_policy_assignment(cli_testing_service_client, runn
 def test_create_volume_group(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'CreateVolumeGroup'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'Blockstorage', 'CreateVolumeGroup')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_create_volume_group.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_create_volume_group', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_create_volume_group.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_create_volume_group'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_create_volume_group.pem'])
+            config_file = 'tests/resources/config_for_test_create_volume_group'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('blockstorage_root_group.command_name', 'blockstorage')
     resource_group_command_name = oci_cli.cli_util.override('volume_group_group.command_name', 'volume_group')
@@ -597,6 +789,10 @@ def test_create_volume_group(cli_testing_service_client, runner, config_file, co
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_create_volume_group.pem'):
+                    os.remove('tests/resources/keyfile_for_test_create_volume_group.pem')
+                if os.path.exists('tests/resources/config_for_test_create_volume_group'):
+                    os.remove('tests/resources/config_for_test_create_volume_group')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -615,6 +811,30 @@ def test_create_volume_group(cli_testing_service_client, runner, config_file, co
 def test_create_volume_group_backup(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'CreateVolumeGroupBackup'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'Blockstorage', 'CreateVolumeGroupBackup')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_create_volume_group_backup.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_create_volume_group_backup', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_create_volume_group_backup.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_create_volume_group_backup'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_create_volume_group_backup.pem'])
+            config_file = 'tests/resources/config_for_test_create_volume_group_backup'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('blockstorage_root_group.command_name', 'blockstorage')
     resource_group_command_name = oci_cli.cli_util.override('volume_group_backup_group.command_name', 'volume_group_backup')
@@ -681,6 +901,10 @@ def test_create_volume_group_backup(cli_testing_service_client, runner, config_f
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_create_volume_group_backup.pem'):
+                    os.remove('tests/resources/keyfile_for_test_create_volume_group_backup.pem')
+                if os.path.exists('tests/resources/config_for_test_create_volume_group_backup'):
+                    os.remove('tests/resources/config_for_test_create_volume_group_backup')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -699,6 +923,30 @@ def test_create_volume_group_backup(cli_testing_service_client, runner, config_f
 def test_delete_boot_volume(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'DeleteBootVolume'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'Blockstorage', 'DeleteBootVolume')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_delete_boot_volume.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_delete_boot_volume', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_delete_boot_volume.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_delete_boot_volume'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_delete_boot_volume.pem'])
+            config_file = 'tests/resources/config_for_test_delete_boot_volume'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('blockstorage_root_group.command_name', 'blockstorage')
     resource_group_command_name = oci_cli.cli_util.override('boot_volume_group.command_name', 'boot_volume')
@@ -758,6 +1006,10 @@ def test_delete_boot_volume(cli_testing_service_client, runner, config_file, con
                     True
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_delete_boot_volume.pem'):
+                    os.remove('tests/resources/keyfile_for_test_delete_boot_volume.pem')
+                if os.path.exists('tests/resources/config_for_test_delete_boot_volume'):
+                    os.remove('tests/resources/config_for_test_delete_boot_volume')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -776,6 +1028,30 @@ def test_delete_boot_volume(cli_testing_service_client, runner, config_file, con
 def test_delete_boot_volume_backup(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'DeleteBootVolumeBackup'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'Blockstorage', 'DeleteBootVolumeBackup')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_delete_boot_volume_backup.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_delete_boot_volume_backup', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_delete_boot_volume_backup.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_delete_boot_volume_backup'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_delete_boot_volume_backup.pem'])
+            config_file = 'tests/resources/config_for_test_delete_boot_volume_backup'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('blockstorage_root_group.command_name', 'blockstorage')
     resource_group_command_name = oci_cli.cli_util.override('boot_volume_backup_group.command_name', 'boot_volume_backup')
@@ -835,6 +1111,10 @@ def test_delete_boot_volume_backup(cli_testing_service_client, runner, config_fi
                     True
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_delete_boot_volume_backup.pem'):
+                    os.remove('tests/resources/keyfile_for_test_delete_boot_volume_backup.pem')
+                if os.path.exists('tests/resources/config_for_test_delete_boot_volume_backup'):
+                    os.remove('tests/resources/config_for_test_delete_boot_volume_backup')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -853,6 +1133,30 @@ def test_delete_boot_volume_backup(cli_testing_service_client, runner, config_fi
 def test_delete_boot_volume_kms_key(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'DeleteBootVolumeKmsKey'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'Blockstorage', 'DeleteBootVolumeKmsKey')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_delete_boot_volume_kms_key.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_delete_boot_volume_kms_key', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_delete_boot_volume_kms_key.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_delete_boot_volume_kms_key'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_delete_boot_volume_kms_key.pem'])
+            config_file = 'tests/resources/config_for_test_delete_boot_volume_kms_key'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('blockstorage_root_group.command_name', 'blockstorage')
     resource_group_command_name = oci_cli.cli_util.override('boot_volume_kms_key_group.command_name', 'boot_volume_kms_key')
@@ -912,6 +1216,10 @@ def test_delete_boot_volume_kms_key(cli_testing_service_client, runner, config_f
                     True
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_delete_boot_volume_kms_key.pem'):
+                    os.remove('tests/resources/keyfile_for_test_delete_boot_volume_kms_key.pem')
+                if os.path.exists('tests/resources/config_for_test_delete_boot_volume_kms_key'):
+                    os.remove('tests/resources/config_for_test_delete_boot_volume_kms_key')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -930,6 +1238,30 @@ def test_delete_boot_volume_kms_key(cli_testing_service_client, runner, config_f
 def test_delete_volume(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'DeleteVolume'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'Blockstorage', 'DeleteVolume')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_delete_volume.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_delete_volume', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_delete_volume.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_delete_volume'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_delete_volume.pem'])
+            config_file = 'tests/resources/config_for_test_delete_volume'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('blockstorage_root_group.command_name', 'blockstorage')
     resource_group_command_name = oci_cli.cli_util.override('volume_group.command_name', 'volume')
@@ -989,6 +1321,10 @@ def test_delete_volume(cli_testing_service_client, runner, config_file, config_p
                     True
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_delete_volume.pem'):
+                    os.remove('tests/resources/keyfile_for_test_delete_volume.pem')
+                if os.path.exists('tests/resources/config_for_test_delete_volume'):
+                    os.remove('tests/resources/config_for_test_delete_volume')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -1007,6 +1343,30 @@ def test_delete_volume(cli_testing_service_client, runner, config_file, config_p
 def test_delete_volume_backup(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'DeleteVolumeBackup'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'Blockstorage', 'DeleteVolumeBackup')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_delete_volume_backup.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_delete_volume_backup', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_delete_volume_backup.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_delete_volume_backup'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_delete_volume_backup.pem'])
+            config_file = 'tests/resources/config_for_test_delete_volume_backup'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('blockstorage_root_group.command_name', 'blockstorage')
     resource_group_command_name = oci_cli.cli_util.override('volume_backup_group.command_name', 'volume_backup')
@@ -1066,6 +1426,10 @@ def test_delete_volume_backup(cli_testing_service_client, runner, config_file, c
                     True
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_delete_volume_backup.pem'):
+                    os.remove('tests/resources/keyfile_for_test_delete_volume_backup.pem')
+                if os.path.exists('tests/resources/config_for_test_delete_volume_backup'):
+                    os.remove('tests/resources/config_for_test_delete_volume_backup')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -1084,6 +1448,30 @@ def test_delete_volume_backup(cli_testing_service_client, runner, config_file, c
 def test_delete_volume_backup_policy_assignment(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'DeleteVolumeBackupPolicyAssignment'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'Blockstorage', 'DeleteVolumeBackupPolicyAssignment')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_delete_volume_backup_policy_assignment.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_delete_volume_backup_policy_assignment', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_delete_volume_backup_policy_assignment.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_delete_volume_backup_policy_assignment'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_delete_volume_backup_policy_assignment.pem'])
+            config_file = 'tests/resources/config_for_test_delete_volume_backup_policy_assignment'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('blockstorage_root_group.command_name', 'blockstorage')
     resource_group_command_name = oci_cli.cli_util.override('volume_backup_policy_assignment_group.command_name', 'volume_backup_policy_assignment')
@@ -1143,6 +1531,10 @@ def test_delete_volume_backup_policy_assignment(cli_testing_service_client, runn
                     True
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_delete_volume_backup_policy_assignment.pem'):
+                    os.remove('tests/resources/keyfile_for_test_delete_volume_backup_policy_assignment.pem')
+                if os.path.exists('tests/resources/config_for_test_delete_volume_backup_policy_assignment'):
+                    os.remove('tests/resources/config_for_test_delete_volume_backup_policy_assignment')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -1161,6 +1553,30 @@ def test_delete_volume_backup_policy_assignment(cli_testing_service_client, runn
 def test_delete_volume_group(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'DeleteVolumeGroup'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'Blockstorage', 'DeleteVolumeGroup')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_delete_volume_group.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_delete_volume_group', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_delete_volume_group.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_delete_volume_group'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_delete_volume_group.pem'])
+            config_file = 'tests/resources/config_for_test_delete_volume_group'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('blockstorage_root_group.command_name', 'blockstorage')
     resource_group_command_name = oci_cli.cli_util.override('volume_group_group.command_name', 'volume_group')
@@ -1220,6 +1636,10 @@ def test_delete_volume_group(cli_testing_service_client, runner, config_file, co
                     True
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_delete_volume_group.pem'):
+                    os.remove('tests/resources/keyfile_for_test_delete_volume_group.pem')
+                if os.path.exists('tests/resources/config_for_test_delete_volume_group'):
+                    os.remove('tests/resources/config_for_test_delete_volume_group')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -1238,6 +1658,30 @@ def test_delete_volume_group(cli_testing_service_client, runner, config_file, co
 def test_delete_volume_group_backup(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'DeleteVolumeGroupBackup'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'Blockstorage', 'DeleteVolumeGroupBackup')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_delete_volume_group_backup.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_delete_volume_group_backup', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_delete_volume_group_backup.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_delete_volume_group_backup'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_delete_volume_group_backup.pem'])
+            config_file = 'tests/resources/config_for_test_delete_volume_group_backup'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('blockstorage_root_group.command_name', 'blockstorage')
     resource_group_command_name = oci_cli.cli_util.override('volume_group_backup_group.command_name', 'volume_group_backup')
@@ -1297,6 +1741,10 @@ def test_delete_volume_group_backup(cli_testing_service_client, runner, config_f
                     True
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_delete_volume_group_backup.pem'):
+                    os.remove('tests/resources/keyfile_for_test_delete_volume_group_backup.pem')
+                if os.path.exists('tests/resources/config_for_test_delete_volume_group_backup'):
+                    os.remove('tests/resources/config_for_test_delete_volume_group_backup')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -1315,6 +1763,30 @@ def test_delete_volume_group_backup(cli_testing_service_client, runner, config_f
 def test_delete_volume_kms_key(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'DeleteVolumeKmsKey'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'Blockstorage', 'DeleteVolumeKmsKey')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_delete_volume_kms_key.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_delete_volume_kms_key', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_delete_volume_kms_key.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_delete_volume_kms_key'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_delete_volume_kms_key.pem'])
+            config_file = 'tests/resources/config_for_test_delete_volume_kms_key'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('blockstorage_root_group.command_name', 'blockstorage')
     resource_group_command_name = oci_cli.cli_util.override('volume_kms_key_group.command_name', 'volume_kms_key')
@@ -1374,6 +1846,10 @@ def test_delete_volume_kms_key(cli_testing_service_client, runner, config_file, 
                     True
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_delete_volume_kms_key.pem'):
+                    os.remove('tests/resources/keyfile_for_test_delete_volume_kms_key.pem')
+                if os.path.exists('tests/resources/config_for_test_delete_volume_kms_key'):
+                    os.remove('tests/resources/config_for_test_delete_volume_kms_key')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -1392,6 +1868,30 @@ def test_delete_volume_kms_key(cli_testing_service_client, runner, config_file, 
 def test_get_boot_volume(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'GetBootVolume'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'Blockstorage', 'GetBootVolume')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_boot_volume.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_boot_volume', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_boot_volume.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_boot_volume'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_boot_volume.pem'])
+            config_file = 'tests/resources/config_for_test_get_boot_volume'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('blockstorage_root_group.command_name', 'blockstorage')
     resource_group_command_name = oci_cli.cli_util.override('boot_volume_group.command_name', 'boot_volume')
@@ -1450,6 +1950,10 @@ def test_get_boot_volume(cli_testing_service_client, runner, config_file, config
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_boot_volume.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_boot_volume.pem')
+                if os.path.exists('tests/resources/config_for_test_get_boot_volume'):
+                    os.remove('tests/resources/config_for_test_get_boot_volume')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -1468,6 +1972,30 @@ def test_get_boot_volume(cli_testing_service_client, runner, config_file, config
 def test_get_boot_volume_backup(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'GetBootVolumeBackup'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'Blockstorage', 'GetBootVolumeBackup')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_boot_volume_backup.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_boot_volume_backup', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_boot_volume_backup.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_boot_volume_backup'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_boot_volume_backup.pem'])
+            config_file = 'tests/resources/config_for_test_get_boot_volume_backup'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('blockstorage_root_group.command_name', 'blockstorage')
     resource_group_command_name = oci_cli.cli_util.override('boot_volume_backup_group.command_name', 'boot_volume_backup')
@@ -1526,6 +2054,10 @@ def test_get_boot_volume_backup(cli_testing_service_client, runner, config_file,
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_boot_volume_backup.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_boot_volume_backup.pem')
+                if os.path.exists('tests/resources/config_for_test_get_boot_volume_backup'):
+                    os.remove('tests/resources/config_for_test_get_boot_volume_backup')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -1544,6 +2076,30 @@ def test_get_boot_volume_backup(cli_testing_service_client, runner, config_file,
 def test_get_boot_volume_kms_key(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'GetBootVolumeKmsKey'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'Blockstorage', 'GetBootVolumeKmsKey')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_boot_volume_kms_key.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_boot_volume_kms_key', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_boot_volume_kms_key.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_boot_volume_kms_key'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_boot_volume_kms_key.pem'])
+            config_file = 'tests/resources/config_for_test_get_boot_volume_kms_key'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('blockstorage_root_group.command_name', 'blockstorage')
     resource_group_command_name = oci_cli.cli_util.override('boot_volume_kms_key_group.command_name', 'boot_volume_kms_key')
@@ -1602,6 +2158,10 @@ def test_get_boot_volume_kms_key(cli_testing_service_client, runner, config_file
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_boot_volume_kms_key.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_boot_volume_kms_key.pem')
+                if os.path.exists('tests/resources/config_for_test_get_boot_volume_kms_key'):
+                    os.remove('tests/resources/config_for_test_get_boot_volume_kms_key')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -1620,6 +2180,30 @@ def test_get_boot_volume_kms_key(cli_testing_service_client, runner, config_file
 def test_get_volume(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'GetVolume'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'Blockstorage', 'GetVolume')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_volume.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_volume', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_volume.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_volume'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_volume.pem'])
+            config_file = 'tests/resources/config_for_test_get_volume'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('blockstorage_root_group.command_name', 'blockstorage')
     resource_group_command_name = oci_cli.cli_util.override('volume_group.command_name', 'volume')
@@ -1678,6 +2262,10 @@ def test_get_volume(cli_testing_service_client, runner, config_file, config_prof
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_volume.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_volume.pem')
+                if os.path.exists('tests/resources/config_for_test_get_volume'):
+                    os.remove('tests/resources/config_for_test_get_volume')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -1696,6 +2284,30 @@ def test_get_volume(cli_testing_service_client, runner, config_file, config_prof
 def test_get_volume_backup(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'GetVolumeBackup'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'Blockstorage', 'GetVolumeBackup')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_volume_backup.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_volume_backup', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_volume_backup.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_volume_backup'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_volume_backup.pem'])
+            config_file = 'tests/resources/config_for_test_get_volume_backup'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('blockstorage_root_group.command_name', 'blockstorage')
     resource_group_command_name = oci_cli.cli_util.override('volume_backup_group.command_name', 'volume_backup')
@@ -1754,6 +2366,10 @@ def test_get_volume_backup(cli_testing_service_client, runner, config_file, conf
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_volume_backup.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_volume_backup.pem')
+                if os.path.exists('tests/resources/config_for_test_get_volume_backup'):
+                    os.remove('tests/resources/config_for_test_get_volume_backup')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -1772,6 +2388,30 @@ def test_get_volume_backup(cli_testing_service_client, runner, config_file, conf
 def test_get_volume_backup_policy(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'GetVolumeBackupPolicy'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'Blockstorage', 'GetVolumeBackupPolicy')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_volume_backup_policy.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_volume_backup_policy', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_volume_backup_policy.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_volume_backup_policy'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_volume_backup_policy.pem'])
+            config_file = 'tests/resources/config_for_test_get_volume_backup_policy'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('blockstorage_root_group.command_name', 'blockstorage')
     resource_group_command_name = oci_cli.cli_util.override('volume_backup_policy_group.command_name', 'volume_backup_policy')
@@ -1830,6 +2470,10 @@ def test_get_volume_backup_policy(cli_testing_service_client, runner, config_fil
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_volume_backup_policy.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_volume_backup_policy.pem')
+                if os.path.exists('tests/resources/config_for_test_get_volume_backup_policy'):
+                    os.remove('tests/resources/config_for_test_get_volume_backup_policy')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -1848,6 +2492,30 @@ def test_get_volume_backup_policy(cli_testing_service_client, runner, config_fil
 def test_get_volume_backup_policy_asset_assignment(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'GetVolumeBackupPolicyAssetAssignment'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'Blockstorage', 'GetVolumeBackupPolicyAssetAssignment')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_volume_backup_policy_asset_assignment.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_volume_backup_policy_asset_assignment', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_volume_backup_policy_asset_assignment.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_volume_backup_policy_asset_assignment'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_volume_backup_policy_asset_assignment.pem'])
+            config_file = 'tests/resources/config_for_test_get_volume_backup_policy_asset_assignment'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('blockstorage_root_group.command_name', 'blockstorage')
     resource_group_command_name = oci_cli.cli_util.override('volume_backup_policy_assignment_group.command_name', 'volume_backup_policy_assignment')
@@ -1906,6 +2574,10 @@ def test_get_volume_backup_policy_asset_assignment(cli_testing_service_client, r
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_volume_backup_policy_asset_assignment.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_volume_backup_policy_asset_assignment.pem')
+                if os.path.exists('tests/resources/config_for_test_get_volume_backup_policy_asset_assignment'):
+                    os.remove('tests/resources/config_for_test_get_volume_backup_policy_asset_assignment')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -1924,6 +2596,30 @@ def test_get_volume_backup_policy_asset_assignment(cli_testing_service_client, r
 def test_get_volume_backup_policy_assignment(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'GetVolumeBackupPolicyAssignment'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'Blockstorage', 'GetVolumeBackupPolicyAssignment')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_volume_backup_policy_assignment.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_volume_backup_policy_assignment', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_volume_backup_policy_assignment.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_volume_backup_policy_assignment'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_volume_backup_policy_assignment.pem'])
+            config_file = 'tests/resources/config_for_test_get_volume_backup_policy_assignment'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('blockstorage_root_group.command_name', 'blockstorage')
     resource_group_command_name = oci_cli.cli_util.override('volume_backup_policy_assignment_group.command_name', 'volume_backup_policy_assignment')
@@ -1982,6 +2678,10 @@ def test_get_volume_backup_policy_assignment(cli_testing_service_client, runner,
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_volume_backup_policy_assignment.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_volume_backup_policy_assignment.pem')
+                if os.path.exists('tests/resources/config_for_test_get_volume_backup_policy_assignment'):
+                    os.remove('tests/resources/config_for_test_get_volume_backup_policy_assignment')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -2000,6 +2700,30 @@ def test_get_volume_backup_policy_assignment(cli_testing_service_client, runner,
 def test_get_volume_group(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'GetVolumeGroup'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'Blockstorage', 'GetVolumeGroup')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_volume_group.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_volume_group', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_volume_group.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_volume_group'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_volume_group.pem'])
+            config_file = 'tests/resources/config_for_test_get_volume_group'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('blockstorage_root_group.command_name', 'blockstorage')
     resource_group_command_name = oci_cli.cli_util.override('volume_group_group.command_name', 'volume_group')
@@ -2058,6 +2782,10 @@ def test_get_volume_group(cli_testing_service_client, runner, config_file, confi
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_volume_group.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_volume_group.pem')
+                if os.path.exists('tests/resources/config_for_test_get_volume_group'):
+                    os.remove('tests/resources/config_for_test_get_volume_group')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -2076,6 +2804,30 @@ def test_get_volume_group(cli_testing_service_client, runner, config_file, confi
 def test_get_volume_group_backup(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'GetVolumeGroupBackup'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'Blockstorage', 'GetVolumeGroupBackup')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_volume_group_backup.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_volume_group_backup', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_volume_group_backup.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_volume_group_backup'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_volume_group_backup.pem'])
+            config_file = 'tests/resources/config_for_test_get_volume_group_backup'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('blockstorage_root_group.command_name', 'blockstorage')
     resource_group_command_name = oci_cli.cli_util.override('volume_group_backup_group.command_name', 'volume_group_backup')
@@ -2134,6 +2886,10 @@ def test_get_volume_group_backup(cli_testing_service_client, runner, config_file
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_volume_group_backup.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_volume_group_backup.pem')
+                if os.path.exists('tests/resources/config_for_test_get_volume_group_backup'):
+                    os.remove('tests/resources/config_for_test_get_volume_group_backup')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -2152,6 +2908,30 @@ def test_get_volume_group_backup(cli_testing_service_client, runner, config_file
 def test_get_volume_kms_key(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'GetVolumeKmsKey'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'Blockstorage', 'GetVolumeKmsKey')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_volume_kms_key.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_volume_kms_key', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_volume_kms_key.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_volume_kms_key'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_volume_kms_key.pem'])
+            config_file = 'tests/resources/config_for_test_get_volume_kms_key'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('blockstorage_root_group.command_name', 'blockstorage')
     resource_group_command_name = oci_cli.cli_util.override('volume_kms_key_group.command_name', 'volume_kms_key')
@@ -2210,6 +2990,10 @@ def test_get_volume_kms_key(cli_testing_service_client, runner, config_file, con
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_volume_kms_key.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_volume_kms_key.pem')
+                if os.path.exists('tests/resources/config_for_test_get_volume_kms_key'):
+                    os.remove('tests/resources/config_for_test_get_volume_kms_key')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -2228,6 +3012,30 @@ def test_get_volume_kms_key(cli_testing_service_client, runner, config_file, con
 def test_list_boot_volume_backups(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'ListBootVolumeBackups'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'Blockstorage', 'ListBootVolumeBackups')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_boot_volume_backups.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_boot_volume_backups', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_boot_volume_backups.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_boot_volume_backups'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_boot_volume_backups.pem'])
+            config_file = 'tests/resources/config_for_test_list_boot_volume_backups'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('blockstorage_root_group.command_name', 'blockstorage')
     resource_group_command_name = oci_cli.cli_util.override('boot_volume_backup_group.command_name', 'boot_volume_backup')
@@ -2286,6 +3094,10 @@ def test_list_boot_volume_backups(cli_testing_service_client, runner, config_fil
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_boot_volume_backups.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_boot_volume_backups.pem')
+                if os.path.exists('tests/resources/config_for_test_list_boot_volume_backups'):
+                    os.remove('tests/resources/config_for_test_list_boot_volume_backups')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -2304,6 +3116,30 @@ def test_list_boot_volume_backups(cli_testing_service_client, runner, config_fil
 def test_list_boot_volumes(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'ListBootVolumes'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'Blockstorage', 'ListBootVolumes')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_boot_volumes.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_boot_volumes', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_boot_volumes.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_boot_volumes'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_boot_volumes.pem'])
+            config_file = 'tests/resources/config_for_test_list_boot_volumes'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('blockstorage_root_group.command_name', 'blockstorage')
     resource_group_command_name = oci_cli.cli_util.override('boot_volume_group.command_name', 'boot_volume')
@@ -2362,6 +3198,10 @@ def test_list_boot_volumes(cli_testing_service_client, runner, config_file, conf
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_boot_volumes.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_boot_volumes.pem')
+                if os.path.exists('tests/resources/config_for_test_list_boot_volumes'):
+                    os.remove('tests/resources/config_for_test_list_boot_volumes')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -2380,6 +3220,30 @@ def test_list_boot_volumes(cli_testing_service_client, runner, config_file, conf
 def test_list_volume_backup_policies(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'ListVolumeBackupPolicies'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'Blockstorage', 'ListVolumeBackupPolicies')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_volume_backup_policies.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_volume_backup_policies', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_volume_backup_policies.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_volume_backup_policies'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_volume_backup_policies.pem'])
+            config_file = 'tests/resources/config_for_test_list_volume_backup_policies'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('blockstorage_root_group.command_name', 'blockstorage')
     resource_group_command_name = oci_cli.cli_util.override('volume_backup_policy_group.command_name', 'volume_backup_policy')
@@ -2438,6 +3302,10 @@ def test_list_volume_backup_policies(cli_testing_service_client, runner, config_
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_volume_backup_policies.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_volume_backup_policies.pem')
+                if os.path.exists('tests/resources/config_for_test_list_volume_backup_policies'):
+                    os.remove('tests/resources/config_for_test_list_volume_backup_policies')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -2456,6 +3324,30 @@ def test_list_volume_backup_policies(cli_testing_service_client, runner, config_
 def test_list_volume_backups(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'ListVolumeBackups'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'Blockstorage', 'ListVolumeBackups')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_volume_backups.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_volume_backups', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_volume_backups.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_volume_backups'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_volume_backups.pem'])
+            config_file = 'tests/resources/config_for_test_list_volume_backups'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('blockstorage_root_group.command_name', 'blockstorage')
     resource_group_command_name = oci_cli.cli_util.override('volume_backup_group.command_name', 'volume_backup')
@@ -2514,6 +3406,10 @@ def test_list_volume_backups(cli_testing_service_client, runner, config_file, co
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_volume_backups.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_volume_backups.pem')
+                if os.path.exists('tests/resources/config_for_test_list_volume_backups'):
+                    os.remove('tests/resources/config_for_test_list_volume_backups')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -2532,6 +3428,30 @@ def test_list_volume_backups(cli_testing_service_client, runner, config_file, co
 def test_list_volume_group_backups(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'ListVolumeGroupBackups'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'Blockstorage', 'ListVolumeGroupBackups')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_volume_group_backups.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_volume_group_backups', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_volume_group_backups.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_volume_group_backups'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_volume_group_backups.pem'])
+            config_file = 'tests/resources/config_for_test_list_volume_group_backups'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('blockstorage_root_group.command_name', 'blockstorage')
     resource_group_command_name = oci_cli.cli_util.override('volume_group_backup_group.command_name', 'volume_group_backup')
@@ -2590,6 +3510,10 @@ def test_list_volume_group_backups(cli_testing_service_client, runner, config_fi
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_volume_group_backups.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_volume_group_backups.pem')
+                if os.path.exists('tests/resources/config_for_test_list_volume_group_backups'):
+                    os.remove('tests/resources/config_for_test_list_volume_group_backups')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -2608,6 +3532,30 @@ def test_list_volume_group_backups(cli_testing_service_client, runner, config_fi
 def test_list_volume_groups(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'ListVolumeGroups'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'Blockstorage', 'ListVolumeGroups')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_volume_groups.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_volume_groups', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_volume_groups.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_volume_groups'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_volume_groups.pem'])
+            config_file = 'tests/resources/config_for_test_list_volume_groups'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('blockstorage_root_group.command_name', 'blockstorage')
     resource_group_command_name = oci_cli.cli_util.override('volume_group_group.command_name', 'volume_group')
@@ -2666,6 +3614,10 @@ def test_list_volume_groups(cli_testing_service_client, runner, config_file, con
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_volume_groups.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_volume_groups.pem')
+                if os.path.exists('tests/resources/config_for_test_list_volume_groups'):
+                    os.remove('tests/resources/config_for_test_list_volume_groups')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -2684,6 +3636,30 @@ def test_list_volume_groups(cli_testing_service_client, runner, config_file, con
 def test_list_volumes(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'ListVolumes'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'Blockstorage', 'ListVolumes')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_volumes.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_volumes', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_volumes.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_volumes'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_volumes.pem'])
+            config_file = 'tests/resources/config_for_test_list_volumes'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('blockstorage_root_group.command_name', 'blockstorage')
     resource_group_command_name = oci_cli.cli_util.override('volume_group.command_name', 'volume')
@@ -2742,6 +3718,10 @@ def test_list_volumes(cli_testing_service_client, runner, config_file, config_pr
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_volumes.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_volumes.pem')
+                if os.path.exists('tests/resources/config_for_test_list_volumes'):
+                    os.remove('tests/resources/config_for_test_list_volumes')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -2760,6 +3740,30 @@ def test_list_volumes(cli_testing_service_client, runner, config_file, config_pr
 def test_update_boot_volume(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'UpdateBootVolume'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'Blockstorage', 'UpdateBootVolume')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_update_boot_volume.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_update_boot_volume', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_update_boot_volume.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_update_boot_volume'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_update_boot_volume.pem'])
+            config_file = 'tests/resources/config_for_test_update_boot_volume'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('blockstorage_root_group.command_name', 'blockstorage')
     resource_group_command_name = oci_cli.cli_util.override('boot_volume_group.command_name', 'boot_volume')
@@ -2827,6 +3831,10 @@ def test_update_boot_volume(cli_testing_service_client, runner, config_file, con
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_update_boot_volume.pem'):
+                    os.remove('tests/resources/keyfile_for_test_update_boot_volume.pem')
+                if os.path.exists('tests/resources/config_for_test_update_boot_volume'):
+                    os.remove('tests/resources/config_for_test_update_boot_volume')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -2845,6 +3853,30 @@ def test_update_boot_volume(cli_testing_service_client, runner, config_file, con
 def test_update_boot_volume_backup(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'UpdateBootVolumeBackup'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'Blockstorage', 'UpdateBootVolumeBackup')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_update_boot_volume_backup.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_update_boot_volume_backup', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_update_boot_volume_backup.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_update_boot_volume_backup'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_update_boot_volume_backup.pem'])
+            config_file = 'tests/resources/config_for_test_update_boot_volume_backup'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('blockstorage_root_group.command_name', 'blockstorage')
     resource_group_command_name = oci_cli.cli_util.override('boot_volume_backup_group.command_name', 'boot_volume_backup')
@@ -2912,6 +3944,10 @@ def test_update_boot_volume_backup(cli_testing_service_client, runner, config_fi
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_update_boot_volume_backup.pem'):
+                    os.remove('tests/resources/keyfile_for_test_update_boot_volume_backup.pem')
+                if os.path.exists('tests/resources/config_for_test_update_boot_volume_backup'):
+                    os.remove('tests/resources/config_for_test_update_boot_volume_backup')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -2930,6 +3966,30 @@ def test_update_boot_volume_backup(cli_testing_service_client, runner, config_fi
 def test_update_boot_volume_kms_key(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'UpdateBootVolumeKmsKey'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'Blockstorage', 'UpdateBootVolumeKmsKey')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_update_boot_volume_kms_key.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_update_boot_volume_kms_key', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_update_boot_volume_kms_key.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_update_boot_volume_kms_key'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_update_boot_volume_kms_key.pem'])
+            config_file = 'tests/resources/config_for_test_update_boot_volume_kms_key'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('blockstorage_root_group.command_name', 'blockstorage')
     resource_group_command_name = oci_cli.cli_util.override('boot_volume_kms_key_group.command_name', 'boot_volume_kms_key')
@@ -2996,6 +4056,10 @@ def test_update_boot_volume_kms_key(cli_testing_service_client, runner, config_f
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_update_boot_volume_kms_key.pem'):
+                    os.remove('tests/resources/keyfile_for_test_update_boot_volume_kms_key.pem')
+                if os.path.exists('tests/resources/config_for_test_update_boot_volume_kms_key'):
+                    os.remove('tests/resources/config_for_test_update_boot_volume_kms_key')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -3014,6 +4078,30 @@ def test_update_boot_volume_kms_key(cli_testing_service_client, runner, config_f
 def test_update_volume(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'UpdateVolume'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'Blockstorage', 'UpdateVolume')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_update_volume.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_update_volume', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_update_volume.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_update_volume'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_update_volume.pem'])
+            config_file = 'tests/resources/config_for_test_update_volume'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('blockstorage_root_group.command_name', 'blockstorage')
     resource_group_command_name = oci_cli.cli_util.override('volume_group.command_name', 'volume')
@@ -3081,6 +4169,10 @@ def test_update_volume(cli_testing_service_client, runner, config_file, config_p
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_update_volume.pem'):
+                    os.remove('tests/resources/keyfile_for_test_update_volume.pem')
+                if os.path.exists('tests/resources/config_for_test_update_volume'):
+                    os.remove('tests/resources/config_for_test_update_volume')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -3099,6 +4191,30 @@ def test_update_volume(cli_testing_service_client, runner, config_file, config_p
 def test_update_volume_backup(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'UpdateVolumeBackup'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'Blockstorage', 'UpdateVolumeBackup')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_update_volume_backup.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_update_volume_backup', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_update_volume_backup.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_update_volume_backup'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_update_volume_backup.pem'])
+            config_file = 'tests/resources/config_for_test_update_volume_backup'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('blockstorage_root_group.command_name', 'blockstorage')
     resource_group_command_name = oci_cli.cli_util.override('volume_backup_group.command_name', 'volume_backup')
@@ -3166,6 +4282,10 @@ def test_update_volume_backup(cli_testing_service_client, runner, config_file, c
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_update_volume_backup.pem'):
+                    os.remove('tests/resources/keyfile_for_test_update_volume_backup.pem')
+                if os.path.exists('tests/resources/config_for_test_update_volume_backup'):
+                    os.remove('tests/resources/config_for_test_update_volume_backup')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -3184,6 +4304,30 @@ def test_update_volume_backup(cli_testing_service_client, runner, config_file, c
 def test_update_volume_group(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'UpdateVolumeGroup'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'Blockstorage', 'UpdateVolumeGroup')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_update_volume_group.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_update_volume_group', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_update_volume_group.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_update_volume_group'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_update_volume_group.pem'])
+            config_file = 'tests/resources/config_for_test_update_volume_group'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('blockstorage_root_group.command_name', 'blockstorage')
     resource_group_command_name = oci_cli.cli_util.override('volume_group_group.command_name', 'volume_group')
@@ -3251,6 +4395,10 @@ def test_update_volume_group(cli_testing_service_client, runner, config_file, co
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_update_volume_group.pem'):
+                    os.remove('tests/resources/keyfile_for_test_update_volume_group.pem')
+                if os.path.exists('tests/resources/config_for_test_update_volume_group'):
+                    os.remove('tests/resources/config_for_test_update_volume_group')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -3269,6 +4417,30 @@ def test_update_volume_group(cli_testing_service_client, runner, config_file, co
 def test_update_volume_group_backup(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'UpdateVolumeGroupBackup'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'Blockstorage', 'UpdateVolumeGroupBackup')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_update_volume_group_backup.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_update_volume_group_backup', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_update_volume_group_backup.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_update_volume_group_backup'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_update_volume_group_backup.pem'])
+            config_file = 'tests/resources/config_for_test_update_volume_group_backup'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('blockstorage_root_group.command_name', 'blockstorage')
     resource_group_command_name = oci_cli.cli_util.override('volume_group_backup_group.command_name', 'volume_group_backup')
@@ -3336,6 +4508,10 @@ def test_update_volume_group_backup(cli_testing_service_client, runner, config_f
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_update_volume_group_backup.pem'):
+                    os.remove('tests/resources/keyfile_for_test_update_volume_group_backup.pem')
+                if os.path.exists('tests/resources/config_for_test_update_volume_group_backup'):
+                    os.remove('tests/resources/config_for_test_update_volume_group_backup')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -3354,6 +4530,30 @@ def test_update_volume_group_backup(cli_testing_service_client, runner, config_f
 def test_update_volume_kms_key(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'UpdateVolumeKmsKey'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'Blockstorage', 'UpdateVolumeKmsKey')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_update_volume_kms_key.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_update_volume_kms_key', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_update_volume_kms_key.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_update_volume_kms_key'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_update_volume_kms_key.pem'])
+            config_file = 'tests/resources/config_for_test_update_volume_kms_key'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('blockstorage_root_group.command_name', 'blockstorage')
     resource_group_command_name = oci_cli.cli_util.override('volume_kms_key_group.command_name', 'volume_kms_key')
@@ -3420,6 +4620,10 @@ def test_update_volume_kms_key(cli_testing_service_client, runner, config_file, 
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_update_volume_kms_key.pem'):
+                    os.remove('tests/resources/keyfile_for_test_update_volume_kms_key.pem')
+                if os.path.exists('tests/resources/config_for_test_update_volume_kms_key'):
+                    os.remove('tests/resources/config_for_test_update_volume_kms_key')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -3435,7 +4639,7 @@ def test_update_volume_kms_key(cli_testing_service_client, runner, config_file, 
 
 
 def invoke(runner, config_file, config_profile, params, debug=False, root_params=None, strip_progress_bar=True, strip_multipart_stderr_output=True, ** args):
-    root_params = ['--config-file', os.environ['OCI_CLI_CONFIG_FILE']]
+    root_params = ['--config-file', config_file]
 
     if config_profile:
         root_params.extend(['--profile', config_profile])

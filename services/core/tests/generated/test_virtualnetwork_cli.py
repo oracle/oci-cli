@@ -6,7 +6,7 @@ import pytest
 from tests import generated_test_request_transformers
 from tests import test_config_container  # noqa: F401
 from tests import util
-
+import vcr
 import oci_cli
 import os
 
@@ -27,6 +27,30 @@ def vcr_fixture(request):
 def test_attach_service_id(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'AttachServiceId'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'AttachServiceId')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_attach_service_id.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_attach_service_id', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_attach_service_id.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_attach_service_id'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_attach_service_id.pem'])
+            config_file = 'tests/resources/config_for_test_attach_service_id'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('service_gateway_group.command_name', 'service_gateway')
@@ -93,6 +117,10 @@ def test_attach_service_id(cli_testing_service_client, runner, config_file, conf
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_attach_service_id.pem'):
+                    os.remove('tests/resources/keyfile_for_test_attach_service_id.pem')
+                if os.path.exists('tests/resources/config_for_test_attach_service_id'):
+                    os.remove('tests/resources/config_for_test_attach_service_id')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -111,6 +139,30 @@ def test_attach_service_id(cli_testing_service_client, runner, config_file, conf
 def test_bulk_add_virtual_circuit_public_prefixes(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'BulkAddVirtualCircuitPublicPrefixes'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'BulkAddVirtualCircuitPublicPrefixes')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_bulk_add_virtual_circuit_public_prefixes.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_bulk_add_virtual_circuit_public_prefixes', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_bulk_add_virtual_circuit_public_prefixes.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_bulk_add_virtual_circuit_public_prefixes'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_bulk_add_virtual_circuit_public_prefixes.pem'])
+            config_file = 'tests/resources/config_for_test_bulk_add_virtual_circuit_public_prefixes'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('virtual_circuit_public_prefix_group.command_name', 'virtual_circuit_public_prefix')
@@ -177,6 +229,10 @@ def test_bulk_add_virtual_circuit_public_prefixes(cli_testing_service_client, ru
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_bulk_add_virtual_circuit_public_prefixes.pem'):
+                    os.remove('tests/resources/keyfile_for_test_bulk_add_virtual_circuit_public_prefixes.pem')
+                if os.path.exists('tests/resources/config_for_test_bulk_add_virtual_circuit_public_prefixes'):
+                    os.remove('tests/resources/config_for_test_bulk_add_virtual_circuit_public_prefixes')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -195,6 +251,30 @@ def test_bulk_add_virtual_circuit_public_prefixes(cli_testing_service_client, ru
 def test_bulk_delete_virtual_circuit_public_prefixes(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'BulkDeleteVirtualCircuitPublicPrefixes'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'BulkDeleteVirtualCircuitPublicPrefixes')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_bulk_delete_virtual_circuit_public_prefixes.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_bulk_delete_virtual_circuit_public_prefixes', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_bulk_delete_virtual_circuit_public_prefixes.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_bulk_delete_virtual_circuit_public_prefixes'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_bulk_delete_virtual_circuit_public_prefixes.pem'])
+            config_file = 'tests/resources/config_for_test_bulk_delete_virtual_circuit_public_prefixes'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('virtual_circuit_public_prefix_group.command_name', 'virtual_circuit_public_prefix')
@@ -261,6 +341,10 @@ def test_bulk_delete_virtual_circuit_public_prefixes(cli_testing_service_client,
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_bulk_delete_virtual_circuit_public_prefixes.pem'):
+                    os.remove('tests/resources/keyfile_for_test_bulk_delete_virtual_circuit_public_prefixes.pem')
+                if os.path.exists('tests/resources/config_for_test_bulk_delete_virtual_circuit_public_prefixes'):
+                    os.remove('tests/resources/config_for_test_bulk_delete_virtual_circuit_public_prefixes')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -279,6 +363,30 @@ def test_bulk_delete_virtual_circuit_public_prefixes(cli_testing_service_client,
 def test_connect_local_peering_gateways(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'ConnectLocalPeeringGateways'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'ConnectLocalPeeringGateways')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_connect_local_peering_gateways.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_connect_local_peering_gateways', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_connect_local_peering_gateways.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_connect_local_peering_gateways'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_connect_local_peering_gateways.pem'])
+            config_file = 'tests/resources/config_for_test_connect_local_peering_gateways'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('local_peering_gateway_group.command_name', 'local_peering_gateway')
@@ -345,6 +453,10 @@ def test_connect_local_peering_gateways(cli_testing_service_client, runner, conf
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_connect_local_peering_gateways.pem'):
+                    os.remove('tests/resources/keyfile_for_test_connect_local_peering_gateways.pem')
+                if os.path.exists('tests/resources/config_for_test_connect_local_peering_gateways'):
+                    os.remove('tests/resources/config_for_test_connect_local_peering_gateways')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -363,6 +475,30 @@ def test_connect_local_peering_gateways(cli_testing_service_client, runner, conf
 def test_connect_remote_peering_connections(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'ConnectRemotePeeringConnections'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'ConnectRemotePeeringConnections')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_connect_remote_peering_connections.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_connect_remote_peering_connections', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_connect_remote_peering_connections.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_connect_remote_peering_connections'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_connect_remote_peering_connections.pem'])
+            config_file = 'tests/resources/config_for_test_connect_remote_peering_connections'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('remote_peering_connection_group.command_name', 'remote_peering_connection')
@@ -429,6 +565,10 @@ def test_connect_remote_peering_connections(cli_testing_service_client, runner, 
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_connect_remote_peering_connections.pem'):
+                    os.remove('tests/resources/keyfile_for_test_connect_remote_peering_connections.pem')
+                if os.path.exists('tests/resources/config_for_test_connect_remote_peering_connections'):
+                    os.remove('tests/resources/config_for_test_connect_remote_peering_connections')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -447,6 +587,30 @@ def test_connect_remote_peering_connections(cli_testing_service_client, runner, 
 def test_create_cpe(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'CreateCpe'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'CreateCpe')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_create_cpe.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_create_cpe', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_create_cpe.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_create_cpe'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_create_cpe.pem'])
+            config_file = 'tests/resources/config_for_test_create_cpe'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('cpe_group.command_name', 'cpe')
@@ -513,6 +677,10 @@ def test_create_cpe(cli_testing_service_client, runner, config_file, config_prof
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_create_cpe.pem'):
+                    os.remove('tests/resources/keyfile_for_test_create_cpe.pem')
+                if os.path.exists('tests/resources/config_for_test_create_cpe'):
+                    os.remove('tests/resources/config_for_test_create_cpe')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -531,6 +699,30 @@ def test_create_cpe(cli_testing_service_client, runner, config_file, config_prof
 def test_create_cross_connect(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'CreateCrossConnect'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'CreateCrossConnect')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_create_cross_connect.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_create_cross_connect', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_create_cross_connect.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_create_cross_connect'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_create_cross_connect.pem'])
+            config_file = 'tests/resources/config_for_test_create_cross_connect'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('cross_connect_group.command_name', 'cross_connect')
@@ -597,6 +789,10 @@ def test_create_cross_connect(cli_testing_service_client, runner, config_file, c
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_create_cross_connect.pem'):
+                    os.remove('tests/resources/keyfile_for_test_create_cross_connect.pem')
+                if os.path.exists('tests/resources/config_for_test_create_cross_connect'):
+                    os.remove('tests/resources/config_for_test_create_cross_connect')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -615,6 +811,30 @@ def test_create_cross_connect(cli_testing_service_client, runner, config_file, c
 def test_create_cross_connect_group(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'CreateCrossConnectGroup'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'CreateCrossConnectGroup')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_create_cross_connect_group.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_create_cross_connect_group', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_create_cross_connect_group.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_create_cross_connect_group'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_create_cross_connect_group.pem'])
+            config_file = 'tests/resources/config_for_test_create_cross_connect_group'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('cross_connect_group_group.command_name', 'cross_connect_group')
@@ -681,6 +901,10 @@ def test_create_cross_connect_group(cli_testing_service_client, runner, config_f
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_create_cross_connect_group.pem'):
+                    os.remove('tests/resources/keyfile_for_test_create_cross_connect_group.pem')
+                if os.path.exists('tests/resources/config_for_test_create_cross_connect_group'):
+                    os.remove('tests/resources/config_for_test_create_cross_connect_group')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -699,6 +923,30 @@ def test_create_cross_connect_group(cli_testing_service_client, runner, config_f
 def test_create_dhcp_options(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'CreateDhcpOptions'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'CreateDhcpOptions')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_create_dhcp_options.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_create_dhcp_options', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_create_dhcp_options.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_create_dhcp_options'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_create_dhcp_options.pem'])
+            config_file = 'tests/resources/config_for_test_create_dhcp_options'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('dhcp_options_group.command_name', 'dhcp_options')
@@ -765,6 +1013,10 @@ def test_create_dhcp_options(cli_testing_service_client, runner, config_file, co
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_create_dhcp_options.pem'):
+                    os.remove('tests/resources/keyfile_for_test_create_dhcp_options.pem')
+                if os.path.exists('tests/resources/config_for_test_create_dhcp_options'):
+                    os.remove('tests/resources/config_for_test_create_dhcp_options')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -783,6 +1035,30 @@ def test_create_dhcp_options(cli_testing_service_client, runner, config_file, co
 def test_create_drg(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'CreateDrg'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'CreateDrg')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_create_drg.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_create_drg', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_create_drg.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_create_drg'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_create_drg.pem'])
+            config_file = 'tests/resources/config_for_test_create_drg'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('drg_group.command_name', 'drg')
@@ -849,6 +1125,10 @@ def test_create_drg(cli_testing_service_client, runner, config_file, config_prof
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_create_drg.pem'):
+                    os.remove('tests/resources/keyfile_for_test_create_drg.pem')
+                if os.path.exists('tests/resources/config_for_test_create_drg'):
+                    os.remove('tests/resources/config_for_test_create_drg')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -867,6 +1147,30 @@ def test_create_drg(cli_testing_service_client, runner, config_file, config_prof
 def test_create_drg_attachment(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'CreateDrgAttachment'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'CreateDrgAttachment')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_create_drg_attachment.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_create_drg_attachment', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_create_drg_attachment.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_create_drg_attachment'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_create_drg_attachment.pem'])
+            config_file = 'tests/resources/config_for_test_create_drg_attachment'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('drg_attachment_group.command_name', 'drg_attachment')
@@ -933,6 +1237,10 @@ def test_create_drg_attachment(cli_testing_service_client, runner, config_file, 
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_create_drg_attachment.pem'):
+                    os.remove('tests/resources/keyfile_for_test_create_drg_attachment.pem')
+                if os.path.exists('tests/resources/config_for_test_create_drg_attachment'):
+                    os.remove('tests/resources/config_for_test_create_drg_attachment')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -951,6 +1259,30 @@ def test_create_drg_attachment(cli_testing_service_client, runner, config_file, 
 def test_create_internet_gateway(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'CreateInternetGateway'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'CreateInternetGateway')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_create_internet_gateway.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_create_internet_gateway', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_create_internet_gateway.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_create_internet_gateway'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_create_internet_gateway.pem'])
+            config_file = 'tests/resources/config_for_test_create_internet_gateway'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('internet_gateway_group.command_name', 'internet_gateway')
@@ -1017,6 +1349,10 @@ def test_create_internet_gateway(cli_testing_service_client, runner, config_file
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_create_internet_gateway.pem'):
+                    os.remove('tests/resources/keyfile_for_test_create_internet_gateway.pem')
+                if os.path.exists('tests/resources/config_for_test_create_internet_gateway'):
+                    os.remove('tests/resources/config_for_test_create_internet_gateway')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -1035,6 +1371,30 @@ def test_create_internet_gateway(cli_testing_service_client, runner, config_file
 def test_create_ip_sec_connection(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'CreateIPSecConnection'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'CreateIPSecConnection')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_create_ip_sec_connection.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_create_ip_sec_connection', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_create_ip_sec_connection.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_create_ip_sec_connection'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_create_ip_sec_connection.pem'])
+            config_file = 'tests/resources/config_for_test_create_ip_sec_connection'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('ip_sec_connection_group.command_name', 'ip_sec_connection')
@@ -1101,6 +1461,10 @@ def test_create_ip_sec_connection(cli_testing_service_client, runner, config_fil
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_create_ip_sec_connection.pem'):
+                    os.remove('tests/resources/keyfile_for_test_create_ip_sec_connection.pem')
+                if os.path.exists('tests/resources/config_for_test_create_ip_sec_connection'):
+                    os.remove('tests/resources/config_for_test_create_ip_sec_connection')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -1119,6 +1483,30 @@ def test_create_ip_sec_connection(cli_testing_service_client, runner, config_fil
 def test_create_local_peering_gateway(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'CreateLocalPeeringGateway'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'CreateLocalPeeringGateway')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_create_local_peering_gateway.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_create_local_peering_gateway', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_create_local_peering_gateway.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_create_local_peering_gateway'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_create_local_peering_gateway.pem'])
+            config_file = 'tests/resources/config_for_test_create_local_peering_gateway'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('local_peering_gateway_group.command_name', 'local_peering_gateway')
@@ -1185,6 +1573,10 @@ def test_create_local_peering_gateway(cli_testing_service_client, runner, config
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_create_local_peering_gateway.pem'):
+                    os.remove('tests/resources/keyfile_for_test_create_local_peering_gateway.pem')
+                if os.path.exists('tests/resources/config_for_test_create_local_peering_gateway'):
+                    os.remove('tests/resources/config_for_test_create_local_peering_gateway')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -1203,6 +1595,30 @@ def test_create_local_peering_gateway(cli_testing_service_client, runner, config
 def test_create_nat_gateway(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'CreateNatGateway'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'CreateNatGateway')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_create_nat_gateway.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_create_nat_gateway', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_create_nat_gateway.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_create_nat_gateway'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_create_nat_gateway.pem'])
+            config_file = 'tests/resources/config_for_test_create_nat_gateway'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('nat_gateway_group.command_name', 'nat_gateway')
@@ -1269,6 +1685,10 @@ def test_create_nat_gateway(cli_testing_service_client, runner, config_file, con
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_create_nat_gateway.pem'):
+                    os.remove('tests/resources/keyfile_for_test_create_nat_gateway.pem')
+                if os.path.exists('tests/resources/config_for_test_create_nat_gateway'):
+                    os.remove('tests/resources/config_for_test_create_nat_gateway')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -1287,6 +1707,30 @@ def test_create_nat_gateway(cli_testing_service_client, runner, config_file, con
 def test_create_private_ip(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'CreatePrivateIp'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'CreatePrivateIp')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_create_private_ip.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_create_private_ip', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_create_private_ip.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_create_private_ip'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_create_private_ip.pem'])
+            config_file = 'tests/resources/config_for_test_create_private_ip'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('private_ip_group.command_name', 'private_ip')
@@ -1353,6 +1797,10 @@ def test_create_private_ip(cli_testing_service_client, runner, config_file, conf
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_create_private_ip.pem'):
+                    os.remove('tests/resources/keyfile_for_test_create_private_ip.pem')
+                if os.path.exists('tests/resources/config_for_test_create_private_ip'):
+                    os.remove('tests/resources/config_for_test_create_private_ip')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -1371,6 +1819,30 @@ def test_create_private_ip(cli_testing_service_client, runner, config_file, conf
 def test_create_public_ip(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'CreatePublicIp'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'CreatePublicIp')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_create_public_ip.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_create_public_ip', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_create_public_ip.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_create_public_ip'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_create_public_ip.pem'])
+            config_file = 'tests/resources/config_for_test_create_public_ip'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('public_ip_group.command_name', 'public_ip')
@@ -1437,6 +1909,10 @@ def test_create_public_ip(cli_testing_service_client, runner, config_file, confi
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_create_public_ip.pem'):
+                    os.remove('tests/resources/keyfile_for_test_create_public_ip.pem')
+                if os.path.exists('tests/resources/config_for_test_create_public_ip'):
+                    os.remove('tests/resources/config_for_test_create_public_ip')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -1455,6 +1931,30 @@ def test_create_public_ip(cli_testing_service_client, runner, config_file, confi
 def test_create_remote_peering_connection(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'CreateRemotePeeringConnection'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'CreateRemotePeeringConnection')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_create_remote_peering_connection.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_create_remote_peering_connection', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_create_remote_peering_connection.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_create_remote_peering_connection'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_create_remote_peering_connection.pem'])
+            config_file = 'tests/resources/config_for_test_create_remote_peering_connection'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('remote_peering_connection_group.command_name', 'remote_peering_connection')
@@ -1521,6 +2021,10 @@ def test_create_remote_peering_connection(cli_testing_service_client, runner, co
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_create_remote_peering_connection.pem'):
+                    os.remove('tests/resources/keyfile_for_test_create_remote_peering_connection.pem')
+                if os.path.exists('tests/resources/config_for_test_create_remote_peering_connection'):
+                    os.remove('tests/resources/config_for_test_create_remote_peering_connection')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -1539,6 +2043,30 @@ def test_create_remote_peering_connection(cli_testing_service_client, runner, co
 def test_create_route_table(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'CreateRouteTable'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'CreateRouteTable')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_create_route_table.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_create_route_table', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_create_route_table.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_create_route_table'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_create_route_table.pem'])
+            config_file = 'tests/resources/config_for_test_create_route_table'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('route_table_group.command_name', 'route_table')
@@ -1605,6 +2133,10 @@ def test_create_route_table(cli_testing_service_client, runner, config_file, con
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_create_route_table.pem'):
+                    os.remove('tests/resources/keyfile_for_test_create_route_table.pem')
+                if os.path.exists('tests/resources/config_for_test_create_route_table'):
+                    os.remove('tests/resources/config_for_test_create_route_table')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -1623,6 +2155,30 @@ def test_create_route_table(cli_testing_service_client, runner, config_file, con
 def test_create_security_list(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'CreateSecurityList'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'CreateSecurityList')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_create_security_list.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_create_security_list', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_create_security_list.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_create_security_list'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_create_security_list.pem'])
+            config_file = 'tests/resources/config_for_test_create_security_list'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('security_list_group.command_name', 'security_list')
@@ -1689,6 +2245,10 @@ def test_create_security_list(cli_testing_service_client, runner, config_file, c
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_create_security_list.pem'):
+                    os.remove('tests/resources/keyfile_for_test_create_security_list.pem')
+                if os.path.exists('tests/resources/config_for_test_create_security_list'):
+                    os.remove('tests/resources/config_for_test_create_security_list')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -1707,6 +2267,30 @@ def test_create_security_list(cli_testing_service_client, runner, config_file, c
 def test_create_service_gateway(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'CreateServiceGateway'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'CreateServiceGateway')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_create_service_gateway.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_create_service_gateway', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_create_service_gateway.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_create_service_gateway'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_create_service_gateway.pem'])
+            config_file = 'tests/resources/config_for_test_create_service_gateway'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('service_gateway_group.command_name', 'service_gateway')
@@ -1773,6 +2357,10 @@ def test_create_service_gateway(cli_testing_service_client, runner, config_file,
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_create_service_gateway.pem'):
+                    os.remove('tests/resources/keyfile_for_test_create_service_gateway.pem')
+                if os.path.exists('tests/resources/config_for_test_create_service_gateway'):
+                    os.remove('tests/resources/config_for_test_create_service_gateway')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -1791,6 +2379,30 @@ def test_create_service_gateway(cli_testing_service_client, runner, config_file,
 def test_create_subnet(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'CreateSubnet'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'CreateSubnet')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_create_subnet.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_create_subnet', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_create_subnet.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_create_subnet'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_create_subnet.pem'])
+            config_file = 'tests/resources/config_for_test_create_subnet'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('subnet_group.command_name', 'subnet')
@@ -1857,6 +2469,10 @@ def test_create_subnet(cli_testing_service_client, runner, config_file, config_p
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_create_subnet.pem'):
+                    os.remove('tests/resources/keyfile_for_test_create_subnet.pem')
+                if os.path.exists('tests/resources/config_for_test_create_subnet'):
+                    os.remove('tests/resources/config_for_test_create_subnet')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -1875,6 +2491,30 @@ def test_create_subnet(cli_testing_service_client, runner, config_file, config_p
 def test_create_vcn(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'CreateVcn'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'CreateVcn')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_create_vcn.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_create_vcn', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_create_vcn.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_create_vcn'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_create_vcn.pem'])
+            config_file = 'tests/resources/config_for_test_create_vcn'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('vcn_group.command_name', 'vcn')
@@ -1941,6 +2581,10 @@ def test_create_vcn(cli_testing_service_client, runner, config_file, config_prof
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_create_vcn.pem'):
+                    os.remove('tests/resources/keyfile_for_test_create_vcn.pem')
+                if os.path.exists('tests/resources/config_for_test_create_vcn'):
+                    os.remove('tests/resources/config_for_test_create_vcn')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -1959,6 +2603,30 @@ def test_create_vcn(cli_testing_service_client, runner, config_file, config_prof
 def test_create_virtual_circuit(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'CreateVirtualCircuit'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'CreateVirtualCircuit')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_create_virtual_circuit.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_create_virtual_circuit', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_create_virtual_circuit.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_create_virtual_circuit'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_create_virtual_circuit.pem'])
+            config_file = 'tests/resources/config_for_test_create_virtual_circuit'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('virtual_circuit_group.command_name', 'virtual_circuit')
@@ -2025,6 +2693,10 @@ def test_create_virtual_circuit(cli_testing_service_client, runner, config_file,
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_create_virtual_circuit.pem'):
+                    os.remove('tests/resources/keyfile_for_test_create_virtual_circuit.pem')
+                if os.path.exists('tests/resources/config_for_test_create_virtual_circuit'):
+                    os.remove('tests/resources/config_for_test_create_virtual_circuit')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -2043,6 +2715,30 @@ def test_create_virtual_circuit(cli_testing_service_client, runner, config_file,
 def test_delete_cpe(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'DeleteCpe'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'DeleteCpe')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_delete_cpe.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_delete_cpe', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_delete_cpe.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_delete_cpe'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_delete_cpe.pem'])
+            config_file = 'tests/resources/config_for_test_delete_cpe'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('cpe_group.command_name', 'cpe')
@@ -2102,6 +2798,10 @@ def test_delete_cpe(cli_testing_service_client, runner, config_file, config_prof
                     True
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_delete_cpe.pem'):
+                    os.remove('tests/resources/keyfile_for_test_delete_cpe.pem')
+                if os.path.exists('tests/resources/config_for_test_delete_cpe'):
+                    os.remove('tests/resources/config_for_test_delete_cpe')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -2120,6 +2820,30 @@ def test_delete_cpe(cli_testing_service_client, runner, config_file, config_prof
 def test_delete_cross_connect(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'DeleteCrossConnect'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'DeleteCrossConnect')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_delete_cross_connect.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_delete_cross_connect', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_delete_cross_connect.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_delete_cross_connect'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_delete_cross_connect.pem'])
+            config_file = 'tests/resources/config_for_test_delete_cross_connect'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('cross_connect_group.command_name', 'cross_connect')
@@ -2179,6 +2903,10 @@ def test_delete_cross_connect(cli_testing_service_client, runner, config_file, c
                     True
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_delete_cross_connect.pem'):
+                    os.remove('tests/resources/keyfile_for_test_delete_cross_connect.pem')
+                if os.path.exists('tests/resources/config_for_test_delete_cross_connect'):
+                    os.remove('tests/resources/config_for_test_delete_cross_connect')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -2197,6 +2925,30 @@ def test_delete_cross_connect(cli_testing_service_client, runner, config_file, c
 def test_delete_cross_connect_group(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'DeleteCrossConnectGroup'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'DeleteCrossConnectGroup')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_delete_cross_connect_group.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_delete_cross_connect_group', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_delete_cross_connect_group.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_delete_cross_connect_group'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_delete_cross_connect_group.pem'])
+            config_file = 'tests/resources/config_for_test_delete_cross_connect_group'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('cross_connect_group_group.command_name', 'cross_connect_group')
@@ -2256,6 +3008,10 @@ def test_delete_cross_connect_group(cli_testing_service_client, runner, config_f
                     True
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_delete_cross_connect_group.pem'):
+                    os.remove('tests/resources/keyfile_for_test_delete_cross_connect_group.pem')
+                if os.path.exists('tests/resources/config_for_test_delete_cross_connect_group'):
+                    os.remove('tests/resources/config_for_test_delete_cross_connect_group')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -2274,6 +3030,30 @@ def test_delete_cross_connect_group(cli_testing_service_client, runner, config_f
 def test_delete_dhcp_options(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'DeleteDhcpOptions'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'DeleteDhcpOptions')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_delete_dhcp_options.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_delete_dhcp_options', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_delete_dhcp_options.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_delete_dhcp_options'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_delete_dhcp_options.pem'])
+            config_file = 'tests/resources/config_for_test_delete_dhcp_options'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('dhcp_options_group.command_name', 'dhcp_options')
@@ -2333,6 +3113,10 @@ def test_delete_dhcp_options(cli_testing_service_client, runner, config_file, co
                     True
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_delete_dhcp_options.pem'):
+                    os.remove('tests/resources/keyfile_for_test_delete_dhcp_options.pem')
+                if os.path.exists('tests/resources/config_for_test_delete_dhcp_options'):
+                    os.remove('tests/resources/config_for_test_delete_dhcp_options')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -2351,6 +3135,30 @@ def test_delete_dhcp_options(cli_testing_service_client, runner, config_file, co
 def test_delete_drg(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'DeleteDrg'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'DeleteDrg')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_delete_drg.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_delete_drg', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_delete_drg.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_delete_drg'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_delete_drg.pem'])
+            config_file = 'tests/resources/config_for_test_delete_drg'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('drg_group.command_name', 'drg')
@@ -2410,6 +3218,10 @@ def test_delete_drg(cli_testing_service_client, runner, config_file, config_prof
                     True
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_delete_drg.pem'):
+                    os.remove('tests/resources/keyfile_for_test_delete_drg.pem')
+                if os.path.exists('tests/resources/config_for_test_delete_drg'):
+                    os.remove('tests/resources/config_for_test_delete_drg')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -2428,6 +3240,30 @@ def test_delete_drg(cli_testing_service_client, runner, config_file, config_prof
 def test_delete_drg_attachment(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'DeleteDrgAttachment'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'DeleteDrgAttachment')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_delete_drg_attachment.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_delete_drg_attachment', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_delete_drg_attachment.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_delete_drg_attachment'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_delete_drg_attachment.pem'])
+            config_file = 'tests/resources/config_for_test_delete_drg_attachment'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('drg_attachment_group.command_name', 'drg_attachment')
@@ -2487,6 +3323,10 @@ def test_delete_drg_attachment(cli_testing_service_client, runner, config_file, 
                     True
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_delete_drg_attachment.pem'):
+                    os.remove('tests/resources/keyfile_for_test_delete_drg_attachment.pem')
+                if os.path.exists('tests/resources/config_for_test_delete_drg_attachment'):
+                    os.remove('tests/resources/config_for_test_delete_drg_attachment')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -2505,6 +3345,30 @@ def test_delete_drg_attachment(cli_testing_service_client, runner, config_file, 
 def test_delete_internet_gateway(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'DeleteInternetGateway'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'DeleteInternetGateway')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_delete_internet_gateway.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_delete_internet_gateway', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_delete_internet_gateway.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_delete_internet_gateway'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_delete_internet_gateway.pem'])
+            config_file = 'tests/resources/config_for_test_delete_internet_gateway'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('internet_gateway_group.command_name', 'internet_gateway')
@@ -2564,6 +3428,10 @@ def test_delete_internet_gateway(cli_testing_service_client, runner, config_file
                     True
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_delete_internet_gateway.pem'):
+                    os.remove('tests/resources/keyfile_for_test_delete_internet_gateway.pem')
+                if os.path.exists('tests/resources/config_for_test_delete_internet_gateway'):
+                    os.remove('tests/resources/config_for_test_delete_internet_gateway')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -2582,6 +3450,30 @@ def test_delete_internet_gateway(cli_testing_service_client, runner, config_file
 def test_delete_ip_sec_connection(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'DeleteIPSecConnection'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'DeleteIPSecConnection')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_delete_ip_sec_connection.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_delete_ip_sec_connection', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_delete_ip_sec_connection.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_delete_ip_sec_connection'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_delete_ip_sec_connection.pem'])
+            config_file = 'tests/resources/config_for_test_delete_ip_sec_connection'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('ip_sec_connection_group.command_name', 'ip_sec_connection')
@@ -2641,6 +3533,10 @@ def test_delete_ip_sec_connection(cli_testing_service_client, runner, config_fil
                     True
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_delete_ip_sec_connection.pem'):
+                    os.remove('tests/resources/keyfile_for_test_delete_ip_sec_connection.pem')
+                if os.path.exists('tests/resources/config_for_test_delete_ip_sec_connection'):
+                    os.remove('tests/resources/config_for_test_delete_ip_sec_connection')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -2659,6 +3555,30 @@ def test_delete_ip_sec_connection(cli_testing_service_client, runner, config_fil
 def test_delete_local_peering_gateway(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'DeleteLocalPeeringGateway'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'DeleteLocalPeeringGateway')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_delete_local_peering_gateway.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_delete_local_peering_gateway', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_delete_local_peering_gateway.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_delete_local_peering_gateway'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_delete_local_peering_gateway.pem'])
+            config_file = 'tests/resources/config_for_test_delete_local_peering_gateway'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('local_peering_gateway_group.command_name', 'local_peering_gateway')
@@ -2718,6 +3638,10 @@ def test_delete_local_peering_gateway(cli_testing_service_client, runner, config
                     True
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_delete_local_peering_gateway.pem'):
+                    os.remove('tests/resources/keyfile_for_test_delete_local_peering_gateway.pem')
+                if os.path.exists('tests/resources/config_for_test_delete_local_peering_gateway'):
+                    os.remove('tests/resources/config_for_test_delete_local_peering_gateway')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -2736,6 +3660,30 @@ def test_delete_local_peering_gateway(cli_testing_service_client, runner, config
 def test_delete_nat_gateway(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'DeleteNatGateway'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'DeleteNatGateway')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_delete_nat_gateway.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_delete_nat_gateway', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_delete_nat_gateway.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_delete_nat_gateway'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_delete_nat_gateway.pem'])
+            config_file = 'tests/resources/config_for_test_delete_nat_gateway'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('nat_gateway_group.command_name', 'nat_gateway')
@@ -2795,6 +3743,10 @@ def test_delete_nat_gateway(cli_testing_service_client, runner, config_file, con
                     True
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_delete_nat_gateway.pem'):
+                    os.remove('tests/resources/keyfile_for_test_delete_nat_gateway.pem')
+                if os.path.exists('tests/resources/config_for_test_delete_nat_gateway'):
+                    os.remove('tests/resources/config_for_test_delete_nat_gateway')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -2813,6 +3765,30 @@ def test_delete_nat_gateway(cli_testing_service_client, runner, config_file, con
 def test_delete_private_ip(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'DeletePrivateIp'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'DeletePrivateIp')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_delete_private_ip.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_delete_private_ip', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_delete_private_ip.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_delete_private_ip'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_delete_private_ip.pem'])
+            config_file = 'tests/resources/config_for_test_delete_private_ip'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('private_ip_group.command_name', 'private_ip')
@@ -2872,6 +3848,10 @@ def test_delete_private_ip(cli_testing_service_client, runner, config_file, conf
                     True
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_delete_private_ip.pem'):
+                    os.remove('tests/resources/keyfile_for_test_delete_private_ip.pem')
+                if os.path.exists('tests/resources/config_for_test_delete_private_ip'):
+                    os.remove('tests/resources/config_for_test_delete_private_ip')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -2890,6 +3870,30 @@ def test_delete_private_ip(cli_testing_service_client, runner, config_file, conf
 def test_delete_public_ip(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'DeletePublicIp'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'DeletePublicIp')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_delete_public_ip.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_delete_public_ip', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_delete_public_ip.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_delete_public_ip'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_delete_public_ip.pem'])
+            config_file = 'tests/resources/config_for_test_delete_public_ip'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('public_ip_group.command_name', 'public_ip')
@@ -2949,6 +3953,10 @@ def test_delete_public_ip(cli_testing_service_client, runner, config_file, confi
                     True
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_delete_public_ip.pem'):
+                    os.remove('tests/resources/keyfile_for_test_delete_public_ip.pem')
+                if os.path.exists('tests/resources/config_for_test_delete_public_ip'):
+                    os.remove('tests/resources/config_for_test_delete_public_ip')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -2967,6 +3975,30 @@ def test_delete_public_ip(cli_testing_service_client, runner, config_file, confi
 def test_delete_remote_peering_connection(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'DeleteRemotePeeringConnection'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'DeleteRemotePeeringConnection')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_delete_remote_peering_connection.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_delete_remote_peering_connection', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_delete_remote_peering_connection.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_delete_remote_peering_connection'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_delete_remote_peering_connection.pem'])
+            config_file = 'tests/resources/config_for_test_delete_remote_peering_connection'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('remote_peering_connection_group.command_name', 'remote_peering_connection')
@@ -3026,6 +4058,10 @@ def test_delete_remote_peering_connection(cli_testing_service_client, runner, co
                     True
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_delete_remote_peering_connection.pem'):
+                    os.remove('tests/resources/keyfile_for_test_delete_remote_peering_connection.pem')
+                if os.path.exists('tests/resources/config_for_test_delete_remote_peering_connection'):
+                    os.remove('tests/resources/config_for_test_delete_remote_peering_connection')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -3044,6 +4080,30 @@ def test_delete_remote_peering_connection(cli_testing_service_client, runner, co
 def test_delete_route_table(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'DeleteRouteTable'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'DeleteRouteTable')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_delete_route_table.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_delete_route_table', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_delete_route_table.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_delete_route_table'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_delete_route_table.pem'])
+            config_file = 'tests/resources/config_for_test_delete_route_table'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('route_table_group.command_name', 'route_table')
@@ -3103,6 +4163,10 @@ def test_delete_route_table(cli_testing_service_client, runner, config_file, con
                     True
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_delete_route_table.pem'):
+                    os.remove('tests/resources/keyfile_for_test_delete_route_table.pem')
+                if os.path.exists('tests/resources/config_for_test_delete_route_table'):
+                    os.remove('tests/resources/config_for_test_delete_route_table')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -3121,6 +4185,30 @@ def test_delete_route_table(cli_testing_service_client, runner, config_file, con
 def test_delete_security_list(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'DeleteSecurityList'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'DeleteSecurityList')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_delete_security_list.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_delete_security_list', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_delete_security_list.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_delete_security_list'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_delete_security_list.pem'])
+            config_file = 'tests/resources/config_for_test_delete_security_list'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('security_list_group.command_name', 'security_list')
@@ -3180,6 +4268,10 @@ def test_delete_security_list(cli_testing_service_client, runner, config_file, c
                     True
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_delete_security_list.pem'):
+                    os.remove('tests/resources/keyfile_for_test_delete_security_list.pem')
+                if os.path.exists('tests/resources/config_for_test_delete_security_list'):
+                    os.remove('tests/resources/config_for_test_delete_security_list')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -3198,6 +4290,30 @@ def test_delete_security_list(cli_testing_service_client, runner, config_file, c
 def test_delete_service_gateway(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'DeleteServiceGateway'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'DeleteServiceGateway')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_delete_service_gateway.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_delete_service_gateway', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_delete_service_gateway.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_delete_service_gateway'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_delete_service_gateway.pem'])
+            config_file = 'tests/resources/config_for_test_delete_service_gateway'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('service_gateway_group.command_name', 'service_gateway')
@@ -3257,6 +4373,10 @@ def test_delete_service_gateway(cli_testing_service_client, runner, config_file,
                     True
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_delete_service_gateway.pem'):
+                    os.remove('tests/resources/keyfile_for_test_delete_service_gateway.pem')
+                if os.path.exists('tests/resources/config_for_test_delete_service_gateway'):
+                    os.remove('tests/resources/config_for_test_delete_service_gateway')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -3275,6 +4395,30 @@ def test_delete_service_gateway(cli_testing_service_client, runner, config_file,
 def test_delete_subnet(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'DeleteSubnet'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'DeleteSubnet')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_delete_subnet.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_delete_subnet', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_delete_subnet.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_delete_subnet'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_delete_subnet.pem'])
+            config_file = 'tests/resources/config_for_test_delete_subnet'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('subnet_group.command_name', 'subnet')
@@ -3334,6 +4478,10 @@ def test_delete_subnet(cli_testing_service_client, runner, config_file, config_p
                     True
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_delete_subnet.pem'):
+                    os.remove('tests/resources/keyfile_for_test_delete_subnet.pem')
+                if os.path.exists('tests/resources/config_for_test_delete_subnet'):
+                    os.remove('tests/resources/config_for_test_delete_subnet')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -3352,6 +4500,30 @@ def test_delete_subnet(cli_testing_service_client, runner, config_file, config_p
 def test_delete_vcn(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'DeleteVcn'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'DeleteVcn')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_delete_vcn.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_delete_vcn', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_delete_vcn.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_delete_vcn'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_delete_vcn.pem'])
+            config_file = 'tests/resources/config_for_test_delete_vcn'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('vcn_group.command_name', 'vcn')
@@ -3411,6 +4583,10 @@ def test_delete_vcn(cli_testing_service_client, runner, config_file, config_prof
                     True
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_delete_vcn.pem'):
+                    os.remove('tests/resources/keyfile_for_test_delete_vcn.pem')
+                if os.path.exists('tests/resources/config_for_test_delete_vcn'):
+                    os.remove('tests/resources/config_for_test_delete_vcn')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -3429,6 +4605,30 @@ def test_delete_vcn(cli_testing_service_client, runner, config_file, config_prof
 def test_delete_virtual_circuit(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'DeleteVirtualCircuit'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'DeleteVirtualCircuit')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_delete_virtual_circuit.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_delete_virtual_circuit', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_delete_virtual_circuit.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_delete_virtual_circuit'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_delete_virtual_circuit.pem'])
+            config_file = 'tests/resources/config_for_test_delete_virtual_circuit'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('virtual_circuit_group.command_name', 'virtual_circuit')
@@ -3488,6 +4688,10 @@ def test_delete_virtual_circuit(cli_testing_service_client, runner, config_file,
                     True
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_delete_virtual_circuit.pem'):
+                    os.remove('tests/resources/keyfile_for_test_delete_virtual_circuit.pem')
+                if os.path.exists('tests/resources/config_for_test_delete_virtual_circuit'):
+                    os.remove('tests/resources/config_for_test_delete_virtual_circuit')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -3506,6 +4710,30 @@ def test_delete_virtual_circuit(cli_testing_service_client, runner, config_file,
 def test_detach_service_id(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'DetachServiceId'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'DetachServiceId')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_detach_service_id.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_detach_service_id', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_detach_service_id.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_detach_service_id'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_detach_service_id.pem'])
+            config_file = 'tests/resources/config_for_test_detach_service_id'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('service_gateway_group.command_name', 'service_gateway')
@@ -3572,6 +4800,10 @@ def test_detach_service_id(cli_testing_service_client, runner, config_file, conf
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_detach_service_id.pem'):
+                    os.remove('tests/resources/keyfile_for_test_detach_service_id.pem')
+                if os.path.exists('tests/resources/config_for_test_detach_service_id'):
+                    os.remove('tests/resources/config_for_test_detach_service_id')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -3590,6 +4822,30 @@ def test_detach_service_id(cli_testing_service_client, runner, config_file, conf
 def test_get_cpe(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'GetCpe'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'GetCpe')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_cpe.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_cpe', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_cpe.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_cpe'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_cpe.pem'])
+            config_file = 'tests/resources/config_for_test_get_cpe'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('cpe_group.command_name', 'cpe')
@@ -3648,6 +4904,10 @@ def test_get_cpe(cli_testing_service_client, runner, config_file, config_profile
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_cpe.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_cpe.pem')
+                if os.path.exists('tests/resources/config_for_test_get_cpe'):
+                    os.remove('tests/resources/config_for_test_get_cpe')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -3666,6 +4926,30 @@ def test_get_cpe(cli_testing_service_client, runner, config_file, config_profile
 def test_get_cross_connect(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'GetCrossConnect'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'GetCrossConnect')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_cross_connect.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_cross_connect', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_cross_connect.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_cross_connect'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_cross_connect.pem'])
+            config_file = 'tests/resources/config_for_test_get_cross_connect'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('cross_connect_group.command_name', 'cross_connect')
@@ -3724,6 +5008,10 @@ def test_get_cross_connect(cli_testing_service_client, runner, config_file, conf
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_cross_connect.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_cross_connect.pem')
+                if os.path.exists('tests/resources/config_for_test_get_cross_connect'):
+                    os.remove('tests/resources/config_for_test_get_cross_connect')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -3742,6 +5030,30 @@ def test_get_cross_connect(cli_testing_service_client, runner, config_file, conf
 def test_get_cross_connect_group(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'GetCrossConnectGroup'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'GetCrossConnectGroup')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_cross_connect_group.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_cross_connect_group', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_cross_connect_group.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_cross_connect_group'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_cross_connect_group.pem'])
+            config_file = 'tests/resources/config_for_test_get_cross_connect_group'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('cross_connect_group_group.command_name', 'cross_connect_group')
@@ -3800,6 +5112,10 @@ def test_get_cross_connect_group(cli_testing_service_client, runner, config_file
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_cross_connect_group.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_cross_connect_group.pem')
+                if os.path.exists('tests/resources/config_for_test_get_cross_connect_group'):
+                    os.remove('tests/resources/config_for_test_get_cross_connect_group')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -3818,6 +5134,30 @@ def test_get_cross_connect_group(cli_testing_service_client, runner, config_file
 def test_get_cross_connect_letter_of_authority(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'GetCrossConnectLetterOfAuthority'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'GetCrossConnectLetterOfAuthority')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_cross_connect_letter_of_authority.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_cross_connect_letter_of_authority', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_cross_connect_letter_of_authority.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_cross_connect_letter_of_authority'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_cross_connect_letter_of_authority.pem'])
+            config_file = 'tests/resources/config_for_test_get_cross_connect_letter_of_authority'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('letter_of_authority_group.command_name', 'letter_of_authority')
@@ -3876,6 +5216,10 @@ def test_get_cross_connect_letter_of_authority(cli_testing_service_client, runne
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_cross_connect_letter_of_authority.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_cross_connect_letter_of_authority.pem')
+                if os.path.exists('tests/resources/config_for_test_get_cross_connect_letter_of_authority'):
+                    os.remove('tests/resources/config_for_test_get_cross_connect_letter_of_authority')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -3894,6 +5238,30 @@ def test_get_cross_connect_letter_of_authority(cli_testing_service_client, runne
 def test_get_cross_connect_status(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'GetCrossConnectStatus'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'GetCrossConnectStatus')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_cross_connect_status.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_cross_connect_status', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_cross_connect_status.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_cross_connect_status'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_cross_connect_status.pem'])
+            config_file = 'tests/resources/config_for_test_get_cross_connect_status'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('cross_connect_status_group.command_name', 'cross_connect_status')
@@ -3952,6 +5320,10 @@ def test_get_cross_connect_status(cli_testing_service_client, runner, config_fil
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_cross_connect_status.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_cross_connect_status.pem')
+                if os.path.exists('tests/resources/config_for_test_get_cross_connect_status'):
+                    os.remove('tests/resources/config_for_test_get_cross_connect_status')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -3970,6 +5342,30 @@ def test_get_cross_connect_status(cli_testing_service_client, runner, config_fil
 def test_get_dhcp_options(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'GetDhcpOptions'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'GetDhcpOptions')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_dhcp_options.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_dhcp_options', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_dhcp_options.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_dhcp_options'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_dhcp_options.pem'])
+            config_file = 'tests/resources/config_for_test_get_dhcp_options'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('dhcp_options_group.command_name', 'dhcp_options')
@@ -4028,6 +5424,10 @@ def test_get_dhcp_options(cli_testing_service_client, runner, config_file, confi
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_dhcp_options.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_dhcp_options.pem')
+                if os.path.exists('tests/resources/config_for_test_get_dhcp_options'):
+                    os.remove('tests/resources/config_for_test_get_dhcp_options')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -4046,6 +5446,30 @@ def test_get_dhcp_options(cli_testing_service_client, runner, config_file, confi
 def test_get_drg(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'GetDrg'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'GetDrg')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_drg.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_drg', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_drg.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_drg'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_drg.pem'])
+            config_file = 'tests/resources/config_for_test_get_drg'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('drg_group.command_name', 'drg')
@@ -4104,6 +5528,10 @@ def test_get_drg(cli_testing_service_client, runner, config_file, config_profile
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_drg.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_drg.pem')
+                if os.path.exists('tests/resources/config_for_test_get_drg'):
+                    os.remove('tests/resources/config_for_test_get_drg')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -4122,6 +5550,30 @@ def test_get_drg(cli_testing_service_client, runner, config_file, config_profile
 def test_get_drg_attachment(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'GetDrgAttachment'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'GetDrgAttachment')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_drg_attachment.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_drg_attachment', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_drg_attachment.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_drg_attachment'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_drg_attachment.pem'])
+            config_file = 'tests/resources/config_for_test_get_drg_attachment'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('drg_attachment_group.command_name', 'drg_attachment')
@@ -4180,6 +5632,10 @@ def test_get_drg_attachment(cli_testing_service_client, runner, config_file, con
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_drg_attachment.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_drg_attachment.pem')
+                if os.path.exists('tests/resources/config_for_test_get_drg_attachment'):
+                    os.remove('tests/resources/config_for_test_get_drg_attachment')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -4198,6 +5654,30 @@ def test_get_drg_attachment(cli_testing_service_client, runner, config_file, con
 def test_get_fast_connect_provider_service(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'GetFastConnectProviderService'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'GetFastConnectProviderService')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_fast_connect_provider_service.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_fast_connect_provider_service', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_fast_connect_provider_service.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_fast_connect_provider_service'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_fast_connect_provider_service.pem'])
+            config_file = 'tests/resources/config_for_test_get_fast_connect_provider_service'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('fast_connect_provider_service_group.command_name', 'fast_connect_provider_service')
@@ -4256,6 +5736,10 @@ def test_get_fast_connect_provider_service(cli_testing_service_client, runner, c
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_fast_connect_provider_service.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_fast_connect_provider_service.pem')
+                if os.path.exists('tests/resources/config_for_test_get_fast_connect_provider_service'):
+                    os.remove('tests/resources/config_for_test_get_fast_connect_provider_service')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -4274,6 +5758,30 @@ def test_get_fast_connect_provider_service(cli_testing_service_client, runner, c
 def test_get_fast_connect_provider_service_key(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'GetFastConnectProviderServiceKey'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'GetFastConnectProviderServiceKey')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_fast_connect_provider_service_key.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_fast_connect_provider_service_key', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_fast_connect_provider_service_key.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_fast_connect_provider_service_key'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_fast_connect_provider_service_key.pem'])
+            config_file = 'tests/resources/config_for_test_get_fast_connect_provider_service_key'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('fast_connect_provider_service_key_group.command_name', 'fast_connect_provider_service_key')
@@ -4332,6 +5840,10 @@ def test_get_fast_connect_provider_service_key(cli_testing_service_client, runne
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_fast_connect_provider_service_key.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_fast_connect_provider_service_key.pem')
+                if os.path.exists('tests/resources/config_for_test_get_fast_connect_provider_service_key'):
+                    os.remove('tests/resources/config_for_test_get_fast_connect_provider_service_key')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -4350,6 +5862,30 @@ def test_get_fast_connect_provider_service_key(cli_testing_service_client, runne
 def test_get_internet_gateway(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'GetInternetGateway'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'GetInternetGateway')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_internet_gateway.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_internet_gateway', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_internet_gateway.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_internet_gateway'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_internet_gateway.pem'])
+            config_file = 'tests/resources/config_for_test_get_internet_gateway'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('internet_gateway_group.command_name', 'internet_gateway')
@@ -4408,6 +5944,10 @@ def test_get_internet_gateway(cli_testing_service_client, runner, config_file, c
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_internet_gateway.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_internet_gateway.pem')
+                if os.path.exists('tests/resources/config_for_test_get_internet_gateway'):
+                    os.remove('tests/resources/config_for_test_get_internet_gateway')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -4426,6 +5966,30 @@ def test_get_internet_gateway(cli_testing_service_client, runner, config_file, c
 def test_get_ip_sec_connection(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'GetIPSecConnection'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'GetIPSecConnection')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_ip_sec_connection.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_ip_sec_connection', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_ip_sec_connection.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_ip_sec_connection'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_ip_sec_connection.pem'])
+            config_file = 'tests/resources/config_for_test_get_ip_sec_connection'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('ip_sec_connection_group.command_name', 'ip_sec_connection')
@@ -4484,6 +6048,10 @@ def test_get_ip_sec_connection(cli_testing_service_client, runner, config_file, 
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_ip_sec_connection.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_ip_sec_connection.pem')
+                if os.path.exists('tests/resources/config_for_test_get_ip_sec_connection'):
+                    os.remove('tests/resources/config_for_test_get_ip_sec_connection')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -4502,6 +6070,30 @@ def test_get_ip_sec_connection(cli_testing_service_client, runner, config_file, 
 def test_get_ip_sec_connection_device_config(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'GetIPSecConnectionDeviceConfig'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'GetIPSecConnectionDeviceConfig')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_ip_sec_connection_device_config.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_ip_sec_connection_device_config', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_ip_sec_connection_device_config.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_ip_sec_connection_device_config'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_ip_sec_connection_device_config.pem'])
+            config_file = 'tests/resources/config_for_test_get_ip_sec_connection_device_config'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('ip_sec_connection_device_config_group.command_name', 'ip_sec_connection_device_config')
@@ -4560,6 +6152,10 @@ def test_get_ip_sec_connection_device_config(cli_testing_service_client, runner,
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_ip_sec_connection_device_config.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_ip_sec_connection_device_config.pem')
+                if os.path.exists('tests/resources/config_for_test_get_ip_sec_connection_device_config'):
+                    os.remove('tests/resources/config_for_test_get_ip_sec_connection_device_config')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -4578,6 +6174,30 @@ def test_get_ip_sec_connection_device_config(cli_testing_service_client, runner,
 def test_get_ip_sec_connection_device_status(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'GetIPSecConnectionDeviceStatus'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'GetIPSecConnectionDeviceStatus')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_ip_sec_connection_device_status.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_ip_sec_connection_device_status', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_ip_sec_connection_device_status.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_ip_sec_connection_device_status'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_ip_sec_connection_device_status.pem'])
+            config_file = 'tests/resources/config_for_test_get_ip_sec_connection_device_status'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('ip_sec_connection_device_status_group.command_name', 'ip_sec_connection_device_status')
@@ -4636,6 +6256,10 @@ def test_get_ip_sec_connection_device_status(cli_testing_service_client, runner,
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_ip_sec_connection_device_status.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_ip_sec_connection_device_status.pem')
+                if os.path.exists('tests/resources/config_for_test_get_ip_sec_connection_device_status'):
+                    os.remove('tests/resources/config_for_test_get_ip_sec_connection_device_status')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -4654,6 +6278,30 @@ def test_get_ip_sec_connection_device_status(cli_testing_service_client, runner,
 def test_get_local_peering_gateway(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'GetLocalPeeringGateway'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'GetLocalPeeringGateway')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_local_peering_gateway.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_local_peering_gateway', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_local_peering_gateway.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_local_peering_gateway'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_local_peering_gateway.pem'])
+            config_file = 'tests/resources/config_for_test_get_local_peering_gateway'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('local_peering_gateway_group.command_name', 'local_peering_gateway')
@@ -4712,6 +6360,10 @@ def test_get_local_peering_gateway(cli_testing_service_client, runner, config_fi
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_local_peering_gateway.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_local_peering_gateway.pem')
+                if os.path.exists('tests/resources/config_for_test_get_local_peering_gateway'):
+                    os.remove('tests/resources/config_for_test_get_local_peering_gateway')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -4730,6 +6382,30 @@ def test_get_local_peering_gateway(cli_testing_service_client, runner, config_fi
 def test_get_nat_gateway(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'GetNatGateway'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'GetNatGateway')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_nat_gateway.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_nat_gateway', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_nat_gateway.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_nat_gateway'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_nat_gateway.pem'])
+            config_file = 'tests/resources/config_for_test_get_nat_gateway'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('nat_gateway_group.command_name', 'nat_gateway')
@@ -4788,6 +6464,10 @@ def test_get_nat_gateway(cli_testing_service_client, runner, config_file, config
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_nat_gateway.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_nat_gateway.pem')
+                if os.path.exists('tests/resources/config_for_test_get_nat_gateway'):
+                    os.remove('tests/resources/config_for_test_get_nat_gateway')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -4806,6 +6486,30 @@ def test_get_nat_gateway(cli_testing_service_client, runner, config_file, config
 def test_get_private_ip(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'GetPrivateIp'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'GetPrivateIp')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_private_ip.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_private_ip', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_private_ip.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_private_ip'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_private_ip.pem'])
+            config_file = 'tests/resources/config_for_test_get_private_ip'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('private_ip_group.command_name', 'private_ip')
@@ -4864,6 +6568,10 @@ def test_get_private_ip(cli_testing_service_client, runner, config_file, config_
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_private_ip.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_private_ip.pem')
+                if os.path.exists('tests/resources/config_for_test_get_private_ip'):
+                    os.remove('tests/resources/config_for_test_get_private_ip')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -4882,6 +6590,30 @@ def test_get_private_ip(cli_testing_service_client, runner, config_file, config_
 def test_get_public_ip(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'GetPublicIp'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'GetPublicIp')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_public_ip.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_public_ip', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_public_ip.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_public_ip'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_public_ip.pem'])
+            config_file = 'tests/resources/config_for_test_get_public_ip'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('public_ip_group.command_name', 'public_ip')
@@ -4940,6 +6672,10 @@ def test_get_public_ip(cli_testing_service_client, runner, config_file, config_p
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_public_ip.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_public_ip.pem')
+                if os.path.exists('tests/resources/config_for_test_get_public_ip'):
+                    os.remove('tests/resources/config_for_test_get_public_ip')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -4958,6 +6694,30 @@ def test_get_public_ip(cli_testing_service_client, runner, config_file, config_p
 def test_get_public_ip_by_ip_address(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'GetPublicIpByIpAddress'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'GetPublicIpByIpAddress')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_public_ip_by_ip_address.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_public_ip_by_ip_address', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_public_ip_by_ip_address.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_public_ip_by_ip_address'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_public_ip_by_ip_address.pem'])
+            config_file = 'tests/resources/config_for_test_get_public_ip_by_ip_address'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('public_ip_group.command_name', 'public_ip')
@@ -5024,6 +6784,10 @@ def test_get_public_ip_by_ip_address(cli_testing_service_client, runner, config_
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_public_ip_by_ip_address.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_public_ip_by_ip_address.pem')
+                if os.path.exists('tests/resources/config_for_test_get_public_ip_by_ip_address'):
+                    os.remove('tests/resources/config_for_test_get_public_ip_by_ip_address')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -5042,6 +6806,30 @@ def test_get_public_ip_by_ip_address(cli_testing_service_client, runner, config_
 def test_get_public_ip_by_private_ip_id(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'GetPublicIpByPrivateIpId'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'GetPublicIpByPrivateIpId')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_public_ip_by_private_ip_id.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_public_ip_by_private_ip_id', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_public_ip_by_private_ip_id.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_public_ip_by_private_ip_id'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_public_ip_by_private_ip_id.pem'])
+            config_file = 'tests/resources/config_for_test_get_public_ip_by_private_ip_id'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('public_ip_group.command_name', 'public_ip')
@@ -5108,6 +6896,10 @@ def test_get_public_ip_by_private_ip_id(cli_testing_service_client, runner, conf
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_public_ip_by_private_ip_id.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_public_ip_by_private_ip_id.pem')
+                if os.path.exists('tests/resources/config_for_test_get_public_ip_by_private_ip_id'):
+                    os.remove('tests/resources/config_for_test_get_public_ip_by_private_ip_id')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -5126,6 +6918,30 @@ def test_get_public_ip_by_private_ip_id(cli_testing_service_client, runner, conf
 def test_get_remote_peering_connection(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'GetRemotePeeringConnection'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'GetRemotePeeringConnection')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_remote_peering_connection.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_remote_peering_connection', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_remote_peering_connection.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_remote_peering_connection'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_remote_peering_connection.pem'])
+            config_file = 'tests/resources/config_for_test_get_remote_peering_connection'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('remote_peering_connection_group.command_name', 'remote_peering_connection')
@@ -5184,6 +7000,10 @@ def test_get_remote_peering_connection(cli_testing_service_client, runner, confi
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_remote_peering_connection.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_remote_peering_connection.pem')
+                if os.path.exists('tests/resources/config_for_test_get_remote_peering_connection'):
+                    os.remove('tests/resources/config_for_test_get_remote_peering_connection')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -5202,6 +7022,30 @@ def test_get_remote_peering_connection(cli_testing_service_client, runner, confi
 def test_get_route_table(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'GetRouteTable'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'GetRouteTable')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_route_table.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_route_table', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_route_table.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_route_table'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_route_table.pem'])
+            config_file = 'tests/resources/config_for_test_get_route_table'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('route_table_group.command_name', 'route_table')
@@ -5260,6 +7104,10 @@ def test_get_route_table(cli_testing_service_client, runner, config_file, config
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_route_table.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_route_table.pem')
+                if os.path.exists('tests/resources/config_for_test_get_route_table'):
+                    os.remove('tests/resources/config_for_test_get_route_table')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -5278,6 +7126,30 @@ def test_get_route_table(cli_testing_service_client, runner, config_file, config
 def test_get_security_list(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'GetSecurityList'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'GetSecurityList')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_security_list.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_security_list', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_security_list.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_security_list'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_security_list.pem'])
+            config_file = 'tests/resources/config_for_test_get_security_list'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('security_list_group.command_name', 'security_list')
@@ -5336,6 +7208,10 @@ def test_get_security_list(cli_testing_service_client, runner, config_file, conf
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_security_list.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_security_list.pem')
+                if os.path.exists('tests/resources/config_for_test_get_security_list'):
+                    os.remove('tests/resources/config_for_test_get_security_list')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -5354,6 +7230,30 @@ def test_get_security_list(cli_testing_service_client, runner, config_file, conf
 def test_get_service(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'GetService'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'GetService')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_service.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_service', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_service.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_service'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_service.pem'])
+            config_file = 'tests/resources/config_for_test_get_service'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('service_group.command_name', 'service')
@@ -5412,6 +7312,10 @@ def test_get_service(cli_testing_service_client, runner, config_file, config_pro
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_service.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_service.pem')
+                if os.path.exists('tests/resources/config_for_test_get_service'):
+                    os.remove('tests/resources/config_for_test_get_service')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -5430,6 +7334,30 @@ def test_get_service(cli_testing_service_client, runner, config_file, config_pro
 def test_get_service_gateway(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'GetServiceGateway'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'GetServiceGateway')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_service_gateway.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_service_gateway', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_service_gateway.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_service_gateway'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_service_gateway.pem'])
+            config_file = 'tests/resources/config_for_test_get_service_gateway'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('service_gateway_group.command_name', 'service_gateway')
@@ -5488,6 +7416,10 @@ def test_get_service_gateway(cli_testing_service_client, runner, config_file, co
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_service_gateway.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_service_gateway.pem')
+                if os.path.exists('tests/resources/config_for_test_get_service_gateway'):
+                    os.remove('tests/resources/config_for_test_get_service_gateway')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -5506,6 +7438,30 @@ def test_get_service_gateway(cli_testing_service_client, runner, config_file, co
 def test_get_subnet(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'GetSubnet'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'GetSubnet')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_subnet.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_subnet', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_subnet.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_subnet'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_subnet.pem'])
+            config_file = 'tests/resources/config_for_test_get_subnet'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('subnet_group.command_name', 'subnet')
@@ -5564,6 +7520,10 @@ def test_get_subnet(cli_testing_service_client, runner, config_file, config_prof
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_subnet.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_subnet.pem')
+                if os.path.exists('tests/resources/config_for_test_get_subnet'):
+                    os.remove('tests/resources/config_for_test_get_subnet')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -5582,6 +7542,30 @@ def test_get_subnet(cli_testing_service_client, runner, config_file, config_prof
 def test_get_vcn(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'GetVcn'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'GetVcn')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_vcn.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_vcn', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_vcn.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_vcn'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_vcn.pem'])
+            config_file = 'tests/resources/config_for_test_get_vcn'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('vcn_group.command_name', 'vcn')
@@ -5640,6 +7624,10 @@ def test_get_vcn(cli_testing_service_client, runner, config_file, config_profile
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_vcn.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_vcn.pem')
+                if os.path.exists('tests/resources/config_for_test_get_vcn'):
+                    os.remove('tests/resources/config_for_test_get_vcn')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -5658,6 +7646,30 @@ def test_get_vcn(cli_testing_service_client, runner, config_file, config_profile
 def test_get_virtual_circuit(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'GetVirtualCircuit'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'GetVirtualCircuit')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_virtual_circuit.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_virtual_circuit', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_virtual_circuit.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_virtual_circuit'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_virtual_circuit.pem'])
+            config_file = 'tests/resources/config_for_test_get_virtual_circuit'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('virtual_circuit_group.command_name', 'virtual_circuit')
@@ -5716,6 +7728,10 @@ def test_get_virtual_circuit(cli_testing_service_client, runner, config_file, co
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_virtual_circuit.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_virtual_circuit.pem')
+                if os.path.exists('tests/resources/config_for_test_get_virtual_circuit'):
+                    os.remove('tests/resources/config_for_test_get_virtual_circuit')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -5734,6 +7750,30 @@ def test_get_virtual_circuit(cli_testing_service_client, runner, config_file, co
 def test_get_vnic(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'GetVnic'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'GetVnic')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_vnic.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_vnic', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_vnic.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_vnic'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_vnic.pem'])
+            config_file = 'tests/resources/config_for_test_get_vnic'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('vnic_group.command_name', 'vnic')
@@ -5792,6 +7832,10 @@ def test_get_vnic(cli_testing_service_client, runner, config_file, config_profil
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_vnic.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_vnic.pem')
+                if os.path.exists('tests/resources/config_for_test_get_vnic'):
+                    os.remove('tests/resources/config_for_test_get_vnic')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -5810,6 +7854,30 @@ def test_get_vnic(cli_testing_service_client, runner, config_file, config_profil
 def test_list_allowed_peer_regions_for_remote_peering(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'ListAllowedPeerRegionsForRemotePeering'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'ListAllowedPeerRegionsForRemotePeering')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_allowed_peer_regions_for_remote_peering.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_allowed_peer_regions_for_remote_peering', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_allowed_peer_regions_for_remote_peering.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_allowed_peer_regions_for_remote_peering'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_allowed_peer_regions_for_remote_peering.pem'])
+            config_file = 'tests/resources/config_for_test_list_allowed_peer_regions_for_remote_peering'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('peer_region_for_remote_peering_group.command_name', 'peer_region_for_remote_peering')
@@ -5868,6 +7936,10 @@ def test_list_allowed_peer_regions_for_remote_peering(cli_testing_service_client
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_allowed_peer_regions_for_remote_peering.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_allowed_peer_regions_for_remote_peering.pem')
+                if os.path.exists('tests/resources/config_for_test_list_allowed_peer_regions_for_remote_peering'):
+                    os.remove('tests/resources/config_for_test_list_allowed_peer_regions_for_remote_peering')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -5886,6 +7958,30 @@ def test_list_allowed_peer_regions_for_remote_peering(cli_testing_service_client
 def test_list_cpes(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'ListCpes'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'ListCpes')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_cpes.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_cpes', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_cpes.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_cpes'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_cpes.pem'])
+            config_file = 'tests/resources/config_for_test_list_cpes'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('cpe_group.command_name', 'cpe')
@@ -5944,6 +8040,10 @@ def test_list_cpes(cli_testing_service_client, runner, config_file, config_profi
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_cpes.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_cpes.pem')
+                if os.path.exists('tests/resources/config_for_test_list_cpes'):
+                    os.remove('tests/resources/config_for_test_list_cpes')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -5962,6 +8062,30 @@ def test_list_cpes(cli_testing_service_client, runner, config_file, config_profi
 def test_list_cross_connect_groups(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'ListCrossConnectGroups'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'ListCrossConnectGroups')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_cross_connect_groups.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_cross_connect_groups', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_cross_connect_groups.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_cross_connect_groups'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_cross_connect_groups.pem'])
+            config_file = 'tests/resources/config_for_test_list_cross_connect_groups'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('cross_connect_group_group.command_name', 'cross_connect_group')
@@ -6020,6 +8144,10 @@ def test_list_cross_connect_groups(cli_testing_service_client, runner, config_fi
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_cross_connect_groups.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_cross_connect_groups.pem')
+                if os.path.exists('tests/resources/config_for_test_list_cross_connect_groups'):
+                    os.remove('tests/resources/config_for_test_list_cross_connect_groups')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -6038,6 +8166,30 @@ def test_list_cross_connect_groups(cli_testing_service_client, runner, config_fi
 def test_list_cross_connect_locations(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'ListCrossConnectLocations'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'ListCrossConnectLocations')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_cross_connect_locations.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_cross_connect_locations', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_cross_connect_locations.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_cross_connect_locations'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_cross_connect_locations.pem'])
+            config_file = 'tests/resources/config_for_test_list_cross_connect_locations'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('cross_connect_location_group.command_name', 'cross_connect_location')
@@ -6096,6 +8248,10 @@ def test_list_cross_connect_locations(cli_testing_service_client, runner, config
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_cross_connect_locations.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_cross_connect_locations.pem')
+                if os.path.exists('tests/resources/config_for_test_list_cross_connect_locations'):
+                    os.remove('tests/resources/config_for_test_list_cross_connect_locations')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -6114,6 +8270,30 @@ def test_list_cross_connect_locations(cli_testing_service_client, runner, config
 def test_list_cross_connects(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'ListCrossConnects'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'ListCrossConnects')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_cross_connects.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_cross_connects', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_cross_connects.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_cross_connects'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_cross_connects.pem'])
+            config_file = 'tests/resources/config_for_test_list_cross_connects'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('cross_connect_group.command_name', 'cross_connect')
@@ -6172,6 +8352,10 @@ def test_list_cross_connects(cli_testing_service_client, runner, config_file, co
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_cross_connects.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_cross_connects.pem')
+                if os.path.exists('tests/resources/config_for_test_list_cross_connects'):
+                    os.remove('tests/resources/config_for_test_list_cross_connects')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -6190,6 +8374,30 @@ def test_list_cross_connects(cli_testing_service_client, runner, config_file, co
 def test_list_crossconnect_port_speed_shapes(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'ListCrossconnectPortSpeedShapes'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'ListCrossconnectPortSpeedShapes')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_crossconnect_port_speed_shapes.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_crossconnect_port_speed_shapes', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_crossconnect_port_speed_shapes.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_crossconnect_port_speed_shapes'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_crossconnect_port_speed_shapes.pem'])
+            config_file = 'tests/resources/config_for_test_list_crossconnect_port_speed_shapes'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('cross_connect_port_speed_shape_group.command_name', 'cross_connect_port_speed_shape')
@@ -6248,6 +8456,10 @@ def test_list_crossconnect_port_speed_shapes(cli_testing_service_client, runner,
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_crossconnect_port_speed_shapes.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_crossconnect_port_speed_shapes.pem')
+                if os.path.exists('tests/resources/config_for_test_list_crossconnect_port_speed_shapes'):
+                    os.remove('tests/resources/config_for_test_list_crossconnect_port_speed_shapes')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -6266,6 +8478,30 @@ def test_list_crossconnect_port_speed_shapes(cli_testing_service_client, runner,
 def test_list_dhcp_options(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'ListDhcpOptions'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'ListDhcpOptions')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_dhcp_options.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_dhcp_options', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_dhcp_options.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_dhcp_options'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_dhcp_options.pem'])
+            config_file = 'tests/resources/config_for_test_list_dhcp_options'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('dhcp_options_group.command_name', 'dhcp_options')
@@ -6324,6 +8560,10 @@ def test_list_dhcp_options(cli_testing_service_client, runner, config_file, conf
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_dhcp_options.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_dhcp_options.pem')
+                if os.path.exists('tests/resources/config_for_test_list_dhcp_options'):
+                    os.remove('tests/resources/config_for_test_list_dhcp_options')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -6342,6 +8582,30 @@ def test_list_dhcp_options(cli_testing_service_client, runner, config_file, conf
 def test_list_drg_attachments(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'ListDrgAttachments'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'ListDrgAttachments')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_drg_attachments.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_drg_attachments', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_drg_attachments.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_drg_attachments'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_drg_attachments.pem'])
+            config_file = 'tests/resources/config_for_test_list_drg_attachments'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('drg_attachment_group.command_name', 'drg_attachment')
@@ -6400,6 +8664,10 @@ def test_list_drg_attachments(cli_testing_service_client, runner, config_file, c
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_drg_attachments.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_drg_attachments.pem')
+                if os.path.exists('tests/resources/config_for_test_list_drg_attachments'):
+                    os.remove('tests/resources/config_for_test_list_drg_attachments')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -6418,6 +8686,30 @@ def test_list_drg_attachments(cli_testing_service_client, runner, config_file, c
 def test_list_drgs(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'ListDrgs'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'ListDrgs')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_drgs.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_drgs', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_drgs.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_drgs'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_drgs.pem'])
+            config_file = 'tests/resources/config_for_test_list_drgs'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('drg_group.command_name', 'drg')
@@ -6476,6 +8768,10 @@ def test_list_drgs(cli_testing_service_client, runner, config_file, config_profi
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_drgs.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_drgs.pem')
+                if os.path.exists('tests/resources/config_for_test_list_drgs'):
+                    os.remove('tests/resources/config_for_test_list_drgs')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -6494,6 +8790,30 @@ def test_list_drgs(cli_testing_service_client, runner, config_file, config_profi
 def test_list_fast_connect_provider_services(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'ListFastConnectProviderServices'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'ListFastConnectProviderServices')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_fast_connect_provider_services.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_fast_connect_provider_services', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_fast_connect_provider_services.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_fast_connect_provider_services'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_fast_connect_provider_services.pem'])
+            config_file = 'tests/resources/config_for_test_list_fast_connect_provider_services'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('fast_connect_provider_service_group.command_name', 'fast_connect_provider_service')
@@ -6552,6 +8872,10 @@ def test_list_fast_connect_provider_services(cli_testing_service_client, runner,
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_fast_connect_provider_services.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_fast_connect_provider_services.pem')
+                if os.path.exists('tests/resources/config_for_test_list_fast_connect_provider_services'):
+                    os.remove('tests/resources/config_for_test_list_fast_connect_provider_services')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -6570,6 +8894,30 @@ def test_list_fast_connect_provider_services(cli_testing_service_client, runner,
 def test_list_fast_connect_provider_virtual_circuit_bandwidth_shapes(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'ListFastConnectProviderVirtualCircuitBandwidthShapes'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'ListFastConnectProviderVirtualCircuitBandwidthShapes')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_fast_connect_provider_virtual_circuit_bandwidth_shapes.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_fast_connect_provider_virtual_circuit_bandwidth_shapes', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_fast_connect_provider_virtual_circuit_bandwidth_shapes.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_fast_connect_provider_virtual_circuit_bandwidth_shapes'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_fast_connect_provider_virtual_circuit_bandwidth_shapes.pem'])
+            config_file = 'tests/resources/config_for_test_list_fast_connect_provider_virtual_circuit_bandwidth_shapes'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('fast_connect_provider_service_group.command_name', 'fast_connect_provider_service')
@@ -6628,6 +8976,10 @@ def test_list_fast_connect_provider_virtual_circuit_bandwidth_shapes(cli_testing
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_fast_connect_provider_virtual_circuit_bandwidth_shapes.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_fast_connect_provider_virtual_circuit_bandwidth_shapes.pem')
+                if os.path.exists('tests/resources/config_for_test_list_fast_connect_provider_virtual_circuit_bandwidth_shapes'):
+                    os.remove('tests/resources/config_for_test_list_fast_connect_provider_virtual_circuit_bandwidth_shapes')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -6646,6 +8998,30 @@ def test_list_fast_connect_provider_virtual_circuit_bandwidth_shapes(cli_testing
 def test_list_internet_gateways(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'ListInternetGateways'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'ListInternetGateways')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_internet_gateways.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_internet_gateways', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_internet_gateways.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_internet_gateways'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_internet_gateways.pem'])
+            config_file = 'tests/resources/config_for_test_list_internet_gateways'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('internet_gateway_group.command_name', 'internet_gateway')
@@ -6704,6 +9080,10 @@ def test_list_internet_gateways(cli_testing_service_client, runner, config_file,
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_internet_gateways.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_internet_gateways.pem')
+                if os.path.exists('tests/resources/config_for_test_list_internet_gateways'):
+                    os.remove('tests/resources/config_for_test_list_internet_gateways')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -6722,6 +9102,30 @@ def test_list_internet_gateways(cli_testing_service_client, runner, config_file,
 def test_list_ip_sec_connections(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'ListIPSecConnections'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'ListIPSecConnections')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_ip_sec_connections.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_ip_sec_connections', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_ip_sec_connections.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_ip_sec_connections'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_ip_sec_connections.pem'])
+            config_file = 'tests/resources/config_for_test_list_ip_sec_connections'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('ip_sec_connection_group.command_name', 'ip_sec_connection')
@@ -6780,6 +9184,10 @@ def test_list_ip_sec_connections(cli_testing_service_client, runner, config_file
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_ip_sec_connections.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_ip_sec_connections.pem')
+                if os.path.exists('tests/resources/config_for_test_list_ip_sec_connections'):
+                    os.remove('tests/resources/config_for_test_list_ip_sec_connections')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -6798,6 +9206,30 @@ def test_list_ip_sec_connections(cli_testing_service_client, runner, config_file
 def test_list_local_peering_gateways(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'ListLocalPeeringGateways'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'ListLocalPeeringGateways')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_local_peering_gateways.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_local_peering_gateways', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_local_peering_gateways.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_local_peering_gateways'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_local_peering_gateways.pem'])
+            config_file = 'tests/resources/config_for_test_list_local_peering_gateways'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('local_peering_gateway_group.command_name', 'local_peering_gateway')
@@ -6856,6 +9288,10 @@ def test_list_local_peering_gateways(cli_testing_service_client, runner, config_
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_local_peering_gateways.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_local_peering_gateways.pem')
+                if os.path.exists('tests/resources/config_for_test_list_local_peering_gateways'):
+                    os.remove('tests/resources/config_for_test_list_local_peering_gateways')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -6874,6 +9310,30 @@ def test_list_local_peering_gateways(cli_testing_service_client, runner, config_
 def test_list_nat_gateways(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'ListNatGateways'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'ListNatGateways')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_nat_gateways.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_nat_gateways', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_nat_gateways.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_nat_gateways'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_nat_gateways.pem'])
+            config_file = 'tests/resources/config_for_test_list_nat_gateways'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('nat_gateway_group.command_name', 'nat_gateway')
@@ -6932,6 +9392,10 @@ def test_list_nat_gateways(cli_testing_service_client, runner, config_file, conf
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_nat_gateways.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_nat_gateways.pem')
+                if os.path.exists('tests/resources/config_for_test_list_nat_gateways'):
+                    os.remove('tests/resources/config_for_test_list_nat_gateways')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -6950,6 +9414,30 @@ def test_list_nat_gateways(cli_testing_service_client, runner, config_file, conf
 def test_list_private_ips(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'ListPrivateIps'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'ListPrivateIps')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_private_ips.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_private_ips', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_private_ips.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_private_ips'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_private_ips.pem'])
+            config_file = 'tests/resources/config_for_test_list_private_ips'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('private_ip_group.command_name', 'private_ip')
@@ -7008,6 +9496,10 @@ def test_list_private_ips(cli_testing_service_client, runner, config_file, confi
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_private_ips.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_private_ips.pem')
+                if os.path.exists('tests/resources/config_for_test_list_private_ips'):
+                    os.remove('tests/resources/config_for_test_list_private_ips')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -7026,6 +9518,30 @@ def test_list_private_ips(cli_testing_service_client, runner, config_file, confi
 def test_list_public_ips(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'ListPublicIps'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'ListPublicIps')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_public_ips.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_public_ips', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_public_ips.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_public_ips'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_public_ips.pem'])
+            config_file = 'tests/resources/config_for_test_list_public_ips'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('public_ip_group.command_name', 'public_ip')
@@ -7084,6 +9600,10 @@ def test_list_public_ips(cli_testing_service_client, runner, config_file, config
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_public_ips.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_public_ips.pem')
+                if os.path.exists('tests/resources/config_for_test_list_public_ips'):
+                    os.remove('tests/resources/config_for_test_list_public_ips')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -7102,6 +9622,30 @@ def test_list_public_ips(cli_testing_service_client, runner, config_file, config
 def test_list_remote_peering_connections(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'ListRemotePeeringConnections'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'ListRemotePeeringConnections')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_remote_peering_connections.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_remote_peering_connections', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_remote_peering_connections.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_remote_peering_connections'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_remote_peering_connections.pem'])
+            config_file = 'tests/resources/config_for_test_list_remote_peering_connections'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('remote_peering_connection_group.command_name', 'remote_peering_connection')
@@ -7160,6 +9704,10 @@ def test_list_remote_peering_connections(cli_testing_service_client, runner, con
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_remote_peering_connections.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_remote_peering_connections.pem')
+                if os.path.exists('tests/resources/config_for_test_list_remote_peering_connections'):
+                    os.remove('tests/resources/config_for_test_list_remote_peering_connections')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -7178,6 +9726,30 @@ def test_list_remote_peering_connections(cli_testing_service_client, runner, con
 def test_list_route_tables(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'ListRouteTables'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'ListRouteTables')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_route_tables.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_route_tables', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_route_tables.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_route_tables'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_route_tables.pem'])
+            config_file = 'tests/resources/config_for_test_list_route_tables'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('route_table_group.command_name', 'route_table')
@@ -7236,6 +9808,10 @@ def test_list_route_tables(cli_testing_service_client, runner, config_file, conf
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_route_tables.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_route_tables.pem')
+                if os.path.exists('tests/resources/config_for_test_list_route_tables'):
+                    os.remove('tests/resources/config_for_test_list_route_tables')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -7254,6 +9830,30 @@ def test_list_route_tables(cli_testing_service_client, runner, config_file, conf
 def test_list_security_lists(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'ListSecurityLists'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'ListSecurityLists')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_security_lists.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_security_lists', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_security_lists.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_security_lists'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_security_lists.pem'])
+            config_file = 'tests/resources/config_for_test_list_security_lists'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('security_list_group.command_name', 'security_list')
@@ -7312,6 +9912,10 @@ def test_list_security_lists(cli_testing_service_client, runner, config_file, co
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_security_lists.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_security_lists.pem')
+                if os.path.exists('tests/resources/config_for_test_list_security_lists'):
+                    os.remove('tests/resources/config_for_test_list_security_lists')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -7330,6 +9934,30 @@ def test_list_security_lists(cli_testing_service_client, runner, config_file, co
 def test_list_service_gateways(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'ListServiceGateways'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'ListServiceGateways')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_service_gateways.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_service_gateways', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_service_gateways.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_service_gateways'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_service_gateways.pem'])
+            config_file = 'tests/resources/config_for_test_list_service_gateways'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('service_gateway_group.command_name', 'service_gateway')
@@ -7388,6 +10016,10 @@ def test_list_service_gateways(cli_testing_service_client, runner, config_file, 
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_service_gateways.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_service_gateways.pem')
+                if os.path.exists('tests/resources/config_for_test_list_service_gateways'):
+                    os.remove('tests/resources/config_for_test_list_service_gateways')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -7406,6 +10038,30 @@ def test_list_service_gateways(cli_testing_service_client, runner, config_file, 
 def test_list_services(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'ListServices'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'ListServices')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_services.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_services', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_services.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_services'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_services.pem'])
+            config_file = 'tests/resources/config_for_test_list_services'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('service_group.command_name', 'service')
@@ -7464,6 +10120,10 @@ def test_list_services(cli_testing_service_client, runner, config_file, config_p
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_services.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_services.pem')
+                if os.path.exists('tests/resources/config_for_test_list_services'):
+                    os.remove('tests/resources/config_for_test_list_services')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -7482,6 +10142,30 @@ def test_list_services(cli_testing_service_client, runner, config_file, config_p
 def test_list_subnets(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'ListSubnets'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'ListSubnets')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_subnets.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_subnets', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_subnets.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_subnets'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_subnets.pem'])
+            config_file = 'tests/resources/config_for_test_list_subnets'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('subnet_group.command_name', 'subnet')
@@ -7540,6 +10224,10 @@ def test_list_subnets(cli_testing_service_client, runner, config_file, config_pr
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_subnets.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_subnets.pem')
+                if os.path.exists('tests/resources/config_for_test_list_subnets'):
+                    os.remove('tests/resources/config_for_test_list_subnets')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -7558,6 +10246,30 @@ def test_list_subnets(cli_testing_service_client, runner, config_file, config_pr
 def test_list_vcns(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'ListVcns'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'ListVcns')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_vcns.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_vcns', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_vcns.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_vcns'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_vcns.pem'])
+            config_file = 'tests/resources/config_for_test_list_vcns'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('vcn_group.command_name', 'vcn')
@@ -7616,6 +10328,10 @@ def test_list_vcns(cli_testing_service_client, runner, config_file, config_profi
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_vcns.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_vcns.pem')
+                if os.path.exists('tests/resources/config_for_test_list_vcns'):
+                    os.remove('tests/resources/config_for_test_list_vcns')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -7634,6 +10350,30 @@ def test_list_vcns(cli_testing_service_client, runner, config_file, config_profi
 def test_list_virtual_circuit_bandwidth_shapes(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'ListVirtualCircuitBandwidthShapes'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'ListVirtualCircuitBandwidthShapes')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_virtual_circuit_bandwidth_shapes.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_virtual_circuit_bandwidth_shapes', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_virtual_circuit_bandwidth_shapes.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_virtual_circuit_bandwidth_shapes'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_virtual_circuit_bandwidth_shapes.pem'])
+            config_file = 'tests/resources/config_for_test_list_virtual_circuit_bandwidth_shapes'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('virtual_circuit_bandwidth_shape_group.command_name', 'virtual_circuit_bandwidth_shape')
@@ -7692,6 +10432,10 @@ def test_list_virtual_circuit_bandwidth_shapes(cli_testing_service_client, runne
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_virtual_circuit_bandwidth_shapes.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_virtual_circuit_bandwidth_shapes.pem')
+                if os.path.exists('tests/resources/config_for_test_list_virtual_circuit_bandwidth_shapes'):
+                    os.remove('tests/resources/config_for_test_list_virtual_circuit_bandwidth_shapes')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -7710,6 +10454,30 @@ def test_list_virtual_circuit_bandwidth_shapes(cli_testing_service_client, runne
 def test_list_virtual_circuit_public_prefixes(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'ListVirtualCircuitPublicPrefixes'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'ListVirtualCircuitPublicPrefixes')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_virtual_circuit_public_prefixes.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_virtual_circuit_public_prefixes', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_virtual_circuit_public_prefixes.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_virtual_circuit_public_prefixes'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_virtual_circuit_public_prefixes.pem'])
+            config_file = 'tests/resources/config_for_test_list_virtual_circuit_public_prefixes'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('virtual_circuit_public_prefix_group.command_name', 'virtual_circuit_public_prefix')
@@ -7768,6 +10536,10 @@ def test_list_virtual_circuit_public_prefixes(cli_testing_service_client, runner
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_virtual_circuit_public_prefixes.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_virtual_circuit_public_prefixes.pem')
+                if os.path.exists('tests/resources/config_for_test_list_virtual_circuit_public_prefixes'):
+                    os.remove('tests/resources/config_for_test_list_virtual_circuit_public_prefixes')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -7786,6 +10558,30 @@ def test_list_virtual_circuit_public_prefixes(cli_testing_service_client, runner
 def test_list_virtual_circuits(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'ListVirtualCircuits'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'ListVirtualCircuits')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_virtual_circuits.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_virtual_circuits', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_virtual_circuits.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_virtual_circuits'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_virtual_circuits.pem'])
+            config_file = 'tests/resources/config_for_test_list_virtual_circuits'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('virtual_circuit_group.command_name', 'virtual_circuit')
@@ -7844,6 +10640,10 @@ def test_list_virtual_circuits(cli_testing_service_client, runner, config_file, 
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_virtual_circuits.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_virtual_circuits.pem')
+                if os.path.exists('tests/resources/config_for_test_list_virtual_circuits'):
+                    os.remove('tests/resources/config_for_test_list_virtual_circuits')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -7862,6 +10662,30 @@ def test_list_virtual_circuits(cli_testing_service_client, runner, config_file, 
 def test_update_cpe(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'UpdateCpe'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'UpdateCpe')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_update_cpe.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_update_cpe', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_update_cpe.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_update_cpe'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_update_cpe.pem'])
+            config_file = 'tests/resources/config_for_test_update_cpe'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('cpe_group.command_name', 'cpe')
@@ -7929,6 +10753,10 @@ def test_update_cpe(cli_testing_service_client, runner, config_file, config_prof
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_update_cpe.pem'):
+                    os.remove('tests/resources/keyfile_for_test_update_cpe.pem')
+                if os.path.exists('tests/resources/config_for_test_update_cpe'):
+                    os.remove('tests/resources/config_for_test_update_cpe')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -7947,6 +10775,30 @@ def test_update_cpe(cli_testing_service_client, runner, config_file, config_prof
 def test_update_cross_connect(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'UpdateCrossConnect'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'UpdateCrossConnect')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_update_cross_connect.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_update_cross_connect', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_update_cross_connect.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_update_cross_connect'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_update_cross_connect.pem'])
+            config_file = 'tests/resources/config_for_test_update_cross_connect'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('cross_connect_group.command_name', 'cross_connect')
@@ -8013,6 +10865,10 @@ def test_update_cross_connect(cli_testing_service_client, runner, config_file, c
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_update_cross_connect.pem'):
+                    os.remove('tests/resources/keyfile_for_test_update_cross_connect.pem')
+                if os.path.exists('tests/resources/config_for_test_update_cross_connect'):
+                    os.remove('tests/resources/config_for_test_update_cross_connect')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -8031,6 +10887,30 @@ def test_update_cross_connect(cli_testing_service_client, runner, config_file, c
 def test_update_cross_connect_group(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'UpdateCrossConnectGroup'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'UpdateCrossConnectGroup')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_update_cross_connect_group.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_update_cross_connect_group', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_update_cross_connect_group.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_update_cross_connect_group'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_update_cross_connect_group.pem'])
+            config_file = 'tests/resources/config_for_test_update_cross_connect_group'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('cross_connect_group_group.command_name', 'cross_connect_group')
@@ -8097,6 +10977,10 @@ def test_update_cross_connect_group(cli_testing_service_client, runner, config_f
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_update_cross_connect_group.pem'):
+                    os.remove('tests/resources/keyfile_for_test_update_cross_connect_group.pem')
+                if os.path.exists('tests/resources/config_for_test_update_cross_connect_group'):
+                    os.remove('tests/resources/config_for_test_update_cross_connect_group')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -8115,6 +10999,30 @@ def test_update_cross_connect_group(cli_testing_service_client, runner, config_f
 def test_update_dhcp_options(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'UpdateDhcpOptions'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'UpdateDhcpOptions')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_update_dhcp_options.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_update_dhcp_options', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_update_dhcp_options.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_update_dhcp_options'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_update_dhcp_options.pem'])
+            config_file = 'tests/resources/config_for_test_update_dhcp_options'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('dhcp_options_group.command_name', 'dhcp_options')
@@ -8182,6 +11090,10 @@ def test_update_dhcp_options(cli_testing_service_client, runner, config_file, co
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_update_dhcp_options.pem'):
+                    os.remove('tests/resources/keyfile_for_test_update_dhcp_options.pem')
+                if os.path.exists('tests/resources/config_for_test_update_dhcp_options'):
+                    os.remove('tests/resources/config_for_test_update_dhcp_options')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -8200,6 +11112,30 @@ def test_update_dhcp_options(cli_testing_service_client, runner, config_file, co
 def test_update_drg(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'UpdateDrg'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'UpdateDrg')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_update_drg.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_update_drg', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_update_drg.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_update_drg'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_update_drg.pem'])
+            config_file = 'tests/resources/config_for_test_update_drg'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('drg_group.command_name', 'drg')
@@ -8267,6 +11203,10 @@ def test_update_drg(cli_testing_service_client, runner, config_file, config_prof
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_update_drg.pem'):
+                    os.remove('tests/resources/keyfile_for_test_update_drg.pem')
+                if os.path.exists('tests/resources/config_for_test_update_drg'):
+                    os.remove('tests/resources/config_for_test_update_drg')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -8285,6 +11225,30 @@ def test_update_drg(cli_testing_service_client, runner, config_file, config_prof
 def test_update_drg_attachment(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'UpdateDrgAttachment'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'UpdateDrgAttachment')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_update_drg_attachment.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_update_drg_attachment', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_update_drg_attachment.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_update_drg_attachment'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_update_drg_attachment.pem'])
+            config_file = 'tests/resources/config_for_test_update_drg_attachment'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('drg_attachment_group.command_name', 'drg_attachment')
@@ -8351,6 +11315,10 @@ def test_update_drg_attachment(cli_testing_service_client, runner, config_file, 
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_update_drg_attachment.pem'):
+                    os.remove('tests/resources/keyfile_for_test_update_drg_attachment.pem')
+                if os.path.exists('tests/resources/config_for_test_update_drg_attachment'):
+                    os.remove('tests/resources/config_for_test_update_drg_attachment')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -8369,6 +11337,30 @@ def test_update_drg_attachment(cli_testing_service_client, runner, config_file, 
 def test_update_internet_gateway(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'UpdateInternetGateway'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'UpdateInternetGateway')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_update_internet_gateway.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_update_internet_gateway', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_update_internet_gateway.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_update_internet_gateway'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_update_internet_gateway.pem'])
+            config_file = 'tests/resources/config_for_test_update_internet_gateway'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('internet_gateway_group.command_name', 'internet_gateway')
@@ -8436,6 +11428,10 @@ def test_update_internet_gateway(cli_testing_service_client, runner, config_file
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_update_internet_gateway.pem'):
+                    os.remove('tests/resources/keyfile_for_test_update_internet_gateway.pem')
+                if os.path.exists('tests/resources/config_for_test_update_internet_gateway'):
+                    os.remove('tests/resources/config_for_test_update_internet_gateway')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -8454,6 +11450,30 @@ def test_update_internet_gateway(cli_testing_service_client, runner, config_file
 def test_update_ip_sec_connection(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'UpdateIPSecConnection'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'UpdateIPSecConnection')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_update_ip_sec_connection.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_update_ip_sec_connection', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_update_ip_sec_connection.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_update_ip_sec_connection'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_update_ip_sec_connection.pem'])
+            config_file = 'tests/resources/config_for_test_update_ip_sec_connection'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('ip_sec_connection_group.command_name', 'ip_sec_connection')
@@ -8521,6 +11541,10 @@ def test_update_ip_sec_connection(cli_testing_service_client, runner, config_fil
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_update_ip_sec_connection.pem'):
+                    os.remove('tests/resources/keyfile_for_test_update_ip_sec_connection.pem')
+                if os.path.exists('tests/resources/config_for_test_update_ip_sec_connection'):
+                    os.remove('tests/resources/config_for_test_update_ip_sec_connection')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -8539,6 +11563,30 @@ def test_update_ip_sec_connection(cli_testing_service_client, runner, config_fil
 def test_update_local_peering_gateway(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'UpdateLocalPeeringGateway'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'UpdateLocalPeeringGateway')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_update_local_peering_gateway.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_update_local_peering_gateway', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_update_local_peering_gateway.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_update_local_peering_gateway'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_update_local_peering_gateway.pem'])
+            config_file = 'tests/resources/config_for_test_update_local_peering_gateway'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('local_peering_gateway_group.command_name', 'local_peering_gateway')
@@ -8606,6 +11654,10 @@ def test_update_local_peering_gateway(cli_testing_service_client, runner, config
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_update_local_peering_gateway.pem'):
+                    os.remove('tests/resources/keyfile_for_test_update_local_peering_gateway.pem')
+                if os.path.exists('tests/resources/config_for_test_update_local_peering_gateway'):
+                    os.remove('tests/resources/config_for_test_update_local_peering_gateway')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -8624,6 +11676,30 @@ def test_update_local_peering_gateway(cli_testing_service_client, runner, config
 def test_update_nat_gateway(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'UpdateNatGateway'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'UpdateNatGateway')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_update_nat_gateway.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_update_nat_gateway', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_update_nat_gateway.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_update_nat_gateway'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_update_nat_gateway.pem'])
+            config_file = 'tests/resources/config_for_test_update_nat_gateway'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('nat_gateway_group.command_name', 'nat_gateway')
@@ -8691,6 +11767,10 @@ def test_update_nat_gateway(cli_testing_service_client, runner, config_file, con
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_update_nat_gateway.pem'):
+                    os.remove('tests/resources/keyfile_for_test_update_nat_gateway.pem')
+                if os.path.exists('tests/resources/config_for_test_update_nat_gateway'):
+                    os.remove('tests/resources/config_for_test_update_nat_gateway')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -8709,6 +11789,30 @@ def test_update_nat_gateway(cli_testing_service_client, runner, config_file, con
 def test_update_private_ip(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'UpdatePrivateIp'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'UpdatePrivateIp')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_update_private_ip.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_update_private_ip', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_update_private_ip.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_update_private_ip'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_update_private_ip.pem'])
+            config_file = 'tests/resources/config_for_test_update_private_ip'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('private_ip_group.command_name', 'private_ip')
@@ -8776,6 +11880,10 @@ def test_update_private_ip(cli_testing_service_client, runner, config_file, conf
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_update_private_ip.pem'):
+                    os.remove('tests/resources/keyfile_for_test_update_private_ip.pem')
+                if os.path.exists('tests/resources/config_for_test_update_private_ip'):
+                    os.remove('tests/resources/config_for_test_update_private_ip')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -8794,6 +11902,30 @@ def test_update_private_ip(cli_testing_service_client, runner, config_file, conf
 def test_update_public_ip(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'UpdatePublicIp'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'UpdatePublicIp')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_update_public_ip.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_update_public_ip', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_update_public_ip.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_update_public_ip'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_update_public_ip.pem'])
+            config_file = 'tests/resources/config_for_test_update_public_ip'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('public_ip_group.command_name', 'public_ip')
@@ -8861,6 +11993,10 @@ def test_update_public_ip(cli_testing_service_client, runner, config_file, confi
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_update_public_ip.pem'):
+                    os.remove('tests/resources/keyfile_for_test_update_public_ip.pem')
+                if os.path.exists('tests/resources/config_for_test_update_public_ip'):
+                    os.remove('tests/resources/config_for_test_update_public_ip')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -8879,6 +12015,30 @@ def test_update_public_ip(cli_testing_service_client, runner, config_file, confi
 def test_update_remote_peering_connection(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'UpdateRemotePeeringConnection'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'UpdateRemotePeeringConnection')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_update_remote_peering_connection.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_update_remote_peering_connection', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_update_remote_peering_connection.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_update_remote_peering_connection'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_update_remote_peering_connection.pem'])
+            config_file = 'tests/resources/config_for_test_update_remote_peering_connection'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('remote_peering_connection_group.command_name', 'remote_peering_connection')
@@ -8945,6 +12105,10 @@ def test_update_remote_peering_connection(cli_testing_service_client, runner, co
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_update_remote_peering_connection.pem'):
+                    os.remove('tests/resources/keyfile_for_test_update_remote_peering_connection.pem')
+                if os.path.exists('tests/resources/config_for_test_update_remote_peering_connection'):
+                    os.remove('tests/resources/config_for_test_update_remote_peering_connection')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -8963,6 +12127,30 @@ def test_update_remote_peering_connection(cli_testing_service_client, runner, co
 def test_update_route_table(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'UpdateRouteTable'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'UpdateRouteTable')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_update_route_table.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_update_route_table', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_update_route_table.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_update_route_table'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_update_route_table.pem'])
+            config_file = 'tests/resources/config_for_test_update_route_table'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('route_table_group.command_name', 'route_table')
@@ -9030,6 +12218,10 @@ def test_update_route_table(cli_testing_service_client, runner, config_file, con
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_update_route_table.pem'):
+                    os.remove('tests/resources/keyfile_for_test_update_route_table.pem')
+                if os.path.exists('tests/resources/config_for_test_update_route_table'):
+                    os.remove('tests/resources/config_for_test_update_route_table')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -9048,6 +12240,30 @@ def test_update_route_table(cli_testing_service_client, runner, config_file, con
 def test_update_security_list(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'UpdateSecurityList'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'UpdateSecurityList')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_update_security_list.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_update_security_list', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_update_security_list.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_update_security_list'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_update_security_list.pem'])
+            config_file = 'tests/resources/config_for_test_update_security_list'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('security_list_group.command_name', 'security_list')
@@ -9115,6 +12331,10 @@ def test_update_security_list(cli_testing_service_client, runner, config_file, c
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_update_security_list.pem'):
+                    os.remove('tests/resources/keyfile_for_test_update_security_list.pem')
+                if os.path.exists('tests/resources/config_for_test_update_security_list'):
+                    os.remove('tests/resources/config_for_test_update_security_list')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -9133,6 +12353,30 @@ def test_update_security_list(cli_testing_service_client, runner, config_file, c
 def test_update_service_gateway(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'UpdateServiceGateway'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'UpdateServiceGateway')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_update_service_gateway.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_update_service_gateway', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_update_service_gateway.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_update_service_gateway'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_update_service_gateway.pem'])
+            config_file = 'tests/resources/config_for_test_update_service_gateway'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('service_gateway_group.command_name', 'service_gateway')
@@ -9200,6 +12444,10 @@ def test_update_service_gateway(cli_testing_service_client, runner, config_file,
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_update_service_gateway.pem'):
+                    os.remove('tests/resources/keyfile_for_test_update_service_gateway.pem')
+                if os.path.exists('tests/resources/config_for_test_update_service_gateway'):
+                    os.remove('tests/resources/config_for_test_update_service_gateway')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -9218,6 +12466,30 @@ def test_update_service_gateway(cli_testing_service_client, runner, config_file,
 def test_update_subnet(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'UpdateSubnet'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'UpdateSubnet')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_update_subnet.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_update_subnet', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_update_subnet.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_update_subnet'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_update_subnet.pem'])
+            config_file = 'tests/resources/config_for_test_update_subnet'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('subnet_group.command_name', 'subnet')
@@ -9285,6 +12557,10 @@ def test_update_subnet(cli_testing_service_client, runner, config_file, config_p
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_update_subnet.pem'):
+                    os.remove('tests/resources/keyfile_for_test_update_subnet.pem')
+                if os.path.exists('tests/resources/config_for_test_update_subnet'):
+                    os.remove('tests/resources/config_for_test_update_subnet')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -9303,6 +12579,30 @@ def test_update_subnet(cli_testing_service_client, runner, config_file, config_p
 def test_update_vcn(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'UpdateVcn'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'UpdateVcn')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_update_vcn.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_update_vcn', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_update_vcn.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_update_vcn'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_update_vcn.pem'])
+            config_file = 'tests/resources/config_for_test_update_vcn'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('vcn_group.command_name', 'vcn')
@@ -9370,6 +12670,10 @@ def test_update_vcn(cli_testing_service_client, runner, config_file, config_prof
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_update_vcn.pem'):
+                    os.remove('tests/resources/keyfile_for_test_update_vcn.pem')
+                if os.path.exists('tests/resources/config_for_test_update_vcn'):
+                    os.remove('tests/resources/config_for_test_update_vcn')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -9388,6 +12692,30 @@ def test_update_vcn(cli_testing_service_client, runner, config_file, config_prof
 def test_update_virtual_circuit(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'UpdateVirtualCircuit'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'UpdateVirtualCircuit')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_update_virtual_circuit.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_update_virtual_circuit', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_update_virtual_circuit.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_update_virtual_circuit'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_update_virtual_circuit.pem'])
+            config_file = 'tests/resources/config_for_test_update_virtual_circuit'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('virtual_circuit_group.command_name', 'virtual_circuit')
@@ -9455,6 +12783,10 @@ def test_update_virtual_circuit(cli_testing_service_client, runner, config_file,
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_update_virtual_circuit.pem'):
+                    os.remove('tests/resources/keyfile_for_test_update_virtual_circuit.pem')
+                if os.path.exists('tests/resources/config_for_test_update_virtual_circuit'):
+                    os.remove('tests/resources/config_for_test_update_virtual_circuit')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -9473,6 +12805,30 @@ def test_update_virtual_circuit(cli_testing_service_client, runner, config_file,
 def test_update_vnic(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'UpdateVnic'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'VirtualNetwork', 'UpdateVnic')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_update_vnic.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_update_vnic', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_update_vnic.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_update_vnic'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_update_vnic.pem'])
+            config_file = 'tests/resources/config_for_test_update_vnic'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
 
     root_command_name = oci_cli.cli_util.override('virtual_network_root_group.command_name', 'virtual-network')
     resource_group_command_name = oci_cli.cli_util.override('vnic_group.command_name', 'vnic')
@@ -9540,6 +12896,10 @@ def test_update_vnic(cli_testing_service_client, runner, config_file, config_pro
                     False
                 )
             finally:
+                if os.path.exists('tests/resources/keyfile_for_test_update_vnic.pem'):
+                    os.remove('tests/resources/keyfile_for_test_update_vnic.pem')
+                if os.path.exists('tests/resources/config_for_test_update_vnic'):
+                    os.remove('tests/resources/config_for_test_update_vnic')
                 if cleanup:
                     try:
                         next(cleanup)
@@ -9555,7 +12915,7 @@ def test_update_vnic(cli_testing_service_client, runner, config_file, config_pro
 
 
 def invoke(runner, config_file, config_profile, params, debug=False, root_params=None, strip_progress_bar=True, strip_multipart_stderr_output=True, ** args):
-    root_params = ['--config-file', os.environ['OCI_CLI_CONFIG_FILE']]
+    root_params = ['--config-file', config_file]
 
     if config_profile:
         root_params.extend(['--profile', config_profile])
