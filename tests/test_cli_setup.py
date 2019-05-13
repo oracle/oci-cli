@@ -391,7 +391,7 @@ class TestSetup(unittest.TestCase):
                     subprocess.check_output('icacls "{path}" /grant Everyone:F'.format(path=tmp.name), stderr=subprocess.STDOUT)
 
                     # warning should be emitted because permissions are too loose
-                    oci_cli.cli_util.warn_on_invalid_file_permissions(tmp.name)
+                    oci_cli.cli_util.FilePermissionChecker.warn_on_invalid_file_permissions(tmp.name)
                     assert 'WARNING' in out[1].getvalue()
 
                     # reset captured stderr
@@ -404,7 +404,7 @@ class TestSetup(unittest.TestCase):
                     assert result.exit_code == 0
 
                     # no warning should be emitted because we repaired the permissions
-                    oci_cli.cli_util.warn_on_invalid_file_permissions(tmp.name)
+                    oci_cli.cli_util.FilePermissionChecker.warn_on_invalid_file_permissions(tmp.name)
                     assert 'WARNING' not in out[1].getvalue()
             else:
                 with util.capture() as out:
@@ -413,7 +413,7 @@ class TestSetup(unittest.TestCase):
                     os.chmod(tmp.name, 509)  # octal 775
 
                     # warning should be emitted because permissions are too loose
-                    oci_cli.cli_util.warn_on_invalid_file_permissions(tmp.name)
+                    oci_cli.cli_util.FilePermissionChecker.warn_on_invalid_file_permissions(tmp.name)
                     assert 'WARNING' in out[1].getvalue()
 
                     # reset captured stderr
@@ -427,13 +427,13 @@ class TestSetup(unittest.TestCase):
                     assert oct(stat.S_IMODE(os.lstat(tmp.name).st_mode)) == oct(384)  # 600
 
                     # no warning should be emitted because we repaired the permissions
-                    oci_cli.cli_util.warn_on_invalid_file_permissions(tmp.name)
+                    oci_cli.cli_util.FilePermissionChecker.warn_on_invalid_file_permissions(tmp.name)
                     assert 'WARNING' not in out[1].getvalue()
 
                 with util.capture() as out:
                     # validate that 400 file permissions are accepted as well
                     os.chmod(tmp.name, 256)  # octal 400
-                    oci_cli.cli_util.warn_on_invalid_file_permissions(tmp.name)
+                    oci_cli.cli_util.FilePermissionChecker.warn_on_invalid_file_permissions(tmp.name)
                     assert 'WARNING' not in out[1].getvalue()
         finally:
             if original_suppress_warning_value is None:
@@ -484,7 +484,7 @@ class TestSetup(unittest.TestCase):
 
     def validate_file_permissions(self, filename):
         with util.capture() as out:
-            oci_cli.cli_util.warn_on_invalid_file_permissions(filename)
+            oci_cli.cli_util.FilePermissionChecker.warn_on_invalid_file_permissions(filename)
             return 'WARNING' not in out
 
     def validate_config(self, input_config):

@@ -232,8 +232,10 @@ Options:
   --lifecycle-state [CREATING|ACTIVE|DELETING|DELETED]
                                   The current state of a sender.
   --email-address TEXT            The email address of the approved sender.
-  --page TEXT                     The value of the `opc-next-page` response
-                                  header from the previous GET request.
+  --page TEXT                     For list pagination. The value of the opc-
+                                  next-page response header from the previous
+                                  "List" call. For important details about how
+                                  pagination works, see [List Pagination].
   --limit INTEGER                 For list pagination. The maximum number of
                                   results per page, or items to return in a
                                   paginated "List" call. `1` is the minimum,
@@ -689,8 +691,10 @@ Options:
                                   Epoch seconds
                                   **************
                                   Example: 1412195400
-  --page TEXT                     The value of the `opc-next-page` response
-                                  header from the previous GET request.
+  --page TEXT                     For list pagination. The value of the opc-
+                                  next-page response header from the previous
+                                  "List" call. For important details about how
+                                  pagination works, see [List Pagination].
   --limit INTEGER                 For list pagination. The maximum number of
                                   results per page, or items to return in a
                                   paginated "List" call. `1` is the minimum,

@@ -63,6 +63,25 @@ Options:
                                   in a file, modifying it
                                   as needed and then passing it back in via the
                                   file:// syntax.
+  --logging-context COMPLEX TYPE  Information that can be used to provide
+                                  context for audit logging. It is a map that
+                                  contains any addtional data the users may have
+                                  and will be added to the audit logs (if audit
+                                  logging is enabled)
+                                  This is a complex type
+                                  whose value must be valid JSON. The value can
+                                  be provided as a string on the command line or
+                                  passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
   --from-json TEXT                Provide input to this command as a JSON
                                   document from a file using the file://path-
                                   to/file syntax.
@@ -124,6 +143,25 @@ Options:
                                   in a file, modifying it
                                   as needed and then passing it back in via the
                                   file:// syntax.
+  --logging-context COMPLEX TYPE  Information that can be used to provide
+                                  context for audit logging. It is a map that
+                                  contains any addtional data the users may have
+                                  and will be added to the audit logs (if audit
+                                  logging is enabled)
+                                  This is a complex type
+                                  whose value must be valid JSON. The value can
+                                  be provided as a string on the command line or
+                                  passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
   --from-json TEXT                Provide input to this command as a JSON
                                   document from a file using the file://path-
                                   to/file syntax.
@@ -200,6 +238,25 @@ Options:
                                   in a file, modifying it
                                   as needed and then passing it back in via the
                                   file:// syntax.
+  --logging-context COMPLEX TYPE  Information that can be used to provide
+                                  context for audit logging. It is a map that
+                                  contains any addtional data the users may have
+                                  and will be added to the audit logs (if audit
+                                  logging is enabled)
+                                  This is a complex type
+                                  whose value must be valid JSON. The value can
+                                  be provided as a string on the command line or
+                                  passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
   --from-json TEXT                Provide input to this command as a JSON
                                   document from a file using the file://path-
                                   to/file syntax.

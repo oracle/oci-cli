@@ -30,14 +30,15 @@
 #    export FREEFORM_TAG_PAIR = # <optional freeform tag key value pair for resource creation API>
 #    export FREEFORM_TAG_NEW_PAIR = # <optional different freeform tag key value pair for resource update API to append tag to existing resource>
 #    export DEFINED_TAG_PAIR = # <optional defined tag namespace and key value pairs for resource creation API>
+#    export LOGGING_CONTEXT = # <optional logging context for kms crypto audit logging. An example: '{"loggingContextKey":"loggingContextValue"}'>
 # Requirements for running this script:
 #   - OCI CLI v2.4.31 or later (you can check this by running oci --version)
 #   - Please make sure the user and tenancy used by the CLI have the appropriate permissions for these operations
 
 set -e
 
-if [[ -z "$FREEFORM_TAG_PAIR" || -z "$FREEFORM_TAG_NEW_PAIR" || -z "$DEFINED_TAG_PAIR" || -z "$VAULT_OCID" || -z "$COMPARTMENT_ID" || -z "$VAULT_NAME_NEW" || -z "$KEY_NAME" || -z "$KEY_NAME_NEW" || -z "$KEY_SHAPE" || -z "$PLAINTEXT" ]];then
-echo "FREEFORM_TAG_PAIR, FREEFORM_TAG_NEW_PAIR, DEFINED_TAG_PAIR, VAULT_OCID, COMPARTMENT_ID, VAULT_NAME_NEW, KEY_NAME, KEY_NAME_NEW, KEY_SHAPE, PLAINTEXT must be defined in the environment. "
+if [[ -z "$FREEFORM_TAG_PAIR" || -z "$FREEFORM_TAG_NEW_PAIR" || -z "$DEFINED_TAG_PAIR" || -z "$VAULT_OCID" || -z "$COMPARTMENT_ID" || -z "$VAULT_NAME_NEW" || -z "$KEY_NAME" || -z "$KEY_NAME_NEW" || -z "$KEY_SHAPE" || -z "$PLAINTEXT" || -z "$LOGGING_CONTEXT" ]];then
+echo "FREEFORM_TAG_PAIR, FREEFORM_TAG_NEW_PAIR, DEFINED_TAG_PAIR, VAULT_OCID, COMPARTMENT_ID, VAULT_NAME_NEW, KEY_NAME, KEY_NAME_NEW, KEY_SHAPE, PLAINTEXT and LOGGING_CONTEXT must be defined in the environment. "
 exit 1
 fi
 
@@ -133,8 +134,9 @@ echo "===========================================  KMS Crypto Operations (oci km
 echo " "
 
 # Encrypt some data with the Key, the plaintext must be base64 encoded
+# Passing in a loggingContext here, which will be added to the Audit logs (if Audit Logging is enabled)
 echo "Encrypting plaintext with Key with OCID: $KEY_OCID"
-oci kms crypto encrypt --key-id $KEY_OCID --plaintext $PLAINTEXT --endpoint $CRYPTO_ENDPOINT
+oci kms crypto encrypt --key-id $KEY_OCID --plaintext $PLAINTEXT --logging-context $LOGGING_CONTEXT --endpoint $CRYPTO_ENDPOINT
 CIPHERTEXT=$(oci kms crypto encrypt --key-id $KEY_OCID --plaintext $PLAINTEXT --endpoint $CRYPTO_ENDPOINT --query 'data.ciphertext' --raw-output)
 
 # Decrypt the data we just encrypted previously
