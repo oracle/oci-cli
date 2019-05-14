@@ -52,6 +52,7 @@ def create_vcr(**kwargs):
     vcr_to_use.register_matcher('vcr_query_matcher', vcr_query_matcher)
     vcr_to_use.register_matcher('vcr_path_matcher', vcr_path_matcher)
     vcr_to_use.register_matcher('vcr_host_matcher', vcr_host_matcher)
+    vcr_to_use.register_matcher('vcr_port_matcher', vcr_port_matcher)
     vcr_to_use.register_matcher('vcr_body_matcher', create_vcr_body_matcher(match_request_json_object_values))
 
     vcr_to_use.register_persister(CassetteOverwritingPersister)
@@ -63,7 +64,7 @@ def create_vcr(**kwargs):
             'method',
             'scheme',
             'vcr_host_matcher',
-            'port',
+            'vcr_port_matcher',
             'vcr_path_matcher',
             'vcr_query_matcher',
             'vcr_body_matcher'
@@ -214,6 +215,14 @@ def vcr_host_matcher(r1, r2):
     if get_servicename_from_endpoint(r1.host) == get_servicename_from_endpoint(r2.host):
         return True
     return r1.host == r2.host
+
+
+# If recordings are done against testing service, then the hostname URL will have port number in it. We allow the port
+# number to be different in this case. In all other cases, we match port numbers.
+def vcr_port_matcher(r1, r2):
+    if 'localhost' in r1.host and 'localhost' in r2.host:
+        return True
+    return r1.port == r2.port
 
 
 # New Endpoint format: <region>.<service>.<oci/ocp/ocs>.<oraclecloud/oracleiaas>.com

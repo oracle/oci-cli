@@ -81,6 +81,83 @@ LIST_NOT_ALL_ITEMS_RETURNED_WARNING = "WARNING: This operation supports paginati
 TOKEN_PRESENT_BUT_NOT_USED_FOR_AUTH_WARNING = "WARNING: The active profile contains a value for 'security_token_file' which is not being used. To authenticate using the token, specify --auth {}".format(cli_constants.OCI_CLI_AUTH_SESSION_TOKEN)
 
 
+class FilePermissionChecker(object):
+    WARNING_MESSAGE = 'WARNING: Permissions on {filepath} are too open. '
+    IDENTITY_WARNING = 'The following users  / groups have permissions to the file and should not: {identities}. '
+    FIX_SUGGESTION = 'To fix this please try executing the following command: '
+    REPAIR_CMD = 'oci setup repair-file-permissions --file {filepath} '
+    ALTERNATE_SUGGESTION = 'Alternatively to hide this warning, you may set the environment variable, OCI_CLI_SUPPRESS_FILE_PERMISSIONS_WARNING: '
+    ALTERNATE_SUGGESTION_WINDOWS = 'Alternatively to hide this warning, you may set an environment variable; Windows and PowerShell commands follow: '
+    ALTERNATE_BASH_CMD = 'export OCI_CLI_SUPPRESS_FILE_PERMISSIONS_WARNING=True'
+    ALTERNATE_POWERSHELL_CMD = '$Env:OCI_CLI_SUPPRESS_FILE_PERMISSIONS_WARNING="True"'
+    ALTERNATE_WINDOWS_CMD = 'SET OCI_CLI_SUPPRESS_FILE_PERMISSIONS_WARNING=True'
+
+    # On Windows, the file is allowed to any level of permissions granted to the current user, SYSTEM, and ADMINISTRATORS.
+    # If any other users or groups have permissions to the file, a warning will be printed indicating which additional groups
+    # have permissions and should not.
+    @classmethod
+    def windows_warn_on_invalid_file_permissions(cls, filename):
+        # one line powershell command to output newline separated list of all users / groups
+        # with access to a given file that are not in BUILTIN\Administrators, NT Authority\System or current user
+        try:
+            cmd = (
+                '$ex_perms=@();'
+                '$defaults=@();'
+                '$macls=(Get-Acl {filename}).Access.IdentityReference;'
+                '$defaults+=[wmi]\"win32_SID.SID=\'S-1-5-32-544\'\"|%{{$_.ReferencedDomainName + \"\\\" + $_.AccountName}};'
+                '$defaults+=[wmi]\"win32_SID.SID=\'S-1-5-18\'\"|%{{$_.ReferencedDomainName + \"\\\" + $_.AccountName}};'
+                '$defaults+=\"$env:USERDOMAIN\" + \"\\\" + \"$env:USERNAME\";'
+                'foreach ($i in $macls){{foreach ($m in $defaults){{if($i -eq $m){{$found=$true;}}}};if(!$found){{$ex_perms+=$i}};$found=$false;}};'
+                '"$ex_perms";'.format(filename=filename)
+            )
+            output = subprocess.check_output(["powershell.exe", '{}'.format(cmd)], shell=True).strip()
+        except Exception:
+            # if somehow executing this throws an exception we don't want to prevent use of the CLI so return here
+            return
+
+        # output will be empty if there are no extra permissions on the file
+        if len(output) == 0:
+            return
+
+        try:
+            disallowed_identities = [line.strip() for line in _try_decode_using_stdout(output).splitlines() if line]
+            warning = FilePermissionChecker.WARNING_MESSAGE.format(filepath=filename)
+            identity_warning = FilePermissionChecker.IDENTITY_WARNING.format(identities=', '.join(disallowed_identities))
+            click.echo(click.style(warning + '\n' + identity_warning + '\n' + FilePermissionChecker.FIX_SUGGESTION, fg='red'), file=sys.stderr)
+            click.echo(FilePermissionChecker.REPAIR_CMD.format(filepath=filename), file=sys.stderr)
+            click.echo(click.style(FilePermissionChecker.ALTERNATE_SUGGESTION_WINDOWS, fg='red'), file=sys.stderr)
+            click.echo(FilePermissionChecker.ALTERNATE_WINDOWS_CMD, file=sys.stderr)
+            click.echo(FilePermissionChecker.ALTERNATE_POWERSHELL_CMD + '\n', file=sys.stderr)
+        except ValueError:
+            # ValueError is the superclass exception of the various decoding errors we can receive. If we receive an error,
+            # still try and show a message
+            warning = FilePermissionChecker.WARNING_MESSAGE.format(filepath=filename)
+            click.echo(click.style(warning + '\n' + FilePermissionChecker.FIX_SUGGESTION, fg='red'), file=sys.stderr)
+            click.echo(FilePermissionChecker.REPAIR_CMD.format(filepath=filename), file=sys.stderr)
+            click.echo(click.style(FilePermissionChecker.ALTERNATE_SUGGESTION_WINDOWS, fg='red'), file=sys.stderr)
+            click.echo(FilePermissionChecker.ALTERNATE_WINDOWS_CMD, file=sys.stderr)
+            click.echo(FilePermissionChecker.ALTERNATE_POWERSHELL_CMD + '\n', file=sys.stderr)
+
+    @staticmethod
+    def warn_on_invalid_file_permissions(filepath):
+        suppress_warning = os.environ.get('OCI_CLI_SUPPRESS_FILE_PERMISSIONS_WARNING')
+        if suppress_warning == 'True':
+            return
+
+        filepath = os.path.expanduser(filepath)
+        if is_windows():
+            FilePermissionChecker.windows_warn_on_invalid_file_permissions(filepath)
+        else:
+            # validate that permissions are user R or RW only (400 or 600)
+            unwanted_perms = 127  # octal 177
+            if (stat.S_IMODE(os.lstat(filepath).st_mode) & unwanted_perms):
+                warning = FilePermissionChecker.WARNING_MESSAGE.format(filepath=filepath)
+                click.echo(click.style(warning + '\n' + FilePermissionChecker.FIX_SUGGESTION, fg='red'), file=sys.stderr)
+                click.echo(FilePermissionChecker.REPAIR_CMD.format(filepath=filepath), file=sys.stderr)
+                click.echo(click.style(FilePermissionChecker.ALTERNATE_SUGGESTION, fg='red'), file=sys.stderr)
+                click.echo(FilePermissionChecker.ALTERNATE_BASH_CMD + '\n', file=sys.stderr)
+
+
 def rename_command(parent_group, command, new_name):
     if parent_group and command.name in parent_group.commands:
         parent_group.commands.pop(command.name)
@@ -130,9 +207,9 @@ def override(key, default):
     # note: this is simply meant to cover as many places as possible automatically, if there are descriptions
     # that don't work well, we should add them to the manual overrides
     if 'API' in default:
-        if key.endswith('_root_group.help'):
+        if key.endswith('_root_group.help') or key.endswith('_service_group.help'):
             default = default.replace('API', 'CLI').strip()
-        elif key.endswith('_root_group.short_help'):
+        elif key.endswith('_root_group.short_help') or key.endswith('_service_group.short_help'):
             default = default.replace('API', '').strip()
 
     return OVERRIDES.get(key, default)
@@ -253,7 +330,7 @@ def build_raw_requests_session(ctx):
     client_config = config_and_signer.config
 
     if 'key_file' in client_config:
-        warn_on_invalid_file_permissions(os.path.expanduser(client_config['key_file']))
+        FilePermissionChecker.warn_on_invalid_file_permissions(os.path.expanduser(client_config['key_file']))
 
     if signer is None and config_and_signer.uses_instance_principals_auth:
         raise click.ClickException('Invalid configuration detected: instance principals authentication is being used without a created signer')
@@ -287,7 +364,7 @@ def build_client(service_name, ctx):
         kwargs['signer'] = signer
 
     if 'key_file' in client_config:
-        warn_on_invalid_file_permissions(os.path.expanduser(client_config['key_file']))
+        FilePermissionChecker.warn_on_invalid_file_permissions(os.path.expanduser(client_config['key_file']))
 
     # Add to ctx for later by the operations.
     ctx.obj["config"] = client_config
@@ -347,7 +424,7 @@ def build_config(command_args):
     except exceptions.ProfileNotFound as e:
         sys.exit("ERROR: " + str(e))
 
-    warn_on_invalid_file_permissions(config._get_config_path_with_fallback(command_args['config_file']))
+    FilePermissionChecker.warn_on_invalid_file_permissions(config._get_config_path_with_fallback(command_args['config_file']))
 
     client_config["additional_user_agent"] = 'Oracle-PythonCLI/{}'.format(__version__)
 
@@ -443,7 +520,7 @@ def render(data, headers, ctx, display_all_headers=False, nest_data_in_data_attr
             # and we can output those in table format, so no need to duplicate printing them here
             if 'data' in display_dictionary:
                 for key in display_dictionary:
-                    if key is not 'data':
+                    if key != 'data':
                         click.echo('{}: {}'.format(key, display_dictionary[key]), file=sys.stderr)
 
         if ctx.obj['debug']:
@@ -1352,58 +1429,6 @@ def warn_if_token_present_in_profile_but_not_using_token_auth(ctx):
         click.echo(click.style(TOKEN_PRESENT_BUT_NOT_USED_FOR_AUTH_WARNING, fg='red'), file=sys.stderr)
 
 
-def warn_on_invalid_file_permissions(filepath):
-    suppress_warning = os.environ.get('OCI_CLI_SUPPRESS_FILE_PERMISSIONS_WARNING')
-    if suppress_warning == 'True':
-        return
-
-    filepath = os.path.expanduser(filepath)
-    if is_windows():
-        windows_warn_on_invalid_file_permissions(filepath)
-    else:
-        # validate that permissions are user R or RW only (400 or 600)
-        unwanted_perms = 127  # octal 177
-        if (stat.S_IMODE(os.lstat(filepath).st_mode) & unwanted_perms):
-            warning = 'WARNING: Permissions on {filepath} are too open. To fix this please execute the following command: oci setup repair-file-permissions --file {filepath} '.format(filepath=filepath)
-            click.echo(click.style(warning, fg='red'), file=sys.stderr)
-
-
-# On Windows, the file is allowed to any level of permissions granted to the current user, SYSTEM, and ADMINISTRATORS.
-# If any other users or groups have permissions to the file, a warning will be printed indicating which additional groups
-# have permissions and should not.
-def windows_warn_on_invalid_file_permissions(filename):
-    # one line powershell command to output newline separated list of all users / groups
-    # with access to a given file that are not in BUILTIN\Administrators, NT Authority\System or current user
-    try:
-        cmd = (
-            '$ex_perms=@();'
-            '$defaults=@();'
-            '$macls=(Get-Acl {filename}).Access.IdentityReference;'
-            '$defaults+=[wmi]\"win32_SID.SID=\'S-1-5-32-544\'\"|%{{$_.ReferencedDomainName + \"\\\" + $_.AccountName}};'
-            '$defaults+=[wmi]\"win32_SID.SID=\'S-1-5-18\'\"|%{{$_.ReferencedDomainName + \"\\\" + $_.AccountName}};'
-            '$defaults+=\"$env:USERDOMAIN\" + \"\\\" + \"$env:USERNAME\";'
-            'foreach ($i in $macls){{foreach ($m in $defaults){{if($i -eq $m){{$found=$true;}}}};if(!$found){{$ex_perms+=$i}};$found=$false;}};'
-            '"$ex_perms";'.format(filename=filename)
-        )
-        output = subprocess.check_output(["powershell.exe", '{}'.format(cmd)], shell=True).strip()
-    except Exception:
-        # if somehow executing this throws an exception we don't want to prevent use of the CLI so return here
-        return
-
-    # output will be empty if there are no extra permissions on the file
-    if len(output) == 0:
-        return
-
-    try:
-        disallowed_identities = [line.strip() for line in _try_decode_using_stdout(output).splitlines() if line]
-        warning = 'WARNING: Permissions for file {filename} are too open.  The following users  / groups have permissions to the file and should not: {identities}.  To fix this please execute the following command: oci setup repair-file-permissions --file {filename}'.format(filename=filename, identities=', '.join(disallowed_identities))
-    except ValueError:
-        # ValueError is the superclass exception of the various decoding errors we can receive. If we receive an error,
-        # still try and show a message
-        warning = 'WARNING: Permissions for file {filename} are too open. To fix this please execute the following command: oci setup repair-file-permissions --file {filename}'.format(filename=filename)
-    click.echo(warning, file=sys.stderr)
-
-
 def is_windows():
     return sys.platform == 'win32' or sys.platform == 'cygwin'
 
@@ -1483,7 +1508,6 @@ def _coalesce_param(ctx, param, value, required, explicit_default=None):
             ctx.obj['missing_internal_parameters'] = []
 
         ctx.obj['missing_internal_parameters'].append(hyphenated_param_name)
-
     except cli_exceptions.RequiredValueNotInDefaultOrUserInputError:
         # if there is an explicit default then its not missing so just return explicit_default
         if explicit_default is not None:

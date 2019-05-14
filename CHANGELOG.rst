@@ -6,6 +6,25 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.5.10 - 2019-05-14
+-------------------
+Added
+~~~~~
+* Support for changing the recovery window for backup in the Database service (``--recovery-windows-in-days``  option for ``oci db database create``)
+
+* Support for LoggingContext option in Key Management Service (``--logging-context`` option for ``oci kms crypto encrypt|decrypt|generate-data-encryption-key``)
+
+  * An example on using Key Management Service LoggingContext option can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/kms_example.sh>`__.
+  * (``oci kms crypto encrypt --logging-context``)
+  * (``oci kms crypto decrypt --logging-context``)
+  * (``oci kms crypto generate-data-encryption-key --logging-context``)
+
+* opc-prev-page header added to Email List responses (``oci email sender list``)
+
+Changed
+~~~~~~~
+* Warning messages for invalid file permissions. Include OCI_CLI_SUPPRESS_FILE_PERMISSIONS_WARNING in messages.
+
 2.5.9 - 2018-05-07
 ------------------
 Added

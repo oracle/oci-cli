@@ -13,7 +13,7 @@ interactions:
     headers:
       Content-Length: ['4']
       Content-Type: [text/plain]
-      Date: ['Mon, 25 Mar 2019 16:49:10 GMT']
+      Date: ['Fri, 03 May 2019 20:09:59 GMT']
       Server: [Jetty(9.4.7.v20170914)]
     status: {code: 200, message: OK}
 - request:
@@ -24,13 +24,13 @@ interactions:
       Connection: [keep-alive]
       User-Agent: [python-requests/2.21.0]
     method: GET
-    uri: http://docker.for.mac.localhost:8090/SDKTestingService/request?sessionId=0416&apiName=ListSuppressions&serviceName=email&lang=PythonCLI
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/request?sessionId=0022&apiName=ListSuppressions&serviceName=email&lang=PythonCLI
   response:
-    body: {string: '[{"containerId":"fa8bea43-021f-4a46-a843-051e3dfa6b13","request":{"compartmentId":"ocid1.tenancy.oc1..aaaaaaaagsqotoyawe3qkoxt4lz3pg7obo5xsyglmvvu6pczgq5cbuahgqta","opcRequestId":"stsListSuppressions","limit":10}}]'}
+    body: {string: '[{"containerId":"66aa0857-27bf-4cd7-bd6d-6ff42bef4452","request":{"compartmentId":"ocid1.tenancy.oc1..aaaaaaaagsqotoyawe3qkoxt4lz3pg7obo5xsyglmvvu6pczgq5cbuahgqta","opcRequestId":"stsListSuppressions","limit":10}},{"containerId":"68b8aeb6-092c-4969-91b8-ac9817d4851a","request":{"compartmentId":"ocid1.tenancy.oc1..aaaaaaaagsqotoyawe3qkoxt4lz3pg7obo5xsyglmvvu6pczgq5cbuahgqta","opcRequestId":"stsListSuppressions","limit":4}}]'}
     headers:
-      Content-Length: ['214']
+      Content-Length: ['426']
       Content-Type: [text/plain]
-      Date: ['Mon, 25 Mar 2019 16:49:11 GMT']
+      Date: ['Fri, 03 May 2019 20:10:01 GMT']
       Server: [Jetty(9.4.7.v20170914)]
     status: {code: 200, message: OK}
 - request:
@@ -39,87 +39,146 @@ interactions:
       accept: [application/json]
       accept-encoding: ['gzip, deflate']
       authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
-          host",keyId="ocid1.tenancy.oc1..aaaaaaaagsqotoyawe3qkoxt4lz3pg7obo5xsyglmvvu6pczgq5cbuahgqta/ocid1.user.oc1..aaaaaaaajq6r7ewazrmfwarqztb2ubs5kwt24s7xieuolf7kknpdzciz6uoa/27:fc:89:7f:2d:27:e3:11:7e:42:d7:d9:63:4e:b3:38",signature="muV5yvRNtDkvuMRvmUkpYK1Xu+alcYA06fZZkY0dBQ9kw5h+W+f+WeoJMWk7qHb0g4nSBJBw0jBiVFUrG8uaj3d5jY4k2eafdy7oCjb8WcYWmp2kp0/nUkLVh5dWSYblUxxDalZACmj3gIdqGf43KAJn1hQLFrf+wUjq8EUNPNrkmTdTtZEYmt47XUtmliqTpmevwmQUHpkZ4PkV8OzZC7KKc838Z31d/7659WCjKbjjf/iuesnRiqalSZyahuGhp2SVu0pVLkbd2pKAXdlh3rBMe0p9um6XPUjX11UaVb5CXakYnBCfQbaTMMw5CWuHGJkmCpnjzo6DsIxS8tdaQQ==",version="1"']
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaagsqotoyawe3qkoxt4lz3pg7obo5xsyglmvvu6pczgq5cbuahgqta/ocid1.user.oc1..aaaaaaaajq6r7ewazrmfwarqztb2ubs5kwt24s7xieuolf7kknpdzciz6uoa/27:fc:89:7f:2d:27:e3:11:7e:42:d7:d9:63:4e:b3:38",signature="Qv9uk4LyA8CJh8mWcHBK+eI9ti/x85fNM4YRjJ3LiFoQWQMG6wLkrpdmueJtiG/lf8gNo6TcCngHnsI0a73Eicn8Xd1zYei6rOTa/uhDzcVPRiCb8sjcr49+gqAr1LZWvmGCxwkcHm1rUTY7ofSmMOwI8FyloKN/CVXMwfzdXKhSrFm43c+2Yn3eJGSPuSPfG3C2Gv+9QyOCoxeE0HdfrSJctJzdcbmwOS3SxRWXkqhDqtcbJItSBi372M/+hy04oG29Ff+l9vp4hyU0PZc3mxFvObOHkKbo0DqzPK/mHlK8NHN6D2yG33vPoN5+UMEuGOc1PLEaitgSYowJz95lag==",version="1"']
       connection: [keep-alive]
       content-type: [application/json]
-      date: ['Mon, 25 Mar 2019 16:49:11 GMT']
+      date: ['Fri, 03 May 2019 20:10:39 GMT']
       host: [email.us-phoenix-1.oraclecloud.com]
-      opc-client-info: [Oracle-PythonSDK/2.2.2+preview.1.0.738]
-      opc-request-id: [E66821347EF847C98E4C380C4609A25B]
-      user-agent: [Oracle-PythonSDK/2.2.2+preview.1.0.738 (python 3.5.3; x86_64-Linux)
-          Oracle-PythonCLI/2.5.3+preview.1]
+      opc-client-info: [Oracle-PythonSDK/2.2.6]
+      opc-request-id: [6171D93D8B1C4F88978B9D00BC68E613]
+      user-agent: [Oracle-PythonSDK/2.2.6 (python 3.5.3; x86_64-Linux) Oracle-PythonCLI/2.5.7]
     method: GET
     uri: https://email.us-phoenix-1.oraclecloud.com/20170907/suppressions?limit=10&compartmentId=ocid1.tenancy.oc1..aaaaaaaagsqotoyawe3qkoxt4lz3pg7obo5xsyglmvvu6pczgq5cbuahgqta
   response:
-    body: {string: '[{"emailAddress":"__sts0416_250@test.oracle.com","id":"ocid1.emailsuppression.oc1..aaaaaaaad5m3nxuu7vwagk7xqxnlai2uybppqgsbl4k2w3qf77i7s7mdre6q","reason":"MANUAL","timeCreated":"2019-03-25T16:48:50.000Z","compartmentId":"ocid1.tenancy.oc1..aaaaaaaagsqotoyawe3qkoxt4lz3pg7obo5xsyglmvvu6pczgq5cbuahgqta"},{"emailAddress":"suppr-integ-a5cb6@dyn-ora-example.com","id":"ocid1.emailsuppression.oc1..aaaaaaaad4mw7cknzzoivnrscamuyqvn4oakjyaicjxd4e6c3op3ioi27egq","reason":"MANUAL","timeCreated":"2019-02-28T20:41:20.000Z","compartmentId":"ocid1.tenancy.oc1..aaaaaaaagsqotoyawe3qkoxt4lz3pg7obo5xsyglmvvu6pczgq5cbuahgqta"},{"emailAddress":"suppr-integ-47bde@dyn-ora-example.com","id":"ocid1.emailsuppression.oc1..aaaaaaaad4mw7ce2glir3tgvmzhbta6yrucwh377zknmfsk4h5gpzv6xjppq","reason":"MANUAL","timeCreated":"2019-02-28T20:41:08.000Z","compartmentId":"ocid1.tenancy.oc1..aaaaaaaagsqotoyawe3qkoxt4lz3pg7obo5xsyglmvvu6pczgq5cbuahgqta"},{"emailAddress":"zhaotest12@oracle.com","id":"ocid1.emailsuppression.oc1..aaaaaaaadzz3zdmy5hgc3ubj5cnupaf7mjyi2wgu42k634qkyhbwhx2vlt5a","reason":"MANUAL","timeCreated":"2019-02-22T21:11:03.000Z","compartmentId":"ocid1.tenancy.oc1..aaaaaaaagsqotoyawe3qkoxt4lz3pg7obo5xsyglmvvu6pczgq5cbuahgqta"},{"emailAddress":"email-sendonly-test@dynqatesting.com","id":"ocid1.emailsuppression.oc1..aaaaaaaad34z2o6gxlbdmd43qmt5re43wfslol7nxpsjrk2eq3d7haksprfq","reason":"HARDBOUNCE","timeCreated":"2019-02-12T16:04:02.000Z","compartmentId":"ocid1.tenancy.oc1..aaaaaaaagsqotoyawe3qkoxt4lz3pg7obo5xsyglmvvu6pczgq5cbuahgqta"},{"emailAddress":"suppression+email-0d276@oracle.com","id":"ocid1.emailsuppression.oc1..aaaaaaaadyzfyyhobdcwhdrz5oin27be4ulearccvi7fwpjsyvvza7pvd47a","reason":"MANUAL","timeCreated":"2018-11-08T18:02:14.000Z","compartmentId":"ocid1.tenancy.oc1..aaaaaaaagsqotoyawe3qkoxt4lz3pg7obo5xsyglmvvu6pczgq5cbuahgqta"},{"emailAddress":"ociwaf_qa_ww_grp@oracle.com","id":"ocid1.emailsuppression.oc1..aaaaaaaadyxnpjhbxbkco72gfjoliqnihlmtonfczapzn3ls3zyoiy77c6lq","reason":"HARDBOUNCE","timeCreated":"2018-11-06T21:22:07.000Z","compartmentId":"ocid1.tenancy.oc1..aaaaaaaagsqotoyawe3qkoxt4lz3pg7obo5xsyglmvvu6pczgq5cbuahgqta"},{"emailAddress":"get.suppression.pdecker.ociphx@dynqatesting.com","id":"ocid1.emailsuppression.oc1..aaaaaaaadwzmjykvwo5b5rlldvgquxlh4gikxfagjdafitxworua2o5lewaa","reason":"MANUAL","timeCreated":"2018-08-31T19:50:14.000Z","compartmentId":"ocid1.tenancy.oc1..aaaaaaaagsqotoyawe3qkoxt4lz3pg7obo5xsyglmvvu6pczgq5cbuahgqta"},{"emailAddress":"a@a.com","id":"ocid1.emailsuppression.oc1..aaaaaaaadwwpqkd5zmgner5kssew4zs4gn3jnj56ddjypj4nnvk3jbklp73q","reason":"HARDBOUNCE","timeCreated":"2018-08-28T13:39:03.000Z","compartmentId":"ocid1.tenancy.oc1..aaaaaaaagsqotoyawe3qkoxt4lz3pg7obo5xsyglmvvu6pczgq5cbuahgqta"},{"emailAddress":"b@b.com","id":"ocid1.emailsuppression.oc1..aaaaaaaadwwpqk6ky5f7jru6wjm3hptdiotvsrajz7csfyn5lp6twwjqsmoa","reason":"HARDBOUNCE","timeCreated":"2018-08-28T13:39:03.000Z","compartmentId":"ocid1.tenancy.oc1..aaaaaaaagsqotoyawe3qkoxt4lz3pg7obo5xsyglmvvu6pczgq5cbuahgqta"}]'}
+    body: {string: '[{"emailAddress":"__sts0022_3635@test.oracle.com","id":"ocid1.emailsuppression.oc1..aaaaaaaad643l55ard2umqyqks5qdwa6r32xxccwttowyca5g3452suoxyza","reason":"MANUAL","timeCreated":"2019-05-03T20:10:39.000Z","compartmentId":"ocid1.tenancy.oc1..aaaaaaaagsqotoyawe3qkoxt4lz3pg7obo5xsyglmvvu6pczgq5cbuahgqta"},{"emailAddress":"__sts0022_7747@test.oracle.com","id":"ocid1.emailsuppression.oc1..aaaaaaaad643l5xst2wvcfvgsyaud6om3dx2gqmc6yzggzb22ew24adlczqq","reason":"MANUAL","timeCreated":"2019-05-03T20:10:32.000Z","compartmentId":"ocid1.tenancy.oc1..aaaaaaaagsqotoyawe3qkoxt4lz3pg7obo5xsyglmvvu6pczgq5cbuahgqta"},{"emailAddress":"__sts0022_5912@test.oracle.com","id":"ocid1.emailsuppression.oc1..aaaaaaaad643l5ku2kwtyq2elkxnqzulaxvi7ei2khuwyxy5vtxwnaokqtsq","reason":"MANUAL","timeCreated":"2019-05-03T20:10:25.000Z","compartmentId":"ocid1.tenancy.oc1..aaaaaaaagsqotoyawe3qkoxt4lz3pg7obo5xsyglmvvu6pczgq5cbuahgqta"},{"emailAddress":"__sts0022_2994@test.oracle.com","id":"ocid1.emailsuppression.oc1..aaaaaaaad643l4yc7eowoizfwwd6hob32ec72c2fhriebkyqvmspjehviuwa","reason":"MANUAL","timeCreated":"2019-05-03T20:10:17.000Z","compartmentId":"ocid1.tenancy.oc1..aaaaaaaagsqotoyawe3qkoxt4lz3pg7obo5xsyglmvvu6pczgq5cbuahgqta"},{"emailAddress":"__sts0022_7945@test.oracle.com","id":"ocid1.emailsuppression.oc1..aaaaaaaad643l4rbtzn6r5gdbhz2vmnke4osvopbk3y2jix363zvehsek2oq","reason":"MANUAL","timeCreated":"2019-05-03T20:10:10.000Z","compartmentId":"ocid1.tenancy.oc1..aaaaaaaagsqotoyawe3qkoxt4lz3pg7obo5xsyglmvvu6pczgq5cbuahgqta"},{"emailAddress":"__sts0022_140@test.oracle.com","id":"ocid1.emailsuppression.oc1..aaaaaaaad643kdolqzyae226ar6dt3jd6pcd4fdwlzzvtlrle2qeswb4ldja","reason":"MANUAL","timeCreated":"2019-05-03T20:08:32.000Z","compartmentId":"ocid1.tenancy.oc1..aaaaaaaagsqotoyawe3qkoxt4lz3pg7obo5xsyglmvvu6pczgq5cbuahgqta"},{"emailAddress":"__sts0280_5018@test.oracle.com","id":"ocid1.emailsuppression.oc1..aaaaaaaad6z6vm27s2vwy65hhu2kekmxykjmyk74itubtp3heepmxrxtkcda","reason":"MANUAL","timeCreated":"2019-05-01T17:25:02.000Z","compartmentId":"ocid1.tenancy.oc1..aaaaaaaagsqotoyawe3qkoxt4lz3pg7obo5xsyglmvvu6pczgq5cbuahgqta"},{"emailAddress":"__sts0280_9704@test.oracle.com","id":"ocid1.emailsuppression.oc1..aaaaaaaad6z6uqguqbm5nm2god53rtwg6tx5x6gfvdlyhm5qofrumdkam3za","reason":"MANUAL","timeCreated":"2019-05-01T17:24:55.000Z","compartmentId":"ocid1.tenancy.oc1..aaaaaaaagsqotoyawe3qkoxt4lz3pg7obo5xsyglmvvu6pczgq5cbuahgqta"},{"emailAddress":"__sts0083_8092@test.oracle.com","id":"ocid1.emailsuppression.oc1..aaaaaaaad6vikidwgzmk5upmk6sqsnj6mqjgo5p7jjj452jlnzq33nbmtgba","reason":"MANUAL","timeCreated":"2019-04-30T17:17:30.000Z","compartmentId":"ocid1.tenancy.oc1..aaaaaaaagsqotoyawe3qkoxt4lz3pg7obo5xsyglmvvu6pczgq5cbuahgqta"},{"emailAddress":"fire@example.com","id":"ocid1.emailsuppression.oc1..aaaaaaaad6mzrqme35lu3xyiwngvsb3xacsi5iu2e4ujfeb5zjzfmwpenqja","reason":"MANUAL","timeCreated":"2019-04-25T15:17:06.000Z","compartmentId":"ocid1.tenancy.oc1..aaaaaaaagsqotoyawe3qkoxt4lz3pg7obo5xsyglmvvu6pczgq5cbuahgqta"}]'}
     headers:
       Access-Control-Allow-Origin: ['*']
       Access-Control-Expose-Headers: ['etag, opc-prev-page, opc-next-page, opc-page-count,
           ops-total-items, opc-request-id']
       Connection: [keep-alive]
-      Content-Length: ['3029']
+      Content-Length: ['3016']
       Content-Type: [application/json]
-      Date: ['Mon, 25 Mar 2019 16:49:17 GMT']
+      Date: ['Fri, 03 May 2019 20:10:46 GMT']
       X-Application-Context: [application]
-      opc-next-page: [MQktMjA3MjIyMjIyOAk1MAkxMTAJMTUzNTQ2MzU0Mwk0OTc4NzQ5ODcJMjMw]
-      opc-request-id: [E66821347EF847C98E4C380C4609A25B/931F0E1FC6C028A90104038705CBEE26/6B78F5450BFF215AC12A399E3B10B1C6]
+      opc-next-page: [MQktMjA3MjIyMjIyOAk1MAkxMTAJMTU1NjIwNTQyNgk1MzAxNTk4MDkJMjMw]
+      opc-request-id: [6171D93D8B1C4F88978B9D00BC68E613/C2750C4522EF6A76992C754F518BFB19/FC46963ACF88DD313855DE13AA8A16CE]
     status: {code: 200, message: OK}
 - request:
-    body: '{"responseJson": "{\"opcRequestId\": \"C7E4FE0408AF4BAEBFD0FFA4D5DD617F\",
-      \"opcNextPage\": \"MQktMjA3MjIyMjIyOAk1MAkxMTAJMTUzNTQ2MzU0Mwk0OTc4NzQ5ODcJMjMw\",
-      \"items\": [{\"id\": \"ocid1.emailsuppression.oc1..aaaaaaaad5m3nxuu7vwagk7xqxnlai2uybppqgsbl4k2w3qf77i7s7mdre6q\",
-      \"emailAddress\": \"__sts0416_250@test.oracle.com\", \"compartmentId\": \"ocid1.tenancy.oc1..aaaaaaaagsqotoyawe3qkoxt4lz3pg7obo5xsyglmvvu6pczgq5cbuahgqta\",
-      \"reason\": \"MANUAL\", \"timeCreated\": \"2019-03-25T16:48:50+00:00\"}, {\"id\":
-      \"ocid1.emailsuppression.oc1..aaaaaaaad4mw7cknzzoivnrscamuyqvn4oakjyaicjxd4e6c3op3ioi27egq\",
-      \"emailAddress\": \"suppr-integ-a5cb6@dyn-ora-example.com\", \"compartmentId\":
-      \"ocid1.tenancy.oc1..aaaaaaaagsqotoyawe3qkoxt4lz3pg7obo5xsyglmvvu6pczgq5cbuahgqta\",
-      \"reason\": \"MANUAL\", \"timeCreated\": \"2019-02-28T20:41:20+00:00\"}, {\"id\":
-      \"ocid1.emailsuppression.oc1..aaaaaaaad4mw7ce2glir3tgvmzhbta6yrucwh377zknmfsk4h5gpzv6xjppq\",
-      \"emailAddress\": \"suppr-integ-47bde@dyn-ora-example.com\", \"compartmentId\":
-      \"ocid1.tenancy.oc1..aaaaaaaagsqotoyawe3qkoxt4lz3pg7obo5xsyglmvvu6pczgq5cbuahgqta\",
-      \"reason\": \"MANUAL\", \"timeCreated\": \"2019-02-28T20:41:08+00:00\"}, {\"id\":
-      \"ocid1.emailsuppression.oc1..aaaaaaaadzz3zdmy5hgc3ubj5cnupaf7mjyi2wgu42k634qkyhbwhx2vlt5a\",
-      \"emailAddress\": \"zhaotest12@oracle.com\", \"compartmentId\": \"ocid1.tenancy.oc1..aaaaaaaagsqotoyawe3qkoxt4lz3pg7obo5xsyglmvvu6pczgq5cbuahgqta\",
-      \"reason\": \"MANUAL\", \"timeCreated\": \"2019-02-22T21:11:03+00:00\"}, {\"id\":
-      \"ocid1.emailsuppression.oc1..aaaaaaaad34z2o6gxlbdmd43qmt5re43wfslol7nxpsjrk2eq3d7haksprfq\",
-      \"emailAddress\": \"email-sendonly-test@dynqatesting.com\", \"compartmentId\":
-      \"ocid1.tenancy.oc1..aaaaaaaagsqotoyawe3qkoxt4lz3pg7obo5xsyglmvvu6pczgq5cbuahgqta\",
-      \"reason\": \"HARDBOUNCE\", \"timeCreated\": \"2019-02-12T16:04:02+00:00\"},
-      {\"id\": \"ocid1.emailsuppression.oc1..aaaaaaaadyzfyyhobdcwhdrz5oin27be4ulearccvi7fwpjsyvvza7pvd47a\",
-      \"emailAddress\": \"suppression+email-0d276@oracle.com\", \"compartmentId\":
-      \"ocid1.tenancy.oc1..aaaaaaaagsqotoyawe3qkoxt4lz3pg7obo5xsyglmvvu6pczgq5cbuahgqta\",
-      \"reason\": \"MANUAL\", \"timeCreated\": \"2018-11-08T18:02:14+00:00\"}, {\"id\":
-      \"ocid1.emailsuppression.oc1..aaaaaaaadyxnpjhbxbkco72gfjoliqnihlmtonfczapzn3ls3zyoiy77c6lq\",
-      \"emailAddress\": \"ociwaf_qa_ww_grp@oracle.com\", \"compartmentId\": \"ocid1.tenancy.oc1..aaaaaaaagsqotoyawe3qkoxt4lz3pg7obo5xsyglmvvu6pczgq5cbuahgqta\",
-      \"reason\": \"HARDBOUNCE\", \"timeCreated\": \"2018-11-06T21:22:07+00:00\"},
-      {\"id\": \"ocid1.emailsuppression.oc1..aaaaaaaadwzmjykvwo5b5rlldvgquxlh4gikxfagjdafitxworua2o5lewaa\",
-      \"emailAddress\": \"get.suppression.pdecker.ociphx@dynqatesting.com\", \"compartmentId\":
-      \"ocid1.tenancy.oc1..aaaaaaaagsqotoyawe3qkoxt4lz3pg7obo5xsyglmvvu6pczgq5cbuahgqta\",
-      \"reason\": \"MANUAL\", \"timeCreated\": \"2018-08-31T19:50:14+00:00\"}, {\"id\":
-      \"ocid1.emailsuppression.oc1..aaaaaaaadwwpqkd5zmgner5kssew4zs4gn3jnj56ddjypj4nnvk3jbklp73q\",
-      \"emailAddress\": \"a@a.com\", \"compartmentId\": \"ocid1.tenancy.oc1..aaaaaaaagsqotoyawe3qkoxt4lz3pg7obo5xsyglmvvu6pczgq5cbuahgqta\",
-      \"reason\": \"HARDBOUNCE\", \"timeCreated\": \"2018-08-28T13:39:03+00:00\"},
-      {\"id\": \"ocid1.emailsuppression.oc1..aaaaaaaadwwpqk6ky5f7jru6wjm3hptdiotvsrajz7csfyn5lp6twwjqsmoa\",
-      \"emailAddress\": \"b@b.com\", \"compartmentId\": \"ocid1.tenancy.oc1..aaaaaaaagsqotoyawe3qkoxt4lz3pg7obo5xsyglmvvu6pczgq5cbuahgqta\",
-      \"reason\": \"HARDBOUNCE\", \"timeCreated\": \"2018-08-28T13:39:03+00:00\"}]}",
+    body: '{"responseJson": "{\"opcRequestId\": \"4A15D264473747C58E83E867E35B8EA8\",
+      \"opcNextPage\": \"MQktMjA3MjIyMjIyOAk1MAkxMTAJMTU1NjIwNTQyNgk1MzAxNTk4MDkJMjMw\",
+      \"items\": [{\"id\": \"ocid1.emailsuppression.oc1..aaaaaaaad643l55ard2umqyqks5qdwa6r32xxccwttowyca5g3452suoxyza\",
+      \"emailAddress\": \"__sts0022_3635@test.oracle.com\", \"compartmentId\": \"ocid1.tenancy.oc1..aaaaaaaagsqotoyawe3qkoxt4lz3pg7obo5xsyglmvvu6pczgq5cbuahgqta\",
+      \"reason\": \"MANUAL\", \"timeCreated\": \"2019-05-03T20:10:39+00:00\"}, {\"id\":
+      \"ocid1.emailsuppression.oc1..aaaaaaaad643l5xst2wvcfvgsyaud6om3dx2gqmc6yzggzb22ew24adlczqq\",
+      \"emailAddress\": \"__sts0022_7747@test.oracle.com\", \"compartmentId\": \"ocid1.tenancy.oc1..aaaaaaaagsqotoyawe3qkoxt4lz3pg7obo5xsyglmvvu6pczgq5cbuahgqta\",
+      \"reason\": \"MANUAL\", \"timeCreated\": \"2019-05-03T20:10:32+00:00\"}, {\"id\":
+      \"ocid1.emailsuppression.oc1..aaaaaaaad643l5ku2kwtyq2elkxnqzulaxvi7ei2khuwyxy5vtxwnaokqtsq\",
+      \"emailAddress\": \"__sts0022_5912@test.oracle.com\", \"compartmentId\": \"ocid1.tenancy.oc1..aaaaaaaagsqotoyawe3qkoxt4lz3pg7obo5xsyglmvvu6pczgq5cbuahgqta\",
+      \"reason\": \"MANUAL\", \"timeCreated\": \"2019-05-03T20:10:25+00:00\"}, {\"id\":
+      \"ocid1.emailsuppression.oc1..aaaaaaaad643l4yc7eowoizfwwd6hob32ec72c2fhriebkyqvmspjehviuwa\",
+      \"emailAddress\": \"__sts0022_2994@test.oracle.com\", \"compartmentId\": \"ocid1.tenancy.oc1..aaaaaaaagsqotoyawe3qkoxt4lz3pg7obo5xsyglmvvu6pczgq5cbuahgqta\",
+      \"reason\": \"MANUAL\", \"timeCreated\": \"2019-05-03T20:10:17+00:00\"}, {\"id\":
+      \"ocid1.emailsuppression.oc1..aaaaaaaad643l4rbtzn6r5gdbhz2vmnke4osvopbk3y2jix363zvehsek2oq\",
+      \"emailAddress\": \"__sts0022_7945@test.oracle.com\", \"compartmentId\": \"ocid1.tenancy.oc1..aaaaaaaagsqotoyawe3qkoxt4lz3pg7obo5xsyglmvvu6pczgq5cbuahgqta\",
+      \"reason\": \"MANUAL\", \"timeCreated\": \"2019-05-03T20:10:10+00:00\"}, {\"id\":
+      \"ocid1.emailsuppression.oc1..aaaaaaaad643kdolqzyae226ar6dt3jd6pcd4fdwlzzvtlrle2qeswb4ldja\",
+      \"emailAddress\": \"__sts0022_140@test.oracle.com\", \"compartmentId\": \"ocid1.tenancy.oc1..aaaaaaaagsqotoyawe3qkoxt4lz3pg7obo5xsyglmvvu6pczgq5cbuahgqta\",
+      \"reason\": \"MANUAL\", \"timeCreated\": \"2019-05-03T20:08:32+00:00\"}, {\"id\":
+      \"ocid1.emailsuppression.oc1..aaaaaaaad6z6vm27s2vwy65hhu2kekmxykjmyk74itubtp3heepmxrxtkcda\",
+      \"emailAddress\": \"__sts0280_5018@test.oracle.com\", \"compartmentId\": \"ocid1.tenancy.oc1..aaaaaaaagsqotoyawe3qkoxt4lz3pg7obo5xsyglmvvu6pczgq5cbuahgqta\",
+      \"reason\": \"MANUAL\", \"timeCreated\": \"2019-05-01T17:25:02+00:00\"}, {\"id\":
+      \"ocid1.emailsuppression.oc1..aaaaaaaad6z6uqguqbm5nm2god53rtwg6tx5x6gfvdlyhm5qofrumdkam3za\",
+      \"emailAddress\": \"__sts0280_9704@test.oracle.com\", \"compartmentId\": \"ocid1.tenancy.oc1..aaaaaaaagsqotoyawe3qkoxt4lz3pg7obo5xsyglmvvu6pczgq5cbuahgqta\",
+      \"reason\": \"MANUAL\", \"timeCreated\": \"2019-05-01T17:24:55+00:00\"}, {\"id\":
+      \"ocid1.emailsuppression.oc1..aaaaaaaad6vikidwgzmk5upmk6sqsnj6mqjgo5p7jjj452jlnzq33nbmtgba\",
+      \"emailAddress\": \"__sts0083_8092@test.oracle.com\", \"compartmentId\": \"ocid1.tenancy.oc1..aaaaaaaagsqotoyawe3qkoxt4lz3pg7obo5xsyglmvvu6pczgq5cbuahgqta\",
+      \"reason\": \"MANUAL\", \"timeCreated\": \"2019-04-30T17:17:30+00:00\"}, {\"id\":
+      \"ocid1.emailsuppression.oc1..aaaaaaaad6mzrqme35lu3xyiwngvsb3xacsi5iu2e4ujfeb5zjzfmwpenqja\",
+      \"emailAddress\": \"fire@example.com\", \"compartmentId\": \"ocid1.tenancy.oc1..aaaaaaaagsqotoyawe3qkoxt4lz3pg7obo5xsyglmvvu6pczgq5cbuahgqta\",
+      \"reason\": \"MANUAL\", \"timeCreated\": \"2019-04-25T15:17:06+00:00\"}]}",
       "requestJson": "{\"opcRequestId\": \"stsListSuppressions\", \"limit\": 10, \"compartmentId\":
       \"ocid1.tenancy.oc1..aaaaaaaagsqotoyawe3qkoxt4lz3pg7obo5xsyglmvvu6pczgq5cbuahgqta\"}",
-      "containerId": "fa8bea43-021f-4a46-a843-051e3dfa6b13", "requestClass": "com.oracle.bmc.email.requests.ListSuppressionsRequest",
+      "containerId": "66aa0857-27bf-4cd7-bd6d-6ff42bef4452", "requestClass": "com.oracle.bmc.email.requests.ListSuppressionsRequest",
       "responseClass": "com.oracle.bmc.email.responses.ListSuppressionsResponse"}'
     headers:
       Accept: ['*/*']
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
-      Content-Length: ['3895']
+      Content-Length: ['3882']
       User-Agent: [python-requests/2.21.0]
     method: POST
-    uri: http://docker.for.mac.localhost:8090/SDKTestingService/response?sessionId=0416&lang=PythonCLI
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/response?sessionId=0022&lang=PythonCLI
   response:
     body: {string: ''}
     headers:
       Content-Length: ['0']
       Content-Type: [text/plain]
-      Date: ['Mon, 25 Mar 2019 16:49:19 GMT']
+      Date: ['Fri, 03 May 2019 20:10:47 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaagsqotoyawe3qkoxt4lz3pg7obo5xsyglmvvu6pczgq5cbuahgqta/ocid1.user.oc1..aaaaaaaajq6r7ewazrmfwarqztb2ubs5kwt24s7xieuolf7kknpdzciz6uoa/27:fc:89:7f:2d:27:e3:11:7e:42:d7:d9:63:4e:b3:38",signature="zDyXHdZduGpGoCjXlDMm3glGTEVJrUmZWtgO0kp5p0wGzuE4/meGt49zv6frG3PfR9REpeuuNL9obB1tviswLlH3Fsnszg98iBfXehc6zCa1hpOx11tQDATxxwGsr4iqb2yH2gzF+UFznkrkFOkB+prx/lIjQEM/t7b9QfdBMSPMuVd/9uq79U2lL+lD5mA1rCFZ51/7TN8WkGue+m1qVTIksXqaHUbhfGTZx3HDZtuo4mn9qVArcrw3f+IiedUiHBx2p+Ilyp+lPYMtVK0ScX94AeAATBCCMRepoNFFMpYoTZl+vb3cIHv3C9v1b0yGrmWCSqJijh8cKItqkvsd3g==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Fri, 03 May 2019 20:10:47 GMT']
+      host: [email.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.2.6]
+      opc-request-id: [ECEED27BE74B4ED088BF906B82C29FBD]
+      user-agent: [Oracle-PythonSDK/2.2.6 (python 3.5.3; x86_64-Linux) Oracle-PythonCLI/2.5.7]
+    method: GET
+    uri: https://email.us-phoenix-1.oraclecloud.com/20170907/suppressions?limit=4&compartmentId=ocid1.tenancy.oc1..aaaaaaaagsqotoyawe3qkoxt4lz3pg7obo5xsyglmvvu6pczgq5cbuahgqta
+  response:
+    body: {string: '[{"emailAddress":"__sts0022_3635@test.oracle.com","id":"ocid1.emailsuppression.oc1..aaaaaaaad643l55ard2umqyqks5qdwa6r32xxccwttowyca5g3452suoxyza","reason":"MANUAL","timeCreated":"2019-05-03T20:10:39.000Z","compartmentId":"ocid1.tenancy.oc1..aaaaaaaagsqotoyawe3qkoxt4lz3pg7obo5xsyglmvvu6pczgq5cbuahgqta"},{"emailAddress":"__sts0022_7747@test.oracle.com","id":"ocid1.emailsuppression.oc1..aaaaaaaad643l5xst2wvcfvgsyaud6om3dx2gqmc6yzggzb22ew24adlczqq","reason":"MANUAL","timeCreated":"2019-05-03T20:10:32.000Z","compartmentId":"ocid1.tenancy.oc1..aaaaaaaagsqotoyawe3qkoxt4lz3pg7obo5xsyglmvvu6pczgq5cbuahgqta"},{"emailAddress":"__sts0022_5912@test.oracle.com","id":"ocid1.emailsuppression.oc1..aaaaaaaad643l5ku2kwtyq2elkxnqzulaxvi7ei2khuwyxy5vtxwnaokqtsq","reason":"MANUAL","timeCreated":"2019-05-03T20:10:25.000Z","compartmentId":"ocid1.tenancy.oc1..aaaaaaaagsqotoyawe3qkoxt4lz3pg7obo5xsyglmvvu6pczgq5cbuahgqta"},{"emailAddress":"__sts0022_2994@test.oracle.com","id":"ocid1.emailsuppression.oc1..aaaaaaaad643l4yc7eowoizfwwd6hob32ec72c2fhriebkyqvmspjehviuwa","reason":"MANUAL","timeCreated":"2019-05-03T20:10:17.000Z","compartmentId":"ocid1.tenancy.oc1..aaaaaaaagsqotoyawe3qkoxt4lz3pg7obo5xsyglmvvu6pczgq5cbuahgqta"}]'}
+    headers:
+      Access-Control-Allow-Origin: ['*']
+      Access-Control-Expose-Headers: ['etag, opc-prev-page, opc-next-page, opc-page-count,
+          ops-total-items, opc-request-id']
+      Connection: [keep-alive]
+      Content-Length: ['1213']
+      Content-Type: [application/json]
+      Date: ['Fri, 03 May 2019 20:10:53 GMT']
+      X-Application-Context: [application]
+      opc-next-page: [MQktMjA3MjIyMjIyOAk1MAkxMTAJMTU1NjkxNDIxNwk1MzIyNjQ0MzUJMjMw]
+      opc-request-id: [ECEED27BE74B4ED088BF906B82C29FBD/96DD5FE1CD7F0403A9BF3536F083AA06/3657A7DD62454AFE85B642ED376965E5]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"responseJson": "{\"opcRequestId\": \"277EB38BD4154F949CD4A12B62786511\",
+      \"opcNextPage\": \"MQktMjA3MjIyMjIyOAk1MAkxMTAJMTU1NjkxNDIxNwk1MzIyNjQ0MzUJMjMw\",
+      \"items\": [{\"id\": \"ocid1.emailsuppression.oc1..aaaaaaaad643l55ard2umqyqks5qdwa6r32xxccwttowyca5g3452suoxyza\",
+      \"emailAddress\": \"__sts0022_3635@test.oracle.com\", \"compartmentId\": \"ocid1.tenancy.oc1..aaaaaaaagsqotoyawe3qkoxt4lz3pg7obo5xsyglmvvu6pczgq5cbuahgqta\",
+      \"reason\": \"MANUAL\", \"timeCreated\": \"2019-05-03T20:10:39+00:00\"}, {\"id\":
+      \"ocid1.emailsuppression.oc1..aaaaaaaad643l5xst2wvcfvgsyaud6om3dx2gqmc6yzggzb22ew24adlczqq\",
+      \"emailAddress\": \"__sts0022_7747@test.oracle.com\", \"compartmentId\": \"ocid1.tenancy.oc1..aaaaaaaagsqotoyawe3qkoxt4lz3pg7obo5xsyglmvvu6pczgq5cbuahgqta\",
+      \"reason\": \"MANUAL\", \"timeCreated\": \"2019-05-03T20:10:32+00:00\"}, {\"id\":
+      \"ocid1.emailsuppression.oc1..aaaaaaaad643l5ku2kwtyq2elkxnqzulaxvi7ei2khuwyxy5vtxwnaokqtsq\",
+      \"emailAddress\": \"__sts0022_5912@test.oracle.com\", \"compartmentId\": \"ocid1.tenancy.oc1..aaaaaaaagsqotoyawe3qkoxt4lz3pg7obo5xsyglmvvu6pczgq5cbuahgqta\",
+      \"reason\": \"MANUAL\", \"timeCreated\": \"2019-05-03T20:10:25+00:00\"}, {\"id\":
+      \"ocid1.emailsuppression.oc1..aaaaaaaad643l4yc7eowoizfwwd6hob32ec72c2fhriebkyqvmspjehviuwa\",
+      \"emailAddress\": \"__sts0022_2994@test.oracle.com\", \"compartmentId\": \"ocid1.tenancy.oc1..aaaaaaaagsqotoyawe3qkoxt4lz3pg7obo5xsyglmvvu6pczgq5cbuahgqta\",
+      \"reason\": \"MANUAL\", \"timeCreated\": \"2019-05-03T20:10:17+00:00\"}]}",
+      "requestJson": "{\"opcRequestId\": \"stsListSuppressions\", \"limit\": 4, \"compartmentId\":
+      \"ocid1.tenancy.oc1..aaaaaaaagsqotoyawe3qkoxt4lz3pg7obo5xsyglmvvu6pczgq5cbuahgqta\"}",
+      "containerId": "68b8aeb6-092c-4969-91b8-ac9817d4851a", "requestClass": "com.oracle.bmc.email.requests.ListSuppressionsRequest",
+      "responseClass": "com.oracle.bmc.email.responses.ListSuppressionsResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['1892']
+      User-Agent: [python-requests/2.21.0]
+    method: POST
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/response?sessionId=0022&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Fri, 03 May 2019 20:10:55 GMT']
       Server: [Jetty(9.4.7.v20170914)]
     status: {code: 200, message: OK}
 version: 1

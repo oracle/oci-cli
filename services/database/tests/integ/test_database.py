@@ -26,6 +26,7 @@ from tests import test_config_container
 ADMIN_PASSWORD = "BEstr0ng_#1"
 DB_VERSION = '12.1.0.2'
 DB_SYSTEM_CPU_CORE_COUNT = '4'
+DB_RECOVERY_WINDOW = '45'
 DB_SYSTEM_DB_EDITION = 'ENTERPRISE_EDITION'
 DB_SYSTEM_DB_EXTREME_EDITION = 'ENTERPRISE_EDITION_EXTREME_PERFORMANCE'
 DB_SYSTEM_SHAPE = 'BM.DenseIO2.52'
@@ -723,6 +724,7 @@ def test_database_operations(runner, config_file, config_profile, db_systems_tes
             '--db-system-id', db_systems_test_database_operations[0],
             '--db-version', DB_VERSION,
             '--admin-password', ADMIN_PASSWORD,
+            '--recovery-window-in-days', DB_RECOVERY_WINDOW,
             '--db-name', random_db_name()
         ]
 
@@ -762,6 +764,7 @@ def test_database_operations(runner, config_file, config_profile, db_systems_tes
             'database', 'update',
             '--database-id', database_id,
             '--auto-backup-enabled', 'true',
+            '--recovery-window-in-days', DB_RECOVERY_WINDOW,
             '--force'
         ]
 
@@ -1646,6 +1649,7 @@ def db_systems_cleanup(runner, config_file, config_profile, db_system_id_1, db_s
 
 def networking(network_client):
     if EXISTING_SUBNET:
+        print("Returning existing subnet")
         networking_dict = {}
         networking_dict['vcn_ocid'] = ''
         networking_dict['subnet_ocid_1'] = EXISTING_SUBNET
@@ -1653,6 +1657,7 @@ def networking(network_client):
         return EXISTING_SUBNET, "", "", "", "", networking_dict
     else:
         # create VCN
+        print("Creating a new subnet")
         vcn_name = util.random_name('cli_db_test_vcn')
         cidr_block = "10.0.0.0/16"
         vcn_dns_label = util.random_name('vcn', insert_underscore=False)
@@ -1661,6 +1666,7 @@ def networking(network_client):
         create_vcn_details.cidr_block = cidr_block
         create_vcn_details.display_name = vcn_name
         create_vcn_details.compartment_id = util.COMPARTMENT_ID
+        print("Compartment ID:", create_vcn_details.compartment_id)
         create_vcn_details.dns_label = vcn_dns_label
 
         result = network_client.create_vcn(create_vcn_details)

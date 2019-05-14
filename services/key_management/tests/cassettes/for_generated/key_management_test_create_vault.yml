@@ -5,7 +5,7 @@ interactions:
       Accept: ['*/*']
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
-      User-Agent: [python-requests/2.18.4]
+      User-Agent: [python-requests/2.21.0]
     method: GET
     uri: http://localhost:8090/SDKTestingService/request/enable?apiName=CreateVault&serviceName=keymanagement&lang=PythonCLI
   response:
@@ -13,7 +13,7 @@ interactions:
     headers:
       Content-Length: ['5']
       Content-Type: [text/plain]
-      Date: ['Fri, 31 Aug 2018 19:27:45 GMT']
-      Server: [Jetty(9.2.14.v20151106)]
+      Date: ['Wed, 01 May 2019 21:16:20 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
     status: {code: 200, message: OK}
 version: 1

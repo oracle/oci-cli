@@ -46,6 +46,8 @@ cli_util.rename_command(database_cli.autonomous_database_group, database_cli.cre
 @cli_util.option('--ncharacter-set', help="""National character set for the database. The default is AL16UTF16. Allowed values are: AL16UTF16 or UTF8.""")
 @cli_util.option('--pdb-name', help="""Pluggable database name. It must begin with an alphabetic character and can contain a maximum of eight alphanumeric characters. Special characters are not permitted. Pluggable database should not be same as database name.""")
 @cli_util.option('--ssh-authorized-keys-file', required=True, type=click.File('r'), help="""A file containing one or more public SSH keys to use for SSH access to the DB System. Use a newline character to separate multiple keys. The length of the combined keys cannot exceed 10,000 characters.""")
+@cli_util.option('--auto-backup-enabled', type=click.BOOL, help="""If set to true, schedules backups automatically. Default is false.""")
+@cli_util.option('--recovery-window-in-days', type=click.IntRange(1, 60), help="""The number of days between the current and the earliest point of recoverability covered by automatic backups (1 to 60).""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'fault-domains': {'module': 'database', 'class': 'list[string]'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}}, output_type={'module': 'database', 'class': 'DbSystem'})
 @cli_util.wrap_exceptions
@@ -73,6 +75,13 @@ def launch_db_system_extended(ctx, **kwargs):
     if 'pdb_name' in kwargs and kwargs['pdb_name']:
         create_database_details['pdbName'] = kwargs['pdb_name']
 
+    if kwargs['auto_backup_enabled'] is not None or kwargs['recovery_window_in_days'] is not None:
+        db_backup_config = {}
+        if kwargs['auto_backup_enabled'] is not None:
+            db_backup_config['autoBackupEnabled'] = kwargs['auto_backup_enabled']
+        if kwargs['recovery_window_in_days'] is not None:
+            db_backup_config['recoveryWindowInDays'] = kwargs['recovery_window_in_days']
+        create_database_details['db_backup_config'] = json.dumps(db_backup_config)
     create_db_home_details['database'] = create_database_details
 
     kwargs['db_home'] = json.dumps(create_db_home_details)
@@ -90,6 +99,8 @@ def launch_db_system_extended(ctx, **kwargs):
     del kwargs['ncharacter_set']
     del kwargs['pdb_name']
     del kwargs['ssh_authorized_keys_file']
+    del kwargs['auto_backup_enabled']
+    del kwargs['recovery_window_in_days']
 
     ctx.invoke(database_cli.launch_db_system_launch_db_system_details, **kwargs)
 
@@ -148,6 +159,8 @@ def launch_db_system_backup_extended(ctx, **kwargs):
 @cli_util.option('--ncharacter-set', help="""National character set for the database. The default is AL16UTF16. Allowed values are: AL16UTF16 or UTF8.""")
 @cli_util.option('--pdb-name', help="""Pluggable database name. It must begin with an alphabetic character and can contain a maximum of eight alphanumeric characters. Special characters are not permitted. Pluggable database should not be same as database name.""")
 @cli_util.option('--db-version', required=True, help="""A valid Oracle database version. To get a list of supported versions, use the command 'oci db version list'.""")
+@cli_util.option('--auto-backup-enabled', type=click.BOOL, help="""If set to true, schedules backups automatically. Default is false.""")
+@cli_util.option('--recovery-window-in-days', type=click.IntRange(1, 60), help="""The number of days between the current and the earliest point of recoverability covered by automatic backups (1 to 60).""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'DatabaseSummary'})
 @cli_util.wrap_exceptions
@@ -173,6 +186,15 @@ def create_database(ctx, **kwargs):
     if 'pdb_name' in kwargs and kwargs['pdb_name']:
         create_database_details.pdb_name = kwargs['pdb_name']
 
+    if kwargs['auto_backup_enabled'] is not None or kwargs['recovery_window_in_days'] is not None:
+        db_backup_config = oci.database.models.DbBackupConfig()
+        if kwargs['auto_backup_enabled'] is not None:
+            db_backup_config.auto_backup_enabled = kwargs['auto_backup_enabled']
+        if kwargs['recovery_window_in_days'] is not None:
+            db_backup_config.recoveryWindowInDays = kwargs['recovery_window_in_days']
+        create_database_details.db_backup_config = db_backup_config
+    del kwargs['auto_backup_enabled']
+    del kwargs['recovery_window_in_days']
     create_db_home_with_system_details.database = create_database_details
 
     if 'db_system_id' in kwargs and kwargs['db_system_id']:
@@ -259,17 +281,21 @@ def create_database_from_backup(ctx, **kwargs):
 @cli_util.copy_params_from_generated_command(database_cli.update_database, params_to_exclude=['db_backup_config'])
 @database_cli.database_group.command(name='update', help="""Update a Database based on the request parameters you provide.""")
 @cli_util.option('--auto-backup-enabled', type=click.BOOL, help="""If set to true, schedules backups automatically. Default is false.""")
+@cli_util.option('--recovery-window-in-days', type=click.IntRange(1, 60), help="""The number of days between the current and the earliest point of recoverability covered by automatic backups (1 to 60).""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}}, output_type={'module': 'database', 'class': 'Database'})
 @cli_util.wrap_exceptions
 def update_database_extended(ctx, **kwargs):
-    if kwargs['auto_backup_enabled'] is not None:
+    if kwargs['auto_backup_enabled'] is not None or kwargs['recovery_window_in_days'] is not None:
         db_backup_config = {}
-        db_backup_config['autoBackupEnabled'] = kwargs['auto_backup_enabled']
-
+        if kwargs['auto_backup_enabled'] is not None:
+            db_backup_config['autoBackupEnabled'] = kwargs['auto_backup_enabled']
+        if kwargs['recovery_window_in_days'] is not None:
+            db_backup_config['recoveryWindowInDays'] = kwargs['recovery_window_in_days']
         kwargs['db_backup_config'] = json.dumps(db_backup_config)
 
     del kwargs['auto_backup_enabled']
+    del kwargs['recovery_window_in_days']
 
     ctx.invoke(database_cli.update_database, **kwargs)
 
