@@ -586,11 +586,17 @@ Options:
                                   instance pool [required]
   --instance-configuration-id TEXT
                                   The OCID of the instance configuration
-                                  associated to the instance pool. [required]
+                                  associated with the instance pool. [required]
   --placement-configurations COMPLEX TYPE
                                   The placement configurations for the instance
-                                  pool. There should be 1 placement
-                                  configuration for each desired AD.
+                                  pool. Provide one placement configuration for
+                                  each availability domain.
+                                  
+                                  To use the instance
+                                  pool with a regional subnet, provide a
+                                  placement configuration for each availability
+                                  domain, and include the regional subnet in
+                                  each placement configuration.
                                   This is a
                                   complex type whose value must be valid JSON.
                                   The value can be provided as a string on the
@@ -1338,14 +1344,20 @@ Options:
                                   associated with the instance pool.
   --placement-configurations COMPLEX TYPE
                                   The placement configurations for the instance
-                                  pool. There should be 1 placement
-                                  configuration for each desired AD.
+                                  pool. Provide one placement configuration for
+                                  each availability domain.
                                   
-                                  This
-                                  option is a JSON list with items of type Updat
-                                  eInstancePoolPlacementConfigurationDetails.
-                                  For documentation on UpdateInstancePoolPlaceme
-                                  ntConfigurationDetails please see our API
+                                  To use the instance
+                                  pool with a regional subnet, provide a
+                                  placement configuration for each availability
+                                  domain, and include the regional subnet in
+                                  each placement configuration.
+                                  
+                                  This option is
+                                  a JSON list with items of type UpdateInstanceP
+                                  oolPlacementConfigurationDetails.  For
+                                  documentation on UpdateInstancePoolPlacementCo
+                                  nfigurationDetails please see our API
                                   reference: https://docs.cloud.oracle.com/api/#
                                   /en/iaas/20160918/datatypes/UpdateInstancePool
                                   PlacementConfigurationDetails.

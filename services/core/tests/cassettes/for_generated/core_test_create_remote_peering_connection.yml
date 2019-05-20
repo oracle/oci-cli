@@ -13,7 +13,7 @@ interactions:
     headers:
       Content-Length: ['4']
       Content-Type: [text/plain]
-      Date: ['Thu, 28 Mar 2019 20:57:14 GMT']
+      Date: ['Tue, 16 Apr 2019 21:06:20 GMT']
       Server: [Jetty(9.4.7.v20170914)]
     status: {code: 200, message: OK}
 - request:
@@ -24,82 +24,82 @@ interactions:
       Connection: [keep-alive]
       User-Agent: [python-requests/2.21.0]
     method: GET
-    uri: http://localhost:8090/SDKTestingService/request?sessionId=0922&apiName=CreateRemotePeeringConnection&serviceName=core&lang=PythonCLI
+    uri: http://localhost:8090/SDKTestingService/request?sessionId=0043&apiName=CreateRemotePeeringConnection&serviceName=core&lang=PythonCLI
   response:
-    body: {string: '[{"containerId":"3b96ac68-d340-4940-98fa-944d1f4aa38c","request":{"createRemotePeeringConnectionDetails":{"compartmentId":"ocid1.compartment.oc1..aaaaaaaa4wap5jzxvxvdxhtesdkde7bovfuytevkkrpg43l44m6m5zoafqwa","displayName":"__STS0922_6962","drgId":"ocid1.drg.oc1.phx.aaaaaaaa5htcnwtqgo553ughdamtolxhs2nux26gagdeffkdm32nyncnka2q"},"opcRetryToken":"2902c824-8734-4183-8556-46dc0718f769"}}]'}
+    body: {string: '[{"containerId":"87babf5c-84b5-4285-b46e-391af157eceb","request":{"createRemotePeeringConnectionDetails":{"compartmentId":"ocid1.compartment.oc1..aaaaaaaa4wap5jzxvxvdxhtesdkde7bovfuytevkkrpg43l44m6m5zoafqwa","displayName":"__STS0043_2288","drgId":"ocid1.drg.oc1.phx.aaaaaaaagugt5tib7fudsaoipat4xtn2kgkwe4avpeb5vrbk7k3nbpaboniq"},"opcRetryToken":"d835dcf7-eff1-414c-8d9d-5a666f0d1660"}}]'}
     headers:
       Content-Length: ['386']
       Content-Type: [text/plain]
-      Date: ['Thu, 28 Mar 2019 20:57:16 GMT']
+      Date: ['Tue, 16 Apr 2019 21:06:21 GMT']
       Server: [Jetty(9.4.7.v20170914)]
     status: {code: 200, message: OK}
 - request:
-    body: '{"displayName": "__STS0922_6962", "drgId": "ocid1.drg.oc1.phx.aaaaaaaa5htcnwtqgo553ughdamtolxhs2nux26gagdeffkdm32nyncnka2q",
+    body: '{"displayName": "__STS0043_2288", "drgId": "ocid1.drg.oc1.phx.aaaaaaaagugt5tib7fudsaoipat4xtn2kgkwe4avpeb5vrbk7k3nbpaboniq",
       "compartmentId": "ocid1.compartment.oc1..aaaaaaaa4wap5jzxvxvdxhtesdkde7bovfuytevkkrpg43l44m6m5zoafqwa"}'
     headers:
       Content-Length: ['228']
       accept: [application/json]
       accept-encoding: ['gzip, deflate']
       authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
-          host content-length content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaarepczpw2gkmbq2l7g6vhstkzlth5v7z6zkthi6zsm7oyu52eznza/ocid1.user.oc1..aaaaaaaavxggrody3lzjvtcwpr47uvipnrbaotb33o6los3twruyvgsiqd4q/41:ab:71:c5:c9:8a:2d:d7:6a:48:b6:90:2c:91:a8:2b",signature="NM3cL2nYSbJ5THb3Y31Rtesg7U/TYIG7V9ET8J+NKyZ+gSrZlC6gECUmsC0L4ij3YY/zQuWBYaYYHwfAqI1Ua2Ip39gAhnAZYjHx2BOYWLjGEw/sS9Fz+wZUKr7isyPzHpmmqq3Os7UcNo6myDYGvCp1tg13hu4uZulWWqZm1UHlxl+sb+SVObw0w34enYR2Yt5zmE+UPPSqo0lR3AtDkwfElEToTnp8mohocIq5loe2O1htw52OvXnBaRX5NuiTvnhjK0R0mTooEY0V4yJqdV2vaK8PCrbH/kkbnp18wVCUyjehwQxgGmxynP/ZO1LRAuODO+BvC5/4tAjhBJub/A==",version="1"']
+          host content-length content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaarepczpw2gkmbq2l7g6vhstkzlth5v7z6zkthi6zsm7oyu52eznza/ocid1.user.oc1..aaaaaaaavxggrody3lzjvtcwpr47uvipnrbaotb33o6los3twruyvgsiqd4q/41:ab:71:c5:c9:8a:2d:d7:6a:48:b6:90:2c:91:a8:2b",signature="vEDeLGmtNyH5AzKW4+JJel2v1JqF2cbqEN9P1BivjwuRxv19OUAnxLQ/FJ1+v1kWx/AXRqFUW88AIQn8w3qcQYuwng8Vmw1PJ5N/G81jXFCikEmcbZLv+6pFeCkoq5BtzeXQIKp/Oq0R7wYQvfcAF+pRXPN7l7MJIF2WpUYXeRsfadCiIuLMFOcHsYPCpa3YcDZ1fgv+itL8Q5uI0ATtswMNwCdQqPHuXSesRVqdyb0q675baEExeJhewyFZP5CNmGhOc5oks/pOwL/SEUkFhdmosOy/GH4DpdkDfpYb6Mj32wouvRKxcbWSBr6Da0SnIuZBB/tqzdOo1/kORp4SFw==",version="1"']
       connection: [keep-alive]
       content-type: [application/json]
-      date: ['Thu, 28 Mar 2019 20:57:16 GMT']
+      date: ['Tue, 16 Apr 2019 21:06:22 GMT']
       host: [iaas.us-phoenix-1.oraclecloud.com]
-      opc-client-info: [Oracle-PythonSDK/2.2.5+preview.1.774]
-      opc-request-id: [09B2C3426AF44830A0D72B7D31E4DDB5]
-      opc-retry-token: [7K8wQpbcDf9lHcMAdJa5CvIsITB6ef]
-      user-agent: [Oracle-PythonSDK/2.2.5+preview.1.774 (python 3.5.3; x86_64-Linux)
-          Oracle-PythonCLI/2.5.6+preview.1]
-      x-content-sha256: [JFOoGf8o0Hq6bf0q2VMx0DXLWzQL43bv2ol8PhCaasA=]
+      opc-client-info: [Oracle-PythonSDK/2.2.7+preview.1.0.68]
+      opc-request-id: [CC1349C793F447DFB939A44C6947AB6A]
+      opc-retry-token: [kYYpzvEtWbeseIOmwo8f8uO8dxTcCS]
+      user-agent: [Oracle-PythonSDK/2.2.7+preview.1.0.68 (python 3.5.3; x86_64-Linux)
+          Oracle-PythonCLI/2.5.8+preview.1]
+      x-content-sha256: [Cc6vQIrViMlxZUhbUHarOF1f2nseDjnOQ8fIBMtwZMg=]
     method: POST
     uri: https://iaas.us-phoenix-1.oraclecloud.com/20160918/remotePeeringConnections
   response:
     body: {string: "{\n  \"compartmentId\" : \"ocid1.compartment.oc1..aaaaaaaa4wap5jzxvxvdxhtesdkde7bovfuytevkkrpg43l44m6m5zoafqwa\"\
-        ,\n  \"definedTags\" : { },\n  \"displayName\" : \"__STS0922_6962\",\n  \"\
-        drgId\" : \"ocid1.drg.oc1.phx.aaaaaaaa5htcnwtqgo553ughdamtolxhs2nux26gagdeffkdm32nyncnka2q\"\
-        ,\n  \"freeformTags\" : { },\n  \"id\" : \"ocid1.remotepeeringconnection.oc1.phx.aaaaaaaanywuasvkrvjgkvlttx3nl7zhmcyi2x5ck3c6dyp4o3mvhknz6msa\"\
+        ,\n  \"definedTags\" : { },\n  \"displayName\" : \"__STS0043_2288\",\n  \"\
+        drgId\" : \"ocid1.drg.oc1.phx.aaaaaaaagugt5tib7fudsaoipat4xtn2kgkwe4avpeb5vrbk7k3nbpaboniq\"\
+        ,\n  \"freeformTags\" : { },\n  \"id\" : \"ocid1.remotepeeringconnection.oc1.phx.aaaaaaaam7dd3dbviyyip3vl7gp4z6rq2c6get3aj4gi46sf7vgboa3yl7bq\"\
         ,\n  \"isCrossTenancyPeering\" : false,\n  \"lifecycleState\" : \"AVAILABLE\"\
         ,\n  \"peerId\" : null,\n  \"peerRegionName\" : null,\n  \"peerTenancyId\"\
-        \ : null,\n  \"peeringStatus\" : \"NEW\",\n  \"timeCreated\" : \"2019-03-28T20:57:18.509Z\"\
+        \ : null,\n  \"peeringStatus\" : \"NEW\",\n  \"timeCreated\" : \"2019-04-16T21:06:29.274Z\"\
         \n}"}
     headers:
       Connection: [keep-alive]
       Content-Length: ['611']
       Content-Type: [application/json]
-      Date: ['Thu, 28 Mar 2019 20:57:18 GMT']
-      ETag: ['421529510']
+      Date: ['Tue, 16 Apr 2019 21:06:29 GMT']
+      ETag: ['-664271211']
       X-Content-Type-Options: [nosniff]
-      opc-request-id: [09B2C3426AF44830A0D72B7D31E4DDB5/70E15C8CF10E21A68E9543CFB28DF1D6/1133D6CA5A949FA93707218BB065F6D5]
+      opc-request-id: [CC1349C793F447DFB939A44C6947AB6A/5FDF3C8301D5F90A0F59F76E8754E55C/86C50D4949FFC7B69745C84E7CCF1824]
     status: {code: 200, message: OK}
 - request:
-    body: '{"responseJson": "{\"opcRequestId\": \"7B1A2564DB2C427B8ABA0E7BA36BFFCF\",
-      \"etag\": \"421529510\", \"remotePeeringConnection\": {\"peerId\": null, \"id\":
-      \"ocid1.remotepeeringconnection.oc1.phx.aaaaaaaanywuasvkrvjgkvlttx3nl7zhmcyi2x5ck3c6dyp4o3mvhknz6msa\",
+    body: '{"responseJson": "{\"opcRequestId\": \"8236BC0D850540AABEC13F4481B2F73C\",
+      \"etag\": \"-664271211\", \"remotePeeringConnection\": {\"peerId\": null, \"id\":
+      \"ocid1.remotepeeringconnection.oc1.phx.aaaaaaaam7dd3dbviyyip3vl7gp4z6rq2c6get3aj4gi46sf7vgboa3yl7bq\",
       \"compartmentId\": \"ocid1.compartment.oc1..aaaaaaaa4wap5jzxvxvdxhtesdkde7bovfuytevkkrpg43l44m6m5zoafqwa\",
-      \"displayName\": \"__STS0922_6962\", \"isCrossTenancyPeering\": false, \"timeCreated\":
-      \"2019-03-28T20:57:18.509000+00:00\", \"peerTenancyId\": null, \"drgId\": \"ocid1.drg.oc1.phx.aaaaaaaa5htcnwtqgo553ughdamtolxhs2nux26gagdeffkdm32nyncnka2q\",
+      \"displayName\": \"__STS0043_2288\", \"isCrossTenancyPeering\": false, \"timeCreated\":
+      \"2019-04-16T21:06:29.274000+00:00\", \"peerTenancyId\": null, \"drgId\": \"ocid1.drg.oc1.phx.aaaaaaaagugt5tib7fudsaoipat4xtn2kgkwe4avpeb5vrbk7k3nbpaboniq\",
       \"peeringStatus\": \"NEW\", \"lifecycleState\": \"AVAILABLE\", \"peerRegionName\":
-      null}}", "requestJson": "{\"opcRetryToken\": \"2902c824-8734-4183-8556-46dc0718f769\",
-      \"createRemotePeeringConnectionDetails\": {\"displayName\": \"__STS0922_6962\",
-      \"drgId\": \"ocid1.drg.oc1.phx.aaaaaaaa5htcnwtqgo553ughdamtolxhs2nux26gagdeffkdm32nyncnka2q\",
+      null}}", "requestJson": "{\"opcRetryToken\": \"d835dcf7-eff1-414c-8d9d-5a666f0d1660\",
+      \"createRemotePeeringConnectionDetails\": {\"displayName\": \"__STS0043_2288\",
+      \"drgId\": \"ocid1.drg.oc1.phx.aaaaaaaagugt5tib7fudsaoipat4xtn2kgkwe4avpeb5vrbk7k3nbpaboniq\",
       \"compartmentId\": \"ocid1.compartment.oc1..aaaaaaaa4wap5jzxvxvdxhtesdkde7bovfuytevkkrpg43l44m6m5zoafqwa\"}}",
-      "containerId": "3b96ac68-d340-4940-98fa-944d1f4aa38c", "requestClass": "com.oracle.bmc.core.requests.CreateRemotePeeringConnectionRequest",
+      "containerId": "87babf5c-84b5-4285-b46e-391af157eceb", "requestClass": "com.oracle.bmc.core.requests.CreateRemotePeeringConnectionRequest",
       "responseClass": "com.oracle.bmc.core.responses.CreateRemotePeeringConnectionResponse"}'
     headers:
       Accept: ['*/*']
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
-      Content-Length: ['1297']
+      Content-Length: ['1298']
       User-Agent: [python-requests/2.21.0]
     method: POST
-    uri: http://localhost:8090/SDKTestingService/response?sessionId=0922&lang=PythonCLI
+    uri: http://localhost:8090/SDKTestingService/response?sessionId=0043&lang=PythonCLI
   response:
     body: {string: ''}
     headers:
       Content-Length: ['0']
       Content-Type: [text/plain]
-      Date: ['Thu, 28 Mar 2019 20:57:19 GMT']
+      Date: ['Tue, 16 Apr 2019 21:06:24 GMT']
       Server: [Jetty(9.4.7.v20170914)]
     status: {code: 200, message: OK}
 version: 1

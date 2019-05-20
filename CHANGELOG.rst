@@ -6,6 +6,38 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.5.11 - 2019-05-21
+-------------------
+Added
+~~~~~
+* Improvement for VPN IPSec service usability: support BGP dynamic routing and allow customer to input PSK.
+
+  * (``oci network ip-sec-tunnel get``)
+  * (``oci network ip-sec-tunnel list``)
+  * (``oci network ip-sec-tunnel update``)
+  * (``oci network ip-sec-psk get``)
+  * (``oci network ip-sec-psk update``)
+
+* Support for getting Object Storage namespace of another tenancy by using their compartment ID.
+
+  * (``oci os ns get --compartment-id``)
+  * An example on getting namespace using compartment ID can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/object_storage_get_namespace.sh>`__.
+
+Changed
+~~~~~~~
+* IPSec connection create command: it now includes --tunnel-configuration option.
+
+  * (``oci network ip-sec-connection create --tunnel-configuration``)
+
+* Listing for Instance Configs and Pools: they now return defined and freeform tags.
+
+  * (``oci compute-management instance-configuration list --compartment-id``)
+  * (``oci compute-management instance-pool list --compartment-id``)
+
+* Listing for Autoscaling configurations: they now return defined and freeform tags.
+
+  * (``oci autoscaling configuration list --compartment-id``)
+
 2.5.10 - 2019-05-14
 -------------------
 Added

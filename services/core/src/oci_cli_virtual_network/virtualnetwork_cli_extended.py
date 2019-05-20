@@ -35,6 +35,9 @@ cli_util.rename_command(virtualnetwork_cli.cross_connect_port_speed_shape_group,
 virtualnetwork_cli.virtual_network_root_group.help = "Networking Service CLI"
 virtualnetwork_cli.virtual_network_root_group.short_help = "Networking Service"
 
+cli_util.rename_command(virtualnetwork_cli.virtual_network_root_group, virtualnetwork_cli.ip_sec_connection_tunnel_group, "ip-sec-tunnel")
+cli_util.rename_command(virtualnetwork_cli.virtual_network_root_group, virtualnetwork_cli.ip_sec_connection_tunnel_shared_secret_group, "ip-sec-psk")
+
 # help for oci network ip-sec-connection create --static-routes
 network_create_ip_sec_connection_static_routes_example = """'["10.0.0.0/16"]'"""
 network_create_ip_sec_connection_static_routes_help = """Static routes to the CPE. At least one route must be included. The CIDR must not be a multicast address or class E address. This must be provided in JSON format."""

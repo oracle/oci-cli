@@ -14,7 +14,12 @@ from oci_cli.aliasing import CommandGroupWithAlias
 from oci_cli_core.generated import core_service_cli
 
 
-@click.command(cli_util.override('virtual_network_root_group.command_name', 'virtual-network'), cls=CommandGroupWithAlias, help=cli_util.override('virtual_network_root_group.help', """APIs for Networking Service, Compute Service, and Block Volume Service."""), short_help=cli_util.override('virtual_network_root_group.short_help', """Core Services API"""))
+@click.command(cli_util.override('virtual_network_root_group.command_name', 'virtual-network'), cls=CommandGroupWithAlias, help=cli_util.override('virtual_network_root_group.help', """API covering the [Networking](/iaas/Content/Network/Concepts/overview.htm),
+[Compute](/iaas/Content/Compute/Concepts/computeoverview.htm), and
+[Block Volume](/iaas/Content/Block/Concepts/overview.htm) services. Use this API
+to manage resources such as virtual cloud networks (VCNs), compute instances, and
+block storage volumes.
+"""), short_help=cli_util.override('virtual_network_root_group.short_help', """Core Services API"""))
 @cli_util.help_option_group
 def virtual_network_root_group():
     pass
@@ -70,9 +75,17 @@ def public_ip_group():
     pass
 
 
-@click.command(cli_util.override('ip_sec_connection_device_config_group.command_name', 'ip-sec-connection-device-config'), cls=CommandGroupWithAlias, help="""Information about the IPSecConnection device configuration.""")
+@click.command(cli_util.override('ip_sec_connection_device_config_group.command_name', 'ip-sec-connection-device-config'), cls=CommandGroupWithAlias, help="""Deprecated. For tunnel information, instead see:
+
+  * [IPSecConnectionTunnel]   * [IPSecConnectionTunnelSharedSecret]""")
 @cli_util.help_option_group
 def ip_sec_connection_device_config_group():
+    pass
+
+
+@click.command(cli_util.override('ip_sec_connection_tunnel_group.command_name', 'ip-sec-connection-tunnel'), cls=CommandGroupWithAlias, help="""Information about a single tunnel in an IPSec connection. This object does not include the tunnel's shared secret (pre-shared key). That is in the [IPSecConnectionTunnelSharedSecret] object.""")
+@cli_util.help_option_group
+def ip_sec_connection_tunnel_group():
     pass
 
 
@@ -94,9 +107,9 @@ def virtual_circuit_public_prefix_group():
     pass
 
 
-@click.command(cli_util.override('private_ip_group.command_name', 'private-ip'), cls=CommandGroupWithAlias, help="""A *private IP* is a conceptual term that refers to a private IP address and related properties. The `privateIp` object is the API representation of a private IP.
+@click.command(cli_util.override('private_ip_group.command_name', 'private-ip'), cls=CommandGroupWithAlias, help="""A *private IP* is a conceptual term that refers to an IPv4 private IP address and related properties. The `privateIp` object is the API representation of a private IP.
 
-Each instance has a *primary private IP* that is automatically created and assigned to the primary VNIC during instance launch. If you add a secondary VNIC to the instance, it also automatically gets a primary private IP. You can't remove a primary private IP from its VNIC. The primary private IP is automatically deleted when the VNIC is terminated.
+ Each instance has a *primary private IP* that is automatically created and assigned to the primary VNIC during instance launch. If you add a secondary VNIC to the instance, it also automatically gets a primary private IP. You can't remove a primary private IP from its VNIC. The primary private IP is automatically deleted when the VNIC is terminated.
 
 You can add *secondary private IPs* to a VNIC after it's created. For more information, see the `privateIp` operations and also [IP Addresses].
 
@@ -107,6 +120,12 @@ To use any of the API operations, you must be authorized in an IAM policy. If yo
 **Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
 @cli_util.help_option_group
 def private_ip_group():
+    pass
+
+
+@click.command(cli_util.override('ip_sec_connection_tunnel_shared_secret_group.command_name', 'ip-sec-connection-tunnel-shared-secret'), cls=CommandGroupWithAlias, help="""The tunnel's shared secret (pre-shared key).""")
+@cli_util.help_option_group
+def ip_sec_connection_tunnel_shared_secret_group():
     pass
 
 
@@ -206,7 +225,7 @@ def vcn_group():
     pass
 
 
-@click.command(cli_util.override('ip_sec_connection_device_status_group.command_name', 'ip-sec-connection-device-status'), cls=CommandGroupWithAlias, help="""Status of the IPSec connection.""")
+@click.command(cli_util.override('ip_sec_connection_device_status_group.command_name', 'ip-sec-connection-device-status'), cls=CommandGroupWithAlias, help="""Deprecated. For tunnel information, instead see [IPSecConnectionTunnel].""")
 @cli_util.help_option_group
 def ip_sec_connection_device_status_group():
     pass
@@ -258,7 +277,7 @@ def peer_region_for_remote_peering_group():
     pass
 
 
-@click.command(cli_util.override('service_gateway_group.command_name', 'service-gateway'), cls=CommandGroupWithAlias, help="""Represents a router that connects the edge of a VCN with public Oracle Cloud Infrastructure services such as Object Storage. Traffic leaving the VCN and destined for a supported public service (see [ListServices]) is routed through the service gateway and does not traverse the internet. The instances in the VCN do not need to have public IP addresses nor be in a public subnet. The VCN does not need an internet gateway for this traffic. For more information, see [Access to Object Storage: Service Gateway].
+@click.command(cli_util.override('service_gateway_group.command_name', 'service-gateway'), cls=CommandGroupWithAlias, help="""Represents a router that lets your VCN privately access specific Oracle services such as Object Storage without exposing the VCN to the public internet. Traffic leaving the VCN and destined for a supported Oracle service (see [ListServices]) is routed through the service gateway and does not traverse the internet. The instances in the VCN do not need to have public IP addresses nor be in a public subnet. The VCN does not need an internet gateway for this traffic. For more information, see [Access to Oracle Services: Service Gateway].
 
 To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].
 
@@ -278,7 +297,11 @@ def internet_gateway_group():
     pass
 
 
-@click.command(cli_util.override('ip_sec_connection_group.command_name', 'ip-sec-connection'), cls=CommandGroupWithAlias, help="""A connection between a DRG and CPE. This connection consists of multiple IPSec tunnels. Creating this connection is one of the steps required when setting up an IPSec VPN. For more information, see [IPSec VPN].
+@click.command(cli_util.override('ip_sec_connection_group.command_name', 'ip-sec-connection'), cls=CommandGroupWithAlias, help="""A connection between a DRG and CPE. This connection consists of multiple IPSec tunnels. Creating this connection is one of the steps required when setting up an IPSec VPN.
+
+**Important:**  Each tunnel in an IPSec connection can use either static routing or BGP dynamic routing (see the [IPSecConnectionTunnel] object's `routing` attribute). Originally only static routing was supported and every IPSec connection was required to have at least one static route configured. To maintain backward compatibility in the API when support for BPG dynamic routing was introduced, the API accepts an empty list of static routes if you configure both of the IPSec tunnels to use BGP dynamic routing. If you switch a tunnel's routing from `BGP` to `STATIC`, you must first ensure that the IPSec connection is configured with at least one valid CIDR block static route. Oracle uses the IPSec connection's static routes when routing a tunnel's traffic *only* if that tunnel's `routing` attribute = `STATIC`. Otherwise the static routes are ignored.
+
+For more information about the workflow for setting up an IPSec connection, see [IPSec VPN].
 
 To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].
 
@@ -288,7 +311,7 @@ def ip_sec_connection_group():
     pass
 
 
-@click.command(cli_util.override('service_group.command_name', 'service'), cls=CommandGroupWithAlias, help="""Information about a service that is accessible through a service gateway.""")
+@click.command(cli_util.override('service_group.command_name', 'service'), cls=CommandGroupWithAlias, help="""An object that represents one or multiple Oracle services that you can enable for a [ServiceGateway]. In the User Guide topic [Access to Oracle Services: Service Gateway], the term *service CIDR label* is used to refer to the string that represents the regional public IP address ranges of the Oracle service or services covered by a given `Service` object. That unique string is the value of the `Service` object's `cidrBlock` attribute.""")
 @cli_util.help_option_group
 def service_group():
     pass
@@ -325,10 +348,12 @@ virtual_network_root_group.add_command(nat_gateway_group)
 virtual_network_root_group.add_command(drg_attachment_group)
 virtual_network_root_group.add_command(public_ip_group)
 virtual_network_root_group.add_command(ip_sec_connection_device_config_group)
+virtual_network_root_group.add_command(ip_sec_connection_tunnel_group)
 virtual_network_root_group.add_command(fast_connect_provider_service_group)
 virtual_network_root_group.add_command(cross_connect_location_group)
 virtual_network_root_group.add_command(virtual_circuit_public_prefix_group)
 virtual_network_root_group.add_command(private_ip_group)
+virtual_network_root_group.add_command(ip_sec_connection_tunnel_shared_secret_group)
 virtual_network_root_group.add_command(virtual_circuit_group)
 virtual_network_root_group.add_command(local_peering_gateway_group)
 virtual_network_root_group.add_command(cross_connect_port_speed_shape_group)
@@ -353,11 +378,11 @@ virtual_network_root_group.add_command(cross_connect_group_group)
 virtual_network_root_group.add_command(security_list_group)
 
 
-@service_gateway_group.command(name=cli_util.override('attach_service_id.command_name', 'attach'), help=u"""Enables the specified service on the specified gateway. In other words, enables the service gateway to send traffic to the specified service. You must also set up a route rule with the service's `cidrBlock` as the rule's destination CIDR and the gateway as the rule's target. See [Route Table].
+@service_gateway_group.command(name=cli_util.override('attach_service_id.command_name', 'attach'), help=u"""Adds the specified [Service] to the list of enabled `Service` objects for the specified gateway. You must also set up a route rule with the `cidrBlock` of the `Service` as the rule's destination and the service gateway as the rule's target. See [Route Table].
 
-**Note:** The `AttachServiceId` operation is an easy way to enable an individual service on the service gateway. Compare it with [UpdateServiceGateway], which also lets you enable an individual service. However, with `UpdateServiceGateway`, you must specify the *entire* list of services you want enabled on the service gateway.""")
+**Note:** The `AttachServiceId` operation is an easy way to add an individual `Service` to the service gateway. Compare it with [UpdateServiceGateway], which replaces the entire existing list of enabled `Service` objects with the list that you provide in the `Update` call.""")
 @cli_util.option('--service-gateway-id', required=True, help=u"""The service gateway's [OCID].""")
-@cli_util.option('--service-id', required=True, help=u"""The [OCID] of the service.""")
+@cli_util.option('--service-id', required=True, help=u"""The [OCID] of the [Service].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -994,21 +1019,25 @@ def create_internet_gateway(ctx, from_json, wait_for_state, max_wait_seconds, wa
 
 @ip_sec_connection_group.command(name=cli_util.override('create_ip_sec_connection.command_name', 'create'), help=u"""Creates a new IPSec connection between the specified DRG and CPE. For more information, see [IPSec VPNs].
 
-In the request, you must include at least one static route to the CPE object (you're allowed a maximum of 10). For example: 10.0.8.0/16.
+If you configure at least one tunnel to use static routing, then in the request you must provide at least one valid static route (you're allowed a maximum of 10). For example: 10.0.0.0/16. If you configure both tunnels to use BGP dynamic routing, you can provide an empty list for the static routes. For more information, see the important note in [IPSecConnection].
 
 For the purposes of access control, you must provide the OCID of the compartment where you want the IPSec connection to reside. Notice that the IPSec connection doesn't have to be in the same compartment as the DRG, CPE, or other Networking Service components. If you're not sure which compartment to use, put the IPSec connection in the same compartment as the DRG. For more information about compartments and access control, see [Overview of the IAM Service]. For information about OCIDs, see [Resource Identifiers].
 
 You may optionally specify a *display name* for the IPSec connection, otherwise a default is provided. It does not have to be unique, and you can change it. Avoid entering confidential information.
 
-After creating the IPSec connection, you need to configure your on-premises router with tunnel-specific information returned by [GetIPSecConnectionDeviceConfig]. For each tunnel, that operation gives you the IP address of Oracle's VPN headend and the shared secret (that is, the pre-shared key). For more information, see [Configuring Your On-Premises Router for an IPSec VPN].
+After creating the IPSec connection, you need to configure your on-premises router with tunnel-specific information. For tunnel status and the required configuration information, see:
 
-To get the status of the tunnels (whether they're up or down), use [GetIPSecConnectionDeviceStatus].""")
+  * [IPSecConnectionTunnel]   * [IPSecConnectionTunnelSharedSecret]
+
+For each tunnel, you need the IP address of Oracle's VPN headend and the shared secret (that is, the pre-shared key). For more information, see [Configuring Your On-Premises Router for an IPSec VPN].""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to contain the IPSec connection.""")
 @cli_util.option('--cpe-id', required=True, help=u"""The OCID of the [Cpe] object.""")
 @cli_util.option('--drg-id', required=True, help=u"""The OCID of the DRG.""")
-@cli_util.option('--static-routes', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Static routes to the CPE. At least one route must be included. A static route's CIDR must not be a multicast address or class E address.
+@cli_util.option('--static-routes', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Static routes to the CPE. A static route's CIDR must not be a multicast address or class E address.
 
-Example: `10.0.1.0/24`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+Used for routing a given IPSec tunnel's traffic only if the tunnel is using static routing. If you configure at least one tunnel to use static routing, then you must provide at least one valid static route. If you configure both tunnels to use BGP dynamic routing, you can provide an empty list for the static routes. For more information, see the important note in [IPSecConnection].
+
+ Example: `10.0.1.0/24`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1024,15 +1053,18 @@ Example IP address: `10.0.3.3`
 
 Example hostname: `cpe.example.com`""")
 @cli_util.option('--cpe-local-identifier-type', type=custom_types.CliCaseInsensitiveChoice(["IP_ADDRESS", "HOSTNAME"]), help=u"""The type of identifier for your CPE device. The value you provide here must correspond to the value for `cpeLocalIdentifier`.""")
+@cli_util.option('--tunnel-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Information for creating the individual tunnels in the IPSec connection. You can provide a maximum of 2 `tunnelConfiguration` objects in the array (one for each of the two tunnels).
+
+This option is a JSON list with items of type CreateIPSecConnectionTunnelDetails.  For documentation on CreateIPSecConnectionTunnelDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/CreateIPSecConnectionTunnelDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'static-routes': {'module': 'core', 'class': 'list[string]'}})
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'static-routes': {'module': 'core', 'class': 'list[string]'}, 'tunnel-configuration': {'module': 'core', 'class': 'list[CreateIPSecConnectionTunnelDetails]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'static-routes': {'module': 'core', 'class': 'list[string]'}}, output_type={'module': 'core', 'class': 'IPSecConnection'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'static-routes': {'module': 'core', 'class': 'list[string]'}, 'tunnel-configuration': {'module': 'core', 'class': 'list[CreateIPSecConnectionTunnelDetails]'}}, output_type={'module': 'core', 'class': 'IPSecConnection'})
 @cli_util.wrap_exceptions
-def create_ip_sec_connection(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, cpe_id, drg_id, static_routes, defined_tags, display_name, freeform_tags, cpe_local_identifier, cpe_local_identifier_type):
+def create_ip_sec_connection(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, cpe_id, drg_id, static_routes, defined_tags, display_name, freeform_tags, cpe_local_identifier, cpe_local_identifier_type, tunnel_configuration):
 
     kwargs = {}
 
@@ -1056,6 +1088,9 @@ def create_ip_sec_connection(ctx, from_json, wait_for_state, max_wait_seconds, w
 
     if cpe_local_identifier_type is not None:
         details['cpeLocalIdentifierType'] = cpe_local_identifier_type
+
+    if tunnel_configuration is not None:
+        details['tunnelConfiguration'] = cli_util.parse_json_parameter("tunnel_configuration", tunnel_configuration)
 
     client = cli_util.build_client('virtual_network', ctx)
     result = client.create_ip_sec_connection(
@@ -1566,8 +1601,10 @@ def create_security_list(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 For the purposes of access control, you must provide the OCID of the compartment where you want the service gateway to reside. For more information about compartments and access control, see [Overview of the IAM Service]. For information about OCIDs, see [Resource Identifiers].
 
 You may optionally specify a *display name* for the service gateway, otherwise a default is provided. It does not have to be unique, and you can change it. Avoid entering confidential information.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID]   of the compartment to contain the service gateway.""")
-@cli_util.option('--services', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of the service OCIDs. These are the services that will be enabled on the service gateway. This list can be empty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID]  of the compartment to contain the service gateway.""")
+@cli_util.option('--services', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of the OCIDs of the [Service] objects to enable for the service gateway. This list can be empty if you don't want to enable any `Service` objects when you create the gateway. You can enable a `Service` object later by using either [AttachServiceId] or [UpdateServiceGateway].
+
+For each enabled `Service`, make sure there's a route rule with the `Service` object's `cidrBlock` as the rule's destination and the service gateway as the rule's target. See [Route Table].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--vcn-id', required=True, help=u"""The [OCID] of the VCN.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
@@ -3077,11 +3114,11 @@ def delete_virtual_circuit(ctx, from_json, wait_for_state, max_wait_seconds, wai
     cli_util.render_response(result, ctx)
 
 
-@service_gateway_group.command(name=cli_util.override('detach_service_id.command_name', 'detach'), help=u"""Disables the specified service on the specified gateway. In other words, stops the service gateway from sending traffic to the specified service. You do not need to remove any route rules that specify this service's `cidrBlock` as the destination CIDR. However, consider removing the rules if your intent is to permanently disable use of the service through this service gateway.
+@service_gateway_group.command(name=cli_util.override('detach_service_id.command_name', 'detach'), help=u"""Removes the specified [Service] from the list of enabled `Service` objects for the specified gateway. You do not need to remove any route rules that specify this `Service` object's `cidrBlock` as the destination CIDR. However, consider removing the rules if your intent is to permanently disable use of the `Service` through this service gateway.
 
-**Note:** The `DetachServiceId` operation is an easy way to disable an individual service on the service gateway. Compare it with [UpdateServiceGateway], which also lets you disable an individual service. However, with `UpdateServiceGateway`, you must specify the *entire* list of services you want enabled on the service gateway. `UpdateServiceGateway` also lets you block all traffic through the service gateway without having to disable each of the individual services.""")
+**Note:** The `DetachServiceId` operation is an easy way to remove an individual `Service` from the service gateway. Compare it with [UpdateServiceGateway], which replaces the entire existing list of enabled `Service` objects with the list that you provide in the `Update` call. `UpdateServiceGateway` also lets you block all traffic through the service gateway without having to remove each of the individual `Service` objects.""")
 @cli_util.option('--service-gateway-id', required=True, help=u"""The service gateway's [OCID].""")
-@cli_util.option('--service-id', required=True, help=u"""The [OCID] of the service.""")
+@cli_util.option('--service-id', required=True, help=u"""The [OCID] of the [Service].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -3370,7 +3407,7 @@ def get_internet_gateway(ctx, from_json, ig_id):
     cli_util.render_response(result, ctx)
 
 
-@ip_sec_connection_group.command(name=cli_util.override('get_ip_sec_connection.command_name', 'get'), help=u"""Gets the specified IPSec connection's basic information, including the static routes for the on-premises router. If you want the status of the connection (whether it's up or down), use [GetIPSecConnectionDeviceStatus].""")
+@ip_sec_connection_group.command(name=cli_util.override('get_ip_sec_connection.command_name', 'get'), help=u"""Gets the specified IPSec connection's basic information, including the static routes for the on-premises router. If you want the status of the connection (whether it's up or down), use [GetIPSecConnectionTunnel].""")
 @cli_util.option('--ipsc-id', required=True, help=u"""The OCID of the IPSec connection.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -3391,7 +3428,9 @@ def get_ip_sec_connection(ctx, from_json, ipsc_id):
     cli_util.render_response(result, ctx)
 
 
-@ip_sec_connection_device_config_group.command(name=cli_util.override('get_ip_sec_connection_device_config.command_name', 'get'), help=u"""Gets the configuration information for the specified IPSec connection. For each tunnel, the response includes the IP address of Oracle's VPN headend and the shared secret.""")
+@ip_sec_connection_device_config_group.command(name=cli_util.override('get_ip_sec_connection_device_config.command_name', 'get'), help=u"""Deprecated. To get tunnel information, instead use:
+
+* [GetIPSecConnectionTunnel] * [GetIPSecConnectionTunnelSharedSecret]""")
 @cli_util.option('--ipsc-id', required=True, help=u"""The OCID of the IPSec connection.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -3412,7 +3451,7 @@ def get_ip_sec_connection_device_config(ctx, from_json, ipsc_id):
     cli_util.render_response(result, ctx)
 
 
-@ip_sec_connection_device_status_group.command(name=cli_util.override('get_ip_sec_connection_device_status.command_name', 'get'), help=u"""Gets the status of the specified IPSec connection (whether it's up or down).""")
+@ip_sec_connection_device_status_group.command(name=cli_util.override('get_ip_sec_connection_device_status.command_name', 'get'), help=u"""Deprecated. To get the tunnel status, instead use [GetIPSecConnectionTunnel].""")
 @cli_util.option('--ipsc-id', required=True, help=u"""The OCID of the IPSec connection.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -3428,6 +3467,58 @@ def get_ip_sec_connection_device_status(ctx, from_json, ipsc_id):
     client = cli_util.build_client('virtual_network', ctx)
     result = client.get_ip_sec_connection_device_status(
         ipsc_id=ipsc_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@ip_sec_connection_tunnel_group.command(name=cli_util.override('get_ip_sec_connection_tunnel.command_name', 'get'), help=u"""Gets the specified tunnel's information. The resulting object does not include the tunnel's shared secret (pre-shared key). To retrieve that, use [GetIPSecConnectionTunnelSharedSecret].""")
+@cli_util.option('--ipsc-id', required=True, help=u"""The OCID of the IPSec connection.""")
+@cli_util.option('--tunnel-id', required=True, help=u"""The [OCID] of the tunnel.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'IPSecConnectionTunnel'})
+@cli_util.wrap_exceptions
+def get_ip_sec_connection_tunnel(ctx, from_json, ipsc_id, tunnel_id):
+
+    if isinstance(ipsc_id, six.string_types) and len(ipsc_id.strip()) == 0:
+        raise click.UsageError('Parameter --ipsc-id cannot be whitespace or empty string')
+
+    if isinstance(tunnel_id, six.string_types) and len(tunnel_id.strip()) == 0:
+        raise click.UsageError('Parameter --tunnel-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    client = cli_util.build_client('virtual_network', ctx)
+    result = client.get_ip_sec_connection_tunnel(
+        ipsc_id=ipsc_id,
+        tunnel_id=tunnel_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@ip_sec_connection_tunnel_shared_secret_group.command(name=cli_util.override('get_ip_sec_connection_tunnel_shared_secret.command_name', 'get'), help=u"""Gets the specified tunnel's shared secret (pre-shared key). To get other information about the tunnel, use [GetIPSecConnectionTunnel].""")
+@cli_util.option('--ipsc-id', required=True, help=u"""The OCID of the IPSec connection.""")
+@cli_util.option('--tunnel-id', required=True, help=u"""The [OCID] of the tunnel.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'IPSecConnectionTunnelSharedSecret'})
+@cli_util.wrap_exceptions
+def get_ip_sec_connection_tunnel_shared_secret(ctx, from_json, ipsc_id, tunnel_id):
+
+    if isinstance(ipsc_id, six.string_types) and len(ipsc_id.strip()) == 0:
+        raise click.UsageError('Parameter --ipsc-id cannot be whitespace or empty string')
+
+    if isinstance(tunnel_id, six.string_types) and len(tunnel_id.strip()) == 0:
+        raise click.UsageError('Parameter --tunnel-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    client = cli_util.build_client('virtual_network', ctx)
+    result = client.get_ip_sec_connection_tunnel_shared_secret(
+        ipsc_id=ipsc_id,
+        tunnel_id=tunnel_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -3634,7 +3725,7 @@ def get_security_list(ctx, from_json, security_list_id):
     cli_util.render_response(result, ctx)
 
 
-@service_group.command(name=cli_util.override('get_service.command_name', 'get'), help=u"""Gets the specified service's information.""")
+@service_group.command(name=cli_util.override('get_service.command_name', 'get'), help=u"""Gets the specified [Service] object.""")
 @cli_util.option('--service-id', required=True, help=u"""The service's [OCID].""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -4398,6 +4489,58 @@ def list_internet_gateways(ctx, from_json, all_pages, page_size, compartment_id,
     cli_util.render_response(result, ctx)
 
 
+@ip_sec_connection_tunnel_group.command(name=cli_util.override('list_ip_sec_connection_tunnels.command_name', 'list'), help=u"""Lists the tunnel information for the specified IPSec connection.""")
+@cli_util.option('--ipsc-id', required=True, help=u"""The OCID of the IPSec connection.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
+
+Example: `50`""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[IPSecConnectionTunnel]'})
+@cli_util.wrap_exceptions
+def list_ip_sec_connection_tunnels(ctx, from_json, all_pages, page_size, ipsc_id, limit, page):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(ipsc_id, six.string_types) and len(ipsc_id.strip()) == 0:
+        raise click.UsageError('Parameter --ipsc-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    client = cli_util.build_client('virtual_network', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_ip_sec_connection_tunnels,
+            ipsc_id=ipsc_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_ip_sec_connection_tunnels,
+            limit,
+            page_size,
+            ipsc_id=ipsc_id,
+            **kwargs
+        )
+    else:
+        result = client.list_ip_sec_connection_tunnels(
+            ipsc_id=ipsc_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
 @ip_sec_connection_group.command(name=cli_util.override('list_ip_sec_connections.command_name', 'list'), help=u"""Lists the IPSec connections for the specified compartment. You can filter the results by DRG or CPE.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
 @cli_util.option('--drg-id', help=u"""The OCID of the DRG.""")
@@ -4952,7 +5095,7 @@ def list_service_gateways(ctx, from_json, all_pages, page_size, compartment_id, 
     cli_util.render_response(result, ctx)
 
 
-@service_group.command(name=cli_util.override('list_services.command_name', 'list'), help=u"""Lists the available services that you can access through a service gateway in this region.""")
+@service_group.command(name=cli_util.override('list_services.command_name', 'list'), help=u"""Lists the available [Service] objects that you can enable for a service gateway in this region.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
@@ -5738,7 +5881,9 @@ def update_internet_gateway(ctx, from_json, force, wait_for_state, max_wait_seco
     cli_util.render_response(result, ctx)
 
 
-@ip_sec_connection_group.command(name=cli_util.override('update_ip_sec_connection.command_name', 'update'), help=u"""Updates the display name or tags for the specified IPSec connection. Avoid entering confidential information.""")
+@ip_sec_connection_group.command(name=cli_util.override('update_ip_sec_connection.command_name', 'update'), help=u"""Updates the specified IPSec connection.
+
+To update an individual IPSec tunnel's attributes, use [UpdateIPSecConnectionTunnel].""")
 @cli_util.option('--ipsc-id', required=True, help=u"""The OCID of the IPSec connection.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
@@ -5827,6 +5972,129 @@ def update_ip_sec_connection(ctx, from_json, force, wait_for_state, max_wait_sec
                 raise
         else:
             click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@ip_sec_connection_tunnel_group.command(name=cli_util.override('update_ip_sec_connection_tunnel.command_name', 'update'), help=u"""Updates the specified tunnel. This operation lets you change tunnel attributes such as the routing type (BGP dynamic routing or static routing). Here are some important notes:
+
+  * If you change the tunnel's routing type or BGP session configuration, the tunnel will go     down while it's reprovisioned.
+
+  * If you want to switch the tunnel's `routing` from `STATIC` to `BGP`, make sure the tunnel's     BGP session configuration attributes have been set ([bgpSessionConfig]).
+
+  * If you want to switch the tunnel's `routing` from `BGP` to `STATIC`, make sure the     [IPSecConnection] already has at least one valid CIDR     static route.""")
+@cli_util.option('--ipsc-id', required=True, help=u"""The OCID of the IPSec connection.""")
+@cli_util.option('--tunnel-id', required=True, help=u"""The [OCID] of the tunnel.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--routing', type=custom_types.CliCaseInsensitiveChoice(["BGP", "STATIC"]), help=u"""The type of routing to use for this tunnel (either BGP dynamic routing or static routing).""")
+@cli_util.option('--bgp-session-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Information for establishing a BGP session for the IPSec tunnel.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'bgp-session-config': {'module': 'core', 'class': 'UpdateIPSecTunnelBgpSessionDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'bgp-session-config': {'module': 'core', 'class': 'UpdateIPSecTunnelBgpSessionDetails'}}, output_type={'module': 'core', 'class': 'IPSecConnectionTunnel'})
+@cli_util.wrap_exceptions
+def update_ip_sec_connection_tunnel(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, ipsc_id, tunnel_id, display_name, routing, bgp_session_config, if_match):
+
+    if isinstance(ipsc_id, six.string_types) and len(ipsc_id.strip()) == 0:
+        raise click.UsageError('Parameter --ipsc-id cannot be whitespace or empty string')
+
+    if isinstance(tunnel_id, six.string_types) and len(tunnel_id.strip()) == 0:
+        raise click.UsageError('Parameter --tunnel-id cannot be whitespace or empty string')
+    if not force:
+        if bgp_session_config:
+            if not click.confirm("WARNING: Updates to bgp-session-config will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    details = {}
+
+    if display_name is not None:
+        details['displayName'] = display_name
+
+    if routing is not None:
+        details['routing'] = routing
+
+    if bgp_session_config is not None:
+        details['bgpSessionConfig'] = cli_util.parse_json_parameter("bgp_session_config", bgp_session_config)
+
+    client = cli_util.build_client('virtual_network', ctx)
+    result = client.update_ip_sec_connection_tunnel(
+        ipsc_id=ipsc_id,
+        tunnel_id=tunnel_id,
+        update_ip_sec_connection_tunnel_details=details,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_ip_sec_connection_tunnel') and callable(getattr(client, 'get_ip_sec_connection_tunnel')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_ip_sec_connection_tunnel(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@ip_sec_connection_tunnel_shared_secret_group.command(name=cli_util.override('update_ip_sec_connection_tunnel_shared_secret.command_name', 'update'), help=u"""Updates the shared secret (pre-shared key) for the specified tunnel.
+
+**Important:** If you change the shared secret, the tunnel will go down while it's reprovisioned.""")
+@cli_util.option('--ipsc-id', required=True, help=u"""The OCID of the IPSec connection.""")
+@cli_util.option('--tunnel-id', required=True, help=u"""The [OCID] of the tunnel.""")
+@cli_util.option('--shared-secret', help=u"""The shared secret (pre-shared key) to use for the tunnel.
+
+Example: `EXAMPLEToUis6j1c.p8G.dVQxcmdfMO0yXMLi.lZTbYCMDGu4V8o`""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'IPSecConnectionTunnelSharedSecret'})
+@cli_util.wrap_exceptions
+def update_ip_sec_connection_tunnel_shared_secret(ctx, from_json, ipsc_id, tunnel_id, shared_secret, if_match):
+
+    if isinstance(ipsc_id, six.string_types) and len(ipsc_id.strip()) == 0:
+        raise click.UsageError('Parameter --ipsc-id cannot be whitespace or empty string')
+
+    if isinstance(tunnel_id, six.string_types) and len(tunnel_id.strip()) == 0:
+        raise click.UsageError('Parameter --tunnel-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+
+    details = {}
+
+    if shared_secret is not None:
+        details['sharedSecret'] = shared_secret
+
+    client = cli_util.build_client('virtual_network', ctx)
+    result = client.update_ip_sec_connection_tunnel_shared_secret(
+        ipsc_id=ipsc_id,
+        tunnel_id=tunnel_id,
+        update_ip_sec_connection_tunnel_shared_secret_details=details,
+        **kwargs
+    )
     cli_util.render_response(result, ctx)
 
 
@@ -6384,11 +6652,11 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--services', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of all the services you want enabled on this service gateway. Sending an empty list means you want to disable all services. Omitting this parameter entirely keeps the existing list of services intact.
+@cli_util.option('--services', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of all the `Service` objects you want enabled on this service gateway. Sending an empty list means you want to disable all services. Omitting this parameter entirely keeps the existing list of services intact.
 
-You can also enable or disable a particular service by using [AttachServiceId] and [DetachServiceId].
+You can also enable or disable a particular `Service` by using [AttachServiceId] or [DetachServiceId].
 
-For each enabled service, make sure there's a route rule with the service's `cidrBlock` as the rule's destination CIDR and the service gateway as the rule's target. See [Route Table].
+For each enabled `Service`, make sure there's a route rule with the `Service` object's `cidrBlock` as the rule's destination and the service gateway as the rule's target. See [Route Table].
 
 This option is a JSON list with items of type ServiceIdRequestDetails.  For documentation on ServiceIdRequestDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/ServiceIdRequestDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")

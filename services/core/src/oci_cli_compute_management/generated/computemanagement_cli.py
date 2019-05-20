@@ -14,7 +14,12 @@ from oci_cli.aliasing import CommandGroupWithAlias
 from oci_cli_core.generated import core_service_cli
 
 
-@click.command(cli_util.override('compute_management_root_group.command_name', 'compute-management'), cls=CommandGroupWithAlias, help=cli_util.override('compute_management_root_group.help', """APIs for Networking Service, Compute Service, and Block Volume Service."""), short_help=cli_util.override('compute_management_root_group.short_help', """Core Services API"""))
+@click.command(cli_util.override('compute_management_root_group.command_name', 'compute-management'), cls=CommandGroupWithAlias, help=cli_util.override('compute_management_root_group.help', """API covering the [Networking](/iaas/Content/Network/Concepts/overview.htm),
+[Compute](/iaas/Content/Compute/Concepts/computeoverview.htm), and
+[Block Volume](/iaas/Content/Block/Concepts/overview.htm) services. Use this API
+to manage resources such as virtual cloud networks (VCNs), compute instances, and
+block storage volumes.
+"""), short_help=cli_util.override('compute_management_root_group.short_help', """Core Services API"""))
 @cli_util.help_option_group
 def compute_management_root_group():
     pass
@@ -151,8 +156,10 @@ def create_instance_configuration(ctx, from_json, compartment_id, instance_detai
 
 @instance_pool_group.command(name=cli_util.override('create_instance_pool.command_name', 'create'), help=u"""Create an instance pool.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment containing the instance pool""")
-@cli_util.option('--instance-configuration-id', required=True, help=u"""The OCID of the instance configuration associated to the instance pool.""")
-@cli_util.option('--placement-configurations', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The placement configurations for the instance pool. There should be 1 placement configuration for each desired AD.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--instance-configuration-id', required=True, help=u"""The OCID of the instance configuration associated with the instance pool.""")
+@cli_util.option('--placement-configurations', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The placement configurations for the instance pool. Provide one placement configuration for each availability domain.
+
+To use the instance pool with a regional subnet, provide a placement configuration for each availability domain, and include the regional subnet in each placement configuration.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--size', required=True, type=click.INT, help=u"""The number of instances that should be in the instance pool.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
@@ -924,7 +931,9 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--instance-configuration-id', help=u"""The OCID of the instance configuration associated with the instance pool.""")
-@cli_util.option('--placement-configurations', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The placement configurations for the instance pool. There should be 1 placement configuration for each desired AD.
+@cli_util.option('--placement-configurations', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The placement configurations for the instance pool. Provide one placement configuration for each availability domain.
+
+To use the instance pool with a regional subnet, provide a placement configuration for each availability domain, and include the regional subnet in each placement configuration.
 
 This option is a JSON list with items of type UpdateInstancePoolPlacementConfigurationDetails.  For documentation on UpdateInstancePoolPlacementConfigurationDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/UpdateInstancePoolPlacementConfigurationDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--size', type=click.INT, help=u"""The number of instances that should be in the instance pool.""")

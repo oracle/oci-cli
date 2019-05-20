@@ -95,11 +95,16 @@ python_cli_root_dir = this_file_path[:-14]  # chop off "/tests/util.py"
 for service_dir in os.listdir(python_cli_root_dir + '/' + ALL_SERVICES_DIR):
     test_dir = os.path.join(python_cli_root_dir, ALL_SERVICES_DIR, service_dir, 'tests')
     if os.path.isdir(test_dir):
-        for extend_test_file in os.listdir(test_dir):
-            if "extend_test" in extend_test_file:
+        for file in os.listdir(test_dir):
+            if "extend_test" in file:
                 try:
-                    extend_test_module = __import__("services." + service_dir + ".tests." + extend_test_file[:-3], fromlist=['MOVED_COMMANDS'])
+                    extend_test_module = __import__("services." + service_dir + ".tests." + file[:-3], fromlist=['MOVED_COMMANDS'])
                     MOVED_COMMANDS.update(extend_test_module.MOVED_COMMANDS)
+                except Exception:
+                    pass
+            if "generated_test_request_transformers" in file:
+                try:
+                    __import__("services." + service_dir + ".tests." + file[:-3])
                 except Exception:
                     pass
 

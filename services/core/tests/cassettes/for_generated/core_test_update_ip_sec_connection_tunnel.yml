@@ -9,11 +9,102 @@ interactions:
     method: GET
     uri: http://localhost:8090/SDKTestingService/request/enable?apiName=UpdateIPSecConnectionTunnel&serviceName=core&lang=PythonCLI
   response:
-    body: {string: 'false'}
+    body: {string: 'true'}
     headers:
-      Content-Length: ['5']
+      Content-Length: ['4']
       Content-Type: [text/plain]
-      Date: ['Thu, 28 Mar 2019 21:04:50 GMT']
+      Date: ['Tue, 16 Apr 2019 21:20:17 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.21.0]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request?sessionId=0043&apiName=UpdateIPSecConnectionTunnel&serviceName=core&lang=PythonCLI
+  response:
+    body: {string: '[{"containerId":"87babf5c-84b5-4285-b46e-391af157eceb","request":{"ipscId":"ocid1.ipsecconnection.oc1.phx.aaaaaaaa5b4k3v2m2o5htq27e5eumjdgr3ad77hn2kv2thhz4yqhnvvddc5q","tunnelId":"ocid1.ipsectunnel.oc1.phx.aaaaaaaacwt7celgpf2zov2oowj7etpta66xrslg5b2kgddtom4lqtkegv7a","updateIPSecConnectionTunnelDetails":{"displayName":"__STS0043_6089","routing":"BGP","bgpSessionConfig":{"oracleInterfaceIp":"192.168.1.1/31","customerInterfaceIp":"192.168.1.0/31","customerBgpAsn":"14977"}}}}]'}
+    headers:
+      Content-Length: ['478']
+      Content-Type: [text/plain]
+      Date: ['Tue, 16 Apr 2019 21:20:19 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"bgpSessionConfig": {"oracleInterfaceIp": "192.168.1.1/31", "customerInterfaceIp":
+      "192.168.1.0/31", "customerBgpAsn": "14977"}, "displayName": "__STS0043_6089",
+      "routing": "BGP"}'
+    headers:
+      Content-Length: ['180']
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host content-length content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaarepczpw2gkmbq2l7g6vhstkzlth5v7z6zkthi6zsm7oyu52eznza/ocid1.user.oc1..aaaaaaaavxggrody3lzjvtcwpr47uvipnrbaotb33o6los3twruyvgsiqd4q/41:ab:71:c5:c9:8a:2d:d7:6a:48:b6:90:2c:91:a8:2b",signature="UVXZ6dOedRKWdJVLP8SaCdXiDRYBCRj09VwyqmtvVokm6IfFnqur3qeulYxFzGUqD8ko9NGLHPccJUN3Wf757dYoZTmfyLrki6DWRNPTNEemxfqEvfXablnxM46Fg2g0ZaLCSRjPoxqFimVlin1bvLdiXalkT7ze14/4joHmshOmOpwAaj2hmXMuCJrmmyEY8fGv6cDMVybF4t0ipyus+Ozvn4jT8HrYQXGlmn/W1LeJzpAwBl5/02icidwQDelMIYKRj7b9Jf27LaWy3r69LPskNYHhmk4nzf7HQ6xsMJwTOqP2OqYm7659/K3lUWbda4lDbN33aJdvTeufPHTTuA==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Tue, 16 Apr 2019 21:20:20 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.2.7+preview.1.0.68]
+      opc-request-id: [010C149B61824A4DBDD764487809A91C]
+      user-agent: [Oracle-PythonSDK/2.2.7+preview.1.0.68 (python 3.5.3; x86_64-Linux)
+          Oracle-PythonCLI/2.5.8+preview.1]
+      x-content-sha256: [a6qB5s9wKqO4Bn3XNMqxsYKKFn2A3jPd4y23wxpF9fA=]
+    method: PUT
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20160918/ipsecConnections/ocid1.ipsecconnection.oc1.phx.aaaaaaaa5b4k3v2m2o5htq27e5eumjdgr3ad77hn2kv2thhz4yqhnvvddc5q/tunnels/ocid1.ipsectunnel.oc1.phx.aaaaaaaacwt7celgpf2zov2oowj7etpta66xrslg5b2kgddtom4lqtkegv7a
+  response:
+    body: {string: "{\n  \"compartmentId\" : \"ocid1.compartment.oc1..aaaaaaaa4wap5jzxvxvdxhtesdkde7bovfuytevkkrpg43l44m6m5zoafqwa\"\
+        ,\n  \"id\" : \"ocid1.ipsectunnel.oc1.phx.aaaaaaaacwt7celgpf2zov2oowj7etpta66xrslg5b2kgddtom4lqtkegv7a\"\
+        ,\n  \"vpnIp\" : \"10.0.0.3\",\n  \"cpeIp\" : \"129.146.212.16\",\n  \"status\"\
+        \ : \"DOWN\",\n  \"lifecycleState\" : \"PROVISIONING\",\n  \"displayName\"\
+        \ : \"__STS0043_6089\",\n  \"bgpSessionInfo\" : {\n    \"oracleInterfaceIp\"\
+        \ : \"192.168.1.1/31\",\n    \"customerInterfaceIp\" : \"192.168.1.0/31\"\
+        ,\n    \"oracleBgpAsn\" : \"31898\",\n    \"customerBgpAsn\" : \"14977\",\n\
+        \    \"bgpState\" : \"DOWN\"\n  },\n  \"routing\" : \"BGP\",\n  \"timeCreated\"\
+        \ : \"2019-04-16T21:13:46.003Z\",\n  \"timeStatusUpdated\" : \"2019-04-16T21:20:27.803Z\"\
+        \n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['679']
+      Content-Type: [application/json]
+      Date: ['Tue, 16 Apr 2019 21:20:27 GMT']
+      ETag: ['-1956186737']
+      X-Content-Type-Options: [nosniff]
+      opc-request-id: [010C149B61824A4DBDD764487809A91C/E96F78E2FBA33AC988A31600505EEAEC/E42FC2E1C0DF292D55DA963C723A9637]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"responseJson": "{\"opcRequestId\": \"0142C7915A184C57AEED66DE4169AA5B\",
+      \"etag\": \"-1956186737\", \"iPSecConnectionTunnel\": {\"timeStatusUpdated\":
+      \"2019-04-16T21:20:27.803000+00:00\", \"cpeIp\": \"129.146.212.16\", \"compartmentId\":
+      \"ocid1.compartment.oc1..aaaaaaaa4wap5jzxvxvdxhtesdkde7bovfuytevkkrpg43l44m6m5zoafqwa\",
+      \"routing\": \"BGP\", \"displayName\": \"__STS0043_6089\", \"id\": \"ocid1.ipsectunnel.oc1.phx.aaaaaaaacwt7celgpf2zov2oowj7etpta66xrslg5b2kgddtom4lqtkegv7a\",
+      \"lifecycleState\": \"PROVISIONING\", \"timeCreated\": \"2019-04-16T21:13:46.003000+00:00\",
+      \"bgpSessionInfo\": {\"oracleInterfaceIp\": \"192.168.1.1/31\", \"customerInterfaceIp\":
+      \"192.168.1.0/31\", \"bgpState\": \"DOWN\", \"oracleBgpAsn\": \"31898\", \"customerBgpAsn\":
+      \"14977\"}, \"status\": \"DOWN\", \"vpnIp\": \"10.0.0.3\"}}", "requestJson":
+      "{\"tunnelId\": \"ocid1.ipsectunnel.oc1.phx.aaaaaaaacwt7celgpf2zov2oowj7etpta66xrslg5b2kgddtom4lqtkegv7a\",
+      \"updateIPSecConnectionTunnelDetails\": {\"bgpSessionConfig\": {\"oracleInterfaceIp\":
+      \"192.168.1.1/31\", \"customerInterfaceIp\": \"192.168.1.0/31\", \"customerBgpAsn\":
+      \"14977\"}, \"displayName\": \"__STS0043_6089\", \"routing\": \"BGP\"}, \"ipscId\":
+      \"ocid1.ipsecconnection.oc1.phx.aaaaaaaa5b4k3v2m2o5htq27e5eumjdgr3ad77hn2kv2thhz4yqhnvvddc5q\"}",
+      "containerId": "87babf5c-84b5-4285-b46e-391af157eceb", "requestClass": "com.oracle.bmc.core.requests.UpdateIPSecConnectionTunnelRequest",
+      "responseClass": "com.oracle.bmc.core.responses.UpdateIPSecConnectionTunnelResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['1526']
+      User-Agent: [python-requests/2.21.0]
+    method: POST
+    uri: http://localhost:8090/SDKTestingService/response?sessionId=0043&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Tue, 16 Apr 2019 21:20:23 GMT']
       Server: [Jetty(9.4.7.v20170914)]
     status: {code: 200, message: OK}
 version: 1
