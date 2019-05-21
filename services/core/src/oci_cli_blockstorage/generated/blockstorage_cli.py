@@ -14,7 +14,12 @@ from oci_cli.aliasing import CommandGroupWithAlias
 from oci_cli_core.generated import core_service_cli
 
 
-@click.command(cli_util.override('blockstorage_root_group.command_name', 'blockstorage'), cls=CommandGroupWithAlias, help=cli_util.override('blockstorage_root_group.help', """APIs for Networking Service, Compute Service, and Block Volume Service."""), short_help=cli_util.override('blockstorage_root_group.short_help', """Core Services API"""))
+@click.command(cli_util.override('blockstorage_root_group.command_name', 'blockstorage'), cls=CommandGroupWithAlias, help=cli_util.override('blockstorage_root_group.help', """API covering the [Networking](/iaas/Content/Network/Concepts/overview.htm),
+[Compute](/iaas/Content/Compute/Concepts/computeoverview.htm), and
+[Block Volume](/iaas/Content/Block/Concepts/overview.htm) services. Use this API
+to manage resources such as virtual cloud networks (VCNs), compute instances, and
+block storage volumes.
+"""), short_help=cli_util.override('blockstorage_root_group.short_help', """Core Services API"""))
 @cli_util.help_option_group
 def blockstorage_root_group():
     pass
@@ -96,7 +101,7 @@ def volume_backup_policy_group():
     pass
 
 
-@click.command(cli_util.override('volume_kms_key_group.command_name', 'volume-kms-key'), cls=CommandGroupWithAlias, help="""Kms key id associated with this volume.""")
+@click.command(cli_util.override('volume_kms_key_group.command_name', 'volume-kms-key'), cls=CommandGroupWithAlias, help="""The KMS key OCID associated with this volume.""")
 @cli_util.help_option_group
 def volume_kms_key_group():
     pass
@@ -776,7 +781,7 @@ def delete_boot_volume_backup(ctx, from_json, wait_for_state, max_wait_seconds, 
     cli_util.render_response(result, ctx)
 
 
-@boot_volume_kms_key_group.command(name=cli_util.override('delete_boot_volume_kms_key.command_name', 'delete'), help=u"""Remove kms for the specific boot volume. If the volume doesn't use KMS, then do nothing.""")
+@boot_volume_kms_key_group.command(name=cli_util.override('delete_boot_volume_kms_key.command_name', 'delete'), help=u"""Removes the KMS key for the specified boot volume.""")
 @cli_util.option('--boot-volume-id', required=True, help=u"""The OCID of the boot volume.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -1074,7 +1079,7 @@ def delete_volume_group_backup(ctx, from_json, wait_for_state, max_wait_seconds,
     cli_util.render_response(result, ctx)
 
 
-@volume_kms_key_group.command(name=cli_util.override('delete_volume_kms_key.command_name', 'delete'), help=u"""Remove kms for the specific volume. If the volume doesn't use KMS, then do nothing.""")
+@volume_kms_key_group.command(name=cli_util.override('delete_volume_kms_key.command_name', 'delete'), help=u"""Removes the KMS key for the specified volume.""")
 @cli_util.option('--volume-id', required=True, help=u"""The OCID of the volume.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -1141,7 +1146,7 @@ def get_boot_volume_backup(ctx, from_json, boot_volume_backup_id):
     cli_util.render_response(result, ctx)
 
 
-@boot_volume_kms_key_group.command(name=cli_util.override('get_boot_volume_kms_key.command_name', 'get'), help=u"""Gets kms key id for the specified boot volume.""")
+@boot_volume_kms_key_group.command(name=cli_util.override('get_boot_volume_kms_key.command_name', 'get'), help=u"""Gets the KMS key ID for the specified boot volume.""")
 @cli_util.option('--boot-volume-id', required=True, help=u"""The OCID of the boot volume.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1317,7 +1322,7 @@ def get_volume_group_backup(ctx, from_json, volume_group_backup_id):
     cli_util.render_response(result, ctx)
 
 
-@volume_kms_key_group.command(name=cli_util.override('get_volume_kms_key.command_name', 'get'), help=u"""Gets kms key id for the specified volume.""")
+@volume_kms_key_group.command(name=cli_util.override('get_volume_kms_key.command_name', 'get'), help=u"""Gets the KMS key ID for the specified volume.""")
 @cli_util.option('--volume-id', required=True, help=u"""The OCID of the volume.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1937,9 +1942,9 @@ def update_boot_volume_backup(ctx, from_json, force, wait_for_state, max_wait_se
     cli_util.render_response(result, ctx)
 
 
-@boot_volume_kms_key_group.command(name=cli_util.override('update_boot_volume_kms_key.command_name', 'update'), help=u"""Update kms key id for the specific volume.""")
+@boot_volume_kms_key_group.command(name=cli_util.override('update_boot_volume_kms_key.command_name', 'update'), help=u"""Updates the KMS key ID for the specified volume.""")
 @cli_util.option('--boot-volume-id', required=True, help=u"""The OCID of the boot volume.""")
-@cli_util.option('--kms-key-id', help=u"""The new kms key which will be used to protect the specific volume. This key has to be a valid kms key ocid, and user must have key delegation policy to allow them to access this key. Even if this new kms key is the same as the previous kms key id, block storage service will use it to regenerate a new volume encryption key. Example: `{\"kmsKeyId\": \"ocid1.key.region1.sea.afnl2n7daag4s.abzwkljs6uevhlgcznhmh7oiatyrxngrywc3tje3uk3g77hzmewqiieuk75f\"}`""")
+@cli_util.option('--kms-key-id', help=u"""The OCID of the new KMS key which will be used to protect the specified volume. This key has to be a valid KMS key OCID, and the user must have key delegation policy to allow them to access this key. Even if the new KMS key is the same as the previous KMS key ID, the Block Volume service will use it to regenerate a new volume encryption key.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -2275,9 +2280,9 @@ def update_volume_group_backup(ctx, from_json, force, wait_for_state, max_wait_s
     cli_util.render_response(result, ctx)
 
 
-@volume_kms_key_group.command(name=cli_util.override('update_volume_kms_key.command_name', 'update'), help=u"""Update kms key id for the specific volume.""")
+@volume_kms_key_group.command(name=cli_util.override('update_volume_kms_key.command_name', 'update'), help=u"""Updates the KMS key ID for the specified volume.""")
 @cli_util.option('--volume-id', required=True, help=u"""The OCID of the volume.""")
-@cli_util.option('--kms-key-id', help=u"""The new kms key which will be used to protect the specific volume. This key has to be a valid kms key ocid, and user must have key delegation policy to allow them to access this key. Even if this new kms key is the same as the previous kms key id, block storage service will use it to regenerate a new volume encryption key. Example: `{\"kmsKeyId\": \"ocid1.key.region1.sea.afnl2n7daag4s.abzwkljs6uevhlgcznhmh7oiatyrxngrywc3tje3uk3g77hzmewqiieuk75f\"}`""")
+@cli_util.option('--kms-key-id', help=u"""The OCID of the new KMS key which will be used to protect the specified volume. This key has to be a valid KMS key OCID, and the user must have key delegation policy to allow them to access this key. Even if the new KMS key is the same as the previous KMS key ID, the Block Volume service will use it to regenerate a new volume encryption key.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option

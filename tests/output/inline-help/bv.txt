@@ -25,7 +25,7 @@ Commands:
                                   Specifies that a particular volume backup...
   volume-group                    Specifies a volume group which is a...
   volume-group-backup             A point-in-time copy of a volume group that...
-  volume-kms-key                  Kms key id associated with this volume.
+  volume-kms-key                  The KMS key OCID associated with this volume.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci bv backup --help
@@ -1362,16 +1362,15 @@ Options:
                   <command> --help.
 
 Commands:
-  delete  Remove kms for the specific boot volume.
-  get     Gets kms key id for the specified boot...
-  update  Update kms key id for the specific volume.
+  delete  Removes the KMS key for the specified boot...
+  get     Gets the KMS key ID for the specified boot...
+  update  Updates the KMS key ID for the specified...
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci bv boot-volume-kms-key delete --help
 Usage: oci bv boot-volume-kms-key delete [OPTIONS]
 
-  Remove kms for the specific boot volume. If the volume doesn't use KMS, then
-  do nothing.
+  Removes the KMS key for the specified boot volume.
 
 Options:
   --boot-volume-id TEXT  The OCID of the boot volume. [required]
@@ -1411,7 +1410,7 @@ Options:
 $ oci bv boot-volume-kms-key get --help
 Usage: oci bv boot-volume-kms-key get [OPTIONS]
 
-  Gets kms key id for the specified boot volume.
+  Gets the KMS key ID for the specified boot volume.
 
 Options:
   --boot-volume-id TEXT  The OCID of the boot volume. [required]
@@ -1450,19 +1449,17 @@ Options:
 $ oci bv boot-volume-kms-key update --help
 Usage: oci bv boot-volume-kms-key update [OPTIONS]
 
-  Update kms key id for the specific volume.
+  Updates the KMS key ID for the specified volume.
 
 Options:
   --boot-volume-id TEXT  The OCID of the boot volume. [required]
-  --kms-key-id TEXT      The new kms key which will be used to protect the
-                         specific volume. This key has to be a valid kms key
-                         ocid, and user must have key delegation policy to allow
-                         them to access this key. Even if this new kms key is
-                         the same as the previous kms key id, block storage
-                         service will use it to regenerate a new volume
-                         encryption key. Example: `{"kmsKeyId": "ocid1.key.regio
-                         n1.sea.afnl2n7daag4s.abzwkljs6uevhlgcznhmh7oiatyrxngryw
-                         c3tje3uk3g77hzmewqiieuk75f"}`
+  --kms-key-id TEXT      The OCID of the new KMS key which will be used to
+                         protect the specified volume. This key has to be a
+                         valid KMS key OCID, and the user must have key
+                         delegation policy to allow them to access this key.
+                         Even if the new KMS key is the same as the previous KMS
+                         key ID, the Block Volume service will use it to
+                         regenerate a new volume encryption key.
   --if-match TEXT        For optimistic concurrency control. In the PUT or
                          DELETE call for a resource, set the `if-match`
                          parameter to the value of the etag from a previous GET
@@ -3110,23 +3107,22 @@ Options:
 $ oci bv volume-kms-key --help
 Usage: oci bv volume-kms-key [OPTIONS] COMMAND [ARGS]...
 
-  Kms key id associated with this volume.
+  The KMS key OCID associated with this volume.
 
 Options:
   -?, -h, --help  For detailed help on any of these individual commands, enter
                   <command> --help.
 
 Commands:
-  delete  Remove kms for the specific volume.
-  get     Gets kms key id for the specified volume.
-  update  Update kms key id for the specific volume.
+  delete  Removes the KMS key for the specified volume.
+  get     Gets the KMS key ID for the specified volume.
+  update  Updates the KMS key ID for the specified...
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci bv volume-kms-key delete --help
 Usage: oci bv volume-kms-key delete [OPTIONS]
 
-  Remove kms for the specific volume. If the volume doesn't use KMS, then do
-  nothing.
+  Removes the KMS key for the specified volume.
 
 Options:
   --volume-id TEXT  The OCID of the volume. [required]
@@ -3165,7 +3161,7 @@ Options:
 $ oci bv volume-kms-key get --help
 Usage: oci bv volume-kms-key get [OPTIONS]
 
-  Gets kms key id for the specified volume.
+  Gets the KMS key ID for the specified volume.
 
 Options:
   --volume-id TEXT  The OCID of the volume. [required]
@@ -3203,18 +3199,16 @@ Options:
 $ oci bv volume-kms-key update --help
 Usage: oci bv volume-kms-key update [OPTIONS]
 
-  Update kms key id for the specific volume.
+  Updates the KMS key ID for the specified volume.
 
 Options:
   --volume-id TEXT   The OCID of the volume. [required]
-  --kms-key-id TEXT  The new kms key which will be used to protect the specific
-                     volume. This key has to be a valid kms key ocid, and user
-                     must have key delegation policy to allow them to access
-                     this key. Even if this new kms key is the same as the
-                     previous kms key id, block storage service will use it to
-                     regenerate a new volume encryption key. Example:
-                     `{"kmsKeyId": "ocid1.key.region1.sea.afnl2n7daag4s.abzwkljs
-                     6uevhlgcznhmh7oiatyrxngrywc3tje3uk3g77hzmewqiieuk75f"}`
+  --kms-key-id TEXT  The OCID of the new KMS key which will be used to protect
+                     the specified volume. This key has to be a valid KMS key
+                     OCID, and the user must have key delegation policy to allow
+                     them to access this key. Even if the new KMS key is the
+                     same as the previous KMS key ID, the Block Volume service
+                     will use it to regenerate a new volume encryption key.
   --if-match TEXT    For optimistic concurrency control. In the PUT or DELETE
                      call for a resource, set the `if-match` parameter to the
                      value of the etag from a previous GET or POST response for

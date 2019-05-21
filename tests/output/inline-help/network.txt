@@ -29,6 +29,8 @@ Commands:
   internet-gateway                Represents a router that connects the edge
                                   of...
   ip-sec-connection               A connection between a DRG and CPE.
+  ip-sec-psk                      The shared secret of a IPSec connection's...
+  ip-sec-tunnel                   information about IPSecConnection tunnel.
   local-peering-gateway           A local peering gateway (LPG) is an object
                                   on...
   nat-gateway                     A NAT (Network Address Translation)
@@ -38,9 +40,8 @@ Commands:
   remote-peering-connection       A remote peering connection (RPC) is an...
   route-table                     A collection of `RouteRule` objects, which...
   security-list                   A set of virtual firewall rules for your VCN.
-  service                         Information about a service that is...
-  service-gateway                 Represents a router that connects the edge
-                                  of...
+  service                         An object that represents one or multiple...
+  service-gateway                 Represents a router that lets your VCN...
   subnet                          A logical subdivision of a VCN.
   vcn                             A virtual cloud network (VCN).
   virtual-circuit                 For use with Oracle Cloud Infrastructure...
@@ -3229,7 +3230,7 @@ Commands:
   get-config  Gets the configuration information for the...
   get-status  Gets the status of the specified IPSec...
   list        Lists the IPSec connections for the specified...
-  update      Updates the display name or tags for the...
+  update      Updates the specified IPSec connection.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network ip-sec-connection create --help
@@ -3340,6 +3341,32 @@ Options:
                                   The type of identifier for your CPE device.
                                   The value you provide here must correspond to
                                   the value for `cpeLocalIdentifier`.
+  --tunnel-configuration COMPLEX TYPE
+                                  array of tunnel parameters to create tunnels
+                                  for IPSecConnection.
+                                  
+                                  This option is a JSON
+                                  list with items of type
+                                  CreateIPSecConnectionTunnelDetails.  For
+                                  documentation on
+                                  CreateIPSecConnectionTunnelDetails please see
+                                  our API reference: https://docs.cloud.oracle.c
+                                  om/api/#/en/iaas/20160918/datatypes/CreateIPSe
+                                  cConnectionTunnelDetails.
+                                  This is a complex
+                                  type whose value must be valid JSON. The value
+                                  can be provided as a string on the command
+                                  line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
   --wait-for-state [PROVISIONING|AVAILABLE|TERMINATING|TERMINATED]
                                   This operation creates, modifies or deletes a
                                   resource that has a defined lifecycle state.
@@ -3612,8 +3639,7 @@ Options:
 $ oci network ip-sec-connection update --help
 Usage: oci network ip-sec-connection update [OPTIONS]
 
-  Updates the display name or tags for the specified IPSec connection. Avoid
-  entering confidential information.
+  Updates the specified IPSec connection.
 
 Options:
   --ipsc-id TEXT                  The OCID of the IPSec connection. [required]
@@ -3685,6 +3711,283 @@ Options:
                                   This is a complex type
                                   whose value must be valid JSON. The value can
                                   be provided as a string on the command line or
+                                  passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+  --if-match TEXT                 For optimistic concurrency control. In the PUT
+                                  or DELETE call for a resource, set the `if-
+                                  match` parameter to the value of the etag from
+                                  a previous GET or POST response for that
+                                  resource.  The resource will be updated or
+                                  deleted only if the etag you provide matches
+                                  the resource's current etag value.
+  --force                         Perform update without prompting for
+                                  confirmation.
+  --wait-for-state [PROVISIONING|AVAILABLE|TERMINATING|TERMINATED]
+                                  This operation creates, modifies or deletes a
+                                  resource that has a defined lifecycle state.
+                                  Specify this option to perform the action and
+                                  then wait until the resource reaches a given
+                                  lifecycle state. If timeout is reached, a
+                                  return code of 2 is returned. For any other
+                                  error, a return code of 1 is returned.
+  --max-wait-seconds INTEGER      The maximum time to wait for the resource to
+                                  reach the lifecycle state defined by --wait-
+                                  for-state. Defaults to 1200 seconds.
+  --wait-interval-seconds INTEGER
+                                  Check every --wait-interval-seconds to see
+                                  whether the resource to see if it has reached
+                                  the lifecycle state defined by --wait-for-
+                                  state. Defaults to 30 seconds.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file using the file://path-
+                                  to/file syntax.
+                                  
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci network ip-sec-psk --help
+Usage: oci network ip-sec-psk [OPTIONS] COMMAND [ARGS]...
+
+  The shared secret of a IPSec connection's specified tunnel.
+
+Options:
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
+
+Commands:
+  get     Gets the specified IPSec connection's...
+  update  update shared secret for specifed Ipsec...
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci network ip-sec-psk get --help
+Usage: oci network ip-sec-psk get [OPTIONS]
+
+  Gets the specified IPSec connection's specific tunnel's shared secret.
+
+Options:
+  --ipsc-id TEXT    The OCID of the IPSec connection. [required]
+  --tunnel-id TEXT  The OCID of the IPSec connection's tunnel. [required]
+  --from-json TEXT  Provide input to this command as a JSON document from a file
+                    using the file://path-to/file syntax.
+                    
+                    The --generate-full-
+                    command-json-input option can be used to generate a sample
+                    json file to be used with this command option. The key names
+                    are pre-populated and match the command option names
+                    (converted to camelCase format, e.g. compartment-id -->
+                    compartmentId), while the values of the keys need to be
+                    populated by the user before using the sample file as an
+                    input to this command. For any command option that accepts
+                    multiple values, the value of the key can be a JSON array.
+                    Options can still be provided on the command line. If an
+                    option exists in both the JSON document and the command line
+                    then the command line specified value will be used.
+                    
+                    For
+                    examples on usage of this option, please see our "using CLI
+                    with advanced JSON options" link: https://docs.cloud.oracle.
+                    com/iaas/Content/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                    s
+  -?, -h, --help    For detailed help on any of these individual commands, enter
+                    <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci network ip-sec-psk update --help
+Usage: oci network ip-sec-psk update [OPTIONS]
+
+  update shared secret for specifed Ipsec connection's specified tunnel
+
+Options:
+  --ipsc-id TEXT        The OCID of the IPSec connection. [required]
+  --tunnel-id TEXT      The OCID of the IPSec connection's tunnel. [required]
+  --shared-secret TEXT  The shared secret of the IPSec tunnel.
+                        
+                        Example: `vFG2IF
+                        6TWq4UToUiLSRDoJEUs6j1c.p8G.dVQxiMfMO0yXMLi.lZTbYIWhGu4V
+                        8o`
+  --if-match TEXT       For optimistic concurrency control. In the PUT or DELETE
+                        call for a resource, set the `if-match` parameter to the
+                        value of the etag from a previous GET or POST response
+                        for that resource.  The resource will be updated or
+                        deleted only if the etag you provide matches the
+                        resource's current etag value.
+  --from-json TEXT      Provide input to this command as a JSON document from a
+                        file using the file://path-to/file syntax.
+                        
+                        The
+                        --generate-full-command-json-input option can be used to
+                        generate a sample json file to be used with this command
+                        option. The key names are pre-populated and match the
+                        command option names (converted to camelCase format,
+                        e.g. compartment-id --> compartmentId), while the values
+                        of the keys need to be populated by the user before
+                        using the sample file as an input to this command. For
+                        any command option that accepts multiple values, the
+                        value of the key can be a JSON array.
+                        
+                        Options can still
+                        be provided on the command line. If an option exists in
+                        both the JSON document and the command line then the
+                        command line specified value will be used.
+                        
+                        For examples
+                        on usage of this option, please see our "using CLI with
+                        advanced JSON options" link: https://docs.cloud.oracle.c
+                        om/iaas/Content/API/SDKDocs/cliusing.htm#AdvancedJSONOpt
+                        ions
+  -?, -h, --help        For detailed help on any of these individual commands,
+                        enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci network ip-sec-tunnel --help
+Usage: oci network ip-sec-tunnel [OPTIONS] COMMAND [ARGS]...
+
+  information about IPSecConnection tunnel.
+
+Options:
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
+
+Commands:
+  get     Gets the specified IPSec connection's...
+  list    Gets the lists of tunnel information for the...
+  update  Update an IPsecConnection tunnel
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci network ip-sec-tunnel get --help
+Usage: oci network ip-sec-tunnel get [OPTIONS]
+
+  Gets the specified IPSec connection's specified tunnel basic information.
+
+Options:
+  --ipsc-id TEXT    The OCID of the IPSec connection. [required]
+  --tunnel-id TEXT  The OCID of the IPSec connection's tunnel. [required]
+  --from-json TEXT  Provide input to this command as a JSON document from a file
+                    using the file://path-to/file syntax.
+                    
+                    The --generate-full-
+                    command-json-input option can be used to generate a sample
+                    json file to be used with this command option. The key names
+                    are pre-populated and match the command option names
+                    (converted to camelCase format, e.g. compartment-id -->
+                    compartmentId), while the values of the keys need to be
+                    populated by the user before using the sample file as an
+                    input to this command. For any command option that accepts
+                    multiple values, the value of the key can be a JSON array.
+                    Options can still be provided on the command line. If an
+                    option exists in both the JSON document and the command line
+                    then the command line specified value will be used.
+                    
+                    For
+                    examples on usage of this option, please see our "using CLI
+                    with advanced JSON options" link: https://docs.cloud.oracle.
+                    com/iaas/Content/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                    s
+  -?, -h, --help    For detailed help on any of these individual commands, enter
+                    <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci network ip-sec-tunnel list --help
+Usage: oci network ip-sec-tunnel list [OPTIONS]
+
+  Gets the lists of tunnel information for the specified IPSec connection.
+
+Options:
+  --ipsc-id TEXT       The OCID of the IPSec connection. [required]
+  --limit INTEGER      For list pagination. The maximum number of results per
+                       page, or items to return in a paginated "List" call. For
+                       important details about how pagination works, see [List
+                       Pagination].
+                       
+                       Example: `50`
+  --page TEXT          For list pagination. The value of the `opc-next-page`
+                       response header from the previous "List" call. For
+                       important details about how pagination works, see [List
+                       Pagination].
+  --all                Fetches all pages of results. If you provide this option,
+                       then you cannot provide the --limit option.
+  --page-size INTEGER  When fetching results, the number of results to fetch per
+                       call. Only valid when used with --all or --limit, and
+                       ignored otherwise.
+  --from-json TEXT     Provide input to this command as a JSON document from a
+                       file using the file://path-to/file syntax.
+                       
+                       The
+                       --generate-full-command-json-input option can be used to
+                       generate a sample json file to be used with this command
+                       option. The key names are pre-populated and match the
+                       command option names (converted to camelCase format, e.g.
+                       compartment-id --> compartmentId), while the values of
+                       the keys need to be populated by the user before using
+                       the sample file as an input to this command. For any
+                       command option that accepts multiple values, the value of
+                       the key can be a JSON array.
+                       
+                       Options can still be
+                       provided on the command line. If an option exists in both
+                       the JSON document and the command line then the command
+                       line specified value will be used.
+                       
+                       For examples on usage
+                       of this option, please see our "using CLI with advanced
+                       JSON options" link: https://docs.cloud.oracle.com/iaas/Co
+                       ntent/API/SDKDocs/cliusing.htm#AdvancedJSONOptions
+  -?, -h, --help       For detailed help on any of these individual commands,
+                       enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci network ip-sec-tunnel update --help
+Usage: oci network ip-sec-tunnel update [OPTIONS]
+
+  Update an IPsecConnection tunnel
+
+Options:
+  --ipsc-id TEXT                  The OCID of the IPSec connection. [required]
+  --tunnel-id TEXT                The OCID of the IPSec connection's tunnel.
+                                  [required]
+  --display-name TEXT             A user-friendly name. Does not have to be
+                                  unique, and it's changeable. Avoid entering
+                                  confidential information.
+  --routing [BGP|STATIC]          the routing strategy used for this tunnel,
+                                  either static route or BGP.
+  --bgp-session-config COMPLEX TYPE
+                                  Information needed to establish a BGP Session
+                                  on an interface.
+                                  This is a complex type whose
+                                  value must be valid JSON. The value can be
+                                  provided as a string on the command line or
                                   passed in as a file using
                                   the
                                   file://path/to/file syntax.
@@ -4638,15 +4941,15 @@ Options:
 $ oci network private-ip --help
 Usage: oci network private-ip [OPTIONS] COMMAND [ARGS]...
 
-  A *private IP* is a conceptual term that refers to a private IP address and
-  related properties. The `privateIp` object is the API representation of a
-  private IP.
+  A *private IP* is a conceptual term that refers to an IPv4 private IP
+  address and related properties. The `privateIp` object is the API
+  representation of a private IP.
 
-  Each instance has a *primary private IP* that is automatically created and
-  assigned to the primary VNIC during instance launch. If you add a secondary
-  VNIC to the instance, it also automatically gets a primary private IP. You
-  can't remove a primary private IP from its VNIC. The primary private IP is
-  automatically deleted when the VNIC is terminated.
+   Each instance has a *primary private IP* that is automatically created and
+   assigned to the primary VNIC during instance launch. If you add a secondary
+   VNIC to the instance, it also automatically gets a primary private IP. You
+   can't remove a primary private IP from its VNIC. The primary private IP is
+   automatically deleted when the VNIC is terminated.
 
   You can add *secondary private IPs* to a VNIC after it's created. For more
   information, see the `privateIp` operations and also [IP Addresses].
@@ -6869,21 +7172,26 @@ Options:
 $ oci network service --help
 Usage: oci network service [OPTIONS] COMMAND [ARGS]...
 
-  Information about a service that is accessible through a service gateway.
+  An object that represents one or multiple Oracle services that you can
+  enable for a [ServiceGateway]. In the User Guide topic [Access to Oracle
+  Services: Service Gateway], the term *service CIDR label* is used to refer
+  to the string that represents the regional public IP address ranges of the
+  Oracle service or services covered by a given `Service` object. That unique
+  string is the value of the `Service` object's `cidrBlock` attribute.
 
 Options:
   -?, -h, --help  For detailed help on any of these individual commands, enter
                   <command> --help.
 
 Commands:
-  get   Gets the specified service's information.
-  list  Lists the available services that you can...
+  get   Gets the specified [Service] object.
+  list  Lists the available [Service] objects that...
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network service get --help
 Usage: oci network service get [OPTIONS]
 
-  Gets the specified service's information.
+  Gets the specified [Service] object.
 
 Options:
   --service-id TEXT  The service's [OCID]. [required]
@@ -6913,8 +7221,8 @@ Options:
 $ oci network service list --help
 Usage: oci network service list [OPTIONS]
 
-  Lists the available services that you can access through a service gateway
-  in this region.
+  Lists the available [Service] objects that you can enable for a service
+  gateway in this region.
 
 Options:
   --limit INTEGER      For list pagination. The maximum number of results per
@@ -6962,13 +7270,14 @@ Options:
 $ oci network service-gateway --help
 Usage: oci network service-gateway [OPTIONS] COMMAND [ARGS]...
 
-  Represents a router that connects the edge of a VCN with public Oracle Cloud
-  Infrastructure services such as Object Storage. Traffic leaving the VCN and
-  destined for a supported public service (see [ListServices]) is routed
-  through the service gateway and does not traverse the internet. The
-  instances in the VCN do not need to have public IP addresses nor be in a
-  public subnet. The VCN does not need an internet gateway for this traffic.
-  For more information, see [Access to Object Storage: Service Gateway].
+  Represents a router that lets your VCN privately access specific Oracle
+  services such as Object Storage without exposing the VCN to the public
+  internet. Traffic leaving the VCN and destined for a supported Oracle
+  service (see [ListServices]) is routed through the service gateway and does
+  not traverse the internet. The instances in the VCN do not need to have
+  public IP addresses nor be in a public subnet. The VCN does not need an
+  internet gateway for this traffic. For more information, see [Access to
+  Oracle Services: Service Gateway].
 
   To use any of the API operations, you must be authorized in an IAM policy.
   If you're not authorized, talk to an administrator. If you're an
@@ -6983,10 +7292,10 @@ Options:
                   <command> --help.
 
 Commands:
-  attach  Enables the specified service on the...
+  attach  Adds the specified [Service] to the list of...
   create  Creates a new service gateway in the...
   delete  Deletes the specified service gateway.
-  detach  Disables the specified service on the...
+  detach  Removes the specified [Service] from the list...
   get     Gets the specified service gateway's...
   list    Lists the service gateways in the specified...
   update  Updates the specified service gateway.
@@ -6995,20 +7304,19 @@ Commands:
 $ oci network service-gateway attach --help
 Usage: oci network service-gateway attach [OPTIONS]
 
-  Enables the specified service on the specified gateway. In other words,
-  enables the service gateway to send traffic to the specified service. You
-  must also set up a route rule with the service's `cidrBlock` as the rule's
-  destination CIDR and the gateway as the rule's target. See [Route Table].
+  Adds the specified [Service] to the list of enabled `Service` objects for
+  the specified gateway. You must also set up a route rule with the
+  `cidrBlock` of the `Service` as the rule's destination and the service
+  gateway as the rule's target. See [Route Table].
 
-  **Note:** The `AttachServiceId` operation is an easy way to enable an
-  individual service on the service gateway. Compare it with
-  [UpdateServiceGateway], which also lets you enable an individual service.
-  However, with `UpdateServiceGateway`, you must specify the *entire* list of
-  services you want enabled on the service gateway.
+  **Note:** The `AttachServiceId` operation is an easy way to add an
+  individual `Service` to the service gateway. Compare it with
+  [UpdateServiceGateway], which replaces the entire existing list of enabled
+  `Service` objects with the list that you provide in the `Update` call.
 
 Options:
   --service-gateway-id TEXT       The service gateway's [OCID]. [required]
-  --service-id TEXT               The [OCID] of the service. [required]
+  --service-id TEXT               The [OCID] of the [Service]. [required]
   --if-match TEXT                 For optimistic concurrency control. In the PUT
                                   or DELETE call for a resource, set the `if-
                                   match` parameter to the value of the etag from
@@ -7077,13 +7385,23 @@ Usage: oci network service-gateway create [OPTIONS]
   change it. Avoid entering confidential information.
 
 Options:
-  -c, --compartment-id TEXT       The [OCID]   of the compartment to contain the
+  -c, --compartment-id TEXT       The [OCID]  of the compartment to contain the
                                   service gateway. [required]
-  --services COMPLEX TYPE         List of the service OCIDs. These are the
-                                  services that will be enabled on the service
-                                  gateway. This list can be empty.
-                                  This is a
-                                  complex type whose value must be valid JSON.
+  --services COMPLEX TYPE         List of the OCIDs of the [Service] objects to
+                                  enable for the service gateway. This list can
+                                  be empty if you don't want to enable any
+                                  `Service` objects when you create the gateway.
+                                  You can enable a `Service` object later by
+                                  using either [AttachServiceId] or
+                                  [UpdateServiceGateway].
+                                  
+                                  For each enabled
+                                  `Service`, make sure there's a route rule with
+                                  the `Service` object's `cidrBlock` as the
+                                  rule's destination and the service gateway as
+                                  the rule's target. See [Route Table].
+                                  This is
+                                  a complex type whose value must be valid JSON.
                                   The value can be provided as a string on the
                                   command line or passed in as a file using
                                   the
@@ -7254,24 +7572,22 @@ Options:
 $ oci network service-gateway detach --help
 Usage: oci network service-gateway detach [OPTIONS]
 
-  Disables the specified service on the specified gateway. In other words,
-  stops the service gateway from sending traffic to the specified service. You
-  do not need to remove any route rules that specify this service's
-  `cidrBlock` as the destination CIDR. However, consider removing the rules if
-  your intent is to permanently disable use of the service through this
-  service gateway.
+  Removes the specified [Service] from the list of enabled `Service` objects
+  for the specified gateway. You do not need to remove any route rules that
+  specify this `Service` object's `cidrBlock` as the destination CIDR.
+  However, consider removing the rules if your intent is to permanently
+  disable use of the `Service` through this service gateway.
 
-  **Note:** The `DetachServiceId` operation is an easy way to disable an
-  individual service on the service gateway. Compare it with
-  [UpdateServiceGateway], which also lets you disable an individual service.
-  However, with `UpdateServiceGateway`, you must specify the *entire* list of
-  services you want enabled on the service gateway. `UpdateServiceGateway`
-  also lets you block all traffic through the service gateway without having
-  to disable each of the individual services.
+  **Note:** The `DetachServiceId` operation is an easy way to remove an
+  individual `Service` from the service gateway. Compare it with
+  [UpdateServiceGateway], which replaces the entire existing list of enabled
+  `Service` objects with the list that you provide in the `Update` call.
+  `UpdateServiceGateway` also lets you block all traffic through the service
+  gateway without having to remove each of the individual `Service` objects.
 
 Options:
   --service-gateway-id TEXT       The service gateway's [OCID]. [required]
-  --service-id TEXT               The [OCID] of the service. [required]
+  --service-id TEXT               The [OCID] of the [Service]. [required]
   --if-match TEXT                 For optimistic concurrency control. In the PUT
                                   or DELETE call for a resource, set the `if-
                                   match` parameter to the value of the etag from
@@ -7497,41 +7813,40 @@ Options:
                                   in
                                   a file, modifying it as needed and then
                                   passing it back in via the file:// syntax.
-  --services COMPLEX TYPE         List of all the services you want enabled on
-                                  this service gateway. Sending an empty list
-                                  means you want to disable all services.
-                                  Omitting this parameter entirely keeps the
-                                  existing list of services intact.
+  --services COMPLEX TYPE         List of all the `Service` objects you want
+                                  enabled on this service gateway. Sending an
+                                  empty list means you want to disable all
+                                  services. Omitting this parameter entirely
+                                  keeps the existing list of services intact.
+                                  You can also enable or disable a particular
+                                  `Service` by using [AttachServiceId] or
+                                  [DetachServiceId].
                                   
-                                  You can
-                                  also enable or disable a particular service by
-                                  using [AttachServiceId] and [DetachServiceId].
-                                  For each enabled service, make sure there's a
-                                  route rule with the service's `cidrBlock` as
-                                  the rule's destination CIDR and the service
-                                  gateway as the rule's target. See [Route
-                                  Table].
+                                  For each enabled
+                                  `Service`, make sure there's a route rule with
+                                  the `Service` object's `cidrBlock` as the
+                                  rule's destination and the service gateway as
+                                  the rule's target. See [Route Table].
                                   
-                                  This option is a JSON list with items
-                                  of type ServiceIdRequestDetails.  For
-                                  documentation on ServiceIdRequestDetails
-                                  please see our API reference: https://docs.clo
-                                  ud.oracle.com/api/#/en/iaas/20160918/datatypes
-                                  /ServiceIdRequestDetails.
-                                  This is a complex
-                                  type whose value must be valid JSON. The value
-                                  can be provided as a string on the command
-                                  line or passed in as a file using
-                                  the
-                                  file://path/to/file syntax.
-                                  
-                                  The --generate-
-                                  param-json-input option can be used to
-                                  generate an example of the JSON which must be
-                                  provided. We recommend storing this example
-                                  in
-                                  a file, modifying it as needed and then
-                                  passing it back in via the file:// syntax.
+                                  This
+                                  option is a JSON list with items of type
+                                  ServiceIdRequestDetails.  For documentation on
+                                  ServiceIdRequestDetails please see our API
+                                  reference: https://docs.cloud.oracle.com/api/#
+                                  /en/iaas/20160918/datatypes/ServiceIdRequestDe
+                                  tails.
+                                  This is a complex type whose value must
+                                  be valid JSON. The value can be provided as a
+                                  string on the command line or passed in as a
+                                  file using
+                                  the file://path/to/file syntax.
+                                  The --generate-param-json-input option can be
+                                  used to generate an example of the JSON which
+                                  must be provided. We recommend storing this
+                                  example
+                                  in a file, modifying it as needed and
+                                  then passing it back in via the file://
+                                  syntax.
   --if-match TEXT                 For optimistic concurrency control. In the PUT
                                   or DELETE call for a resource, set the `if-
                                   match` parameter to the value of the etag from

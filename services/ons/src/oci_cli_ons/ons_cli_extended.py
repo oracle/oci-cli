@@ -70,8 +70,6 @@ cli_util.rename_command(notificationcontrolplane_cli.notification_topic_group, n
 cli_util.rename_command(notificationcontrolplane_cli.notification_topic_group, notificationcontrolplane_cli.list_topics, "list")
 cli_util.rename_command(notificationcontrolplane_cli.notification_topic_group, notificationcontrolplane_cli.update_topic, "update")
 
-cli_util.rename_command(notificationdataplane_cli.subscription_group, notificationdataplane_cli.resend_subscription_confirmation, "resend-confirmation")
-
 
 # Rename the endpoint parameter to --subscription-endpoint since it conflicts with the --endpoint parameter that CLI
 # provides for all its commands

@@ -17,7 +17,6 @@ computemanagement_cli.compute_management_root_group.commands.pop(computemanageme
 computemanagement_cli.instance_pool_group.add_command(computemanagement_cli.list_instance_pool_instances)
 computemanagement_cli.instance_configuration_group.add_command(computemanagement_cli.launch_instance_configuration_compute_instance_details)
 
-cli_util.rename_command(computemanagement_cli.instance_configuration_group, computemanagement_cli.launch_instance_configuration_compute_instance_details, "launch-compute-instance")
 computemanagement_cli.compute_management_root_group.help = "Compute Management Service CLI"
 computemanagement_cli.compute_management_root_group.short_help = "Compute Management Service"
 
