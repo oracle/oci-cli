@@ -1,4 +1,4 @@
-#!/usr/bin/env bash -e
+#!/bin/bash -e
 # This script provides a basic example of how to use the Monitoring Metrics apis in the Python CLI.
 #
 # This script # will demonstrate:
@@ -94,7 +94,7 @@ main() {
         --name "${metric_name}"
 
     print_header "summarize metrics"
-    echo::exec oci monitoring metric-data summarize-metric-data \
+    echo::exec oci monitoring metric-data summarize-metrics-data \
         --compartment-id "${compartment}" \
         --namespace "${namespace}" \
         --query-text "${metric_name}[1m].sum()"

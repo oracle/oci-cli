@@ -3922,7 +3922,8 @@ Usage: oci compute volume-attachment attach [OPTIONS]
 
 Options:
   --instance-id TEXT              The OCID of the instance. [required]
-  --type [iscsi|paravirtualized]  The type of volume. The only supported value
+  --type [service_determined|emulated|iscsi|paravirtualized]
+                                  The type of volume. The only supported value
                                   are "iscsi" and "paravirtualized". [required]
   --volume-id TEXT                The OCID of the volume. [required]
   --device TEXT                   The device name.

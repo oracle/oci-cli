@@ -341,6 +341,132 @@ def attach_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
     cli_util.render_response(result, ctx)
 
 
+@volume_attachment_group.command(name=cli_util.override('attach_volume_attach_service_determined_volume_details.command_name', 'attach-volume-attach-service-determined-volume-details'), help=u"""Attaches the specified storage volume to the specified instance.""")
+@cli_util.option('--instance-id', required=True, help=u"""The OCID of the instance.""")
+@cli_util.option('--volume-id', required=True, help=u"""The OCID of the volume.""")
+@cli_util.option('--device', help=u"""The device name.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it cannot be changed. Avoid entering confidential information.""")
+@cli_util.option('--is-read-only', type=click.BOOL, help=u"""Whether the attachment was created in read-only mode.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ATTACHING", "ATTACHED", "DETACHING", "DETACHED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'VolumeAttachment'})
+@cli_util.wrap_exceptions
+def attach_volume_attach_service_determined_volume_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_id, volume_id, device, display_name, is_read_only):
+
+    kwargs = {}
+
+    details = {}
+    details['instanceId'] = instance_id
+    details['volumeId'] = volume_id
+
+    if device is not None:
+        details['device'] = device
+
+    if display_name is not None:
+        details['displayName'] = display_name
+
+    if is_read_only is not None:
+        details['isReadOnly'] = is_read_only
+
+    details['type'] = 'service_determined'
+
+    client = cli_util.build_client('compute', ctx)
+    result = client.attach_volume(
+        attach_volume_details=details,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_volume_attachment') and callable(getattr(client, 'get_volume_attachment')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_volume_attachment(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@volume_attachment_group.command(name=cli_util.override('attach_volume_attach_emulated_volume_details.command_name', 'attach-volume-attach-emulated-volume-details'), help=u"""Attaches the specified storage volume to the specified instance.""")
+@cli_util.option('--instance-id', required=True, help=u"""The OCID of the instance.""")
+@cli_util.option('--volume-id', required=True, help=u"""The OCID of the volume.""")
+@cli_util.option('--device', help=u"""The device name.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it cannot be changed. Avoid entering confidential information.""")
+@cli_util.option('--is-read-only', type=click.BOOL, help=u"""Whether the attachment was created in read-only mode.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ATTACHING", "ATTACHED", "DETACHING", "DETACHED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'VolumeAttachment'})
+@cli_util.wrap_exceptions
+def attach_volume_attach_emulated_volume_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_id, volume_id, device, display_name, is_read_only):
+
+    kwargs = {}
+
+    details = {}
+    details['instanceId'] = instance_id
+    details['volumeId'] = volume_id
+
+    if device is not None:
+        details['device'] = device
+
+    if display_name is not None:
+        details['displayName'] = display_name
+
+    if is_read_only is not None:
+        details['isReadOnly'] = is_read_only
+
+    details['type'] = 'emulated'
+
+    client = cli_util.build_client('compute', ctx)
+    result = client.attach_volume(
+        attach_volume_details=details,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_volume_attachment') and callable(getattr(client, 'get_volume_attachment')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_volume_attachment(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @volume_attachment_group.command(name=cli_util.override('attach_volume_attach_i_scsi_volume_details.command_name', 'attach-volume-attach-i-scsi-volume-details'), help=u"""Attaches the specified storage volume to the specified instance.""")
 @cli_util.option('--instance-id', required=True, help=u"""The OCID of the instance.""")
 @cli_util.option('--volume-id', required=True, help=u"""The OCID of the volume.""")

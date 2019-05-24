@@ -24,6 +24,228 @@ def vcr_fixture(request):
 
 
 @pytest.mark.generated
+def test_change_file_system_compartment(cli_testing_service_client, runner, config_file, config_profile):
+    if not cli_testing_service_client.is_api_enabled('file_storage', 'ChangeFileSystemCompartment'):
+        pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('file_storage', 'FileStorage', 'ChangeFileSystemCompartment')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_change_file_system_compartment.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_change_file_system_compartment', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_change_file_system_compartment.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_change_file_system_compartment'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_change_file_system_compartment.pem'])
+            config_file = 'tests/resources/config_for_test_change_file_system_compartment'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
+
+    root_command_name = oci_cli.cli_util.override('fs_root_group.command_name', 'fs')
+    resource_group_command_name = oci_cli.cli_util.override('file_system_group.command_name', 'file_system')
+    request_containers = cli_testing_service_client.get_requests(service_name='file_storage', api_name='ChangeFileSystemCompartment')
+    for i in range(len(request_containers)):
+        request = request_containers[i]['request'].copy()
+        done = False
+        params = []
+        while not done:
+            # force all details param names to have lower case first letter for consistency with Java models
+            param_name = 'ChangeFileSystemCompartmentDetails'
+            details = request.pop(param_name[0].lower() + param_name[1:])
+            for key in details:
+                request[key] = details[key]
+                override = util.variable_name_override(key)
+                if override:
+                    request[override] = request.pop(key)
+
+            if 'opts' in request:
+                for key in request['opts']:
+                    request[key] = request['opts'][key]
+                del request['opts']
+
+            request, cleanup = generated_test_request_transformers.transform_generated_test_input('file_storage', 'ChangeFileSystemCompartment', request)
+
+            input_content = json.dumps(request)
+
+            # for operations with polymorphic input types, attempt to find an operation for a specific subtype
+            # if one does not exist, fallback to calling base operation
+            if not params:
+                params = util.get_command_list(
+                    root_command_name,
+                    resource_group_command_name,
+                    oci_cli.cli_util.override('change_file_system_compartment.command_name', 'change-compartment')
+                )
+
+            if not params:
+                raise ValueError(
+                    'Failed to find CLI command "oci {} {} {}" for given operation: file_storage, ChangeFileSystemCompartment. '
+                    'This usually happens because generated commands have been manually re-arranged in code for better user '
+                    'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'for the new command. If the file does not exist for your service, please create one. You can refer the '
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
+                    .format(
+                        root_command_name, resource_group_command_name,
+                        oci_cli.cli_util.override('change_file_system_compartment.command_name', 'change-compartment'),
+                        root_command_name, resource_group_command_name,
+                        oci_cli.cli_util.override('change_file_system_compartment.command_name', 'change-compartment')))
+
+            params.extend(['--from-json', input_content])
+            try:
+                util.set_admin_pass_phrase()
+                result = invoke(runner, config_file, 'ADMIN', params)
+
+                message = cli_testing_service_client.validate_result(
+                    'file_storage',
+                    'ChangeFileSystemCompartment',
+                    request_containers[i]['containerId'],
+                    request_containers[i]['request'],
+                    result,
+                    'changeFileSystemCompartment',
+                    False
+                )
+            finally:
+                if os.path.exists('tests/resources/keyfile_for_test_change_file_system_compartment.pem'):
+                    os.remove('tests/resources/keyfile_for_test_change_file_system_compartment.pem')
+                if os.path.exists('tests/resources/config_for_test_change_file_system_compartment'):
+                    os.remove('tests/resources/config_for_test_change_file_system_compartment')
+                if cleanup:
+                    try:
+                        next(cleanup)
+                    except StopIteration:
+                        pass
+
+            if message != "CONT":
+                assert len(message) == 0, message
+                done = True
+            else:
+                request_containers = cli_testing_service_client.get_requests(service_name='file_storage', api_name='ChangeFileSystemCompartment')
+                request = request_containers[i]['request'].copy()
+
+
+@pytest.mark.generated
+def test_change_mount_target_compartment(cli_testing_service_client, runner, config_file, config_profile):
+    if not cli_testing_service_client.is_api_enabled('file_storage', 'ChangeMountTargetCompartment'):
+        pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('file_storage', 'FileStorage', 'ChangeMountTargetCompartment')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_change_mount_target_compartment.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_change_mount_target_compartment', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_change_mount_target_compartment.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_change_mount_target_compartment'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_change_mount_target_compartment.pem'])
+            config_file = 'tests/resources/config_for_test_change_mount_target_compartment'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
+
+    root_command_name = oci_cli.cli_util.override('fs_root_group.command_name', 'fs')
+    resource_group_command_name = oci_cli.cli_util.override('mount_target_group.command_name', 'mount_target')
+    request_containers = cli_testing_service_client.get_requests(service_name='file_storage', api_name='ChangeMountTargetCompartment')
+    for i in range(len(request_containers)):
+        request = request_containers[i]['request'].copy()
+        done = False
+        params = []
+        while not done:
+            # force all details param names to have lower case first letter for consistency with Java models
+            param_name = 'ChangeMountTargetCompartmentDetails'
+            details = request.pop(param_name[0].lower() + param_name[1:])
+            for key in details:
+                request[key] = details[key]
+                override = util.variable_name_override(key)
+                if override:
+                    request[override] = request.pop(key)
+
+            if 'opts' in request:
+                for key in request['opts']:
+                    request[key] = request['opts'][key]
+                del request['opts']
+
+            request, cleanup = generated_test_request_transformers.transform_generated_test_input('file_storage', 'ChangeMountTargetCompartment', request)
+
+            input_content = json.dumps(request)
+
+            # for operations with polymorphic input types, attempt to find an operation for a specific subtype
+            # if one does not exist, fallback to calling base operation
+            if not params:
+                params = util.get_command_list(
+                    root_command_name,
+                    resource_group_command_name,
+                    oci_cli.cli_util.override('change_mount_target_compartment.command_name', 'change-compartment')
+                )
+
+            if not params:
+                raise ValueError(
+                    'Failed to find CLI command "oci {} {} {}" for given operation: file_storage, ChangeMountTargetCompartment. '
+                    'This usually happens because generated commands have been manually re-arranged in code for better user '
+                    'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'for the new command. If the file does not exist for your service, please create one. You can refer the '
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
+                    .format(
+                        root_command_name, resource_group_command_name,
+                        oci_cli.cli_util.override('change_mount_target_compartment.command_name', 'change-compartment'),
+                        root_command_name, resource_group_command_name,
+                        oci_cli.cli_util.override('change_mount_target_compartment.command_name', 'change-compartment')))
+
+            params.extend(['--from-json', input_content])
+            try:
+                util.set_admin_pass_phrase()
+                result = invoke(runner, config_file, 'ADMIN', params)
+
+                message = cli_testing_service_client.validate_result(
+                    'file_storage',
+                    'ChangeMountTargetCompartment',
+                    request_containers[i]['containerId'],
+                    request_containers[i]['request'],
+                    result,
+                    'changeMountTargetCompartment',
+                    False
+                )
+            finally:
+                if os.path.exists('tests/resources/keyfile_for_test_change_mount_target_compartment.pem'):
+                    os.remove('tests/resources/keyfile_for_test_change_mount_target_compartment.pem')
+                if os.path.exists('tests/resources/config_for_test_change_mount_target_compartment'):
+                    os.remove('tests/resources/config_for_test_change_mount_target_compartment')
+                if cleanup:
+                    try:
+                        next(cleanup)
+                    except StopIteration:
+                        pass
+
+            if message != "CONT":
+                assert len(message) == 0, message
+                done = True
+            else:
+                request_containers = cli_testing_service_client.get_requests(service_name='file_storage', api_name='ChangeMountTargetCompartment')
+                request = request_containers[i]['request'].copy()
+
+
+@pytest.mark.generated
 def test_create_export(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('file_storage', 'CreateExport'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')

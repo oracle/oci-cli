@@ -31,6 +31,7 @@ Commands:
   tag                      A tag definition that belongs to a specific...
   tag-default              Tag defaults let you specify a default tag...
   tag-namespace            A managed container for defined tags.
+  ui-password-information  Information about the UIPassword, which is a...
   user                     An individual employee or system that needs...
   work-request             The asynchronous API request does not take...
 
@@ -4418,6 +4419,57 @@ Options:
                                 #AdvancedJSONOptions
   -?, -h, --help                For detailed help on any of these individual
                                 commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci iam ui-password-information --help
+Usage: oci iam ui-password-information [OPTIONS] COMMAND [ARGS]...
+
+  Information about the UIPassword, which is a text password that enables a
+  user to sign in to the Console, the user interface for interacting with
+  Oracle Cloud Infrastructure.
+
+  For more information about user credentials, see [User Credentials].
+
+Options:
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
+
+Commands:
+  get-user  Gets the specified user's console password...
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci iam ui-password-information get-user --help
+Usage: oci iam ui-password-information get-user [OPTIONS]
+
+  Gets the specified user's console password information. The returned object
+  contains the user's OCID, but not the password itself. The actual password
+  is returned only when created or reset.
+
+Options:
+  --user-id TEXT    The OCID of the user. [required]
+  --from-json TEXT  Provide input to this command as a JSON document from a file
+                    using the file://path-to/file syntax.
+                    
+                    The --generate-full-
+                    command-json-input option can be used to generate a sample
+                    json file to be used with this command option. The key names
+                    are pre-populated and match the command option names
+                    (converted to camelCase format, e.g. compartment-id -->
+                    compartmentId), while the values of the keys need to be
+                    populated by the user before using the sample file as an
+                    input to this command. For any command option that accepts
+                    multiple values, the value of the key can be a JSON array.
+                    Options can still be provided on the command line. If an
+                    option exists in both the JSON document and the command line
+                    then the command line specified value will be used.
+                    
+                    For
+                    examples on usage of this option, please see our "using CLI
+                    with advanced JSON options" link: https://docs.cloud.oracle.
+                    com/iaas/Content/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                    s
+  -?, -h, --help    For detailed help on any of these individual commands, enter
+                    <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci iam user --help

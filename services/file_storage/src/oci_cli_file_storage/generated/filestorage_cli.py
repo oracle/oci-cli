@@ -86,6 +86,68 @@ fs_root_group.add_command(export_group)
 fs_root_group.add_command(snapshot_group)
 
 
+@file_system_group.command(name=cli_util.override('change_file_system_compartment.command_name', 'change-compartment'), help=u"""Moves a file system and its associated snapshots into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]""")
+@cli_util.option('--file-system-id', required=True, help=u"""The OCID of the file system.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the file system to.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_file_system_compartment(ctx, from_json, file_system_id, compartment_id, if_match):
+
+    if isinstance(file_system_id, six.string_types) and len(file_system_id.strip()) == 0:
+        raise click.UsageError('Parameter --file-system-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    details = {}
+    details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('file_storage', ctx)
+    result = client.change_file_system_compartment(
+        file_system_id=file_system_id,
+        change_file_system_compartment_details=details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@mount_target_group.command(name=cli_util.override('change_mount_target_compartment.command_name', 'change-compartment'), help=u"""Moves a mount target and its associated export set into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]""")
+@cli_util.option('--mount-target-id', required=True, help=u"""The OCID of the mount target.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the mount target to.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_mount_target_compartment(ctx, from_json, mount_target_id, compartment_id, if_match):
+
+    if isinstance(mount_target_id, six.string_types) and len(mount_target_id.strip()) == 0:
+        raise click.UsageError('Parameter --mount-target-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    details = {}
+    details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('file_storage', ctx)
+    result = client.change_mount_target_compartment(
+        mount_target_id=mount_target_id,
+        change_mount_target_compartment_details=details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @export_group.command(name=cli_util.override('create_export.command_name', 'create'), help=u"""Creates a new export in the specified export set, path, and file system.""")
 @cli_util.option('--export-set-id', required=True, help=u"""The OCID of this export's export set.""")
 @cli_util.option('--file-system-id', required=True, help=u"""The OCID of this export's file system.""")
@@ -116,6 +178,7 @@ This option is a JSON list with items of type ClientOptions.  For documentation 
 def create_export(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, export_set_id, file_system_id, path, export_options):
 
     kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     details = {}
     details['exportSetId'] = export_set_id
@@ -184,6 +247,7 @@ Example: `My file system`""")
 def create_file_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, display_name, freeform_tags, defined_tags):
 
     kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     details = {}
     details['availabilityDomain'] = availability_domain
@@ -266,6 +330,7 @@ Example: `10.0.3.3`""")
 def create_mount_target(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, subnet_id, display_name, hostname_label, ip_address, freeform_tags, defined_tags):
 
     kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     details = {}
     details['availabilityDomain'] = availability_domain
@@ -337,6 +402,7 @@ Example: `Sunday`""")
 def create_snapshot(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, file_system_id, name, freeform_tags, defined_tags):
 
     kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     details = {}
     details['fileSystemId'] = file_system_id
@@ -398,6 +464,7 @@ def delete_export(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('file_storage', ctx)
     result = client.delete_export(
         export_id=export_id,
@@ -460,6 +527,7 @@ def delete_file_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('file_storage', ctx)
     result = client.delete_file_system(
         file_system_id=file_system_id,
@@ -522,6 +590,7 @@ def delete_mount_target(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('file_storage', ctx)
     result = client.delete_mount_target(
         mount_target_id=mount_target_id,
@@ -584,6 +653,7 @@ def delete_snapshot(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('file_storage', ctx)
     result = client.delete_snapshot(
         snapshot_id=snapshot_id,
@@ -639,6 +709,7 @@ def get_export(ctx, from_json, export_id):
         raise click.UsageError('Parameter --export-id cannot be whitespace or empty string')
 
     kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('file_storage', ctx)
     result = client.get_export(
         export_id=export_id,
@@ -660,6 +731,7 @@ def get_export_set(ctx, from_json, export_set_id):
         raise click.UsageError('Parameter --export-set-id cannot be whitespace or empty string')
 
     kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('file_storage', ctx)
     result = client.get_export_set(
         export_set_id=export_set_id,
@@ -681,6 +753,7 @@ def get_file_system(ctx, from_json, file_system_id):
         raise click.UsageError('Parameter --file-system-id cannot be whitespace or empty string')
 
     kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('file_storage', ctx)
     result = client.get_file_system(
         file_system_id=file_system_id,
@@ -702,6 +775,7 @@ def get_mount_target(ctx, from_json, mount_target_id):
         raise click.UsageError('Parameter --mount-target-id cannot be whitespace or empty string')
 
     kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('file_storage', ctx)
     result = client.get_mount_target(
         mount_target_id=mount_target_id,
@@ -723,6 +797,7 @@ def get_snapshot(ctx, from_json, snapshot_id):
         raise click.UsageError('Parameter --snapshot-id cannot be whitespace or empty string')
 
     kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('file_storage', ctx)
     result = client.get_snapshot(
         snapshot_id=snapshot_id,
@@ -780,6 +855,7 @@ def list_export_sets(ctx, from_json, all_pages, page_size, compartment_id, avail
         kwargs['sort_by'] = sort_by
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('file_storage', ctx)
     if all_pages:
         if page_size:
@@ -856,6 +932,7 @@ def list_exports(ctx, from_json, all_pages, page_size, compartment_id, limit, pa
         kwargs['sort_by'] = sort_by
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('file_storage', ctx)
     if all_pages:
         if page_size:
@@ -928,6 +1005,7 @@ def list_file_systems(ctx, from_json, all_pages, page_size, compartment_id, avai
         kwargs['sort_by'] = sort_by
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('file_storage', ctx)
     if all_pages:
         if page_size:
@@ -1009,6 +1087,7 @@ def list_mount_targets(ctx, from_json, all_pages, page_size, compartment_id, ava
         kwargs['sort_by'] = sort_by
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('file_storage', ctx)
     if all_pages:
         if page_size:
@@ -1074,6 +1153,7 @@ def list_snapshots(ctx, from_json, all_pages, page_size, file_system_id, limit, 
         kwargs['id'] = id
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('file_storage', ctx)
     if all_pages:
         if page_size:
@@ -1131,6 +1211,7 @@ def update_export(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     details = {}
 
@@ -1192,6 +1273,7 @@ def update_export_set(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     details = {}
 
@@ -1264,6 +1346,7 @@ def update_file_system(ctx, from_json, force, wait_for_state, max_wait_seconds, 
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     details = {}
 
@@ -1336,6 +1419,7 @@ def update_mount_target(ctx, from_json, force, wait_for_state, max_wait_seconds,
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     details = {}
 
@@ -1405,6 +1489,7 @@ def update_snapshot(ctx, from_json, force, wait_for_state, max_wait_seconds, wai
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     details = {}
 
