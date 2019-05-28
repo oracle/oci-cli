@@ -3,8 +3,8 @@
 #
 # This script provides an example of how to get Object Storage namespace of a tenancy that is not their own. This
 # is useful in cross-tenant Object Storage operations. Object Storage namespace can be retrieved using the
-# compartment id of the target tenancy if the user has necessary permissions to access that tenancy. TENANCY_INSPECT
-# permission should be available to access target tenancy's namespace.
+# compartment id of the target tenancy if the user has necessary permissions to access that tenancy.
+# OBJECTSTORAGE_NAMESPACE_READ permission should be available to access target tenancy's namespace.
 #
 # The compartment id parameter is optional. If the compartment id parameter is omitted the namespace of requesting
 # user's tenant is returned. Otherwise the namespace of the given compartment's tenancy is returned.

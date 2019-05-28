@@ -1,0 +1,85 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.21.0]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request/enable?lang=PythonCLI&serviceName=filestorage&apiName=ChangeFileSystemCompartment
+  response:
+    body: {string: !!python/unicode 'true'}
+    headers:
+      content-length: ['4']
+      content-type: [text/plain]
+      date: ['Tue, 14 May 2019 14:16:06 GMT']
+      server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.21.0]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request?lang=PythonCLI&sessionId=0109&serviceName=filestorage&apiName=ChangeFileSystemCompartment
+  response:
+    body: {string: !!python/unicode '[{"containerId":"fe693825-a35b-4176-bd64-0bb2f6a1d626","request":{"fileSystemId":"ocid1.filesystem.oc1.phx.aaaaaaaaaaaalsgcobuhqllqojxwiotqnb4c2ylefuzqaaaa","changeFileSystemCompartmentDetails":{"compartmentId":"ocid1.compartment.oc1..aaaaaaaa4mtljyclui4udzxjuw3pqpw3wec7rpahkvrify6bfzmtzsqdo6ka"}}}]'}
+    headers:
+      content-length: ['300']
+      content-type: [text/plain]
+      date: ['Tue, 14 May 2019 14:16:06 GMT']
+      server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{"compartmentId": "ocid1.compartment.oc1..aaaaaaaa4mtljyclui4udzxjuw3pqpw3wec7rpahkvrify6bfzmtzsqdo6ka"}'
+    headers:
+      Content-Length: ['104']
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: [!!python/unicode 'Signature algorithm="rsa-sha256",headers="date
+          (request-target) host content-length content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaahszyiacvxm4pordaj2jfhqf36ncfsbueu2xxopt6gf4ifvv5to7a/ocid1.user.oc1..aaaaaaaaw5u4vevifzlf4fj7uduvjziw6ccaaev5eng2hqf2csb6bxost5iq/59:c4:0a:85:93:12:a5:40:46:df:7a:1b:33:1c:05:f3",signature="CakfgNssj/F/1u1gmaU02XLkh/4ySfhCuY7iQowcKNmQ/SHDjbKDLGBwLF/SKWF7J1wh96gmjBIu0OpW0hiV8i+pluXb1Afeg8uSu3A0cvrzoDNvJLOS/3138W+qus8snKWT7earH1ocfpyynhbOlsGZMAO6LgLeD4LumH2mmYFQIiLu/Letcaz0JhpxWNe19N2YSlL6XSJZxMpyttDqy6PU3souigz6ZFWNZ7sB1QjHTaTLH2e70C2+snpnoAzqg6VbLxauhymgKsy0wU51DnAjSh1EkncCQiMPGnz3wsZUsmOwekcEbU7VoZwIcThAfmQqXwZHhK5F92Yuk4urxA==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Tue, 14 May 2019 14:16:11 GMT']
+      host: [filestorage.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.2.8+preview.1.0.138]
+      opc-request-id: [49309ED88C8C4C97858288B1DFF0BEAF]
+      user-agent: [Oracle-PythonSDK/2.2.8+preview.1.0.138 (python 2.7.16; x86_64-Darwin)
+          Oracle-PythonCLI/2.5.10]
+      x-content-sha256: [!!python/unicode 'IsGgB5wQtjXcI+Qa5ES325FqvE2SodVPvaNRdxAyRjI=']
+    method: POST
+    uri: https://filestorage.us-phoenix-1.oraclecloud.com/20171215/fileSystems/ocid1.filesystem.oc1.phx.aaaaaaaaaaaalsgcobuhqllqojxwiotqnb4c2ylefuzqaaaa/actions/changeCompartment
+  response:
+    body: {string: !!python/unicode ''}
+    headers:
+      connection: [keep-alive]
+      date: ['Tue, 14 May 2019 14:16:12 GMT']
+      opc-request-id: [49309ED88C8C4C97858288B1DFF0BEAF/E114A3E4ED9E6D15A57CD44C4863BD4B/94E712719AE3FE471ACF554258127C44]
+    status: {code: 204, message: No Content}
+- request:
+    body: !!python/unicode '{"responseJson": "{\"opcRequestId\": \"65C342C095F940CAAA7447FA9B8E8CE4\"}",
+      "responseClass": "com.oracle.bmc.filestorage.responses.ChangeFileSystemCompartmentResponse",
+      "containerId": "fe693825-a35b-4176-bd64-0bb2f6a1d626", "requestJson": "{\"changeFileSystemCompartmentDetails\":
+      {\"compartmentId\": \"ocid1.compartment.oc1..aaaaaaaa4mtljyclui4udzxjuw3pqpw3wec7rpahkvrify6bfzmtzsqdo6ka\"},
+      \"fileSystemId\": \"ocid1.filesystem.oc1.phx.aaaaaaaaaaaalsgcobuhqllqojxwiotqnb4c2ylefuzqaaaa\"}",
+      "requestClass": "com.oracle.bmc.filestorage.requests.ChangeFileSystemCompartmentRequest"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['580']
+      User-Agent: [python-requests/2.21.0]
+    method: POST
+    uri: http://localhost:8090/SDKTestingService/response?lang=PythonCLI&sessionId=0109
+  response:
+    body: {string: !!python/unicode ''}
+    headers:
+      content-length: ['0']
+      content-type: [text/plain]
+      date: ['Tue, 14 May 2019 14:16:12 GMT']
+      server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+version: 1

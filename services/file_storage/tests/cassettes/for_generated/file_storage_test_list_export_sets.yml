@@ -5,7 +5,7 @@ interactions:
       Accept: ['*/*']
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
-      User-Agent: [python-requests/2.18.4]
+      User-Agent: [python-requests/2.21.0]
     method: GET
     uri: http://localhost:8090/SDKTestingService/request/enable?lang=PythonCLI&serviceName=filestorage&apiName=ListExportSets
   response:
@@ -13,8 +13,8 @@ interactions:
     headers:
       content-length: ['4']
       content-type: [text/plain]
-      date: ['Mon, 22 Oct 2018 13:57:04 GMT']
-      server: [Jetty(9.2.14.v20151106)]
+      date: ['Tue, 14 May 2019 14:20:15 GMT']
+      server: [Jetty(9.4.7.v20170914)]
     status: {code: 200, message: OK}
 - request:
     body: null
@@ -22,16 +22,16 @@ interactions:
       Accept: ['*/*']
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
-      User-Agent: [python-requests/2.18.4]
+      User-Agent: [python-requests/2.21.0]
     method: GET
-    uri: http://localhost:8090/SDKTestingService/request?lang=PythonCLI&sessionId=0012&serviceName=filestorage&apiName=ListExportSets
+    uri: http://localhost:8090/SDKTestingService/request?lang=PythonCLI&sessionId=0109&serviceName=filestorage&apiName=ListExportSets
   response:
-    body: {string: !!python/unicode '[{"containerId":"f466d099-b85b-4dfe-8af5-96c180fe8694","request":{"compartmentId":"ocid1.compartment.oc1..aaaaaaaazemiqhnawozsau2s3by4lgpbzqygmfbhyxom6r636wkpape2roya","availabilityDomain":"wrbF:PHX-AD-1","limit":10,"displayName":"__STS0012_3317"}}]'}
+    body: {string: !!python/unicode '[{"containerId":"fe693825-a35b-4176-bd64-0bb2f6a1d626","request":{"compartmentId":"ocid1.compartment.oc1..aaaaaaaa4mtljyclui4udzxjuw3pqpw3wec7rpahkvrify6bfzmtzsqdo6ka","availabilityDomain":"xeRv:PHX-AD-3","limit":10,"displayName":"__STS0109_7512"}}]'}
     headers:
       content-length: ['249']
-      content-type: [application/json]
-      date: ['Mon, 22 Oct 2018 13:57:04 GMT']
-      server: [Jetty(9.2.14.v20151106)]
+      content-type: [text/plain]
+      date: ['Tue, 14 May 2019 14:20:15 GMT']
+      server: [Jetty(9.4.7.v20170914)]
     status: {code: 200, message: OK}
 - request:
     body: null
@@ -39,48 +39,48 @@ interactions:
       accept: [application/json]
       accept-encoding: ['gzip, deflate']
       authorization: [!!python/unicode 'Signature algorithm="rsa-sha256",headers="date
-          (request-target) host",keyId="ocid1.tenancy.oc1..aaaaaaaafol4o2jwcdodnqtpg2txwqthxiohlv37qv4zwahhxu4l7ywjim2q/ocid1.user.oc1..aaaaaaaaj3knfde4ir5errwk57wk36zxvdmdi73czoub23xlb2hbkqoulhha/73:71:f1:ca:d8:1e:b2:b7:a7:f0:3a:c6:a0:0f:c9:57",signature="QXud3CzX/qJA8heW7hOQYB1LgHweecdXzeGtgJ3isE5g1dU2Wd62KA0/FWX+35fiQoZxYaus+stEDpOb7WGiUgLs32AgASic1oTxmMovM7/FcQXF5dzr6EI+xYPKbdQgc9VX2amyMWtq8DT5RSSDfVLt35ZVMAyoK9omMvXLWW7INrCCKYAWffdUuvyuLzhTIghnCn4vx3CzaDGV/OHZStVH/lAJjZbEoFo4gtQJN9njb9jZZ891qiRr7rTABX1zRVdiBstruOw2Qm5QuSt0MAf0kUfMoySAn3Duw/wEfrJQTFtGMIQ1B8fgVPZc44AOozSj8+8SUOXBq0VyANJSHQ==",version="1"']
+          (request-target) host",keyId="ocid1.tenancy.oc1..aaaaaaaahszyiacvxm4pordaj2jfhqf36ncfsbueu2xxopt6gf4ifvv5to7a/ocid1.user.oc1..aaaaaaaaw5u4vevifzlf4fj7uduvjziw6ccaaev5eng2hqf2csb6bxost5iq/59:c4:0a:85:93:12:a5:40:46:df:7a:1b:33:1c:05:f3",signature="gu5c1XPugFgK8CNzXaFvSumR+qfPYVM/fOe6EhaGf10S6ru+Ratm2p58tQal3aRDHTAMIll3WYp7oAITgJY7G7RZy6LKKKGVUwbyMAfzHmnFXn9/bDv1puDvP5Rf40djsxJtYQowNASdUpkvdDVXWLuLLUgYMG0L1bOoR4Lmy57mWz1sQ5Uo3PRdIWi9y7a3+/VxxBzsQzlJzD2GfX/ZCEidKbJTVpqiASwsZzsKUa6PmsHQ/HlzR5CNYieEAP3s0JSRIkoaozHs2XCBI38wHNJOiXFq5itPwywRypNr7oGg7xBo2/D80TNvrRV2csLsEyBvOt6imbk9rcJwK6UxOw==",version="1"']
       connection: [keep-alive]
       content-type: [application/json]
-      date: ['Mon, 22 Oct 2018 13:57:04 GMT']
+      date: ['Tue, 14 May 2019 14:20:15 GMT']
       host: [filestorage.us-phoenix-1.oraclecloud.com]
-      opc-client-info: [Oracle-PythonSDK/2.0.5+preview.1.385]
-      opc-request-id: [88BE263E87734F2C9D9CBCF1829222BB]
-      user-agent: [Oracle-PythonSDK/2.0.5+preview.1.385 (python 2.7.15; x86_64-Darwin)
-          Oracle-PythonCLI/2.4.34+preview.1]
+      opc-client-info: [Oracle-PythonSDK/2.2.8+preview.1.0.138]
+      opc-request-id: [5C4164D1F443469C82C4279E61D17D93]
+      user-agent: [Oracle-PythonSDK/2.2.8+preview.1.0.138 (python 2.7.16; x86_64-Darwin)
+          Oracle-PythonCLI/2.5.10]
     method: GET
-    uri: https://filestorage.us-phoenix-1.oraclecloud.com/20171215/exportSets?displayName=__STS0012_3317&compartmentId=ocid1.compartment.oc1..aaaaaaaazemiqhnawozsau2s3by4lgpbzqygmfbhyxom6r636wkpape2roya&limit=10&availabilityDomain=wrbF%3APHX-AD-1
+    uri: https://filestorage.us-phoenix-1.oraclecloud.com/20171215/exportSets?displayName=__STS0109_7512&compartmentId=ocid1.compartment.oc1..aaaaaaaa4mtljyclui4udzxjuw3pqpw3wec7rpahkvrify6bfzmtzsqdo6ka&limit=10&availabilityDomain=xeRv%3APHX-AD-3
   response:
     body: {string: !!python/unicode '[ ]'}
     headers:
       connection: [keep-alive]
       content-length: ['3']
       content-type: [application/json]
-      date: ['Mon, 22 Oct 2018 13:57:05 GMT']
-      opc-request-id: [88BE263E87734F2C9D9CBCF1829222BB/8AE8C72B83A24036A70E4945370E5E8F/ACDF5A2B7A4FB69E4EC8B3D4B179E6D0]
+      date: ['Tue, 14 May 2019 14:20:15 GMT']
+      opc-request-id: [5C4164D1F443469C82C4279E61D17D93/F5BEFF6076EA43E13754138EE372E90A/32865FCE085B3030043CA2F00A543C4F]
       vary: [Accept-Encoding]
     status: {code: 200, message: OK}
 - request:
-    body: !!python/unicode '{"responseJson": "{\"items\": [], \"opcRequestId\": \"055FB34C7741486191C6C2D58B9A97F6\"}",
+    body: !!python/unicode '{"responseJson": "{\"items\": [], \"opcRequestId\": \"7567C4249C9644419994D2AB737D180B\"}",
       "responseClass": "com.oracle.bmc.filestorage.responses.ListExportSetsResponse",
-      "containerId": "f466d099-b85b-4dfe-8af5-96c180fe8694", "requestJson": "{\"displayName\":
-      \"__STS0012_3317\", \"compartmentId\": \"ocid1.compartment.oc1..aaaaaaaazemiqhnawozsau2s3by4lgpbzqygmfbhyxom6r636wkpape2roya\",
-      \"limit\": 10, \"availabilityDomain\": \"wrbF:PHX-AD-1\"}", "requestClass":
+      "containerId": "fe693825-a35b-4176-bd64-0bb2f6a1d626", "requestJson": "{\"displayName\":
+      \"__STS0109_7512\", \"compartmentId\": \"ocid1.compartment.oc1..aaaaaaaa4mtljyclui4udzxjuw3pqpw3wec7rpahkvrify6bfzmtzsqdo6ka\",
+      \"limit\": 10, \"availabilityDomain\": \"xeRv:PHX-AD-3\"}", "requestClass":
       "com.oracle.bmc.filestorage.requests.ListExportSetsRequest"}'
     headers:
       Accept: ['*/*']
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
       Content-Length: ['525']
-      User-Agent: [python-requests/2.18.4]
+      User-Agent: [python-requests/2.21.0]
     method: POST
-    uri: http://localhost:8090/SDKTestingService/response?lang=PythonCLI&sessionId=0012
+    uri: http://localhost:8090/SDKTestingService/response?lang=PythonCLI&sessionId=0109
   response:
     body: {string: !!python/unicode ''}
     headers:
       content-length: ['0']
       content-type: [text/plain]
-      date: ['Mon, 22 Oct 2018 13:57:05 GMT']
-      server: [Jetty(9.2.14.v20151106)]
+      date: ['Tue, 14 May 2019 14:20:15 GMT']
+      server: [Jetty(9.4.7.v20170914)]
     status: {code: 200, message: OK}
 version: 1

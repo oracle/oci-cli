@@ -1,0 +1,136 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.21.0]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request/enable?lang=PythonCLI&serviceName=workrequests&apiName=ListWorkRequestErrors
+  response:
+    body: {string: !!python/unicode 'true'}
+    headers:
+      content-length: ['4']
+      content-type: [text/plain]
+      date: ['Mon, 06 May 2019 22:52:52 GMT']
+      server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.21.0]
+    method: GET
+    uri: http://localhost:8090/SDKTestingService/request?lang=PythonCLI&sessionId=0059&serviceName=workrequests&apiName=ListWorkRequestErrors
+  response:
+    body: {string: !!python/unicode '[{"containerId":"62f6e25e-d9ef-4f73-a956-d98cf97795be","request":{"workRequestId":"ocid1.coreservicesworkrequest.oc1.phx.abyhqljthj3js46ocfhpbhc5e4rr6w2zwnjt4o4yoeq2f67lz4vsyts5kl3a","limit":10}},{"containerId":"002d56da-740e-46a6-b129-3f9cab384002","request":{"workRequestId":"ABCDEFGHIJKLMNOPQRSTUVWXYZ","limit":10}}]'}
+    headers:
+      content-length: ['319']
+      content-type: [text/plain]
+      date: ['Mon, 06 May 2019 22:52:52 GMT']
+      server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: [!!python/unicode 'Signature algorithm="rsa-sha256",headers="date
+          (request-target) host",keyId="ocid1.tenancy.oc1..aaaaaaaa6cgcfxdfwcl6nn42gsr7hldm554srjqalnvcvt4dbpzuqdcxusaa/ocid1.user.oc1..aaaaaaaass6rgakmngm7zmw4zdp5gvabfluuemnwarkw65rfjfq2r5fcylfa/e7:03:16:1a:42:96:b3:61:5c:9c:ba:c4:4d:24:c5:13",signature="TVtfdw2lh6Fkc7D7ngmjFanzgxpMLsS+b1T1Rv/qRzhc2HuOczkhgWn/grJ6CzO2il2GFcTn+FIEcXOjQB16NUcvUYHYpk10P9ib1J4v0VtPnBXLeasLK46ANdh8qSW5oEKq60Okr2yEvzzDViWmczGf38XemEZZcSOM1V6GKBXW56R57S0uYULXyohwVCFeszGh2MA4qZOD8MHapleRqtZvQSJlLDk/61oLWfeVzd4K3T9D2KEiugm0lTDENEFtYmGBhKyQlCIQVTf1711VK004vpC6qtPRDQi4P+wEd10H2zpE5ZF1PiLsgFBa0RWPSHB4SLAxxM7vow2dxbt7tw==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Mon, 06 May 2019 22:52:53 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.2.5+preview.1.0.44]
+      opc-request-id: [1B01966E0A0848E58DC2FCA54A7DE510]
+      user-agent: [Oracle-PythonSDK/2.2.5+preview.1.0.44 (python 2.7.10; x86_64-Darwin)
+          Oracle-PythonCLI/2.5.6+preview.1]
+    method: GET
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20160918/workRequests/ocid1.coreservicesworkrequest.oc1.phx.abyhqljthj3js46ocfhpbhc5e4rr6w2zwnjt4o4yoeq2f67lz4vsyts5kl3a/errors?limit=10
+  response:
+    body: {string: !!python/unicode '[ ]'}
+    headers:
+      connection: [keep-alive]
+      content-length: ['3']
+      content-type: [application/json]
+      date: ['Mon, 06 May 2019 22:52:53 GMT']
+      opc-request-id: [1B01966E0A0848E58DC2FCA54A7DE510/1B26F4CA49BBED93F9FFDD7827CAD2E6/656E44FB7901D8B258DF5594B0E7A461]
+      vary: [Accept-Encoding]
+      x-content-type-options: [nosniff]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{"responseJson": "{\"items\": [], \"opcRequestId\": \"27265D2A5FC9426A921AC80F0438D45D\"}",
+      "responseClass": "com.oracle.bmc.workrequests.responses.ListWorkRequestErrorsResponse",
+      "containerId": "62f6e25e-d9ef-4f73-a956-d98cf97795be", "requestJson": "{\"workRequestId\":
+      \"ocid1.coreservicesworkrequest.oc1.phx.abyhqljthj3js46ocfhpbhc5e4rr6w2zwnjt4o4yoeq2f67lz4vsyts5kl3a\",
+      \"limit\": 10}", "requestClass": "com.oracle.bmc.workrequests.requests.ListWorkRequestErrorsRequest"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['476']
+      User-Agent: [python-requests/2.21.0]
+    method: POST
+    uri: http://localhost:8090/SDKTestingService/response?lang=PythonCLI&sessionId=0059
+  response:
+    body: {string: !!python/unicode ''}
+    headers:
+      content-length: ['0']
+      content-type: [text/plain]
+      date: ['Mon, 06 May 2019 22:52:53 GMT']
+      server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: [!!python/unicode 'Signature algorithm="rsa-sha256",headers="date
+          (request-target) host",keyId="ocid1.tenancy.oc1..aaaaaaaa6cgcfxdfwcl6nn42gsr7hldm554srjqalnvcvt4dbpzuqdcxusaa/ocid1.user.oc1..aaaaaaaass6rgakmngm7zmw4zdp5gvabfluuemnwarkw65rfjfq2r5fcylfa/e7:03:16:1a:42:96:b3:61:5c:9c:ba:c4:4d:24:c5:13",signature="SVBCEMi4HtV4Oh3h0DQmdHRXtgEemyzlVp4aZIeoefKQlqKx0m/tJMbgLtrprvXp3Djx3CSn0xbHJervIhmxVU5bVnJ7mb0eDXzSEZWui73baiL0nudW+yYBmvaPM69s6dBhpeAWmwcr11bLtHJDO8AhLAdVIPrzoCUgPeEqIBSx8xioB3xCdDcku5cpolb3MNRMqAY2j94tdzbyy76gSLn3VvpguaZKpEPtXltoVhIcQQKzvJtfb5kOqzLHvhRKn1mk+xWUccgMVsLmeysIc0BWBaWZ9DZ9hOIs4Ir5ZTmiZka+6gRLX/4FBkGppkfg/T8k21qm38xnEK5Y6N1Tuw==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Mon, 06 May 2019 22:52:53 GMT']
+      host: [iaas.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.2.5+preview.1.0.44]
+      opc-request-id: [1F36F2D09D0645D7B36C0DDAA2EB3AE3]
+      user-agent: [Oracle-PythonSDK/2.2.5+preview.1.0.44 (python 2.7.10; x86_64-Darwin)
+          Oracle-PythonCLI/2.5.6+preview.1]
+    method: GET
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20160918/workRequests/ABCDEFGHIJKLMNOPQRSTUVWXYZ/errors?limit=10
+  response:
+    body: {string: !!python/unicode '{"code":"NotAuthorizedOrNotFound","message":"Authorization
+        failed or requested resource not found."}'}
+    headers:
+      connection: [keep-alive]
+      content-length: ['100']
+      content-type: [application/json]
+      date: ['Mon, 06 May 2019 22:52:53 GMT']
+      opc-request-id: [1F36F2D09D0645D7B36C0DDAA2EB3AE3/8D62A80B12EC71DD4B1774B2CF638137/7EDFF1D5B7B105E105086F8604D4DB8E]
+    status: {code: 404, message: Not Found}
+- request:
+    body: !!python/unicode '{"errorJson": "{\"message\": \"Authorization failed or
+      requested resource not found.\", \"code\": \"NotAuthorizedOrNotFound\", \"opcRequestId\":
+      \"1F36F2D09D0645D7B36C0DDAA2EB3AE3/8D62A80B12EC71DD4B1774B2CF638137/7EDFF1D5B7B105E105086F8604D4DB8E\",
+      \"statusCode\": 404}", "containerId": "002d56da-740e-46a6-b129-3f9cab384002",
+      "requestJson": "{\"workRequestId\": \"ABCDEFGHIJKLMNOPQRSTUVWXYZ\", \"limit\":
+      10}", "requestClass": "com.oracle.bmc.workrequests.requests.ListWorkRequestErrorsRequest"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['496']
+      User-Agent: [python-requests/2.21.0]
+    method: POST
+    uri: http://localhost:8090/SDKTestingService/error?lang=PythonCLI&sessionId=0059
+  response:
+    body: {string: !!python/unicode ''}
+    headers:
+      content-length: ['0']
+      content-type: [text/plain]
+      date: ['Mon, 06 May 2019 22:52:53 GMT']
+      server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+version: 1

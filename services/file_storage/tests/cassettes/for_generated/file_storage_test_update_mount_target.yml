@@ -5,7 +5,7 @@ interactions:
       Accept: ['*/*']
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
-      User-Agent: [python-requests/2.18.4]
+      User-Agent: [python-requests/2.21.0]
     method: GET
     uri: http://localhost:8090/SDKTestingService/request/enable?lang=PythonCLI&serviceName=filestorage&apiName=UpdateMountTarget
   response:
@@ -13,8 +13,8 @@ interactions:
     headers:
       content-length: ['4']
       content-type: [text/plain]
-      date: ['Mon, 22 Oct 2018 13:57:41 GMT']
-      server: [Jetty(9.2.14.v20151106)]
+      date: ['Tue, 14 May 2019 14:20:43 GMT']
+      server: [Jetty(9.4.7.v20170914)]
     status: {code: 200, message: OK}
 - request:
     body: null
@@ -22,229 +22,298 @@ interactions:
       Accept: ['*/*']
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
-      User-Agent: [python-requests/2.18.4]
+      User-Agent: [python-requests/2.21.0]
     method: GET
-    uri: http://localhost:8090/SDKTestingService/request?lang=PythonCLI&sessionId=0012&serviceName=filestorage&apiName=UpdateMountTarget
+    uri: http://localhost:8090/SDKTestingService/request?lang=PythonCLI&sessionId=0109&serviceName=filestorage&apiName=UpdateMountTarget
   response:
-    body: {string: !!python/unicode '[{"containerId":"f466d099-b85b-4dfe-8af5-96c180fe8694","request":{"mountTargetId":"ocid1.mounttarget.oc1.phx.aaaaaby27vezctb7obuhqllqojxwiotqnb4c2ylefuzqaaaa","updateMountTargetDetails":{"displayName":"__STS0012_3723","freeformTags":{"tag1":"value1.__STS0012_654","tag2":"value2.__STS0012_654"},"definedTags":{"testing_service_tag_ns_001":{"testing_service_tag_01":"tag4.__STS0012_1320","testing_service_tag_02":"tag5.__STS0012_1320","testing_service_tag_03":"tag6.__STS0012_1320"}}}}},{"containerId":"ac42a0d3-c1b9-4d10-ba05-93146e09b7f2","request":{"mountTargetId":"ocid1.mounttarget.oc1.phx.aaaaaby27vezctb7obuhqllqojxwiotqnb4c2ylefuzqaaaa","updateMountTargetDetails":{"displayName":"__STS0012_1364","freeformTags":{"tag1":"value1.__STS0012_4898","tag2":"value2.__STS0012_4898"},"definedTags":{"ns_you_dont_have":{"key_you_dont_have":"value"}}}}},{"containerId":"d5101187-906f-4f92-a855-caef8ccdf8d4","request":{"mountTargetId":"ocid1.mounttarget.oc1.phx.aaaaaby27vezctb7obuhqllqojxwiotqnb4c2ylefuzqaaaa","updateMountTargetDetails":{"displayName":"__STS0012_7216"}}}]'}
+    body: {string: !!python/unicode '[{"containerId":"fe693825-a35b-4176-bd64-0bb2f6a1d626","request":{"mountTargetId":"ocid1.mounttarget.oc1.phx.aaaaaby27vezzciwobuhqllqojxwiotqnb4c2ylefuzqaaaa","updateMountTargetDetails":{"displayName":"__STS0109_5818","freeformTags":{"tag1":"value1.__STS0109_6538","tag2":"value2.__STS0109_6538"},"definedTags":{"testing_service_tag_ns_001":{"testing_service_tag_01":"tag4.__STS0109_4290","testing_service_tag_02":"tag5.__STS0109_4290","testing_service_tag_03":"tag6.__STS0109_4290"}}}}},{"containerId":"48efe540-a552-4f55-8859-6ac73cfea695","request":{"mountTargetId":"ocid1.mounttarget.oc1.phx.aaaaaby27vezzciwobuhqllqojxwiotqnb4c2ylefuzqaaaa","updateMountTargetDetails":{"displayName":"__STS0109_8553"}}},{"containerId":"3da42f26-1bc3-46c6-87d7-6d9be04330e4","request":{"mountTargetId":"ocid1.mounttarget.oc1.phx.aaaaaby27vezzciwobuhqllqojxwiotqnb4c2ylefuzqaaaa","updateMountTargetDetails":{"displayName":"__STS0109_1020","freeformTags":{},"definedTags":{}}}},{"containerId":"dcb5405a-a184-4311-adf2-dea264c69ffe","request":{"mountTargetId":"ocid1.mounttarget.oc1.phx.aaaaaby27vezzciwobuhqllqojxwiotqnb4c2ylefuzqaaaa","updateMountTargetDetails":{"displayName":"__STS0109_7281","freeformTags":{"tag1":"value1.__STS0109_3416","tag2":"value2.__STS0109_3416"},"definedTags":{"ns_you_dont_have":{"key_you_dont_have":"value"}}}}}]'}
     headers:
-      content-length: ['1070']
-      content-type: [application/json]
-      date: ['Mon, 22 Oct 2018 13:57:41 GMT']
-      server: [Jetty(9.2.14.v20151106)]
+      content-length: ['1327']
+      content-type: [text/plain]
+      date: ['Tue, 14 May 2019 14:20:43 GMT']
+      server: [Jetty(9.4.7.v20170914)]
     status: {code: 200, message: OK}
 - request:
     body: !!python/unicode '{"definedTags": {"testing_service_tag_ns_001": {"testing_service_tag_02":
-      "tag5.__STS0012_1320", "testing_service_tag_03": "tag6.__STS0012_1320", "testing_service_tag_01":
-      "tag4.__STS0012_1320"}}, "displayName": "__STS0012_3723", "freeformTags": {"tag1":
-      "value1.__STS0012_654", "tag2": "value2.__STS0012_654"}}'
+      "tag5.__STS0109_4290", "testing_service_tag_03": "tag6.__STS0109_4290", "testing_service_tag_01":
+      "tag4.__STS0109_4290"}}, "displayName": "__STS0109_5818", "freeformTags": {"tag1":
+      "value1.__STS0109_6538", "tag2": "value2.__STS0109_6538"}}'
     headers:
-      Content-Length: ['311']
+      Content-Length: ['313']
       accept: [application/json]
       accept-encoding: ['gzip, deflate']
       authorization: [!!python/unicode 'Signature algorithm="rsa-sha256",headers="date
-          (request-target) host content-length content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaafol4o2jwcdodnqtpg2txwqthxiohlv37qv4zwahhxu4l7ywjim2q/ocid1.user.oc1..aaaaaaaaj3knfde4ir5errwk57wk36zxvdmdi73czoub23xlb2hbkqoulhha/73:71:f1:ca:d8:1e:b2:b7:a7:f0:3a:c6:a0:0f:c9:57",signature="gKZX8bTtoPQeIwMabtf7ANwnW37B/dkONWaW2INWSefsgzaHd42JrUs9kE1EAUuF4qMBdLJbwcgJbeIrZ5WdY/u16eMFdWLtzqSJA5DKxK/fuwl5DygeCDKehc0sqoHthck8JPurLrAGGvytsmT+0UIfQaXjMPF9RTrTAZqgbqyROKSoLJo//3wGIH2HkRQFjOiIPTac/hzhTlgynWHb5JLWQ6rUA0E4ndJ5bEe1ZqRfRbMJslqHWt3GeNQviCaYZKb6/eTEP34rQyTsUHUpM2QKU7FnKDDL3bhkZMuZS4tkvlA+fw/YIWMAFCt+or+SUnNyxyUf4cROtkIdyXBCLA==",version="1"']
+          (request-target) host content-length content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaahszyiacvxm4pordaj2jfhqf36ncfsbueu2xxopt6gf4ifvv5to7a/ocid1.user.oc1..aaaaaaaaw5u4vevifzlf4fj7uduvjziw6ccaaev5eng2hqf2csb6bxost5iq/59:c4:0a:85:93:12:a5:40:46:df:7a:1b:33:1c:05:f3",signature="yUNm8xj7OzUuzm5Ykcb5Q83luMwVP1s3R/xSpbiVA2qlAi8ovMJ4wkknpm4a0ylhr88Jt/hC+CuJja2doSlR8rELnU486lXZRuj6I0qLkwurHcwDnBz7buim5px2za0jgdobs1ZxKe/HYbwKMol83UxzEIFU7zbJ6vcorzFQsW7PhrPQaKLZFk67tUxUWozWFMi+R96eV3UPU753KHFhaLdI2ZJRuBgFeRhGsVwHVE7OV9cSYXtNr7N4SzNFU31s+6/eEpW0WxYwZhLPrC+Blq2wvp56kiL5S8Z9+jB4pkLQvSxNeThbehf9bInZQeuu+jj8eoDGYSeR+5GZ+1q/Xw==",version="1"']
       connection: [keep-alive]
       content-type: [application/json]
-      date: ['Mon, 22 Oct 2018 13:57:42 GMT']
+      date: ['Tue, 14 May 2019 14:20:45 GMT']
       host: [filestorage.us-phoenix-1.oraclecloud.com]
-      opc-client-info: [Oracle-PythonSDK/2.0.5+preview.1.385]
-      opc-request-id: [367976FD2DD040F29F75FE76C9BD163F]
-      user-agent: [Oracle-PythonSDK/2.0.5+preview.1.385 (python 2.7.15; x86_64-Darwin)
-          Oracle-PythonCLI/2.4.34+preview.1]
-      x-content-sha256: [!!python/unicode 'iHCcRolkaqfRylClppDyqD8i0DGK8shDf9o1Ps5zI5k=']
+      opc-client-info: [Oracle-PythonSDK/2.2.8+preview.1.0.138]
+      opc-request-id: [9B6266755B7E4FAEB3F3B439040EB61E]
+      user-agent: [Oracle-PythonSDK/2.2.8+preview.1.0.138 (python 2.7.16; x86_64-Darwin)
+          Oracle-PythonCLI/2.5.10]
+      x-content-sha256: [!!python/unicode 'zCr0hrtMUe9OoXJEYghUm9jusKjzNmi0nA7CpUGdjCs=']
     method: PUT
-    uri: https://filestorage.us-phoenix-1.oraclecloud.com/20171215/mountTargets/ocid1.mounttarget.oc1.phx.aaaaaby27vezctb7obuhqllqojxwiotqnb4c2ylefuzqaaaa
+    uri: https://filestorage.us-phoenix-1.oraclecloud.com/20171215/mountTargets/ocid1.mounttarget.oc1.phx.aaaaaby27vezzciwobuhqllqojxwiotqnb4c2ylefuzqaaaa
   response:
-    body: {string: !!python/unicode "{\n  \"availabilityDomain\" : \"wrbF:PHX-AD-1\"\
-        ,\n  \"compartmentId\" : \"ocid1.compartment.oc1..aaaaaaaazemiqhnawozsau2s3by4lgpbzqygmfbhyxom6r636wkpape2roya\"\
-        ,\n  \"displayName\" : \"__STS0012_3723\",\n  \"exportSetId\" : \"ocid1.exportset.oc1.phx.aaaaaby27vezctb6obuhqllqojxwiotqnb4c2ylefuzqaaaa\"\
-        ,\n  \"id\" : \"ocid1.mounttarget.oc1.phx.aaaaaby27vezctb7obuhqllqojxwiotqnb4c2ylefuzqaaaa\"\
+    body: {string: !!python/unicode "{\n  \"availabilityDomain\" : \"xeRv:PHX-AD-3\"\
+        ,\n  \"compartmentId\" : \"ocid1.compartment.oc1..aaaaaaaa4mtljyclui4udzxjuw3pqpw3wec7rpahkvrify6bfzmtzsqdo6ka\"\
+        ,\n  \"displayName\" : \"__STS0109_5818\",\n  \"exportSetId\" : \"ocid1.exportset.oc1.phx.aaaaaby27vezzcivobuhqllqojxwiotqnb4c2ylefuzqaaaa\"\
+        ,\n  \"id\" : \"ocid1.mounttarget.oc1.phx.aaaaaby27vezzciwobuhqllqojxwiotqnb4c2ylefuzqaaaa\"\
         ,\n  \"lifecycleDetails\" : \"\",\n  \"lifecycleState\" : \"ACTIVE\",\n  \"\
-        privateIpIds\" : [ \"ocid1.privateip.oc1.phx.abyhqljtyb3uufrjetgy7ypu4qcmahqfgwtibw5ozycx4g4lmcrcacgmaxha\"\
-        \ ],\n  \"subnetId\" : \"ocid1.subnet.oc1.phx.aaaaaaaanme7uiuqeeijdpxsug6rmkr3a4baec3jcdzsnnme7kod3am36t7q\"\
-        ,\n  \"timeCreated\" : \"2018-10-22T13:56:28.404Z\",\n  \"freeformTags\" :\
-        \ {\n    \"tag1\" : \"value1.__STS0012_654\",\n    \"tag2\" : \"value2.__STS0012_654\"\
+        privateIpIds\" : [ \"ocid1.privateip.oc1.phx.abyhqljtnb5rnt7e5nebnip3uq3ql6ffrlmqjkuqmaqxzi6arelzfrfk6hnq\"\
+        \ ],\n  \"subnetId\" : \"ocid1.subnet.oc1.phx.aaaaaaaae6cvglfq3zau33p7wgl5awrzsjtapksorjlv572ibi5a7dyi5zaq\"\
+        ,\n  \"timeCreated\" : \"2019-05-14T14:19:44.862Z\",\n  \"freeformTags\" :\
+        \ {\n    \"tag1\" : \"value1.__STS0109_6538\",\n    \"tag2\" : \"value2.__STS0109_6538\"\
         \n  },\n  \"definedTags\" : {\n    \"testing_service_tag_ns_001\" : {\n  \
-        \    \"testing_service_tag_01\" : \"tag4.__STS0012_1320\",\n      \"testing_service_tag_02\"\
-        \ : \"tag5.__STS0012_1320\",\n      \"testing_service_tag_03\" : \"tag6.__STS0012_1320\"\
+        \    \"testing_service_tag_01\" : \"tag4.__STS0109_4290\",\n      \"testing_service_tag_02\"\
+        \ : \"tag5.__STS0109_4290\",\n      \"testing_service_tag_03\" : \"tag6.__STS0109_4290\"\
         \n    }\n  }\n}"}
     headers:
       connection: [keep-alive]
-      content-length: ['1017']
+      content-length: ['1019']
       content-type: [application/json]
-      date: ['Mon, 22 Oct 2018 13:57:43 GMT']
-      etag: [2cfa2e50ef188b004747c3d7cf2327ffafc6b5505f55de365f26e165df772c46]
-      opc-request-id: [367976FD2DD040F29F75FE76C9BD163F/9DBD6F97B2F1E858010873F312431343/B2C9D76DFA963A677EAC042D7C4D5DCF]
+      date: ['Tue, 14 May 2019 14:20:46 GMT']
+      etag: [40d86c9a91ad634dcbbae3ae13237509e44c87a4e38b2ffc54561048268f07af]
+      opc-request-id: [9B6266755B7E4FAEB3F3B439040EB61E/0D3D4C1188C6F2731EB4C44C1826D6F7/8203604B6786558099CCDCEB88E476DB]
     status: {code: 200, message: OK}
 - request:
     body: !!python/unicode '{"responseJson": "{\"mountTarget\": {\"privateIpIds\":
-      [\"ocid1.privateip.oc1.phx.abyhqljtyb3uufrjetgy7ypu4qcmahqfgwtibw5ozycx4g4lmcrcacgmaxha\"],
-      \"compartmentId\": \"ocid1.compartment.oc1..aaaaaaaazemiqhnawozsau2s3by4lgpbzqygmfbhyxom6r636wkpape2roya\",
-      \"displayName\": \"__STS0012_3723\", \"timeCreated\": \"2018-10-22T13:56:28.404000+00:00\",
-      \"exportSetId\": \"ocid1.exportset.oc1.phx.aaaaaby27vezctb6obuhqllqojxwiotqnb4c2ylefuzqaaaa\",
+      [\"ocid1.privateip.oc1.phx.abyhqljtnb5rnt7e5nebnip3uq3ql6ffrlmqjkuqmaqxzi6arelzfrfk6hnq\"],
+      \"compartmentId\": \"ocid1.compartment.oc1..aaaaaaaa4mtljyclui4udzxjuw3pqpw3wec7rpahkvrify6bfzmtzsqdo6ka\",
+      \"displayName\": \"__STS0109_5818\", \"timeCreated\": \"2019-05-14T14:19:44.862000+00:00\",
+      \"exportSetId\": \"ocid1.exportset.oc1.phx.aaaaaby27vezzcivobuhqllqojxwiotqnb4c2ylefuzqaaaa\",
       \"lifecycleDetails\": \"\", \"definedTags\": {\"testing_service_tag_ns_001\":
-      {\"testing_service_tag_02\": \"tag5.__STS0012_1320\", \"testing_service_tag_03\":
-      \"tag6.__STS0012_1320\", \"testing_service_tag_01\": \"tag4.__STS0012_1320\"}},
-      \"lifecycleState\": \"ACTIVE\", \"freeformTags\": {\"tag1\": \"value1.__STS0012_654\",
-      \"tag2\": \"value2.__STS0012_654\"}, \"subnetId\": \"ocid1.subnet.oc1.phx.aaaaaaaanme7uiuqeeijdpxsug6rmkr3a4baec3jcdzsnnme7kod3am36t7q\",
-      \"id\": \"ocid1.mounttarget.oc1.phx.aaaaaby27vezctb7obuhqllqojxwiotqnb4c2ylefuzqaaaa\",
-      \"availabilityDomain\": \"wrbF:PHX-AD-1\"}, \"etag\": \"2cfa2e50ef188b004747c3d7cf2327ffafc6b5505f55de365f26e165df772c46\",
-      \"opcRequestId\": \"A49F14E3F7314549BDD088069B8A628E\"}", "responseClass": "com.oracle.bmc.filestorage.responses.UpdateMountTargetResponse",
-      "containerId": "f466d099-b85b-4dfe-8af5-96c180fe8694", "requestJson": "{\"mountTargetId\":
-      \"ocid1.mounttarget.oc1.phx.aaaaaby27vezctb7obuhqllqojxwiotqnb4c2ylefuzqaaaa\",
+      {\"testing_service_tag_02\": \"tag5.__STS0109_4290\", \"testing_service_tag_03\":
+      \"tag6.__STS0109_4290\", \"testing_service_tag_01\": \"tag4.__STS0109_4290\"}},
+      \"lifecycleState\": \"ACTIVE\", \"freeformTags\": {\"tag1\": \"value1.__STS0109_6538\",
+      \"tag2\": \"value2.__STS0109_6538\"}, \"subnetId\": \"ocid1.subnet.oc1.phx.aaaaaaaae6cvglfq3zau33p7wgl5awrzsjtapksorjlv572ibi5a7dyi5zaq\",
+      \"id\": \"ocid1.mounttarget.oc1.phx.aaaaaby27vezzciwobuhqllqojxwiotqnb4c2ylefuzqaaaa\",
+      \"availabilityDomain\": \"xeRv:PHX-AD-3\"}, \"etag\": \"40d86c9a91ad634dcbbae3ae13237509e44c87a4e38b2ffc54561048268f07af\",
+      \"opcRequestId\": \"BF507C7881A24CF79661CF273A9BF937\"}", "responseClass": "com.oracle.bmc.filestorage.responses.UpdateMountTargetResponse",
+      "containerId": "fe693825-a35b-4176-bd64-0bb2f6a1d626", "requestJson": "{\"mountTargetId\":
+      \"ocid1.mounttarget.oc1.phx.aaaaaby27vezzciwobuhqllqojxwiotqnb4c2ylefuzqaaaa\",
       \"updateMountTargetDetails\": {\"definedTags\": {\"testing_service_tag_ns_001\":
-      {\"testing_service_tag_02\": \"tag5.__STS0012_1320\", \"testing_service_tag_03\":
-      \"tag6.__STS0012_1320\", \"testing_service_tag_01\": \"tag4.__STS0012_1320\"}},
-      \"displayName\": \"__STS0012_3723\", \"freeformTags\": {\"tag1\": \"value1.__STS0012_654\",
-      \"tag2\": \"value2.__STS0012_654\"}}}", "requestClass": "com.oracle.bmc.filestorage.requests.UpdateMountTargetRequest"}'
+      {\"testing_service_tag_02\": \"tag5.__STS0109_4290\", \"testing_service_tag_03\":
+      \"tag6.__STS0109_4290\", \"testing_service_tag_01\": \"tag4.__STS0109_4290\"}},
+      \"displayName\": \"__STS0109_5818\", \"freeformTags\": {\"tag1\": \"value1.__STS0109_6538\",
+      \"tag2\": \"value2.__STS0109_6538\"}}}", "requestClass": "com.oracle.bmc.filestorage.requests.UpdateMountTargetRequest"}'
     headers:
       Accept: ['*/*']
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
-      Content-Length: ['1885']
-      User-Agent: [python-requests/2.18.4]
+      Content-Length: ['1889']
+      User-Agent: [python-requests/2.21.0]
     method: POST
-    uri: http://localhost:8090/SDKTestingService/response?lang=PythonCLI&sessionId=0012
+    uri: http://localhost:8090/SDKTestingService/response?lang=PythonCLI&sessionId=0109
   response:
     body: {string: !!python/unicode ''}
     headers:
       content-length: ['0']
       content-type: [text/plain]
-      date: ['Mon, 22 Oct 2018 13:57:43 GMT']
-      server: [Jetty(9.2.14.v20151106)]
+      date: ['Tue, 14 May 2019 14:20:46 GMT']
+      server: [Jetty(9.4.7.v20170914)]
     status: {code: 200, message: OK}
 - request:
-    body: !!python/unicode '{"definedTags": {"ns_you_dont_have": {"key_you_dont_have":
-      "value"}}, "displayName": "__STS0012_1364", "freeformTags": {"tag1": "value1.__STS0012_4898",
-      "tag2": "value2.__STS0012_4898"}}'
-    headers:
-      Content-Length: ['186']
-      accept: [application/json]
-      accept-encoding: ['gzip, deflate']
-      authorization: [!!python/unicode 'Signature algorithm="rsa-sha256",headers="date
-          (request-target) host content-length content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaafol4o2jwcdodnqtpg2txwqthxiohlv37qv4zwahhxu4l7ywjim2q/ocid1.user.oc1..aaaaaaaaj3knfde4ir5errwk57wk36zxvdmdi73czoub23xlb2hbkqoulhha/73:71:f1:ca:d8:1e:b2:b7:a7:f0:3a:c6:a0:0f:c9:57",signature="vRzcKS7wYlQECPTjtpQ8QJn2SAj8h4Ki1U+CIba+qiuZb5tdU3qJahHSUp5ERngRH3WsP30Cal7gPqif2rXpwytl2WHKqoUeoybMgkhzz/2FPPbzhgtusTpDPrbrlwxE7whPhduN4Q0e1wNcejBRa1HsyNzEquQzVIH+RQytgSkRqPnwe/UhdoqvV5csIgWvsiUpl4AxPgDcItF3WWuAbelWM8d44OvV1H5EBqyTYHVW/zXH4H/5nxY4+H+L5h9vHpoMwJkK54IxFE63PCfwKvXmY1paafddypBs41cBTJjNvJRopRvU+RglII3reVBmIYYPqnJxDGUWkhHZt57kqQ==",version="1"']
-      connection: [keep-alive]
-      content-type: [application/json]
-      date: ['Mon, 22 Oct 2018 13:57:43 GMT']
-      host: [filestorage.us-phoenix-1.oraclecloud.com]
-      opc-client-info: [Oracle-PythonSDK/2.0.5+preview.1.385]
-      opc-request-id: [FED6DCD44F0B4AE097DAB03EE22757B4]
-      user-agent: [Oracle-PythonSDK/2.0.5+preview.1.385 (python 2.7.15; x86_64-Darwin)
-          Oracle-PythonCLI/2.4.34+preview.1]
-      x-content-sha256: [!!python/unicode 'dS3tAjrKabEfHvPDUqqBzOU8BxfYCzjHMcmKXcElWMk=']
-    method: PUT
-    uri: https://filestorage.us-phoenix-1.oraclecloud.com/20171215/mountTargets/ocid1.mounttarget.oc1.phx.aaaaaby27vezctb7obuhqllqojxwiotqnb4c2ylefuzqaaaa
-  response:
-    body: {string: !!python/unicode "{\n  \"code\" : \"NotAuthorizedOrNotFound\",\n\
-        \  \"message\" : \"The following tag namespaces / keys are not authorized\
-        \ or not found: 'ns_you_dont_have' namespace is not present\"\n}"}
-    headers:
-      connection: [keep-alive]
-      content-length: ['170']
-      content-type: [application/json]
-      date: ['Mon, 22 Oct 2018 13:57:44 GMT']
-      opc-request-id: [FED6DCD44F0B4AE097DAB03EE22757B4/2F6DD6FD52AC607C38D4B166AE5602FB/57911C81BC1220C6C2C6E81BDCB4D0AE]
-    status: {code: 404, message: Not Found}
-- request:
-    body: !!python/unicode '{"errorJson": "{\"message\": \"The following tag namespaces
-      / keys are not authorized or not found: ''ns_you_dont_have'' namespace is not
-      present\", \"code\": \"NotAuthorizedOrNotFound\", \"opcRequestId\": \"FED6DCD44F0B4AE097DAB03EE22757B4/2F6DD6FD52AC607C38D4B166AE5602FB/57911C81BC1220C6C2C6E81BDCB4D0AE\",
-      \"statusCode\": 404}", "containerId": "ac42a0d3-c1b9-4d10-ba05-93146e09b7f2",
-      "requestJson": "{\"mountTargetId\": \"ocid1.mounttarget.oc1.phx.aaaaaby27vezctb7obuhqllqojxwiotqnb4c2ylefuzqaaaa\",
-      \"updateMountTargetDetails\": {\"definedTags\": {\"ns_you_dont_have\": {\"key_you_dont_have\":
-      \"value\"}}, \"displayName\": \"__STS0012_1364\", \"freeformTags\": {\"tag1\":
-      \"value1.__STS0012_4898\", \"tag2\": \"value2.__STS0012_4898\"}}}", "requestClass":
-      "com.oracle.bmc.filestorage.requests.UpdateMountTargetRequest"}'
-    headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      Content-Length: ['823']
-      User-Agent: [python-requests/2.18.4]
-    method: POST
-    uri: http://localhost:8090/SDKTestingService/error?lang=PythonCLI&sessionId=0012
-  response:
-    body: {string: !!python/unicode ''}
-    headers:
-      content-length: ['0']
-      content-type: [text/plain]
-      date: ['Mon, 22 Oct 2018 13:57:44 GMT']
-      server: [Jetty(9.2.14.v20151106)]
-    status: {code: 200, message: OK}
-- request:
-    body: !!python/unicode '{"displayName": "__STS0012_7216"}'
+    body: !!python/unicode '{"displayName": "__STS0109_8553"}'
     headers:
       Content-Length: ['33']
       accept: [application/json]
       accept-encoding: ['gzip, deflate']
       authorization: [!!python/unicode 'Signature algorithm="rsa-sha256",headers="date
-          (request-target) host content-length content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaafol4o2jwcdodnqtpg2txwqthxiohlv37qv4zwahhxu4l7ywjim2q/ocid1.user.oc1..aaaaaaaaj3knfde4ir5errwk57wk36zxvdmdi73czoub23xlb2hbkqoulhha/73:71:f1:ca:d8:1e:b2:b7:a7:f0:3a:c6:a0:0f:c9:57",signature="mTaQIuHlJcBZXwIbAgjWSgugv7Bv4B/pIybCfZqoQsSxj9rZDuhKqY0bM5FRPBYtFSaGTWOjdka60cucOurrreIczOM6kv/7Gn5zYRBc3ssKPltbWqwbNbt85/9tONQIuxU5ZKDqwtEkgj6T1uQtlyf9PYl/ylkQ920bgowA9aikM2/HQyU5SNFu/25MaYxvvZFP6RX3H50K9Sf8gjYpSk7NLn0KFYIuB9GY7kwb2GhOWhLEzgQIz+8Oc05CtswbSRhtlT4CY9xFw8HQBJ3s+mPb+NquPVB0q5ZmKXbC+A2f7uPJ/W98sumaHwKC3G+EgVhEQ2AFmaIDajxdYaCosw==",version="1"']
+          (request-target) host content-length content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaahszyiacvxm4pordaj2jfhqf36ncfsbueu2xxopt6gf4ifvv5to7a/ocid1.user.oc1..aaaaaaaaw5u4vevifzlf4fj7uduvjziw6ccaaev5eng2hqf2csb6bxost5iq/59:c4:0a:85:93:12:a5:40:46:df:7a:1b:33:1c:05:f3",signature="A9bSPITzl6r9B9EtqrmVfqctFHBon2d5OdFbmmQzybKoS8RkTV/hQwlX+UZ5KAQCs0RjajuyMNnUmkdzPI4oynM0GiCw+SVx46qRMHC92Nlelv11PLK3WFSHJ2mYVx5Cnpm8cGUi8TtBYCCHjCCZqenDIN+8GnBWab8RuPohhOlPj28oPon+uJ+X7GwNxCFa1W+5LlHFGjyDg7Fsi5zzQIhgYoj+fHtZoazwwQesibSpYT6KIjoU8zZC/F4gRixyo/ZRSi1eATqRmUeVMiGqcM2RwxZv/8liGEfQ+GQPHueVX/9nFdQHd61ndUEvuw2c5cH650SxtXbHa3ASZ9Mdkw==",version="1"']
       connection: [keep-alive]
       content-type: [application/json]
-      date: ['Mon, 22 Oct 2018 13:57:44 GMT']
+      date: ['Tue, 14 May 2019 14:20:46 GMT']
       host: [filestorage.us-phoenix-1.oraclecloud.com]
-      opc-client-info: [Oracle-PythonSDK/2.0.5+preview.1.385]
-      opc-request-id: [B98904D0A42F4FB895A95669B4A1AA2D]
-      user-agent: [Oracle-PythonSDK/2.0.5+preview.1.385 (python 2.7.15; x86_64-Darwin)
-          Oracle-PythonCLI/2.4.34+preview.1]
-      x-content-sha256: [!!python/unicode 'eIEymxFQxuOAjonrBPQzyzuchvlofy+NtkF/reKY2Cc=']
+      opc-client-info: [Oracle-PythonSDK/2.2.8+preview.1.0.138]
+      opc-request-id: [6B8EF3B0D22B45E1B3BC522661794D5A]
+      user-agent: [Oracle-PythonSDK/2.2.8+preview.1.0.138 (python 2.7.16; x86_64-Darwin)
+          Oracle-PythonCLI/2.5.10]
+      x-content-sha256: [!!python/unicode '7eF6DPKc7eebcSFyWiv32dCtHyV7LO0bTFdQJMmKOP4=']
     method: PUT
-    uri: https://filestorage.us-phoenix-1.oraclecloud.com/20171215/mountTargets/ocid1.mounttarget.oc1.phx.aaaaaby27vezctb7obuhqllqojxwiotqnb4c2ylefuzqaaaa
+    uri: https://filestorage.us-phoenix-1.oraclecloud.com/20171215/mountTargets/ocid1.mounttarget.oc1.phx.aaaaaby27vezzciwobuhqllqojxwiotqnb4c2ylefuzqaaaa
   response:
-    body: {string: !!python/unicode "{\n  \"availabilityDomain\" : \"wrbF:PHX-AD-1\"\
-        ,\n  \"compartmentId\" : \"ocid1.compartment.oc1..aaaaaaaazemiqhnawozsau2s3by4lgpbzqygmfbhyxom6r636wkpape2roya\"\
-        ,\n  \"displayName\" : \"__STS0012_7216\",\n  \"exportSetId\" : \"ocid1.exportset.oc1.phx.aaaaaby27vezctb6obuhqllqojxwiotqnb4c2ylefuzqaaaa\"\
-        ,\n  \"id\" : \"ocid1.mounttarget.oc1.phx.aaaaaby27vezctb7obuhqllqojxwiotqnb4c2ylefuzqaaaa\"\
+    body: {string: !!python/unicode "{\n  \"availabilityDomain\" : \"xeRv:PHX-AD-3\"\
+        ,\n  \"compartmentId\" : \"ocid1.compartment.oc1..aaaaaaaa4mtljyclui4udzxjuw3pqpw3wec7rpahkvrify6bfzmtzsqdo6ka\"\
+        ,\n  \"displayName\" : \"__STS0109_8553\",\n  \"exportSetId\" : \"ocid1.exportset.oc1.phx.aaaaaby27vezzcivobuhqllqojxwiotqnb4c2ylefuzqaaaa\"\
+        ,\n  \"id\" : \"ocid1.mounttarget.oc1.phx.aaaaaby27vezzciwobuhqllqojxwiotqnb4c2ylefuzqaaaa\"\
         ,\n  \"lifecycleDetails\" : \"\",\n  \"lifecycleState\" : \"ACTIVE\",\n  \"\
-        privateIpIds\" : [ \"ocid1.privateip.oc1.phx.abyhqljtyb3uufrjetgy7ypu4qcmahqfgwtibw5ozycx4g4lmcrcacgmaxha\"\
-        \ ],\n  \"subnetId\" : \"ocid1.subnet.oc1.phx.aaaaaaaanme7uiuqeeijdpxsug6rmkr3a4baec3jcdzsnnme7kod3am36t7q\"\
-        ,\n  \"timeCreated\" : \"2018-10-22T13:56:28.404Z\",\n  \"freeformTags\" :\
-        \ {\n    \"tag1\" : \"value1.__STS0012_654\",\n    \"tag2\" : \"value2.__STS0012_654\"\
+        privateIpIds\" : [ \"ocid1.privateip.oc1.phx.abyhqljtnb5rnt7e5nebnip3uq3ql6ffrlmqjkuqmaqxzi6arelzfrfk6hnq\"\
+        \ ],\n  \"subnetId\" : \"ocid1.subnet.oc1.phx.aaaaaaaae6cvglfq3zau33p7wgl5awrzsjtapksorjlv572ibi5a7dyi5zaq\"\
+        ,\n  \"timeCreated\" : \"2019-05-14T14:19:44.862Z\",\n  \"freeformTags\" :\
+        \ {\n    \"tag1\" : \"value1.__STS0109_6538\",\n    \"tag2\" : \"value2.__STS0109_6538\"\
         \n  },\n  \"definedTags\" : {\n    \"testing_service_tag_ns_001\" : {\n  \
-        \    \"testing_service_tag_01\" : \"tag4.__STS0012_1320\",\n      \"testing_service_tag_02\"\
-        \ : \"tag5.__STS0012_1320\",\n      \"testing_service_tag_03\" : \"tag6.__STS0012_1320\"\
+        \    \"testing_service_tag_01\" : \"tag4.__STS0109_4290\",\n      \"testing_service_tag_02\"\
+        \ : \"tag5.__STS0109_4290\",\n      \"testing_service_tag_03\" : \"tag6.__STS0109_4290\"\
         \n    }\n  }\n}"}
     headers:
       connection: [keep-alive]
-      content-length: ['1017']
+      content-length: ['1019']
       content-type: [application/json]
-      date: ['Mon, 22 Oct 2018 13:57:47 GMT']
-      etag: [99275a7fea541853bd4df78d6ab27799e0d3356460ac39b7a59b292671638cdc]
-      opc-request-id: [B98904D0A42F4FB895A95669B4A1AA2D/7682625341911604CC728199BFF8A998/B1F8D10AEB1E714852A3195E50039289]
+      date: ['Tue, 14 May 2019 14:20:47 GMT']
+      etag: [d992c251fcced0e71d298d38c74d8fad3df253ffb41b4ae26c3006d77bb03dcc]
+      opc-request-id: [6B8EF3B0D22B45E1B3BC522661794D5A/65DF44F452265BA48701BED80BA97890/53862280CF3593E49EA0B0E2F8467F23]
     status: {code: 200, message: OK}
 - request:
     body: !!python/unicode '{"responseJson": "{\"mountTarget\": {\"privateIpIds\":
-      [\"ocid1.privateip.oc1.phx.abyhqljtyb3uufrjetgy7ypu4qcmahqfgwtibw5ozycx4g4lmcrcacgmaxha\"],
-      \"compartmentId\": \"ocid1.compartment.oc1..aaaaaaaazemiqhnawozsau2s3by4lgpbzqygmfbhyxom6r636wkpape2roya\",
-      \"displayName\": \"__STS0012_7216\", \"timeCreated\": \"2018-10-22T13:56:28.404000+00:00\",
-      \"exportSetId\": \"ocid1.exportset.oc1.phx.aaaaaby27vezctb6obuhqllqojxwiotqnb4c2ylefuzqaaaa\",
+      [\"ocid1.privateip.oc1.phx.abyhqljtnb5rnt7e5nebnip3uq3ql6ffrlmqjkuqmaqxzi6arelzfrfk6hnq\"],
+      \"compartmentId\": \"ocid1.compartment.oc1..aaaaaaaa4mtljyclui4udzxjuw3pqpw3wec7rpahkvrify6bfzmtzsqdo6ka\",
+      \"displayName\": \"__STS0109_8553\", \"timeCreated\": \"2019-05-14T14:19:44.862000+00:00\",
+      \"exportSetId\": \"ocid1.exportset.oc1.phx.aaaaaby27vezzcivobuhqllqojxwiotqnb4c2ylefuzqaaaa\",
       \"lifecycleDetails\": \"\", \"definedTags\": {\"testing_service_tag_ns_001\":
-      {\"testing_service_tag_02\": \"tag5.__STS0012_1320\", \"testing_service_tag_03\":
-      \"tag6.__STS0012_1320\", \"testing_service_tag_01\": \"tag4.__STS0012_1320\"}},
-      \"lifecycleState\": \"ACTIVE\", \"freeformTags\": {\"tag1\": \"value1.__STS0012_654\",
-      \"tag2\": \"value2.__STS0012_654\"}, \"subnetId\": \"ocid1.subnet.oc1.phx.aaaaaaaanme7uiuqeeijdpxsug6rmkr3a4baec3jcdzsnnme7kod3am36t7q\",
-      \"id\": \"ocid1.mounttarget.oc1.phx.aaaaaby27vezctb7obuhqllqojxwiotqnb4c2ylefuzqaaaa\",
-      \"availabilityDomain\": \"wrbF:PHX-AD-1\"}, \"etag\": \"99275a7fea541853bd4df78d6ab27799e0d3356460ac39b7a59b292671638cdc\",
-      \"opcRequestId\": \"918EBA8B791E449E895FECD16E3CAB56\"}", "responseClass": "com.oracle.bmc.filestorage.responses.UpdateMountTargetResponse",
-      "containerId": "d5101187-906f-4f92-a855-caef8ccdf8d4", "requestJson": "{\"mountTargetId\":
-      \"ocid1.mounttarget.oc1.phx.aaaaaby27vezctb7obuhqllqojxwiotqnb4c2ylefuzqaaaa\",
-      \"updateMountTargetDetails\": {\"displayName\": \"__STS0012_7216\"}}", "requestClass":
+      {\"testing_service_tag_02\": \"tag5.__STS0109_4290\", \"testing_service_tag_03\":
+      \"tag6.__STS0109_4290\", \"testing_service_tag_01\": \"tag4.__STS0109_4290\"}},
+      \"lifecycleState\": \"ACTIVE\", \"freeformTags\": {\"tag1\": \"value1.__STS0109_6538\",
+      \"tag2\": \"value2.__STS0109_6538\"}, \"subnetId\": \"ocid1.subnet.oc1.phx.aaaaaaaae6cvglfq3zau33p7wgl5awrzsjtapksorjlv572ibi5a7dyi5zaq\",
+      \"id\": \"ocid1.mounttarget.oc1.phx.aaaaaby27vezzciwobuhqllqojxwiotqnb4c2ylefuzqaaaa\",
+      \"availabilityDomain\": \"xeRv:PHX-AD-3\"}, \"etag\": \"d992c251fcced0e71d298d38c74d8fad3df253ffb41b4ae26c3006d77bb03dcc\",
+      \"opcRequestId\": \"B4FDB5ED3345427EAA9A4DC43A006349\"}", "responseClass": "com.oracle.bmc.filestorage.responses.UpdateMountTargetResponse",
+      "containerId": "48efe540-a552-4f55-8859-6ac73cfea695", "requestJson": "{\"mountTargetId\":
+      \"ocid1.mounttarget.oc1.phx.aaaaaby27vezzciwobuhqllqojxwiotqnb4c2ylefuzqaaaa\",
+      \"updateMountTargetDetails\": {\"displayName\": \"__STS0109_8553\"}}", "requestClass":
       "com.oracle.bmc.filestorage.requests.UpdateMountTargetRequest"}'
     headers:
       Accept: ['*/*']
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
-      Content-Length: ['1581']
-      User-Agent: [python-requests/2.18.4]
+      Content-Length: ['1583']
+      User-Agent: [python-requests/2.21.0]
     method: POST
-    uri: http://localhost:8090/SDKTestingService/response?lang=PythonCLI&sessionId=0012
+    uri: http://localhost:8090/SDKTestingService/response?lang=PythonCLI&sessionId=0109
   response:
     body: {string: !!python/unicode ''}
     headers:
       content-length: ['0']
       content-type: [text/plain]
-      date: ['Mon, 22 Oct 2018 13:57:47 GMT']
-      server: [Jetty(9.2.14.v20151106)]
+      date: ['Tue, 14 May 2019 14:20:47 GMT']
+      server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{"definedTags": {}, "displayName": "__STS0109_1020", "freeformTags":
+      {}}'
+    headers:
+      Content-Length: ['72']
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: [!!python/unicode 'Signature algorithm="rsa-sha256",headers="date
+          (request-target) host content-length content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaahszyiacvxm4pordaj2jfhqf36ncfsbueu2xxopt6gf4ifvv5to7a/ocid1.user.oc1..aaaaaaaaw5u4vevifzlf4fj7uduvjziw6ccaaev5eng2hqf2csb6bxost5iq/59:c4:0a:85:93:12:a5:40:46:df:7a:1b:33:1c:05:f3",signature="FG1zq9wZ8iaj5rVWtWQ825pN18jtLscpdqNOUKz1w48u/gJOwAtlLXtcp3vYhzRzHuPulTKG5uY3VQxe8rZOFJ3lSft+OKxntli18L0iC94iXgjhQ7s0OliJKOtzJpJ+0QmFAO6bk+ENcw4dm+mqKZiqELcs3Wo8Y2BOjOt74Fv/M02G8Tiot/U78BRXF2VQRvYUBoJjtm4roUYFmPUMP2aOWi+fLFRT+VthZWtOHK+Q7EJgI4bZ/KJKhgWSAFtXrXC5ZTjmPV+eHYYZ/9nt0kVPf7qfYiks8/XqbumqYCqPR0NBIgtwsaIrMTS6OkipDDw0FYTq8Hl5DBwKgF5TJQ==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Tue, 14 May 2019 14:20:47 GMT']
+      host: [filestorage.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.2.8+preview.1.0.138]
+      opc-request-id: [D05C7707C842467BBD7110BBD31D3532]
+      user-agent: [Oracle-PythonSDK/2.2.8+preview.1.0.138 (python 2.7.16; x86_64-Darwin)
+          Oracle-PythonCLI/2.5.10]
+      x-content-sha256: [!!python/unicode '919iLZhQH/j3LKH7yxi42XxXUGAaHdrOUd99YSUg/eQ=']
+    method: PUT
+    uri: https://filestorage.us-phoenix-1.oraclecloud.com/20171215/mountTargets/ocid1.mounttarget.oc1.phx.aaaaaby27vezzciwobuhqllqojxwiotqnb4c2ylefuzqaaaa
+  response:
+    body: {string: !!python/unicode "{\n  \"availabilityDomain\" : \"xeRv:PHX-AD-3\"\
+        ,\n  \"compartmentId\" : \"ocid1.compartment.oc1..aaaaaaaa4mtljyclui4udzxjuw3pqpw3wec7rpahkvrify6bfzmtzsqdo6ka\"\
+        ,\n  \"displayName\" : \"__STS0109_1020\",\n  \"exportSetId\" : \"ocid1.exportset.oc1.phx.aaaaaby27vezzcivobuhqllqojxwiotqnb4c2ylefuzqaaaa\"\
+        ,\n  \"id\" : \"ocid1.mounttarget.oc1.phx.aaaaaby27vezzciwobuhqllqojxwiotqnb4c2ylefuzqaaaa\"\
+        ,\n  \"lifecycleDetails\" : \"\",\n  \"lifecycleState\" : \"ACTIVE\",\n  \"\
+        privateIpIds\" : [ \"ocid1.privateip.oc1.phx.abyhqljtnb5rnt7e5nebnip3uq3ql6ffrlmqjkuqmaqxzi6arelzfrfk6hnq\"\
+        \ ],\n  \"subnetId\" : \"ocid1.subnet.oc1.phx.aaaaaaaae6cvglfq3zau33p7wgl5awrzsjtapksorjlv572ibi5a7dyi5zaq\"\
+        ,\n  \"timeCreated\" : \"2019-05-14T14:19:44.862Z\",\n  \"freeformTags\" :\
+        \ { },\n  \"definedTags\" : { }\n}"}
+    headers:
+      connection: [keep-alive]
+      content-length: ['730']
+      content-type: [application/json]
+      date: ['Tue, 14 May 2019 14:20:47 GMT']
+      etag: [c16560a82dfe7c57a694d6b786e5b39571bdce0f695ffe76b3f34820cf405d41]
+      opc-request-id: [D05C7707C842467BBD7110BBD31D3532/C1A04E77A51005FEE5BDF94674F46C77/86115F481DDC68CF9D75E4F110385E2F]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{"responseJson": "{\"mountTarget\": {\"privateIpIds\":
+      [\"ocid1.privateip.oc1.phx.abyhqljtnb5rnt7e5nebnip3uq3ql6ffrlmqjkuqmaqxzi6arelzfrfk6hnq\"],
+      \"compartmentId\": \"ocid1.compartment.oc1..aaaaaaaa4mtljyclui4udzxjuw3pqpw3wec7rpahkvrify6bfzmtzsqdo6ka\",
+      \"displayName\": \"__STS0109_1020\", \"timeCreated\": \"2019-05-14T14:19:44.862000+00:00\",
+      \"exportSetId\": \"ocid1.exportset.oc1.phx.aaaaaby27vezzcivobuhqllqojxwiotqnb4c2ylefuzqaaaa\",
+      \"lifecycleDetails\": \"\", \"definedTags\": {}, \"lifecycleState\": \"ACTIVE\",
+      \"freeformTags\": {}, \"subnetId\": \"ocid1.subnet.oc1.phx.aaaaaaaae6cvglfq3zau33p7wgl5awrzsjtapksorjlv572ibi5a7dyi5zaq\",
+      \"id\": \"ocid1.mounttarget.oc1.phx.aaaaaby27vezzciwobuhqllqojxwiotqnb4c2ylefuzqaaaa\",
+      \"availabilityDomain\": \"xeRv:PHX-AD-3\"}, \"etag\": \"c16560a82dfe7c57a694d6b786e5b39571bdce0f695ffe76b3f34820cf405d41\",
+      \"opcRequestId\": \"828151CA3C104ECFA9DB6470E62B65DD\"}", "responseClass": "com.oracle.bmc.filestorage.responses.UpdateMountTargetResponse",
+      "containerId": "3da42f26-1bc3-46c6-87d7-6d9be04330e4", "requestJson": "{\"mountTargetId\":
+      \"ocid1.mounttarget.oc1.phx.aaaaaby27vezzciwobuhqllqojxwiotqnb4c2ylefuzqaaaa\",
+      \"updateMountTargetDetails\": {\"definedTags\": {}, \"displayName\": \"__STS0109_1020\",
+      \"freeformTags\": {}}}", "requestClass": "com.oracle.bmc.filestorage.requests.UpdateMountTargetRequest"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['1363']
+      User-Agent: [python-requests/2.21.0]
+    method: POST
+    uri: http://localhost:8090/SDKTestingService/response?lang=PythonCLI&sessionId=0109
+  response:
+    body: {string: !!python/unicode ''}
+    headers:
+      content-length: ['0']
+      content-type: [text/plain]
+      date: ['Tue, 14 May 2019 14:20:47 GMT']
+      server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{"definedTags": {"ns_you_dont_have": {"key_you_dont_have":
+      "value"}}, "displayName": "__STS0109_7281", "freeformTags": {"tag1": "value1.__STS0109_3416",
+      "tag2": "value2.__STS0109_3416"}}'
+    headers:
+      Content-Length: ['186']
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: [!!python/unicode 'Signature algorithm="rsa-sha256",headers="date
+          (request-target) host content-length content-type x-content-sha256",keyId="ocid1.tenancy.oc1..aaaaaaaahszyiacvxm4pordaj2jfhqf36ncfsbueu2xxopt6gf4ifvv5to7a/ocid1.user.oc1..aaaaaaaaw5u4vevifzlf4fj7uduvjziw6ccaaev5eng2hqf2csb6bxost5iq/59:c4:0a:85:93:12:a5:40:46:df:7a:1b:33:1c:05:f3",signature="nJ23RHtGMF4Yl1oY9QAU5RG192GIft0uwVk+eqK2nMvwA/ww3BtGP+dRlj6EFiPltg2HbduHYHaLMA5KBvprM9C0JxThJ9R0OqaWg6F9qSqyuZJxEsaGYiHTjEzdXAOwS5NshLOCqckbN8dvkmw8flJ08sOYJe/zJLgKdRXlc7iSgifaADJiANm0ZwtKR9zQwooe1EF2cyX1oogfAqY3ERJCTX5YFVxhIwZipU/hpVXWmf0It3+kNKEoiSxiEytFq8POm++PtNu9yCLGrKgqExeP2hcM1zuJw4Ts7R2n0UK7l+vySzbjtZyA0vlV1PCuFJuGawoWN6byQBW+LfWe2Q==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Tue, 14 May 2019 14:20:47 GMT']
+      host: [filestorage.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.2.8+preview.1.0.138]
+      opc-request-id: [C7E121F2E20F48AEB1DBE5EA9401EAF2]
+      user-agent: [Oracle-PythonSDK/2.2.8+preview.1.0.138 (python 2.7.16; x86_64-Darwin)
+          Oracle-PythonCLI/2.5.10]
+      x-content-sha256: [!!python/unicode 'akdYnGZlnAckq/+GAWfUbGuN+42PdqlyRnbhz7aG3CI=']
+    method: PUT
+    uri: https://filestorage.us-phoenix-1.oraclecloud.com/20171215/mountTargets/ocid1.mounttarget.oc1.phx.aaaaaby27vezzciwobuhqllqojxwiotqnb4c2ylefuzqaaaa
+  response:
+    body: {string: !!python/unicode "{\n  \"code\" : \"NotAuthorizedOrNotFound\",\n\
+        \  \"message\" : \"The following tag namespaces / keys are not authorized\
+        \ or not found: TagNamespace ns_you_dont_have does not exists.\\n\"\n}"}
+    headers:
+      connection: [keep-alive]
+      content-length: ['175']
+      content-type: [application/json]
+      date: ['Tue, 14 May 2019 14:20:48 GMT']
+      opc-request-id: [C7E121F2E20F48AEB1DBE5EA9401EAF2/D98ED0B4C53B76AF45E1D63D72E9D34C/62536625C6CECFF299209E962D895411]
+    status: {code: 404, message: Not Found}
+- request:
+    body: !!python/unicode '{"errorJson": "{\"message\": \"The following tag namespaces
+      / keys are not authorized or not found: TagNamespace ns_you_dont_have does not
+      exists.\\n\", \"code\": \"NotAuthorizedOrNotFound\", \"opcRequestId\": \"C7E121F2E20F48AEB1DBE5EA9401EAF2/D98ED0B4C53B76AF45E1D63D72E9D34C/62536625C6CECFF299209E962D895411\",
+      \"statusCode\": 404}", "containerId": "dcb5405a-a184-4311-adf2-dea264c69ffe",
+      "requestJson": "{\"mountTargetId\": \"ocid1.mounttarget.oc1.phx.aaaaaby27vezzciwobuhqllqojxwiotqnb4c2ylefuzqaaaa\",
+      \"updateMountTargetDetails\": {\"definedTags\": {\"ns_you_dont_have\": {\"key_you_dont_have\":
+      \"value\"}}, \"displayName\": \"__STS0109_7281\", \"freeformTags\": {\"tag1\":
+      \"value1.__STS0109_3416\", \"tag2\": \"value2.__STS0109_3416\"}}}", "requestClass":
+      "com.oracle.bmc.filestorage.requests.UpdateMountTargetRequest"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['829']
+      User-Agent: [python-requests/2.21.0]
+    method: POST
+    uri: http://localhost:8090/SDKTestingService/error?lang=PythonCLI&sessionId=0109
+  response:
+    body: {string: !!python/unicode ''}
+    headers:
+      content-length: ['0']
+      content-type: [text/plain]
+      date: ['Tue, 14 May 2019 14:20:48 GMT']
+      server: [Jetty(9.4.7.v20170914)]
     status: {code: 200, message: OK}
 version: 1

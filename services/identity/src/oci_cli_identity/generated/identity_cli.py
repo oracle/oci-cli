@@ -144,6 +144,14 @@ def mfa_totp_device_group():
     pass
 
 
+@click.command(cli_util.override('ui_password_information_group.command_name', 'ui-password-information'), cls=CommandGroupWithAlias, help="""Information about the UIPassword, which is a text password that enables a user to sign in to the Console, the user interface for interacting with Oracle Cloud Infrastructure.
+
+For more information about user credentials, see [User Credentials].""")
+@cli_util.help_option_group
+def ui_password_information_group():
+    pass
+
+
 @click.command(cli_util.override('identity_provider_group.command_name', 'identity-provider'), cls=CommandGroupWithAlias, help="""The resulting base object when you add an identity provider to your tenancy. A [Saml2IdentityProvider] is a specific type of `IdentityProvider` that supports the SAML 2.0 protocol. Each `IdentityProvider` object has its own OCID. For more information, see [Identity Providers and Federation].
 
 To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
@@ -262,6 +270,7 @@ iam_root_group.add_command(idp_group_mapping_group)
 iam_root_group.add_command(tenancy_group)
 iam_root_group.add_command(user_group_membership_group)
 iam_root_group.add_command(mfa_totp_device_group)
+iam_root_group.add_command(ui_password_information_group)
 iam_root_group.add_command(identity_provider_group)
 iam_root_group.add_command(identity_provider_group_group)
 iam_root_group.add_command(ui_password_group)
@@ -2325,6 +2334,27 @@ def get_user_group_membership(ctx, from_json, user_group_membership_id):
     client = cli_util.build_client('identity', ctx)
     result = client.get_user_group_membership(
         user_group_membership_id=user_group_membership_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@ui_password_information_group.command(name=cli_util.override('get_user_ui_password_information.command_name', 'get-user'), help=u"""Gets the specified user's console password information. The returned object contains the user's OCID, but not the password itself. The actual password is returned only when created or reset.""")
+@cli_util.option('--user-id', required=True, help=u"""The OCID of the user.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'UIPasswordInformation'})
+@cli_util.wrap_exceptions
+def get_user_ui_password_information(ctx, from_json, user_id):
+
+    if isinstance(user_id, six.string_types) and len(user_id.strip()) == 0:
+        raise click.UsageError('Parameter --user-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    client = cli_util.build_client('identity', ctx)
+    result = client.get_user_ui_password_information(
+        user_id=user_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)

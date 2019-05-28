@@ -6,6 +6,34 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.5.12 - 2019-05-28
+-------------------
+Added
+~~~~~
+* Support to get user UI password creation date in Identity service.
+
+  * (``oci iam ui-password-information get-user --user-id``)
+
+* Support for Work Requests Service
+
+  * (``oci work-requests``)
+  * An example of using the Work Requests Service can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/get_work_requests_example.sh>`__.
+
+* Tags returned in File Storage Summary objects
+
+* Change compartment support for File Storage Service.
+
+  * (``oci fs file-system change-compartment --file-system-id --compartment-id``)
+  * (``oci fs mount-target change-compartment --mount-target-id --compartment-id``)
+
+Fixed
+~~~~~
+* Missing emulated type for volume-attachment. (`Issue 146 <https://github.com/oracle/oci-cli/issues/146>`__)
+
+  * (``oci compute volume-attachment attach --type``)
+
+* Fixed metrics example. (`Issue 149 <https://github.com/oracle/oci-cli/issues/149>`_, `Issue 150 <https://github.com/oracle/oci-cli/issues/150>`_)
+
 2.5.11 - 2019-05-21
 -------------------
 Added

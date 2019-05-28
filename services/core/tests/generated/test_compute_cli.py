@@ -298,6 +298,26 @@ def test_attach_volume(cli_testing_service_client, runner, config_file, config_p
                     request[key] = request['opts'][key]
                 del request['opts']
 
+            if request.get('type') == 'service_determined':
+                params = util.get_command_list(
+                    root_command_name,
+                    resource_group_command_name,
+                    oci_cli.cli_util.override('attach_volume_attach_service_determined_volume_details.command_name', 'attach-volume-attach-service-determined-volume-details')
+                )
+
+                if params:
+                    del request['type']
+
+            if request.get('type') == 'emulated':
+                params = util.get_command_list(
+                    root_command_name,
+                    resource_group_command_name,
+                    oci_cli.cli_util.override('attach_volume_attach_emulated_volume_details.command_name', 'attach-volume-attach-emulated-volume-details')
+                )
+
+                if params:
+                    del request['type']
+
             if request.get('type') == 'iscsi':
                 params = util.get_command_list(
                     root_command_name,
