@@ -381,13 +381,23 @@ def list_databases(ctx, **kwargs):
         if response.data is not None:
             db_homes += response.data
 
+    list_db_kw_args = {}
+    if kwargs['sort_by'] is not None:
+        list_db_kw_args['sort_by'] = kwargs['sort_by']
+    if kwargs['sort_order'] is not None:
+        list_db_kw_args['sort_order'] = kwargs['sort_order']
+    if kwargs['lifecycle_state'] is not None:
+        list_db_kw_args['lifecycle_state'] = kwargs['lifecycle_state']
+    if kwargs['display_name'] is not None:
+        list_db_kw_args['db_name'] = kwargs['display_name']
+
     # go through all db_homes and list all dbs
     databases = []
     for db_home in db_homes:
         if 'limit' in kwargs and kwargs['limit'] is not None and len(databases) >= int(kwargs['limit']):
             break
 
-        response = client.list_databases(compartment_id, db_home.id)
+        response = client.list_databases(compartment_id, db_home.id, **list_db_kw_args)
         if response.data is not None:
             for database in response.data:
                 if 'limit' in kwargs and kwargs['limit'] is not None and len(databases) >= int(kwargs['limit']):

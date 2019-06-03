@@ -1,5 +1,6 @@
 {
   "availabilityDomain": "__AD__",
+  "faultDomain": "FAULT-DOMAIN-2",
   "createVnicDetails": {
     "subnetId": "__SUBNET_ID__"
   }

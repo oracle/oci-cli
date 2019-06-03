@@ -1049,6 +1049,8 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 
 If you don't provide a value, the `ipAddress` attribute for the [Cpe] object specified by `cpeId` is used as the `cpeLocalIdentifier`.
 
+For information about why you'd provide this value, see [If Your CPE Is Behind a NAT Device].
+
 Example IP address: `10.0.3.3`
 
 Example hostname: `cpe.example.com`""")
@@ -2989,7 +2991,7 @@ def delete_subnet(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 
 
 @vcn_group.command(name=cli_util.override('delete_vcn.command_name', 'delete'), help=u"""Deletes the specified VCN. The VCN must be empty and have no attached gateways. This is an asynchronous operation. The VCN's `lifecycleState` will change to TERMINATING temporarily until the VCN is completely removed.""")
-@cli_util.option('--vcn-id', required=True, help=u"""The OCID of the VCN.""")
+@cli_util.option('--vcn-id', required=True, help=u"""The [OCID] of the VCN.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -3789,7 +3791,7 @@ def get_subnet(ctx, from_json, subnet_id):
 
 
 @vcn_group.command(name=cli_util.override('get_vcn.command_name', 'get'), help=u"""Gets the specified VCN's information.""")
-@cli_util.option('--vcn-id', required=True, help=u"""The OCID of the VCN.""")
+@cli_util.option('--vcn-id', required=True, help=u"""The [OCID] of the VCN.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -3869,7 +3871,7 @@ def list_allowed_peer_regions_for_remote_peering(ctx, from_json, all_pages, ):
 
 
 @cpe_group.command(name=cli_util.override('list_cpes.command_name', 'list'), help=u"""Lists the customer-premises equipment objects (CPEs) in the specified compartment.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
@@ -3918,7 +3920,7 @@ def list_cpes(ctx, from_json, all_pages, page_size, compartment_id, limit, page)
 
 
 @cross_connect_group_group.command(name=cli_util.override('list_cross_connect_groups.command_name', 'list'), help=u"""Lists the cross-connect groups in the specified compartment.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
@@ -3981,7 +3983,7 @@ def list_cross_connect_groups(ctx, from_json, all_pages, page_size, compartment_
 
 
 @cross_connect_location_group.command(name=cli_util.override('list_cross_connect_locations.command_name', 'list'), help=u"""Lists the available FastConnect locations for cross-connect installation. You need this information so you can specify your desired location when you create a cross-connect.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
@@ -4030,7 +4032,7 @@ def list_cross_connect_locations(ctx, from_json, all_pages, page_size, compartme
 
 
 @cross_connect_group.command(name=cli_util.override('list_cross_connects.command_name', 'list'), help=u"""Lists the cross-connects in the specified compartment. You can filter the list by specifying the OCID of a cross-connect group.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--cross-connect-group-id', help=u"""The OCID of the cross-connect group.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
@@ -4096,7 +4098,7 @@ def list_cross_connects(ctx, from_json, all_pages, page_size, compartment_id, cr
 
 
 @cross_connect_port_speed_shape_group.command(name=cli_util.override('list_crossconnect_port_speed_shapes.command_name', 'list-crossconnect-port-speed-shapes'), help=u"""Lists the available port speeds for cross-connects. You need this information so you can specify your desired port speed (that is, shape) when you create a cross-connect.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
@@ -4145,8 +4147,8 @@ def list_crossconnect_port_speed_shapes(ctx, from_json, all_pages, page_size, co
 
 
 @dhcp_options_group.command(name=cli_util.override('list_dhcp_options.command_name', 'list'), help=u"""Lists the sets of DHCP options in the specified VCN and specified compartment. The response includes the default set of options that automatically comes with each VCN, plus any other sets you've created.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
-@cli_util.option('--vcn-id', required=True, help=u"""The OCID of the VCN.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--vcn-id', required=True, help=u"""The [OCID] of the VCN.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
@@ -4212,8 +4214,8 @@ def list_dhcp_options(ctx, from_json, all_pages, page_size, compartment_id, vcn_
 
 
 @drg_attachment_group.command(name=cli_util.override('list_drg_attachments.command_name', 'list'), help=u"""Lists the `DrgAttachment` objects for the specified compartment. You can filter the results by VCN or DRG.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
-@cli_util.option('--vcn-id', help=u"""The OCID of the VCN.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--vcn-id', help=u"""The [OCID] of the VCN.""")
 @cli_util.option('--drg-id', help=u"""The OCID of the DRG.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
@@ -4267,7 +4269,7 @@ def list_drg_attachments(ctx, from_json, all_pages, page_size, compartment_id, v
 
 
 @drg_group.command(name=cli_util.override('list_drgs.command_name', 'list'), help=u"""Lists the DRGs in the specified compartment.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
@@ -4320,7 +4322,7 @@ def list_drgs(ctx, from_json, all_pages, page_size, compartment_id, limit, page)
 For the compartment ID, provide the OCID of your tenancy (the root compartment).
 
 For more information, see [FastConnect Overview].""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
@@ -4423,8 +4425,8 @@ def list_fast_connect_provider_virtual_circuit_bandwidth_shapes(ctx, from_json, 
 
 
 @internet_gateway_group.command(name=cli_util.override('list_internet_gateways.command_name', 'list'), help=u"""Lists the internet gateways in the specified VCN and the specified compartment.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
-@cli_util.option('--vcn-id', required=True, help=u"""The OCID of the VCN.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--vcn-id', required=True, help=u"""The [OCID] of the VCN.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
@@ -4542,7 +4544,7 @@ def list_ip_sec_connection_tunnels(ctx, from_json, all_pages, page_size, ipsc_id
 
 
 @ip_sec_connection_group.command(name=cli_util.override('list_ip_sec_connections.command_name', 'list'), help=u"""Lists the IPSec connections for the specified compartment. You can filter the results by DRG or CPE.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--drg-id', help=u"""The OCID of the DRG.""")
 @cli_util.option('--cpe-id', help=u"""The OCID of the CPE.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
@@ -4597,8 +4599,8 @@ def list_ip_sec_connections(ctx, from_json, all_pages, page_size, compartment_id
 
 
 @local_peering_gateway_group.command(name=cli_util.override('list_local_peering_gateways.command_name', 'list'), help=u"""Lists the local peering gateways (LPGs) for the specified VCN and compartment (the LPG's compartment).""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
-@cli_util.option('--vcn-id', required=True, help=u"""The OCID of the VCN.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--vcn-id', required=True, help=u"""The [OCID] of the VCN.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
@@ -4650,8 +4652,8 @@ def list_local_peering_gateways(ctx, from_json, all_pages, page_size, compartmen
 
 
 @nat_gateway_group.command(name=cli_util.override('list_nat_gateways.command_name', 'list'), help=u"""Lists the NAT gateways in the specified compartment. You may optionally specify a VCN OCID to filter the results by VCN.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
-@cli_util.option('--vcn-id', help=u"""The OCID of the VCN.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--vcn-id', help=u"""The [OCID] of the VCN.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
@@ -4787,7 +4789,7 @@ To list the ephemeral public IPs assigned to private IPs:   * Set `scope` = `AVA
 * `REGION`: The public IP exists within a region and is assigned to a regional entity (such as a [NatGateway]), or can be assigned to a private IP in any availability domain in the region. Reserved public IPs have `scope` = `REGION`, as do ephemeral public IPs assigned to a regional entity.
 
 * `AVAILABILITY_DOMAIN`: The public IP exists within the availability domain of the entity it's assigned to, which is specified by the `availabilityDomain` property of the public IP object. Ephemeral public IPs that are assigned to private IPs have `scope` = `AVAILABILITY_DOMAIN`.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
@@ -4847,7 +4849,7 @@ def list_public_ips(ctx, from_json, all_pages, page_size, scope, compartment_id,
 
 
 @remote_peering_connection_group.command(name=cli_util.override('list_remote_peering_connections.command_name', 'list'), help=u"""Lists the remote peering connections (RPCs) for the specified DRG and compartment (the RPC's compartment).""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--drg-id', help=u"""The OCID of the DRG.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
@@ -4899,8 +4901,8 @@ def list_remote_peering_connections(ctx, from_json, all_pages, page_size, compar
 
 
 @route_table_group.command(name=cli_util.override('list_route_tables.command_name', 'list'), help=u"""Lists the route tables in the specified VCN and specified compartment. The response includes the default route table that automatically comes with each VCN, plus any route tables you've created.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
-@cli_util.option('--vcn-id', required=True, help=u"""The OCID of the VCN.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--vcn-id', required=True, help=u"""The [OCID] of the VCN.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
@@ -4966,8 +4968,8 @@ def list_route_tables(ctx, from_json, all_pages, page_size, compartment_id, vcn_
 
 
 @security_list_group.command(name=cli_util.override('list_security_lists.command_name', 'list'), help=u"""Lists the security lists in the specified VCN and compartment.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
-@cli_util.option('--vcn-id', required=True, help=u"""The OCID of the VCN.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--vcn-id', required=True, help=u"""The [OCID] of the VCN.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
@@ -5033,8 +5035,8 @@ def list_security_lists(ctx, from_json, all_pages, page_size, compartment_id, vc
 
 
 @service_gateway_group.command(name=cli_util.override('list_service_gateways.command_name', 'list'), help=u"""Lists the service gateways in the specified compartment. You may optionally specify a VCN OCID to filter the results by VCN.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
-@cli_util.option('--vcn-id', help=u"""The OCID of the VCN.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--vcn-id', help=u"""The [OCID] of the VCN.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
@@ -5141,8 +5143,8 @@ def list_services(ctx, from_json, all_pages, page_size, limit, page):
 
 
 @subnet_group.command(name=cli_util.override('list_subnets.command_name', 'list'), help=u"""Lists the subnets in the specified VCN and the specified compartment.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
-@cli_util.option('--vcn-id', required=True, help=u"""The OCID of the VCN.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--vcn-id', required=True, help=u"""The [OCID] of the VCN.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
@@ -5208,7 +5210,7 @@ def list_subnets(ctx, from_json, all_pages, page_size, compartment_id, vcn_id, l
 
 
 @vcn_group.command(name=cli_util.override('list_vcns.command_name', 'list'), help=u"""Lists the virtual cloud networks (VCNs) in the specified compartment.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
@@ -5271,7 +5273,7 @@ def list_vcns(ctx, from_json, all_pages, page_size, compartment_id, limit, page,
 
 
 @virtual_circuit_bandwidth_shape_group.command(name=cli_util.override('list_virtual_circuit_bandwidth_shapes.command_name', 'list'), help=u"""The deprecated operation lists available bandwidth levels for virtual circuits. For the compartment ID, provide the OCID of your tenancy (the root compartment).""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
@@ -5345,7 +5347,7 @@ def list_virtual_circuit_public_prefixes(ctx, from_json, all_pages, virtual_circ
 
 
 @virtual_circuit_group.command(name=cli_util.override('list_virtual_circuits.command_name', 'list'), help=u"""Lists the virtual circuits in the specified compartment.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
@@ -5894,6 +5896,8 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--cpe-local-identifier', help=u"""Your identifier for your CPE device. Can be either an IP address or a hostname (specifically, the fully qualified domain name (FQDN)). The type of identifier you provide here must correspond to the value for `cpeLocalIdentifierType`.
 
+For information about why you'd provide this value, see [If Your CPE Is Behind a NAT Device].
+
 Example IP address: `10.0.3.3`
 
 Example hostname: `cpe.example.com`""")
@@ -6062,9 +6066,9 @@ def update_ip_sec_connection_tunnel(ctx, from_json, force, wait_for_state, max_w
 **Important:** If you change the shared secret, the tunnel will go down while it's reprovisioned.""")
 @cli_util.option('--ipsc-id', required=True, help=u"""The OCID of the IPSec connection.""")
 @cli_util.option('--tunnel-id', required=True, help=u"""The [OCID] of the tunnel.""")
-@cli_util.option('--shared-secret', help=u"""The shared secret (pre-shared key) to use for the tunnel.
+@cli_util.option('--shared-secret', help=u"""The shared secret (pre-shared key) to use for the tunnel. Only numbers, letters, and spaces are allowed.
 
-Example: `EXAMPLEToUis6j1c.p8G.dVQxcmdfMO0yXMLi.lZTbYCMDGu4V8o`""")
+Example: `EXAMPLEToUis6j1cp8GdVQxcmdfMO0yXMLilZTbYCMDGu4V8o`""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -6817,7 +6821,7 @@ def update_subnet(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_
 
 
 @vcn_group.command(name=cli_util.override('update_vcn.command_name', 'update'), help=u"""Updates the specified VCN.""")
-@cli_util.option('--vcn-id', required=True, help=u"""The OCID of the VCN.""")
+@cli_util.option('--vcn-id', required=True, help=u"""The [OCID] of the VCN.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)

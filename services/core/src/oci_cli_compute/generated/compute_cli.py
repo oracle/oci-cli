@@ -872,7 +872,7 @@ def create_instance_console_connection(ctx, from_json, wait_for_state, max_wait_
 
 @app_catalog_subscription_group.command(name=cli_util.override('delete_app_catalog_subscription.command_name', 'delete'), help=u"""Delete a subscription for a listing resource version for a compartment.""")
 @cli_util.option('--listing-id', required=True, help=u"""The OCID of the listing.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--resource-version', required=True, help=u"""Listing Resource Version.""")
 @cli_util.confirm_delete_option
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2084,7 +2084,7 @@ def list_app_catalog_listings(ctx, from_json, all_pages, page_size, limit, page,
 
 
 @app_catalog_subscription_group.command(name=cli_util.override('list_app_catalog_subscriptions.command_name', 'list'), help=u"""Lists subscriptions for a compartment.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
@@ -2147,7 +2147,7 @@ def list_app_catalog_subscriptions(ctx, from_json, all_pages, page_size, compart
 @cli_util.option('--availability-domain', required=True, help=u"""The name of the availability domain.
 
 Example: `Uocm:PHX-AD-1`""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
@@ -2205,7 +2205,7 @@ def list_boot_volume_attachments(ctx, from_json, all_pages, page_size, availabil
 
 
 @console_history_group.command(name=cli_util.override('list_console_histories.command_name', 'list'), help=u"""Lists the console history metadata for the specified compartment or instance.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--availability-domain', help=u"""The name of the availability domain.
 
 Example: `Uocm:PHX-AD-1`""")
@@ -2277,7 +2277,7 @@ def list_console_histories(ctx, from_json, all_pages, page_size, compartment_id,
 @image_group.command(name=cli_util.override('list_images.command_name', 'list'), help=u"""Lists the available images in the specified compartment, including both [Oracle-provided images] and [custom images] that have been created. The list of images returned is ordered to first show all Oracle-provided images, then all custom images.
 
 The order of images returned may change when new images are released.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
 @cli_util.option('--operating-system', help=u"""The image's operating system.
 
@@ -2355,7 +2355,7 @@ def list_images(ctx, from_json, all_pages, page_size, compartment_id, display_na
 @instance_console_connection_group.command(name=cli_util.override('list_instance_console_connections.command_name', 'list'), help=u"""Lists the console connections for the specified compartment or instance.
 
 For more information about console access, see [Accessing the Console].""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--instance-id', help=u"""The OCID of the instance.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
@@ -2474,7 +2474,7 @@ def list_instance_devices(ctx, from_json, all_pages, page_size, instance_id, is_
 
 
 @instance_group.command(name=cli_util.override('list_instances.command_name', 'list'), help=u"""Lists the instances in the specified compartment and the specified availability domain. You can filter the results by specifying an instance name (the list will include all the identically-named instances in the compartment).""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--availability-domain', help=u"""The name of the availability domain.
 
 Example: `Uocm:PHX-AD-1`""")
@@ -2544,7 +2544,7 @@ def list_instances(ctx, from_json, all_pages, page_size, compartment_id, availab
 
 
 @shape_group.command(name=cli_util.override('list_shapes.command_name', 'list'), help=u"""Lists the shapes that can be used to launch an instance within the specified compartment. You can filter the list by compatibility with a specific image.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--availability-domain', help=u"""The name of the availability domain.
 
 Example: `Uocm:PHX-AD-1`""")
@@ -2601,7 +2601,7 @@ def list_shapes(ctx, from_json, all_pages, page_size, compartment_id, availabili
 
 
 @vnic_attachment_group.command(name=cli_util.override('list_vnic_attachments.command_name', 'list'), help=u"""Lists the VNIC attachments in the specified compartment. A VNIC attachment resides in the same compartment as the attached instance. The list can be filtered by instance, VNIC, or availability domain.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--availability-domain', help=u"""The name of the availability domain.
 
 Example: `Uocm:PHX-AD-1`""")
@@ -2663,7 +2663,7 @@ def list_vnic_attachments(ctx, from_json, all_pages, page_size, compartment_id, 
 @volume_attachment_group.command(name=cli_util.override('list_volume_attachments.command_name', 'list'), help=u"""Lists the volume attachments in the specified compartment. You can filter the list by specifying an instance OCID, volume OCID, or both.
 
 Currently, the only supported volume attachment type are [IScsiVolumeAttachment] and [ParavirtualizedVolumeAttachment].""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--availability-domain', help=u"""The name of the availability domain.
 
 Example: `Uocm:PHX-AD-1`""")
@@ -2876,6 +2876,12 @@ Example: `My custom Oracle Linux image`""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--operating-system', help=u"""Operating system
+
+Example: `Oracle Linux`""")
+@cli_util.option('--operating-system-version', help=u"""Operating system version
+
+Example: `7.4`""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "IMPORTING", "AVAILABLE", "EXPORTING", "DISABLED", "DELETED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -2886,7 +2892,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'Image'})
 @cli_util.wrap_exceptions
-def update_image(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, image_id, defined_tags, display_name, freeform_tags, if_match):
+def update_image(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, image_id, defined_tags, display_name, freeform_tags, operating_system, operating_system_version, if_match):
 
     if isinstance(image_id, six.string_types) and len(image_id.strip()) == 0:
         raise click.UsageError('Parameter --image-id cannot be whitespace or empty string')
@@ -2909,6 +2915,12 @@ def update_image(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_i
 
     if freeform_tags is not None:
         details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if operating_system is not None:
+        details['operatingSystem'] = operating_system
+
+    if operating_system_version is not None:
+        details['operatingSystemVersion'] = operating_system_version
 
     client = cli_util.build_client('compute', ctx)
     result = client.update_image(

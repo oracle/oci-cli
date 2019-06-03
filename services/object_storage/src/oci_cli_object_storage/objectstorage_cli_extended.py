@@ -1425,7 +1425,8 @@ def restore_status(ctx, from_json, namespace, bucket_name, name):
             # expected format: Literal Z at the end for UTC with milliseconds
             time_of_archival = response.headers['time-of-archival']
             time_of_archival_dt = arrow.get(time_of_archival, 'YYYY-MM-DDTHH:mm:ss.SSS[Z]')
-            time_left = time_delta((time_of_archival_dt - arrow.utcnow()).seconds)
+            diff = time_of_archival_dt - arrow.utcnow()
+            time_left = time_delta(diff.days, diff.seconds)
             msg = "Restored. You have {} to download the restored object before it is once again archived.".format(time_left)
         except arrow.parser.ParserError:
             msg = "Restored. The object will be re-archived at {}.".format(time_of_archival)
@@ -1435,19 +1436,18 @@ def restore_status(ctx, from_json, namespace, bucket_name, name):
     click.echo(msg, file=sys.stderr)
 
 
-def time_delta(seconds):
-    seconds = abs(int(seconds))
-    hours, seconds = divmod(seconds, 3600)
+def time_delta(days, remaning_secs_in_day):
+    hours, seconds = divmod(remaning_secs_in_day, 3600)
     minutes, seconds = divmod(seconds, 60)
-    if hours > 0:
-        if minutes == 0:
-            return '{} hrs'.format(hours)
-        else:
-            return '{} hrs {} mins'.format(hours, minutes)
-    elif minutes > 0:
-        return '{} mins'.format(minutes)
-    else:
+
+    if days == 0 and hours == 0 and minutes == 0:
         return 'less than 1 minute'
+
+    days_str = "1 day" if days == 1 else "{} days".format(days)
+    hours_str = "1 hour" if hours == 1 else "{} hours".format(hours)
+    minutes_str = "1 min" if minutes == 1 else "{} mins".format(minutes)
+
+    return ' '.join([days_str, hours_str, minutes_str])
 
 
 @click.command(name='multipart', cls=CommandGroupWithAlias)

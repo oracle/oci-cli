@@ -219,7 +219,7 @@ Options:
                               
                               Example:
                               `Uocm:PHX-AD-1` [required]
-  -c, --compartment-id TEXT   The OCID of the compartment. [required]
+  -c, --compartment-id TEXT   The [OCID] of the compartment. [required]
   --limit INTEGER             For list pagination. The maximum number of results
                               per page, or items to return in a paginated "List"
                               call. For important details about how pagination
@@ -556,7 +556,7 @@ Usage: oci compute console-history list [OPTIONS]
   instance.
 
 Options:
-  -c, --compartment-id TEXT       The OCID of the compartment. [required]
+  -c, --compartment-id TEXT       The [OCID] of the compartment. [required]
   --availability-domain TEXT      The name of the availability domain.
                                   
                                   Example:
@@ -1542,7 +1542,7 @@ Usage: oci compute image list [OPTIONS]
   The order of images returned may change when new images are released.
 
 Options:
-  -c, --compartment-id TEXT       The OCID of the compartment. [required]
+  -c, --compartment-id TEXT       The [OCID] of the compartment. [required]
   --display-name TEXT             A filter to return only resources that match
                                   the given display name exactly.
   --operating-system TEXT         The image's operating system.
@@ -1678,6 +1678,13 @@ Options:
                                   in
                                   a file, modifying it as needed and then
                                   passing it back in via the file:// syntax.
+  --operating-system TEXT         Operating system
+                                  
+                                  Example: `Oracle Linux`
+  --operating-system-version TEXT
+                                  Operating system version
+                                  
+                                  Example: `7.4`
   --if-match TEXT                 For optimistic concurrency control. In the PUT
                                   or DELETE call for a resource, set the `if-
                                   match` parameter to the value of the etag from
@@ -2457,7 +2464,7 @@ Usage: oci compute instance list [OPTIONS]
   compartment).
 
 Options:
-  -c, --compartment-id TEXT       The OCID of the compartment. [required]
+  -c, --compartment-id TEXT       The [OCID] of the compartment. [required]
   --availability-domain TEXT      The name of the availability domain.
                                   
                                   Example:
@@ -3150,7 +3157,7 @@ Usage: oci compute instance-console-connection list [OPTIONS]
   For more information about console access, see [Accessing the Console].
 
 Options:
-  -c, --compartment-id TEXT  The OCID of the compartment. [required]
+  -c, --compartment-id TEXT  The [OCID] of the compartment. [required]
   --instance-id TEXT         The OCID of the instance.
   --limit INTEGER            For list pagination. The maximum number of results
                              per page, or items to return in a paginated "List"
@@ -3496,7 +3503,7 @@ Usage: oci compute pic subscription delete [OPTIONS]
 
 Options:
   --listing-id TEXT          The OCID of the listing. [required]
-  -c, --compartment-id TEXT  The OCID of the compartment. [required]
+  -c, --compartment-id TEXT  The [OCID] of the compartment. [required]
   --resource-version TEXT    Listing Resource Version. [required]
   --force                    Perform deletion without prompting for
                              confirmation.
@@ -3533,7 +3540,7 @@ Usage: oci compute pic subscription list [OPTIONS]
   Lists subscriptions for a compartment.
 
 Options:
-  -c, --compartment-id TEXT       The OCID of the compartment. [required]
+  -c, --compartment-id TEXT       The [OCID] of the compartment. [required]
   --limit INTEGER                 For list pagination. The maximum number of
                                   results per page, or items to return in a
                                   paginated "List" call. For important details
@@ -3728,7 +3735,7 @@ Usage: oci compute shape list [OPTIONS]
   compartment. You can filter the list by compatibility with a specific image.
 
 Options:
-  -c, --compartment-id TEXT   The OCID of the compartment. [required]
+  -c, --compartment-id TEXT   The [OCID] of the compartment. [required]
   --availability-domain TEXT  The name of the availability domain.
                               
                               Example:
@@ -3838,7 +3845,7 @@ Usage: oci compute vnic-attachment list [OPTIONS]
   filtered by instance, VNIC, or availability domain.
 
 Options:
-  -c, --compartment-id TEXT   The OCID of the compartment. [required]
+  -c, --compartment-id TEXT   The [OCID] of the compartment. [required]
   --availability-domain TEXT  The name of the availability domain.
                               
                               Example:
@@ -3908,6 +3915,7 @@ Options:
 
 Commands:
   attach                         Attaches the specified storage volume to the...
+  attach-iscsi-volume            Attaches the specified storage volume to the...
   attach-paravirtualized-volume  Attaches the specified storage volume to the...
   detach                         Detaches a storage volume from an instance.
   get                            Gets information about the specified volume...
@@ -3932,6 +3940,68 @@ Options:
                                   entering confidential information.
   --is-read-only BOOLEAN          Whether the attachment was created in read-
                                   only mode.
+  --wait-for-state [ATTACHING|ATTACHED|DETACHING|DETACHED]
+                                  This operation creates, modifies or deletes a
+                                  resource that has a defined lifecycle state.
+                                  Specify this option to perform the action and
+                                  then wait until the resource reaches a given
+                                  lifecycle state. If timeout is reached, a
+                                  return code of 2 is returned. For any other
+                                  error, a return code of 1 is returned.
+  --max-wait-seconds INTEGER      The maximum time to wait for the resource to
+                                  reach the lifecycle state defined by --wait-
+                                  for-state. Defaults to 1200 seconds.
+  --wait-interval-seconds INTEGER
+                                  Check every --wait-interval-seconds to see
+                                  whether the resource to see if it has reached
+                                  the lifecycle state defined by --wait-for-
+                                  state. Defaults to 30 seconds.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file using the file://path-
+                                  to/file syntax.
+                                  
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci compute volume-attachment attach-iscsi-volume --help
+Usage: oci compute volume-attachment attach-iscsi-volume [OPTIONS]
+
+  Attaches the specified storage volume to the specified instance.
+
+Options:
+  --instance-id TEXT              The OCID of the instance. [required]
+  --volume-id TEXT                The OCID of the volume. [required]
+  --device TEXT                   The device name.
+  --display-name TEXT             A user-friendly name. Does not have to be
+                                  unique, and it cannot be changed. Avoid
+                                  entering confidential information.
+  --is-read-only BOOLEAN          Whether the attachment was created in read-
+                                  only mode.
+  --use-chap BOOLEAN              Whether to use CHAP authentication for the
+                                  volume attachment. Defaults to false.
   --wait-for-state [ATTACHING|ATTACHED|DETACHING|DETACHED]
                                   This operation creates, modifies or deletes a
                                   resource that has a defined lifecycle state.
@@ -4154,7 +4224,7 @@ Usage: oci compute volume-attachment list [OPTIONS]
   [IScsiVolumeAttachment] and [ParavirtualizedVolumeAttachment].
 
 Options:
-  -c, --compartment-id TEXT   The OCID of the compartment. [required]
+  -c, --compartment-id TEXT   The [OCID] of the compartment. [required]
   --availability-domain TEXT  The name of the availability domain.
                               
                               Example:

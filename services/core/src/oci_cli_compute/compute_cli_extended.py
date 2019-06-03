@@ -44,7 +44,8 @@ compute_cli.compute_root_group.add_command(compute_cli.volume_attachment_group)
 # Disabling subclass commands
 compute_cli.volume_attachment_group.commands.pop(compute_cli.attach_volume_attach_service_determined_volume_details.name)
 compute_cli.volume_attachment_group.commands.pop(compute_cli.attach_volume_attach_emulated_volume_details.name)
-compute_cli.volume_attachment_group.commands.pop(compute_cli.attach_volume_attach_i_scsi_volume_details.name)
+
+cli_util.rename_command(compute_cli.volume_attachment_group, compute_cli.attach_volume_attach_i_scsi_volume_details, 'attach-iscsi-volume')
 
 compute_cli.compute_root_group.add_command(compute_cli.console_history_group)
 cli_util.rename_command(compute_cli.console_history_group, compute_cli.get_console_history_content, "get-content")
@@ -357,7 +358,7 @@ def list_vnics(ctx, from_json, instance_id, limit, page, all_pages, page_size):
 @cli_util.option('--source-boot-volume-id', help="""The OCID of the boot volume used to boot the instance. This is a shortcut for specifying a boot volume source via the --source-details complex JSON parameter. If this parameter is provided, you cannot provide the --source-details or --image-id parameters.""")
 @cli_util.option('--boot-volume-size-in-gbs', type=click.INT, help="""The size of the boot volume in GBs. Minimum value is 50 GB and maximum value is 16384 GB (16TB). This is a shortcut for specifying a boot volume size via the --source-details complex JSON parameter. If this parameter is provided, you cannot provide the --source-details or --source-boot-volume-id parameters.""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}}, output_type={'module': 'core', 'class': 'Instance'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
 def launch_instance_extended(ctx, **kwargs):
     metadata = {}
