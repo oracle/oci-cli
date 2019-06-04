@@ -24,6 +24,7 @@ SCALED_CPU="2"
 SCALED_STORAGE="2"
 STORAGE="1"
 LICENSE_TYPE="LICENSE_INCLUDED"
+AUTO_SCALE=true
 
 
 ##############################################################################AutonomousDataWarehouse##############################################################################
@@ -109,10 +110,10 @@ echo 'Update Autonomous Transaction Processing DisplayName'
 oci db autonomous-database update --autonomous-database-id $ADB_ID --display-name $DISPLAY_NAME2
 echo 'Updated Autonomous Transaction Processing DisplayName'
 
-echo 'Update Autonomous Transaction Processing cpuCoreCount and storage'
-oci db autonomous-database update --autonomous-database-id $ADB_ID --data-storage-size-in-tbs $SCALED_STORAGE \
+echo 'Update Autonomous Transaction Processing cpuCoreCount, storage and auto scale '
+oci db autonomous-database update --autonomous-database-id $ADB_ID --data-storage-size-in-tbs $SCALED_STORAGE --is-auto-scaling-enabled $AUTO_SCALE \
                 --cpu-core-count $SCALED_CPU --wait-for-state AVAILABLE
-echo 'Updated Autonomous Transaction Processing cpuCoreCount and storageSize'
+echo 'Updated Autonomous Transaction Processing cpuCoreCount, storageSize and auto scale'
 
 echo 'Generate and download AutonomousDatabase wallet'
 oci db autonomous-database generate-wallet --autonomous-database-id $ADB_ID --password $PASSWORD1 --file  wallet_adb.zip

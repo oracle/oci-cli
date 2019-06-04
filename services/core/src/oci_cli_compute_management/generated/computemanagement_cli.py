@@ -426,7 +426,7 @@ def launch_instance_configuration_compute_instance_details(ctx, from_json, insta
 
 
 @instance_configuration_group.command(name=cli_util.override('list_instance_configurations.command_name', 'list'), help=u"""Lists the available instanceConfigurations in the specific compartment.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
@@ -483,7 +483,7 @@ def list_instance_configurations(ctx, from_json, all_pages, page_size, compartme
 
 
 @instance_group.command(name=cli_util.override('list_instance_pool_instances.command_name', 'list-instance-pool-instances'), help=u"""List the instances in the specified instance pool.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--instance-pool-id', required=True, help=u"""The OCID of the instance pool.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
@@ -550,7 +550,7 @@ def list_instance_pool_instances(ctx, from_json, all_pages, page_size, compartme
 
 
 @instance_pool_group.command(name=cli_util.override('list_instance_pools.command_name', 'list'), help=u"""Lists the instance pools in the specified compartment.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 

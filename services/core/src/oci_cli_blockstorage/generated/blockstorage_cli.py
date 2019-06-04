@@ -1347,7 +1347,7 @@ def get_volume_kms_key(ctx, from_json, volume_id, if_match):
 
 
 @boot_volume_backup_group.command(name=cli_util.override('list_boot_volume_backups.command_name', 'list'), help=u"""Lists the boot volume backups in the specified compartment. You can filter the results by boot volume.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--boot-volume-id', help=u"""The OCID of the boot volume.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
@@ -1416,7 +1416,7 @@ def list_boot_volume_backups(ctx, from_json, all_pages, page_size, compartment_i
 @cli_util.option('--availability-domain', required=True, help=u"""The name of the availability domain.
 
 Example: `Uocm:PHX-AD-1`""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
@@ -1516,7 +1516,7 @@ def list_volume_backup_policies(ctx, from_json, all_pages, page_size, limit, pag
 
 
 @volume_backup_group.command(name=cli_util.override('list_volume_backups.command_name', 'list'), help=u"""Lists the volume backups in the specified compartment. You can filter the results by volume.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--volume-id', help=u"""The OCID of the volume.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
@@ -1585,7 +1585,7 @@ def list_volume_backups(ctx, from_json, all_pages, page_size, compartment_id, vo
 
 
 @volume_group_backup_group.command(name=cli_util.override('list_volume_group_backups.command_name', 'list'), help=u"""Lists the volume group backups in the specified compartment. You can filter the results by volume group. For more information, see [Volume Groups].""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--volume-group-id', help=u"""The OCID of the volume group.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
@@ -1648,7 +1648,7 @@ def list_volume_group_backups(ctx, from_json, all_pages, page_size, compartment_
 
 
 @volume_group_group.command(name=cli_util.override('list_volume_groups.command_name', 'list'), help=u"""Lists the volume groups in the specified compartment and availability domain. For more information, see [Volume Groups].""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--availability-domain', help=u"""The name of the availability domain.
 
 Example: `Uocm:PHX-AD-1`""")
@@ -1718,7 +1718,7 @@ def list_volume_groups(ctx, from_json, all_pages, page_size, compartment_id, ava
 
 
 @volume_group.command(name=cli_util.override('list_volumes.command_name', 'list'), help=u"""Lists the volumes in the specified compartment and availability domain.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--availability-domain', help=u"""The name of the availability domain.
 
 Example: `Uocm:PHX-AD-1`""")

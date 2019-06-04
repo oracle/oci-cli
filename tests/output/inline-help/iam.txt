@@ -3325,6 +3325,7 @@ Options:
 
 Commands:
   create              Create new tag in a given tagNamespace
+  delete              Deletes the the specified tag definition.
   get                 Gets the specified tags information
   list                List tags in a given tagNamespace
   list-cost-tracking  Lists all the tags enabled for cost-tracking...
@@ -3352,79 +3353,161 @@ Usage: oci iam tag create [OPTIONS]
   unique, and you can change it with [UpdateTag].
 
 Options:
-  --tag-namespace-id TEXT       The OCID of the tag namespace. [required]
-  --name TEXT                   The name you assign to the tag during creation.
-                                The name must be unique within the tag namespace
-                                and cannot be changed. [required]
-  --description TEXT            The description you assign to the tag during
-                                creation. [required]
-  --freeform-tags COMPLEX TYPE  Free-form tags for this resource. Each tag is a
-                                simple key-value pair with no predefined name,
-                                type, or namespace. For more information, see
-                                [Resource Tags]. Example: `{"Department":
-                                "Finance"}`
-                                This is a complex type whose value
-                                must be valid JSON. The value can be provided as
-                                a string on the command line or passed in as a
-                                file using
-                                the file://path/to/file syntax.
-                                
-                                The
-                                --generate-param-json-input option can be used
-                                to generate an example of the JSON which must be
-                                provided. We recommend storing this example
-                                in a
-                                file, modifying it as needed and then passing it
-                                back in via the file:// syntax.
-  --defined-tags COMPLEX TYPE   Defined tags for this resource. Each key is
-                                predefined and scoped to a namespace. For more
-                                information, see [Resource Tags]. Example:
-                                `{"Operations": {"CostCenter": "42"}}`
-                                This is a
-                                complex type whose value must be valid JSON. The
-                                value can be provided as a string on the command
-                                line or passed in as a file using
-                                the
-                                file://path/to/file syntax.
-                                
-                                The --generate-
-                                param-json-input option can be used to generate
-                                an example of the JSON which must be provided.
-                                We recommend storing this example
-                                in a file,
-                                modifying it as needed and then passing it back
-                                in via the file:// syntax.
-  --is-cost-tracking BOOLEAN    Indicates whether the tag is enabled for cost
-                                tracking.
-  --from-json TEXT              Provide input to this command as a JSON document
-                                from a file using the file://path-to/file
-                                syntax.
-                                
-                                The --generate-full-command-json-input
-                                option can be used to generate a sample json
-                                file to be used with this command option. The
-                                key names are pre-populated and match the
-                                command option names (converted to camelCase
-                                format, e.g. compartment-id --> compartmentId),
-                                while the values of the keys need to be
-                                populated by the user before using the sample
-                                file as an input to this command. For any
-                                command option that accepts multiple values, the
-                                value of the key can be a JSON array.
-                                
-                                Options
-                                can still be provided on the command line. If an
-                                option exists in both the JSON document and the
-                                command line then the command line specified
-                                value will be used.
-                                
-                                For examples on usage of
-                                this option, please see our "using CLI with
-                                advanced JSON options" link: https://docs.cloud.
-                                oracle.com/iaas/Content/API/SDKDocs/cliusing.htm
-                                #AdvancedJSONOptions
-  -?, -h, --help                For detailed help on any of these individual
-                                commands, enter <command> --help.
+  --tag-namespace-id TEXT         The OCID of the tag namespace. [required]
+  --name TEXT                     The name you assign to the tag during
+                                  creation. The name must be unique within the
+                                  tag namespace and cannot be changed.
+                                  [required]
+  --description TEXT              The description you assign to the tag during
+                                  creation. [required]
+  --freeform-tags COMPLEX TYPE    Free-form tags for this resource. Each tag is
+                                  a simple key-value pair with no predefined
+                                  name, type, or namespace. For more
+                                  information, see [Resource Tags]. Example:
+                                  `{"Department": "Finance"}`
+                                  This is a complex
+                                  type whose value must be valid JSON. The value
+                                  can be provided as a string on the command
+                                  line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+  --defined-tags COMPLEX TYPE     Defined tags for this resource. Each key is
+                                  predefined and scoped to a namespace. For more
+                                  information, see [Resource Tags]. Example:
+                                  `{"Operations": {"CostCenter": "42"}}`
+                                  This is
+                                  a complex type whose value must be valid JSON.
+                                  The value can be provided as a string on the
+                                  command line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+  --is-cost-tracking BOOLEAN      Indicates whether the tag is enabled for cost
+                                  tracking.
+  --wait-for-state [ACTIVE|INACTIVE|DELETING|DELETED]
+                                  This operation creates, modifies or deletes a
+                                  resource that has a defined lifecycle state.
+                                  Specify this option to perform the action and
+                                  then wait until the resource reaches a given
+                                  lifecycle state. If timeout is reached, a
+                                  return code of 2 is returned. For any other
+                                  error, a return code of 1 is returned.
+  --max-wait-seconds INTEGER      The maximum time to wait for the resource to
+                                  reach the lifecycle state defined by --wait-
+                                  for-state. Defaults to 1200 seconds.
+  --wait-interval-seconds INTEGER
+                                  Check every --wait-interval-seconds to see
+                                  whether the resource to see if it has reached
+                                  the lifecycle state defined by --wait-for-
+                                  state. Defaults to 30 seconds.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file using the file://path-
+                                  to/file syntax.
+                                  
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci iam tag delete --help
+Usage: oci iam tag delete [OPTIONS]
+
+  Deletes the the specified tag definition.
+
+Options:
+  --tag-namespace-id TEXT         The OCID of the tag namespace. [required]
+  --tag-name TEXT                 The name of the tag. [required]
+  --if-match TEXT                 For optimistic concurrency control. In the PUT
+                                  or DELETE call for a resource, set the `if-
+                                  match` parameter to the value of the etag from
+                                  a previous GET or POST response for that
+                                  resource.  The resource will be updated or
+                                  deleted only if the etag you provide matches
+                                  the resource's current etag value.
+  --force                         Perform deletion without prompting for
+                                  confirmation.
+  --wait-for-state [ACCEPTED|IN_PROGRESS|FAILED|SUCCEEDED|CANCELING|CANCELED]
+                                  This operation asynchronously creates,
+                                  modifies or deletes a resource and uses a work
+                                  request to track the progress of the
+                                  operation. Specify this option to perform the
+                                  action and then wait until the work request
+                                  reaches a certain state. If timeout is
+                                  reached, a return code of 2 is returned. For
+                                  any other error, a return code of 1 is
+                                  returned.
+  --max-wait-seconds INTEGER      The maximum time to wait for the work request
+                                  to reach the state defined by --wait-for-
+                                  state. Defaults to 1200 seconds.
+  --wait-interval-seconds INTEGER
+                                  Check every --wait-interval-seconds to see
+                                  whether the work request to see if it has
+                                  reached the state defined by --wait-for-state.
+                                  Defaults to 30 seconds.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file using the file://path-
+                                  to/file syntax.
+                                  
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci iam tag get --help
@@ -3470,43 +3553,49 @@ Usage: oci iam tag list [OPTIONS]
   Lists the tag definitions in the specified tag namespace.
 
 Options:
-  --tag-namespace-id TEXT  The OCID of the tag namespace. [required]
-  --page TEXT              The value of the `opc-next-page` response header from
-                           the previous "List" call.
-  --limit INTEGER          The maximum number of items to return in a paginated
-                           "List" call.
-  --all                    Fetches all pages of results. If you provide this
-                           option, then you cannot provide the --limit option.
-  --page-size INTEGER      When fetching results, the number of results to fetch
-                           per call. Only valid when used with --all or --limit,
-                           and ignored otherwise.
-  --from-json TEXT         Provide input to this command as a JSON document from
-                           a file using the file://path-to/file syntax.
-                           
-                           The
-                           --generate-full-command-json-input option can be used
-                           to generate a sample json file to be used with this
-                           command option. The key names are pre-populated and
-                           match the command option names (converted to
-                           camelCase format, e.g. compartment-id -->
-                           compartmentId), while the values of the keys need to
-                           be populated by the user before using the sample file
-                           as an input to this command. For any command option
-                           that accepts multiple values, the value of the key
-                           can be a JSON array.
-                           
-                           Options can still be provided
-                           on the command line. If an option exists in both the
-                           JSON document and the command line then the command
-                           line specified value will be used.
-                           
-                           For examples on
-                           usage of this option, please see our "using CLI with
-                           advanced JSON options" link: https://docs.cloud.oracl
-                           e.com/iaas/Content/API/SDKDocs/cliusing.htm#AdvancedJ
-                           SONOptions
-  -?, -h, --help           For detailed help on any of these individual
-                           commands, enter <command> --help.
+  --tag-namespace-id TEXT         The OCID of the tag namespace. [required]
+  --page TEXT                     The value of the `opc-next-page` response
+                                  header from the previous "List" call.
+  --limit INTEGER                 The maximum number of items to return in a
+                                  paginated "List" call.
+  --lifecycle-state [ACTIVE|INACTIVE|DELETING|DELETED]
+                                  A filter to only return resources that match
+                                  the given lifecycle state.  The state value is
+                                  case-insensitive.
+  --all                           Fetches all pages of results. If you provide
+                                  this option, then you cannot provide the
+                                  --limit option.
+  --page-size INTEGER             When fetching results, the number of results
+                                  to fetch per call. Only valid when used with
+                                  --all or --limit, and ignored otherwise.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file using the file://path-
+                                  to/file syntax.
+                                  
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci iam tag list-cost-tracking --help
@@ -3638,79 +3727,102 @@ Usage: oci iam tag update [OPTIONS]
   Updates the the specified tag
 
 Options:
-  --tag-namespace-id TEXT       The OCID of the tag namespace. [required]
-  --tag-name TEXT               The name of the tag. [required]
-  --description TEXT            The description you assign to the tag during
-                                creation.
-  --freeform-tags COMPLEX TYPE  Free-form tags for this resource. Each tag is a
-                                simple key-value pair with no predefined name,
-                                type, or namespace. For more information, see
-                                [Resource Tags]. Example: `{"Department":
-                                "Finance"}`
-                                This is a complex type whose value
-                                must be valid JSON. The value can be provided as
-                                a string on the command line or passed in as a
-                                file using
-                                the file://path/to/file syntax.
-                                
-                                The
-                                --generate-param-json-input option can be used
-                                to generate an example of the JSON which must be
-                                provided. We recommend storing this example
-                                in a
-                                file, modifying it as needed and then passing it
-                                back in via the file:// syntax.
-  --defined-tags COMPLEX TYPE   Defined tags for this resource. Each key is
-                                predefined and scoped to a namespace. For more
-                                information, see [Resource Tags]. Example:
-                                `{"Operations": {"CostCenter": "42"}}`
-                                This is a
-                                complex type whose value must be valid JSON. The
-                                value can be provided as a string on the command
-                                line or passed in as a file using
-                                the
-                                file://path/to/file syntax.
-                                
-                                The --generate-
-                                param-json-input option can be used to generate
-                                an example of the JSON which must be provided.
-                                We recommend storing this example
-                                in a file,
-                                modifying it as needed and then passing it back
-                                in via the file:// syntax.
-  --is-cost-tracking BOOLEAN    Indicates whether the tag is enabled for cost
-                                tracking.
-  --force                       Perform update without prompting for
-                                confirmation.
-  --from-json TEXT              Provide input to this command as a JSON document
-                                from a file using the file://path-to/file
-                                syntax.
-                                
-                                The --generate-full-command-json-input
-                                option can be used to generate a sample json
-                                file to be used with this command option. The
-                                key names are pre-populated and match the
-                                command option names (converted to camelCase
-                                format, e.g. compartment-id --> compartmentId),
-                                while the values of the keys need to be
-                                populated by the user before using the sample
-                                file as an input to this command. For any
-                                command option that accepts multiple values, the
-                                value of the key can be a JSON array.
-                                
-                                Options
-                                can still be provided on the command line. If an
-                                option exists in both the JSON document and the
-                                command line then the command line specified
-                                value will be used.
-                                
-                                For examples on usage of
-                                this option, please see our "using CLI with
-                                advanced JSON options" link: https://docs.cloud.
-                                oracle.com/iaas/Content/API/SDKDocs/cliusing.htm
-                                #AdvancedJSONOptions
-  -?, -h, --help                For detailed help on any of these individual
-                                commands, enter <command> --help.
+  --tag-namespace-id TEXT         The OCID of the tag namespace. [required]
+  --tag-name TEXT                 The name of the tag. [required]
+  --description TEXT              The description you assign to the tag during
+                                  creation.
+  --freeform-tags COMPLEX TYPE    Free-form tags for this resource. Each tag is
+                                  a simple key-value pair with no predefined
+                                  name, type, or namespace. For more
+                                  information, see [Resource Tags]. Example:
+                                  `{"Department": "Finance"}`
+                                  This is a complex
+                                  type whose value must be valid JSON. The value
+                                  can be provided as a string on the command
+                                  line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+  --defined-tags COMPLEX TYPE     Defined tags for this resource. Each key is
+                                  predefined and scoped to a namespace. For more
+                                  information, see [Resource Tags]. Example:
+                                  `{"Operations": {"CostCenter": "42"}}`
+                                  This is
+                                  a complex type whose value must be valid JSON.
+                                  The value can be provided as a string on the
+                                  command line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+  --is-cost-tracking BOOLEAN      Indicates whether the tag is enabled for cost
+                                  tracking.
+  --if-match TEXT                 For optimistic concurrency control. In the PUT
+                                  or DELETE call for a resource, set the `if-
+                                  match` parameter to the value of the etag from
+                                  a previous GET or POST response for that
+                                  resource.  The resource will be updated or
+                                  deleted only if the etag you provide matches
+                                  the resource's current etag value.
+  --force                         Perform update without prompting for
+                                  confirmation.
+  --wait-for-state [ACTIVE|INACTIVE|DELETING|DELETED]
+                                  This operation creates, modifies or deletes a
+                                  resource that has a defined lifecycle state.
+                                  Specify this option to perform the action and
+                                  then wait until the resource reaches a given
+                                  lifecycle state. If timeout is reached, a
+                                  return code of 2 is returned. For any other
+                                  error, a return code of 1 is returned.
+  --max-wait-seconds INTEGER      The maximum time to wait for the resource to
+                                  reach the lifecycle state defined by --wait-
+                                  for-state. Defaults to 1200 seconds.
+  --wait-interval-seconds INTEGER
+                                  Check every --wait-interval-seconds to see
+                                  whether the resource to see if it has reached
+                                  the lifecycle state defined by --wait-for-
+                                  state. Defaults to 30 seconds.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file using the file://path-
+                                  to/file syntax.
+                                  
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci iam tag-default --help
@@ -3739,7 +3851,7 @@ Commands:
   delete  Deletes the the specified tag default.
   get     Retrieves the specified tag default.
   list    Lists the tag defaults for tag definitions in...
-  update  Updates the the specified tag default.
+  update  Updates the specified tag default.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci iam tag-default create --help
@@ -3952,7 +4064,7 @@ Options:
 $ oci iam tag-default update --help
 Usage: oci iam tag-default update [OPTIONS]
 
-  Updates the the specified tag default. You can update the following field:
+  Updates the specified tag default. You can update the following field:
   `value`.
 
 Options:
@@ -4026,6 +4138,7 @@ Options:
 Commands:
   change-compartment  Moves the specified tag namespace to the...
   create              Create new tagNamespace in a compartment
+  delete              Delete the specified tag namespace.
   get                 Get a tagNamespaces information
   list                List the tagNamespaces in a compartment
   reactivate          Reactivate namespace (only)
@@ -4100,79 +4213,159 @@ Usage: oci iam tag-namespace create [OPTIONS]
   Definitions and Namespace Definitions] for more information.
 
 Options:
-  -c, --compartment-id TEXT     The OCID of the tenancy containing the tag
-                                namespace. [required]
-  --name TEXT                   The name you assign to the tag namespace during
-                                creation. It must be unique across all tag
-                                namespaces in the tenancy and cannot be changed.
-                                [required]
-  --description TEXT            The description you assign to the tag namespace
-                                during creation. [required]
-  --freeform-tags COMPLEX TYPE  Free-form tags for this resource. Each tag is a
-                                simple key-value pair with no predefined name,
-                                type, or namespace. For more information, see
-                                [Resource Tags]. Example: `{"Department":
-                                "Finance"}`
-                                This is a complex type whose value
-                                must be valid JSON. The value can be provided as
-                                a string on the command line or passed in as a
-                                file using
-                                the file://path/to/file syntax.
-                                
-                                The
-                                --generate-param-json-input option can be used
-                                to generate an example of the JSON which must be
-                                provided. We recommend storing this example
-                                in a
-                                file, modifying it as needed and then passing it
-                                back in via the file:// syntax.
-  --defined-tags COMPLEX TYPE   Defined tags for this resource. Each key is
-                                predefined and scoped to a namespace. For more
-                                information, see [Resource Tags]. Example:
-                                `{"Operations": {"CostCenter": "42"}}`
-                                This is a
-                                complex type whose value must be valid JSON. The
-                                value can be provided as a string on the command
-                                line or passed in as a file using
-                                the
-                                file://path/to/file syntax.
-                                
-                                The --generate-
-                                param-json-input option can be used to generate
-                                an example of the JSON which must be provided.
-                                We recommend storing this example
-                                in a file,
-                                modifying it as needed and then passing it back
-                                in via the file:// syntax.
-  --from-json TEXT              Provide input to this command as a JSON document
-                                from a file using the file://path-to/file
-                                syntax.
-                                
-                                The --generate-full-command-json-input
-                                option can be used to generate a sample json
-                                file to be used with this command option. The
-                                key names are pre-populated and match the
-                                command option names (converted to camelCase
-                                format, e.g. compartment-id --> compartmentId),
-                                while the values of the keys need to be
-                                populated by the user before using the sample
-                                file as an input to this command. For any
-                                command option that accepts multiple values, the
-                                value of the key can be a JSON array.
-                                
-                                Options
-                                can still be provided on the command line. If an
-                                option exists in both the JSON document and the
-                                command line then the command line specified
-                                value will be used.
-                                
-                                For examples on usage of
-                                this option, please see our "using CLI with
-                                advanced JSON options" link: https://docs.cloud.
-                                oracle.com/iaas/Content/API/SDKDocs/cliusing.htm
-                                #AdvancedJSONOptions
-  -?, -h, --help                For detailed help on any of these individual
-                                commands, enter <command> --help.
+  -c, --compartment-id TEXT       The OCID of the tenancy containing the tag
+                                  namespace. [required]
+  --name TEXT                     The name you assign to the tag namespace
+                                  during creation. It must be unique across all
+                                  tag namespaces in the tenancy and cannot be
+                                  changed. [required]
+  --description TEXT              The description you assign to the tag
+                                  namespace during creation. [required]
+  --freeform-tags COMPLEX TYPE    Free-form tags for this resource. Each tag is
+                                  a simple key-value pair with no predefined
+                                  name, type, or namespace. For more
+                                  information, see [Resource Tags]. Example:
+                                  `{"Department": "Finance"}`
+                                  This is a complex
+                                  type whose value must be valid JSON. The value
+                                  can be provided as a string on the command
+                                  line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+  --defined-tags COMPLEX TYPE     Defined tags for this resource. Each key is
+                                  predefined and scoped to a namespace. For more
+                                  information, see [Resource Tags]. Example:
+                                  `{"Operations": {"CostCenter": "42"}}`
+                                  This is
+                                  a complex type whose value must be valid JSON.
+                                  The value can be provided as a string on the
+                                  command line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+  --wait-for-state [ACTIVE|INACTIVE|DELETING|DELETED]
+                                  This operation creates, modifies or deletes a
+                                  resource that has a defined lifecycle state.
+                                  Specify this option to perform the action and
+                                  then wait until the resource reaches a given
+                                  lifecycle state. If timeout is reached, a
+                                  return code of 2 is returned. For any other
+                                  error, a return code of 1 is returned.
+  --max-wait-seconds INTEGER      The maximum time to wait for the resource to
+                                  reach the lifecycle state defined by --wait-
+                                  for-state. Defaults to 1200 seconds.
+  --wait-interval-seconds INTEGER
+                                  Check every --wait-interval-seconds to see
+                                  whether the resource to see if it has reached
+                                  the lifecycle state defined by --wait-for-
+                                  state. Defaults to 30 seconds.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file using the file://path-
+                                  to/file syntax.
+                                  
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci iam tag-namespace delete --help
+Usage: oci iam tag-namespace delete [OPTIONS]
+
+  Delete the specified tag namespace. Only an empty tagnamespace can be
+  deleted. If the tag namespace you are trying to delete is not empty, please
+  remove tag definitions from it first.
+
+Options:
+  --tag-namespace-id TEXT         The OCID of the tag namespace. [required]
+  --if-match TEXT                 For optimistic concurrency control. In the PUT
+                                  or DELETE call for a resource, set the `if-
+                                  match` parameter to the value of the etag from
+                                  a previous GET or POST response for that
+                                  resource.  The resource will be updated or
+                                  deleted only if the etag you provide matches
+                                  the resource's current etag value.
+  --force                         Perform deletion without prompting for
+                                  confirmation.
+  --wait-for-state [ACTIVE|INACTIVE|DELETING|DELETED]
+                                  This operation creates, modifies or deletes a
+                                  resource that has a defined lifecycle state.
+                                  Specify this option to perform the action and
+                                  then wait until the resource reaches a given
+                                  lifecycle state. If timeout is reached, a
+                                  return code of 2 is returned. For any other
+                                  error, a return code of 1 is returned.
+  --max-wait-seconds INTEGER      The maximum time to wait for the resource to
+                                  reach the lifecycle state defined by --wait-
+                                  for-state. Defaults to 1200 seconds.
+  --wait-interval-seconds INTEGER
+                                  Check every --wait-interval-seconds to see
+                                  whether the resource to see if it has reached
+                                  the lifecycle state defined by --wait-for-
+                                  state. Defaults to 30 seconds.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file using the file://path-
+                                  to/file syntax.
+                                  
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci iam tag-namespace get --help
@@ -4230,6 +4423,10 @@ Options:
                                   subcompartments. If this parameter is not
                                   specified, only the tag namespaces defined in
                                   the specified compartment are retrieved.
+  --lifecycle-state [ACTIVE|INACTIVE|DELETING|DELETED]
+                                  A filter to only return resources that match
+                                  the given lifecycle state.  The state value is
+                                  case-insensitive.
   --all                           Fetches all pages of results. If you provide
                                   this option, then you cannot provide the
                                   --limit option.
@@ -4350,75 +4547,92 @@ Usage: oci iam tag-namespace update [OPTIONS]
   Updates the specified tagNamespace
 
 Options:
-  --tag-namespace-id TEXT       The OCID of the tag namespace. [required]
-  --description TEXT            The description you assign to the tag namespace.
-  --freeform-tags COMPLEX TYPE  Free-form tags for this resource. Each tag is a
-                                simple key-value pair with no predefined name,
-                                type, or namespace. For more information, see
-                                [Resource Tags]. Example: `{"Department":
-                                "Finance"}`
-                                This is a complex type whose value
-                                must be valid JSON. The value can be provided as
-                                a string on the command line or passed in as a
-                                file using
-                                the file://path/to/file syntax.
-                                
-                                The
-                                --generate-param-json-input option can be used
-                                to generate an example of the JSON which must be
-                                provided. We recommend storing this example
-                                in a
-                                file, modifying it as needed and then passing it
-                                back in via the file:// syntax.
-  --defined-tags COMPLEX TYPE   Defined tags for this resource. Each key is
-                                predefined and scoped to a namespace. For more
-                                information, see [Resource Tags]. Example:
-                                `{"Operations": {"CostCenter": "42"}}`
-                                This is a
-                                complex type whose value must be valid JSON. The
-                                value can be provided as a string on the command
-                                line or passed in as a file using
-                                the
-                                file://path/to/file syntax.
-                                
-                                The --generate-
-                                param-json-input option can be used to generate
-                                an example of the JSON which must be provided.
-                                We recommend storing this example
-                                in a file,
-                                modifying it as needed and then passing it back
-                                in via the file:// syntax.
-  --force                       Perform update without prompting for
-                                confirmation.
-  --from-json TEXT              Provide input to this command as a JSON document
-                                from a file using the file://path-to/file
-                                syntax.
-                                
-                                The --generate-full-command-json-input
-                                option can be used to generate a sample json
-                                file to be used with this command option. The
-                                key names are pre-populated and match the
-                                command option names (converted to camelCase
-                                format, e.g. compartment-id --> compartmentId),
-                                while the values of the keys need to be
-                                populated by the user before using the sample
-                                file as an input to this command. For any
-                                command option that accepts multiple values, the
-                                value of the key can be a JSON array.
-                                
-                                Options
-                                can still be provided on the command line. If an
-                                option exists in both the JSON document and the
-                                command line then the command line specified
-                                value will be used.
-                                
-                                For examples on usage of
-                                this option, please see our "using CLI with
-                                advanced JSON options" link: https://docs.cloud.
-                                oracle.com/iaas/Content/API/SDKDocs/cliusing.htm
-                                #AdvancedJSONOptions
-  -?, -h, --help                For detailed help on any of these individual
-                                commands, enter <command> --help.
+  --tag-namespace-id TEXT         The OCID of the tag namespace. [required]
+  --description TEXT              The description you assign to the tag
+                                  namespace.
+  --freeform-tags COMPLEX TYPE    Free-form tags for this resource. Each tag is
+                                  a simple key-value pair with no predefined
+                                  name, type, or namespace. For more
+                                  information, see [Resource Tags]. Example:
+                                  `{"Department": "Finance"}`
+                                  This is a complex
+                                  type whose value must be valid JSON. The value
+                                  can be provided as a string on the command
+                                  line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+  --defined-tags COMPLEX TYPE     Defined tags for this resource. Each key is
+                                  predefined and scoped to a namespace. For more
+                                  information, see [Resource Tags]. Example:
+                                  `{"Operations": {"CostCenter": "42"}}`
+                                  This is
+                                  a complex type whose value must be valid JSON.
+                                  The value can be provided as a string on the
+                                  command line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+  --force                         Perform update without prompting for
+                                  confirmation.
+  --wait-for-state [ACTIVE|INACTIVE|DELETING|DELETED]
+                                  This operation creates, modifies or deletes a
+                                  resource that has a defined lifecycle state.
+                                  Specify this option to perform the action and
+                                  then wait until the resource reaches a given
+                                  lifecycle state. If timeout is reached, a
+                                  return code of 2 is returned. For any other
+                                  error, a return code of 1 is returned.
+  --max-wait-seconds INTEGER      The maximum time to wait for the resource to
+                                  reach the lifecycle state defined by --wait-
+                                  for-state. Defaults to 1200 seconds.
+  --wait-interval-seconds INTEGER
+                                  Check every --wait-interval-seconds to see
+                                  whether the resource to see if it has reached
+                                  the lifecycle state defined by --wait-for-
+                                  state. Defaults to 30 seconds.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file using the file://path-
+                                  to/file syntax.
+                                  
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci iam ui-password-information --help

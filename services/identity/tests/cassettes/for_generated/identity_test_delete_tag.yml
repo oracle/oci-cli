@@ -1,0 +1,138 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.21.0]
+    method: GET
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/request/enable?apiName=DeleteTag&serviceName=identity&lang=PythonCLI
+  response:
+    body: {string: 'true'}
+    headers:
+      Content-Length: ['4']
+      Content-Type: [text/plain]
+      Date: ['Tue, 14 May 2019 23:46:25 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.21.0]
+    method: GET
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/request?sessionId=0269&apiName=DeleteTag&serviceName=identity&lang=PythonCLI
+  response:
+    body: {string: '[{"containerId":"109a33c7-a959-400b-b8aa-efbbf448d7d8","request":{"tagNamespaceId":"ocid1.tagnamespace.oc1..aaaaaaaaz2annwjv6sauz2qgk3ukfqzs536qrp6qbkq3gi7or4hg2454slza","tagName":"delete_tag_2019-05-14T16:46:29_700-07:00"}},{"containerId":"410a4fdc-3147-4418-b09f-8d1153789f92","request":{"tagNamespaceId":"ocid1.tagnamespace.oc1..aaaaaaaaz2annwjv6sauz2qgk3ukfqzs536qrp6qbkq3gi7or4hg2454slza","tagName":"ABCDEFGHIJKLMNOPQRSTUVWXYZ"}}]'}
+    headers:
+      Content-Length: ['435']
+      Content-Type: [text/plain]
+      Date: ['Tue, 14 May 2019 23:46:26 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa7vkmhkrneeg2okzias5z7ujhhnaqa5utwggtyqlhofx7nfauvpuq/ocid1.user.oc1..aaaaaaaa3qczd5knnlcy6vt47fb2jaga5hfi2tcxug3ujh6eqnwaap5lbd6q/e1:fa:97:a1:51:24:b5:c3:4f:43:5c:4b:0d:3a:cf:40",signature="cp3tuRF1AaXC+YP94frIICC5aPeKyEehPsc8uwzGXaAQLt8KksD/M/5lRo/t2HGcD5KEw5BC1haV1f6FgjgJopXcaeDz6wpkxmdLrYXbIp+H2uPZ3MxpZYO82gwGQuPhHtsrDnCjmSfRB5KXwf9dRFdrt9P6V5nkG7gpbf3uWtjHkmKIVLJjHv85aqFQfYAl48YkwapWUvo7AWQ04MJjdh7eKsnaFuSu+OeK4y9IU+Wi3qUROUwm+Qk/rv+PBxB/8WI8aup61MNar2EKl/nbnQxR+3DZB9P7vdlA8Lzt5QbB8SGkJ8RlmGuiydRghWOiAnG/5261EuX9D8raaN6tWw==",version="1"']
+      connection: [keep-alive]
+      content-length: ['0']
+      content-type: [application/json]
+      date: ['Tue, 14 May 2019 23:46:31 GMT']
+      host: [identity.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.2.8]
+      opc-request-id: [1AAA8AC9A2C04E7DACC7CB947F4129FB]
+      user-agent: [Oracle-PythonSDK/2.2.8 (python 3.5.3; x86_64-Linux) Oracle-PythonCLI/2.5.9]
+    method: DELETE
+    uri: https://identity.us-phoenix-1.oraclecloud.com/20160918/tagNamespaces/ocid1.tagnamespace.oc1..aaaaaaaaz2annwjv6sauz2qgk3ukfqzs536qrp6qbkq3gi7or4hg2454slza/tags/delete_tag_2019-05-14T16%3A46%3A29_700-07%3A00
+  response:
+    body: {string: ''}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['0']
+      Content-Type: [application/json]
+      Date: ['Tue, 14 May 2019 23:46:33 GMT']
+      X-Content-Type-Options: [nosniff]
+      opc-request-id: [1AAA8AC9A2C04E7DACC7CB947F4129FB/B8C416E629A72A72C313425B2F0361E3/BB7851D5AF2C4CDFB235EC6A2E7583DE]
+      opc-work-request-id: [ocid1.identityworkrequest.oc1..aaaaaaaasjfplqm7cpkefu7oo7xkq4sef23bwnd45cvkkekylowtfoudbgra]
+    status: {code: 202, message: Accepted}
+- request:
+    body: '{"responseJson": "{\"opcRequestId\": \"2DEA3B125F4C4EE3A3C2A4C5EBC4C360\",
+      \"opcWorkRequestId\": \"ocid1.identityworkrequest.oc1..aaaaaaaasjfplqm7cpkefu7oo7xkq4sef23bwnd45cvkkekylowtfoudbgra\"}",
+      "requestJson": "{\"tagName\": \"delete_tag_2019-05-14T16:46:29_700-07:00\",
+      \"tagNamespaceId\": \"ocid1.tagnamespace.oc1..aaaaaaaaz2annwjv6sauz2qgk3ukfqzs536qrp6qbkq3gi7or4hg2454slza\"}",
+      "containerId": "109a33c7-a959-400b-b8aa-efbbf448d7d8", "requestClass": "com.oracle.bmc.identity.requests.DeleteTagRequest",
+      "responseClass": "com.oracle.bmc.identity.responses.DeleteTagResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['579']
+      User-Agent: [python-requests/2.21.0]
+    method: POST
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/response?sessionId=0269&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Tue, 14 May 2019 23:46:34 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocid1.tenancy.oc1..aaaaaaaa7vkmhkrneeg2okzias5z7ujhhnaqa5utwggtyqlhofx7nfauvpuq/ocid1.user.oc1..aaaaaaaa3qczd5knnlcy6vt47fb2jaga5hfi2tcxug3ujh6eqnwaap5lbd6q/e1:fa:97:a1:51:24:b5:c3:4f:43:5c:4b:0d:3a:cf:40",signature="zuSeebogolrhoN3wIiYLNXtn5QytUKf3rdwAPKZ4iETV8gbpszQ5qws20qnrzeU0RWjpbGD1zHd04O/wwBJ6JJ0oPR4z1TgS+1TEXLbL60HDaM4ODGotSZQB5o5GjIhcNC0ZW+RjfDObZxG73iZFjhv5T9sGPDOWGRxWMW6h807CbwBekYRwyEfPsdB/yOc1OBcq2rBF693HG0W6m/wFWScE2z7U+70mEysH/oYg9xmOiZf1cnpwvlSo2O5PnTXDA1Rh6kVGzTRMbs7+sl6ptqiW8Xu97FZ048jGaEfiMXWAvZqfDRdQTJNo6tWTUY0re2BZcvPBkh9SksWNpZbteg==",version="1"']
+      connection: [keep-alive]
+      content-length: ['0']
+      content-type: [application/json]
+      date: ['Tue, 14 May 2019 23:46:34 GMT']
+      host: [identity.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.2.8]
+      opc-request-id: [A190B59CFEEC4B3DABC8B890EC7B473D]
+      user-agent: [Oracle-PythonSDK/2.2.8 (python 3.5.3; x86_64-Linux) Oracle-PythonCLI/2.5.9]
+    method: DELETE
+    uri: https://identity.us-phoenix-1.oraclecloud.com/20160918/tagNamespaces/ocid1.tagnamespace.oc1..aaaaaaaaz2annwjv6sauz2qgk3ukfqzs536qrp6qbkq3gi7or4hg2454slza/tags/ABCDEFGHIJKLMNOPQRSTUVWXYZ
+  response:
+    body: {string: "{\n  \"code\" : \"NotAuthorizedOrNotFound\",\n  \"message\" :\
+        \ \"Authorization failed or requested resource not found\"\n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['110']
+      Content-Type: [application/json]
+      Date: ['Tue, 14 May 2019 23:46:36 GMT']
+      X-Content-Type-Options: [nosniff]
+      opc-request-id: [A190B59CFEEC4B3DABC8B890EC7B473D/40C7742522A1E3666821EF683998A6ED/149C21716049A2792C2A68FDC91E66F4]
+    status: {code: 404, message: Not Found}
+- request:
+    body: '{"requestJson": "{\"tagName\": \"ABCDEFGHIJKLMNOPQRSTUVWXYZ\", \"tagNamespaceId\":
+      \"ocid1.tagnamespace.oc1..aaaaaaaaz2annwjv6sauz2qgk3ukfqzs536qrp6qbkq3gi7or4hg2454slza\"}",
+      "errorJson": "{\"statusCode\": 404, \"opcRequestId\": \"A190B59CFEEC4B3DABC8B890EC7B473D/40C7742522A1E3666821EF683998A6ED/149C21716049A2792C2A68FDC91E66F4\",
+      \"code\": \"NotAuthorizedOrNotFound\", \"message\": \"Authorization failed or
+      requested resource not found\"}", "containerId": "410a4fdc-3147-4418-b09f-8d1153789f92",
+      "requestClass": "com.oracle.bmc.identity.requests.DeleteTagRequest"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['568']
+      User-Agent: [python-requests/2.21.0]
+    method: POST
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/error?sessionId=0269&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Tue, 14 May 2019 23:46:37 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+version: 1

@@ -33,6 +33,11 @@ if [[ -z "$TAG_NAMESPACE_NAME" ]]; then
     exit 1
 fi
 
+if [[ -z "$TAG_NAMESPACE_NAME_FOR_DELETE" ]]; then
+    echo "TAG_NAMESPACE_NAME_FOR_DELETE must be defined in the environment. "
+    exit 1
+fi
+
 TEMP_DIR="scripts/temp/"
 
 ##########################################################
@@ -335,5 +340,33 @@ oci iam tag-default delete --tag-default-id $TAG_DEFAULT_ID
 
 echo "Cleaning up test data"
 rm -rf $TEMP_DIR
+
+##########################################################
+# Tag and Tag namespace delete
+##########################################################
+
+echo "Creating Tag Namespace for delete"
+CREATED_TAG_NAMESPACE_FOR_DELETE=$(oci iam tag-namespace create -c $COMPARTMENT_ID --name $TAG_NAMESPACE_NAME_FOR_DELETE --description "A description of the tag namespace to be deleted")
+TAG_NAMESPACE_ID_FOR_DELETE=$(jq -r '.data.id' <<< "$CREATED_TAG_NAMESPACE_FOR_DELETE")
+echo "Tag Namespace OCID: ${TAG_NAMESPACE_ID_FOR_DELETE}"
+
+echo "Deleting Tag Namespace"
+oci iam tag-namespace delete --tag-namespace-id $TAG_NAMESPACE_ID_FOR_DELETE
+
+
+echo "Creating Tag for deleting"
+DELETE_TAG_SAMPLE_TAG_NAME="cli_sample_tag_for_delete"
+CREATED_SAMPLE_TAG_FOR_DELETE=$(oci iam tag create --tag-namespace-id $TAG_NAMESPACE_ID --name $DELETE_TAG_SAMPLE_TAG_NAME --description "A sample tag for delete tag feature")
+DELETE_TAG_SAMPLE_TAG_ID=$(jq -r '.data.id' <<< "$CREATED_SAMPLE_TAG_FOR_DELETE")
+echo "Tag OCID: ${DELETE_TAG_SAMPLE_TAG_ID}"
+
+echo "Wait for 30 seconds till tag cli_tag_default_sample_tag is available"
+sleep 30
+
+echo "Retiring an individual tag before deleting"
+oci iam tag retire --tag-namespace-id $TAG_NAMESPACE_ID --tag-name $DELETE_TAG_SAMPLE_TAG_NAME
+
+echo "Deleting Tag"
+oci iam tag delete --tag-namespace-id $TAG_NAMESPACE_ID --tag-name $DELETE_TAG_SAMPLE_TAG_NAME
 
 echo "DONE"

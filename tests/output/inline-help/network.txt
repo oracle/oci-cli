@@ -259,7 +259,7 @@ Usage: oci network cpe list [OPTIONS]
   compartment.
 
 Options:
-  -c, --compartment-id TEXT  The OCID of the compartment. [required]
+  -c, --compartment-id TEXT  The [OCID] of the compartment. [required]
   --limit INTEGER            For list pagination. The maximum number of results
                              per page, or items to return in a paginated "List"
                              call. For important details about how pagination
@@ -641,7 +641,7 @@ Usage: oci network cross-connect list [OPTIONS]
   list by specifying the OCID of a cross-connect group.
 
 Options:
-  -c, --compartment-id TEXT       The OCID of the compartment. [required]
+  -c, --compartment-id TEXT       The [OCID] of the compartment. [required]
   --cross-connect-group-id TEXT   The OCID of the cross-connect group.
   --limit INTEGER                 For list pagination. The maximum number of
                                   results per page, or items to return in a
@@ -1004,7 +1004,7 @@ Usage: oci network cross-connect-group list [OPTIONS]
   Lists the cross-connect groups in the specified compartment.
 
 Options:
-  -c, --compartment-id TEXT       The OCID of the compartment. [required]
+  -c, --compartment-id TEXT       The [OCID] of the compartment. [required]
   --limit INTEGER                 For list pagination. The maximum number of
                                   results per page, or items to return in a
                                   paginated "List" call. For important details
@@ -1166,7 +1166,7 @@ Usage: oci network cross-connect-location list [OPTIONS]
   create a cross-connect.
 
 Options:
-  -c, --compartment-id TEXT  The OCID of the compartment. [required]
+  -c, --compartment-id TEXT  The [OCID] of the compartment. [required]
   --limit INTEGER            For list pagination. The maximum number of results
                              per page, or items to return in a paginated "List"
                              call. For important details about how pagination
@@ -1230,7 +1230,7 @@ Usage: oci network cross-connect-port-speed-shape list [OPTIONS]
   you create a cross-connect.
 
 Options:
-  -c, --compartment-id TEXT  The OCID of the compartment. [required]
+  -c, --compartment-id TEXT  The [OCID] of the compartment. [required]
   --limit INTEGER            For list pagination. The maximum number of results
                              per page, or items to return in a paginated "List"
                              call. For important details about how pagination
@@ -1600,8 +1600,8 @@ Usage: oci network dhcp-options list [OPTIONS]
   automatically comes with each VCN, plus any other sets you've created.
 
 Options:
-  -c, --compartment-id TEXT       The OCID of the compartment. [required]
-  --vcn-id TEXT                   The OCID of the VCN. [required]
+  -c, --compartment-id TEXT       The [OCID] of the compartment. [required]
+  --vcn-id TEXT                   The [OCID] of the VCN. [required]
   --limit INTEGER                 For list pagination. The maximum number of
                                   results per page, or items to return in a
                                   paginated "List" call. For important details
@@ -2051,7 +2051,7 @@ Usage: oci network drg list [OPTIONS]
   Lists the DRGs in the specified compartment.
 
 Options:
-  -c, --compartment-id TEXT  The OCID of the compartment. [required]
+  -c, --compartment-id TEXT  The [OCID] of the compartment. [required]
   --limit INTEGER            For list pagination. The maximum number of results
                              per page, or items to return in a paginated "List"
                              call. For important details about how pagination
@@ -2409,8 +2409,8 @@ Usage: oci network drg-attachment list [OPTIONS]
   filter the results by VCN or DRG.
 
 Options:
-  -c, --compartment-id TEXT  The OCID of the compartment. [required]
-  --vcn-id TEXT              The OCID of the VCN.
+  -c, --compartment-id TEXT  The [OCID] of the compartment. [required]
+  --vcn-id TEXT              The [OCID] of the VCN.
   --drg-id TEXT              The OCID of the DRG.
   --limit INTEGER            For list pagination. The maximum number of results
                              per page, or items to return in a paginated "List"
@@ -2588,7 +2588,7 @@ Usage: oci network fast-connect-provider-service list [OPTIONS]
   For more information, see [FastConnect Overview].
 
 Options:
-  -c, --compartment-id TEXT  The OCID of the compartment. [required]
+  -c, --compartment-id TEXT  The [OCID] of the compartment. [required]
   --limit INTEGER            For list pagination. The maximum number of results
                              per page, or items to return in a paginated "List"
                              call. For important details about how pagination
@@ -3020,8 +3020,8 @@ Usage: oci network internet-gateway list [OPTIONS]
   compartment.
 
 Options:
-  -c, --compartment-id TEXT       The OCID of the compartment. [required]
-  --vcn-id TEXT                   The OCID of the VCN. [required]
+  -c, --compartment-id TEXT       The [OCID] of the compartment. [required]
+  --vcn-id TEXT                   The [OCID] of the VCN. [required]
   --limit INTEGER                 For list pagination. The maximum number of
                                   results per page, or items to return in a
                                   paginated "List" call. For important details
@@ -3352,6 +3352,10 @@ Options:
                                   the [Cpe] object specified by `cpeId` is used
                                   as the `cpeLocalIdentifier`.
                                   
+                                  For information
+                                  about why you'd provide this value, see [If
+                                  Your CPE Is Behind a NAT Device].
+                                  
                                   Example IP
                                   address: `10.0.3.3`
                                   
@@ -3615,7 +3619,7 @@ Usage: oci network ip-sec-connection list [OPTIONS]
   the results by DRG or CPE.
 
 Options:
-  -c, --compartment-id TEXT  The OCID of the compartment. [required]
+  -c, --compartment-id TEXT  The [OCID] of the compartment. [required]
   --drg-id TEXT              The OCID of the DRG.
   --cpe-id TEXT              The OCID of the CPE.
   --limit INTEGER            For list pagination. The maximum number of results
@@ -3721,8 +3725,12 @@ Options:
                                   here must correspond to the value for
                                   `cpeLocalIdentifierType`.
                                   
-                                  Example IP address:
-                                  `10.0.3.3`
+                                  For information
+                                  about why you'd provide this value, see [If
+                                  Your CPE Is Behind a NAT Device].
+                                  
+                                  Example IP
+                                  address: `10.0.3.3`
                                   
                                   Example hostname:
                                   `cpe.example.com`
@@ -3864,10 +3872,9 @@ Options:
   --ipsc-id TEXT        The OCID of the IPSec connection. [required]
   --tunnel-id TEXT      The [OCID] of the tunnel. [required]
   --shared-secret TEXT  The shared secret (pre-shared key) to use for the
-                        tunnel.
-                        
+                        tunnel. Only numbers, letters, and spaces are allowed.
                         Example:
-                        `EXAMPLEToUis6j1c.p8G.dVQxcmdfMO0yXMLi.lZTbYCMDGu4V8o`
+                        `EXAMPLEToUis6j1cp8GdVQxcmdfMO0yXMLilZTbYCMDGu4V8o`
   --if-match TEXT       For optimistic concurrency control. In the PUT or DELETE
                         call for a resource, set the `if-match` parameter to the
                         value of the etag from a previous GET or POST response
@@ -4405,8 +4412,8 @@ Usage: oci network local-peering-gateway list [OPTIONS]
   compartment (the LPG's compartment).
 
 Options:
-  -c, --compartment-id TEXT  The OCID of the compartment. [required]
-  --vcn-id TEXT              The OCID of the VCN. [required]
+  -c, --compartment-id TEXT  The [OCID] of the compartment. [required]
+  --vcn-id TEXT              The [OCID] of the VCN. [required]
   --limit INTEGER            For list pagination. The maximum number of results
                              per page, or items to return in a paginated "List"
                              call. For important details about how pagination
@@ -4802,8 +4809,8 @@ Usage: oci network nat-gateway list [OPTIONS]
   specify a VCN OCID to filter the results by VCN.
 
 Options:
-  -c, --compartment-id TEXT       The OCID of the compartment. [required]
-  --vcn-id TEXT                   The OCID of the VCN.
+  -c, --compartment-id TEXT       The [OCID] of the compartment. [required]
+  --vcn-id TEXT                   The [OCID] of the VCN.
   --limit INTEGER                 For list pagination. The maximum number of
                                   results per page, or items to return in a
                                   paginated "List" call. For important details
@@ -5615,7 +5622,7 @@ Options:
                                   object. Ephemeral public IPs that are assigned
                                   to private IPs have `scope` =
                                   `AVAILABILITY_DOMAIN`. [required]
-  -c, --compartment-id TEXT       The OCID of the compartment. [required]
+  -c, --compartment-id TEXT       The [OCID] of the compartment. [required]
   --limit INTEGER                 For list pagination. The maximum number of
                                   results per page, or items to return in a
                                   paginated "List" call. For important details
@@ -6080,7 +6087,7 @@ Usage: oci network remote-peering-connection list [OPTIONS]
   compartment (the RPC's compartment).
 
 Options:
-  -c, --compartment-id TEXT  The OCID of the compartment. [required]
+  -c, --compartment-id TEXT  The [OCID] of the compartment. [required]
   --drg-id TEXT              The OCID of the DRG.
   --limit INTEGER            For list pagination. The maximum number of results
                              per page, or items to return in a paginated "List"
@@ -6461,8 +6468,8 @@ Usage: oci network route-table list [OPTIONS]
   VCN, plus any route tables you've created.
 
 Options:
-  -c, --compartment-id TEXT       The OCID of the compartment. [required]
-  --vcn-id TEXT                   The OCID of the VCN. [required]
+  -c, --compartment-id TEXT       The [OCID] of the compartment. [required]
+  --vcn-id TEXT                   The [OCID] of the VCN. [required]
   --limit INTEGER                 For list pagination. The maximum number of
                                   results per page, or items to return in a
                                   paginated "List" call. For important details
@@ -6977,8 +6984,8 @@ Usage: oci network security-list list [OPTIONS]
   Lists the security lists in the specified VCN and compartment.
 
 Options:
-  -c, --compartment-id TEXT       The OCID of the compartment. [required]
-  --vcn-id TEXT                   The OCID of the VCN. [required]
+  -c, --compartment-id TEXT       The [OCID] of the compartment. [required]
+  --vcn-id TEXT                   The [OCID] of the VCN. [required]
   --limit INTEGER                 For list pagination. The maximum number of
                                   results per page, or items to return in a
                                   paginated "List" call. For important details
@@ -7730,8 +7737,8 @@ Usage: oci network service-gateway list [OPTIONS]
   specify a VCN OCID to filter the results by VCN.
 
 Options:
-  -c, --compartment-id TEXT       The OCID of the compartment. [required]
-  --vcn-id TEXT                   The OCID of the VCN.
+  -c, --compartment-id TEXT       The [OCID] of the compartment. [required]
+  --vcn-id TEXT                   The [OCID] of the VCN.
   --limit INTEGER                 For list pagination. The maximum number of
                                   results per page, or items to return in a
                                   paginated "List" call. For important details
@@ -8306,8 +8313,8 @@ Usage: oci network subnet list [OPTIONS]
   Lists the subnets in the specified VCN and the specified compartment.
 
 Options:
-  -c, --compartment-id TEXT       The OCID of the compartment. [required]
-  --vcn-id TEXT                   The OCID of the VCN. [required]
+  -c, --compartment-id TEXT       The [OCID] of the compartment. [required]
+  --vcn-id TEXT                   The [OCID] of the VCN. [required]
   --limit INTEGER                 For list pagination. The maximum number of
                                   results per page, or items to return in a
                                   paginated "List" call. For important details
@@ -8697,7 +8704,7 @@ Usage: oci network vcn delete [OPTIONS]
   change to TERMINATING temporarily until the VCN is completely removed.
 
 Options:
-  --vcn-id TEXT                   The OCID of the VCN. [required]
+  --vcn-id TEXT                   The [OCID] of the VCN. [required]
   --if-match TEXT                 For optimistic concurrency control. In the PUT
                                   or DELETE call for a resource, set the `if-
                                   match` parameter to the value of the etag from
@@ -8759,7 +8766,7 @@ Usage: oci network vcn get [OPTIONS]
   Gets the specified VCN's information.
 
 Options:
-  --vcn-id TEXT     The OCID of the VCN. [required]
+  --vcn-id TEXT     The [OCID] of the VCN. [required]
   --from-json TEXT  Provide input to this command as a JSON document from a file
                     using the file://path-to/file syntax.
                     
@@ -8791,7 +8798,7 @@ Usage: oci network vcn list [OPTIONS]
   Lists the virtual cloud networks (VCNs) in the specified compartment.
 
 Options:
-  -c, --compartment-id TEXT       The OCID of the compartment. [required]
+  -c, --compartment-id TEXT       The [OCID] of the compartment. [required]
   --limit INTEGER                 For list pagination. The maximum number of
                                   results per page, or items to return in a
                                   paginated "List" call. For important details
@@ -8870,7 +8877,7 @@ Usage: oci network vcn update [OPTIONS]
   Updates the specified VCN.
 
 Options:
-  --vcn-id TEXT                   The OCID of the VCN. [required]
+  --vcn-id TEXT                   The [OCID] of the VCN. [required]
   --defined-tags COMPLEX TYPE     Defined tags for this resource. Each key is
                                   predefined and scoped to a namespace. For more
                                   information, see [Resource Tags].
@@ -9277,7 +9284,7 @@ Usage: oci network virtual-circuit list [OPTIONS]
   Lists the virtual circuits in the specified compartment.
 
 Options:
-  -c, --compartment-id TEXT       The OCID of the compartment. [required]
+  -c, --compartment-id TEXT       The [OCID] of the compartment. [required]
   --limit INTEGER                 For list pagination. The maximum number of
                                   results per page, or items to return in a
                                   paginated "List" call. For important details

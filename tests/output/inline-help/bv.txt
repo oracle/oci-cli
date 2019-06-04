@@ -329,7 +329,7 @@ Usage: oci bv backup list [OPTIONS]
   results by volume.
 
 Options:
-  -c, --compartment-id TEXT       The OCID of the compartment. [required]
+  -c, --compartment-id TEXT       The [OCID] of the compartment. [required]
   --volume-id TEXT                The OCID of the volume.
   --limit INTEGER                 For list pagination. The maximum number of
                                   results per page, or items to return in a
@@ -778,7 +778,7 @@ Options:
                               
                               Example:
                               `Uocm:PHX-AD-1` [required]
-  -c, --compartment-id TEXT   The OCID of the compartment. [required]
+  -c, --compartment-id TEXT   The [OCID] of the compartment. [required]
   --limit INTEGER             For list pagination. The maximum number of results
                               per page, or items to return in a paginated "List"
                               call. For important details about how pagination
@@ -1171,7 +1171,7 @@ Usage: oci bv boot-volume-backup list [OPTIONS]
   the results by boot volume.
 
 Options:
-  -c, --compartment-id TEXT       The OCID of the compartment. [required]
+  -c, --compartment-id TEXT       The [OCID] of the compartment. [required]
   --boot-volume-id TEXT           The OCID of the boot volume.
   --limit INTEGER                 For list pagination. The maximum number of
                                   results per page, or items to return in a
@@ -1759,7 +1759,7 @@ Usage: oci bv volume list [OPTIONS]
   Lists the volumes in the specified compartment and availability domain.
 
 Options:
-  -c, --compartment-id TEXT       The OCID of the compartment. [required]
+  -c, --compartment-id TEXT       The [OCID] of the compartment. [required]
   --availability-domain TEXT      The name of the availability domain.
                                   
                                   Example:
@@ -2483,7 +2483,7 @@ Usage: oci bv volume-group list [OPTIONS]
   domain. For more information, see [Volume Groups].
 
 Options:
-  -c, --compartment-id TEXT       The OCID of the compartment. [required]
+  -c, --compartment-id TEXT       The [OCID] of the compartment. [required]
   --availability-domain TEXT      The name of the availability domain.
                                   
                                   Example:
@@ -2927,7 +2927,7 @@ Usage: oci bv volume-group-backup list [OPTIONS]
   the results by volume group. For more information, see [Volume Groups].
 
 Options:
-  -c, --compartment-id TEXT       The OCID of the compartment. [required]
+  -c, --compartment-id TEXT       The [OCID] of the compartment. [required]
   --volume-group-id TEXT          The OCID of the volume group.
   --limit INTEGER                 For list pagination. The maximum number of
                                   results per page, or items to return in a

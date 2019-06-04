@@ -28,3 +28,10 @@ class TestCompute(unittest.TestCase):
         assert 'Error: Missing option(s)' in result.output
         result = util.invoke_command(['compute', 'volume-attachment', 'attach', '--type', 'paravirtualized'])
         assert 'Error: Missing option(s)' in result.output
+
+    def test_attach_iscsi_volume(self):
+        result = util.invoke_command(['compute', 'volume-attachment'])
+        assert 'attach-iscsi-volume' in result.output
+
+        result = util.invoke_command(['compute', 'volume-attachment', 'attach-iscsi-volume'])
+        assert 'Error: Missing option(s) --instance-id, --volume-id.' in result.output

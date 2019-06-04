@@ -6,6 +6,49 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.5.13 - 2019-06-04
+-------------------
+Added
+~~~~~
+* Support for delete Tag Namespace and Tag Definition in the Identity Service
+
+  * (``oci iam tag delete``)
+  * (``oci iam tag-namespace delete``)
+  * An example on using the feature can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/tagging_example.sh>`__.
+
+* Support for iscsi type volume-attachment for compute resources.
+
+  * (``oci compute volume-attachment attach-iscsi-volume``)
+
+* Support for specifying the FAULT_DOMAIN parameter for instances as part of InstanceConfiguration details.
+
+  * (``oci compute-management instance-configuration create``)
+  * (``oci compute-management instance-configuration launch-compute-instance``)
+
+* Support for Auto Scale in the Database service for Autonomous Databases (--is-auto-scaling-enabled for ``oci db autonomous-database``)
+
+Changed
+~~~~~~~
+* New parameters to handle Tag Definition and Tag Namespace lifecycle state
+
+  * (``oci iam tag-namespace update --wait-for-state --max-wait-seconds --wait-interval-seconds``)
+  * (``oci iam tag-namespace list --lifecycle-state``)
+  * (``oci iam tag update --wait-for-state --max-wait-seconds --wait-interval-seconds``)
+  * (``oci iam tag create --wait-for-state --max-wait-seconds --wait-interval-seconds``)
+
+Fixed
+~~~~~
+* JSON generated for ``oci compute instance launch`` using ``--generate-full-command-json-input`` option.
+
+* (``oci os object restore-status``) now returns accurate restoration time. Earlier for restoration time greater than a day, it did not display the number of days.
+
+* Load balancer service endpoints.
+
+* Filters, sort options for ``oci db database list`` command.
+
+  * (``oci db database list``)
+
+
 2.5.12 - 2019-05-28
 -------------------
 Added
@@ -33,6 +76,7 @@ Fixed
   * (``oci compute volume-attachment attach --type``)
 
 * Fixed metrics example. (`Issue 149 <https://github.com/oracle/oci-cli/issues/149>`_, `Issue 150 <https://github.com/oracle/oci-cli/issues/150>`_)
+
 
 2.5.11 - 2019-05-21
 -------------------

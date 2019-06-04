@@ -317,7 +317,7 @@ Usage: oci compute-management instance-configuration list [OPTIONS]
   Lists the available instanceConfigurations in the specific compartment.
 
 Options:
-  -c, --compartment-id TEXT       The OCID of the compartment. [required]
+  -c, --compartment-id TEXT       The [OCID] of the compartment. [required]
   --limit INTEGER                 For list pagination. The maximum number of
                                   results per page, or items to return in a
                                   paginated "List" call. For important details
@@ -833,7 +833,7 @@ Usage: oci compute-management instance-pool list [OPTIONS]
   Lists the instance pools in the specified compartment.
 
 Options:
-  -c, --compartment-id TEXT       The OCID of the compartment. [required]
+  -c, --compartment-id TEXT       The [OCID] of the compartment. [required]
   --display-name TEXT             A filter to return only resources that match
                                   the given display name exactly.
   --limit INTEGER                 For list pagination. The maximum number of
@@ -912,7 +912,7 @@ Usage: oci compute-management instance-pool list-instances [OPTIONS]
   List the instances in the specified instance pool.
 
 Options:
-  -c, --compartment-id TEXT       The OCID of the compartment. [required]
+  -c, --compartment-id TEXT       The [OCID] of the compartment. [required]
   --instance-pool-id TEXT         The OCID of the instance pool. [required]
   --display-name TEXT             A filter to return only resources that match
                                   the given display name exactly.
