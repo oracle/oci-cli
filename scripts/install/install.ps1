@@ -11,7 +11,16 @@
 .PARAMETER OptionalFeatures
     This input param is used to specify any optional features that need to be installed as part of OCI CLI install
     .e.g. to run dbaas script 'create_backup_from_onprem', users need to install optional "db" feature which will install dependent cxOracle package.
-    Use this optional input param as follows: --optional-features feature1,feature2
+    Use this optional input param as follows: -OptionalFeatures feature1,feature2
+.PARAMETER InstallDir
+    This input parameter allows the user to specify the directory where CLI installation is done.
+.PARAMETER ExecDir
+    This input parameter allows the user to specify the directory where CLI executable is stored.
+.PARAMETER UpdatePathAndEnableTabCompletion
+    If this flag is specified, the PATH environment variable is updated to include CLI executable and tab auto
+    completion of CLI commands is enabled.
+.PARAMETER OciCliVersion
+    The version of CLI to install, e.g. 2.5.12. The default is the latest from pypi.
 
 .NOTES
     The order of precedence in which this scripts applies input parameters is as follows:
@@ -27,11 +36,17 @@
 
 [CmdletBinding()]
 Param(
-    [switch]$AcceptAllDefaults,
-    [string]$PythonInstallLocation,
-    [string]$OptionalFeatures
-
+    [Parameter(Mandatory=$false)][switch]$AcceptAllDefaults,
+    [Parameter(Mandatory=$false)][string]$PythonInstallLocation,
+    [Parameter(Mandatory=$false)][string]$OptionalFeatures,
+    [Parameter(Mandatory=$false)][string]$InstallDir,
+    [Parameter(Mandatory=$false)][string]$ExecDir,
+    [Parameter(Mandatory=$false)][switch]$UpdatePathAndEnableTabCompletion,
+    [Parameter(Mandatory=$false)][switch]$UseLocalCLiInstaller,
+    [Parameter(Mandatory=$false)][string]$OciCliVersion
 )
+
+
 
 $OriginalErrorActionPreference = $ErrorActionPreference
 
@@ -41,14 +56,14 @@ if ([System.Enum]::GetNames('System.Net.SecurityProtocolType') -Contains 'Tls12'
 }
 
 
-$PythonInstallScriptUrl = "https://raw.githubusercontent.com/oracle/oci-cli/5a96643afa1f3c1e52cc58e4e9a7e75c60b4dda1/scripts/install/install.py"
-$FallbackPythonInstallScriptUrl = "https://raw.githubusercontent.com/oracle/oci-cli/6dc61e3b5fd2781c5afff2decb532c24969fa6bf/scripts/install/install.py"
+$PythonInstallScriptUrl = "https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/install/install.py"
+$FallbackPythonInstallScriptUrl = "https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/install/install.py"
 $PythonVersionToInstall = "3.6.5"    # version of Python to install if none exists
 $MinValidPython2Version = "2.7.5"    # minimum required version of Python 2 on system
 $MinValidPython3Version = "3.5.0"    # minimum required version of Python 3 on system
 
 function LogOutput($Output) {
-    Write-Verbose $Output
+    Write-Verbose $Output -Verbose
     Write-Progress -Activity $Output -Status 'In progress...'
 }
 
@@ -199,7 +214,6 @@ function DownloadAndRunPythonMsiInstaller($PythonInstallLocation, $Version) {
     LogOutput "Download Complete! Installer MSI written to: $PythonInstallerMsi"
 
     LogOutput "Installing Python to $PythonInstallLocation..."
-
     $PythonInstallLocation = (Get-ChildItem Env:\USERPROFILE).Value + "\Python\"
     $DataStamp = get-date -Format yyyyMMddTHHmmss
     $logFile = '{0}-{1}.log' -f $PythonInstallerMsi,$DataStamp
@@ -231,15 +245,13 @@ Try {
     {
         Write-Output "
         ******************************************************************************
-        ******************************************************************************
         You have started the OCI CLI Installer in interactive mode. If you do not wish
-        to run this in interactive mode or would like to know more about input options
-        for this script, kill this process and invoke the commands below to get more
-        help text for this script:
-        ((New-Object System.Net.WebClient).DownloadFile('https://raw.githubusercontent.com/
-        oracle/oci-cli/master/scripts/install/install.ps1', `"`$pwd\install.ps1`"))
-        Get-Help .\install.ps1 -full
-        ******************************************************************************
+        to run this in interactive mode, please include the -AcceptAllDefaults option.
+        If you have the script locally and would like to know more about
+        input options for this script, then you can run:
+        help .\install.ps1
+        If you would like to know more about input options for this script, refer to:
+        https://github.com/oracle/oci-cli/blob/master/scripts/install/README.rst
         ******************************************************************************"
     }
     # check if Python is installed, and is greater than MinValidPythonVersion
@@ -283,18 +295,32 @@ Try {
         # (e.g. C:\Users\{USER}\Python)
         if (-Not $PythonInstallLocation)
         {
-            $PythonInstallLocation = Join-Path (Get-ChildItem Env:\USERPROFILE).Value "Python"
+            Try 
+            {
+                $PythonInstallLocation = Join-Path (Get-ChildItem Env:\USERPROFILE).Value "Python"
+            }
+            Catch
+            {
+                $PythonInstallLocation = Join-Path (Get-ChildItem Env:\HOME).Value "Python"
+            }
         }
         else {
             # value passed by the user as an argument
             $PythonInstallLocation = Join-Path $PythonInstallLocation "Python"
         }
         # use MSI installer for python 2.7.x on Windows Server 2008 SP 0
-        $OsInfo = Get-WMIObject Win32_OperatingSystem -ComputerName $env:COMPUTERNAME
-        if ($OsInfo.Caption.Contains('Windows Server 2008') -And $OsInfo.ServicePackMajorVersion -eq 0) {
-            DownloadAndRunPythonMsiInstaller -PythonInstallLocation $PythonInstallLocation -Version "2.7.14"
+        Try
+        {
+            $OsInfo = Get-WMIObject Win32_OperatingSystem -ComputerName $env:COMPUTERNAME
+            if ($OsInfo.Caption.Contains('Windows Server 2008') -And $OsInfo.ServicePackMajorVersion -eq 0) {
+                DownloadAndRunPythonMsiInstaller -PythonInstallLocation $PythonInstallLocation -Version "2.7.14"
+            }
+            else {
+                DownloadAndRunPythonExeInstaller -PythonInstallLocation $PythonInstallLocation -Version $PythonVersionToInstall
+            }    
         }
-        else {
+        Catch
+        {
             DownloadAndRunPythonExeInstaller -PythonInstallLocation $PythonInstallLocation -Version $PythonVersionToInstall
         }
 
@@ -302,26 +328,51 @@ Try {
     }
 
     # Once python is installed, execute the CLI install script
-    $PythonInstallScriptPath = [System.IO.Path]::GetTempFileName()
-    LogOutput "Downloading install script to $PythonInstallScriptPath"
-    Try {
-        DownloadFile -Uri $PythonInstallScriptUrl -OutFile $PythonInstallScriptPath
+    $whl_exists = Test-Path  ".\oci_cli*.whl" -PathType Leaf
+    $install_py_exists = Test-Path  ".\install.py" -PathType Leaf
+    if ($whl_exists -And $install_py_exists) {
+        $UseLocalCLiInstaller = $true
     }
-    catch [System.Net.WebException] {
-        $PythonInstallScriptUrl = $FallbackPythonInstallScriptUrl
-        DownloadFile -Uri $PythonInstallScriptUrl -OutFile $PythonInstallScriptPath
-        LogOutput "Falling back to previous install.py script URL - $PythonInstallScriptUrl"
+    if ($OciCliVersion -And $OciCliVersion -Contains "preview" -And $install_py_exists) {
+        $UseLocalCLiInstaller = $true
     }
-
+    if ($UseLocalCLiInstaller -And $install_py_exists) {
+        $PythonInstallScriptPath = "$PSScriptRoot\install.py"
+    } else {
+        if ($OciCliVersion) {
+            $PythonInstallScriptUrl = "https://raw.githubusercontent.com/oracle/oci-cli/v$OciCliVersion/scripts/install/install.py"
+        }
+        $PythonInstallScriptPath = [System.IO.Path]::GetTempFileName()
+        LogOutput "Downloading install script to $PythonInstallScriptPath"
+        Try {
+            DownloadFile -Uri $PythonInstallScriptUrl -OutFile $PythonInstallScriptPath
+        }
+        catch [System.Net.WebException] {
+            $PythonInstallScriptUrl = $FallbackPythonInstallScriptUrl
+            DownloadFile -Uri $PythonInstallScriptUrl -OutFile $PythonInstallScriptPath
+            LogOutput "Falling back to previous install.py script URL - $PythonInstallScriptUrl"
+        }
+    }
     $ArgumentList = "`"$PythonInstallScriptPath`""
     if ($AcceptAllDefaults) {
         $ArgumentList = "$ArgumentList --accept-all-defaults"
     }
-
+    if ($InstallDir) {
+        $ArgumentList = "$ArgumentList --install-dir $InstallDir"
+    }
+    if ($ExecDir) {
+        $ArgumentList = "$ArgumentList --exec-dir $ExecDir"
+    }
+    if ($UpdatePathAndEnableTabCompletion) {
+        $ArgumentList = "$ArgumentList --update-path-and-enable-tab-completion"
+    }
     if ($OptionalFeatures) {
         $ArgumentList = "$ArgumentList --optional-features $OptionalFeatures"
     }
-
+    if ($OciCliVersion) {
+        $ArgumentList = "$ArgumentList --oci-cli-version $OciCliVersion"
+    }
+    LogOutput "$PythonInstallLocation $AcceptAllDefaults $InstallDir $ExecDir $UpdatePathAndEnableTabCompletion"
     LogOutput "Using Python executable: $PythonExecutable to run install script..."
     LogOutput "Arguments to python script: $ArgumentList"
 

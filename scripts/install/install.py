@@ -131,6 +131,9 @@ def is_valid_sha256sum(a_file, expected_sum):
 
 
 def create_virtualenv(tmp_dir, install_dir):
+    if DRY_RUN:
+        print_status('dry-run: Skipping virtualenv setup')
+        return
     download_location = os.path.join(tmp_dir, VIRTUALENV_ARCHIVE)
     print_status('Downloading virtualenv package from {}.'.format(VIRTUALENV_DOWNLOAD_URL))
 
@@ -173,7 +176,7 @@ def create_virtualenv(tmp_dir, install_dir):
     exec_command(cmd, cwd=working_dir)
 
 
-def install_cli(install_dir, tmp_dir, optional_features):
+def install_cli(install_dir, tmp_dir, version, optional_features):
     if is_windows():
         path_to_pip = os.path.join(install_dir, 'Scripts', 'pip')
     else:
@@ -186,11 +189,31 @@ def install_cli(install_dir, tmp_dir, optional_features):
     if '__PYVENV_LAUNCHER__' in os.environ:
         env.pop('__PYVENV_LAUNCHER__')
 
+    # The python installer handles 2 cases:
+    # 1) full install zip bundles -- originally for distributing preview builds
+    #    --oci-cli-version can be used to pick the version of the local whl package
+    # 2) installation from pypi
+    #    --oci-cli-version can be used to pick the version of oci-cli from pypi
+
+    match_wheel = "oci_cli*.whl"
     cli_package_name = 'oci_cli'
+    if version:
+        cli_package_name += '==' + version
+        match_wheel = "oci_cli*" + version + "*.whl"
     if (optional_features):
         cli_package_name += '[' + optional_features + ']'
 
-    cmd = [path_to_pip, 'install', '--cache-dir', tmp_dir, cli_package_name, '--upgrade']
+    # Check if we should install a local full-install bundle.
+    oci_cli_whl_files = glob.glob(match_wheel)
+    if os.path.exists('./cli-deps') and len(oci_cli_whl_files) > 0:
+        print_status("Installing {} from local resources.".format(oci_cli_whl_files[0]))
+        cmd = [path_to_pip, 'install', '--cache-dir', tmp_dir, oci_cli_whl_files[0], '--upgrade', '--find-links', 'cli-deps']
+    else:
+        cmd = [path_to_pip, 'install', '--cache-dir', tmp_dir, cli_package_name, '--upgrade']
+
+    if DRY_RUN:
+        print_status('dry-run: Skipping CLI install, cmd=' + str(cmd))
+        return
     exec_command(cmd, env=env)
 
 
@@ -356,9 +379,18 @@ def warn_other_oci_or_bmcs_on_path(exec_dir, exec_filepath):
         print_status("You can run this installation of the CLI with '{}'.".format(exec_filepath))
 
 
-def handle_path_and_tab_completion(completion_file_path, exec_filepath, exec_dir):
+def handle_path_and_tab_completion(completion_file_path, exec_filepath, exec_dir, update_path_and_enable_tab_completion,
+                                   rc_file_path):
+    if DRY_RUN:
+        print_status("dry-run: Skipping handle_path_and_tab_completion")
+        print_status("dry-run: update_path_and_enable_tab_completion=" + str(update_path_and_enable_tab_completion))
+        print_status("dry-run: rc_file_path=" + str(rc_file_path))
+        return
     if is_windows():
-        ans_yes = prompt_y_n('Modify PATH to include the CLI and enable tab completion in PowerShell now?', 'y')
+        if update_path_and_enable_tab_completion:
+            ans_yes = True
+        else:
+            ans_yes = prompt_y_n('Modify PATH to include the CLI and enable tab completion in PowerShell now?', 'y')
         if ans_yes:
             # Add autocomplete to the user's profile. Assume that powershell is on the path
             profile_file_path = subprocess.check_output(['powershell', '-NoProfile', 'echo $profile']).decode(sys.stdout.encoding).strip()
@@ -399,9 +431,13 @@ def handle_path_and_tab_completion(completion_file_path, exec_filepath, exec_dir
             print_status("If you change your mind, dot source {} in your PowerShell profile and restart your shell to enable tab completion.".format(completion_file_path))
             print_status("You can run the CLI with '{}'.".format(exec_filepath))
     else:
-        ans_yes = prompt_y_n('Modify profile to update your $PATH and enable shell/tab completion now?', 'y')
+        if update_path_and_enable_tab_completion:
+            ans_yes = True
+        else:
+            ans_yes = prompt_y_n('Modify profile to update your $PATH and enable shell/tab completion now?', 'y')
         if ans_yes:
-            rc_file_path = get_rc_file_path()
+            if rc_file_path is None:
+                rc_file_path = get_rc_file_path()
             if not rc_file_path:
                 raise CLIInstallError('No suitable profile file found.')
             _backup_rc(rc_file_path)
@@ -482,6 +518,12 @@ def verify_native_dependencies():
         python_dep = 'python3{}u-devel'.format(sys.version_info[1]) if is_python3 else 'python-devel'
         dep_list = ['gcc', 'libffi-devel', python_dep, 'openssl-devel']
     if verify_cmd_args and install_cmd_args and dep_list:
+        if DRY_RUN:
+            print_status("dry-run: Skipping native_dependencies execution.")
+            print_status("dry-run: verify_cmd_args=" + str(verify_cmd_args))
+            print_status("dry-run: update_cmd_args=" + str(update_cmd_args))
+            print_status("dry-run: install_cmd_args=" + str(install_cmd_args))
+            print_status("dry-run: dep_list=" + str(dep_list))
         _native_dependencies_for_dist(verify_cmd_args, update_cmd_args, install_cmd_args, dep_list)
     else:
         print_status("Unable to verify native dependencies. dist={}, version={}. Continuing...".format(distname, version))
@@ -495,34 +537,73 @@ def verify_install_dir_exec_path_conflict(install_dir, exec_path):
 def main():
     parser = argparse.ArgumentParser(description='Install Oracle Cloud Infrastructure CLI.')
     parser.add_argument('--accept-all-defaults', action='store_true',
-                        help='If this flag is specified, no user prompts will be displayed and all default prompt responses will be used.')
+                        help='If this flag is specified, no user prompts will be displayed and all default prompt '
+                             'responses will be used. This flag can be used in combination with other input '
+                             'parameters/flags. When used with other parameters/flags, other parameter values '
+                             'mentioned on command line take precedence over default values.')
     parser.add_argument('--optional-features', help="""This input param is used to specify any optional
                          features that need to be installed as part of OCI CLI install .e.g. to run dbaas script
                          'create_backup_from_onprem', users need to install optional "db" feature which will install
                          dependent cxOracle package. Use this optional input param as follows:
                          --optional-features feature1,feature2""")
+    parser.add_argument('--install-dir', help='This input parameter allows the user to specify the directory where '
+                                              'CLI installation is done.')
+    parser.add_argument('--exec-dir', help='This input parameter allows the user to specify the directory where CLI '
+                                           'executable is stored.')
+    parser.add_argument('--update-path-and-enable-tab-completion', action='store_true',
+                        help='If this flag is specified, the PATH environment variable is updated to include CLI '
+                             'executable and tab auto completion of CLI commands is enabled. It does require rc '
+                             'file path in *NIX systems which can be either given interactively or using the '
+                             '--rc-file-path option')
+    parser.add_argument('--rc-file-path', help='This input param is used in *NIX systems to update the corresponding '
+                                               'shell rc file with command auto completion and modification to '
+                                               'PATH environment variable with CLI executable path. It requires '
+                                               'shell\'s rc file path. e.g. ~/.bashrc. Ideally, should be used with '
+                                               'the --update-path-and-enable-tab-completion option')
+    parser.add_argument('--oci-cli-version', help='The pip version of CLI to install.')
+    parser.add_argument('--dry-run', action='store_true', help='Do not install virtualenv or CLI but go through the motions.')
+    parser.add_argument('--verify-native-dependencies', action='store_true',
+                        help='Check whether linux native dependencies are available to compile modules like cryptography.')
     args = parser.parse_args()
     global ACCEPT_ALL_DEFAULTS
     ACCEPT_ALL_DEFAULTS = args.accept_all_defaults
+    global DRY_RUN
+    DRY_RUN = args.dry_run
     OPTIONAL_FEATURES = args.optional_features
+    install_dir = args.install_dir
+    exec_dir = args.exec_dir
 
     verify_python_version()
-    verify_native_dependencies()
+    if args.verify_native_dependencies:
+        verify_native_dependencies()
     tmp_dir = create_tmp_dir()
-    install_dir = get_install_dir()
-    exec_dir = get_exec_dir(install_dir)
+    if install_dir is None:
+        install_dir = get_install_dir()
+    else:
+        # Create the install directory provided by the user if it does not exist
+        create_dir(install_dir)
+    if exec_dir is None:
+        exec_dir = get_exec_dir(install_dir)
+    else:
+        # Create the executable directory provided by the user if it does not exist
+        create_dir(exec_dir)
     script_dir = get_script_dir(install_dir)
     if OPTIONAL_FEATURES is None:
         OPTIONAL_FEATURES = get_optional_features()
+
     oci_exec_path = os.path.join(exec_dir, OCI_EXECUTABLE_NAME)
     bmcs_exec_path = os.path.join(exec_dir, BMCS_EXECUTABLE_NAME)
     dbaas_exec_path = os.path.join(script_dir, DBAAS_SCRIPT_NAME)
     verify_install_dir_exec_path_conflict(install_dir, oci_exec_path)
     verify_install_dir_exec_path_conflict(install_dir, bmcs_exec_path)
     create_virtualenv(tmp_dir, install_dir)
-    install_cli(install_dir, tmp_dir, OPTIONAL_FEATURES)
+    install_cli(install_dir, tmp_dir, args.oci_cli_version, OPTIONAL_FEATURES)
 
-    if is_windows():
+    if DRY_RUN:
+        print_status("dry-run: Skipping copying files to Scripts/bin directories.")
+        print_status("dry-run: exec_dir=" + exec_dir)
+        completion_file_path = None
+    elif is_windows():
         venv_python_executable = os.path.join(install_dir, 'Scripts', 'python')
         venv_site_packages_directory = subprocess.check_output([venv_python_executable, '-c', 'from distutils.sysconfig import get_python_lib; print(get_python_lib())']).strip()
         completion_file_path = os.path.join(venv_site_packages_directory.decode(sys.stdout.encoding), RELATIVE_PATH_TO_POWERSHELL_AUTOCOMPLETE_SCRIPT)
@@ -552,7 +633,8 @@ def main():
 
     try:
         # this function prints out the executable location so we only want to point users to 'oci'
-        handle_path_and_tab_completion(completion_file_path, oci_exec_path, exec_dir)
+        handle_path_and_tab_completion(completion_file_path, oci_exec_path, exec_dir,
+                                       args.update_path_and_enable_tab_completion, args.rc_file_path)
     except Exception as e:
         print_status("Unable to set up tab completion. ERROR: {}".format(str(e)))
 

@@ -186,6 +186,26 @@ def test_create_boot_volume(cli_testing_service_client, runner, config_file, con
                     request[key] = request['opts'][key]
                 del request['opts']
 
+            if request.get('type') == 'bootVolumeBackup':
+                params = util.get_command_list(
+                    root_command_name,
+                    resource_group_command_name,
+                    oci_cli.cli_util.override('create_boot_volume_boot_volume_source_from_boot_volume_backup_details.command_name', 'create-boot-volume-boot-volume-source-from-boot-volume-backup-details')
+                )
+
+                if params:
+                    del request['type']
+
+            if request.get('type') == 'bootVolume':
+                params = util.get_command_list(
+                    root_command_name,
+                    resource_group_command_name,
+                    oci_cli.cli_util.override('create_boot_volume_boot_volume_source_from_boot_volume_details.command_name', 'create-boot-volume-boot-volume-source-from-boot-volume-details')
+                )
+
+                if params:
+                    del request['type']
+
             request, cleanup = generated_test_request_transformers.transform_generated_test_input('core', 'CreateBootVolume', request)
 
             input_content = json.dumps(request)
@@ -409,6 +429,26 @@ def test_create_volume(cli_testing_service_client, runner, config_file, config_p
                 for key in request['opts']:
                     request[key] = request['opts'][key]
                 del request['opts']
+
+            if request.get('type') == 'volume':
+                params = util.get_command_list(
+                    root_command_name,
+                    resource_group_command_name,
+                    oci_cli.cli_util.override('create_volume_volume_source_from_volume_details.command_name', 'create-volume-volume-source-from-volume-details')
+                )
+
+                if params:
+                    del request['type']
+
+            if request.get('type') == 'volumeBackup':
+                params = util.get_command_list(
+                    root_command_name,
+                    resource_group_command_name,
+                    oci_cli.cli_util.override('create_volume_volume_source_from_volume_backup_details.command_name', 'create-volume-volume-source-from-volume-backup-details')
+                )
+
+                if params:
+                    del request['type']
 
             request, cleanup = generated_test_request_transformers.transform_generated_test_input('core', 'CreateVolume', request)
 
@@ -745,6 +785,36 @@ def test_create_volume_group(cli_testing_service_client, runner, config_file, co
                 for key in request['opts']:
                     request[key] = request['opts'][key]
                 del request['opts']
+
+            if request.get('type') == 'volumeGroupId':
+                params = util.get_command_list(
+                    root_command_name,
+                    resource_group_command_name,
+                    oci_cli.cli_util.override('create_volume_group_volume_group_source_from_volume_group_details.command_name', 'create-volume-group-volume-group-source-from-volume-group-details')
+                )
+
+                if params:
+                    del request['type']
+
+            if request.get('type') == 'volumeIds':
+                params = util.get_command_list(
+                    root_command_name,
+                    resource_group_command_name,
+                    oci_cli.cli_util.override('create_volume_group_volume_group_source_from_volumes_details.command_name', 'create-volume-group-volume-group-source-from-volumes-details')
+                )
+
+                if params:
+                    del request['type']
+
+            if request.get('type') == 'volumeGroupBackupId':
+                params = util.get_command_list(
+                    root_command_name,
+                    resource_group_command_name,
+                    oci_cli.cli_util.override('create_volume_group_volume_group_source_from_volume_group_backup_details.command_name', 'create-volume-group-volume-group-source-from-volume-group-backup-details')
+                )
+
+                if params:
+                    del request['type']
 
             request, cleanup = generated_test_request_transformers.transform_generated_test_input('core', 'CreateVolumeGroup', request)
 

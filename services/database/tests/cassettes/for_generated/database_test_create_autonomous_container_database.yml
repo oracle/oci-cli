@@ -1,0 +1,112 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.21.0]
+    method: GET
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/request/enable?apiName=CreateAutonomousContainerDatabase&serviceName=database&lang=PythonCLI
+  response:
+    body: {string: 'true'}
+    headers:
+      Content-Length: ['4']
+      Content-Type: [text/plain]
+      Date: ['Wed, 17 Apr 2019 21:32:45 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.21.0]
+    method: GET
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/request?sessionId=0172&apiName=CreateAutonomousContainerDatabase&serviceName=database&lang=PythonCLI
+  response:
+    body: {string: '[{"containerId":"a3758259-bd67-4f15-bba8-afab29d3e032","request":{"createAutonomousContainerDatabaseDetails":{"displayName":"__STS0172_5580","autonomousExadataInfrastructureId":"ocid1.autonomousexainfrastructure.oc1.phx.abyhqljtadabko2i7ejhszjllfhdkkcpuht5ec2zf5kny5trn3xa7vqnqvda","compartmentId":"ocid1.compartment.oc1..aaaaaaaaybnl4otkmah23bx73e4h4t2fzvlrv4jo6elnnuegl5g2sleffhia","patchModel":"RELEASE_UPDATES","backupConfig":{}},"opcRetryToken":"72628fc1-f199-4893-b802-7cf87a88e3e2"}}]'}
+    headers:
+      Content-Length: ['491']
+      Content-Type: [text/plain]
+      Date: ['Wed, 17 Apr 2019 21:32:45 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"autonomousExadataInfrastructureId": "ocid1.autonomousexainfrastructure.oc1.phx.abyhqljtadabko2i7ejhszjllfhdkkcpuht5ec2zf5kny5trn3xa7vqnqvda",
+      "displayName": "__STS0172_5580", "backupConfig": {}, "compartmentId": "ocid1.compartment.oc1..aaaaaaaaybnl4otkmah23bx73e4h4t2fzvlrv4jo6elnnuegl5g2sleffhia",
+      "patchModel": "RELEASE_UPDATES"}'
+    headers:
+      Content-Length: ['333']
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host content-length content-type x-content-sha256",keyId="ocidv1:tenancy:oc1:phx:1458753575596:aaaaaaaavary4yqe4ljpv5wzp74eflkwpu/ocid1.user.oc1..aaaaaaaakq5e4caznkmlrhvszm6ddsqqhcdti75mzp6lsjwmazcalbdzr5ca/8b:3e:78:cd:6a:66:81:8f:c4:14:e4:03:b6:20:d8:5c",signature="rPVm5uQ82S9GnNoaWmDlmH1WwJoSoe60mmQ/cDeSKoZalvacp/tejKiY7+QC/mWliLTIjVDU4VsU3ivFxNZ4fVco+s93jtThegGNxvqsCldrlBKWpdlal9p6syx+8SV59s5KU3NZH0jIIY/Fy0mIBKsa97TWiYKcAbQQUVwMvB3PI15gWJI7Lxd8kkD6BP/U26ojAba2v3uJzcW+WJ2NKRbFzAwNqGFm6GrjmCb4HB7YGXbt6LvAUUjIGoCIpvi+1ORMLIplaP4VKkFtR8P0G8HO9UnAUb7ig2Ah+Bj180pR8taONuO5WJPY04e6p47Lf2YFqjnWQojbVwjMaHj71A==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Wed, 17 Apr 2019 21:33:55 GMT']
+      host: [database.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.2.6+preview.1.0.57]
+      opc-request-id: [8FF4EBAF93064767A8DF67C2BD85C7E2]
+      opc-retry-token: [Z3mPpMfcUHG02w9Bkp9zud4qwg5BYw]
+      user-agent: [Oracle-PythonSDK/2.2.6+preview.1.0.57 (python 3.5.3; x86_64-Linux)
+          Oracle-PythonCLI/2.5.7+preview.1]
+      x-content-sha256: [TIc00oMrmaLYiDGB54WZ0Tx2960rnfKEN84OXdqsTIg=]
+    method: POST
+    uri: https://database.us-phoenix-1.oraclecloud.com/20160918/autonomousContainerDatabases
+  response:
+    body: {string: "{\n  \"autonomousExadataInfrastructureId\" : \"ocid1.autonomousexainfrastructure.oc1.phx.abyhqljtadabko2i7ejhszjllfhdkkcpuht5ec2zf5kny5trn3xa7vqnqvda\"\
+        ,\n  \"availabilityDomain\" : \"XXIT:PHX-AD-3\",\n  \"backupConfig\" : {\n\
+        \    \"recoveryWindowInDays\" : 30\n  },\n  \"compartmentId\" : \"ocid1.compartment.oc1..aaaaaaaaybnl4otkmah23bx73e4h4t2fzvlrv4jo6elnnuegl5g2sleffhia\"\
+        ,\n  \"definedTags\" : { },\n  \"displayName\" : \"__STS0172_5580\",\n  \"\
+        freeformTags\" : { },\n  \"id\" : \"ocid1.autonomouscontainerdatabase.oc1.phx.abyhqljtasoidwp2jj73tqp7svxfnmor4lc3s6doiuamf3yvglfcueb3npia\"\
+        ,\n  \"lastMaintenanceRunId\" : null,\n  \"lifecycleDetails\" : null,\n  \"\
+        lifecycleState\" : \"PROVISIONING\",\n  \"nextMaintenanceRunId\" : null,\n\
+        \  \"patchModel\" : \"RELEASE_UPDATES\",\n  \"role\" : null,\n  \"serviceLevelAgreementType\"\
+        \ : \"STANDARD\",\n  \"timeCreated\" : \"2019-04-17T21:33:56.342Z\"\n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['828']
+      Content-Type: [application/json]
+      Date: ['Wed, 17 Apr 2019 21:33:56 GMT']
+      ETag: [ec155e5c]
+      X-Content-Type-Options: [nosniff]
+      opc-request-id: [8FF4EBAF93064767A8DF67C2BD85C7E2/2C1538B13491EF1024CF3D7B60FD9006/94BD91DAD5BFBB4237D8A0944D172A48]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"responseJson": "{\"opcRequestId\": \"7DACB0C5F2AD4706A0E5055B57EB76CE\",
+      \"autonomousContainerDatabase\": {\"definedTags\": {}, \"serviceLevelAgreementType\":
+      \"STANDARD\", \"lastMaintenanceRunId\": null, \"lifecycleDetails\": null, \"displayName\":
+      \"__STS0172_5580\", \"role\": null, \"availabilityDomain\": \"XXIT:PHX-AD-3\",
+      \"patchModel\": \"RELEASE_UPDATES\", \"nextMaintenanceRunId\": null, \"lifecycleState\":
+      \"PROVISIONING\", \"timeCreated\": \"2019-04-17T21:33:56.342000+00:00\", \"autonomousExadataInfrastructureId\":
+      \"ocid1.autonomousexainfrastructure.oc1.phx.abyhqljtadabko2i7ejhszjllfhdkkcpuht5ec2zf5kny5trn3xa7vqnqvda\",
+      \"id\": \"ocid1.autonomouscontainerdatabase.oc1.phx.abyhqljtasoidwp2jj73tqp7svxfnmor4lc3s6doiuamf3yvglfcueb3npia\",
+      \"compartmentId\": \"ocid1.compartment.oc1..aaaaaaaaybnl4otkmah23bx73e4h4t2fzvlrv4jo6elnnuegl5g2sleffhia\",
+      \"freeformTags\": {}, \"backupConfig\": {\"recoveryWindowInDays\": 30}}, \"etag\":
+      \"ec155e5c\"}", "requestJson": "{\"createAutonomousContainerDatabaseDetails\":
+      {\"displayName\": \"__STS0172_5580\", \"backupConfig\": {}, \"compartmentId\":
+      \"ocid1.compartment.oc1..aaaaaaaaybnl4otkmah23bx73e4h4t2fzvlrv4jo6elnnuegl5g2sleffhia\",
+      \"patchModel\": \"RELEASE_UPDATES\", \"autonomousExadataInfrastructureId\":
+      \"ocid1.autonomousexainfrastructure.oc1.phx.abyhqljtadabko2i7ejhszjllfhdkkcpuht5ec2zf5kny5trn3xa7vqnqvda\"},
+      \"opcRetryToken\": \"72628fc1-f199-4893-b802-7cf87a88e3e2\"}", "containerId":
+      "a3758259-bd67-4f15-bba8-afab29d3e032", "requestClass": "com.oracle.bmc.database.requests.CreateAutonomousContainerDatabaseRequest",
+      "responseClass": "com.oracle.bmc.database.responses.CreateAutonomousContainerDatabaseResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['1685']
+      User-Agent: [python-requests/2.21.0]
+    method: POST
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/response?sessionId=0172&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Wed, 17 Apr 2019 21:33:57 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+version: 1

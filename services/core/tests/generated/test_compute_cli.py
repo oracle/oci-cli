@@ -674,6 +674,26 @@ def test_create_image(cli_testing_service_client, runner, config_file, config_pr
                     request[key] = request['opts'][key]
                 del request['opts']
 
+            if request.get('sourceType') == 'objectStorageTuple':
+                params = util.get_command_list(
+                    root_command_name,
+                    resource_group_command_name,
+                    oci_cli.cli_util.override('create_image_image_source_via_object_storage_tuple_details.command_name', 'create-image-image-source-via-object-storage-tuple-details')
+                )
+
+                if params:
+                    del request['sourceType']
+
+            if request.get('sourceType') == 'objectStorageUri':
+                params = util.get_command_list(
+                    root_command_name,
+                    resource_group_command_name,
+                    oci_cli.cli_util.override('create_image_image_source_via_object_storage_uri_details.command_name', 'create-image-image-source-via-object-storage-uri-details')
+                )
+
+                if params:
+                    del request['sourceType']
+
             request, cleanup = generated_test_request_transformers.transform_generated_test_input('core', 'CreateImage', request)
 
             input_content = json.dumps(request)
@@ -3125,6 +3145,26 @@ def test_launch_instance(cli_testing_service_client, runner, config_file, config
                 for key in request['opts']:
                     request[key] = request['opts'][key]
                 del request['opts']
+
+            if request.get('sourceType') == 'image':
+                params = util.get_command_list(
+                    root_command_name,
+                    resource_group_command_name,
+                    oci_cli.cli_util.override('launch_instance_instance_source_via_image_details.command_name', 'launch-instance-instance-source-via-image-details')
+                )
+
+                if params:
+                    del request['sourceType']
+
+            if request.get('sourceType') == 'bootVolume':
+                params = util.get_command_list(
+                    root_command_name,
+                    resource_group_command_name,
+                    oci_cli.cli_util.override('launch_instance_instance_source_via_boot_volume_details.command_name', 'launch-instance-instance-source-via-boot-volume-details')
+                )
+
+                if params:
+                    del request['sourceType']
 
             request, cleanup = generated_test_request_transformers.transform_generated_test_input('core', 'LaunchInstance', request)
 

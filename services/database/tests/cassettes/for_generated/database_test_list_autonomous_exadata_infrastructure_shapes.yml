@@ -1,0 +1,87 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.21.0]
+    method: GET
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/request/enable?apiName=ListAutonomousExadataInfrastructureShapes&serviceName=database&lang=PythonCLI
+  response:
+    body: {string: 'true'}
+    headers:
+      Content-Length: ['4']
+      Content-Type: [text/plain]
+      Date: ['Wed, 17 Apr 2019 01:32:56 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.21.0]
+    method: GET
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/request?sessionId=0600&apiName=ListAutonomousExadataInfrastructureShapes&serviceName=database&lang=PythonCLI
+  response:
+    body: {string: '[{"containerId":"184dc770-bd73-42c3-9a8e-8a3c33db442d","request":{"availabilityDomain":"XXIT:PHX-AD-3","compartmentId":"ocid1.compartment.oc1..aaaaaaaaybnl4otkmah23bx73e4h4t2fzvlrv4jo6elnnuegl5g2sleffhia","limit":10}}]'}
+    headers:
+      Content-Length: ['218']
+      Content-Type: [text/plain]
+      Date: ['Wed, 17 Apr 2019 01:32:57 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocidv1:tenancy:oc1:phx:1458753575596:aaaaaaaavary4yqe4ljpv5wzp74eflkwpu/ocid1.user.oc1..aaaaaaaakq5e4caznkmlrhvszm6ddsqqhcdti75mzp6lsjwmazcalbdzr5ca/8b:3e:78:cd:6a:66:81:8f:c4:14:e4:03:b6:20:d8:5c",signature="hOw1aWC86OD8uhFRaZoGsXfZ8WZO0zmUJ1mDD8aCNAcOUhcHUoP5znM7BF+4w7GGJEs+4pdylKAKCl4TSLYjQUJwGyxHYIBHJIeL8KVz2/0/RcxgeIxH5l4N/pjEjwbU/61/Jz5y7URWbF6q73lP6KqZJpwg+ruu2B3Xy9XfBZGTUPzwXkwlw7g8vJU/b7LVll0C2gsx7f3DDDp47DJcU91KPZIEP5eGMxTiVLyhV32B2E8IGIHzw5Uw06IyKAtpexZI/0J0PwH+ZN1nY2O2LbcjOgPeCaSb/WTimdDq0h4M4taW0uDlT4wznshgLNcaDXN4CNgWhlEvgMsyWGKyjA==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Wed, 17 Apr 2019 01:32:58 GMT']
+      host: [database.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.2.6+preview.1.0.57]
+      opc-request-id: [E70D6ACBE14A4B9EAFDC118E1BD2F62E]
+      user-agent: [Oracle-PythonSDK/2.2.6+preview.1.0.57 (python 3.5.3; x86_64-Linux)
+          Oracle-PythonCLI/2.5.7+preview.1]
+    method: GET
+    uri: https://database.us-phoenix-1.oraclecloud.com/20160918/autonomousExadataInfrastructureShapes?availabilityDomain=XXIT%3APHX-AD-3&limit=10&compartmentId=ocid1.compartment.oc1..aaaaaaaaybnl4otkmah23bx73e4h4t2fzvlrv4jo6elnnuegl5g2sleffhia
+  response:
+    body: {string: '[{"availableCoreCount":92,"coreCountIncrement":2,"maximumNodeCount":2,"minimumCoreCount":0,"minimumNodeCount":2,"name":"Exadata.Quarter2.92"}]'}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['142']
+      Content-Type: [application/json]
+      Date: ['Wed, 17 Apr 2019 01:32:59 GMT']
+      X-Content-Type-Options: [nosniff]
+      opc-request-id: [E70D6ACBE14A4B9EAFDC118E1BD2F62E/52BA24E1F2C6EE51DAA52E7D4B6C6869/3F25C3DE1C2D93942552B26ADF3413DF]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"responseJson": "{\"opcRequestId\": \"6AC8173B50F0477085BFE6B1F44F871D\",
+      \"items\": [{\"minimumCoreCount\": 0, \"minimumNodeCount\": 2, \"maximumNodeCount\":
+      2, \"name\": \"Exadata.Quarter2.92\", \"coreCountIncrement\": 2, \"availableCoreCount\":
+      92}]}", "requestJson": "{\"availabilityDomain\": \"XXIT:PHX-AD-3\", \"limit\":
+      10, \"compartmentId\": \"ocid1.compartment.oc1..aaaaaaaaybnl4otkmah23bx73e4h4t2fzvlrv4jo6elnnuegl5g2sleffhia\"}",
+      "containerId": "184dc770-bd73-42c3-9a8e-8a3c33db442d", "requestClass": "com.oracle.bmc.database.requests.ListAutonomousExadataInfrastructureShapesRequest",
+      "responseClass": "com.oracle.bmc.database.responses.ListAutonomousExadataInfrastructureShapesResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['701']
+      User-Agent: [python-requests/2.21.0]
+    method: POST
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/response?sessionId=0600&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Wed, 17 Apr 2019 01:33:00 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+version: 1

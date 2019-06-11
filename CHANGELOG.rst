@@ -6,6 +6,35 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.5.14 - 2019-06-11
+-------------------
+Added
+~~~~~
+* Support for Autonomous Database (Dedicated) features as part of the Database Service
+
+  * (``oci db autonomous-exadata-infrastructure``)
+  * (``oci db autonomous-container-database``)
+  * (``oci db autonomous-database``)
+  * (``oci db maintenance-run``)
+
+* Support for specifying bootVolumeSizeInGBs parameter during creation of instance config in the Compute Management service.
+
+  * (``oci compute-management instance-configuration create --instance-details``)
+
+Changed
+~~~~~~~~
+* \*NIX installer, install.sh, supports more options for non-interactive installations.
+
+  * (``./install.sh --accept-all-defaults --python-install-location <dir> --optional-features [db] --install-dir <dir> --exec-dir <dir> --update-path-and-enable-tab-completion --rc-file-path <file-path> --oci-cli-version <version> --help``)
+
+* Windows installer, install.ps1, supports more options for non-interactive installations.
+
+  * (``.\install.ps1 -AcceptAllDefaults -PythonInstallLocation <dir> -OptionalFeatures [db] -UpdatePathAndEnableTabCompletion -OciCliVersion <version>``)
+
+* The installer no longer checks for required native dependencies on linux systems.
+
+* The installer no longer requires /dev/tty for non-interactive installations.
+
 2.5.13 - 2019-06-04
 -------------------
 Added

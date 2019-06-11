@@ -1,0 +1,84 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.21.0]
+    method: GET
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/request/enable?apiName=TerminateAutonomousExadataInfrastructure&serviceName=database&lang=PythonCLI
+  response:
+    body: {string: 'true'}
+    headers:
+      Content-Length: ['4']
+      Content-Type: [text/plain]
+      Date: ['Wed, 17 Apr 2019 01:15:30 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.21.0]
+    method: GET
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/request?sessionId=0955&apiName=TerminateAutonomousExadataInfrastructure&serviceName=database&lang=PythonCLI
+  response:
+    body: {string: '[{"containerId":"184dc770-bd73-42c3-9a8e-8a3c33db442d","request":{"autonomousExadataInfrastructureId":"ocid1.autonomousexainfrastructure.oc1.phx.abyhqljt2meis7lned4ewak32zu5x2rhsbcmfs6cen7bcvwbehnkp5cztciq"}}]'}
+    headers:
+      Content-Length: ['209']
+      Content-Type: [text/plain]
+      Date: ['Wed, 17 Apr 2019 01:15:31 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocidv1:tenancy:oc1:phx:1458753575596:aaaaaaaavary4yqe4ljpv5wzp74eflkwpu/ocid1.user.oc1..aaaaaaaakq5e4caznkmlrhvszm6ddsqqhcdti75mzp6lsjwmazcalbdzr5ca/8b:3e:78:cd:6a:66:81:8f:c4:14:e4:03:b6:20:d8:5c",signature="YG+4TGXvc87VOQBXoqOxY0TetTIEIlPRFrQZM1pS36LoSSzSDfgoR3UokD6NpOvOWJaCQwamIDJceksCk9XWDM6OLzddccWsFEQ4IPIqYPjkm+en1sY6kfpre1hRG6wQN1UETeIiYoY/ddzINJBv6QugYtcAJmBDYDlWi2LKOm3Hh5GWdFcLkw/sv7XthkcdWsIHBXEvj75MJadK+4XLUhp2tZaNwQ+lQ0x0rmHOb1lVCy0DrW7rnJTl8Yx+6aBtrvy9BsqZe2LZQEgVzLVkXk65OsdEQ/HIKi02nilK6M1ECLXnTdpcVl9l3eCmaIwvsSqUCtTdIgFJc4OX7LxtoQ==",version="1"']
+      connection: [keep-alive]
+      content-length: ['0']
+      content-type: [application/json]
+      date: ['Wed, 17 Apr 2019 01:16:48 GMT']
+      host: [database.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.2.6+preview.1.0.57]
+      opc-request-id: [C0B050D599E64802B8074011EB1EDCD9]
+      user-agent: [Oracle-PythonSDK/2.2.6+preview.1.0.57 (python 3.5.3; x86_64-Linux)
+          Oracle-PythonCLI/2.5.7+preview.1]
+    method: DELETE
+    uri: https://database.us-phoenix-1.oraclecloud.com/20160918/autonomousExadataInfrastructures/ocid1.autonomousexainfrastructure.oc1.phx.abyhqljt2meis7lned4ewak32zu5x2rhsbcmfs6cen7bcvwbehnkp5cztciq
+  response:
+    body: {string: ''}
+    headers:
+      Connection: [keep-alive]
+      Content-Type: [application/json]
+      Date: ['Wed, 17 Apr 2019 01:16:50 GMT']
+      X-Content-Type-Options: [nosniff]
+      opc-request-id: [C0B050D599E64802B8074011EB1EDCD9/18FBAC81B7A6FB7780112D5112B7682B/768FDF42BFC0A2091B80060D94B6B71E]
+    status: {code: 204, message: No Content}
+- request:
+    body: '{"responseJson": "{\"opcRequestId\": \"D21E454B41074FEBB6EDC3B89C0E6134\"}",
+      "requestJson": "{\"autonomousExadataInfrastructureId\": \"ocid1.autonomousexainfrastructure.oc1.phx.abyhqljt2meis7lned4ewak32zu5x2rhsbcmfs6cen7bcvwbehnkp5cztciq\"}",
+      "containerId": "184dc770-bd73-42c3-9a8e-8a3c33db442d", "requestClass": "com.oracle.bmc.database.requests.TerminateAutonomousExadataInfrastructureRequest",
+      "responseClass": "com.oracle.bmc.database.responses.TerminateAutonomousExadataInfrastructureResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['500']
+      User-Agent: [python-requests/2.21.0]
+    method: POST
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/response?sessionId=0955&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Wed, 17 Apr 2019 01:16:51 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+version: 1
