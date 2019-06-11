@@ -373,10 +373,11 @@ def list_databases(ctx, **kwargs):
     response = client.get_db_system(kwargs['db_system_id'])
     compartment_id = response.data.compartment_id
 
-    response = client.list_db_homes(compartment_id, kwargs['db_system_id'])
+    list_db_home_kw_args = {'db_system_id': kwargs['db_system_id']}
+    response = client.list_db_homes(compartment_id, **list_db_home_kw_args)
     db_homes = response.data
     while response.has_next_page:
-        response = client.list_db_homes(compartment_id, kwargs['db_system_id'])
+        response = client.list_db_homes(compartment_id, **list_db_home_kw_args)
 
         if response.data is not None:
             db_homes += response.data

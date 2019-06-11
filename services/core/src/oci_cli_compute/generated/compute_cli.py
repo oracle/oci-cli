@@ -807,6 +807,216 @@ def create_image(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
     cli_util.render_response(result, ctx)
 
 
+@image_group.command(name=cli_util.override('create_image_image_source_via_object_storage_tuple_details.command_name', 'create-image-image-source-via-object-storage-tuple-details'), help=u"""Creates a boot disk image for the specified instance or imports an exported image from the Oracle Cloud Infrastructure Object Storage service.
+
+When creating a new image, you must provide the OCID of the instance you want to use as the basis for the image, and the OCID of the compartment containing that instance. For more information about images, see [Managing Custom Images].
+
+When importing an exported image from Object Storage, you specify the source information in [ImageSourceDetails].
+
+When importing an image based on the namespace, bucket name, and object name, use [ImageSourceViaObjectStorageTupleDetails].
+
+When importing an image based on the Object Storage URL, use [ImageSourceViaObjectStorageUriDetails]. See [Object Storage URLs] and [Using Pre-Authenticated Requests] for constructing URLs for image import/export.
+
+For more information about importing exported images, see [Image Import/Export].
+
+You may optionally specify a *display name* for the image, which is simply a friendly name or description. It does not have to be unique, and you can change it. See [UpdateImage]. Avoid entering confidential information.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment containing the instance you want to use as the basis for the image.""")
+@cli_util.option('--image-source-details-bucket-name', required=True, help=u"""The Object Storage bucket for the image.""")
+@cli_util.option('--image-source-details-namespace-name', required=True, help=u"""The Object Storage namespace for the image.""")
+@cli_util.option('--image-source-details-object-name', required=True, help=u"""The Object Storage name for the image.""")
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help=u"""A user-friendly name for the image. It does not have to be unique, and it's changeable. Avoid entering confidential information.
+
+You cannot use an Oracle-provided image name as a custom image name.
+
+Example: `My Oracle Linux image`""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--instance-id', help=u"""The OCID of the instance you want to use as the basis for the image.""")
+@cli_util.option('--launch-mode', type=custom_types.CliCaseInsensitiveChoice(["NATIVE", "EMULATED", "PARAVIRTUALIZED", "CUSTOM"]), help=u"""Specifies the configuration mode for launching virtual machine (VM) instances. The configuration modes are: * `NATIVE` - VM instances launch with paravirtualized boot and VFIO devices. The default value for Oracle-provided images. * `EMULATED` - VM instances launch with emulated devices, such as the E1000 network driver and emulated SCSI disk controller. * `PARAVIRTUALIZED` - VM instances launch with paravirtualized devices using virtio drivers. * `CUSTOM` - VM instances launch with custom configuration settings specified in the `LaunchOptions` parameter.""")
+@cli_util.option('--image-source-details-operating-system', help=u"""""")
+@cli_util.option('--image-source-details-operating-system-version', help=u"""""")
+@cli_util.option('--image-source-details-source-image-type', type=custom_types.CliCaseInsensitiveChoice(["QCOW2", "VMDK"]), help=u"""The format of the image to be imported.  Only monolithic images are supported. This attribute is not used for exported Oracle images with the OCI image format.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "IMPORTING", "AVAILABLE", "EXPORTING", "DISABLED", "DELETED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'Image'})
+@cli_util.wrap_exceptions
+def create_image_image_source_via_object_storage_tuple_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, image_source_details_bucket_name, image_source_details_namespace_name, image_source_details_object_name, defined_tags, display_name, freeform_tags, instance_id, launch_mode, image_source_details_operating_system, image_source_details_operating_system_version, image_source_details_source_image_type):
+
+    kwargs = {}
+
+    details = {}
+    details['compartmentId'] = compartment_id
+    details['imageSourceDetails']['bucketName'] = image_source_details_bucket_name
+    details['imageSourceDetails']['namespaceName'] = image_source_details_namespace_name
+    details['imageSourceDetails']['objectName'] = image_source_details_object_name
+
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if display_name is not None:
+        details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if instance_id is not None:
+        details['instanceId'] = instance_id
+
+    if launch_mode is not None:
+        details['launchMode'] = launch_mode
+
+    if image_source_details_operating_system is not None:
+        details['imageSourceDetails']['operatingSystem'] = image_source_details_operating_system
+
+    if image_source_details_operating_system_version is not None:
+        details['imageSourceDetails']['operatingSystemVersion'] = image_source_details_operating_system_version
+
+    if image_source_details_source_image_type is not None:
+        details['imageSourceDetails']['sourceImageType'] = image_source_details_source_image_type
+
+    details['imageSourceDetails']['sourceType'] = 'objectStorageTuple'
+
+    client = cli_util.build_client('compute', ctx)
+    result = client.create_image(
+        create_image_details=details,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_image') and callable(getattr(client, 'get_image')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_image(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@image_group.command(name=cli_util.override('create_image_image_source_via_object_storage_uri_details.command_name', 'create-image-image-source-via-object-storage-uri-details'), help=u"""Creates a boot disk image for the specified instance or imports an exported image from the Oracle Cloud Infrastructure Object Storage service.
+
+When creating a new image, you must provide the OCID of the instance you want to use as the basis for the image, and the OCID of the compartment containing that instance. For more information about images, see [Managing Custom Images].
+
+When importing an exported image from Object Storage, you specify the source information in [ImageSourceDetails].
+
+When importing an image based on the namespace, bucket name, and object name, use [ImageSourceViaObjectStorageTupleDetails].
+
+When importing an image based on the Object Storage URL, use [ImageSourceViaObjectStorageUriDetails]. See [Object Storage URLs] and [Using Pre-Authenticated Requests] for constructing URLs for image import/export.
+
+For more information about importing exported images, see [Image Import/Export].
+
+You may optionally specify a *display name* for the image, which is simply a friendly name or description. It does not have to be unique, and you can change it. See [UpdateImage]. Avoid entering confidential information.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment containing the instance you want to use as the basis for the image.""")
+@cli_util.option('--image-source-details-source-uri', required=True, help=u"""The Object Storage URL for the image.""")
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help=u"""A user-friendly name for the image. It does not have to be unique, and it's changeable. Avoid entering confidential information.
+
+You cannot use an Oracle-provided image name as a custom image name.
+
+Example: `My Oracle Linux image`""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--instance-id', help=u"""The OCID of the instance you want to use as the basis for the image.""")
+@cli_util.option('--launch-mode', type=custom_types.CliCaseInsensitiveChoice(["NATIVE", "EMULATED", "PARAVIRTUALIZED", "CUSTOM"]), help=u"""Specifies the configuration mode for launching virtual machine (VM) instances. The configuration modes are: * `NATIVE` - VM instances launch with paravirtualized boot and VFIO devices. The default value for Oracle-provided images. * `EMULATED` - VM instances launch with emulated devices, such as the E1000 network driver and emulated SCSI disk controller. * `PARAVIRTUALIZED` - VM instances launch with paravirtualized devices using virtio drivers. * `CUSTOM` - VM instances launch with custom configuration settings specified in the `LaunchOptions` parameter.""")
+@cli_util.option('--image-source-details-operating-system', help=u"""""")
+@cli_util.option('--image-source-details-operating-system-version', help=u"""""")
+@cli_util.option('--image-source-details-source-image-type', type=custom_types.CliCaseInsensitiveChoice(["QCOW2", "VMDK"]), help=u"""The format of the image to be imported.  Only monolithic images are supported. This attribute is not used for exported Oracle images with the OCI image format.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "IMPORTING", "AVAILABLE", "EXPORTING", "DISABLED", "DELETED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'Image'})
+@cli_util.wrap_exceptions
+def create_image_image_source_via_object_storage_uri_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, image_source_details_source_uri, defined_tags, display_name, freeform_tags, instance_id, launch_mode, image_source_details_operating_system, image_source_details_operating_system_version, image_source_details_source_image_type):
+
+    kwargs = {}
+
+    details = {}
+    details['compartmentId'] = compartment_id
+    details['imageSourceDetails']['sourceUri'] = image_source_details_source_uri
+
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if display_name is not None:
+        details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if instance_id is not None:
+        details['instanceId'] = instance_id
+
+    if launch_mode is not None:
+        details['launchMode'] = launch_mode
+
+    if image_source_details_operating_system is not None:
+        details['imageSourceDetails']['operatingSystem'] = image_source_details_operating_system
+
+    if image_source_details_operating_system_version is not None:
+        details['imageSourceDetails']['operatingSystemVersion'] = image_source_details_operating_system_version
+
+    if image_source_details_source_image_type is not None:
+        details['imageSourceDetails']['sourceImageType'] = image_source_details_source_image_type
+
+    details['imageSourceDetails']['sourceType'] = 'objectStorageUri'
+
+    client = cli_util.build_client('compute', ctx)
+    result = client.create_image(
+        create_image_details=details,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_image') and callable(getattr(client, 'get_image')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_image(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @instance_console_connection_group.command(name=cli_util.override('create_instance_console_connection.command_name', 'create'), help=u"""Creates a new console connection to the specified instance. Once the console connection has been created and is available, you connect to the console using SSH.
 
 For more information about console access, see [Accessing the Console].""")
@@ -1940,6 +2150,364 @@ def launch_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 
     if is_pv_encryption_in_transit_enabled is not None:
         details['isPvEncryptionInTransitEnabled'] = is_pv_encryption_in_transit_enabled
+
+    client = cli_util.build_client('compute', ctx)
+    result = client.launch_instance(
+        launch_instance_details=details,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_instance') and callable(getattr(client, 'get_instance')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_instance(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@instance_group.command(name=cli_util.override('launch_instance_instance_source_via_image_details.command_name', 'launch-instance-instance-source-via-image-details'), help=u"""Creates a new instance in the specified compartment and the specified availability domain. For general information about instances, see [Overview of the Compute Service].
+
+For information about access control and compartments, see [Overview of the IAM Service].
+
+For information about availability domains, see [Regions and Availability Domains]. To get a list of availability domains, use the `ListAvailabilityDomains` operation in the Identity and Access Management Service API.
+
+All Oracle Cloud Infrastructure resources, including instances, get an Oracle-assigned, unique ID called an Oracle Cloud Identifier (OCID). When you create a resource, you can find its OCID in the response. You can also retrieve a resource's OCID by using a List API operation on that resource type, or by viewing the resource in the Console.
+
+To launch an instance using an image or a boot volume use the `sourceDetails` parameter in [LaunchInstanceDetails].
+
+When you launch an instance, it is automatically attached to a virtual network interface card (VNIC), called the *primary VNIC*. The VNIC has a private IP address from the subnet's CIDR. You can either assign a private IP address of your choice or let Oracle automatically assign one. You can choose whether the instance has a public IP address. To retrieve the addresses, use the [ListVnicAttachments] operation to get the VNIC ID for the instance, and then call [GetVnic] with the VNIC ID.
+
+You can later add secondary VNICs to an instance. For more information, see [Virtual Network Interface Cards (VNICs)].""")
+@cli_util.option('--availability-domain', required=True, help=u"""The availability domain of the instance.
+
+Example: `Uocm:PHX-AD-1`""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--shape', required=True, help=u"""The shape of an instance. The shape determines the number of CPUs, amount of memory, and other resources allocated to the instance.
+
+You can enumerate all available shapes by calling [ListShapes].""")
+@cli_util.option('--source-details-image-id', required=True, help=u"""The OCID of the image used to boot the instance.""")
+@cli_util.option('--create-vnic-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Details for the primary VNIC, which is automatically created and attached when the instance is launched.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
+
+Example: `My bare metal instance`""")
+@cli_util.option('--extended-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Additional metadata key/value pairs that you provide. They serve the same purpose and functionality as fields in the 'metadata' object.
+
+They are distinguished from 'metadata' fields in that these can be nested JSON objects (whereas 'metadata' fields are string/string maps only).""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--fault-domain', help=u"""A fault domain is a grouping of hardware and infrastructure within an availability domain. Each availability domain contains three fault domains. Fault domains let you distribute your instances so that they are not on the same physical hardware within a single availability domain. A hardware failure or Compute hardware maintenance that affects one fault domain does not affect instances in other fault domains.
+
+If you do not specify the fault domain, the system selects one for you. To change the fault domain for an instance, terminate it and launch a new instance in the preferred fault domain.
+
+To get a list of fault domains, use the [ListFaultDomains] operation in the Identity and Access Management Service API.
+
+Example: `FAULT-DOMAIN-1`""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--hostname-label', help=u"""Deprecated. Instead use `hostnameLabel` in [CreateVnicDetails]. If you provide both, the values must match.""")
+@cli_util.option('--image-id', help=u"""Deprecated. Use `sourceDetails` with [InstanceSourceViaImageDetails] source type instead. If you specify values for both, the values must match.""")
+@cli_util.option('--ipxe-script-file', type=click.File(mode='r'), help=u"""This is an advanced option.
+
+When a bare metal or virtual machine instance boots, the iPXE firmware that runs on the instance is configured to run an iPXE script to continue the boot process.
+
+If you want more control over the boot process, you can provide your own custom iPXE script that will run when the instance boots; however, you should be aware that the same iPXE script will run every time an instance boots; not only after the initial LaunchInstance call.
+
+The default iPXE script connects to the instance's local boot volume over iSCSI and performs a network boot. If you use a custom iPXE script and want to network-boot from the instance's local boot volume over iSCSI the same way as the default iPXE script, you should use the following iSCSI IP address: 169.254.0.2, and boot volume IQN: iqn.2015-02.oracle.boot.
+
+For more information about the Bring Your Own Image feature of Oracle Cloud Infrastructure, see [Bring Your Own Image].
+
+For more information about iPXE, see http://ipxe.org.""")
+@cli_util.option('--metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Custom metadata key/value pairs that you provide, such as the SSH public key required to connect to the instance.
+
+A metadata service runs on every launched instance. The service is an HTTP endpoint listening on 169.254.169.254. You can use the service to:
+
+* Provide information to [Cloud-Init]   to be used for various system initialization tasks.
+
+* Get information about the instance, including the custom metadata that you   provide when you launch the instance.
+
+ **Providing Cloud-Init Metadata**
+
+ You can use the following metadata key names to provide information to  Cloud-Init:
+
+ **\"ssh_authorized_keys\"** - Provide one or more public SSH keys to be  included in the `~/.ssh/authorized_keys` file for the default user on the  instance. Use a newline character to separate multiple keys. The SSH  keys must be in the format necessary for the `authorized_keys` file, as shown  in the example below.
+
+ **\"user_data\"** - Provide your own base64-encoded data to be used by  Cloud-Init to run custom scripts or provide custom Cloud-Init configuration. For  information about how to take advantage of user data, see the  [Cloud-Init Documentation].
+
+ **Note:** Cloud-Init does not pull this data from the `http://169.254.169.254/opc/v1/instance/metadata/`  path. When the instance launches and either of these keys are provided, the key values are formatted as  OpenStack metadata and copied to the following locations, which are recognized by Cloud-Init:
+
+ `http://169.254.169.254/openstack/latest/meta_data.json` - This JSON blob  contains, among other things, the SSH keys that you provided for   **\"ssh_authorized_keys\"**.
+
+ `http://169.254.169.254/openstack/latest/user_data` - Contains the  base64-decoded data that you provided for **\"user_data\"**.
+
+ **Metadata Example**
+
+      \"metadata\" : {          \"quake_bot_level\" : \"Severe\",          \"ssh_authorized_keys\" : \"ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCZ06fccNTQfq+xubFlJ5ZR3kt+uzspdH9tXL+lAejSM1NXM+CFZev7MIxfEjas06y80ZBZ7DUTQO0GxJPeD8NCOb1VorF8M4xuLwrmzRtkoZzU16umt4y1W0Q4ifdp3IiiU0U8/WxczSXcUVZOLqkz5dc6oMHdMVpkimietWzGZ4LBBsH/LjEVY7E0V+a0sNchlVDIZcm7ErReBLcdTGDq0uLBiuChyl6RUkX1PNhusquTGwK7zc8OBXkRuubn5UKXhI3Ul9Nyk4XESkVWIGNKmw8mSpoJSjR8P9ZjRmcZVo8S+x4KVPMZKQEor== ryan.smith@company.com          ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEAzJSAtwEPoB3Jmr58IXrDGzLuDYkWAYg8AsLYlo6JZvKpjY1xednIcfEVQJm4T2DhVmdWhRrwQ8DmayVZvBkLt+zs2LdoAJEVimKwXcJFD/7wtH8Lnk17HiglbbbNXsemjDY0hea4JUE5CfvkIdZBITuMrfqSmA4n3VNoorXYdvtTMoGG8fxMub46RPtuxtqi9bG9Zqenordkg5FJt2mVNfQRqf83CWojcOkklUWq4CjyxaeLf5i9gv1fRoBo4QhiA8I6NCSppO8GnoV/6Ox6TNoh9BiifqGKC9VGYuC89RvUajRBTZSK2TK4DPfaT+2R+slPsFrwiT/oPEhhEK1S5Q== rsa-key-20160227\",          \"user_data\" : \"SWYgeW91IGNhbiBzZWUgdGhpcywgdGhlbiBpdCB3b3JrZWQgbWF5YmUuCg==\"       }  **Getting Metadata on the Instance**
+
+ To get information about your instance, connect to the instance using SSH and issue any of the  following GET requests:
+
+     curl http://169.254.169.254/opc/v1/instance/      curl http://169.254.169.254/opc/v1/instance/metadata/      curl http://169.254.169.254/opc/v1/instance/metadata/<any-key-name>
+
+ You'll get back a response that includes all the instance information; only the metadata information; or  the metadata information for the specified key name, respectively.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--agent-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--subnet-id', help=u"""Deprecated. Instead use `subnetId` in [CreateVnicDetails]. At least one of them is required; if you provide both, the values must match.""")
+@cli_util.option('--is-pv-encryption-in-transit-enabled', type=click.BOOL, help=u"""Whether to enable in-transit encryption for the data volume's paravirtualized attachment. The default value is false.""")
+@cli_util.option('--source-details-boot-volume-size-in-gbs', type=click.INT, help=u"""The size of the boot volume in GBs. Minimum value is 50 GB and maximum value is 16384 GB (16TB).""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "RUNNING", "STARTING", "STOPPING", "STOPPED", "CREATING_IMAGE", "TERMINATING", "TERMINATED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}}, output_type={'module': 'core', 'class': 'Instance'})
+@cli_util.wrap_exceptions
+def launch_instance_instance_source_via_image_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, shape, source_details_image_id, create_vnic_details, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, hostname_label, image_id, ipxe_script_file, metadata, agent_config, subnet_id, is_pv_encryption_in_transit_enabled, source_details_boot_volume_size_in_gbs):
+
+    kwargs = {}
+
+    details = {}
+    details['availabilityDomain'] = availability_domain
+    details['compartmentId'] = compartment_id
+    details['shape'] = shape
+    details['sourceDetails']['imageId'] = source_details_image_id
+
+    if create_vnic_details is not None:
+        details['createVnicDetails'] = cli_util.parse_json_parameter("create_vnic_details", create_vnic_details)
+
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if display_name is not None:
+        details['displayName'] = display_name
+
+    if extended_metadata is not None:
+        details['extendedMetadata'] = cli_util.parse_json_parameter("extended_metadata", extended_metadata)
+
+    if fault_domain is not None:
+        details['faultDomain'] = fault_domain
+
+    if freeform_tags is not None:
+        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if hostname_label is not None:
+        details['hostnameLabel'] = hostname_label
+
+    if image_id is not None:
+        details['imageId'] = image_id
+
+    if ipxe_script_file is not None:
+        details['ipxeScript'] = ipxe_script_file.read()
+
+    if metadata is not None:
+        details['metadata'] = cli_util.parse_json_parameter("metadata", metadata)
+
+    if agent_config is not None:
+        details['agentConfig'] = cli_util.parse_json_parameter("agent_config", agent_config)
+
+    if subnet_id is not None:
+        details['subnetId'] = subnet_id
+
+    if is_pv_encryption_in_transit_enabled is not None:
+        details['isPvEncryptionInTransitEnabled'] = is_pv_encryption_in_transit_enabled
+
+    if source_details_boot_volume_size_in_gbs is not None:
+        details['sourceDetails']['bootVolumeSizeInGBs'] = source_details_boot_volume_size_in_gbs
+
+    details['sourceDetails']['sourceType'] = 'image'
+
+    client = cli_util.build_client('compute', ctx)
+    result = client.launch_instance(
+        launch_instance_details=details,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_instance') and callable(getattr(client, 'get_instance')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_instance(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@instance_group.command(name=cli_util.override('launch_instance_instance_source_via_boot_volume_details.command_name', 'launch-instance-instance-source-via-boot-volume-details'), help=u"""Creates a new instance in the specified compartment and the specified availability domain. For general information about instances, see [Overview of the Compute Service].
+
+For information about access control and compartments, see [Overview of the IAM Service].
+
+For information about availability domains, see [Regions and Availability Domains]. To get a list of availability domains, use the `ListAvailabilityDomains` operation in the Identity and Access Management Service API.
+
+All Oracle Cloud Infrastructure resources, including instances, get an Oracle-assigned, unique ID called an Oracle Cloud Identifier (OCID). When you create a resource, you can find its OCID in the response. You can also retrieve a resource's OCID by using a List API operation on that resource type, or by viewing the resource in the Console.
+
+To launch an instance using an image or a boot volume use the `sourceDetails` parameter in [LaunchInstanceDetails].
+
+When you launch an instance, it is automatically attached to a virtual network interface card (VNIC), called the *primary VNIC*. The VNIC has a private IP address from the subnet's CIDR. You can either assign a private IP address of your choice or let Oracle automatically assign one. You can choose whether the instance has a public IP address. To retrieve the addresses, use the [ListVnicAttachments] operation to get the VNIC ID for the instance, and then call [GetVnic] with the VNIC ID.
+
+You can later add secondary VNICs to an instance. For more information, see [Virtual Network Interface Cards (VNICs)].""")
+@cli_util.option('--availability-domain', required=True, help=u"""The availability domain of the instance.
+
+Example: `Uocm:PHX-AD-1`""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--shape', required=True, help=u"""The shape of an instance. The shape determines the number of CPUs, amount of memory, and other resources allocated to the instance.
+
+You can enumerate all available shapes by calling [ListShapes].""")
+@cli_util.option('--source-details-boot-volume-id', required=True, help=u"""The OCID of the boot volume used to boot the instance.""")
+@cli_util.option('--create-vnic-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Details for the primary VNIC, which is automatically created and attached when the instance is launched.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
+
+Example: `My bare metal instance`""")
+@cli_util.option('--extended-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Additional metadata key/value pairs that you provide. They serve the same purpose and functionality as fields in the 'metadata' object.
+
+They are distinguished from 'metadata' fields in that these can be nested JSON objects (whereas 'metadata' fields are string/string maps only).""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--fault-domain', help=u"""A fault domain is a grouping of hardware and infrastructure within an availability domain. Each availability domain contains three fault domains. Fault domains let you distribute your instances so that they are not on the same physical hardware within a single availability domain. A hardware failure or Compute hardware maintenance that affects one fault domain does not affect instances in other fault domains.
+
+If you do not specify the fault domain, the system selects one for you. To change the fault domain for an instance, terminate it and launch a new instance in the preferred fault domain.
+
+To get a list of fault domains, use the [ListFaultDomains] operation in the Identity and Access Management Service API.
+
+Example: `FAULT-DOMAIN-1`""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--hostname-label', help=u"""Deprecated. Instead use `hostnameLabel` in [CreateVnicDetails]. If you provide both, the values must match.""")
+@cli_util.option('--image-id', help=u"""Deprecated. Use `sourceDetails` with [InstanceSourceViaImageDetails] source type instead. If you specify values for both, the values must match.""")
+@cli_util.option('--ipxe-script-file', type=click.File(mode='r'), help=u"""This is an advanced option.
+
+When a bare metal or virtual machine instance boots, the iPXE firmware that runs on the instance is configured to run an iPXE script to continue the boot process.
+
+If you want more control over the boot process, you can provide your own custom iPXE script that will run when the instance boots; however, you should be aware that the same iPXE script will run every time an instance boots; not only after the initial LaunchInstance call.
+
+The default iPXE script connects to the instance's local boot volume over iSCSI and performs a network boot. If you use a custom iPXE script and want to network-boot from the instance's local boot volume over iSCSI the same way as the default iPXE script, you should use the following iSCSI IP address: 169.254.0.2, and boot volume IQN: iqn.2015-02.oracle.boot.
+
+For more information about the Bring Your Own Image feature of Oracle Cloud Infrastructure, see [Bring Your Own Image].
+
+For more information about iPXE, see http://ipxe.org.""")
+@cli_util.option('--metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Custom metadata key/value pairs that you provide, such as the SSH public key required to connect to the instance.
+
+A metadata service runs on every launched instance. The service is an HTTP endpoint listening on 169.254.169.254. You can use the service to:
+
+* Provide information to [Cloud-Init]   to be used for various system initialization tasks.
+
+* Get information about the instance, including the custom metadata that you   provide when you launch the instance.
+
+ **Providing Cloud-Init Metadata**
+
+ You can use the following metadata key names to provide information to  Cloud-Init:
+
+ **\"ssh_authorized_keys\"** - Provide one or more public SSH keys to be  included in the `~/.ssh/authorized_keys` file for the default user on the  instance. Use a newline character to separate multiple keys. The SSH  keys must be in the format necessary for the `authorized_keys` file, as shown  in the example below.
+
+ **\"user_data\"** - Provide your own base64-encoded data to be used by  Cloud-Init to run custom scripts or provide custom Cloud-Init configuration. For  information about how to take advantage of user data, see the  [Cloud-Init Documentation].
+
+ **Note:** Cloud-Init does not pull this data from the `http://169.254.169.254/opc/v1/instance/metadata/`  path. When the instance launches and either of these keys are provided, the key values are formatted as  OpenStack metadata and copied to the following locations, which are recognized by Cloud-Init:
+
+ `http://169.254.169.254/openstack/latest/meta_data.json` - This JSON blob  contains, among other things, the SSH keys that you provided for   **\"ssh_authorized_keys\"**.
+
+ `http://169.254.169.254/openstack/latest/user_data` - Contains the  base64-decoded data that you provided for **\"user_data\"**.
+
+ **Metadata Example**
+
+      \"metadata\" : {          \"quake_bot_level\" : \"Severe\",          \"ssh_authorized_keys\" : \"ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCZ06fccNTQfq+xubFlJ5ZR3kt+uzspdH9tXL+lAejSM1NXM+CFZev7MIxfEjas06y80ZBZ7DUTQO0GxJPeD8NCOb1VorF8M4xuLwrmzRtkoZzU16umt4y1W0Q4ifdp3IiiU0U8/WxczSXcUVZOLqkz5dc6oMHdMVpkimietWzGZ4LBBsH/LjEVY7E0V+a0sNchlVDIZcm7ErReBLcdTGDq0uLBiuChyl6RUkX1PNhusquTGwK7zc8OBXkRuubn5UKXhI3Ul9Nyk4XESkVWIGNKmw8mSpoJSjR8P9ZjRmcZVo8S+x4KVPMZKQEor== ryan.smith@company.com          ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEAzJSAtwEPoB3Jmr58IXrDGzLuDYkWAYg8AsLYlo6JZvKpjY1xednIcfEVQJm4T2DhVmdWhRrwQ8DmayVZvBkLt+zs2LdoAJEVimKwXcJFD/7wtH8Lnk17HiglbbbNXsemjDY0hea4JUE5CfvkIdZBITuMrfqSmA4n3VNoorXYdvtTMoGG8fxMub46RPtuxtqi9bG9Zqenordkg5FJt2mVNfQRqf83CWojcOkklUWq4CjyxaeLf5i9gv1fRoBo4QhiA8I6NCSppO8GnoV/6Ox6TNoh9BiifqGKC9VGYuC89RvUajRBTZSK2TK4DPfaT+2R+slPsFrwiT/oPEhhEK1S5Q== rsa-key-20160227\",          \"user_data\" : \"SWYgeW91IGNhbiBzZWUgdGhpcywgdGhlbiBpdCB3b3JrZWQgbWF5YmUuCg==\"       }  **Getting Metadata on the Instance**
+
+ To get information about your instance, connect to the instance using SSH and issue any of the  following GET requests:
+
+     curl http://169.254.169.254/opc/v1/instance/      curl http://169.254.169.254/opc/v1/instance/metadata/      curl http://169.254.169.254/opc/v1/instance/metadata/<any-key-name>
+
+ You'll get back a response that includes all the instance information; only the metadata information; or  the metadata information for the specified key name, respectively.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--agent-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--subnet-id', help=u"""Deprecated. Instead use `subnetId` in [CreateVnicDetails]. At least one of them is required; if you provide both, the values must match.""")
+@cli_util.option('--is-pv-encryption-in-transit-enabled', type=click.BOOL, help=u"""Whether to enable in-transit encryption for the data volume's paravirtualized attachment. The default value is false.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "RUNNING", "STARTING", "STOPPING", "STOPPED", "CREATING_IMAGE", "TERMINATING", "TERMINATED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}}, output_type={'module': 'core', 'class': 'Instance'})
+@cli_util.wrap_exceptions
+def launch_instance_instance_source_via_boot_volume_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, shape, source_details_boot_volume_id, create_vnic_details, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, hostname_label, image_id, ipxe_script_file, metadata, agent_config, subnet_id, is_pv_encryption_in_transit_enabled):
+
+    kwargs = {}
+
+    details = {}
+    details['availabilityDomain'] = availability_domain
+    details['compartmentId'] = compartment_id
+    details['shape'] = shape
+    details['sourceDetails']['bootVolumeId'] = source_details_boot_volume_id
+
+    if create_vnic_details is not None:
+        details['createVnicDetails'] = cli_util.parse_json_parameter("create_vnic_details", create_vnic_details)
+
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if display_name is not None:
+        details['displayName'] = display_name
+
+    if extended_metadata is not None:
+        details['extendedMetadata'] = cli_util.parse_json_parameter("extended_metadata", extended_metadata)
+
+    if fault_domain is not None:
+        details['faultDomain'] = fault_domain
+
+    if freeform_tags is not None:
+        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if hostname_label is not None:
+        details['hostnameLabel'] = hostname_label
+
+    if image_id is not None:
+        details['imageId'] = image_id
+
+    if ipxe_script_file is not None:
+        details['ipxeScript'] = ipxe_script_file.read()
+
+    if metadata is not None:
+        details['metadata'] = cli_util.parse_json_parameter("metadata", metadata)
+
+    if agent_config is not None:
+        details['agentConfig'] = cli_util.parse_json_parameter("agent_config", agent_config)
+
+    if subnet_id is not None:
+        details['subnetId'] = subnet_id
+
+    if is_pv_encryption_in_transit_enabled is not None:
+        details['isPvEncryptionInTransitEnabled'] = is_pv_encryption_in_transit_enabled
+
+    details['sourceDetails']['sourceType'] = 'bootVolume'
 
     client = cli_util.build_client('compute', ctx)
     result = client.launch_instance(

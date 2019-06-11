@@ -33,6 +33,12 @@ compute_cli.compute_root_group.commands.pop(compute_cli.instance_credentials_gro
 compute_cli.image_group.commands.pop(compute_cli.export_image_export_image_via_object_storage_uri_details.name)
 compute_cli.image_group.commands.pop(compute_cli.export_image_export_image_via_object_storage_tuple_details.name)
 
+# Disable nested polymorphic commands
+compute_cli.image_group.commands.pop(compute_cli.create_image_image_source_via_object_storage_tuple_details.name)
+compute_cli.image_group.commands.pop(compute_cli.create_image_image_source_via_object_storage_uri_details.name)
+compute_cli.instance_group.commands.pop(compute_cli.launch_instance_instance_source_via_image_details.name)
+compute_cli.instance_group.commands.pop(compute_cli.launch_instance_instance_source_via_boot_volume_details.name)
+
 compute_cli.image_group.commands.pop(compute_cli.export_image.name)
 
 compute_cli.compute_root_group.add_command(compute_cli.instance_group)

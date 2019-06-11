@@ -126,3 +126,22 @@ echo 'Trying to Get Deleted Autonomous Transaction Processing. Should not find i
 oci db autonomous-database get --autonomous-database-id $ADB_ID
 
 echo 'End of Autonomous Transaction Processing Examples.'
+
+if [[ ! -z "$CONTAINER_DB_ID" ]]; then
+
+    echo 'Create Dedicated Autonomous Database...'
+    ATP_DEDICATED=$(oci db autonomous-database create -c $COMPARTMENT_ID --db-name $DB_NAME2 --admin-password $PASSWORD1 \
+                        --cpu-core-count $CPU --data-storage-size-in-tbs $STORAGE --display-name $DISPLAY_NAME1 \
+                        --is-dedicated true --autonomous-container-database-id $CONTAINER_DB_ID \
+                        --wait-for-state AVAILABLE)
+
+    ADB_D_ID=$(jq -r '.data.id' <<< "ATP_DEDICATED")
+    
+    echo 'Created Dedicated Autonomous Database with OCID:'
+    echo ADB_D_ID
+
+    echo 'Delete Autonomous Dedicated Transaction Processing'
+    oci db autonomous-database delete --autonomous-database-id $ADB_D_ID --force --wait-for-state TERMINATED
+    echo 'Deleted Autonomous Dedicated Transaction Processing'
+
+fi

@@ -186,6 +186,16 @@ def test_create_instance_configuration(cli_testing_service_client, runner, confi
                     request[key] = request['opts'][key]
                 del request['opts']
 
+            if request.get('instanceType') == 'compute':
+                params = util.get_command_list(
+                    root_command_name,
+                    resource_group_command_name,
+                    oci_cli.cli_util.override('create_instance_configuration_compute_instance_details.command_name', 'create-instance-configuration-compute-instance-details')
+                )
+
+                if params:
+                    del request['instanceType']
+
             request, cleanup = generated_test_request_transformers.transform_generated_test_input('core', 'CreateInstanceConfiguration', request)
 
             input_content = json.dumps(request)

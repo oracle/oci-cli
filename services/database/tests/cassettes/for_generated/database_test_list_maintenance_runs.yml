@@ -1,0 +1,134 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.21.0]
+    method: GET
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/request/enable?apiName=ListMaintenanceRuns&serviceName=database&lang=PythonCLI
+  response:
+    body: {string: 'true'}
+    headers:
+      Content-Length: ['4']
+      Content-Type: [text/plain]
+      Date: ['Tue, 09 Apr 2019 23:04:24 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.21.0]
+    method: GET
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/request?sessionId=0572&apiName=ListMaintenanceRuns&serviceName=database&lang=PythonCLI
+  response:
+    body: {string: '[{"containerId":"d8eaa28c-c0a9-4b9c-b78d-7706c6a5937e","request":{"compartmentId":"ocid1.compartment.oc1..aaaaaaaaybnl4otkmah23bx73e4h4t2fzvlrv4jo6elnnuegl5g2sleffhia","limit":100,"availabilityDomain":"XXIT:PHX-AD-3"}},{"containerId":"e2f09970-895d-45db-a607-aacef26cace8","request":{"compartmentId":"","limit":100,"availabilityDomain":"XXIT:PHX-AD-3"}}]'}
+    headers:
+      Content-Length: ['354']
+      Content-Type: [text/plain]
+      Date: ['Tue, 09 Apr 2019 23:04:25 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocidv1:tenancy:oc1:phx:1458753575596:aaaaaaaavary4yqe4ljpv5wzp74eflkwpu/ocid1.user.oc1..aaaaaaaakq5e4caznkmlrhvszm6ddsqqhcdti75mzp6lsjwmazcalbdzr5ca/8b:3e:78:cd:6a:66:81:8f:c4:14:e4:03:b6:20:d8:5c",signature="mBIWYBuV9AuqvuxrekpsYtQptIGywA3rm70aBFnSzrQmZwaDNua5a0UL/eA1NZd70kQa1WoW47Lh3bqfy/tA5AYT8LsEIcPH7kIbrysQ2zD8C0KXrlIR7zOJigvyJP7Z0Uanl1eLI3ADz09a37ql6xJcchCaa/UDfrZP0C5KfeqLQ9fQvTgpO4J/FxxCKSCec7cr8Uv0zbzzI/s6H8RCuSNngcEyqdpFCviRacQzT/wKbnmNBY4QwDKpr05UNeGJJx0KwrBXY3ykLT8J+k5wD4vXXlbqgtlgw1Q5fXuPCi7Fj+wcd7f5G+nPvmiIvQVLknUwySgZyBx7L6C4f+zuRQ==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Tue, 09 Apr 2019 23:04:25 GMT']
+      host: [database.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.2.6+preview.1.0.57]
+      opc-request-id: [3165847FD48F4B39BA06CA5D2B32C45D]
+      user-agent: [Oracle-PythonSDK/2.2.6+preview.1.0.57 (python 3.5.3; x86_64-Linux)
+          Oracle-PythonCLI/2.5.7+preview.1]
+    method: GET
+    uri: https://database.us-phoenix-1.oraclecloud.com/20160918/maintenanceRuns?availabilityDomain=XXIT%3APHX-AD-3&limit=100&compartmentId=ocid1.compartment.oc1..aaaaaaaaybnl4otkmah23bx73e4h4t2fzvlrv4jo6elnnuegl5g2sleffhia
+  response:
+    body: {string: '[]'}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['2']
+      Content-Type: [application/json]
+      Date: ['Tue, 09 Apr 2019 23:04:27 GMT']
+      X-Content-Type-Options: [nosniff]
+      opc-request-id: [3165847FD48F4B39BA06CA5D2B32C45D/F0B3CAE7FF59F8B2ED0754B22516F1C6/DFFAD40EA97A0C15E88AE382677E7D30]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"responseJson": "{\"opcRequestId\": \"A36677013BD24F6FA16A270962ECAEA0\",
+      \"items\": []}", "requestJson": "{\"availabilityDomain\": \"XXIT:PHX-AD-3\",
+      \"limit\": 100, \"compartmentId\": \"ocid1.compartment.oc1..aaaaaaaaybnl4otkmah23bx73e4h4t2fzvlrv4jo6elnnuegl5g2sleffhia\"}",
+      "containerId": "d8eaa28c-c0a9-4b9c-b78d-7706c6a5937e", "requestClass": "com.oracle.bmc.database.requests.ListMaintenanceRunsRequest",
+      "responseClass": "com.oracle.bmc.database.responses.ListMaintenanceRunsResponse"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['493']
+      User-Agent: [python-requests/2.21.0]
+    method: POST
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/response?sessionId=0572&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Tue, 09 Apr 2019 23:04:27 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      accept: [application/json]
+      accept-encoding: ['gzip, deflate']
+      authorization: ['Signature algorithm="rsa-sha256",headers="date (request-target)
+          host",keyId="ocidv1:tenancy:oc1:phx:1458753575596:aaaaaaaavary4yqe4ljpv5wzp74eflkwpu/ocid1.user.oc1..aaaaaaaakq5e4caznkmlrhvszm6ddsqqhcdti75mzp6lsjwmazcalbdzr5ca/8b:3e:78:cd:6a:66:81:8f:c4:14:e4:03:b6:20:d8:5c",signature="ME730zz7AQ1LRJt8SOq5eGKme7Mzb2Wf7zCLQcfJsQMsfiKJpiNefc6Pt8+6sQb4slbVPqDdruMqItEy/RN4zgYmyWvsJIvp9bglGH0qxWFyFhxsVNPFPk9SumH41+ctjGUfMeqVD7l5noY/ugGdC0YuBoT9dYZtOg+26/V2GxT5CTh41NuFWUNnIDfIo6lL5l10nS7YMujeIupdxFlkFW1qph/+x4+DhGJzIFJbNs/7HYqhpk4sqghfnIOXXEMfxSbJngVBIprOdoxkXyDaBIx9ciNdX2GuMe4rgbIbg9Y9eho7PtIjd+4XJmO/3QE+wev11HNWtE6XTBiS2EwXNg==",version="1"']
+      connection: [keep-alive]
+      content-type: [application/json]
+      date: ['Tue, 09 Apr 2019 23:04:27 GMT']
+      host: [database.us-phoenix-1.oraclecloud.com]
+      opc-client-info: [Oracle-PythonSDK/2.2.6+preview.1.0.57]
+      opc-request-id: [F4B51FB463F340C097B0267F1ED97EC1]
+      user-agent: [Oracle-PythonSDK/2.2.6+preview.1.0.57 (python 3.5.3; x86_64-Linux)
+          Oracle-PythonCLI/2.5.7+preview.1]
+    method: GET
+    uri: https://database.us-phoenix-1.oraclecloud.com/20160918/maintenanceRuns?availabilityDomain=XXIT%3APHX-AD-3&limit=100&compartmentId=
+  response:
+    body: {string: "{\n  \"code\" : \"MissingParameter\",\n  \"message\" : \"Missing\
+        \ compartmentId\"\n}"}
+    headers:
+      Connection: [keep-alive]
+      Content-Length: ['72']
+      Content-Type: [application/json]
+      Date: ['Tue, 09 Apr 2019 23:04:28 GMT']
+      opc-request-id: [F4B51FB463F340C097B0267F1ED97EC1/4A8B46BAB5CABB17B797795B3B629439/5AC0853ABCD1A4BD5A44EBC4781493F2]
+    status: {code: 400, message: Bad Request}
+- request:
+    body: '{"requestJson": "{\"availabilityDomain\": \"XXIT:PHX-AD-3\", \"limit\":
+      100, \"compartmentId\": \"\"}", "errorJson": "{\"statusCode\": 400, \"opcRequestId\":
+      \"F4B51FB463F340C097B0267F1ED97EC1/4A8B46BAB5CABB17B797795B3B629439/5AC0853ABCD1A4BD5A44EBC4781493F2\",
+      \"code\": \"MissingParameter\", \"message\": \"Missing compartmentId\"}", "containerId":
+      "e2f09970-895d-45db-a607-aacef26cace8", "requestClass": "com.oracle.bmc.database.requests.ListMaintenanceRunsRequest"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['469']
+      User-Agent: [python-requests/2.21.0]
+    method: POST
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/error?sessionId=0572&lang=PythonCLI
+  response:
+    body: {string: ''}
+    headers:
+      Content-Length: ['0']
+      Content-Type: [text/plain]
+      Date: ['Tue, 09 Apr 2019 23:04:29 GMT']
+      Server: [Jetty(9.4.7.v20170914)]
+    status: {code: 200, message: OK}
+version: 1

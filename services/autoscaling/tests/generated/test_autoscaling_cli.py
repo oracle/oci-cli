@@ -74,6 +74,16 @@ def test_create_auto_scaling_configuration(cli_testing_service_client, runner, c
                     request[key] = request['opts'][key]
                 del request['opts']
 
+            if request.get('type') == 'instancePool':
+                params = util.get_command_list(
+                    root_command_name,
+                    resource_group_command_name,
+                    oci_cli.cli_util.override('create_auto_scaling_configuration_instance_pool_resource.command_name', 'create-auto-scaling-configuration-instance-pool-resource')
+                )
+
+                if params:
+                    del request['type']
+
             request, cleanup = generated_test_request_transformers.transform_generated_test_input('autoscaling', 'CreateAutoScalingConfiguration', request)
 
             input_content = json.dumps(request)

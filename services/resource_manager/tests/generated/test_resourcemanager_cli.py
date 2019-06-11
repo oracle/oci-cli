@@ -289,6 +289,16 @@ def test_create_stack(cli_testing_service_client, runner, config_file, config_pr
                     request[key] = request['opts'][key]
                 del request['opts']
 
+            if request.get('configSourceType') == 'ZIP_UPLOAD':
+                params = util.get_command_list(
+                    root_command_name,
+                    resource_group_command_name,
+                    oci_cli.cli_util.override('create_stack_create_zip_upload_config_source_details.command_name', 'create-stack-create-zip-upload-config-source-details')
+                )
+
+                if params:
+                    del request['configSourceType']
+
             request, cleanup = generated_test_request_transformers.transform_generated_test_input('resource_manager', 'CreateStack', request)
 
             input_content = json.dumps(request)
@@ -1569,6 +1579,16 @@ def test_update_stack(cli_testing_service_client, runner, config_file, config_pr
                 for key in request['opts']:
                     request[key] = request['opts'][key]
                 del request['opts']
+
+            if request.get('configSourceType') == 'ZIP_UPLOAD':
+                params = util.get_command_list(
+                    root_command_name,
+                    resource_group_command_name,
+                    oci_cli.cli_util.override('update_stack_update_zip_upload_config_source_details.command_name', 'update-stack-update-zip-upload-config-source-details')
+                )
+
+                if params:
+                    del request['configSourceType']
 
             request, cleanup = generated_test_request_transformers.transform_generated_test_input('resource_manager', 'UpdateStack', request)
 

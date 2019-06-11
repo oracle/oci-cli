@@ -15,6 +15,10 @@ import zipfile
 resourcemanager_cli.stack_group.commands.pop(resourcemanager_cli.create_stack.name)
 resourcemanager_cli.stack_group.commands.pop(resourcemanager_cli.update_stack.name)
 
+# Disabling nested polymorphic commands:
+resourcemanager_cli.stack_group.commands.pop(resourcemanager_cli.create_stack_create_zip_upload_config_source_details.name)
+resourcemanager_cli.stack_group.commands.pop(resourcemanager_cli.update_stack_update_zip_upload_config_source_details.name)
+
 
 def create_base64encoded_zip(config_source):
     if config_source.endswith(".zip") and os.path.isfile(config_source) and zipfile.is_zipfile(config_source):

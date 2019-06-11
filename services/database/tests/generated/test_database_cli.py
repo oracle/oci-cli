@@ -135,6 +135,117 @@ def test_complete_external_backup_job(cli_testing_service_client, runner, config
 
 
 @pytest.mark.generated
+def test_create_autonomous_container_database(cli_testing_service_client, runner, config_file, config_profile):
+    if not cli_testing_service_client.is_api_enabled('database', 'CreateAutonomousContainerDatabase'):
+        pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('database', 'Database', 'CreateAutonomousContainerDatabase')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_create_autonomous_container_database.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_create_autonomous_container_database', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_create_autonomous_container_database.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_create_autonomous_container_database'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_create_autonomous_container_database.pem'])
+            config_file = 'tests/resources/config_for_test_create_autonomous_container_database'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
+
+    root_command_name = oci_cli.cli_util.override('db_root_group.command_name', 'db')
+    resource_group_command_name = oci_cli.cli_util.override('autonomous_container_database_group.command_name', 'autonomous_container_database')
+    request_containers = cli_testing_service_client.get_requests(service_name='database', api_name='CreateAutonomousContainerDatabase')
+    for i in range(len(request_containers)):
+        request = request_containers[i]['request'].copy()
+        done = False
+        params = []
+        while not done:
+            # force all details param names to have lower case first letter for consistency with Java models
+            param_name = 'CreateAutonomousContainerDatabaseDetails'
+            details = request.pop(param_name[0].lower() + param_name[1:])
+            for key in details:
+                request[key] = details[key]
+                override = util.variable_name_override(key)
+                if override:
+                    request[override] = request.pop(key)
+
+            if 'opts' in request:
+                for key in request['opts']:
+                    request[key] = request['opts'][key]
+                del request['opts']
+
+            request, cleanup = generated_test_request_transformers.transform_generated_test_input('database', 'CreateAutonomousContainerDatabase', request)
+
+            input_content = json.dumps(request)
+
+            # for operations with polymorphic input types, attempt to find an operation for a specific subtype
+            # if one does not exist, fallback to calling base operation
+            if not params:
+                params = util.get_command_list(
+                    root_command_name,
+                    resource_group_command_name,
+                    oci_cli.cli_util.override('create_autonomous_container_database.command_name', 'create')
+                )
+
+            if not params:
+                raise ValueError(
+                    'Failed to find CLI command "oci {} {} {}" for given operation: database, CreateAutonomousContainerDatabase. '
+                    'This usually happens because generated commands have been manually re-arranged in code for better user '
+                    'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'for the new command. If the file does not exist for your service, please create one. You can refer the '
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
+                    .format(
+                        root_command_name, resource_group_command_name,
+                        oci_cli.cli_util.override('create_autonomous_container_database.command_name', 'create'),
+                        root_command_name, resource_group_command_name,
+                        oci_cli.cli_util.override('create_autonomous_container_database.command_name', 'create')))
+
+            params.extend(['--from-json', input_content])
+            try:
+                util.set_admin_pass_phrase()
+                result = invoke(runner, config_file, 'ADMIN', params)
+
+                message = cli_testing_service_client.validate_result(
+                    'database',
+                    'CreateAutonomousContainerDatabase',
+                    request_containers[i]['containerId'],
+                    request_containers[i]['request'],
+                    result,
+                    'autonomousContainerDatabase',
+                    False
+                )
+            finally:
+                if os.path.exists('tests/resources/keyfile_for_test_create_autonomous_container_database.pem'):
+                    os.remove('tests/resources/keyfile_for_test_create_autonomous_container_database.pem')
+                if os.path.exists('tests/resources/config_for_test_create_autonomous_container_database'):
+                    os.remove('tests/resources/config_for_test_create_autonomous_container_database')
+                if cleanup:
+                    try:
+                        next(cleanup)
+                    except StopIteration:
+                        pass
+
+            if message != "CONT":
+                assert len(message) == 0, message
+                done = True
+            else:
+                request_containers = cli_testing_service_client.get_requests(service_name='database', api_name='CreateAutonomousContainerDatabase')
+                request = request_containers[i]['request'].copy()
+
+
+@pytest.mark.generated
 def test_create_autonomous_data_warehouse(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'CreateAutonomousDataWarehouse'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -1953,6 +2064,109 @@ def test_generate_autonomous_database_wallet(cli_testing_service_client, runner,
 
 
 @pytest.mark.generated
+def test_get_autonomous_container_database(cli_testing_service_client, runner, config_file, config_profile):
+    if not cli_testing_service_client.is_api_enabled('database', 'GetAutonomousContainerDatabase'):
+        pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('database', 'Database', 'GetAutonomousContainerDatabase')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_autonomous_container_database.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_autonomous_container_database', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_autonomous_container_database.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_autonomous_container_database'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_autonomous_container_database.pem'])
+            config_file = 'tests/resources/config_for_test_get_autonomous_container_database'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
+
+    root_command_name = oci_cli.cli_util.override('db_root_group.command_name', 'db')
+    resource_group_command_name = oci_cli.cli_util.override('autonomous_container_database_group.command_name', 'autonomous_container_database')
+    request_containers = cli_testing_service_client.get_requests(service_name='database', api_name='GetAutonomousContainerDatabase')
+    for i in range(len(request_containers)):
+        request = request_containers[i]['request'].copy()
+        done = False
+        params = []
+        while not done:
+
+            if 'opts' in request:
+                for key in request['opts']:
+                    request[key] = request['opts'][key]
+                del request['opts']
+
+            request, cleanup = generated_test_request_transformers.transform_generated_test_input('database', 'GetAutonomousContainerDatabase', request)
+
+            input_content = json.dumps(request)
+
+            # for operations with polymorphic input types, attempt to find an operation for a specific subtype
+            # if one does not exist, fallback to calling base operation
+            if not params:
+                params = util.get_command_list(
+                    root_command_name,
+                    resource_group_command_name,
+                    oci_cli.cli_util.override('get_autonomous_container_database.command_name', 'get')
+                )
+
+            if not params:
+                raise ValueError(
+                    'Failed to find CLI command "oci {} {} {}" for given operation: database, GetAutonomousContainerDatabase. '
+                    'This usually happens because generated commands have been manually re-arranged in code for better user '
+                    'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'for the new command. If the file does not exist for your service, please create one. You can refer the '
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
+                    .format(
+                        root_command_name, resource_group_command_name,
+                        oci_cli.cli_util.override('get_autonomous_container_database.command_name', 'get'),
+                        root_command_name, resource_group_command_name,
+                        oci_cli.cli_util.override('get_autonomous_container_database.command_name', 'get')))
+
+            params.extend(['--from-json', input_content])
+            try:
+                util.set_admin_pass_phrase()
+                result = invoke(runner, config_file, 'ADMIN', params)
+
+                message = cli_testing_service_client.validate_result(
+                    'database',
+                    'GetAutonomousContainerDatabase',
+                    request_containers[i]['containerId'],
+                    request_containers[i]['request'],
+                    result,
+                    'autonomousContainerDatabase',
+                    False
+                )
+            finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_autonomous_container_database.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_autonomous_container_database.pem')
+                if os.path.exists('tests/resources/config_for_test_get_autonomous_container_database'):
+                    os.remove('tests/resources/config_for_test_get_autonomous_container_database')
+                if cleanup:
+                    try:
+                        next(cleanup)
+                    except StopIteration:
+                        pass
+
+            if message != "CONT":
+                assert len(message) == 0, message
+                done = True
+            else:
+                request_containers = cli_testing_service_client.get_requests(service_name='database', api_name='GetAutonomousContainerDatabase')
+                request = request_containers[i]['request'].copy()
+
+
+@pytest.mark.generated
 def test_get_autonomous_data_warehouse(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'GetAutonomousDataWarehouse'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -2361,6 +2575,109 @@ def test_get_autonomous_database_backup(cli_testing_service_client, runner, conf
                 done = True
             else:
                 request_containers = cli_testing_service_client.get_requests(service_name='database', api_name='GetAutonomousDatabaseBackup')
+                request = request_containers[i]['request'].copy()
+
+
+@pytest.mark.generated
+def test_get_autonomous_exadata_infrastructure(cli_testing_service_client, runner, config_file, config_profile):
+    if not cli_testing_service_client.is_api_enabled('database', 'GetAutonomousExadataInfrastructure'):
+        pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('database', 'Database', 'GetAutonomousExadataInfrastructure')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_autonomous_exadata_infrastructure.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_autonomous_exadata_infrastructure', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_autonomous_exadata_infrastructure.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_autonomous_exadata_infrastructure'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_autonomous_exadata_infrastructure.pem'])
+            config_file = 'tests/resources/config_for_test_get_autonomous_exadata_infrastructure'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
+
+    root_command_name = oci_cli.cli_util.override('db_root_group.command_name', 'db')
+    resource_group_command_name = oci_cli.cli_util.override('autonomous_exadata_infrastructure_group.command_name', 'autonomous_exadata_infrastructure')
+    request_containers = cli_testing_service_client.get_requests(service_name='database', api_name='GetAutonomousExadataInfrastructure')
+    for i in range(len(request_containers)):
+        request = request_containers[i]['request'].copy()
+        done = False
+        params = []
+        while not done:
+
+            if 'opts' in request:
+                for key in request['opts']:
+                    request[key] = request['opts'][key]
+                del request['opts']
+
+            request, cleanup = generated_test_request_transformers.transform_generated_test_input('database', 'GetAutonomousExadataInfrastructure', request)
+
+            input_content = json.dumps(request)
+
+            # for operations with polymorphic input types, attempt to find an operation for a specific subtype
+            # if one does not exist, fallback to calling base operation
+            if not params:
+                params = util.get_command_list(
+                    root_command_name,
+                    resource_group_command_name,
+                    oci_cli.cli_util.override('get_autonomous_exadata_infrastructure.command_name', 'get')
+                )
+
+            if not params:
+                raise ValueError(
+                    'Failed to find CLI command "oci {} {} {}" for given operation: database, GetAutonomousExadataInfrastructure. '
+                    'This usually happens because generated commands have been manually re-arranged in code for better user '
+                    'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'for the new command. If the file does not exist for your service, please create one. You can refer the '
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
+                    .format(
+                        root_command_name, resource_group_command_name,
+                        oci_cli.cli_util.override('get_autonomous_exadata_infrastructure.command_name', 'get'),
+                        root_command_name, resource_group_command_name,
+                        oci_cli.cli_util.override('get_autonomous_exadata_infrastructure.command_name', 'get')))
+
+            params.extend(['--from-json', input_content])
+            try:
+                util.set_admin_pass_phrase()
+                result = invoke(runner, config_file, 'ADMIN', params)
+
+                message = cli_testing_service_client.validate_result(
+                    'database',
+                    'GetAutonomousExadataInfrastructure',
+                    request_containers[i]['containerId'],
+                    request_containers[i]['request'],
+                    result,
+                    'autonomousExadataInfrastructure',
+                    False
+                )
+            finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_autonomous_exadata_infrastructure.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_autonomous_exadata_infrastructure.pem')
+                if os.path.exists('tests/resources/config_for_test_get_autonomous_exadata_infrastructure'):
+                    os.remove('tests/resources/config_for_test_get_autonomous_exadata_infrastructure')
+                if cleanup:
+                    try:
+                        next(cleanup)
+                    except StopIteration:
+                        pass
+
+            if message != "CONT":
+                assert len(message) == 0, message
+                done = True
+            else:
+                request_containers = cli_testing_service_client.get_requests(service_name='database', api_name='GetAutonomousExadataInfrastructure')
                 request = request_containers[i]['request'].copy()
 
 
@@ -3601,6 +3918,220 @@ def test_get_external_backup_job(cli_testing_service_client, runner, config_file
 
 
 @pytest.mark.generated
+def test_get_maintenance_run(cli_testing_service_client, runner, config_file, config_profile):
+    if not cli_testing_service_client.is_api_enabled('database', 'GetMaintenanceRun'):
+        pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('database', 'Database', 'GetMaintenanceRun')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_get_maintenance_run.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_get_maintenance_run', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_get_maintenance_run.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_get_maintenance_run'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_get_maintenance_run.pem'])
+            config_file = 'tests/resources/config_for_test_get_maintenance_run'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
+
+    root_command_name = oci_cli.cli_util.override('db_root_group.command_name', 'db')
+    resource_group_command_name = oci_cli.cli_util.override('maintenance_run_group.command_name', 'maintenance_run')
+    request_containers = cli_testing_service_client.get_requests(service_name='database', api_name='GetMaintenanceRun')
+    for i in range(len(request_containers)):
+        request = request_containers[i]['request'].copy()
+        done = False
+        params = []
+        while not done:
+
+            if 'opts' in request:
+                for key in request['opts']:
+                    request[key] = request['opts'][key]
+                del request['opts']
+
+            request, cleanup = generated_test_request_transformers.transform_generated_test_input('database', 'GetMaintenanceRun', request)
+
+            input_content = json.dumps(request)
+
+            # for operations with polymorphic input types, attempt to find an operation for a specific subtype
+            # if one does not exist, fallback to calling base operation
+            if not params:
+                params = util.get_command_list(
+                    root_command_name,
+                    resource_group_command_name,
+                    oci_cli.cli_util.override('get_maintenance_run.command_name', 'get')
+                )
+
+            if not params:
+                raise ValueError(
+                    'Failed to find CLI command "oci {} {} {}" for given operation: database, GetMaintenanceRun. '
+                    'This usually happens because generated commands have been manually re-arranged in code for better user '
+                    'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'for the new command. If the file does not exist for your service, please create one. You can refer the '
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
+                    .format(
+                        root_command_name, resource_group_command_name,
+                        oci_cli.cli_util.override('get_maintenance_run.command_name', 'get'),
+                        root_command_name, resource_group_command_name,
+                        oci_cli.cli_util.override('get_maintenance_run.command_name', 'get')))
+
+            params.extend(['--from-json', input_content])
+            try:
+                util.set_admin_pass_phrase()
+                result = invoke(runner, config_file, 'ADMIN', params)
+
+                message = cli_testing_service_client.validate_result(
+                    'database',
+                    'GetMaintenanceRun',
+                    request_containers[i]['containerId'],
+                    request_containers[i]['request'],
+                    result,
+                    'maintenanceRun',
+                    False
+                )
+            finally:
+                if os.path.exists('tests/resources/keyfile_for_test_get_maintenance_run.pem'):
+                    os.remove('tests/resources/keyfile_for_test_get_maintenance_run.pem')
+                if os.path.exists('tests/resources/config_for_test_get_maintenance_run'):
+                    os.remove('tests/resources/config_for_test_get_maintenance_run')
+                if cleanup:
+                    try:
+                        next(cleanup)
+                    except StopIteration:
+                        pass
+
+            if message != "CONT":
+                assert len(message) == 0, message
+                done = True
+            else:
+                request_containers = cli_testing_service_client.get_requests(service_name='database', api_name='GetMaintenanceRun')
+                request = request_containers[i]['request'].copy()
+
+
+@pytest.mark.generated
+def test_launch_autonomous_exadata_infrastructure(cli_testing_service_client, runner, config_file, config_profile):
+    if not cli_testing_service_client.is_api_enabled('database', 'LaunchAutonomousExadataInfrastructure'):
+        pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('database', 'Database', 'LaunchAutonomousExadataInfrastructure')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_launch_autonomous_exadata_infrastructure.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_launch_autonomous_exadata_infrastructure', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_launch_autonomous_exadata_infrastructure.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_launch_autonomous_exadata_infrastructure'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_launch_autonomous_exadata_infrastructure.pem'])
+            config_file = 'tests/resources/config_for_test_launch_autonomous_exadata_infrastructure'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
+
+    root_command_name = oci_cli.cli_util.override('db_root_group.command_name', 'db')
+    resource_group_command_name = oci_cli.cli_util.override('autonomous_exadata_infrastructure_group.command_name', 'autonomous_exadata_infrastructure')
+    request_containers = cli_testing_service_client.get_requests(service_name='database', api_name='LaunchAutonomousExadataInfrastructure')
+    for i in range(len(request_containers)):
+        request = request_containers[i]['request'].copy()
+        done = False
+        params = []
+        while not done:
+            # force all details param names to have lower case first letter for consistency with Java models
+            param_name = 'LaunchAutonomousExadataInfrastructureDetails'
+            details = request.pop(param_name[0].lower() + param_name[1:])
+            for key in details:
+                request[key] = details[key]
+                override = util.variable_name_override(key)
+                if override:
+                    request[override] = request.pop(key)
+
+            if 'opts' in request:
+                for key in request['opts']:
+                    request[key] = request['opts'][key]
+                del request['opts']
+
+            request, cleanup = generated_test_request_transformers.transform_generated_test_input('database', 'LaunchAutonomousExadataInfrastructure', request)
+
+            input_content = json.dumps(request)
+
+            # for operations with polymorphic input types, attempt to find an operation for a specific subtype
+            # if one does not exist, fallback to calling base operation
+            if not params:
+                params = util.get_command_list(
+                    root_command_name,
+                    resource_group_command_name,
+                    oci_cli.cli_util.override('launch_autonomous_exadata_infrastructure.command_name', 'launch')
+                )
+
+            if not params:
+                raise ValueError(
+                    'Failed to find CLI command "oci {} {} {}" for given operation: database, LaunchAutonomousExadataInfrastructure. '
+                    'This usually happens because generated commands have been manually re-arranged in code for better user '
+                    'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'for the new command. If the file does not exist for your service, please create one. You can refer the '
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
+                    .format(
+                        root_command_name, resource_group_command_name,
+                        oci_cli.cli_util.override('launch_autonomous_exadata_infrastructure.command_name', 'launch'),
+                        root_command_name, resource_group_command_name,
+                        oci_cli.cli_util.override('launch_autonomous_exadata_infrastructure.command_name', 'launch')))
+
+            params.extend(['--from-json', input_content])
+            try:
+                util.set_admin_pass_phrase()
+                result = invoke(runner, config_file, 'ADMIN', params)
+
+                message = cli_testing_service_client.validate_result(
+                    'database',
+                    'LaunchAutonomousExadataInfrastructure',
+                    request_containers[i]['containerId'],
+                    request_containers[i]['request'],
+                    result,
+                    'autonomousExadataInfrastructure',
+                    False
+                )
+            finally:
+                if os.path.exists('tests/resources/keyfile_for_test_launch_autonomous_exadata_infrastructure.pem'):
+                    os.remove('tests/resources/keyfile_for_test_launch_autonomous_exadata_infrastructure.pem')
+                if os.path.exists('tests/resources/config_for_test_launch_autonomous_exadata_infrastructure'):
+                    os.remove('tests/resources/config_for_test_launch_autonomous_exadata_infrastructure')
+                if cleanup:
+                    try:
+                        next(cleanup)
+                    except StopIteration:
+                        pass
+
+            if message != "CONT":
+                assert len(message) == 0, message
+                done = True
+            else:
+                request_containers = cli_testing_service_client.get_requests(service_name='database', api_name='LaunchAutonomousExadataInfrastructure')
+                request = request_containers[i]['request'].copy()
+
+
+@pytest.mark.generated
 def test_launch_db_system(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'LaunchDbSystem'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -3728,6 +4259,109 @@ def test_launch_db_system(cli_testing_service_client, runner, config_file, confi
                 done = True
             else:
                 request_containers = cli_testing_service_client.get_requests(service_name='database', api_name='LaunchDbSystem')
+                request = request_containers[i]['request'].copy()
+
+
+@pytest.mark.generated
+def test_list_autonomous_container_databases(cli_testing_service_client, runner, config_file, config_profile):
+    if not cli_testing_service_client.is_api_enabled('database', 'ListAutonomousContainerDatabases'):
+        pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('database', 'Database', 'ListAutonomousContainerDatabases')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_autonomous_container_databases.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_autonomous_container_databases', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_autonomous_container_databases.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_autonomous_container_databases'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_autonomous_container_databases.pem'])
+            config_file = 'tests/resources/config_for_test_list_autonomous_container_databases'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
+
+    root_command_name = oci_cli.cli_util.override('db_root_group.command_name', 'db')
+    resource_group_command_name = oci_cli.cli_util.override('autonomous_container_database_group.command_name', 'autonomous_container_database')
+    request_containers = cli_testing_service_client.get_requests(service_name='database', api_name='ListAutonomousContainerDatabases')
+    for i in range(len(request_containers)):
+        request = request_containers[i]['request'].copy()
+        done = False
+        params = []
+        while not done:
+
+            if 'opts' in request:
+                for key in request['opts']:
+                    request[key] = request['opts'][key]
+                del request['opts']
+
+            request, cleanup = generated_test_request_transformers.transform_generated_test_input('database', 'ListAutonomousContainerDatabases', request)
+
+            input_content = json.dumps(request)
+
+            # for operations with polymorphic input types, attempt to find an operation for a specific subtype
+            # if one does not exist, fallback to calling base operation
+            if not params:
+                params = util.get_command_list(
+                    root_command_name,
+                    resource_group_command_name,
+                    oci_cli.cli_util.override('list_autonomous_container_databases.command_name', 'list')
+                )
+
+            if not params:
+                raise ValueError(
+                    'Failed to find CLI command "oci {} {} {}" for given operation: database, ListAutonomousContainerDatabases. '
+                    'This usually happens because generated commands have been manually re-arranged in code for better user '
+                    'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'for the new command. If the file does not exist for your service, please create one. You can refer the '
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
+                    .format(
+                        root_command_name, resource_group_command_name,
+                        oci_cli.cli_util.override('list_autonomous_container_databases.command_name', 'list'),
+                        root_command_name, resource_group_command_name,
+                        oci_cli.cli_util.override('list_autonomous_container_databases.command_name', 'list')))
+
+            params.extend(['--from-json', input_content])
+            try:
+                util.set_admin_pass_phrase()
+                result = invoke(runner, config_file, 'ADMIN', params)
+
+                message = cli_testing_service_client.validate_result(
+                    'database',
+                    'ListAutonomousContainerDatabases',
+                    request_containers[i]['containerId'],
+                    request_containers[i]['request'],
+                    result,
+                    'items',
+                    False
+                )
+            finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_autonomous_container_databases.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_autonomous_container_databases.pem')
+                if os.path.exists('tests/resources/config_for_test_list_autonomous_container_databases'):
+                    os.remove('tests/resources/config_for_test_list_autonomous_container_databases')
+                if cleanup:
+                    try:
+                        next(cleanup)
+                    except StopIteration:
+                        pass
+
+            if message != "CONT":
+                assert len(message) == 0, message
+                done = True
+            else:
+                request_containers = cli_testing_service_client.get_requests(service_name='database', api_name='ListAutonomousContainerDatabases')
                 request = request_containers[i]['request'].copy()
 
 
@@ -4140,6 +4774,212 @@ def test_list_autonomous_databases(cli_testing_service_client, runner, config_fi
                 done = True
             else:
                 request_containers = cli_testing_service_client.get_requests(service_name='database', api_name='ListAutonomousDatabases')
+                request = request_containers[i]['request'].copy()
+
+
+@pytest.mark.generated
+def test_list_autonomous_exadata_infrastructure_shapes(cli_testing_service_client, runner, config_file, config_profile):
+    if not cli_testing_service_client.is_api_enabled('database', 'ListAutonomousExadataInfrastructureShapes'):
+        pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('database', 'Database', 'ListAutonomousExadataInfrastructureShapes')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_autonomous_exadata_infrastructure_shapes.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_autonomous_exadata_infrastructure_shapes', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_autonomous_exadata_infrastructure_shapes.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_autonomous_exadata_infrastructure_shapes'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_autonomous_exadata_infrastructure_shapes.pem'])
+            config_file = 'tests/resources/config_for_test_list_autonomous_exadata_infrastructure_shapes'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
+
+    root_command_name = oci_cli.cli_util.override('db_root_group.command_name', 'db')
+    resource_group_command_name = oci_cli.cli_util.override('autonomous_exadata_infrastructure_shape_group.command_name', 'autonomous_exadata_infrastructure_shape')
+    request_containers = cli_testing_service_client.get_requests(service_name='database', api_name='ListAutonomousExadataInfrastructureShapes')
+    for i in range(len(request_containers)):
+        request = request_containers[i]['request'].copy()
+        done = False
+        params = []
+        while not done:
+
+            if 'opts' in request:
+                for key in request['opts']:
+                    request[key] = request['opts'][key]
+                del request['opts']
+
+            request, cleanup = generated_test_request_transformers.transform_generated_test_input('database', 'ListAutonomousExadataInfrastructureShapes', request)
+
+            input_content = json.dumps(request)
+
+            # for operations with polymorphic input types, attempt to find an operation for a specific subtype
+            # if one does not exist, fallback to calling base operation
+            if not params:
+                params = util.get_command_list(
+                    root_command_name,
+                    resource_group_command_name,
+                    oci_cli.cli_util.override('list_autonomous_exadata_infrastructure_shapes.command_name', 'list')
+                )
+
+            if not params:
+                raise ValueError(
+                    'Failed to find CLI command "oci {} {} {}" for given operation: database, ListAutonomousExadataInfrastructureShapes. '
+                    'This usually happens because generated commands have been manually re-arranged in code for better user '
+                    'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'for the new command. If the file does not exist for your service, please create one. You can refer the '
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
+                    .format(
+                        root_command_name, resource_group_command_name,
+                        oci_cli.cli_util.override('list_autonomous_exadata_infrastructure_shapes.command_name', 'list'),
+                        root_command_name, resource_group_command_name,
+                        oci_cli.cli_util.override('list_autonomous_exadata_infrastructure_shapes.command_name', 'list')))
+
+            params.extend(['--from-json', input_content])
+            try:
+                util.set_admin_pass_phrase()
+                result = invoke(runner, config_file, 'ADMIN', params)
+
+                message = cli_testing_service_client.validate_result(
+                    'database',
+                    'ListAutonomousExadataInfrastructureShapes',
+                    request_containers[i]['containerId'],
+                    request_containers[i]['request'],
+                    result,
+                    'items',
+                    False
+                )
+            finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_autonomous_exadata_infrastructure_shapes.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_autonomous_exadata_infrastructure_shapes.pem')
+                if os.path.exists('tests/resources/config_for_test_list_autonomous_exadata_infrastructure_shapes'):
+                    os.remove('tests/resources/config_for_test_list_autonomous_exadata_infrastructure_shapes')
+                if cleanup:
+                    try:
+                        next(cleanup)
+                    except StopIteration:
+                        pass
+
+            if message != "CONT":
+                assert len(message) == 0, message
+                done = True
+            else:
+                request_containers = cli_testing_service_client.get_requests(service_name='database', api_name='ListAutonomousExadataInfrastructureShapes')
+                request = request_containers[i]['request'].copy()
+
+
+@pytest.mark.generated
+def test_list_autonomous_exadata_infrastructures(cli_testing_service_client, runner, config_file, config_profile):
+    if not cli_testing_service_client.is_api_enabled('database', 'ListAutonomousExadataInfrastructures'):
+        pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('database', 'Database', 'ListAutonomousExadataInfrastructures')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_autonomous_exadata_infrastructures.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_autonomous_exadata_infrastructures', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_autonomous_exadata_infrastructures.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_autonomous_exadata_infrastructures'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_autonomous_exadata_infrastructures.pem'])
+            config_file = 'tests/resources/config_for_test_list_autonomous_exadata_infrastructures'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
+
+    root_command_name = oci_cli.cli_util.override('db_root_group.command_name', 'db')
+    resource_group_command_name = oci_cli.cli_util.override('autonomous_exadata_infrastructure_group.command_name', 'autonomous_exadata_infrastructure')
+    request_containers = cli_testing_service_client.get_requests(service_name='database', api_name='ListAutonomousExadataInfrastructures')
+    for i in range(len(request_containers)):
+        request = request_containers[i]['request'].copy()
+        done = False
+        params = []
+        while not done:
+
+            if 'opts' in request:
+                for key in request['opts']:
+                    request[key] = request['opts'][key]
+                del request['opts']
+
+            request, cleanup = generated_test_request_transformers.transform_generated_test_input('database', 'ListAutonomousExadataInfrastructures', request)
+
+            input_content = json.dumps(request)
+
+            # for operations with polymorphic input types, attempt to find an operation for a specific subtype
+            # if one does not exist, fallback to calling base operation
+            if not params:
+                params = util.get_command_list(
+                    root_command_name,
+                    resource_group_command_name,
+                    oci_cli.cli_util.override('list_autonomous_exadata_infrastructures.command_name', 'list')
+                )
+
+            if not params:
+                raise ValueError(
+                    'Failed to find CLI command "oci {} {} {}" for given operation: database, ListAutonomousExadataInfrastructures. '
+                    'This usually happens because generated commands have been manually re-arranged in code for better user '
+                    'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'for the new command. If the file does not exist for your service, please create one. You can refer the '
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
+                    .format(
+                        root_command_name, resource_group_command_name,
+                        oci_cli.cli_util.override('list_autonomous_exadata_infrastructures.command_name', 'list'),
+                        root_command_name, resource_group_command_name,
+                        oci_cli.cli_util.override('list_autonomous_exadata_infrastructures.command_name', 'list')))
+
+            params.extend(['--from-json', input_content])
+            try:
+                util.set_admin_pass_phrase()
+                result = invoke(runner, config_file, 'ADMIN', params)
+
+                message = cli_testing_service_client.validate_result(
+                    'database',
+                    'ListAutonomousExadataInfrastructures',
+                    request_containers[i]['containerId'],
+                    request_containers[i]['request'],
+                    result,
+                    'items',
+                    False
+                )
+            finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_autonomous_exadata_infrastructures.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_autonomous_exadata_infrastructures.pem')
+                if os.path.exists('tests/resources/config_for_test_list_autonomous_exadata_infrastructures'):
+                    os.remove('tests/resources/config_for_test_list_autonomous_exadata_infrastructures')
+                if cleanup:
+                    try:
+                        next(cleanup)
+                    except StopIteration:
+                        pass
+
+            if message != "CONT":
+                assert len(message) == 0, message
+                done = True
+            else:
+                request_containers = cli_testing_service_client.get_requests(service_name='database', api_name='ListAutonomousExadataInfrastructures')
                 request = request_containers[i]['request'].copy()
 
 
@@ -5380,6 +6220,109 @@ def test_list_db_versions(cli_testing_service_client, runner, config_file, confi
 
 
 @pytest.mark.generated
+def test_list_maintenance_runs(cli_testing_service_client, runner, config_file, config_profile):
+    if not cli_testing_service_client.is_api_enabled('database', 'ListMaintenanceRuns'):
+        pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('database', 'Database', 'ListMaintenanceRuns')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_list_maintenance_runs.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_list_maintenance_runs', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_list_maintenance_runs.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_list_maintenance_runs'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_list_maintenance_runs.pem'])
+            config_file = 'tests/resources/config_for_test_list_maintenance_runs'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
+
+    root_command_name = oci_cli.cli_util.override('db_root_group.command_name', 'db')
+    resource_group_command_name = oci_cli.cli_util.override('maintenance_run_group.command_name', 'maintenance_run')
+    request_containers = cli_testing_service_client.get_requests(service_name='database', api_name='ListMaintenanceRuns')
+    for i in range(len(request_containers)):
+        request = request_containers[i]['request'].copy()
+        done = False
+        params = []
+        while not done:
+
+            if 'opts' in request:
+                for key in request['opts']:
+                    request[key] = request['opts'][key]
+                del request['opts']
+
+            request, cleanup = generated_test_request_transformers.transform_generated_test_input('database', 'ListMaintenanceRuns', request)
+
+            input_content = json.dumps(request)
+
+            # for operations with polymorphic input types, attempt to find an operation for a specific subtype
+            # if one does not exist, fallback to calling base operation
+            if not params:
+                params = util.get_command_list(
+                    root_command_name,
+                    resource_group_command_name,
+                    oci_cli.cli_util.override('list_maintenance_runs.command_name', 'list')
+                )
+
+            if not params:
+                raise ValueError(
+                    'Failed to find CLI command "oci {} {} {}" for given operation: database, ListMaintenanceRuns. '
+                    'This usually happens because generated commands have been manually re-arranged in code for better user '
+                    'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'for the new command. If the file does not exist for your service, please create one. You can refer the '
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
+                    .format(
+                        root_command_name, resource_group_command_name,
+                        oci_cli.cli_util.override('list_maintenance_runs.command_name', 'list'),
+                        root_command_name, resource_group_command_name,
+                        oci_cli.cli_util.override('list_maintenance_runs.command_name', 'list')))
+
+            params.extend(['--from-json', input_content])
+            try:
+                util.set_admin_pass_phrase()
+                result = invoke(runner, config_file, 'ADMIN', params)
+
+                message = cli_testing_service_client.validate_result(
+                    'database',
+                    'ListMaintenanceRuns',
+                    request_containers[i]['containerId'],
+                    request_containers[i]['request'],
+                    result,
+                    'items',
+                    False
+                )
+            finally:
+                if os.path.exists('tests/resources/keyfile_for_test_list_maintenance_runs.pem'):
+                    os.remove('tests/resources/keyfile_for_test_list_maintenance_runs.pem')
+                if os.path.exists('tests/resources/config_for_test_list_maintenance_runs'):
+                    os.remove('tests/resources/config_for_test_list_maintenance_runs')
+                if cleanup:
+                    try:
+                        next(cleanup)
+                    except StopIteration:
+                        pass
+
+            if message != "CONT":
+                assert len(message) == 0, message
+                done = True
+            else:
+                request_containers = cli_testing_service_client.get_requests(service_name='database', api_name='ListMaintenanceRuns')
+                request = request_containers[i]['request'].copy()
+
+
+@pytest.mark.generated
 def test_reinstate_data_guard_association(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'ReinstateDataGuardAssociation'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -5487,6 +6430,109 @@ def test_reinstate_data_guard_association(cli_testing_service_client, runner, co
                 done = True
             else:
                 request_containers = cli_testing_service_client.get_requests(service_name='database', api_name='ReinstateDataGuardAssociation')
+                request = request_containers[i]['request'].copy()
+
+
+@pytest.mark.generated
+def test_restart_autonomous_container_database(cli_testing_service_client, runner, config_file, config_profile):
+    if not cli_testing_service_client.is_api_enabled('database', 'RestartAutonomousContainerDatabase'):
+        pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('database', 'Database', 'RestartAutonomousContainerDatabase')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_restart_autonomous_container_database.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_restart_autonomous_container_database', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_restart_autonomous_container_database.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_restart_autonomous_container_database'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_restart_autonomous_container_database.pem'])
+            config_file = 'tests/resources/config_for_test_restart_autonomous_container_database'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
+
+    root_command_name = oci_cli.cli_util.override('db_root_group.command_name', 'db')
+    resource_group_command_name = oci_cli.cli_util.override('autonomous_container_database_group.command_name', 'autonomous_container_database')
+    request_containers = cli_testing_service_client.get_requests(service_name='database', api_name='RestartAutonomousContainerDatabase')
+    for i in range(len(request_containers)):
+        request = request_containers[i]['request'].copy()
+        done = False
+        params = []
+        while not done:
+
+            if 'opts' in request:
+                for key in request['opts']:
+                    request[key] = request['opts'][key]
+                del request['opts']
+
+            request, cleanup = generated_test_request_transformers.transform_generated_test_input('database', 'RestartAutonomousContainerDatabase', request)
+
+            input_content = json.dumps(request)
+
+            # for operations with polymorphic input types, attempt to find an operation for a specific subtype
+            # if one does not exist, fallback to calling base operation
+            if not params:
+                params = util.get_command_list(
+                    root_command_name,
+                    resource_group_command_name,
+                    oci_cli.cli_util.override('restart_autonomous_container_database.command_name', 'restart')
+                )
+
+            if not params:
+                raise ValueError(
+                    'Failed to find CLI command "oci {} {} {}" for given operation: database, RestartAutonomousContainerDatabase. '
+                    'This usually happens because generated commands have been manually re-arranged in code for better user '
+                    'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'for the new command. If the file does not exist for your service, please create one. You can refer the '
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
+                    .format(
+                        root_command_name, resource_group_command_name,
+                        oci_cli.cli_util.override('restart_autonomous_container_database.command_name', 'restart'),
+                        root_command_name, resource_group_command_name,
+                        oci_cli.cli_util.override('restart_autonomous_container_database.command_name', 'restart')))
+
+            params.extend(['--from-json', input_content])
+            try:
+                util.set_admin_pass_phrase()
+                result = invoke(runner, config_file, 'ADMIN', params)
+
+                message = cli_testing_service_client.validate_result(
+                    'database',
+                    'RestartAutonomousContainerDatabase',
+                    request_containers[i]['containerId'],
+                    request_containers[i]['request'],
+                    result,
+                    'autonomousContainerDatabase',
+                    False
+                )
+            finally:
+                if os.path.exists('tests/resources/keyfile_for_test_restart_autonomous_container_database.pem'):
+                    os.remove('tests/resources/keyfile_for_test_restart_autonomous_container_database.pem')
+                if os.path.exists('tests/resources/config_for_test_restart_autonomous_container_database'):
+                    os.remove('tests/resources/config_for_test_restart_autonomous_container_database')
+                if cleanup:
+                    try:
+                        next(cleanup)
+                    except StopIteration:
+                        pass
+
+            if message != "CONT":
+                assert len(message) == 0, message
+                done = True
+            else:
+                request_containers = cli_testing_service_client.get_requests(service_name='database', api_name='RestartAutonomousContainerDatabase')
                 request = request_containers[i]['request'].copy()
 
 
@@ -6347,6 +7393,214 @@ def test_switchover_data_guard_association(cli_testing_service_client, runner, c
 
 
 @pytest.mark.generated
+def test_terminate_autonomous_container_database(cli_testing_service_client, runner, config_file, config_profile):
+    if not cli_testing_service_client.is_api_enabled('database', 'TerminateAutonomousContainerDatabase'):
+        pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('database', 'Database', 'TerminateAutonomousContainerDatabase')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_terminate_autonomous_container_database.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_terminate_autonomous_container_database', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_terminate_autonomous_container_database.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_terminate_autonomous_container_database'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_terminate_autonomous_container_database.pem'])
+            config_file = 'tests/resources/config_for_test_terminate_autonomous_container_database'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
+
+    root_command_name = oci_cli.cli_util.override('db_root_group.command_name', 'db')
+    resource_group_command_name = oci_cli.cli_util.override('autonomous_container_database_group.command_name', 'autonomous_container_database')
+    request_containers = cli_testing_service_client.get_requests(service_name='database', api_name='TerminateAutonomousContainerDatabase')
+    for i in range(len(request_containers)):
+        request = request_containers[i]['request'].copy()
+        done = False
+        params = []
+        while not done:
+
+            if 'opts' in request:
+                for key in request['opts']:
+                    request[key] = request['opts'][key]
+                del request['opts']
+
+            request, cleanup = generated_test_request_transformers.transform_generated_test_input('database', 'TerminateAutonomousContainerDatabase', request)
+
+            input_content = json.dumps(request)
+
+            # for operations with polymorphic input types, attempt to find an operation for a specific subtype
+            # if one does not exist, fallback to calling base operation
+            if not params:
+                params = util.get_command_list(
+                    root_command_name,
+                    resource_group_command_name,
+                    oci_cli.cli_util.override('terminate_autonomous_container_database.command_name', 'terminate')
+                )
+
+            if not params:
+                raise ValueError(
+                    'Failed to find CLI command "oci {} {} {}" for given operation: database, TerminateAutonomousContainerDatabase. '
+                    'This usually happens because generated commands have been manually re-arranged in code for better user '
+                    'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'for the new command. If the file does not exist for your service, please create one. You can refer the '
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
+                    .format(
+                        root_command_name, resource_group_command_name,
+                        oci_cli.cli_util.override('terminate_autonomous_container_database.command_name', 'terminate'),
+                        root_command_name, resource_group_command_name,
+                        oci_cli.cli_util.override('terminate_autonomous_container_database.command_name', 'terminate')))
+
+            params.append('--force')
+            params.extend(['--from-json', input_content])
+            try:
+                util.set_admin_pass_phrase()
+                result = invoke(runner, config_file, 'ADMIN', params)
+
+                message = cli_testing_service_client.validate_result(
+                    'database',
+                    'TerminateAutonomousContainerDatabase',
+                    request_containers[i]['containerId'],
+                    request_containers[i]['request'],
+                    result,
+                    'terminateAutonomousContainerDatabase',
+                    True
+                )
+            finally:
+                if os.path.exists('tests/resources/keyfile_for_test_terminate_autonomous_container_database.pem'):
+                    os.remove('tests/resources/keyfile_for_test_terminate_autonomous_container_database.pem')
+                if os.path.exists('tests/resources/config_for_test_terminate_autonomous_container_database'):
+                    os.remove('tests/resources/config_for_test_terminate_autonomous_container_database')
+                if cleanup:
+                    try:
+                        next(cleanup)
+                    except StopIteration:
+                        pass
+
+            if message != "CONT":
+                assert len(message) == 0, message
+                done = True
+            else:
+                request_containers = cli_testing_service_client.get_requests(service_name='database', api_name='TerminateAutonomousContainerDatabase')
+                request = request_containers[i]['request'].copy()
+
+
+@pytest.mark.generated
+def test_terminate_autonomous_exadata_infrastructure(cli_testing_service_client, runner, config_file, config_profile):
+    if not cli_testing_service_client.is_api_enabled('database', 'TerminateAutonomousExadataInfrastructure'):
+        pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('database', 'Database', 'TerminateAutonomousExadataInfrastructure')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_terminate_autonomous_exadata_infrastructure.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_terminate_autonomous_exadata_infrastructure', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_terminate_autonomous_exadata_infrastructure.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_terminate_autonomous_exadata_infrastructure'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_terminate_autonomous_exadata_infrastructure.pem'])
+            config_file = 'tests/resources/config_for_test_terminate_autonomous_exadata_infrastructure'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
+
+    root_command_name = oci_cli.cli_util.override('db_root_group.command_name', 'db')
+    resource_group_command_name = oci_cli.cli_util.override('autonomous_exadata_infrastructure_group.command_name', 'autonomous_exadata_infrastructure')
+    request_containers = cli_testing_service_client.get_requests(service_name='database', api_name='TerminateAutonomousExadataInfrastructure')
+    for i in range(len(request_containers)):
+        request = request_containers[i]['request'].copy()
+        done = False
+        params = []
+        while not done:
+
+            if 'opts' in request:
+                for key in request['opts']:
+                    request[key] = request['opts'][key]
+                del request['opts']
+
+            request, cleanup = generated_test_request_transformers.transform_generated_test_input('database', 'TerminateAutonomousExadataInfrastructure', request)
+
+            input_content = json.dumps(request)
+
+            # for operations with polymorphic input types, attempt to find an operation for a specific subtype
+            # if one does not exist, fallback to calling base operation
+            if not params:
+                params = util.get_command_list(
+                    root_command_name,
+                    resource_group_command_name,
+                    oci_cli.cli_util.override('terminate_autonomous_exadata_infrastructure.command_name', 'terminate')
+                )
+
+            if not params:
+                raise ValueError(
+                    'Failed to find CLI command "oci {} {} {}" for given operation: database, TerminateAutonomousExadataInfrastructure. '
+                    'This usually happens because generated commands have been manually re-arranged in code for better user '
+                    'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'for the new command. If the file does not exist for your service, please create one. You can refer the '
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
+                    .format(
+                        root_command_name, resource_group_command_name,
+                        oci_cli.cli_util.override('terminate_autonomous_exadata_infrastructure.command_name', 'terminate'),
+                        root_command_name, resource_group_command_name,
+                        oci_cli.cli_util.override('terminate_autonomous_exadata_infrastructure.command_name', 'terminate')))
+
+            params.append('--force')
+            params.extend(['--from-json', input_content])
+            try:
+                util.set_admin_pass_phrase()
+                result = invoke(runner, config_file, 'ADMIN', params)
+
+                message = cli_testing_service_client.validate_result(
+                    'database',
+                    'TerminateAutonomousExadataInfrastructure',
+                    request_containers[i]['containerId'],
+                    request_containers[i]['request'],
+                    result,
+                    'terminateAutonomousExadataInfrastructure',
+                    True
+                )
+            finally:
+                if os.path.exists('tests/resources/keyfile_for_test_terminate_autonomous_exadata_infrastructure.pem'):
+                    os.remove('tests/resources/keyfile_for_test_terminate_autonomous_exadata_infrastructure.pem')
+                if os.path.exists('tests/resources/config_for_test_terminate_autonomous_exadata_infrastructure'):
+                    os.remove('tests/resources/config_for_test_terminate_autonomous_exadata_infrastructure')
+                if cleanup:
+                    try:
+                        next(cleanup)
+                    except StopIteration:
+                        pass
+
+            if message != "CONT":
+                assert len(message) == 0, message
+                done = True
+            else:
+                request_containers = cli_testing_service_client.get_requests(service_name='database', api_name='TerminateAutonomousExadataInfrastructure')
+                request = request_containers[i]['request'].copy()
+
+
+@pytest.mark.generated
 def test_terminate_db_system(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('database', 'TerminateDbSystem'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')
@@ -6447,6 +7701,118 @@ def test_terminate_db_system(cli_testing_service_client, runner, config_file, co
                 done = True
             else:
                 request_containers = cli_testing_service_client.get_requests(service_name='database', api_name='TerminateDbSystem')
+                request = request_containers[i]['request'].copy()
+
+
+@pytest.mark.generated
+def test_update_autonomous_container_database(cli_testing_service_client, runner, config_file, config_profile):
+    if not cli_testing_service_client.is_api_enabled('database', 'UpdateAutonomousContainerDatabase'):
+        pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('database', 'Database', 'UpdateAutonomousContainerDatabase')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_update_autonomous_container_database.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_update_autonomous_container_database', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_update_autonomous_container_database.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_update_autonomous_container_database'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_update_autonomous_container_database.pem'])
+            config_file = 'tests/resources/config_for_test_update_autonomous_container_database'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
+
+    root_command_name = oci_cli.cli_util.override('db_root_group.command_name', 'db')
+    resource_group_command_name = oci_cli.cli_util.override('autonomous_container_database_group.command_name', 'autonomous_container_database')
+    request_containers = cli_testing_service_client.get_requests(service_name='database', api_name='UpdateAutonomousContainerDatabase')
+    for i in range(len(request_containers)):
+        request = request_containers[i]['request'].copy()
+        done = False
+        params = []
+        while not done:
+            # force all details param names to have lower case first letter for consistency with Java models
+            param_name = 'UpdateAutonomousContainerDatabaseDetails'
+            details = request.pop(param_name[0].lower() + param_name[1:])
+            for key in details:
+                request[key] = details[key]
+                override = util.variable_name_override(key)
+                if override:
+                    request[override] = request.pop(key)
+
+            if 'opts' in request:
+                for key in request['opts']:
+                    request[key] = request['opts'][key]
+                del request['opts']
+
+            request, cleanup = generated_test_request_transformers.transform_generated_test_input('database', 'UpdateAutonomousContainerDatabase', request)
+
+            input_content = json.dumps(request)
+
+            # for operations with polymorphic input types, attempt to find an operation for a specific subtype
+            # if one does not exist, fallback to calling base operation
+            if not params:
+                params = util.get_command_list(
+                    root_command_name,
+                    resource_group_command_name,
+                    oci_cli.cli_util.override('update_autonomous_container_database.command_name', 'update')
+                )
+
+            if not params:
+                raise ValueError(
+                    'Failed to find CLI command "oci {} {} {}" for given operation: database, UpdateAutonomousContainerDatabase. '
+                    'This usually happens because generated commands have been manually re-arranged in code for better user '
+                    'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'for the new command. If the file does not exist for your service, please create one. You can refer the '
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
+                    .format(
+                        root_command_name, resource_group_command_name,
+                        oci_cli.cli_util.override('update_autonomous_container_database.command_name', 'update'),
+                        root_command_name, resource_group_command_name,
+                        oci_cli.cli_util.override('update_autonomous_container_database.command_name', 'update')))
+
+            params.append('--force')
+            params.extend(['--from-json', input_content])
+            try:
+                util.set_admin_pass_phrase()
+                result = invoke(runner, config_file, 'ADMIN', params)
+
+                message = cli_testing_service_client.validate_result(
+                    'database',
+                    'UpdateAutonomousContainerDatabase',
+                    request_containers[i]['containerId'],
+                    request_containers[i]['request'],
+                    result,
+                    'autonomousContainerDatabase',
+                    False
+                )
+            finally:
+                if os.path.exists('tests/resources/keyfile_for_test_update_autonomous_container_database.pem'):
+                    os.remove('tests/resources/keyfile_for_test_update_autonomous_container_database.pem')
+                if os.path.exists('tests/resources/config_for_test_update_autonomous_container_database'):
+                    os.remove('tests/resources/config_for_test_update_autonomous_container_database')
+                if cleanup:
+                    try:
+                        next(cleanup)
+                    except StopIteration:
+                        pass
+
+            if message != "CONT":
+                assert len(message) == 0, message
+                done = True
+            else:
+                request_containers = cli_testing_service_client.get_requests(service_name='database', api_name='UpdateAutonomousContainerDatabase')
                 request = request_containers[i]['request'].copy()
 
 
@@ -6671,6 +8037,118 @@ def test_update_autonomous_database(cli_testing_service_client, runner, config_f
                 done = True
             else:
                 request_containers = cli_testing_service_client.get_requests(service_name='database', api_name='UpdateAutonomousDatabase')
+                request = request_containers[i]['request'].copy()
+
+
+@pytest.mark.generated
+def test_update_autonomous_exadata_infrastructure(cli_testing_service_client, runner, config_file, config_profile):
+    if not cli_testing_service_client.is_api_enabled('database', 'UpdateAutonomousExadataInfrastructure'):
+        pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('database', 'Database', 'UpdateAutonomousExadataInfrastructure')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_update_autonomous_exadata_infrastructure.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_update_autonomous_exadata_infrastructure', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_update_autonomous_exadata_infrastructure.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_update_autonomous_exadata_infrastructure'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_update_autonomous_exadata_infrastructure.pem'])
+            config_file = 'tests/resources/config_for_test_update_autonomous_exadata_infrastructure'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
+
+    root_command_name = oci_cli.cli_util.override('db_root_group.command_name', 'db')
+    resource_group_command_name = oci_cli.cli_util.override('autonomous_exadata_infrastructure_group.command_name', 'autonomous_exadata_infrastructure')
+    request_containers = cli_testing_service_client.get_requests(service_name='database', api_name='UpdateAutonomousExadataInfrastructure')
+    for i in range(len(request_containers)):
+        request = request_containers[i]['request'].copy()
+        done = False
+        params = []
+        while not done:
+            # force all details param names to have lower case first letter for consistency with Java models
+            param_name = 'UpdateAutonomousExadataInfrastructuresDetails'
+            details = request.pop(param_name[0].lower() + param_name[1:])
+            for key in details:
+                request[key] = details[key]
+                override = util.variable_name_override(key)
+                if override:
+                    request[override] = request.pop(key)
+
+            if 'opts' in request:
+                for key in request['opts']:
+                    request[key] = request['opts'][key]
+                del request['opts']
+
+            request, cleanup = generated_test_request_transformers.transform_generated_test_input('database', 'UpdateAutonomousExadataInfrastructure', request)
+
+            input_content = json.dumps(request)
+
+            # for operations with polymorphic input types, attempt to find an operation for a specific subtype
+            # if one does not exist, fallback to calling base operation
+            if not params:
+                params = util.get_command_list(
+                    root_command_name,
+                    resource_group_command_name,
+                    oci_cli.cli_util.override('update_autonomous_exadata_infrastructure.command_name', 'update')
+                )
+
+            if not params:
+                raise ValueError(
+                    'Failed to find CLI command "oci {} {} {}" for given operation: database, UpdateAutonomousExadataInfrastructure. '
+                    'This usually happens because generated commands have been manually re-arranged in code for better user '
+                    'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'for the new command. If the file does not exist for your service, please create one. You can refer the '
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
+                    .format(
+                        root_command_name, resource_group_command_name,
+                        oci_cli.cli_util.override('update_autonomous_exadata_infrastructure.command_name', 'update'),
+                        root_command_name, resource_group_command_name,
+                        oci_cli.cli_util.override('update_autonomous_exadata_infrastructure.command_name', 'update')))
+
+            params.append('--force')
+            params.extend(['--from-json', input_content])
+            try:
+                util.set_admin_pass_phrase()
+                result = invoke(runner, config_file, 'ADMIN', params)
+
+                message = cli_testing_service_client.validate_result(
+                    'database',
+                    'UpdateAutonomousExadataInfrastructure',
+                    request_containers[i]['containerId'],
+                    request_containers[i]['request'],
+                    result,
+                    'autonomousExadataInfrastructure',
+                    False
+                )
+            finally:
+                if os.path.exists('tests/resources/keyfile_for_test_update_autonomous_exadata_infrastructure.pem'):
+                    os.remove('tests/resources/keyfile_for_test_update_autonomous_exadata_infrastructure.pem')
+                if os.path.exists('tests/resources/config_for_test_update_autonomous_exadata_infrastructure'):
+                    os.remove('tests/resources/config_for_test_update_autonomous_exadata_infrastructure')
+                if cleanup:
+                    try:
+                        next(cleanup)
+                    except StopIteration:
+                        pass
+
+            if message != "CONT":
+                assert len(message) == 0, message
+                done = True
+            else:
+                request_containers = cli_testing_service_client.get_requests(service_name='database', api_name='UpdateAutonomousExadataInfrastructure')
                 request = request_containers[i]['request'].copy()
 
 
@@ -7119,6 +8597,117 @@ def test_update_exadata_iorm_config(cli_testing_service_client, runner, config_f
                 done = True
             else:
                 request_containers = cli_testing_service_client.get_requests(service_name='database', api_name='UpdateExadataIormConfig')
+                request = request_containers[i]['request'].copy()
+
+
+@pytest.mark.generated
+def test_update_maintenance_run(cli_testing_service_client, runner, config_file, config_profile):
+    if not cli_testing_service_client.is_api_enabled('database', 'UpdateMaintenanceRun'):
+        pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('database', 'Database', 'UpdateMaintenanceRun')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_update_maintenance_run.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_update_maintenance_run', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_update_maintenance_run.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_update_maintenance_run'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_update_maintenance_run.pem'])
+            config_file = 'tests/resources/config_for_test_update_maintenance_run'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
+
+    root_command_name = oci_cli.cli_util.override('db_root_group.command_name', 'db')
+    resource_group_command_name = oci_cli.cli_util.override('maintenance_run_group.command_name', 'maintenance_run')
+    request_containers = cli_testing_service_client.get_requests(service_name='database', api_name='UpdateMaintenanceRun')
+    for i in range(len(request_containers)):
+        request = request_containers[i]['request'].copy()
+        done = False
+        params = []
+        while not done:
+            # force all details param names to have lower case first letter for consistency with Java models
+            param_name = 'UpdateMaintenanceRunDetails'
+            details = request.pop(param_name[0].lower() + param_name[1:])
+            for key in details:
+                request[key] = details[key]
+                override = util.variable_name_override(key)
+                if override:
+                    request[override] = request.pop(key)
+
+            if 'opts' in request:
+                for key in request['opts']:
+                    request[key] = request['opts'][key]
+                del request['opts']
+
+            request, cleanup = generated_test_request_transformers.transform_generated_test_input('database', 'UpdateMaintenanceRun', request)
+
+            input_content = json.dumps(request)
+
+            # for operations with polymorphic input types, attempt to find an operation for a specific subtype
+            # if one does not exist, fallback to calling base operation
+            if not params:
+                params = util.get_command_list(
+                    root_command_name,
+                    resource_group_command_name,
+                    oci_cli.cli_util.override('update_maintenance_run.command_name', 'update')
+                )
+
+            if not params:
+                raise ValueError(
+                    'Failed to find CLI command "oci {} {} {}" for given operation: database, UpdateMaintenanceRun. '
+                    'This usually happens because generated commands have been manually re-arranged in code for better user '
+                    'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'for the new command. If the file does not exist for your service, please create one. You can refer the '
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
+                    .format(
+                        root_command_name, resource_group_command_name,
+                        oci_cli.cli_util.override('update_maintenance_run.command_name', 'update'),
+                        root_command_name, resource_group_command_name,
+                        oci_cli.cli_util.override('update_maintenance_run.command_name', 'update')))
+
+            params.extend(['--from-json', input_content])
+            try:
+                util.set_admin_pass_phrase()
+                result = invoke(runner, config_file, 'ADMIN', params)
+
+                message = cli_testing_service_client.validate_result(
+                    'database',
+                    'UpdateMaintenanceRun',
+                    request_containers[i]['containerId'],
+                    request_containers[i]['request'],
+                    result,
+                    'maintenanceRun',
+                    False
+                )
+            finally:
+                if os.path.exists('tests/resources/keyfile_for_test_update_maintenance_run.pem'):
+                    os.remove('tests/resources/keyfile_for_test_update_maintenance_run.pem')
+                if os.path.exists('tests/resources/config_for_test_update_maintenance_run'):
+                    os.remove('tests/resources/config_for_test_update_maintenance_run')
+                if cleanup:
+                    try:
+                        next(cleanup)
+                    except StopIteration:
+                        pass
+
+            if message != "CONT":
+                assert len(message) == 0, message
+                done = True
+            else:
+                request_containers = cli_testing_service_client.get_requests(service_name='database', api_name='UpdateMaintenanceRun')
                 request = request_containers[i]['request'].copy()
 
 

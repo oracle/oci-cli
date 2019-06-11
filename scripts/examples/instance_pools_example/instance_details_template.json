@@ -6,7 +6,8 @@
     "sourceDetails":
       {
         "imageId": "__IMAGE_ID__",
-        "sourceType": "image"
+        "sourceType": "image",
+        "bootVolumeSizeInGBs": 75
       },
     "createVnicDetails": {
       "assignPublicIp": true

@@ -25,6 +25,16 @@ cli_util.update_param_help(blockstorage_cli.create_volume, 'compartment_id', """
 cli_util.update_param_help(blockstorage_cli.create_volume, 'size_in_mbs', """[DEPRECATED] The size of the volume in MBs. The value must be a multiple of 1024. This field is deprecated. Use --size-in-gbs instead.""", append=False)
 
 
+# Disable nested inherited commands.
+blockstorage_cli.boot_volume_group.commands.pop(blockstorage_cli.create_boot_volume_boot_volume_source_from_boot_volume_backup_details.name)
+blockstorage_cli.boot_volume_group.commands.pop(blockstorage_cli.create_boot_volume_boot_volume_source_from_boot_volume_details.name)
+blockstorage_cli.volume_group.commands.pop(blockstorage_cli.create_volume_volume_source_from_volume_details.name)
+blockstorage_cli.volume_group.commands.pop(blockstorage_cli.create_volume_volume_source_from_volume_backup_details.name)
+blockstorage_cli.volume_group_group.commands.pop(blockstorage_cli.create_volume_group_volume_group_source_from_volume_group_backup_details.name)
+blockstorage_cli.volume_group_group.commands.pop(blockstorage_cli.create_volume_group_volume_group_source_from_volume_group_details.name)
+blockstorage_cli.volume_group_group.commands.pop(blockstorage_cli.create_volume_group_volume_group_source_from_volumes_details.name)
+
+
 @cli_util.copy_params_from_generated_command(blockstorage_cli.create_volume, params_to_exclude=['source_details', 'volume_backup_id', 'availability_domain', 'compartment_id'])
 @blockstorage_cli.volume_group.command(name=cli_util.override('create_volume.command_name', 'create'), help="""Creates a new volume in the specified compartment. Volumes can be created in sizes ranging from 50 GB (51200 MB) to 16 TB (16777216 MB), in 1 GB (1024 MB) increments. By default, volumes are 1 TB (1048576 MB). For general information about block volumes, see [Overview of Block Volume Service].
 

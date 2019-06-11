@@ -91,6 +91,59 @@ def create_auto_scaling_configuration(ctx, from_json, compartment_id, policies, 
     cli_util.render_response(result, ctx)
 
 
+@auto_scaling_configuration_group.command(name=cli_util.override('create_auto_scaling_configuration_instance_pool_resource.command_name', 'create-auto-scaling-configuration-instance-pool-resource'), help=u"""Creates an autoscaling configuration.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the autoscaling configuration. The autoscaling configuration and the instance pool that it manages must be in the same compartment.""")
+@cli_util.option('--policies', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--resource-id', required=True, help=u"""The [OCID] of the resource that is managed by the autoscaling configuration.""")
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--cool-down-in-seconds', type=click.INT, help=u"""The minimum period of time to wait between scaling actions. The cooldown period gives the system time to stabilize before rescaling. The minimum value is 300 seconds, which is also the default.""")
+@cli_util.option('--is-enabled', type=click.BOOL, help=u"""Whether the autoscaling configuration is enabled.""")
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'autoscaling', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'autoscaling', 'class': 'dict(str, string)'}, 'policies': {'module': 'autoscaling', 'class': 'list[CreateAutoScalingPolicyDetails]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'autoscaling', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'autoscaling', 'class': 'dict(str, string)'}, 'policies': {'module': 'autoscaling', 'class': 'list[CreateAutoScalingPolicyDetails]'}}, output_type={'module': 'autoscaling', 'class': 'AutoScalingConfiguration'})
+@cli_util.wrap_exceptions
+def create_auto_scaling_configuration_instance_pool_resource(ctx, from_json, compartment_id, policies, resource_id, defined_tags, display_name, freeform_tags, cool_down_in_seconds, is_enabled):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    details = {}
+    details['compartmentId'] = compartment_id
+    details['policies'] = cli_util.parse_json_parameter("policies", policies)
+    details['resource']['id'] = resource_id
+
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if display_name is not None:
+        details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if cool_down_in_seconds is not None:
+        details['coolDownInSeconds'] = cool_down_in_seconds
+
+    if is_enabled is not None:
+        details['isEnabled'] = is_enabled
+
+    details['resource']['type'] = 'instancePool'
+
+    client = cli_util.build_client('auto_scaling', ctx)
+    result = client.create_auto_scaling_configuration(
+        create_auto_scaling_configuration_details=details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @auto_scaling_policy_group.command(name=cli_util.override('create_auto_scaling_policy.command_name', 'create'), help=u"""Creates an autoscaling policy for the specified autoscaling configuration.""")
 @cli_util.option('--auto-scaling-configuration-id', required=True, help=u"""The [OCID] of the autoscaling configuration.""")
 @cli_util.option('--capacity', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The capacity requirements of the autoscaling policy.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
