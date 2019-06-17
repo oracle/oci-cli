@@ -6,6 +6,30 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.5.15 - 2019-06-18
+-------------------
+Added
+~~~~~
+* Support for moving block volumes, block volume backups, boot volumes, boot volume backups, volume groups, volume group backups across compartments in the Block Storage Service
+
+  * (``oci bv backup change-compartment``)
+  * (``oci bv boot-volume change-compartment``)
+  * (``oci bv boot-volume-backup change-compartment``)
+  * (``oci bv volume change-compartment``)
+  * (``oci bv volume-group change-compartment``)
+  * (``oci bv volume-group-backup change-compartment``)
+
+* Support for scheduling and cancelling deletion for KMS keys in the Key Management Service
+
+  * (``oci kms management key schedule-deletion --time-of-deletion``)
+  * (``oci kms management key cancel-deletion``)
+
+* Support for python 3.7 on Windows, Linux, and MacOS
+
+* Support for moving Service Gateway across compartments in the Networking Service
+
+  * (``oci network service-gateway change-compartment``)
+
 2.5.14 - 2019-06-11
 -------------------
 Added

@@ -468,6 +468,7 @@ def verify_python_version():
     print_status('Python version {}.{}.{} okay.'.format(v.major, v.minor, v.micro))
 
 
+# This code is being deprecated.  See verify_native_dependencies() below.
 def _native_dependencies_for_dist(verify_cmd_args, update_cmd_args, install_cmd_args, dep_list):
     try:
         print_status("Executing: '{} {}'".format(' '.join(verify_cmd_args), ' '.join(dep_list)))
@@ -490,6 +491,18 @@ def _native_dependencies_for_dist(verify_cmd_args, update_cmd_args, install_cmd_
         subprocess.call(install_cmd_args + dep_list)
 
 
+# This code is being deprecated.
+# Also the name is a little goofy as it does more than just verify your system, it actually can modify your system.
+# Installing native dependencies on ubuntu 18, may cause the system to restart which is disruptive to this installer.
+# By removing this code we are removing the dependency for needing elevated sudo privs to run this script.
+# We also no longer need to compile the crypto python package, so it will also speed things up.
+#
+# We already have OS specific front end scripts, install.sh and install.ps1.
+# Any OS native dependencies should be done in one of those front end scripts.
+# They will already require elevated sudo privs in order to install python, if it is not present.
+#
+# This will give flexibility to organizations to have sysadmins install system requirements whereas this
+# python CLI installer can be run by average users without elevated sudo permissions.
 def verify_native_dependencies():
     distname, version, _ = platform.linux_distribution()
     if not distname:

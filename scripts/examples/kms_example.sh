@@ -114,16 +114,22 @@ oci kms management key-version list --key-id $KEY_OCID --endpoint $MANAGEMENT_EN
 # Disable the Key
 # The Key may stay in DISABLING state for a short period of time, and then transit to DISABLED state
 echo "Disabling Key with OCID: $KEY_OCID"
-oci kms management key disable --key-id $KEY_OCID --endpoint $MANAGEMENT_ENDPOINT
-echo "Wait a bit for Key to be disabled"
-sleep 30
+oci kms management key disable --key-id $KEY_OCID --endpoint $MANAGEMENT_ENDPOINT --wait-for-state DISABLED
 
 # Enable the Key
 # The Key may stay in ENABLING state for a short period of time, and then transit to ENABLED state
 echo "Enabling Key with OCID: $KEY_OCID"
-oci kms management key enable --key-id $KEY_OCID --endpoint $MANAGEMENT_ENDPOINT
-echo "Wait a bit for Key to be enabled"
-sleep 30
+oci kms management key enable --key-id $KEY_OCID --endpoint $MANAGEMENT_ENDPOINT --wait-for-state ENABLED
+
+# Schedule deletion for the Key
+# The Key may stay in SCHEDULING_DELETION state for a short period of time, and then transit to PENDING_DELETION state
+echo "Scheduling Key deletion with OCID: $KEY_OCID"
+oci kms management key schedule-deletion --key-id $KEY_OCID --endpoint $MANAGEMENT_ENDPOINT --wait-for-state PENDING_DELETION
+
+# Cancel deletion for the Key
+# The Key may stay in CANCELING_DELETION state for a short period of time, and then transit to ENABLED state
+echo "Canceling Key deletion with OCID: $KEY_OCID"
+oci kms management key cancel-deletion --key-id $KEY_OCID --endpoint $MANAGEMENT_ENDPOINT --wait-for-state ENABLED
 
 # Update the display name and tags of the Key
 echo "Updating DisplayName and tags of Key with OCID: $KEY_OCID"
