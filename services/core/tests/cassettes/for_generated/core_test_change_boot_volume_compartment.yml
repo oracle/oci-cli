@@ -5,7 +5,7 @@ interactions:
       Accept: ['*/*']
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
-      User-Agent: [python-requests/2.18.4]
+      User-Agent: [python-requests/2.21.0]
     method: GET
     uri: http://docker.for.mac.localhost:8090/SDKTestingService/request/enable?lang=PythonCLI&serviceName=core&apiName=ChangeBootVolumeCompartment
   response:
@@ -13,8 +13,8 @@ interactions:
     headers:
       content-length: ['4']
       content-type: [text/plain]
-      date: ['Tue, 12 Feb 2019 00:09:02 GMT']
-      server: [Jetty(9.2.14.v20151106)]
+      date: ['Tue, 28 May 2019 20:51:58 GMT']
+      server: [Jetty(9.4.7.v20170914)]
     status: {code: 200, message: OK}
 - request:
     body: null
@@ -22,16 +22,16 @@ interactions:
       Accept: ['*/*']
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
-      User-Agent: [python-requests/2.18.4]
+      User-Agent: [python-requests/2.21.0]
     method: GET
-    uri: http://docker.for.mac.localhost:8090/SDKTestingService/request?lang=PythonCLI&sessionId=0923&serviceName=core&apiName=ChangeBootVolumeCompartment
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/request?lang=PythonCLI&sessionId=0470&serviceName=core&apiName=ChangeBootVolumeCompartment
   response:
-    body: {string: !!python/unicode '[{"containerId":"d147cedf-c2ac-4178-ab7e-665277e42f54","request":{"bootVolumeId":"ocid1.bootvolume.oc1.phx.abyhqljt7fgu3pp4lbiqyydor4x2zzilphsrob7es7mcmzhvpozk4velcxtq","changeCompartmentDetails":{"compartmentId":"ocid1.compartment.oc1..aaaaaaaaunxycnballenyvqb5olwuotobpkfogav3j5yx2hiflgzf4vvktla"}}}]'}
+    body: {string: !!python/unicode '[{"containerId":"9b91620b-568c-4250-a8ec-c5e7a3893012","request":{"bootVolumeId":"ocid1.bootvolume.oc1.phx.abyhqljtpijnp6nvep26hpsv5sf2n62rsexd2qz4jr6nv5n5oz5r4psi5efa","changeBootVolumeCompartmentDetails":{"compartmentId":"ocid1.compartment.oc1..aaaaaaaaunxycnballenyvqb5olwuotobpkfogav3j5yx2hiflgzf4vvktla"}}}]'}
     headers:
-      content-length: ['302']
-      content-type: [application/json]
-      date: ['Tue, 12 Feb 2019 00:09:03 GMT']
-      server: [Jetty(9.2.14.v20151106)]
+      content-length: ['312']
+      content-type: [text/plain]
+      date: ['Tue, 28 May 2019 20:52:00 GMT']
+      server: [Jetty(9.4.7.v20170914)]
     status: {code: 200, message: OK}
 - request:
     body: !!python/unicode '{"compartmentId": "ocid1.compartment.oc1..aaaaaaaaunxycnballenyvqb5olwuotobpkfogav3j5yx2hiflgzf4vvktla"}'
@@ -40,48 +40,48 @@ interactions:
       accept: [application/json]
       accept-encoding: ['gzip, deflate']
       authorization: [!!python/unicode 'Signature algorithm="rsa-sha256",headers="date
-          (request-target) host content-length content-type x-content-sha256",keyId="ocidv1:tenancy:oc1:phx:1457633080752:aaaaaaaajuwrfl57l7oa3mtr6hu7hqwcme/ocid1.user.oc1..aaaaaaaajkyp3zhdk63hpqqet2ntlcejwcemlvzlegs6xgvbsmyy5wtvbk2q/7a:ed:ff:8d:54:47:47:45:f0:91:66:ab:dd:3c:c0:e3",signature="D2aR82gPOcK4n8DTzqe6Gt+9fIMaBj75YKZdPrQrJr7qo3X71rTZntW/HCuEtwxAcHrzQ4nCM3hNhnboAtvq71hj1zS0JBJxJsC+gmtcG5Qkn/J7nSlOo0WWwJZ9+DqrBcUvekTkRiC0jgFUChCCRFGZvo49mmJzZspTeF+NQzPj4D/gTrLubOs7wxYut8qWK/aC9vgCnpyMpfwf5JGywlpI61pfPy9DwnENAgF512L5DfguR0+pB3WIHOJGIjK8WiQ7oEXEvQtZ9K0a7UuVLUwQIngVEbmPBSHFzALC2iEBP5aaY8MeWuFXbRzM7KeTgACHEYEbq9xIOYCP0FkRyA==",version="1"']
+          (request-target) host content-length content-type x-content-sha256",keyId="ocidv1:tenancy:oc1:phx:1457633080752:aaaaaaaajuwrfl57l7oa3mtr6hu7hqwcme/ocid1.user.oc1..aaaaaaaajkyp3zhdk63hpqqet2ntlcejwcemlvzlegs6xgvbsmyy5wtvbk2q/7a:ed:ff:8d:54:47:47:45:f0:91:66:ab:dd:3c:c0:e3",signature="YKA/vfUUO+K4jpmuz9KTD66dbyuAo8inbvE+c0nKloZPrWjulJeBenb5D7GiARsOa66lWGBp9Z2a1BCP93+6BUrHnJnbAXSz+mDIWwq8mPCQ3YWn4iXXVjadRGMshuyDgc9raV6+5feas21kyhobzETZCKXBXMRjwt/iAKZbkPSMYw+gpczG8QSyT9WDLjriX+HD1Zzk4khBZAB16xM7aB9QQzimsLhj2GZvF4W42ITJO1h6dzjyzLhoK2Qy0/phQt1wDTVvWtDWKQjmo1t0j97AD/Vs583xtZ1NOJW2Qdjf4dlgm053epRfHgabzIjnt8Fkc4GNLwhmTTlVqNELIg==",version="1"']
       connection: [keep-alive]
       content-type: [application/json]
-      date: ['Tue, 12 Feb 2019 00:10:41 GMT']
+      date: ['Tue, 28 May 2019 20:54:26 GMT']
       host: [iaas.us-phoenix-1.oraclecloud.com]
-      opc-client-info: [Oracle-PythonSDK/2.1.8+preview.1.693]
-      opc-request-id: [D6E4D3C962E24CA6AD47D52075E9FD4E]
-      user-agent: [Oracle-PythonSDK/2.1.8+preview.1.693 (python 2.7.13; x86_64-Linux)
-          Oracle-PythonCLI/2.4.45+preview.1]
+      opc-client-info: [Oracle-PythonSDK/2.2.11+preview.1.0.247]
+      opc-request-id: [72C31218FCB64B96A567934AE306AA7E]
+      user-agent: [Oracle-PythonSDK/2.2.11+preview.1.0.247 (python 2.7.13; x86_64-Linux)
+          Oracle-PythonCLI/2.5.12+preview.1]
       x-content-sha256: [!!python/unicode 'VqGCzOHX20gwbIhMtVScXJA2OLxD3ceLJMTDQsANDM0=']
     method: POST
-    uri: https://iaas.us-phoenix-1.oraclecloud.com/20160918/bootVolumes/ocid1.bootvolume.oc1.phx.abyhqljt7fgu3pp4lbiqyydor4x2zzilphsrob7es7mcmzhvpozk4velcxtq/actions/changeCompartment
+    uri: https://iaas.us-phoenix-1.oraclecloud.com/20160918/bootVolumes/ocid1.bootvolume.oc1.phx.abyhqljtpijnp6nvep26hpsv5sf2n62rsexd2qz4jr6nv5n5oz5r4psi5efa/actions/changeCompartment
   response:
     body: {string: !!python/unicode ''}
     headers:
       connection: [keep-alive]
       content-type: [application/json]
-      date: ['Tue, 12 Feb 2019 00:10:38 GMT']
-      opc-request-id: [D6E4D3C962E24CA6AD47D52075E9FD4E/B530FA73B97A080B4ABAE2ADC7DD5887/7FA5FE6FF797D54A2518C762391E3AC0]
+      date: ['Tue, 28 May 2019 20:54:28 GMT']
+      opc-request-id: [72C31218FCB64B96A567934AE306AA7E/ED9E362783C5DA2FFFD9B186388FC431/6C4AF173ED9CC6A2432CFC43435BCD50]
       x-content-type-options: [nosniff]
     status: {code: 204, message: No Content}
 - request:
-    body: !!python/unicode '{"responseJson": "{\"opcRequestId\": \"665B2943AED248A8A62A4ED6EE7D78A7\"}",
+    body: !!python/unicode '{"responseJson": "{\"opcRequestId\": \"3A092CADEEB44DA8860B1165F8BC5B7A\"}",
       "responseClass": "com.oracle.bmc.core.responses.ChangeBootVolumeCompartmentResponse",
-      "containerId": "d147cedf-c2ac-4178-ab7e-665277e42f54", "requestJson": "{\"bootVolumeId\":
-      \"ocid1.bootvolume.oc1.phx.abyhqljt7fgu3pp4lbiqyydor4x2zzilphsrob7es7mcmzhvpozk4velcxtq\",
-      \"changeCompartmentDetails\": {\"compartmentId\": \"ocid1.compartment.oc1..aaaaaaaaunxycnballenyvqb5olwuotobpkfogav3j5yx2hiflgzf4vvktla\"}}",
+      "containerId": "9b91620b-568c-4250-a8ec-c5e7a3893012", "requestJson": "{\"bootVolumeId\":
+      \"ocid1.bootvolume.oc1.phx.abyhqljtpijnp6nvep26hpsv5sf2n62rsexd2qz4jr6nv5n5oz5r4psi5efa\",
+      \"changeBootVolumeCompartmentDetails\": {\"compartmentId\": \"ocid1.compartment.oc1..aaaaaaaaunxycnballenyvqb5olwuotobpkfogav3j5yx2hiflgzf4vvktla\"}}",
       "requestClass": "com.oracle.bmc.core.requests.ChangeBootVolumeCompartmentRequest"}'
     headers:
       Accept: ['*/*']
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
-      Content-Length: ['568']
-      User-Agent: [python-requests/2.18.4]
+      Content-Length: ['578']
+      User-Agent: [python-requests/2.21.0]
     method: POST
-    uri: http://docker.for.mac.localhost:8090/SDKTestingService/response?lang=PythonCLI&sessionId=0923
+    uri: http://docker.for.mac.localhost:8090/SDKTestingService/response?lang=PythonCLI&sessionId=0470
   response:
     body: {string: !!python/unicode ''}
     headers:
       content-length: ['0']
       content-type: [text/plain]
-      date: ['Tue, 12 Feb 2019 00:10:39 GMT']
-      server: [Jetty(9.2.14.v20151106)]
+      date: ['Tue, 28 May 2019 20:54:30 GMT']
+      server: [Jetty(9.4.7.v20170914)]
     status: {code: 200, message: OK}
 version: 1

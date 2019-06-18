@@ -163,7 +163,7 @@ sleep 15
 # More information on tagging can be found here: https://docs.cloud.oracle.com/Content/General/Concepts/resourcetags.htm
 #
 # Resources in the CLI which accept tags will have --freeform-tags and --defined-tags parameters. Consult the CLI
-# help files (https://github.com/oracle/oci-cli/tree/master/tests/output/inline-help) or the generic tag
+# help files (https://github.com/oracle/oci-cli/tree/master/services/*/docs/inline_help/) or the generic tag
 # reference (https://docs.cloud.oracle.com/Content/Identity/Concepts/taggingoverview.htm#Taggable) to
 # see what resources can accept tags
 ##########################################################

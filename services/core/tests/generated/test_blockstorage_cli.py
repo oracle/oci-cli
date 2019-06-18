@@ -24,6 +24,678 @@ def vcr_fixture(request):
 
 
 @pytest.mark.generated
+def test_change_boot_volume_backup_compartment(cli_testing_service_client, runner, config_file, config_profile):
+    if not cli_testing_service_client.is_api_enabled('core', 'ChangeBootVolumeBackupCompartment'):
+        pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'Blockstorage', 'ChangeBootVolumeBackupCompartment')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_change_boot_volume_backup_compartment.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_change_boot_volume_backup_compartment', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_change_boot_volume_backup_compartment.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_change_boot_volume_backup_compartment'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_change_boot_volume_backup_compartment.pem'])
+            config_file = 'tests/resources/config_for_test_change_boot_volume_backup_compartment'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
+
+    root_command_name = oci_cli.cli_util.override('blockstorage_root_group.command_name', 'blockstorage')
+    resource_group_command_name = oci_cli.cli_util.override('boot_volume_backup_group.command_name', 'boot_volume_backup')
+    request_containers = cli_testing_service_client.get_requests(service_name='core', api_name='ChangeBootVolumeBackupCompartment')
+    for i in range(len(request_containers)):
+        request = request_containers[i]['request'].copy()
+        done = False
+        params = []
+        while not done:
+            # force all details param names to have lower case first letter for consistency with Java models
+            param_name = 'ChangeBootVolumeBackupCompartmentDetails'
+            details = request.pop(param_name[0].lower() + param_name[1:])
+            for key in details:
+                request[key] = details[key]
+                override = util.variable_name_override(key)
+                if override:
+                    request[override] = request.pop(key)
+
+            if 'opts' in request:
+                for key in request['opts']:
+                    request[key] = request['opts'][key]
+                del request['opts']
+
+            request, cleanup = generated_test_request_transformers.transform_generated_test_input('core', 'ChangeBootVolumeBackupCompartment', request)
+
+            input_content = json.dumps(request)
+
+            # for operations with polymorphic input types, attempt to find an operation for a specific subtype
+            # if one does not exist, fallback to calling base operation
+            if not params:
+                params = util.get_command_list(
+                    root_command_name,
+                    resource_group_command_name,
+                    oci_cli.cli_util.override('change_boot_volume_backup_compartment.command_name', 'change-compartment'),
+                    True
+                )
+
+            if not params:
+                raise ValueError(
+                    'Failed to find CLI command "oci {} {} {}" for given operation: core, ChangeBootVolumeBackupCompartment. '
+                    'This usually happens because generated commands have been manually re-arranged in code for better user '
+                    'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'for the new command. If the file does not exist for your service, please create one. You can refer the '
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
+                    .format(
+                        root_command_name, resource_group_command_name,
+                        oci_cli.cli_util.override('change_boot_volume_backup_compartment.command_name', 'change-compartment'),
+                        root_command_name, resource_group_command_name,
+                        oci_cli.cli_util.override('change_boot_volume_backup_compartment.command_name', 'change-compartment')))
+
+            params.extend(['--from-json', input_content])
+            try:
+                util.set_admin_pass_phrase()
+                result = invoke(runner, config_file, 'ADMIN', params)
+
+                message = cli_testing_service_client.validate_result(
+                    'core',
+                    'ChangeBootVolumeBackupCompartment',
+                    request_containers[i]['containerId'],
+                    request_containers[i]['request'],
+                    result,
+                    'changeBootVolumeBackupCompartment',
+                    False
+                )
+            finally:
+                if os.path.exists('tests/resources/keyfile_for_test_change_boot_volume_backup_compartment.pem'):
+                    os.remove('tests/resources/keyfile_for_test_change_boot_volume_backup_compartment.pem')
+                if os.path.exists('tests/resources/config_for_test_change_boot_volume_backup_compartment'):
+                    os.remove('tests/resources/config_for_test_change_boot_volume_backup_compartment')
+                if cleanup:
+                    try:
+                        next(cleanup)
+                    except StopIteration:
+                        pass
+
+            if message != "CONT":
+                assert len(message) == 0, message
+                done = True
+            else:
+                request_containers = cli_testing_service_client.get_requests(service_name='core', api_name='ChangeBootVolumeBackupCompartment')
+                request = request_containers[i]['request'].copy()
+
+
+@pytest.mark.generated
+def test_change_boot_volume_compartment(cli_testing_service_client, runner, config_file, config_profile):
+    if not cli_testing_service_client.is_api_enabled('core', 'ChangeBootVolumeCompartment'):
+        pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'Blockstorage', 'ChangeBootVolumeCompartment')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_change_boot_volume_compartment.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_change_boot_volume_compartment', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_change_boot_volume_compartment.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_change_boot_volume_compartment'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_change_boot_volume_compartment.pem'])
+            config_file = 'tests/resources/config_for_test_change_boot_volume_compartment'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
+
+    root_command_name = oci_cli.cli_util.override('blockstorage_root_group.command_name', 'blockstorage')
+    resource_group_command_name = oci_cli.cli_util.override('boot_volume_group.command_name', 'boot_volume')
+    request_containers = cli_testing_service_client.get_requests(service_name='core', api_name='ChangeBootVolumeCompartment')
+    for i in range(len(request_containers)):
+        request = request_containers[i]['request'].copy()
+        done = False
+        params = []
+        while not done:
+            # force all details param names to have lower case first letter for consistency with Java models
+            param_name = 'ChangeBootVolumeCompartmentDetails'
+            details = request.pop(param_name[0].lower() + param_name[1:])
+            for key in details:
+                request[key] = details[key]
+                override = util.variable_name_override(key)
+                if override:
+                    request[override] = request.pop(key)
+
+            if 'opts' in request:
+                for key in request['opts']:
+                    request[key] = request['opts'][key]
+                del request['opts']
+
+            request, cleanup = generated_test_request_transformers.transform_generated_test_input('core', 'ChangeBootVolumeCompartment', request)
+
+            input_content = json.dumps(request)
+
+            # for operations with polymorphic input types, attempt to find an operation for a specific subtype
+            # if one does not exist, fallback to calling base operation
+            if not params:
+                params = util.get_command_list(
+                    root_command_name,
+                    resource_group_command_name,
+                    oci_cli.cli_util.override('change_boot_volume_compartment.command_name', 'change-compartment'),
+                    True
+                )
+
+            if not params:
+                raise ValueError(
+                    'Failed to find CLI command "oci {} {} {}" for given operation: core, ChangeBootVolumeCompartment. '
+                    'This usually happens because generated commands have been manually re-arranged in code for better user '
+                    'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'for the new command. If the file does not exist for your service, please create one. You can refer the '
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
+                    .format(
+                        root_command_name, resource_group_command_name,
+                        oci_cli.cli_util.override('change_boot_volume_compartment.command_name', 'change-compartment'),
+                        root_command_name, resource_group_command_name,
+                        oci_cli.cli_util.override('change_boot_volume_compartment.command_name', 'change-compartment')))
+
+            params.extend(['--from-json', input_content])
+            try:
+                util.set_admin_pass_phrase()
+                result = invoke(runner, config_file, 'ADMIN', params)
+
+                message = cli_testing_service_client.validate_result(
+                    'core',
+                    'ChangeBootVolumeCompartment',
+                    request_containers[i]['containerId'],
+                    request_containers[i]['request'],
+                    result,
+                    'changeBootVolumeCompartment',
+                    False
+                )
+            finally:
+                if os.path.exists('tests/resources/keyfile_for_test_change_boot_volume_compartment.pem'):
+                    os.remove('tests/resources/keyfile_for_test_change_boot_volume_compartment.pem')
+                if os.path.exists('tests/resources/config_for_test_change_boot_volume_compartment'):
+                    os.remove('tests/resources/config_for_test_change_boot_volume_compartment')
+                if cleanup:
+                    try:
+                        next(cleanup)
+                    except StopIteration:
+                        pass
+
+            if message != "CONT":
+                assert len(message) == 0, message
+                done = True
+            else:
+                request_containers = cli_testing_service_client.get_requests(service_name='core', api_name='ChangeBootVolumeCompartment')
+                request = request_containers[i]['request'].copy()
+
+
+@pytest.mark.generated
+def test_change_volume_backup_compartment(cli_testing_service_client, runner, config_file, config_profile):
+    if not cli_testing_service_client.is_api_enabled('core', 'ChangeVolumeBackupCompartment'):
+        pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'Blockstorage', 'ChangeVolumeBackupCompartment')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_change_volume_backup_compartment.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_change_volume_backup_compartment', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_change_volume_backup_compartment.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_change_volume_backup_compartment'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_change_volume_backup_compartment.pem'])
+            config_file = 'tests/resources/config_for_test_change_volume_backup_compartment'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
+
+    root_command_name = oci_cli.cli_util.override('blockstorage_root_group.command_name', 'blockstorage')
+    resource_group_command_name = oci_cli.cli_util.override('volume_backup_group.command_name', 'volume_backup')
+    request_containers = cli_testing_service_client.get_requests(service_name='core', api_name='ChangeVolumeBackupCompartment')
+    for i in range(len(request_containers)):
+        request = request_containers[i]['request'].copy()
+        done = False
+        params = []
+        while not done:
+            # force all details param names to have lower case first letter for consistency with Java models
+            param_name = 'ChangeVolumeBackupCompartmentDetails'
+            details = request.pop(param_name[0].lower() + param_name[1:])
+            for key in details:
+                request[key] = details[key]
+                override = util.variable_name_override(key)
+                if override:
+                    request[override] = request.pop(key)
+
+            if 'opts' in request:
+                for key in request['opts']:
+                    request[key] = request['opts'][key]
+                del request['opts']
+
+            request, cleanup = generated_test_request_transformers.transform_generated_test_input('core', 'ChangeVolumeBackupCompartment', request)
+
+            input_content = json.dumps(request)
+
+            # for operations with polymorphic input types, attempt to find an operation for a specific subtype
+            # if one does not exist, fallback to calling base operation
+            if not params:
+                params = util.get_command_list(
+                    root_command_name,
+                    resource_group_command_name,
+                    oci_cli.cli_util.override('change_volume_backup_compartment.command_name', 'change-compartment'),
+                    True
+                )
+
+            if not params:
+                raise ValueError(
+                    'Failed to find CLI command "oci {} {} {}" for given operation: core, ChangeVolumeBackupCompartment. '
+                    'This usually happens because generated commands have been manually re-arranged in code for better user '
+                    'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'for the new command. If the file does not exist for your service, please create one. You can refer the '
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
+                    .format(
+                        root_command_name, resource_group_command_name,
+                        oci_cli.cli_util.override('change_volume_backup_compartment.command_name', 'change-compartment'),
+                        root_command_name, resource_group_command_name,
+                        oci_cli.cli_util.override('change_volume_backup_compartment.command_name', 'change-compartment')))
+
+            params.extend(['--from-json', input_content])
+            try:
+                util.set_admin_pass_phrase()
+                result = invoke(runner, config_file, 'ADMIN', params)
+
+                message = cli_testing_service_client.validate_result(
+                    'core',
+                    'ChangeVolumeBackupCompartment',
+                    request_containers[i]['containerId'],
+                    request_containers[i]['request'],
+                    result,
+                    'changeVolumeBackupCompartment',
+                    False
+                )
+            finally:
+                if os.path.exists('tests/resources/keyfile_for_test_change_volume_backup_compartment.pem'):
+                    os.remove('tests/resources/keyfile_for_test_change_volume_backup_compartment.pem')
+                if os.path.exists('tests/resources/config_for_test_change_volume_backup_compartment'):
+                    os.remove('tests/resources/config_for_test_change_volume_backup_compartment')
+                if cleanup:
+                    try:
+                        next(cleanup)
+                    except StopIteration:
+                        pass
+
+            if message != "CONT":
+                assert len(message) == 0, message
+                done = True
+            else:
+                request_containers = cli_testing_service_client.get_requests(service_name='core', api_name='ChangeVolumeBackupCompartment')
+                request = request_containers[i]['request'].copy()
+
+
+@pytest.mark.generated
+def test_change_volume_compartment(cli_testing_service_client, runner, config_file, config_profile):
+    if not cli_testing_service_client.is_api_enabled('core', 'ChangeVolumeCompartment'):
+        pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'Blockstorage', 'ChangeVolumeCompartment')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_change_volume_compartment.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_change_volume_compartment', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_change_volume_compartment.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_change_volume_compartment'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_change_volume_compartment.pem'])
+            config_file = 'tests/resources/config_for_test_change_volume_compartment'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
+
+    root_command_name = oci_cli.cli_util.override('blockstorage_root_group.command_name', 'blockstorage')
+    resource_group_command_name = oci_cli.cli_util.override('volume_group.command_name', 'volume')
+    request_containers = cli_testing_service_client.get_requests(service_name='core', api_name='ChangeVolumeCompartment')
+    for i in range(len(request_containers)):
+        request = request_containers[i]['request'].copy()
+        done = False
+        params = []
+        while not done:
+            # force all details param names to have lower case first letter for consistency with Java models
+            param_name = 'ChangeVolumeCompartmentDetails'
+            details = request.pop(param_name[0].lower() + param_name[1:])
+            for key in details:
+                request[key] = details[key]
+                override = util.variable_name_override(key)
+                if override:
+                    request[override] = request.pop(key)
+
+            if 'opts' in request:
+                for key in request['opts']:
+                    request[key] = request['opts'][key]
+                del request['opts']
+
+            request, cleanup = generated_test_request_transformers.transform_generated_test_input('core', 'ChangeVolumeCompartment', request)
+
+            input_content = json.dumps(request)
+
+            # for operations with polymorphic input types, attempt to find an operation for a specific subtype
+            # if one does not exist, fallback to calling base operation
+            if not params:
+                params = util.get_command_list(
+                    root_command_name,
+                    resource_group_command_name,
+                    oci_cli.cli_util.override('change_volume_compartment.command_name', 'change-compartment'),
+                    True
+                )
+
+            if not params:
+                raise ValueError(
+                    'Failed to find CLI command "oci {} {} {}" for given operation: core, ChangeVolumeCompartment. '
+                    'This usually happens because generated commands have been manually re-arranged in code for better user '
+                    'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'for the new command. If the file does not exist for your service, please create one. You can refer the '
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
+                    .format(
+                        root_command_name, resource_group_command_name,
+                        oci_cli.cli_util.override('change_volume_compartment.command_name', 'change-compartment'),
+                        root_command_name, resource_group_command_name,
+                        oci_cli.cli_util.override('change_volume_compartment.command_name', 'change-compartment')))
+
+            params.extend(['--from-json', input_content])
+            try:
+                util.set_admin_pass_phrase()
+                result = invoke(runner, config_file, 'ADMIN', params)
+
+                message = cli_testing_service_client.validate_result(
+                    'core',
+                    'ChangeVolumeCompartment',
+                    request_containers[i]['containerId'],
+                    request_containers[i]['request'],
+                    result,
+                    'changeVolumeCompartment',
+                    False
+                )
+            finally:
+                if os.path.exists('tests/resources/keyfile_for_test_change_volume_compartment.pem'):
+                    os.remove('tests/resources/keyfile_for_test_change_volume_compartment.pem')
+                if os.path.exists('tests/resources/config_for_test_change_volume_compartment'):
+                    os.remove('tests/resources/config_for_test_change_volume_compartment')
+                if cleanup:
+                    try:
+                        next(cleanup)
+                    except StopIteration:
+                        pass
+
+            if message != "CONT":
+                assert len(message) == 0, message
+                done = True
+            else:
+                request_containers = cli_testing_service_client.get_requests(service_name='core', api_name='ChangeVolumeCompartment')
+                request = request_containers[i]['request'].copy()
+
+
+@pytest.mark.generated
+def test_change_volume_group_backup_compartment(cli_testing_service_client, runner, config_file, config_profile):
+    if not cli_testing_service_client.is_api_enabled('core', 'ChangeVolumeGroupBackupCompartment'):
+        pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'Blockstorage', 'ChangeVolumeGroupBackupCompartment')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_change_volume_group_backup_compartment.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_change_volume_group_backup_compartment', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_change_volume_group_backup_compartment.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_change_volume_group_backup_compartment'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_change_volume_group_backup_compartment.pem'])
+            config_file = 'tests/resources/config_for_test_change_volume_group_backup_compartment'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
+
+    root_command_name = oci_cli.cli_util.override('blockstorage_root_group.command_name', 'blockstorage')
+    resource_group_command_name = oci_cli.cli_util.override('volume_group_backup_group.command_name', 'volume_group_backup')
+    request_containers = cli_testing_service_client.get_requests(service_name='core', api_name='ChangeVolumeGroupBackupCompartment')
+    for i in range(len(request_containers)):
+        request = request_containers[i]['request'].copy()
+        done = False
+        params = []
+        while not done:
+            # force all details param names to have lower case first letter for consistency with Java models
+            param_name = 'ChangeVolumeGroupBackupCompartmentDetails'
+            details = request.pop(param_name[0].lower() + param_name[1:])
+            for key in details:
+                request[key] = details[key]
+                override = util.variable_name_override(key)
+                if override:
+                    request[override] = request.pop(key)
+
+            if 'opts' in request:
+                for key in request['opts']:
+                    request[key] = request['opts'][key]
+                del request['opts']
+
+            request, cleanup = generated_test_request_transformers.transform_generated_test_input('core', 'ChangeVolumeGroupBackupCompartment', request)
+
+            input_content = json.dumps(request)
+
+            # for operations with polymorphic input types, attempt to find an operation for a specific subtype
+            # if one does not exist, fallback to calling base operation
+            if not params:
+                params = util.get_command_list(
+                    root_command_name,
+                    resource_group_command_name,
+                    oci_cli.cli_util.override('change_volume_group_backup_compartment.command_name', 'change-compartment'),
+                    True
+                )
+
+            if not params:
+                raise ValueError(
+                    'Failed to find CLI command "oci {} {} {}" for given operation: core, ChangeVolumeGroupBackupCompartment. '
+                    'This usually happens because generated commands have been manually re-arranged in code for better user '
+                    'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'for the new command. If the file does not exist for your service, please create one. You can refer the '
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
+                    .format(
+                        root_command_name, resource_group_command_name,
+                        oci_cli.cli_util.override('change_volume_group_backup_compartment.command_name', 'change-compartment'),
+                        root_command_name, resource_group_command_name,
+                        oci_cli.cli_util.override('change_volume_group_backup_compartment.command_name', 'change-compartment')))
+
+            params.extend(['--from-json', input_content])
+            try:
+                util.set_admin_pass_phrase()
+                result = invoke(runner, config_file, 'ADMIN', params)
+
+                message = cli_testing_service_client.validate_result(
+                    'core',
+                    'ChangeVolumeGroupBackupCompartment',
+                    request_containers[i]['containerId'],
+                    request_containers[i]['request'],
+                    result,
+                    'changeVolumeGroupBackupCompartment',
+                    False
+                )
+            finally:
+                if os.path.exists('tests/resources/keyfile_for_test_change_volume_group_backup_compartment.pem'):
+                    os.remove('tests/resources/keyfile_for_test_change_volume_group_backup_compartment.pem')
+                if os.path.exists('tests/resources/config_for_test_change_volume_group_backup_compartment'):
+                    os.remove('tests/resources/config_for_test_change_volume_group_backup_compartment')
+                if cleanup:
+                    try:
+                        next(cleanup)
+                    except StopIteration:
+                        pass
+
+            if message != "CONT":
+                assert len(message) == 0, message
+                done = True
+            else:
+                request_containers = cli_testing_service_client.get_requests(service_name='core', api_name='ChangeVolumeGroupBackupCompartment')
+                request = request_containers[i]['request'].copy()
+
+
+@pytest.mark.generated
+def test_change_volume_group_compartment(cli_testing_service_client, runner, config_file, config_profile):
+    if not cli_testing_service_client.is_api_enabled('core', 'ChangeVolumeGroupCompartment'):
+        pytest.skip('OCI Testing Service has not been configured for this operation yet.')
+
+    config_file = os.environ['OCI_CLI_CONFIG_FILE']
+    if 'USE_TESTING_SERVICE_CONFIG' in os.environ:
+        try:
+            config_str = cli_testing_service_client.get_config('core', 'Blockstorage', 'ChangeVolumeGroupCompartment')
+            config = json.loads(config_str)
+            key_file_content = config['keyFileContent']
+            with open('tests/resources/keyfile_for_test_change_volume_group_compartment.pem', 'w') as f:
+                f.write(key_file_content)
+            with open('tests/resources/config_for_test_change_volume_group_compartment', 'w') as f:
+                f.write('[ADMIN]\n')
+                f.write('user = ' + config['userId'] + '\n')
+                f.write('fingerprint = ' + config['fingerprint'] + '\n')
+                f.write('tenancy = ' + config['tenantId'] + '\n')
+                f.write('region = ' + config['region'] + '\n')
+                f.write('key_file = tests/resources/keyfile_for_test_change_volume_group_compartment.pem\n')
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/config_for_test_change_volume_group_compartment'])
+            runner.invoke(oci_cli.cli, ['setup', 'repair-file-permissions', '--file', 'tests/resources/keyfile_for_test_change_volume_group_compartment.pem'])
+            config_file = 'tests/resources/config_for_test_change_volume_group_compartment'
+        except vcr.errors.CannotOverwriteExistingCassetteException:
+            pass
+        except Exception as e:
+            print(e)
+            raise e
+
+    root_command_name = oci_cli.cli_util.override('blockstorage_root_group.command_name', 'blockstorage')
+    resource_group_command_name = oci_cli.cli_util.override('volume_group_group.command_name', 'volume_group')
+    request_containers = cli_testing_service_client.get_requests(service_name='core', api_name='ChangeVolumeGroupCompartment')
+    for i in range(len(request_containers)):
+        request = request_containers[i]['request'].copy()
+        done = False
+        params = []
+        while not done:
+            # force all details param names to have lower case first letter for consistency with Java models
+            param_name = 'ChangeVolumeGroupCompartmentDetails'
+            details = request.pop(param_name[0].lower() + param_name[1:])
+            for key in details:
+                request[key] = details[key]
+                override = util.variable_name_override(key)
+                if override:
+                    request[override] = request.pop(key)
+
+            if 'opts' in request:
+                for key in request['opts']:
+                    request[key] = request['opts'][key]
+                del request['opts']
+
+            request, cleanup = generated_test_request_transformers.transform_generated_test_input('core', 'ChangeVolumeGroupCompartment', request)
+
+            input_content = json.dumps(request)
+
+            # for operations with polymorphic input types, attempt to find an operation for a specific subtype
+            # if one does not exist, fallback to calling base operation
+            if not params:
+                params = util.get_command_list(
+                    root_command_name,
+                    resource_group_command_name,
+                    oci_cli.cli_util.override('change_volume_group_compartment.command_name', 'change-compartment'),
+                    True
+                )
+
+            if not params:
+                raise ValueError(
+                    'Failed to find CLI command "oci {} {} {}" for given operation: core, ChangeVolumeGroupCompartment. '
+                    'This usually happens because generated commands have been manually re-arranged in code for better user '
+                    'experience. To allow this test to find the proper command, please add an entry to MOVED_COMMANDS in '
+                    'services/<spec_name>/tests/extend_test_<your_service_name>.py to map ({}, {}, {}) to the syntax '
+                    'for the new command. If the file does not exist for your service, please create one. You can refer the '
+                    'MOVED_COMMANDS map in services/core/tests/extend_test_compute.py as an example.'
+                    .format(
+                        root_command_name, resource_group_command_name,
+                        oci_cli.cli_util.override('change_volume_group_compartment.command_name', 'change-compartment'),
+                        root_command_name, resource_group_command_name,
+                        oci_cli.cli_util.override('change_volume_group_compartment.command_name', 'change-compartment')))
+
+            params.extend(['--from-json', input_content])
+            try:
+                util.set_admin_pass_phrase()
+                result = invoke(runner, config_file, 'ADMIN', params)
+
+                message = cli_testing_service_client.validate_result(
+                    'core',
+                    'ChangeVolumeGroupCompartment',
+                    request_containers[i]['containerId'],
+                    request_containers[i]['request'],
+                    result,
+                    'changeVolumeGroupCompartment',
+                    False
+                )
+            finally:
+                if os.path.exists('tests/resources/keyfile_for_test_change_volume_group_compartment.pem'):
+                    os.remove('tests/resources/keyfile_for_test_change_volume_group_compartment.pem')
+                if os.path.exists('tests/resources/config_for_test_change_volume_group_compartment'):
+                    os.remove('tests/resources/config_for_test_change_volume_group_compartment')
+                if cleanup:
+                    try:
+                        next(cleanup)
+                    except StopIteration:
+                        pass
+
+            if message != "CONT":
+                assert len(message) == 0, message
+                done = True
+            else:
+                request_containers = cli_testing_service_client.get_requests(service_name='core', api_name='ChangeVolumeGroupCompartment')
+                request = request_containers[i]['request'].copy()
+
+
+@pytest.mark.generated
 def test_copy_volume_backup(cli_testing_service_client, runner, config_file, config_profile):
     if not cli_testing_service_client.is_api_enabled('core', 'CopyVolumeBackup'):
         pytest.skip('OCI Testing Service has not been configured for this operation yet.')

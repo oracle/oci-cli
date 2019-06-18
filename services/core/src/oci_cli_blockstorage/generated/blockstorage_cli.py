@@ -120,6 +120,174 @@ blockstorage_root_group.add_command(volume_backup_policy_group)
 blockstorage_root_group.add_command(volume_kms_key_group)
 
 
+@boot_volume_backup_group.command(name=cli_util.override('change_boot_volume_backup_compartment.command_name', 'change-compartment'), help=u"""Change the compartment of a boot volume backup""")
+@cli_util.option('--boot-volume-backup-id', required=True, help=u"""The OCID of the boot volume backup.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the new compartment""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_boot_volume_backup_compartment(ctx, from_json, boot_volume_backup_id, compartment_id):
+
+    if isinstance(boot_volume_backup_id, six.string_types) and len(boot_volume_backup_id.strip()) == 0:
+        raise click.UsageError('Parameter --boot-volume-backup-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    details = {}
+    details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('blockstorage', ctx)
+    result = client.change_boot_volume_backup_compartment(
+        boot_volume_backup_id=boot_volume_backup_id,
+        change_boot_volume_backup_compartment_details=details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@boot_volume_group.command(name=cli_util.override('change_boot_volume_compartment.command_name', 'change-compartment'), help=u"""Change the compartment of a boot volume""")
+@cli_util.option('--boot-volume-id', required=True, help=u"""The OCID of the boot volume.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the new compartment""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_boot_volume_compartment(ctx, from_json, boot_volume_id, compartment_id):
+
+    if isinstance(boot_volume_id, six.string_types) and len(boot_volume_id.strip()) == 0:
+        raise click.UsageError('Parameter --boot-volume-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    details = {}
+    details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('blockstorage', ctx)
+    result = client.change_boot_volume_compartment(
+        boot_volume_id=boot_volume_id,
+        change_boot_volume_compartment_details=details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@volume_backup_group.command(name=cli_util.override('change_volume_backup_compartment.command_name', 'change-compartment'), help=u"""Change the compartment of a volume backup""")
+@cli_util.option('--volume-backup-id', required=True, help=u"""The OCID of the volume backup.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the new compartment""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_volume_backup_compartment(ctx, from_json, volume_backup_id, compartment_id):
+
+    if isinstance(volume_backup_id, six.string_types) and len(volume_backup_id.strip()) == 0:
+        raise click.UsageError('Parameter --volume-backup-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    details = {}
+    details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('blockstorage', ctx)
+    result = client.change_volume_backup_compartment(
+        volume_backup_id=volume_backup_id,
+        change_volume_backup_compartment_details=details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@volume_group.command(name=cli_util.override('change_volume_compartment.command_name', 'change-compartment'), help=u"""Change the compartment of a volume""")
+@cli_util.option('--volume-id', required=True, help=u"""The OCID of the volume.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the new compartment""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_volume_compartment(ctx, from_json, volume_id, compartment_id):
+
+    if isinstance(volume_id, six.string_types) and len(volume_id.strip()) == 0:
+        raise click.UsageError('Parameter --volume-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    details = {}
+    details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('blockstorage', ctx)
+    result = client.change_volume_compartment(
+        volume_id=volume_id,
+        change_volume_compartment_details=details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@volume_group_backup_group.command(name=cli_util.override('change_volume_group_backup_compartment.command_name', 'change-compartment'), help=u"""Change the compartment of a volume group backup""")
+@cli_util.option('--volume-group-backup-id', required=True, help=u"""The Oracle Cloud ID (OCID) that uniquely identifies the volume group backup.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the new compartment""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_volume_group_backup_compartment(ctx, from_json, volume_group_backup_id, compartment_id):
+
+    if isinstance(volume_group_backup_id, six.string_types) and len(volume_group_backup_id.strip()) == 0:
+        raise click.UsageError('Parameter --volume-group-backup-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    details = {}
+    details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('blockstorage', ctx)
+    result = client.change_volume_group_backup_compartment(
+        volume_group_backup_id=volume_group_backup_id,
+        change_volume_group_backup_compartment_details=details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@volume_group_group.command(name=cli_util.override('change_volume_group_compartment.command_name', 'change-compartment'), help=u"""Change the compartment of a volume group""")
+@cli_util.option('--volume-group-id', required=True, help=u"""The Oracle Cloud ID (OCID) that uniquely identifies the volume group.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the new compartment""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_volume_group_compartment(ctx, from_json, volume_group_id, compartment_id):
+
+    if isinstance(volume_group_id, six.string_types) and len(volume_group_id.strip()) == 0:
+        raise click.UsageError('Parameter --volume-group-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    details = {}
+    details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('blockstorage', ctx)
+    result = client.change_volume_group_compartment(
+        volume_group_id=volume_group_id,
+        change_volume_group_compartment_details=details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @volume_backup_group.command(name=cli_util.override('copy_volume_backup.command_name', 'copy'), help=u"""Creates a volume backup copy in specified region. For general information about volume backups, see [Overview of Block Volume Service Backups]""")
 @cli_util.option('--volume-backup-id', required=True, help=u"""The OCID of the volume backup.""")
 @cli_util.option('--destination-region', required=True, help=u"""The name of the destination region.

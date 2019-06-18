@@ -34,6 +34,9 @@ cli_util.override_command_short_help_and_help(kmsmanagement_cli.kms_management_r
 cli_util.override_command_short_help_and_help(kmscrypto_cli.kms_crypto_root_group, "Operations for performing data encryption, decryption and generation of data encryption keys.")
 cli_util.override_command_short_help_and_help(kms_service_cli.kms_service_group, "Key Management Service")
 
+cli_util.rename_command(kmsmanagement_cli.key_group, kmsmanagement_cli.schedule_key_deletion, "schedule-deletion")
+cli_util.rename_command(kmsmanagement_cli.key_group, kmsmanagement_cli.cancel_key_deletion, "cancel-deletion")
+
 # TODO: Potentially integrate with a specific --vault-endpoint parameter or find a way to translate a vault
 # (e.g. a vault's OCID) to the relevant endpoint
 cli_util.SERVICES_REQUIRING_ENDPOINTS.append("kms_crypto")

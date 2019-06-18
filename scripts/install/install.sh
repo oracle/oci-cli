@@ -10,8 +10,8 @@
 #           individual params > accept_all_defaults > interactive inputs
 #
 SHELL_INSTALL_SCRIPT_URL="https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/install/install.sh"
-INSTALL_SCRIPT_URL="https://raw.githubusercontent.com/oracle/oci-cli/v2.5.14/scripts/install/install.py"
-FALLBACK_INSTALL_SCRIPT_URL="https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/install/install.py"
+INSTALL_SCRIPT_URL="https://raw.githubusercontent.com/oracle/oci-cli/v2.5.15/scripts/install/install.py"
+FALLBACK_INSTALL_SCRIPT_URL="https://raw.githubusercontent.com/oracle/oci-cli/v2.5.14/scripts/install/install.py"
 _TTY=/dev/tty
 
 # Below is the usage text to be printed when --help is invoked on this script.
@@ -36,7 +36,7 @@ The following options are available:
         dbaas script 'create_backup_from_onprem', users need to install
         optional 'db' feature which will install dependent cxOracle package.
     --install-dir
-        This input parameter allows the user to specify the directory where 
+        This input parameter allows the user to specify the directory where
         CLI installation is done.
     --exec-dir
         This input parameter allows the user to specify the directory where CLI executable is stored.
@@ -74,7 +74,7 @@ key="$1"
 
 # Rules for local vs. remote install.py:
 # This is useful for testing specific versions of the installer.
-# 1) if we have --use-local-cli-installer, then it will use a local install.py. 
+# 1) if we have --use-local-cli-installer, then it will use a local install.py.
 #
 # These are useful for the full-install zip bundle install.
 # 2) If we have a whl file, cli-deps directory and local install.py, use the local install.py.
@@ -124,7 +124,7 @@ case $key in
 
     # For Internal Use: This is helpful for doing image testing installs.
     # The --use-local-cli-installer option forces use of a local version of install.py rather than downloading it from GitHub.
-    # Even without this option specified, install.sh may still prefer local over remote based on 
+    # Even without this option specified, install.sh may still prefer local over remote based on
     # implicit rules for full install zip bundles.
     --use-local-cli-installer)
     base=$(basename $0)
@@ -141,7 +141,7 @@ case $key in
 
     # When oci-cli-version is used with a remote install.py, it retrieves a specific version of install.py from GitHub.
     # Also when a remote install.py is being used, it tells install.py which oci-cli version to get from pypi.
-    # When oci-cli-version is used with --use-local-cli-installer or an implicit full zip bundle install, 
+    # When oci-cli-version is used with --use-local-cli-installer or an implicit full zip bundle install,
     # it "tells" install.py which version of the oci_cli whl file to use.
     # If we have a "preview" version and local install.py, use the local install.py.
     --oci-cli-version)
@@ -151,6 +151,8 @@ case $key in
         if [ -f ./install.py ];then
             install_script="./install.py"
         fi
+    else
+        INSTALL_SCRIPT_URL="https://raw.githubusercontent.com/oracle/oci-cli/v${version}/scripts/install/install.py"
     fi
     shift # past argument
     shift # past value
@@ -194,7 +196,7 @@ else
     ******************************************************************************
     You have started the OCI CLI Installer in interactive mode. If you do not wish
     to run this in interactive mode, please include the --accept-all-defaults option.
-    If you have the script locally and would like to know more about 
+    If you have the script locally and would like to know more about
     input options for this script, then you can run:
     ./install.sh -h
     If you would like to know more about input options for this script, refer to:
@@ -252,19 +254,19 @@ else
     echo "Python3 not found on system PATH"
 fi
 
+sudo_cmd="sudo"
+if [ "$(whoami)" == "root" ];then
+    sudo_cmd=""
+fi
 
 if [ "$need_to_install_python" = true ]; then
     # Many docker containers won't have sudo installed since they are already run as root.
-    sudo_cmd="sudo"
-    if [ "$(whoami)" == "root" ];then
-        sudo_cmd=""
-    fi
     if command -v yum
     then
         echo "Attempting to install Python."
         $sudo_cmd yum $yum_opts check-update
         $sudo_cmd yum $yum_opts install gcc libffi-devel python-devel openssl-devel
-        $sudo_cmd yum $yum_opts install make curl
+        $sudo_cmd yum $yum_opts install make
         if [ $? -ne 0 ]; then
             echo "ERROR: Required native dependencies were not installed, exiting install script. If you did not receive a prompt to install native dependencies please ensure you are not piping the script into bash and are instead using the following command: bash -c \"\$(curl -L $SHELL_INSTALL_SCRIPT_URL)\""
             exit 1
@@ -297,10 +299,19 @@ if [ "$need_to_install_python" = true ]; then
     fi
 fi
 
+# In the future native dependency setup will be done in this script.
+cat /etc/os-release | grep "Ubuntu 18"
+if [ "$?" = "0" ];then
+    $sudo_cmd apt-get $apt_get_opts update
+    $sudo_cmd apt-get $apt_get_opts install python3-distutils
+fi
+
 chmod 775 $install_script
 echo "Running install script."
 echo "$python_exe $install_script $install_args"
 if [ "${ACCEPT_ALL_DEFAULTS}" == "true" ];then
+    # By removing the tty requirement, users will be able to install non-interactively over ssh
+    # and in docker containers more easily.
     $python_exe $install_script $install_args
 else
     $python_exe $install_script $install_args < $_TTY
