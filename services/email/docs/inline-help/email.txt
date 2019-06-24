@@ -27,11 +27,56 @@ Options:
                   <command> --help.
 
 Commands:
-  create  Creates a sender for a tenancy in a given...
-  delete  Deletes an approved sender for a tenancy in a...
-  get     Gets an approved sender for a given...
-  list    Gets a collection of approved sender email...
-  update  Replaces the set of tags for a sender with...
+  change-compartment  Moves a sender into a different compartment.
+  create              Creates a sender for a tenancy in a given...
+  delete              Deletes an approved sender for a tenancy in a...
+  get                 Gets an approved sender for a given...
+  list                Gets a collection of approved sender email...
+  update              Replaces the set of tags for a sender with...
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci email sender change-compartment --help
+Usage: oci email sender change-compartment [OPTIONS]
+
+  Moves a sender into a different compartment. When provided, If-Match is
+  checked against ETag values of the resource.
+
+Options:
+  --sender-id TEXT           The unique OCID of the sender. [required]
+  -c, --compartment-id TEXT  The [OCID] of the compartment into which the sender
+                             should be moved. [required]
+  --if-match TEXT            Used for optimistic concurrency control. In the
+                             update or delete call for a resource, set the `if-
+                             match` parameter to the value of the etag from a
+                             previous get, create, or update response for that
+                             resource.  The resource will be updated or deleted
+                             only if the etag you provide matches the resource's
+                             current etag value.
+  --from-json TEXT           Provide input to this command as a JSON document
+                             from a file using the file://path-to/file syntax.
+                             The --generate-full-command-json-input option can
+                             be used to generate a sample json file to be used
+                             with this command option. The key names are pre-
+                             populated and match the command option names
+                             (converted to camelCase format, e.g. compartment-id
+                             --> compartmentId), while the values of the keys
+                             need to be populated by the user before using the
+                             sample file as an input to this command. For any
+                             command option that accepts multiple values, the
+                             value of the key can be a JSON array.
+                             
+                             Options can
+                             still be provided on the command line. If an option
+                             exists in both the JSON document and the command
+                             line then the command line specified value will be
+                             used.
+                             
+                             For examples on usage of this option, please
+                             see our "using CLI with advanced JSON options"
+                             link: https://docs.cloud.oracle.com/iaas/Content/AP
+                             I/SDKDocs/cliusing.htm#AdvancedJSONOptions
+  -?, -h, --help             For detailed help on any of these individual
+                             commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci email sender create --help

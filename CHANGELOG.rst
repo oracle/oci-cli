@@ -6,6 +6,18 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.5.16 - 2019-06-25
+-------------------
+Added
+~~~~~
+* Support for moving Nat Gateway across compartments
+ 
+  * (``oci network nat-gateway change-compartment``)
+
+* Support for moving sender compartment in Email Service.
+
+  * (``oci email sender change-compartment --sender-id  --compartment-id``)
+
 2.5.15 - 2019-06-18
 -------------------
 Added
