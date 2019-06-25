@@ -25,6 +25,26 @@ SERVICE_LANGUAGE = "PythonCLI"
 
 
 class CLITestingServiceClient:
+
+    def collect_list_responses(self, result, params, final_result, page, data_field_name):
+
+        if result.exit_code != 0:
+            return None, final_result
+        # remove known warnings from output that would break JSON parsing
+        output = result.output.replace(LIST_NOT_ALL_ITEMS_RETURNED_WARNING, '')
+        final_result.append(result)
+        if len(output) == 0:
+            normalized_response_json = {data_field_name: []}
+        else:
+            normalized_response_json = json.loads(output)
+        if page == 'next' or page == 'prev':
+            if 'opc-' + page + '-page' not in normalized_response_json:
+                return None, final_result
+            get_page = normalized_response_json['opc-' + page + '-page']
+            return params + ['--page', get_page], final_result
+        else:
+            return params, final_result
+
     def get_requests(self, service_name, api_name):
         """
         Gets a list of requests from the testing service to be used in calling the API specified by service_name and api_name.
@@ -64,8 +84,34 @@ class CLITestingServiceClient:
             print('Failed to parse testing service response as valid JSON. Response: ' + response_content)
             raise e
 
+    def process_output(self, output, service_name, data_field_name):
+        try:
+            normalized_response_json = json.loads(output)
+        except ValueError as e:
+            print('Failed to parse CLI output as valid JSON. Output: {}'.format(output))
+            raise e
+
+        # convert the CLI response (keys with '-') to camelcase so that testing service can validate
+        complex_parameter_type = {
+            'module': service_name,
+            'class': data_field_name[0].upper() + data_field_name[1:]
+        }
+
+        # remove 'data' temporarily to camelize all other fields
+        response_data = normalized_response_json.pop('data', None)
+
+        # camelize the rest of the response fields (data is removed so there is no corresponding complex type definition for the top level object)
+        normalized_response_json = make_dict_keys_camel_case(normalized_response_json)
+
+        # camelize response['data'] independently and specify the corresponding complex_parameter_type
+        # this will correctly skip camelizing keys of dictionaries nested within the response such as 'metadata' or 'defined-tags'
+        if response_data:
+            normalized_response_json[data_field_name] = make_dict_keys_camel_case(response_data,
+                                                                                  complex_parameter_type=complex_parameter_type)
+        return normalized_response_json
+
     def validate_result(self, service_name, api_name, container_id, request, result, data_field_name, is_delete_operation,
-                        is_binary_operation=False, filename=None):
+                        is_binary_operation=False, filename=None, is_list_operation=False):
         """
         Calls the testing service to validate a CLI command result.
 
@@ -123,8 +169,28 @@ class CLITestingServiceClient:
             "lang": SERVICE_LANGUAGE
         }
 
-        if result.exit_code == 0:
+        if is_list_operation:
+            data['responseJson'] = []
+            for result_item in result:
+                # remove known warnings from output that would break JSON parsing
+                output = result_item.output.replace(LIST_NOT_ALL_ITEMS_RETURNED_WARNING, '')
+                if len(output) == 0:
+                    normalized_response_json = {data_field_name: []}
+                else:
+                    normalized_response_json = self.process_output(output, service_name, data_field_name)
+                    if "opcTotalItems" in normalized_response_json and int(normalized_response_json["opcTotalItems"]) == 0:
+                        normalized_response_json = {data_field_name: []}
+                normalized_response_json['opcRequestId'] = use_or_generate_request_id(None)
+                data['responseJson'].append(normalized_response_json)
+            data['responseJson'] = json.dumps(data['responseJson'])
+            data['listResponse'] = True
+            data['responseClass'] = response_class
 
+            response = requests.post(success_url, params=params, data=json.dumps(data))
+            assert response.status_code == 200, response.content
+            return response.content.decode("UTF-8")
+
+        if result.exit_code == 0:
             # remove known warnings from output that would break JSON parsing
             output = result.output.replace(LIST_NOT_ALL_ITEMS_RETURNED_WARNING, '')
 
@@ -139,33 +205,11 @@ class CLITestingServiceClient:
                 else:
                     normalized_response_json = {}
             else:
-                try:
-                    normalized_response_json = json.loads(output)
-                except ValueError as e:
-                    print('Failed to parse CLI output as valid JSON. Output: {}'.format(output))
-                    raise e
+                normalized_response_json = self.process_output(output, service_name, data_field_name)
 
-                # convert the CLI response (keys with '-') to camelcase so that testing service can validate
-                complex_parameter_type = {
-                    'module': service_name,
-                    'class': data_field_name[0].upper() + data_field_name[1:]
-                }
-
-                # remove 'data' temporarily to camelize all other fields
-                response_data = normalized_response_json.pop('data', None)
-
-                # camelize the rest of the response fields (data is removed so there is no corresponding complex type definition for the top level object)
-                normalized_response_json = make_dict_keys_camel_case(normalized_response_json)
-
-                # camelize response['data'] independently and specify the corresponding complex_parameter_type
-                # this will correctly skip camelizing keys of dictionaries nested within the response such as 'metadata' or 'defined-tags'
-                if response_data:
-                    normalized_response_json[data_field_name] = make_dict_keys_camel_case(response_data, complex_parameter_type=complex_parameter_type)
-
-            # right now we only return the opc-request-id for errors but the validator looks for it
-            # tempporarily bypassing this check by hardcoding one here
             normalized_response_json['opcRequestId'] = use_or_generate_request_id(None)
-
+            # right now we only return the opc-request-id for errors but the validator looks for it
+            # temporarily bypassing this check by hardcoding one here
             data['responseJson'] = json.dumps(normalized_response_json)
             data['responseClass'] = response_class
 

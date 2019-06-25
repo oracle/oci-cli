@@ -3,7 +3,7 @@
 # This script provides a basic example of how to use the Email Service in the CLI.
 # It will demonstrate:
 #
-#   * Creating, retrieving, updating, listing, and deleting email senders
+#   * Creating, retrieving, updating, moving, listing, and deleting email senders
 #   * Creating, retrieving, listing, and deleting email suppressions
 #   * Creating, retrieving, listing, and deleting SMTP credentials
 #     See https://docs.cloud.oracle.com/iaas/Content/Email/Tasks/configuresmtpconnection.htm for more
@@ -13,6 +13,7 @@
 #
 #   * TENANCY_ID: The tenancy ID where the suppressions will be created
 #   * COMPARTMENT_ID: The compartment ID where email senders will be created
+#   * TARGET_COMPARTMENT_ID: The compartment ID where email senders will be moved to
 #   * USER_ID: The User ID to create the SMTP credentials for
 #
 # This script will create and delete these resources:
@@ -42,6 +43,11 @@ if [ "${COMPARTMENT_ID}" == "" ]; then
   exit 1
 fi
 
+if [ "${TARGET_COMPARTMENT_ID}" == "" ]; then
+  echo $0: "TARGET_COMPARTMENT_ID must be defined in the environment"
+  exit 1
+fi
+
 if [ "${USER_ID}" == "" ]; then
   echo $0: "USER_ID must be defined in the environment"
   exit 1
@@ -65,6 +71,8 @@ echo "Getting sender"
 oci email sender get --sender-id $SENDER_ID
 echo "Updating sender"
 oci email sender update --sender-id $SENDER_ID --freeform-tags '{"Department": "Finance"}' --force
+echo "Moving Sender"
+oci email sender change-compartment --sender-id $SENDER_ID --compartment-id $TARGET_COMPARTMENT_ID
 echo "Listing senders"
 oci email sender list -c $COMPARTMENT_ID --all
 echo "Deleting sender"

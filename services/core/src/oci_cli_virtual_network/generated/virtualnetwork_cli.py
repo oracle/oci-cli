@@ -489,6 +489,34 @@ def bulk_delete_virtual_circuit_public_prefixes(ctx, from_json, virtual_circuit_
     cli_util.render_response(result, ctx)
 
 
+@nat_gateway_group.command(name=cli_util.override('change_nat_gateway_compartment.command_name', 'change-compartment'), help=u"""Moves a NAT gateway into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].""")
+@cli_util.option('--nat-gateway-id', required=True, help=u"""The NAT gateway's [OCID].""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the NAT gateway to.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_nat_gateway_compartment(ctx, from_json, nat_gateway_id, compartment_id):
+
+    if isinstance(nat_gateway_id, six.string_types) and len(nat_gateway_id.strip()) == 0:
+        raise click.UsageError('Parameter --nat-gateway-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    details = {}
+    details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('virtual_network', ctx)
+    result = client.change_nat_gateway_compartment(
+        nat_gateway_id=nat_gateway_id,
+        change_nat_gateway_compartment_details=details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @service_gateway_group.command(name=cli_util.override('change_service_gateway_compartment.command_name', 'change-compartment'), help=u"""Moves a service gateway into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].""")
 @cli_util.option('--service-gateway-id', required=True, help=u"""The service gateway's [OCID].""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the service gateway to.""")

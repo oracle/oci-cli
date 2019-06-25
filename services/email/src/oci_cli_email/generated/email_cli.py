@@ -16,6 +16,9 @@ from oci_cli.aliasing import CommandGroupWithAlias
 
 @cli.command(cli_util.override('email_root_group.command_name', 'email'), cls=CommandGroupWithAlias, help=cli_util.override('email_root_group.help', """API for the Email Delivery service. Use this API to send high-volume, application-generated
 emails. For more information, see [Overview of the Email Delivery Service](/iaas/Content/Email/Concepts/overview.htm).
+
+
+**Note:** Write actions (POST, UPDATE, DELETE) may take several minutes to propagate and be reflected by the API. If a subsequent read request fails to reflect your changes, wait a few minutes and try again.
 """), short_help=cli_util.override('email_root_group.short_help', """Email Delivery API"""))
 @cli_util.help_option_group
 def email_root_group():
@@ -36,6 +39,37 @@ def suppression_group():
 
 email_root_group.add_command(sender_group)
 email_root_group.add_command(suppression_group)
+
+
+@sender_group.command(name=cli_util.override('change_sender_compartment.command_name', 'change-compartment'), help=u"""Moves a sender into a different compartment. When provided, If-Match is checked against ETag values of the resource.""")
+@cli_util.option('--sender-id', required=True, help=u"""The unique OCID of the sender.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the sender should be moved.""")
+@cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_sender_compartment(ctx, from_json, sender_id, compartment_id, if_match):
+
+    if isinstance(sender_id, six.string_types) and len(sender_id.strip()) == 0:
+        raise click.UsageError('Parameter --sender-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    details = {}
+    details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('email', ctx)
+    result = client.change_sender_compartment(
+        sender_id=sender_id,
+        change_sender_compartment_details=details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
 
 
 @sender_group.command(name=cli_util.override('create_sender.command_name', 'create'), help=u"""Creates a sender for a tenancy in a given compartment.""")
