@@ -2,7 +2,7 @@
 # Copyright (c) 2016, 2019, Oracle and/or its affiliates. All rights reserved.
 
 from __future__ import print_function
-from oci_cli_announcement.generated import announcement_cli
+from services.announcements_service.src.oci_cli_announcement.generated import announcement_cli
 from oci_cli import cli_util
 import click
 from oci_cli.aliasing import CommandGroupWithAlias

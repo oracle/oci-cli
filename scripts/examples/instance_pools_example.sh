@@ -22,6 +22,7 @@
 #   - IMAGE_ID - the image ID to use for instances
 #   - LOAD_BALANCER_ID - The load balancer ID to use for the pool.
 #   - BACKEND_SET_NAME - The backendset name in the load balancer that is being attached.
+#   - ANOTHER_COMPARTMENT_ID - Another compartment OCID to move the pool into
 
 set -e
 
@@ -52,6 +53,11 @@ fi
 
 if [[ -z "$BACKEND_SET_NAME" ]]; then
     echo "BACKEND_SET_NAME must be defined in your environment"
+    exit 1
+fi
+
+if [[ -z "$ANOTHER_COMPARTMENT_ID" ]]; then
+    echo "ANOTHER_COMPARTMENT_ID must be defined in your environment"
     exit 1
 fi
 
@@ -93,6 +99,9 @@ oci compute-management instance-pool update --instance-pool-id $INSTANCE_POOL_ID
 
 # adding some sleep here just so you can see the instances spinning up
 sleep 2m
+
+echo "Moving the instance pool resource into compartment $ANOTHER_COMPARTMENT_ID"
+oci compute-management instance-pool change-compartment --instance-pool-id $INSTANCE_POOL_ID --compartment-id $ANOTHER_COMPARTMENT_ID
 
 echo "Terminating instance pool $INSTANCE_POOL_ID"
 oci compute-management instance-pool terminate --instance-pool-id $INSTANCE_POOL_ID --force --wait-for-state TERMINATED

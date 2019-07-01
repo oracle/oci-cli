@@ -3,7 +3,7 @@
 
 from oci_cli import cli_util
 from oci_cli.cli_root import cli
-from oci_cli_budget.generated import budget_cli
+from services.budget.src.oci_cli_budget.generated import budget_cli
 
 '''
 From:

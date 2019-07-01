@@ -8,7 +8,7 @@ import oci
 
 from oci_cli import cli_util
 from oci_cli import json_skeleton_utils
-from oci_cli_database.generated import database_cli
+from services.database.src.oci_cli_database.generated import database_cli
 from oci_cli.aliasing import CommandGroupWithAlias
 
 # Rename some commands and groups

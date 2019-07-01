@@ -9,7 +9,7 @@ import unittest
 from tests import tag_data_container
 from tests import test_config_container
 from tests import util
-import oci_cli_compute
+import services.core.src.oci_cli_compute as oci_cli_compute
 
 CASSETTE_LIBRARY_DIR = 'services/core/tests/cassettes'
 CONSOLE_HISTORY_FILENAME = 'tests/output/console_history_output.txt'

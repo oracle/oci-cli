@@ -3,7 +3,7 @@
 
 from __future__ import print_function
 
-from oci_cli_compute_management.generated import computemanagement_cli
+from services.core.src.oci_cli_compute_management.generated import computemanagement_cli
 
 from oci_cli.cli_root import cli
 from oci_cli import cli_util

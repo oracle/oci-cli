@@ -3,7 +3,7 @@
 
 
 from oci_cli import cli_util
-from oci_cli_auto_scaling.generated import autoscaling_cli
+from services.autoscaling.src.oci_cli_auto_scaling.generated import autoscaling_cli
 
 autoscaling_cli.auto_scaling_policy_group.commands.pop(autoscaling_cli.create_auto_scaling_policy_create_threshold_policy_details.name)
 autoscaling_cli.auto_scaling_policy_group.commands.pop(autoscaling_cli.update_auto_scaling_policy_update_threshold_policy_details.name)

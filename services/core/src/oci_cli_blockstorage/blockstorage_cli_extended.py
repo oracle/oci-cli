@@ -5,7 +5,7 @@ from __future__ import print_function
 import click
 import json
 
-from oci_cli_blockstorage.generated import blockstorage_cli
+from services.core.src.oci_cli_blockstorage.generated import blockstorage_cli
 
 from oci_cli.cli_root import cli
 from oci_cli import cli_util

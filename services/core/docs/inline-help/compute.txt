@@ -849,13 +849,59 @@ Options:
                   <command> --help.
 
 Commands:
-  create  Creates a boot disk image for the specified...
-  delete  Deletes an image.
-  export  Exports an image to the Oracle Cloud...
-  get     Gets the specified image.
-  import  Imports an exported image from the Oracle...
-  list    Lists the available images in the specified...
-  update  Updates the display name of the image.
+  change-compartment  Moves an image into a different compartment...
+  create              Creates a boot disk image for the specified...
+  delete              Deletes an image.
+  export              Exports an image to the Oracle Cloud...
+  get                 Gets the specified image.
+  import              Imports an exported image from the Oracle...
+  list                Lists the available images in the specified...
+  update              Updates the display name of the image.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci compute image change-compartment --help
+Usage: oci compute image change-compartment [OPTIONS]
+
+  Moves an image into a different compartment within the same tenancy. For
+  information about moving resources between compartments, see [Moving
+  Resources to a Different Compartment].
+
+Options:
+  --image-id TEXT            The [OCID] of the image. [required]
+  -c, --compartment-id TEXT  The [OCID] of the compartment to move the image to.
+                             [required]
+  --if-match TEXT            For optimistic concurrency control. In the PUT or
+                             DELETE call for a resource, set the `if-match`
+                             parameter to the value of the etag from a previous
+                             GET or POST response for that resource.  The
+                             resource will be updated or deleted only if the
+                             etag you provide matches the resource's current
+                             etag value.
+  --from-json TEXT           Provide input to this command as a JSON document
+                             from a file using the file://path-to/file syntax.
+                             The --generate-full-command-json-input option can
+                             be used to generate a sample json file to be used
+                             with this command option. The key names are pre-
+                             populated and match the command option names
+                             (converted to camelCase format, e.g. compartment-id
+                             --> compartmentId), while the values of the keys
+                             need to be populated by the user before using the
+                             sample file as an input to this command. For any
+                             command option that accepts multiple values, the
+                             value of the key can be a JSON array.
+                             
+                             Options can
+                             still be provided on the command line. If an option
+                             exists in both the JSON document and the command
+                             line then the command line specified value will be
+                             used.
+                             
+                             For examples on usage of this option, please
+                             see our "using CLI with advanced JSON options"
+                             link: https://docs.cloud.oracle.com/iaas/Content/AP
+                             I/SDKDocs/cliusing.htm#AdvancedJSONOptions
+  -?, -h, --help             For detailed help on any of these individual
+                             commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci compute image create --help
@@ -1044,7 +1090,7 @@ Usage: oci compute image delete [OPTIONS]
   Deletes an image.
 
 Options:
-  --image-id TEXT                 The OCID of the image. [required]
+  --image-id TEXT                 The [OCID] of the image. [required]
   --if-match TEXT                 For optimistic concurrency control. In the PUT
                                   or DELETE call for a resource, set the `if-
                                   match` parameter to the value of the etag from
@@ -1139,7 +1185,7 @@ Usage: oci compute image export to-object [OPTIONS]
   Buckets].
 
 Options:
-  --image-id TEXT          The OCID of the image. [required]
+  --image-id TEXT          The [OCID] of the image. [required]
   --if-match TEXT          For optimistic concurrency control. In the PUT or
                            DELETE call for a resource, set the `if-match`
                            parameter to the value of the etag from a previous
@@ -1194,7 +1240,7 @@ Usage: oci compute image export to-object-uri [OPTIONS]
   URLs for image import/export.
 
 Options:
-  --image-id TEXT   The OCID of the image. [required]
+  --image-id TEXT   The [OCID] of the image. [required]
   --if-match TEXT   For optimistic concurrency control. In the PUT or DELETE
                     call for a resource, set the `if-match` parameter to the
                     value of the etag from a previous GET or POST response for
@@ -1233,7 +1279,7 @@ Usage: oci compute image get [OPTIONS]
   Gets the specified image.
 
 Options:
-  --image-id TEXT   The OCID of the image. [required]
+  --image-id TEXT   The [OCID] of the image. [required]
   --from-json TEXT  Provide input to this command as a JSON document from a file
                     using the file://path-to/file syntax.
                     
@@ -1630,7 +1676,7 @@ Usage: oci compute image update [OPTIONS]
   information.
 
 Options:
-  --image-id TEXT                 The OCID of the image. [required]
+  --image-id TEXT                 The [OCID] of the image. [required]
   --defined-tags COMPLEX TYPE     Defined tags for this resource. Each key is
                                   predefined and scoped to a namespace. For more
                                   information, see [Resource Tags].
@@ -3750,7 +3796,7 @@ Options:
                               page` response header from the previous "List"
                               call. For important details about how pagination
                               works, see [List Pagination].
-  --image-id TEXT             The OCID of an image.
+  --image-id TEXT             The [OCID] of an image.
   --all                       Fetches all pages of results. If you provide this
                               option, then you cannot provide the --limit
                               option.

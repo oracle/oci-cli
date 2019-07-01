@@ -1,7 +1,7 @@
 # coding: utf-8
 # Copyright (c) 2016, 2019, Oracle and/or its affiliates. All rights reserved.
 
-from oci_cli_monitoring.generated import monitoring_cli
+from services.monitoring.src.oci_cli_monitoring.generated import monitoring_cli
 from oci_cli import cli_util
 from oci_cli import json_skeleton_utils
 import click

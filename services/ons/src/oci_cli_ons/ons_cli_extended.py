@@ -2,8 +2,8 @@
 # Copyright (c) 2016, 2019, Oracle and/or its affiliates. All rights reserved.
 
 import click
-from oci_cli_notification_control_plane.generated import notificationcontrolplane_cli
-from oci_cli_notification_data_plane.generated import notificationdataplane_cli
+from services.ons.src.oci_cli_notification_control_plane.generated import notificationcontrolplane_cli
+from services.ons.src.oci_cli_notification_data_plane.generated import notificationdataplane_cli
 from .generated import ons_service_cli
 from oci_cli.aliasing import CommandGroupWithAlias
 from oci_cli import cli_util

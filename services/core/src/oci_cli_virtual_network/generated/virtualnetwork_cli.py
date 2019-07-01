@@ -11,7 +11,7 @@ from oci_cli import cli_util
 from oci_cli import json_skeleton_utils
 from oci_cli import custom_types  # noqa: F401
 from oci_cli.aliasing import CommandGroupWithAlias
-from oci_cli_core.generated import core_service_cli
+from services.core.src.oci_cli_core.generated import core_service_cli
 
 
 @click.command(cli_util.override('virtual_network_root_group.command_name', 'virtual-network'), cls=CommandGroupWithAlias, help=cli_util.override('virtual_network_root_group.help', """API covering the [Networking](/iaas/Content/Network/Concepts/overview.htm),

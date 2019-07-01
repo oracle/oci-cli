@@ -5,7 +5,7 @@ import json
 import unittest
 from tests import test_config_container
 from tests import util
-import oci_cli_compute
+import services.core.src.oci_cli_compute as oci_cli_compute
 
 CASSETTE_LIBRARY_DIR = 'services/core/tests/cassettes'
 IPXE_SCRIPT_FILE = 'tests/resources/ipxe_script_example.txt'

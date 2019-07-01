@@ -11,7 +11,7 @@ from oci_cli import cli_util
 from oci_cli import json_skeleton_utils
 from oci_cli import custom_types  # noqa: F401
 from oci_cli.aliasing import CommandGroupWithAlias
-from oci_cli_core.generated import core_service_cli
+from services.core.src.oci_cli_core.generated import core_service_cli
 
 
 @click.command(cli_util.override('compute_management_root_group.command_name', 'compute-management'), cls=CommandGroupWithAlias, help=cli_util.override('compute_management_root_group.help', """API covering the [Networking](/iaas/Content/Network/Concepts/overview.htm),
@@ -25,7 +25,7 @@ def compute_management_root_group():
     pass
 
 
-@click.command(cli_util.override('instance_pool_group.command_name', 'instance-pool'), cls=CommandGroupWithAlias, help="""Instance Pool""")
+@click.command(cli_util.override('instance_pool_group.command_name', 'instance-pool'), cls=CommandGroupWithAlias, help="""An instance pool is a group of instances within the same region that are created based off of the same instance configuration. For more information about instance pools and instance configurations, see [Managing Compute Instances].""")
 @cli_util.help_option_group
 def instance_pool_group():
     pass
@@ -41,7 +41,7 @@ def instance_group():
     pass
 
 
-@click.command(cli_util.override('instance_configuration_group.command_name', 'instance-configuration'), cls=CommandGroupWithAlias, help="""Instance Configuration""")
+@click.command(cli_util.override('instance_configuration_group.command_name', 'instance-configuration'), cls=CommandGroupWithAlias, help="""An instance configuration is a template that defines the settings to use when creating Compute instances as part of an instance pool. For more information about instance pools and instance configurations, see [Managing Compute Instances].""")
 @cli_util.help_option_group
 def instance_configuration_group():
     pass
@@ -111,6 +111,72 @@ def attach_load_balancer(ctx, from_json, wait_for_state, max_wait_seconds, wait_
                 raise
         else:
             click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@instance_configuration_group.command(name=cli_util.override('change_instance_configuration_compartment.command_name', 'change-compartment'), help=u"""Moves an instance configuration into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].
+
+**Important:** Most of the properties for an existing instance configuration, including the compartment, cannot be modified after you create the instance configuration. Although you can move an instance configuration to a different compartment, you will not be able to use the instance configuration to manage instance pools in the new compartment. If you want to update an instance configuration to point to a different compartment, you should instead create a new instance configuration in the target compartment using [CreateInstanceConfiguration].""")
+@cli_util.option('--instance-configuration-id', required=True, help=u"""The OCID of the instance configuration.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the instance configuration to.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_instance_configuration_compartment(ctx, from_json, instance_configuration_id, compartment_id, if_match):
+
+    if isinstance(instance_configuration_id, six.string_types) and len(instance_configuration_id.strip()) == 0:
+        raise click.UsageError('Parameter --instance-configuration-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    details = {}
+    details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('compute_management', ctx)
+    result = client.change_instance_configuration_compartment(
+        instance_configuration_id=instance_configuration_id,
+        change_instance_configuration_compartment_details=details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@instance_pool_group.command(name=cli_util.override('change_instance_pool_compartment.command_name', 'change-compartment'), help=u"""Moves an instance pool into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].
+
+When you move an instance pool to a different compartment, associated resources such as the instances in the pool, boot volumes, VNICs, and autoscaling configurations are not moved.""")
+@cli_util.option('--instance-pool-id', required=True, help=u"""The OCID of the instance pool.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the instance pool to.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_instance_pool_compartment(ctx, from_json, instance_pool_id, compartment_id, if_match):
+
+    if isinstance(instance_pool_id, six.string_types) and len(instance_pool_id.strip()) == 0:
+        raise click.UsageError('Parameter --instance-pool-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    details = {}
+    details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('compute_management', ctx)
+    result = client.change_instance_pool_compartment(
+        instance_pool_id=instance_pool_id,
+        change_instance_pool_compartment_details=details,
+        **kwargs
+    )
     cli_util.render_response(result, ctx)
 
 

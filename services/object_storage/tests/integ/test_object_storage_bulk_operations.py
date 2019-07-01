@@ -5,7 +5,7 @@ import filecmp
 import json
 import pytest
 import oci
-import oci_cli_object_storage
+import services.object_storage.src.oci_cli_object_storage as oci_cli_object_storage
 import os
 import random
 import shutil
