@@ -11,7 +11,7 @@ from oci_cli import cli_util
 from oci_cli import json_skeleton_utils
 from oci_cli import custom_types  # noqa: F401
 from oci_cli.aliasing import CommandGroupWithAlias
-from oci_cli_streaming.generated import streaming_service_cli
+from services.streaming.src.oci_cli_streaming.generated import streaming_service_cli
 
 
 @click.command(cli_util.override('stream_root_group.command_name', 'stream'), cls=CommandGroupWithAlias, help=cli_util.override('stream_root_group.help', """The API for the Streaming Service."""), short_help=cli_util.override('stream_root_group.short_help', """Streaming Service API"""))

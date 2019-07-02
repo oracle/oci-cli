@@ -11,7 +11,7 @@ from oci_cli import cli_util
 from oci_cli import json_skeleton_utils
 from oci_cli import custom_types  # noqa: F401
 from oci_cli.aliasing import CommandGroupWithAlias
-from oci_cli_ons.generated import ons_service_cli
+from services.ons.src.oci_cli_ons.generated import ons_service_cli
 
 
 @click.command(cli_util.override('notification_data_plane_root_group.command_name', 'notification-data-plane'), cls=CommandGroupWithAlias, help=cli_util.override('notification_data_plane_root_group.help', """Use the Notification API to broadcast messages to distributed components by topic, using a publish-subscribe pattern.

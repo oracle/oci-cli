@@ -11,7 +11,7 @@ from oci_cli import cli_util
 from oci_cli import json_skeleton_utils
 from oci_cli import custom_types  # noqa: F401
 from oci_cli.aliasing import CommandGroupWithAlias
-from oci_cli_core.generated import core_service_cli
+from services.core.src.oci_cli_core.generated import core_service_cli
 
 
 @click.command(cli_util.override('compute_root_group.command_name', 'compute'), cls=CommandGroupWithAlias, help=cli_util.override('compute_root_group.help', """API covering the [Networking](/iaas/Content/Network/Concepts/overview.htm),
@@ -668,6 +668,37 @@ def capture_console_history(ctx, from_json, wait_for_state, max_wait_seconds, wa
     cli_util.render_response(result, ctx)
 
 
+@image_group.command(name=cli_util.override('change_image_compartment.command_name', 'change-compartment'), help=u"""Moves an image into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].""")
+@cli_util.option('--image-id', required=True, help=u"""The [OCID] of the image.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the image to.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_image_compartment(ctx, from_json, image_id, compartment_id, if_match):
+
+    if isinstance(image_id, six.string_types) and len(image_id.strip()) == 0:
+        raise click.UsageError('Parameter --image-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    details = {}
+    details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('compute', ctx)
+    result = client.change_image_compartment(
+        image_id=image_id,
+        change_image_compartment_details=details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @app_catalog_subscription_group.command(name=cli_util.override('create_app_catalog_subscription.command_name', 'create'), help=u"""Create a subscription for listing resource version for a compartment. It will take some time to propagate to all regions.""")
 @cli_util.option('--compartment-id', help=u"""The compartmentID for the subscription.""")
 @cli_util.option('--listing-id', help=u"""The OCID of the listing.""")
@@ -1166,7 +1197,7 @@ def delete_console_history(ctx, from_json, wait_for_state, max_wait_seconds, wai
 
 
 @image_group.command(name=cli_util.override('delete_image.command_name', 'delete'), help=u"""Deletes an image.""")
-@cli_util.option('--image-id', required=True, help=u"""The OCID of the image.""")
+@cli_util.option('--image-id', required=True, help=u"""The [OCID] of the image.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "IMPORTING", "AVAILABLE", "EXPORTING", "DISABLED", "DELETED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -1488,7 +1519,7 @@ For more information about exporting images, see [Image Import/Export].
 To perform an image export, you need write access to the Object Storage bucket for the image, see [Let Users Write Objects to Object Storage Buckets].
 
 See [Object Storage URLs] and [Using Pre-Authenticated Requests] for constructing URLs for image import/export.""")
-@cli_util.option('--image-id', required=True, help=u"""The OCID of the image.""")
+@cli_util.option('--image-id', required=True, help=u"""The [OCID] of the image.""")
 @cli_util.option('--destination-type', required=True, help=u"""The destination type. Use `objectStorageTuple` when specifying the namespace, bucket name, and object name. Use `objectStorageUri` when specifying the Object Storage URL.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "IMPORTING", "AVAILABLE", "EXPORTING", "DISABLED", "DELETED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -1549,7 +1580,7 @@ For more information about exporting images, see [Image Import/Export].
 To perform an image export, you need write access to the Object Storage bucket for the image, see [Let Users Write Objects to Object Storage Buckets].
 
 See [Object Storage URLs] and [Using Pre-Authenticated Requests] for constructing URLs for image import/export.""")
-@cli_util.option('--image-id', required=True, help=u"""The OCID of the image.""")
+@cli_util.option('--image-id', required=True, help=u"""The [OCID] of the image.""")
 @cli_util.option('--destination-uri', required=True, help=u"""The Object Storage URL to export the image to. See [Object Storage URLs] and [Using Pre-Authenticated Requests] for constructing URLs for image import/export.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "IMPORTING", "AVAILABLE", "EXPORTING", "DISABLED", "DELETED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -1612,7 +1643,7 @@ For more information about exporting images, see [Image Import/Export].
 To perform an image export, you need write access to the Object Storage bucket for the image, see [Let Users Write Objects to Object Storage Buckets].
 
 See [Object Storage URLs] and [Using Pre-Authenticated Requests] for constructing URLs for image import/export.""")
-@cli_util.option('--image-id', required=True, help=u"""The OCID of the image.""")
+@cli_util.option('--image-id', required=True, help=u"""The [OCID] of the image.""")
 @cli_util.option('--bucket-name', required=True, help=u"""The Object Storage bucket to export the image to.""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace to export the image to.""")
 @cli_util.option('--object-name', required=True, help=u"""The Object Storage object name for the exported image.""")
@@ -1816,7 +1847,7 @@ def get_console_history_content(ctx, from_json, file, instance_console_history_i
 
 
 @image_group.command(name=cli_util.override('get_image.command_name', 'get'), help=u"""Gets the specified image.""")
-@cli_util.option('--image-id', required=True, help=u"""The OCID of the image.""")
+@cli_util.option('--image-id', required=True, help=u"""The [OCID] of the image.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -3120,7 +3151,7 @@ Example: `Uocm:PHX-AD-1`""")
 
 Example: `50`""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
-@cli_util.option('--image-id', help=u"""The OCID of an image.""")
+@cli_util.option('--image-id', help=u"""The [OCID] of an image.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -3434,7 +3465,7 @@ def update_console_history(ctx, from_json, force, wait_for_state, max_wait_secon
 
 
 @image_group.command(name=cli_util.override('update_image.command_name', 'update'), help=u"""Updates the display name of the image. Avoid entering confidential information.""")
-@cli_util.option('--image-id', required=True, help=u"""The OCID of the image.""")
+@cli_util.option('--image-id', required=True, help=u"""The [OCID] of the image.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)

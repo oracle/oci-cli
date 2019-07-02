@@ -2,7 +2,7 @@
 # Copyright (c) 2016, 2019, Oracle and/or its affiliates. All rights reserved.
 
 from oci_cli import cli_util
-from oci_cli_container_engine.generated import containerengine_cli
+from services.container_engine.src.oci_cli_container_engine.generated import containerengine_cli
 from oci_cli import json_skeleton_utils
 from oci_cli import custom_types  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401

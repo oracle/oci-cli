@@ -7,7 +7,7 @@ import unittest
 from tests import test_config_container
 from tests import util
 from tests.test_list_filter import retrieve_list_by_field_and_check, retrieve_list_and_ensure_sorted
-import oci_cli_virtual_network
+import services.core.src.oci_cli_virtual_network as oci_cli_virtual_network
 
 CASSETTE_LIBRARY_DIR = 'services/core/tests/cassettes'
 

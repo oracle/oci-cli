@@ -6,6 +6,27 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.5.17 - 2019-07-02
+-------------------
+Added
+~~~~~
+* Support for moving instance-pools and instance-configurations across compartments
+
+    * (``oci compute-management instance-configuration change-compartment``)
+    * (``oci compute-management instance-pool change-compartment``)
+
+* Support for moving autoscaling-configurations across compartments
+
+    * (``oci autoscaling configuration change-compartment``)
+
+* Support for moving custom images across compartments
+
+    * (``oci compute image change-compartment``)
+
+Changed
+~~~~~~~
+* Updated the Oracle Streaming Service' regional endpoints template for new regions. 
+
 2.5.16 - 2019-06-25
 -------------------
 Added

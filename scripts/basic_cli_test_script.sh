@@ -20,6 +20,7 @@ NS=$OCI_CLI_NAMESPACE
 BUCKET=TestScriptBucket$(( ( RANDOM % 10000 )  + 1 ))
 C=$OCI_CLI_COMPARTMENT_ID
 FILE=scripts/temp/content.txt
+# Note that uploading an empty file is not valid for object storage
 EMPTY_FILE=scripts/temp/empty_file
 LARGE_FILE_PATH=scripts/temp/large_file
 LARGE_FILE_DOWNLOAD_PATH=scripts/temp/large_file_downloaded
@@ -113,6 +114,18 @@ oci $ARGS os object delete -ns $NS -bn $BUCKET --name object4 --force
 oci $ARGS os object delete -ns $NS -bn $BUCKET --name object5 --force
 oci $ARGS os object delete -ns $NS -bn $BUCKET --name object6 --force
 oci $ARGS os object delete -ns $NS -bn $BUCKET --name object7 --force
+
+# Intermittently we have buckets that get stuck in this state:
+# Bucket named 'TestScriptBucketxxxx' has pending multipart uploads. Stop all multipart uploads first.
+set +e
+multipart=$(oci $ARGS os multipart list -ns $NS -bn $BUCKET)
+echo "multipart=$multipart"
+object=$(echo $multipart | awk '{print $10}' | sed -e 's/,//' | sed -e 's/"//g')
+upload_id=$(echo $multipart | awk '{print $14}' | sed -e 's/,//' | sed -e 's/"//g')
+echo "oci $ARGS os multipart abort --force --bucket-name $BUCKET --object-name $object --upload-id $upload_id"
+oci $ARGS os multipart abort --force --bucket-name $BUCKET --object-name $object --upload-id $upload_id
+set -e
+
 oci $ARGS os bucket delete -ns $NS --name $BUCKET --force
 
 echo "Success!"

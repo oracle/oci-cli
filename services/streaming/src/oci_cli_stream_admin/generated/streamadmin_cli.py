@@ -11,7 +11,7 @@ from oci_cli import cli_util
 from oci_cli import json_skeleton_utils
 from oci_cli import custom_types  # noqa: F401
 from oci_cli.aliasing import CommandGroupWithAlias
-from oci_cli_streaming.generated import streaming_service_cli
+from services.streaming.src.oci_cli_streaming.generated import streaming_service_cli
 
 
 @click.command(cli_util.override('stream_admin_root_group.command_name', 'stream-admin'), cls=CommandGroupWithAlias, help=cli_util.override('stream_admin_root_group.help', """The API for the Streaming Service."""), short_help=cli_util.override('stream_admin_root_group.short_help', """Streaming Service API"""))
@@ -100,7 +100,7 @@ def create_stream(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
     cli_util.render_response(result, ctx)
 
 
-@stream_group.command(name=cli_util.override('delete_stream.command_name', 'delete'), help=u"""Deletes a stream and its content. Stream contents are deleted immediately. The service retains records of the stream itself for 90 days after deletion. The `lifeCycleState` parameter of the `Stream` object changes to `DELETING` and the stream becomes inaccessible for read or write operations. To verify that a stream has been deleted, make a [GetStream] request. If the call returns the stream's lifecycle state as `DELETED`, then the stream has been deleted. If the call returns a \"404 Not Found\" error, that means all records of the stream have been deleted.""")
+@stream_group.command(name=cli_util.override('delete_stream.command_name', 'delete'), help=u"""Deletes a stream and its content. Stream contents are deleted immediately. The service retains records of the stream itself for 90 days after deletion. The `lifecycleState` parameter of the `Stream` object changes to `DELETING` and the stream becomes inaccessible for read or write operations. To verify that a stream has been deleted, make a [GetStream] request. If the call returns the stream's lifecycle state as `DELETED`, then the stream has been deleted. If the call returns a \"404 Not Found\" error, that means all records of the stream have been deleted.""")
 @cli_util.option('--stream-id', required=True, help=u"""The OCID of the stream to delete.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")

@@ -2,7 +2,7 @@
 # Copyright (c) 2016, 2019, Oracle and/or its affiliates. All rights reserved.
 
 import unittest
-from oci_cli_object_storage.objectstorage_cli_extended import time_delta
+from services.object_storage.src.oci_cli_object_storage.objectstorage_cli_extended import time_delta
 
 
 class TestObjectStorage(unittest.TestCase):

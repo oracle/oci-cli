@@ -20,7 +20,7 @@ from oci_cli import json_skeleton_utils
 from oci_cli.aliasing import CommandGroupWithAlias
 from oci_cli import custom_types  # noqa: F401
 from oci_cli.custom_types import BulkPutOperationOutput, BulkGetOperationOutput, BulkDeleteOperationOutput
-from oci_cli_object_storage.generated import objectstorage_cli
+from services.object_storage.src.oci_cli_object_storage.generated import objectstorage_cli
 from oci_cli import cli_util
 from mimetypes import guess_type
 

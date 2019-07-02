@@ -5,7 +5,7 @@ import click
 import os
 import os.path
 import sys
-from oci_cli_resource_manager.generated import resourcemanager_cli
+from services.resource_manager.src.oci_cli_resource_manager.generated import resourcemanager_cli
 from oci_cli import cli_util
 from oci_cli import json_skeleton_utils
 import oci  # noqa: F401

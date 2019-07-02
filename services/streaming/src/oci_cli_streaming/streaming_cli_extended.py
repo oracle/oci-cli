@@ -1,9 +1,9 @@
 # coding: utf-8
 # Copyright (c) 2016, 2019, Oracle and/or its affiliates. All rights reserved.
 
-from oci_cli_stream.generated import stream_cli
-from oci_cli_stream_admin.generated import streamadmin_cli
-from oci_cli_streaming.generated import streaming_service_cli
+from services.streaming.src.oci_cli_stream.generated import stream_cli
+from services.streaming.src.oci_cli_stream_admin.generated import streamadmin_cli
+from services.streaming.src.oci_cli_streaming.generated import streaming_service_cli
 from oci_cli import cli_util
 
 cli_util.rename_command(streaming_service_cli.streaming_service_group, streamadmin_cli.stream_admin_root_group, "admin")

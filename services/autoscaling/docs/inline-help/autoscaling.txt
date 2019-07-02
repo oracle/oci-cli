@@ -30,11 +30,65 @@ Options:
                   <command> --help.
 
 Commands:
-  create  Creates an autoscaling configuration.
-  delete  Deletes an autoscaling configuration.
-  get     Gets information about the specified...
-  list    Lists autoscaling configurations in the...
-  update  Updates certain fields on the specified...
+  change-compartment  Moves an autoscaling configuration into a...
+  create              Creates an autoscaling configuration.
+  delete              Deletes an autoscaling configuration.
+  get                 Gets information about the specified...
+  list                Lists autoscaling configurations in the...
+  update              Updates certain fields on the specified...
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci autoscaling configuration change-compartment --help
+Usage: oci autoscaling configuration change-compartment [OPTIONS]
+
+  Moves an autoscaling configuration into a different compartment within the
+  same tenancy. For information about moving resources between compartments,
+  see [Moving Resources to a Different Compartment].
+
+  When you move an autoscaling configuration to a different compartment,
+  associated resources such as instance pools are not moved.
+
+Options:
+  --auto-scaling-configuration-id TEXT
+                                  The [OCID] of the autoscaling configuration.
+                                  [required]
+  -c, --compartment-id TEXT       The [OCID] of the compartment to move the
+                                  autoscaling configuration to. [required]
+  --if-match TEXT                 For optimistic concurrency control. In the PUT
+                                  or DELETE call for a resource, set the `if-
+                                  match` parameter to the value of the etag from
+                                  a previous GET or POST response for that
+                                  resource.  The resource will be updated or
+                                  deleted only if the etag you provide matches
+                                  the resource's current etag value.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file using the file://path-
+                                  to/file syntax.
+                                  
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci autoscaling configuration create --help
@@ -44,10 +98,7 @@ Usage: oci autoscaling configuration create [OPTIONS]
 
 Options:
   -c, --compartment-id TEXT       The [OCID] of the compartment containing the
-                                  autoscaling configuration. The autoscaling
-                                  configuration and the instance pool that it
-                                  manages must be in the same compartment.
-                                  [required]
+                                  autoscaling configuration. [required]
   --policies COMPLEX TYPE         This is a complex type whose value must be
                                   valid JSON. The value can be provided as a
                                   string on the command line or passed in as a

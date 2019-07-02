@@ -29,7 +29,7 @@ with open_relative("README.rst") as f:
     readme = f.read()
 
 requires = [
-    'oci==2.2.15',
+    'oci==2.2.16',
     'arrow==0.10.0',
     'certifi',
     'click==6.7',
@@ -61,18 +61,20 @@ if fips_libcrypto_file:
 ALL_SERVICES_DIR = "services"
 package_dirs = {"": "src"}
 all_packages = find_packages(where="src")
-# Populating package_dirs and all_packages from directories outside of src/oci_cli
-python_cli_root_dir = "."  # absolute paths are not allowed in setup
-for spec_dir_name in os.listdir(python_cli_root_dir + '/' + ALL_SERVICES_DIR):
-    if os.path.isdir(os.path.join(python_cli_root_dir, ALL_SERVICES_DIR, spec_dir_name)):
-        spec_dir_src = os.path.join(python_cli_root_dir, ALL_SERVICES_DIR, spec_dir_name, "src")
-        packages = find_packages(where=spec_dir_src)
-        for package in packages:
-            package_path = os.path.join(ALL_SERVICES_DIR, spec_dir_name, "src")
-            for pkg in package.split("."):
-                package_dirs[package] = os.path.join(package_path, pkg)
-                package_path = os.path.join(package_path, pkg)
-        all_packages.extend(packages)
+package_dirs[ALL_SERVICES_DIR] = os.path.join('.', ALL_SERVICES_DIR)
+all_packages.extend([ALL_SERVICES_DIR])
+
+# Populating package_dirs and all_packages from directories under services
+packages = find_packages(where=".")
+service_packages = []
+for package in packages:
+    if package.startswith("services"):
+        service_packages.append(package)
+        package_path = "."
+        for pkg in package.split("."):
+            package_dirs[package] = os.path.join(package_path, pkg)
+            package_path = os.path.join(package_path, pkg)
+        all_packages.extend(service_packages)
 
 setup(
     name='oci-cli',
