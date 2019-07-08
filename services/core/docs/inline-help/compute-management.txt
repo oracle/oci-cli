@@ -562,6 +562,7 @@ Commands:
   create              Create an instance pool.
   detach-lb           Detach a load balancer from the instance...
   get                 Gets the specified instance pool
+  lb-attachment       Represents a load balancer that is attached...
   list                Lists the instance pools in the specified...
   list-instances      List the instances in the specified instance...
   reset               Performs the reset (power off and power on)...
@@ -916,6 +917,200 @@ Usage: oci compute-management instance-pool get [OPTIONS]
 
 Options:
   --instance-pool-id TEXT  The OCID of the instance pool. [required]
+  --from-json TEXT         Provide input to this command as a JSON document from
+                           a file using the file://path-to/file syntax.
+                           
+                           The
+                           --generate-full-command-json-input option can be used
+                           to generate a sample json file to be used with this
+                           command option. The key names are pre-populated and
+                           match the command option names (converted to
+                           camelCase format, e.g. compartment-id -->
+                           compartmentId), while the values of the keys need to
+                           be populated by the user before using the sample file
+                           as an input to this command. For any command option
+                           that accepts multiple values, the value of the key
+                           can be a JSON array.
+                           
+                           Options can still be provided
+                           on the command line. If an option exists in both the
+                           JSON document and the command line then the command
+                           line specified value will be used.
+                           
+                           For examples on
+                           usage of this option, please see our "using CLI with
+                           advanced JSON options" link: https://docs.cloud.oracl
+                           e.com/iaas/Content/API/SDKDocs/cliusing.htm#AdvancedJ
+                           SONOptions
+  -?, -h, --help           For detailed help on any of these individual
+                           commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci compute-management instance-pool lb-attachment --help
+Usage: oci compute-management instance-pool lb-attachment [OPTIONS] COMMAND
+                                                          [ARGS]...
+
+  Represents a load balancer that is attached to an instance pool.
+
+Options:
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
+
+Commands:
+  attach  Attach a load balancer to the instance pool.
+  detach  Detach a load balancer from the instance...
+  get     Gets information about a load balancer that...
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci compute-management instance-pool lb-attachment attach --help
+Usage: oci compute-management instance-pool lb-attachment attach 
+           [OPTIONS]
+
+  Attach a load balancer to the instance pool.
+
+Options:
+  --instance-pool-id TEXT         The OCID of the instance pool. [required]
+  --load-balancer-id TEXT         The OCID of the load balancer to attach to the
+                                  instance pool. [required]
+  --backend-set-name TEXT         The name of the backend set on the load
+                                  balancer to add instances to. [required]
+  --port INTEGER                  The port value to use when creating the
+                                  backend set. [required]
+  --vnic-selection TEXT           Indicates which VNIC on each instance in the
+                                  pool should be used to associate with the load
+                                  balancer. Possible values are "PrimaryVnic" or
+                                  the displayName of one of the secondary VNICs
+                                  on the instance configuration that is
+                                  associated with the instance pool. [required]
+  --if-match TEXT                 For optimistic concurrency control. In the PUT
+                                  or DELETE call for a resource, set the `if-
+                                  match` parameter to the value of the etag from
+                                  a previous GET or POST response for that
+                                  resource.  The resource will be updated or
+                                  deleted only if the etag you provide matches
+                                  the resource's current etag value.
+  --wait-for-state [PROVISIONING|SCALING|STARTING|STOPPING|TERMINATING|STOPPED|TERMINATED|RUNNING]
+                                  This operation creates, modifies or deletes a
+                                  resource that has a defined lifecycle state.
+                                  Specify this option to perform the action and
+                                  then wait until the resource reaches a given
+                                  lifecycle state. If timeout is reached, a
+                                  return code of 2 is returned. For any other
+                                  error, a return code of 1 is returned.
+  --max-wait-seconds INTEGER      The maximum time to wait for the resource to
+                                  reach the lifecycle state defined by --wait-
+                                  for-state. Defaults to 1200 seconds.
+  --wait-interval-seconds INTEGER
+                                  Check every --wait-interval-seconds to see
+                                  whether the resource to see if it has reached
+                                  the lifecycle state defined by --wait-for-
+                                  state. Defaults to 30 seconds.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file using the file://path-
+                                  to/file syntax.
+                                  
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci compute-management instance-pool lb-attachment detach --help
+Usage: oci compute-management instance-pool lb-attachment detach 
+           [OPTIONS]
+
+  Detach a load balancer from the instance pool.
+
+Options:
+  --instance-pool-id TEXT         The OCID of the instance pool. [required]
+  --load-balancer-id TEXT         The OCID of the load balancer to detach from
+                                  the instance pool. [required]
+  --backend-set-name TEXT         The name of the backend set on the load
+                                  balancer to detach from the instance pool.
+                                  [required]
+  --if-match TEXT                 For optimistic concurrency control. In the PUT
+                                  or DELETE call for a resource, set the `if-
+                                  match` parameter to the value of the etag from
+                                  a previous GET or POST response for that
+                                  resource.  The resource will be updated or
+                                  deleted only if the etag you provide matches
+                                  the resource's current etag value.
+  --wait-for-state [PROVISIONING|SCALING|STARTING|STOPPING|TERMINATING|STOPPED|TERMINATED|RUNNING]
+                                  This operation creates, modifies or deletes a
+                                  resource that has a defined lifecycle state.
+                                  Specify this option to perform the action and
+                                  then wait until the resource reaches a given
+                                  lifecycle state. If timeout is reached, a
+                                  return code of 2 is returned. For any other
+                                  error, a return code of 1 is returned.
+  --max-wait-seconds INTEGER      The maximum time to wait for the resource to
+                                  reach the lifecycle state defined by --wait-
+                                  for-state. Defaults to 1200 seconds.
+  --wait-interval-seconds INTEGER
+                                  Check every --wait-interval-seconds to see
+                                  whether the resource to see if it has reached
+                                  the lifecycle state defined by --wait-for-
+                                  state. Defaults to 30 seconds.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file using the file://path-
+                                  to/file syntax.
+                                  
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci compute-management instance-pool lb-attachment get --help
+Usage: oci compute-management instance-pool lb-attachment get 
+           [OPTIONS]
+
+  Gets information about a load balancer that is attached to the specified
+  instance pool.
+
+Options:
+  --instance-pool-id TEXT  The OCID of the instance pool. [required]
+  --lb-attachment-id TEXT  The OCID of the load balancer attachment. [required]
   --from-json TEXT         Provide input to this command as a JSON document from
                            a file using the file://path-to/file syntax.
                            

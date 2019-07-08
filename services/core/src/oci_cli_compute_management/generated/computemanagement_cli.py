@@ -47,10 +47,17 @@ def instance_configuration_group():
     pass
 
 
+@click.command(cli_util.override('instance_pool_load_balancer_attachment_group.command_name', 'instance-pool-load-balancer-attachment'), cls=CommandGroupWithAlias, help="""Represents a load balancer that is attached to an instance pool.""")
+@cli_util.help_option_group
+def instance_pool_load_balancer_attachment_group():
+    pass
+
+
 core_service_cli.core_service_group.add_command(compute_management_root_group)
 compute_management_root_group.add_command(instance_pool_group)
 compute_management_root_group.add_command(instance_group)
 compute_management_root_group.add_command(instance_configuration_group)
+compute_management_root_group.add_command(instance_pool_load_balancer_attachment_group)
 
 
 @instance_pool_group.command(name=cli_util.override('attach_load_balancer.command_name', 'attach'), help=u"""Attach a load balancer to the instance pool.""")
@@ -472,6 +479,32 @@ def get_instance_pool(ctx, from_json, instance_pool_id):
     client = cli_util.build_client('compute_management', ctx)
     result = client.get_instance_pool(
         instance_pool_id=instance_pool_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@instance_pool_load_balancer_attachment_group.command(name=cli_util.override('get_instance_pool_load_balancer_attachment.command_name', 'get'), help=u"""Gets information about a load balancer that is attached to the specified instance pool.""")
+@cli_util.option('--instance-pool-id', required=True, help=u"""The OCID of the instance pool.""")
+@cli_util.option('--instance-pool-load-balancer-attachment-id', required=True, help=u"""The OCID of the load balancer attachment.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'InstancePoolLoadBalancerAttachment'})
+@cli_util.wrap_exceptions
+def get_instance_pool_load_balancer_attachment(ctx, from_json, instance_pool_id, instance_pool_load_balancer_attachment_id):
+
+    if isinstance(instance_pool_id, six.string_types) and len(instance_pool_id.strip()) == 0:
+        raise click.UsageError('Parameter --instance-pool-id cannot be whitespace or empty string')
+
+    if isinstance(instance_pool_load_balancer_attachment_id, six.string_types) and len(instance_pool_load_balancer_attachment_id.strip()) == 0:
+        raise click.UsageError('Parameter --instance-pool-load-balancer-attachment-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    client = cli_util.build_client('compute_management', ctx)
+    result = client.get_instance_pool_load_balancer_attachment(
+        instance_pool_id=instance_pool_id,
+        instance_pool_load_balancer_attachment_id=instance_pool_load_balancer_attachment_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)

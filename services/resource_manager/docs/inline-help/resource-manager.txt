@@ -16,8 +16,11 @@ Options:
                   <command> --help.
 
 Commands:
-  job    Jobs perform the actions that are defined in...
-  stack  The stack object.
+  job                     Jobs perform the actions that are defined in...
+  stack                   The stack object.
+  work-request            The status of a work request.
+  work-request-error      An error encountered while executing a work...
+  work-request-log-entry  A log message from the execution of a work...
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci resource-manager job --help
@@ -734,12 +737,77 @@ Options:
                   <command> --help.
 
 Commands:
+  change-compartment   Moves a Stack and it's associated Jobs into a...
   create               Creates a Stack
   delete               Deletes the specified stack object.
   get                  Gets a stack using the stack ID.
   get-stack-tf-config  Returns the Terraform configuration file in...
   list                 Returns a list of stacks.
   update               Update the Stack object
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci resource-manager stack change-compartment --help
+Usage: oci resource-manager stack change-compartment [OPTIONS]
+
+  Moves a Stack and it's associated Jobs into a different compartment.
+
+Options:
+  --stack-id TEXT                 The stack OCID. [required]
+  -c, --compartment-id TEXT       The [OCID] of the compartment into which the
+                                  Stack should be moved. [required]
+  --if-match TEXT                 For optimistic concurrency control. In the
+                                  `PUT` or `DELETE` call for a resource, set the
+                                  `if-match` parameter to the value of the etag
+                                  from a previous `GET` or `POST` response for
+                                  that resource.  The resource will be updated
+                                  or deleted only if the etag you provide
+                                  matches the resource's current etag value.
+  --wait-for-state [ACCEPTED|IN_PROGRESS|FAILED|SUCCEEDED]
+                                  This operation asynchronously creates,
+                                  modifies or deletes a resource and uses a work
+                                  request to track the progress of the
+                                  operation. Specify this option to perform the
+                                  action and then wait until the work request
+                                  reaches a certain state. If timeout is
+                                  reached, a return code of 2 is returned. For
+                                  any other error, a return code of 1 is
+                                  returned.
+  --max-wait-seconds INTEGER      The maximum time to wait for the work request
+                                  to reach the state defined by --wait-for-
+                                  state. Defaults to 1200 seconds.
+  --wait-interval-seconds INTEGER
+                                  Check every --wait-interval-seconds to see
+                                  whether the work request to see if it has
+                                  reached the state defined by --wait-for-state.
+                                  Defaults to 30 seconds.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file using the file://path-
+                                  to/file syntax.
+                                  
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci resource-manager stack create --help
@@ -1183,4 +1251,219 @@ Options:
                                   s
   -?, -h, --help                  For detailed help on any of these individual
                                   commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci resource-manager work-request --help
+Usage: oci resource-manager work-request [OPTIONS] COMMAND [ARGS]...
+
+  The status of a work request.
+
+Options:
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
+
+Commands:
+  get   Return the given work request.
+  list  Lists the work requests in a given...
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci resource-manager work-request get --help
+Usage: oci resource-manager work-request get [OPTIONS]
+
+  Return the given work request.
+
+Options:
+  --work-request-id TEXT  The OCID of the work request. [required]
+  --from-json TEXT        Provide input to this command as a JSON document from
+                          a file using the file://path-to/file syntax.
+                          
+                          The
+                          --generate-full-command-json-input option can be used
+                          to generate a sample json file to be used with this
+                          command option. The key names are pre-populated and
+                          match the command option names (converted to camelCase
+                          format, e.g. compartment-id --> compartmentId), while
+                          the values of the keys need to be populated by the
+                          user before using the sample file as an input to this
+                          command. For any command option that accepts multiple
+                          values, the value of the key can be a JSON array.
+                          Options can still be provided on the command line. If
+                          an option exists in both the JSON document and the
+                          command line then the command line specified value
+                          will be used.
+                          
+                          For examples on usage of this option,
+                          please see our "using CLI with advanced JSON options"
+                          link: https://docs.cloud.oracle.com/iaas/Content/API/S
+                          DKDocs/cliusing.htm#AdvancedJSONOptions
+  -?, -h, --help          For detailed help on any of these individual commands,
+                          enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci resource-manager work-request list --help
+Usage: oci resource-manager work-request list [OPTIONS]
+
+  Lists the work requests in a given compartment or for a given resource.
+
+Options:
+  -c, --compartment-id TEXT  The compartment OCID on which to filter. [required]
+  --resource-id TEXT         The OCID of the resource.
+  --limit INTEGER            The number of items returned in a paginated `List`
+                             call. For information about pagination, see [List
+                             Pagination].
+  --page TEXT                The value of the `opc-next-page` response header
+                             from the preceding `List` call. For information
+                             about pagination, see [List Pagination].
+  --all                      Fetches all pages of results. If you provide this
+                             option, then you cannot provide the --limit option.
+  --page-size INTEGER        When fetching results, the number of results to
+                             fetch per call. Only valid when used with --all or
+                             --limit, and ignored otherwise.
+  --from-json TEXT           Provide input to this command as a JSON document
+                             from a file using the file://path-to/file syntax.
+                             The --generate-full-command-json-input option can
+                             be used to generate a sample json file to be used
+                             with this command option. The key names are pre-
+                             populated and match the command option names
+                             (converted to camelCase format, e.g. compartment-id
+                             --> compartmentId), while the values of the keys
+                             need to be populated by the user before using the
+                             sample file as an input to this command. For any
+                             command option that accepts multiple values, the
+                             value of the key can be a JSON array.
+                             
+                             Options can
+                             still be provided on the command line. If an option
+                             exists in both the JSON document and the command
+                             line then the command line specified value will be
+                             used.
+                             
+                             For examples on usage of this option, please
+                             see our "using CLI with advanced JSON options"
+                             link: https://docs.cloud.oracle.com/iaas/Content/AP
+                             I/SDKDocs/cliusing.htm#AdvancedJSONOptions
+  -?, -h, --help             For detailed help on any of these individual
+                             commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci resource-manager work-request-error --help
+Usage: oci resource-manager work-request-error [OPTIONS] COMMAND [ARGS]...
+
+  An error encountered while executing a work request.
+
+Options:
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
+
+Commands:
+  list  Return a (paginated) list of errors for a...
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci resource-manager work-request-error list --help
+Usage: oci resource-manager work-request-error list [OPTIONS]
+
+  Return a (paginated) list of errors for a given work request.
+
+Options:
+  --work-request-id TEXT     The OCID of the work request. [required]
+  -c, --compartment-id TEXT  The compartment OCID on which to filter.
+  --limit INTEGER            The number of items returned in a paginated `List`
+                             call. For information about pagination, see [List
+                             Pagination].
+  --page TEXT                The value of the `opc-next-page` response header
+                             from the preceding `List` call. For information
+                             about pagination, see [List Pagination].
+  --sort-order [ASC|DESC]    The sort order, either `ASC` (ascending) or `DESC`
+                             (descending).
+  --all                      Fetches all pages of results. If you provide this
+                             option, then you cannot provide the --limit option.
+  --page-size INTEGER        When fetching results, the number of results to
+                             fetch per call. Only valid when used with --all or
+                             --limit, and ignored otherwise.
+  --from-json TEXT           Provide input to this command as a JSON document
+                             from a file using the file://path-to/file syntax.
+                             The --generate-full-command-json-input option can
+                             be used to generate a sample json file to be used
+                             with this command option. The key names are pre-
+                             populated and match the command option names
+                             (converted to camelCase format, e.g. compartment-id
+                             --> compartmentId), while the values of the keys
+                             need to be populated by the user before using the
+                             sample file as an input to this command. For any
+                             command option that accepts multiple values, the
+                             value of the key can be a JSON array.
+                             
+                             Options can
+                             still be provided on the command line. If an option
+                             exists in both the JSON document and the command
+                             line then the command line specified value will be
+                             used.
+                             
+                             For examples on usage of this option, please
+                             see our "using CLI with advanced JSON options"
+                             link: https://docs.cloud.oracle.com/iaas/Content/AP
+                             I/SDKDocs/cliusing.htm#AdvancedJSONOptions
+  -?, -h, --help             For detailed help on any of these individual
+                             commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci resource-manager work-request-log-entry --help
+Usage: oci resource-manager work-request-log-entry [OPTIONS] COMMAND [ARGS]...
+
+  A log message from the execution of a work request.
+
+Options:
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
+
+Commands:
+  list  Return a (paginated) list of logs for a given...
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci resource-manager work-request-log-entry list --help
+Usage: oci resource-manager work-request-log-entry list [OPTIONS]
+
+  Return a (paginated) list of logs for a given work request.
+
+Options:
+  --work-request-id TEXT     The OCID of the work request. [required]
+  -c, --compartment-id TEXT  The compartment OCID on which to filter.
+  --limit INTEGER            The number of items returned in a paginated `List`
+                             call. For information about pagination, see [List
+                             Pagination].
+  --page TEXT                The value of the `opc-next-page` response header
+                             from the preceding `List` call. For information
+                             about pagination, see [List Pagination].
+  --sort-order [ASC|DESC]    The sort order, either `ASC` (ascending) or `DESC`
+                             (descending).
+  --all                      Fetches all pages of results. If you provide this
+                             option, then you cannot provide the --limit option.
+  --page-size INTEGER        When fetching results, the number of results to
+                             fetch per call. Only valid when used with --all or
+                             --limit, and ignored otherwise.
+  --from-json TEXT           Provide input to this command as a JSON document
+                             from a file using the file://path-to/file syntax.
+                             The --generate-full-command-json-input option can
+                             be used to generate a sample json file to be used
+                             with this command option. The key names are pre-
+                             populated and match the command option names
+                             (converted to camelCase format, e.g. compartment-id
+                             --> compartmentId), while the values of the keys
+                             need to be populated by the user before using the
+                             sample file as an input to this command. For any
+                             command option that accepts multiple values, the
+                             value of the key can be a JSON array.
+                             
+                             Options can
+                             still be provided on the command line. If an option
+                             exists in both the JSON document and the command
+                             line then the command line specified value will be
+                             used.
+                             
+                             For examples on usage of this option, please
+                             see our "using CLI with advanced JSON options"
+                             link: https://docs.cloud.oracle.com/iaas/Content/AP
+                             I/SDKDocs/cliusing.htm#AdvancedJSONOptions
+  -?, -h, --help             For detailed help on any of these individual
+                             commands, enter <command> --help.
 

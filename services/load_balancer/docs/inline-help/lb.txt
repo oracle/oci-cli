@@ -25,6 +25,7 @@ Commands:
   listener              The listener's configuration.
   load-balancer         The properties that define a load balancer.
   load-balancer-health  The health status details for the specified...
+  nsg
   path-route-set        A named set of path route rules.
   policy                A policy that determines how traffic is...
   protocol              A protocol that defines the type of traffic...
@@ -2311,6 +2312,22 @@ Options:
                                   whether the work request to see if it has
                                   reached the state defined by --wait-for-state.
                                   Defaults to 30 seconds.
+  --nsg-ids COMPLEX TYPE          The array of NSG [OCIDs] to be used by this
+                                  Load Balancer.
+                                  This is a complex type whose
+                                  value must be valid JSON. The value can be
+                                  provided as a string on the command line or
+                                  passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
   --from-json TEXT                Provide input to this command as a JSON
                                   document from a file using the file://path-
                                   to/file syntax.
@@ -2727,6 +2744,91 @@ Options:
                              I/SDKDocs/cliusing.htm#AdvancedJSONOptions
   -?, -h, --help             For detailed help on any of these individual
                              commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci lb nsg --help
+Usage: oci lb nsg [OPTIONS] COMMAND [ARGS]...
+
+Options:
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
+
+Commands:
+  update  Updates the network security groups to be...
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci lb nsg update --help
+Usage: oci lb nsg update [OPTIONS]
+
+  Updates the network security groups to be used by a load balancer.
+
+Options:
+  --load-balancer-id TEXT         The [OCID] of the load balancer on which
+                                  update the NSGs. [required]
+  --force                         Perform update without prompting for
+                                  confirmation.
+  --wait-for-state [ACCEPTED|IN_PROGRESS|FAILED|SUCCEEDED]
+                                  This operation asynchronously creates,
+                                  modifies or deletes a resource and uses a work
+                                  request to track the progress of the
+                                  operation. Specify this option to perform the
+                                  action and then wait until the work request
+                                  reaches a certain state. If timeout is
+                                  reached, a return code of 2 is returned. For
+                                  any other error, a return code of 1 is
+                                  returned.
+  --max-wait-seconds INTEGER      The maximum time to wait for the work request
+                                  to reach the state defined by --wait-for-
+                                  state. Defaults to 1200 seconds.
+  --wait-interval-seconds INTEGER
+                                  Check every --wait-interval-seconds to see
+                                  whether the work request to see if it has
+                                  reached the state defined by --wait-for-state.
+                                  Defaults to 30 seconds.
+  --nsg-ids COMPLEX TYPE          The array of NSG [OCIDs] to be used by this
+                                  Load Balancer.
+                                  This is a complex type whose
+                                  value must be valid JSON. The value can be
+                                  provided as a string on the command line or
+                                  passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file using the file://path-
+                                  to/file syntax.
+                                  
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci lb path-route-set --help

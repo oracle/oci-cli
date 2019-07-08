@@ -6,6 +6,70 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.5.18 - 2019-07-09
+-------------------
+Added
+~~~~~
+* Support to managing lb attachments for instance pools
+
+  * (``oci compute-management instance-pool lb-attachment get``)
+  * (``oci compute-management instance-pool lb-attachment attach``)
+  * (``oci compute-management instance-pool lb-attachment detach``)
+
+*  Support for specifying nsgIds and backupNetworkNsgIds parameters for LaunchDbSystemDetails, LaunchDbSystemFromBackupDetails and UpdateDbSystemDetails.
+
+  * (``oci db system launch --backup-network-nsg-ids  --nsg-ids``)
+  * (``oci db system launch-from-backup --backup-network-nsg-ids --nsg-ids``)
+  * (``oci db system launch-from-database --backup-network-nsg-ids --nsg-ids``)
+  * (``oci db system update --backup-network-nsg-ids --nsg-ids``)
+
+* Support for Managing Network Security Group
+
+  * (``oci network nsg create | get | update | delete | list``)
+  * (``oci network nsg rules add | update | remove | list``)
+
+* Support for associating a Vnic with a Network Security Group
+
+  * (``oci network vnic update --nsg-ids``)
+  * (``oci network nsg vnics list``)
+
+* Support for associating primary Vnic with a Network Security Group
+
+  * (``oci compute instance launch --nsg-ids``)
+  * (``oci compute instance attach-vnic --nsg-ids``)
+
+* Support for network security groups in LBaaS
+
+  * (``oci lb network-security-groups update``)
+
+* Support for moving VCN compartment in Core Service.
+
+  * (``oci network vcn change-compartment --vcn-id  --compartment-id``)
+
+* Support for moving Subnet compartment in Core Service.
+
+  * (``oci network subnet change-compartment --subnet-id  --compartment-id``)
+
+* Support for moving RouteTable compartment in Core Service.
+
+  * (``oci network route-table change-compartment --vcn-id  --compartment-id``)
+
+* Support for moving SecurityList compartment in Core Service.
+
+  * (``oci network security-list change-compartment --vcn-id  --compartment-id``)
+
+* Support for moving Resource Manager Stacks across compartments
+
+  * (oci resource-manager stack change-compartment --compartment-id, --stack-id)
+
+* Support for Preview Database service for Autonomous Databases
+
+  * (``oci db autonomous-database create --is-preview-version-with-service-terms-accepted [boolean]``)
+
+* Support for Preview version list API for Autonomous Databases
+
+  * (``oci db autonomous-db-preview-version list --compartment-id [compartment ID]``)
+ 
 2.5.17 - 2019-07-02
 -------------------
 Added

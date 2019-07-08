@@ -38,6 +38,20 @@ virtualnetwork_cli.virtual_network_root_group.short_help = "Networking Service"
 cli_util.rename_command(virtualnetwork_cli.virtual_network_root_group, virtualnetwork_cli.ip_sec_connection_tunnel_group, "ip-sec-tunnel")
 cli_util.rename_command(virtualnetwork_cli.virtual_network_root_group, virtualnetwork_cli.ip_sec_connection_tunnel_shared_secret_group, "ip-sec-psk")
 
+cli_util.rename_command(virtualnetwork_cli.virtual_network_root_group, virtualnetwork_cli.network_security_group_group, "nsg")
+
+virtualnetwork_cli.virtual_network_root_group.commands.pop(virtualnetwork_cli.network_security_group_vnic_group.name)
+virtualnetwork_cli.network_security_group_group.add_command(virtualnetwork_cli.network_security_group_vnic_group)
+cli_util.rename_command(virtualnetwork_cli.network_security_group_group, virtualnetwork_cli.network_security_group_vnic_group, "vnics")
+
+
+virtualnetwork_cli.virtual_network_root_group.commands.pop(virtualnetwork_cli.security_rule_group.name)
+virtualnetwork_cli.network_security_group_group.add_command(virtualnetwork_cli.security_rule_group)
+cli_util.rename_command(virtualnetwork_cli.network_security_group_group, virtualnetwork_cli.security_rule_group, "rules")
+
+cli_util.rename_command(virtualnetwork_cli.security_rule_group, virtualnetwork_cli.list_network_security_group_security_rules, "list")
+cli_util.rename_command(virtualnetwork_cli.security_rule_group, virtualnetwork_cli.update_network_security_group_security_rules, "update")
+
 # help for oci network ip-sec-connection create --static-routes
 network_create_ip_sec_connection_static_routes_example = """'["10.0.0.0/16"]'"""
 network_create_ip_sec_connection_static_routes_help = """Static routes to the CPE. At least one route must be included. The CIDR must not be a multicast address or class E address. This must be provided in JSON format."""
@@ -319,3 +333,107 @@ def virtual_circuit_bandwidth_shape_group():
 
 virtualnetwork_cli.list_fast_connect_provider_virtual_circuit_bandwidth_shapes.name = 'list'
 virtual_circuit_bandwidth_shape_group.add_command(virtualnetwork_cli.list_fast_connect_provider_virtual_circuit_bandwidth_shapes)
+
+
+@cli_util.copy_params_from_generated_command(virtualnetwork_cli.delete_network_security_group, params_to_exclude=['network_security_group_id'])
+@virtualnetwork_cli.network_security_group_group.command(name=cli_util.override('delete_network_security_group.command_name', 'delete'), help=virtualnetwork_cli.delete_network_security_group.help)
+@cli_util.option('--nsg-id', required=True, help=u"""The [OCID] of the network security group.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_network_security_group_extended(ctx, **kwargs):
+    if 'nsg_id' in kwargs:
+        kwargs['network_security_group_id'] = kwargs['nsg_id']
+        kwargs.pop('nsg_id')
+    ctx.invoke(virtualnetwork_cli.delete_network_security_group, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(virtualnetwork_cli.get_network_security_group, params_to_exclude=['network_security_group_id'])
+@virtualnetwork_cli.network_security_group_group.command(name=cli_util.override('get_network_security_group.command_name', 'get'), help=virtualnetwork_cli.get_network_security_group.help)
+@cli_util.option('--nsg-id', required=True, help=u"""The [OCID] of the network security group.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def get_network_security_group_extended(ctx, **kwargs):
+    if 'nsg_id' in kwargs:
+        kwargs['network_security_group_id'] = kwargs['nsg_id']
+        kwargs.pop('nsg_id')
+    ctx.invoke(virtualnetwork_cli.get_network_security_group, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(virtualnetwork_cli.update_network_security_group, params_to_exclude=['network_security_group_id'])
+@virtualnetwork_cli.network_security_group_group.command(name=cli_util.override('update_network_security_group.command_name', 'update'), help=virtualnetwork_cli.update_network_security_group.help)
+@cli_util.option('--nsg-id', required=True, help=u"""The [OCID] of the network security group.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'NetworkSecurityGroup'})
+@cli_util.wrap_exceptions
+def update_network_security_group_extended(ctx, **kwargs):
+    if 'nsg_id' in kwargs:
+        kwargs['network_security_group_id'] = kwargs['nsg_id']
+        kwargs.pop('nsg_id')
+    ctx.invoke(virtualnetwork_cli.update_network_security_group, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(virtualnetwork_cli.list_network_security_group_vnics, params_to_exclude=['network_security_group_id'])
+@virtualnetwork_cli.network_security_group_vnic_group.command(name=cli_util.override('list_network_security_group_vnics.command_name', 'list'), help=virtualnetwork_cli.list_network_security_group_vnics.help)
+@cli_util.option('--nsg-id', required=True, help=u"""The [OCID] of the network security group.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def list_network_security_group_vnics_extended(ctx, **kwargs):
+    if 'nsg_id' in kwargs:
+        kwargs['network_security_group_id'] = kwargs['nsg_id']
+        kwargs.pop('nsg_id')
+    ctx.invoke(virtualnetwork_cli.list_network_security_group_vnics, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(virtualnetwork_cli.add_network_security_group_security_rules, params_to_exclude=['network_security_group_id'])
+@virtualnetwork_cli.security_rule_group.command(name=cli_util.override('add_network_security_group_security_rules.command_name', 'add'), help=virtualnetwork_cli.add_network_security_group_security_rules.help)
+@cli_util.option('--nsg-id', required=True, help=u"""The [OCID] of the network security group.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def add_network_security_group_security_rules_extended(ctx, **kwargs):
+    if 'nsg_id' in kwargs:
+        kwargs['network_security_group_id'] = kwargs['nsg_id']
+        kwargs.pop('nsg_id')
+    ctx.invoke(virtualnetwork_cli.add_network_security_group_security_rules, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(virtualnetwork_cli.list_network_security_group_security_rules, params_to_exclude=['network_security_group_id'])
+@virtualnetwork_cli.security_rule_group.command(name=cli_util.override('list_network_security_group_security_rules.command_name', 'list'), help=virtualnetwork_cli.list_network_security_group_security_rules.help)
+@cli_util.option('--nsg-id', required=True, help=u"""The [OCID] of the network security group.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def list_network_security_group_security_rules_extended(ctx, **kwargs):
+    if 'nsg_id' in kwargs:
+        kwargs['network_security_group_id'] = kwargs['nsg_id']
+        kwargs.pop('nsg_id')
+    ctx.invoke(virtualnetwork_cli.list_network_security_group_security_rules, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(virtualnetwork_cli.remove_network_security_group_security_rules, params_to_exclude=['network_security_group_id'])
+@virtualnetwork_cli.security_rule_group.command(name=cli_util.override('remove_network_security_group_security_rules.command_name', 'remove'), help=virtualnetwork_cli.remove_network_security_group_security_rules.help)
+@cli_util.option('--nsg-id', required=True, help=u"""The [OCID] of the network security group.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def remove_network_security_group_security_rules_extended(ctx, **kwargs):
+    if 'nsg_id' in kwargs:
+        kwargs['network_security_group_id'] = kwargs['nsg_id']
+        kwargs.pop('nsg_id')
+    ctx.invoke(virtualnetwork_cli.remove_network_security_group_security_rules, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(virtualnetwork_cli.update_network_security_group_security_rules, params_to_exclude=['network_security_group_id'])
+@virtualnetwork_cli.security_rule_group.command(name=cli_util.override('update_network_security_group_security_rules.command_name', 'update'), help=virtualnetwork_cli.update_network_security_group_security_rules.help)
+@cli_util.option('--nsg-id', required=True, help=u"""The [OCID] of the network security group.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def update_network_security_group_security_rules_extended(ctx, **kwargs):
+    if 'nsg_id' in kwargs:
+        kwargs['network_security_group_id'] = kwargs['nsg_id']
+        kwargs.pop('nsg_id')
+    ctx.invoke(virtualnetwork_cli.update_network_security_group_security_rules, **kwargs)

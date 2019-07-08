@@ -1907,6 +1907,22 @@ Options:
   --instance-id TEXT              The OCID of the instance. [required]
   --subnet-id TEXT                The OCID of the subnet to create the VNIC in.
                                   [required]
+  --nsg-ids COMPLEX TYPE          A list of the [OCIDs] of the network security
+                                  groups (NSGs) to add the VNIC to..
+                                  This is a
+                                  complex type whose value must be valid JSON.
+                                  The value can be provided as a string on the
+                                  command line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
   --vnic-display-name TEXT        A user-friendly name for the VNIC. Does not
                                   have to be unique.
   --assign-public-ip BOOLEAN      Whether the VNIC should be assigned a public
@@ -2411,6 +2427,22 @@ Options:
   --vnic-display-name TEXT        A user-friendly name for the default VNIC
                                   attached to this instance. Does not have to be
                                   unique.
+  --nsg-ids COMPLEX TYPE          A list of the [OCIDs] of the network security
+                                  groups (NSGs) to add the VNIC to..
+                                  This is a
+                                  complex type whose value must be valid JSON.
+                                  The value can be provided as a string on the
+                                  command line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
   --assign-public-ip BOOLEAN      Whether the default VNIC attached to this
                                   instance should be assigned a public IP
                                   address. Defaults to whether the subnet is
