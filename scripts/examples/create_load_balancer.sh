@@ -18,6 +18,8 @@
 COMPARTMENT_ID=""  # Your compartment OCID
 AVAILABILITY_DOMAIN_ONE="" # An availability domain, e.g. Uocm:IAD-AD-1
 AVAILABILITY_DOMAIN_TWO="" # An availability domain, but different to AVAILABILITY_DOMAIN_TWO, e.g. Uocm:IAD-AD-2
+NSG_IDS_JSON_FILE="scripts/create_load_balancer_example/nsg_ids.json"
+UPDATE_NSG_IDS_JSON_FILE="scripts/create_load_balancer_example/update_nsg_ids.json"
 
 CREATED_VCN=$(oci network vcn create -c $COMPARTMENT_ID --display-name createLbExampleVcn --cidr-block 10.0.0.0/16 --dns-label createLbExample --wait-for-state AVAILABLE 2>/dev/null)
 VCN_ID=$(jq -r '.data.id' <<< "$CREATED_VCN")
@@ -30,6 +32,18 @@ echo "First Subnet OCID: $FIRST_SUBNET_ID"
 SECOND_CREATED_SUBNET=$(oci network subnet create -c $COMPARTMENT_ID --availability-domain $AVAILABILITY_DOMAIN_TWO --display-name createLbSubnet2 --vcn-id $VCN_ID --dns-label subnetLbTwo --cidr-block 10.0.1.0/24 --wait-for-state AVAILABLE 2>/dev/null)
 SECOND_SUBNET_ID=$(jq -r '.data.id' <<< "$SECOND_CREATED_SUBNET")
 echo "Second Subnet OCID: $SECOND_SUBNET_ID"
+
+FIRST_CREATED_NSG_ID=$(oci network nsg create --compartment-id $COMPARTMENT_ID --vcn-id $VCN_ID --display-name "First NSG" 2>/dev/null)
+FIRST_NSG_ID=$(jq -r '.data.id' <<< "$FIRST_CREATED_NSG_ID")
+echo "First NSG OCID: $FIRST_NSG_ID"
+
+SECOND_CREATED_NSG_ID=$(oci network nsg create --compartment-id $COMPARTMENT_ID --vcn-id $VCN_ID --display-name "Second NSG" 2>/dev/null)
+SECOND_NSG_ID=$(jq -r '.data.id' <<< "$SECOND_CREATED_NSG_ID")
+echo "Second NSG OCID: $SECOND_NSG_ID"
+
+THIRD_CREATED_NSG_ID=$(oci network nsg create --compartment-id $COMPARTMENT_ID --vcn-id $VCN_ID --display-name "Third NSG" 2>/dev/null)
+THIRD_NSG_ID=$(jq -r '.data.id' <<< "$THIRD_CREATED_NSG_ID")
+echo "Third NSG OCID: $THIRD_NSG_ID"
 
 # We need to specify a shape when creating a load balancer. Here we are just picking the first shape
 # we get from listing all the available shapes
@@ -66,6 +80,13 @@ function create_lb_with_all_options_as_individual_options() {
     # Because we have these in variables already, we can pipe an array to a file and use that
     echo "[\"${FIRST_SUBNET_ID}\", \"${SECOND_SUBNET_ID}\"]" > scripts/create_load_balancer_example/subnets.json
 
+    # NSG ID's are passed as a JSON array where each entry is a NSG OCID. For example:
+    #
+    #   ["ocid...", "ocid...", "ocid..."]
+    #
+    # Because we have these in variables already, we can pipe an array to a file and use that
+    echo "[\"${FIRST_NSG_ID}\", \"${SECOND_NSG_ID}\"]" > $NSG_IDS_JSON_FILE
+
     # Note here in our create we use --certificates, --listeners etc. to pass in each complex type
     #
     # There is some implicit sequencing in that:
@@ -82,7 +103,8 @@ function create_lb_with_all_options_as_individual_options() {
                                             --backend-sets file://scripts/create_load_balancer_example/backend_sets.json \
                                             --listeners file://scripts/create_load_balancer_example/listeners.json \
                                             --path-route-sets file://scripts/create_load_balancer_example/path_route_sets.json \
-                                            --hostnames file://scripts/create_load_balancer_example/hostnames.json)
+                                            --hostnames file://scripts/create_load_balancer_example/hostnames.json \
+                                            --nsg-ids file://$NSG_IDS_JSON_FILE)
     WORK_REQUEST_ID=$(jq -r '."opc-work-request-id"' <<< "$CREATED_LB")
     echo "Create Load Balancer Work Request ID: $WORK_REQUEST_ID"
 
@@ -122,7 +144,9 @@ function create_lb_with_all_options_using_from_json() {
 
     echo "[\"${FIRST_SUBNET_ID}\", \"${SECOND_SUBNET_ID}\"]" > scripts/create_load_balancer_example/subnets.json
 
-    CREATED_LB=$(oci lb load-balancer create -c $COMPARTMENT_ID --display-name exampleLb --shape-name $LB_SHAPE --subnet-ids file://scripts/create_load_balancer_example/subnets.json --from-json file://scripts/create_load_balancer_example/create_load_balancer_all_complex_params.json)
+    echo "[\"${FIRST_NSG_ID}\", \"${SECOND_NSG_ID}\"]" > $NSG_IDS_JSON_FILE
+
+    CREATED_LB=$(oci lb load-balancer create -c $COMPARTMENT_ID --display-name exampleLb --shape-name $LB_SHAPE --subnet-ids file://scripts/create_load_balancer_example/subnets.json  --nsg-ids file://$NSG_IDS_JSON_FILE --from-json file://scripts/create_load_balancer_example/create_load_balancer_all_complex_params.json)
     WORK_REQUEST_ID=$(jq -r '."opc-work-request-id"' <<< "$CREATED_LB")
     echo "Create Load Balancer Work Request ID: $WORK_REQUEST_ID"
 
@@ -154,8 +178,10 @@ function create_lb_with_all_options_using_from_json() {
 function create_lb_with_minimum_then_add_related_resources() {
     echo "[\"${FIRST_SUBNET_ID}\", \"${SECOND_SUBNET_ID}\"]" > scripts/create_load_balancer_example/subnets.json
 
+    echo "[\"${FIRST_NSG_ID}\", \"${SECOND_NSG_ID}\"]" > $NSG_IDS_JSON_FILE
+
     # The minimum required information is the compartment, display name, load balancer shape, and subnets
-    CREATED_LB=$(oci lb load-balancer create -c $COMPARTMENT_ID --display-name exampleLb --shape-name $LB_SHAPE --subnet-ids file://scripts/create_load_balancer_example/subnets.json)
+    CREATED_LB=$(oci lb load-balancer create -c $COMPARTMENT_ID --display-name exampleLb --shape-name $LB_SHAPE --subnet-ids file://scripts/create_load_balancer_example/subnets.json --nsg-ids file://$NSG_IDS_JSON_FILE)
     WORK_REQUEST_ID=$(jq -r '."opc-work-request-id"' <<< "$CREATED_LB")
     echo "Create Load Balancer Work Request ID: $WORK_REQUEST_ID"
 
@@ -175,6 +201,10 @@ function create_lb_with_minimum_then_add_related_resources() {
     # can be obtained from the work request
     LB_ID=$(jq -r '.data."load-balancer-id"' <<< "$WORK_REQUEST")
     echo "Load Balancer OCID: $LB_ID"
+
+    # Update the NSG ID's associated with load balancer
+    echo "[\"${THIRD_NSG_ID}\"]" > $UPDATE_NSG_IDS_JSON_FILE
+    oci lb nsg update --load-balancer-id $LB_ID --nsg-ids file://$UPDATE_NSG_IDS_JSON_FILE
 
     # Generate a self-signed certificate to use as part of our requests
     openssl req -newkey rsa:2048 -nodes -sha256 -keyout key.pem -x509 -days 365 -out certificate.pem -subj "/C=US/ST=WA/L=Seattle/O=Test/CN=www.example.com"
@@ -259,6 +289,11 @@ function create_lb_with_minimum_then_add_related_resources() {
 create_lb_with_all_options_as_individual_options
 create_lb_with_all_options_using_from_json
 create_lb_with_minimum_then_add_related_resources
+
+# Delete NSG's
+oci network nsg delete --nsg-id $FIRST_NSG_ID --force --wait-for-state TERMINATED
+oci network nsg delete --nsg-id $SECOND_NSG_ID --force --wait-for-state TERMINATED
+oci network nsg delete --nsg-id $THIRD_NSG_ID --force --wait-for-state TERMINATED
 
 # Delete the subnets
 oci network subnet delete --subnet-id $FIRST_SUBNET_ID --force --wait-for-state TERMINATED

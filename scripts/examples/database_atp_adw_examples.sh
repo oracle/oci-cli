@@ -25,6 +25,7 @@ SCALED_STORAGE="2"
 STORAGE="1"
 LICENSE_TYPE="LICENSE_INCLUDED"
 AUTO_SCALE=true
+PREVIEW=true
 
 
 ##############################################################################AutonomousDataWarehouse##############################################################################
@@ -86,10 +87,19 @@ CREATE_ATP=$(oci db autonomous-database create -c $COMPARTMENT_ID --db-name $DB_
                     --data-storage-size-in-tbs $STORAGE --display-name $DISPLAY_NAME1 --license-model $LICENSE_TYPE \
                     --wait-for-state AVAILABLE)
 
+echo 'Create Autonomous Transaction Processing Preview...'
+CREATE_ATP_PREVIEW=$(oci db autonomous-database create -c $COMPARTMENT_ID --db-name $DB_NAME2 --admin-password $PASSWORD1 --cpu-core-count $CPU \
+                    --data-storage-size-in-tbs $STORAGE --display-name $DISPLAY_NAME1 --license-model $LICENSE_TYPE --is-preview-version-with-service-terms-accepted $PREVIEW \
+                    --wait-for-state AVAILABLE)
+
 ADB_ID=$(jq -r '.data.id' <<< "$CREATE_ATP")
+ADB_ID_PREVIEW=$(jq -r '.data.id' <<< "$CREATE_ATP_PREVIEW")
 
 echo "Created Autonomous Transaction Processing with OCID:"
 echo $CREATE_ATP
+
+echo "Created Autonomous Transaction Processing Preview with OCID:"
+echo $CREATE_ATP_PREVIEW
 
 echo 'Get Autonomous Transaction Processing'
 oci db autonomous-database get --autonomous-database-id $ADB_ID
@@ -105,6 +115,9 @@ oci db autonomous-database list --compartment-id $COMPARTMENT_ID --limit 2
 
 echo 'List all Autonomous Transaction Processings in compartment with specific display name, in descending order'
 oci db autonomous-database list --compartment-id $COMPARTMENT_ID --sort-by $DISPLAY_NAME1 --sort-order DESC
+
+echo 'List all Autonomous Transaction Processings preview Versions'
+oci db autonomous-db-preview-version list --compartment-id $COMPARTMENT_ID
 
 echo 'Update Autonomous Transaction Processing DisplayName'
 oci db autonomous-database update --autonomous-database-id $ADB_ID --display-name $DISPLAY_NAME2

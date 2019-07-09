@@ -215,6 +215,12 @@ def cross_connect_status_group():
     pass
 
 
+@click.command(cli_util.override('security_rule_group.command_name', 'security-rule'), cls=CommandGroupWithAlias, help="""A security rule is one of the items in a [NetworkSecurityGroup]. It is a virtual firewall rule for the VNICs in the network security group. A rule can be for either inbound (`direction`= INGRESS) or outbound (`direction`= EGRESS) IP packets.""")
+@cli_util.help_option_group
+def security_rule_group():
+    pass
+
+
 @click.command(cli_util.override('vcn_group.command_name', 'vcn'), cls=CommandGroupWithAlias, help="""A virtual cloud network (VCN). For more information, see [Overview of the Networking Service].
 
 To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].
@@ -228,6 +234,12 @@ def vcn_group():
 @click.command(cli_util.override('ip_sec_connection_device_status_group.command_name', 'ip-sec-connection-device-status'), cls=CommandGroupWithAlias, help="""Deprecated. For tunnel information, instead see [IPSecConnectionTunnel].""")
 @cli_util.help_option_group
 def ip_sec_connection_device_status_group():
+    pass
+
+
+@click.command(cli_util.override('network_security_group_vnic_group.command_name', 'network-security-group-vnic'), cls=CommandGroupWithAlias, help="""Information about a VNIC that belongs to a network security group.""")
+@cli_util.help_option_group
+def network_security_group_vnic_group():
     pass
 
 
@@ -317,6 +329,34 @@ def service_group():
     pass
 
 
+@click.command(cli_util.override('network_security_group_group.command_name', 'network-security-group'), cls=CommandGroupWithAlias, help="""A *network security group* (NSG) provides virtual firewall rules for a specific set of [VNICs] in a VCN. Compare NSGs with [SecurityLists], which provide virtual firewall rules to all the VNICs in a *subnet*.
+
+A network security group consists of two items:
+
+  * The set of [VNICs] that all have the same security rule needs (for     example, a group of Compute instances all running the same application)   * A set of NSG [SecurityRules] that apply to the VNICs in the group
+
+After creating an NSG, you can add VNICs and security rules to it. For example, when you create an instance, you can specify one or more NSGs to add the instance to (see [CreateVnicDetails]). Or you can add an existing instance to an NSG with [UpdateVnic].
+
+To add security rules to an NSG, see [AddNetworkSecurityGroupSecurityRules].
+
+To list the VNICs in an NSG, see [ListNetworkSecurityGroupVnics].
+
+To list the security rules in an NSG, see [ListNetworkSecurityGroupSecurityRules].
+
+For more information about network security groups, see [Network Security Groups].
+
+**Important:** Oracle Cloud Infrastructure Compute service images automatically include firewall rules (for example, Linux iptables, Windows firewall). If there are issues with some type of access to an instance, make sure all of the following are set correctly:
+
+  * Any security rules in any NSGs the instance's VNIC belongs to   * Any [SecurityLists] associated with the instance's subnet   * The instance's OS firewall rules
+
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].
+
+**Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
+@cli_util.help_option_group
+def network_security_group_group():
+    pass
+
+
 @click.command(cli_util.override('cross_connect_group_group.command_name', 'cross-connect-group'), cls=CommandGroupWithAlias, help="""For use with Oracle Cloud Infrastructure FastConnect. A cross-connect group is a link aggregation group (LAG), which can contain one or more [CrossConnects]. Customers who are colocated with Oracle in a FastConnect location create and use cross-connect groups. For more information, see [FastConnect Overview].
 
 **Note:** If you're a provider who is setting up a physical connection to Oracle so customers can use FastConnect over the connection, be aware that your connection is modeled the same way as a colocated customer's (with `CrossConnect` and `CrossConnectGroup` objects, and so on).
@@ -330,6 +370,8 @@ def cross_connect_group_group():
 
 
 @click.command(cli_util.override('security_list_group.command_name', 'security-list'), cls=CommandGroupWithAlias, help="""A set of virtual firewall rules for your VCN. Security lists are configured at the subnet level, but the rules are applied to the ingress and egress traffic for the individual instances in the subnet. The rules can be stateful or stateless. For more information, see [Security Lists].
+
+**Note:** Compare security lists to [NetworkSecurityGroup]s, which let you apply a set of security rules to a *specific set of VNICs* instead of an entire subnet. Oracle recommends using network security groups instead of security lists, although you can use either or both together.
 
 **Important:** Oracle Cloud Infrastructure Compute service images automatically include firewall rules (for example, Linux iptables, Windows firewall). If there are issues with some type of access to an instance, make sure both the security lists associated with the instance's subnet and the instance's firewall rules are set correctly.
 
@@ -363,8 +405,10 @@ virtual_network_root_group.add_command(cpe_group)
 virtual_network_root_group.add_command(cross_connect_group)
 virtual_network_root_group.add_command(letter_of_authority_group)
 virtual_network_root_group.add_command(cross_connect_status_group)
+virtual_network_root_group.add_command(security_rule_group)
 virtual_network_root_group.add_command(vcn_group)
 virtual_network_root_group.add_command(ip_sec_connection_device_status_group)
+virtual_network_root_group.add_command(network_security_group_vnic_group)
 virtual_network_root_group.add_command(vnic_group)
 virtual_network_root_group.add_command(fast_connect_provider_service_key_group)
 virtual_network_root_group.add_command(dhcp_options_group)
@@ -374,8 +418,40 @@ virtual_network_root_group.add_command(service_gateway_group)
 virtual_network_root_group.add_command(internet_gateway_group)
 virtual_network_root_group.add_command(ip_sec_connection_group)
 virtual_network_root_group.add_command(service_group)
+virtual_network_root_group.add_command(network_security_group_group)
 virtual_network_root_group.add_command(cross_connect_group_group)
 virtual_network_root_group.add_command(security_list_group)
+
+
+@security_rule_group.command(name=cli_util.override('add_network_security_group_security_rules.command_name', 'add'), help=u"""Adds one or more security rules to the specified network security group.""")
+@cli_util.option('--network-security-group-id', required=True, help=u"""The [OCID] of the network security group.""")
+@cli_util.option('--security-rules', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The NSG security rules to add.
+
+This option is a JSON list with items of type AddSecurityRuleDetails.  For documentation on AddSecurityRuleDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/AddSecurityRuleDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'security-rules': {'module': 'core', 'class': 'list[AddSecurityRuleDetails]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'security-rules': {'module': 'core', 'class': 'list[AddSecurityRuleDetails]'}}, output_type={'module': 'core', 'class': 'AddedNetworkSecurityGroupSecurityRules'})
+@cli_util.wrap_exceptions
+def add_network_security_group_security_rules(ctx, from_json, network_security_group_id, security_rules):
+
+    if isinstance(network_security_group_id, six.string_types) and len(network_security_group_id.strip()) == 0:
+        raise click.UsageError('Parameter --network-security-group-id cannot be whitespace or empty string')
+
+    kwargs = {}
+
+    details = {}
+
+    if security_rules is not None:
+        details['securityRules'] = cli_util.parse_json_parameter("security_rules", security_rules)
+
+    client = cli_util.build_client('virtual_network', ctx)
+    result = client.add_network_security_group_security_rules(
+        network_security_group_id=network_security_group_id,
+        add_network_security_group_security_rules_details=details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
 
 
 @service_gateway_group.command(name=cli_util.override('attach_service_id.command_name', 'attach'), help=u"""Adds the specified [Service] to the list of enabled `Service` objects for the specified gateway. You must also set up a route rule with the `cidrBlock` of the `Service` as the rule's destination and the service gateway as the rule's target. See [Route Table].
@@ -517,6 +593,62 @@ def change_nat_gateway_compartment(ctx, from_json, nat_gateway_id, compartment_i
     cli_util.render_response(result, ctx)
 
 
+@route_table_group.command(name=cli_util.override('change_route_table_compartment.command_name', 'change-compartment'), help=u"""Moves a route table into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].""")
+@cli_util.option('--rt-id', required=True, help=u"""The OCID of the route table.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the route table to.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_route_table_compartment(ctx, from_json, rt_id, compartment_id):
+
+    if isinstance(rt_id, six.string_types) and len(rt_id.strip()) == 0:
+        raise click.UsageError('Parameter --rt-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    details = {}
+    details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('virtual_network', ctx)
+    result = client.change_route_table_compartment(
+        rt_id=rt_id,
+        change_route_table_compartment_details=details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@security_list_group.command(name=cli_util.override('change_security_list_compartment.command_name', 'change-compartment'), help=u"""Moves a security list into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].""")
+@cli_util.option('--security-list-id', required=True, help=u"""The OCID of the security list.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the security list to.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_security_list_compartment(ctx, from_json, security_list_id, compartment_id):
+
+    if isinstance(security_list_id, six.string_types) and len(security_list_id.strip()) == 0:
+        raise click.UsageError('Parameter --security-list-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    details = {}
+    details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('virtual_network', ctx)
+    result = client.change_security_list_compartment(
+        security_list_id=security_list_id,
+        change_security_list_compartment_details=details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @service_gateway_group.command(name=cli_util.override('change_service_gateway_compartment.command_name', 'change-compartment'), help=u"""Moves a service gateway into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].""")
 @cli_util.option('--service-gateway-id', required=True, help=u"""The service gateway's [OCID].""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the service gateway to.""")
@@ -540,6 +672,62 @@ def change_service_gateway_compartment(ctx, from_json, service_gateway_id, compa
     result = client.change_service_gateway_compartment(
         service_gateway_id=service_gateway_id,
         change_service_gateway_compartment_details=details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@subnet_group.command(name=cli_util.override('change_subnet_compartment.command_name', 'change-compartment'), help=u"""Moves a subnet into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].""")
+@cli_util.option('--subnet-id', required=True, help=u"""The OCID of the subnet.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the subnet to.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_subnet_compartment(ctx, from_json, subnet_id, compartment_id):
+
+    if isinstance(subnet_id, six.string_types) and len(subnet_id.strip()) == 0:
+        raise click.UsageError('Parameter --subnet-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    details = {}
+    details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('virtual_network', ctx)
+    result = client.change_subnet_compartment(
+        subnet_id=subnet_id,
+        change_subnet_compartment_details=details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@vcn_group.command(name=cli_util.override('change_vcn_compartment.command_name', 'change-compartment'), help=u"""Moves a VCN into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].""")
+@cli_util.option('--vcn-id', required=True, help=u"""The [OCID] of the VCN.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the VCN to.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_vcn_compartment(ctx, from_json, vcn_id, compartment_id):
+
+    if isinstance(vcn_id, six.string_types) and len(vcn_id.strip()) == 0:
+        raise click.UsageError('Parameter --vcn-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    details = {}
+    details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('virtual_network', ctx)
+    result = client.change_vcn_compartment(
+        vcn_id=vcn_id,
+        change_vcn_compartment_details=details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -1310,6 +1498,71 @@ def create_nat_gateway(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 result = oci.wait_until(client, client.get_nat_gateway(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@network_security_group_group.command(name=cli_util.override('create_network_security_group.command_name', 'create'), help=u"""Creates a new network security group for the specified VCN.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to contain the network security group.""")
+@cli_util.option('--vcn-id', required=True, help=u"""The [OCID] of the VCN to create the network security group in.""")
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help=u"""A user-friendly name for the network security group. Does not have to be unique. Avoid entering confidential information.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'NetworkSecurityGroup'})
+@cli_util.wrap_exceptions
+def create_network_security_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, vcn_id, defined_tags, display_name, freeform_tags):
+
+    kwargs = {}
+
+    details = {}
+    details['compartmentId'] = compartment_id
+    details['vcnId'] = vcn_id
+
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if display_name is not None:
+        details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    client = cli_util.build_client('virtual_network', ctx)
+    result = client.create_network_security_group(
+        create_network_security_group_details=details,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_network_security_group') and callable(getattr(client, 'get_network_security_group')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_network_security_group(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except oci.exceptions.MaximumWaitTimeExceeded as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -2633,6 +2886,70 @@ def delete_nat_gateway(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     cli_util.render_response(result, ctx)
 
 
+@network_security_group_group.command(name=cli_util.override('delete_network_security_group.command_name', 'delete'), help=u"""Deletes the specified network security group. The group must not contain any VNICs.
+
+To get a list of the VNICs in a network security group, use [ListNetworkSecurityGroupVnics]. Each returned [NetworkSecurityGroupVnic] object contains both the OCID of the VNIC and the OCID of the VNIC's parent resource (for example, the Compute instance that the VNIC is attached to).""")
+@cli_util.option('--network-security-group-id', required=True, help=u"""The [OCID] of the network security group.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_network_security_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, network_security_group_id, if_match):
+
+    if isinstance(network_security_group_id, six.string_types) and len(network_security_group_id.strip()) == 0:
+        raise click.UsageError('Parameter --network-security-group-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    client = cli_util.build_client('virtual_network', ctx)
+    result = client.delete_network_security_group(
+        network_security_group_id=network_security_group_id,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_network_security_group') and callable(getattr(client, 'get_network_security_group')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                oci.wait_until(client, client.get_network_security_group(network_security_group_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except oci.exceptions.ServiceError as e:
+                # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
+                # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
+                # will result in an exception that reflects a HTTP 404. In this case, we can exit with success (rather than raising
+                # the exception) since this would have been the behaviour in the waiter anyway (as for delete we provide the argument
+                # succeed_on_not_found=True to the waiter).
+                #
+                # Any non-404 should still result in the exception being thrown.
+                if e.status == 404:
+                    pass
+                else:
+                    raise
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @private_ip_group.command(name=cli_util.override('delete_private_ip.command_name', 'delete'), help=u"""Unassigns and deletes the specified private IP. You must specify the object's OCID. The private IP address is returned to the subnet's pool of available addresses.
 
 This operation cannot be used with primary private IPs, which are automatically unassigned and deleted when the VNIC is terminated.
@@ -3619,6 +3936,31 @@ def get_nat_gateway(ctx, from_json, nat_gateway_id):
     client = cli_util.build_client('virtual_network', ctx)
     result = client.get_nat_gateway(
         nat_gateway_id=nat_gateway_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@network_security_group_group.command(name=cli_util.override('get_network_security_group.command_name', 'get'), help=u"""Gets the specified network security group's information.
+
+To list the VNICs in an NSG, see [ListNetworkSecurityGroupVnics].
+
+To list the security rules in an NSG, see [ListNetworkSecurityGroupSecurityRules].""")
+@cli_util.option('--network-security-group-id', required=True, help=u"""The [OCID] of the network security group.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'NetworkSecurityGroup'})
+@cli_util.wrap_exceptions
+def get_network_security_group(ctx, from_json, network_security_group_id):
+
+    if isinstance(network_security_group_id, six.string_types) and len(network_security_group_id.strip()) == 0:
+        raise click.UsageError('Parameter --network-security-group-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    client = cli_util.build_client('virtual_network', ctx)
+    result = client.get_network_security_group(
+        network_security_group_id=network_security_group_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -4773,6 +5115,191 @@ def list_nat_gateways(ctx, from_json, all_pages, page_size, compartment_id, vcn_
     cli_util.render_response(result, ctx)
 
 
+@security_rule_group.command(name=cli_util.override('list_network_security_group_security_rules.command_name', 'list-network-security-group'), help=u"""Lists the security rules in the specified network security group.""")
+@cli_util.option('--network-security-group-id', required=True, help=u"""The [OCID] of the network security group.""")
+@cli_util.option('--direction', type=custom_types.CliCaseInsensitiveChoice(["EGRESS", "INGRESS"]), help=u"""Direction of the security rule. Set to `EGRESS` for rules that allow outbound IP packets, or `INGRESS` for rules that allow inbound IP packets.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
+
+Example: `50`""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED"]), help=u"""The field to sort by.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The DISPLAYNAME sort order is case sensitive.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[SecurityRule]'})
+@cli_util.wrap_exceptions
+def list_network_security_group_security_rules(ctx, from_json, all_pages, page_size, network_security_group_id, direction, limit, page, sort_by, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(network_security_group_id, six.string_types) and len(network_security_group_id.strip()) == 0:
+        raise click.UsageError('Parameter --network-security-group-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if direction is not None:
+        kwargs['direction'] = direction
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    client = cli_util.build_client('virtual_network', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_network_security_group_security_rules,
+            network_security_group_id=network_security_group_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_network_security_group_security_rules,
+            limit,
+            page_size,
+            network_security_group_id=network_security_group_id,
+            **kwargs
+        )
+    else:
+        result = client.list_network_security_group_security_rules(
+            network_security_group_id=network_security_group_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@network_security_group_vnic_group.command(name=cli_util.override('list_network_security_group_vnics.command_name', 'list'), help=u"""Lists the VNICs in the specified network security group.""")
+@cli_util.option('--network-security-group-id', required=True, help=u"""The [OCID] of the network security group.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
+
+Example: `50`""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMEASSOCIATED"]), help=u"""The field to sort by.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The DISPLAYNAME sort order is case sensitive.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[NetworkSecurityGroupVnic]'})
+@cli_util.wrap_exceptions
+def list_network_security_group_vnics(ctx, from_json, all_pages, page_size, network_security_group_id, limit, page, sort_by, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(network_security_group_id, six.string_types) and len(network_security_group_id.strip()) == 0:
+        raise click.UsageError('Parameter --network-security-group-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    client = cli_util.build_client('virtual_network', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_network_security_group_vnics,
+            network_security_group_id=network_security_group_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_network_security_group_vnics,
+            limit,
+            page_size,
+            network_security_group_id=network_security_group_id,
+            **kwargs
+        )
+    else:
+        result = client.list_network_security_group_vnics(
+            network_security_group_id=network_security_group_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@network_security_group_group.command(name=cli_util.override('list_network_security_groups.command_name', 'list'), help=u"""Lists the network security groups in the specified compartment.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--vcn-id', help=u"""The [OCID] of the VCN.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
+
+Example: `50`""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.
+
+**Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by availability domain if the scope of the resource type is within a single availability domain. If you call one of these \"List\" operations without specifying an availability domain, the resources are grouped by availability domain, then sorted.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The DISPLAYNAME sort order is case sensitive.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED"]), help=u"""A filter to return only resources that match the specified lifecycle state. The value is case insensitive.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[NetworkSecurityGroup]'})
+@cli_util.wrap_exceptions
+def list_network_security_groups(ctx, from_json, all_pages, page_size, compartment_id, vcn_id, limit, page, display_name, sort_by, sort_order, lifecycle_state):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if vcn_id is not None:
+        kwargs['vcn_id'] = vcn_id
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    client = cli_util.build_client('virtual_network', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_network_security_groups,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_network_security_groups,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_network_security_groups(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
 @private_ip_group.command(name=cli_util.override('list_private_ips.command_name', 'list'), help=u"""Lists the [PrivateIp] objects based on one of these filters:
 
   - Subnet OCID.   - VNIC OCID.   - Both private IP address and subnet OCID: This lets   you get a `privateIP` object based on its private IP   address (for example, 10.0.3.3) and not its OCID. For comparison,   [GetPrivateIp]   requires the OCID.
@@ -5462,6 +5989,35 @@ def list_virtual_circuits(ctx, from_json, all_pages, page_size, compartment_id, 
             compartment_id=compartment_id,
             **kwargs
         )
+    cli_util.render_response(result, ctx)
+
+
+@security_rule_group.command(name=cli_util.override('remove_network_security_group_security_rules.command_name', 'remove'), help=u"""Removes one or more security rules from the specified network security group.""")
+@cli_util.option('--network-security-group-id', required=True, help=u"""The [OCID] of the network security group.""")
+@cli_util.option('--security-rule-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The Oracle-assigned ID of each [SecurityRule] to be deleted.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'security-rule-ids': {'module': 'core', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'security-rule-ids': {'module': 'core', 'class': 'list[string]'}})
+@cli_util.wrap_exceptions
+def remove_network_security_group_security_rules(ctx, from_json, network_security_group_id, security_rule_ids):
+
+    if isinstance(network_security_group_id, six.string_types) and len(network_security_group_id.strip()) == 0:
+        raise click.UsageError('Parameter --network-security-group-id cannot be whitespace or empty string')
+
+    kwargs = {}
+
+    details = {}
+
+    if security_rule_ids is not None:
+        details['securityRuleIds'] = cli_util.parse_json_parameter("security_rule_ids", security_rule_ids)
+
+    client = cli_util.build_client('virtual_network', ctx)
+    result = client.remove_network_security_group_security_rules(
+        network_security_group_id=network_security_group_id,
+        remove_network_security_group_security_rules_details=details,
+        **kwargs
+    )
     cli_util.render_response(result, ctx)
 
 
@@ -6316,6 +6872,119 @@ def update_nat_gateway(ctx, from_json, force, wait_for_state, max_wait_seconds, 
     cli_util.render_response(result, ctx)
 
 
+@network_security_group_group.command(name=cli_util.override('update_network_security_group.command_name', 'update'), help=u"""Updates the specified network security group.
+
+To add or remove an existing VNIC from the group, use [UpdateVnic].
+
+To add a VNIC to the group *when you create the VNIC*, specify the NSG's OCID during creation. For example, see the `nsgIds` attribute in [CreateVnicDetails].
+
+To add or remove security rules from the group, use [AddNetworkSecurityGroupSecurityRules] or [RemoveNetworkSecurityGroupSecurityRules].
+
+To edit the contents of existing security rules in the group, use [UpdateNetworkSecurityGroupSecurityRules].""")
+@cli_util.option('--network-security-group-id', required=True, help=u"""The [OCID] of the network security group.""")
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'NetworkSecurityGroup'})
+@cli_util.wrap_exceptions
+def update_network_security_group(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, network_security_group_id, defined_tags, display_name, freeform_tags, if_match):
+
+    if isinstance(network_security_group_id, six.string_types) and len(network_security_group_id.strip()) == 0:
+        raise click.UsageError('Parameter --network-security-group-id cannot be whitespace or empty string')
+    if not force:
+        if defined_tags or freeform_tags:
+            if not click.confirm("WARNING: Updates to defined-tags and freeform-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+
+    details = {}
+
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if display_name is not None:
+        details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    client = cli_util.build_client('virtual_network', ctx)
+    result = client.update_network_security_group(
+        network_security_group_id=network_security_group_id,
+        update_network_security_group_details=details,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_network_security_group') and callable(getattr(client, 'get_network_security_group')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_network_security_group(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@security_rule_group.command(name=cli_util.override('update_network_security_group_security_rules.command_name', 'update-network-security-group'), help=u"""Updates one or more security rules in the specified network security group.""")
+@cli_util.option('--network-security-group-id', required=True, help=u"""The [OCID] of the network security group.""")
+@cli_util.option('--security-rules', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The NSG security rules to update.
+
+This option is a JSON list with items of type UpdateSecurityRuleDetails.  For documentation on UpdateSecurityRuleDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/UpdateSecurityRuleDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'security-rules': {'module': 'core', 'class': 'list[UpdateSecurityRuleDetails]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'security-rules': {'module': 'core', 'class': 'list[UpdateSecurityRuleDetails]'}}, output_type={'module': 'core', 'class': 'UpdatedNetworkSecurityGroupSecurityRules'})
+@cli_util.wrap_exceptions
+def update_network_security_group_security_rules(ctx, from_json, network_security_group_id, security_rules):
+
+    if isinstance(network_security_group_id, six.string_types) and len(network_security_group_id.strip()) == 0:
+        raise click.UsageError('Parameter --network-security-group-id cannot be whitespace or empty string')
+
+    kwargs = {}
+
+    details = {}
+
+    if security_rules is not None:
+        details['securityRules'] = cli_util.parse_json_parameter("security_rules", security_rules)
+
+    client = cli_util.build_client('virtual_network', ctx)
+    result = client.update_network_security_group_security_rules(
+        network_security_group_id=network_security_group_id,
+        update_network_security_group_security_rules_details=details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @private_ip_group.command(name=cli_util.override('update_private_ip.command_name', 'update'), help=u"""Updates the specified private IP. You must specify the object's OCID. Use this operation if you want to:
 
   - Move a secondary private IP to a different VNIC in the same subnet.   - Change the display name for a secondary private IP.   - Change the hostname for a secondary private IP.
@@ -7072,6 +7741,9 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--hostname-label', help=u"""The hostname for the VNIC's primary private IP. Used for DNS. The value is the hostname portion of the primary private IP's fully qualified domain name (FQDN) (for example, `bminstance-1` in FQDN `bminstance-1.subnet123.vcn1.oraclevcn.com`). Must be unique across all VNICs in the subnet and comply with [RFC 952] and [RFC 1123]. The value appears in the [Vnic] object and also the [PrivateIp] object returned by [ListPrivateIps] and [GetPrivateIp].
 
 For more information, see [DNS in Your Virtual Cloud Network].""")
+@cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of the OCIDs of the network security groups (NSGs) to add the VNIC to. Setting this as an empty array removes the VNIC from all network security groups.
+
+For more information about NSGs, see [NetworkSecurityGroup].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--skip-source-dest-check', type=click.BOOL, help=u"""Whether the source/destination check is disabled on the VNIC. Defaults to `false`, which means the check is performed. For information about why you would skip the source/destination check, see [Using a Private IP as a Route Target].
 
 Example: `true`""")
@@ -7080,18 +7752,18 @@ Example: `true`""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}})
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'nsg-ids': {'module': 'core', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'Vnic'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'nsg-ids': {'module': 'core', 'class': 'list[string]'}}, output_type={'module': 'core', 'class': 'Vnic'})
 @cli_util.wrap_exceptions
-def update_vnic(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, vnic_id, defined_tags, display_name, freeform_tags, hostname_label, skip_source_dest_check, if_match):
+def update_vnic(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, vnic_id, defined_tags, display_name, freeform_tags, hostname_label, nsg_ids, skip_source_dest_check, if_match):
 
     if isinstance(vnic_id, six.string_types) and len(vnic_id.strip()) == 0:
         raise click.UsageError('Parameter --vnic-id cannot be whitespace or empty string')
     if not force:
-        if defined_tags or freeform_tags:
-            if not click.confirm("WARNING: Updates to defined-tags and freeform-tags will replace any existing values. Are you sure you want to continue?"):
+        if defined_tags or freeform_tags or nsg_ids:
+            if not click.confirm("WARNING: Updates to defined-tags and freeform-tags and nsg-ids will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -7111,6 +7783,9 @@ def update_vnic(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_in
 
     if hostname_label is not None:
         details['hostnameLabel'] = hostname_label
+
+    if nsg_ids is not None:
+        details['nsgIds'] = cli_util.parse_json_parameter("nsg_ids", nsg_ids)
 
     if skip_source_dest_check is not None:
         details['skipSourceDestCheck'] = skip_source_dest_check

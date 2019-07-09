@@ -14,9 +14,36 @@ from services.load_balancer.src.oci_cli_load_balancer.generated import loadbalan
 cli_util.rename_command(loadbalancer_cli.lb_root_group, loadbalancer_cli.load_balancer_policy_group, "policy")
 cli_util.rename_command(loadbalancer_cli.lb_root_group, loadbalancer_cli.load_balancer_protocol_group, "protocol")
 cli_util.rename_command(loadbalancer_cli.lb_root_group, loadbalancer_cli.load_balancer_shape_group, "shape")
+cli_util.rename_command(loadbalancer_cli.lb_root_group, loadbalancer_cli.network_security_groups_group, "nsg")
 cli_util.rename_command(loadbalancer_cli.load_balancer_policy_group, loadbalancer_cli.list_policies, "list")
 cli_util.rename_command(loadbalancer_cli.load_balancer_protocol_group, loadbalancer_cli.list_protocols, "list")
 cli_util.rename_command(loadbalancer_cli.load_balancer_shape_group, loadbalancer_cli.list_shapes, "list")
+
+
+@cli_util.copy_params_from_generated_command(loadbalancer_cli.create_load_balancer, params_to_exclude=['network_security_group_ids'])
+@loadbalancer_cli.load_balancer_group.command(name=cli_util.override('create_load_balancer.command_name', 'create'), help=loadbalancer_cli.create_load_balancer.help)
+@cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The array of NSG [OCIDs] to be used by this Load Balancer.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'listeners': {'module': 'load_balancer', 'class': 'dict(str, ListenerDetails)'}, 'hostnames': {'module': 'load_balancer', 'class': 'dict(str, HostnameDetails)'}, 'backend-sets': {'module': 'load_balancer', 'class': 'dict(str, BackendSetDetails)'}, 'nsg-ids': {'module': 'load_balancer', 'class': 'list[string]'}, 'subnet-ids': {'module': 'load_balancer', 'class': 'list[string]'}, 'certificates': {'module': 'load_balancer', 'class': 'dict(str, CertificateDetails)'}, 'path-route-sets': {'module': 'load_balancer', 'class': 'dict(str, PathRouteSetDetails)'}, 'freeform-tags': {'module': 'load_balancer', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'load_balancer', 'class': 'dict(str, dict(str, object))'}, 'rule-sets': {'module': 'load_balancer', 'class': 'dict(str, RuleSetDetails)'}})
+@cli_util.wrap_exceptions
+def create_load_balancer_extended(ctx, **kwargs):
+    if 'nsg_ids' in kwargs:
+        kwargs['network_security_group_ids'] = kwargs['nsg_ids']
+        kwargs.pop('nsg_ids')
+    ctx.invoke(loadbalancer_cli.create_load_balancer, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(loadbalancer_cli.update_network_security_groups, params_to_exclude=['network_security_group_ids'])
+@loadbalancer_cli.network_security_groups_group.command(name=cli_util.override('update_network_security_groups.command_name', 'update'), help=loadbalancer_cli.update_network_security_groups.help)
+@cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The array of NSG [OCIDs] to be used by this Load Balancer.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'nsg-ids': {'module': 'load_balancer', 'class': 'list[string]'}})
+@cli_util.wrap_exceptions
+def update_network_security_groups_extended(ctx, **kwargs):
+    if 'nsg_ids' in kwargs:
+        kwargs['network_security_group_ids'] = kwargs['nsg_ids']
+        kwargs.pop('nsg_ids')
+    ctx.invoke(loadbalancer_cli.update_network_security_groups, **kwargs)
 
 
 def process_ssl_configuration_kwargs(kwargs):

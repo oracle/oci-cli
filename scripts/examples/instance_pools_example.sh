@@ -6,6 +6,7 @@
 #   - Listing instance pool instances
 #   - Attaching a load balancer to the pool
 #   - Updating instance pool size
+#   - Getting the LB attachment info
 #   - Terminating instance pool
 #
 # For more help with specific instance pool commands with, see:
@@ -74,6 +75,7 @@ echo $PLACEMENT_CONFIG
 
 INSTANCE_CONFIG_ID=""
 INSTANCE_POOL_ID=""
+LB_ATTACHMENT_ID=""
 
 echo "Creating instance config in compartment $COMPARTMENT_ID with launch details from $INSTANCE_DETAILS_FILE_LOCATION"
 INSTANCE_CONFIG_ID=$(oci compute-management instance-configuration create --instance-details "$INSTANCE_DETAILS" --compartment-id $COMPARTMENT_ID --query 'data.id' --raw-output)
@@ -99,6 +101,12 @@ oci compute-management instance-pool update --instance-pool-id $INSTANCE_POOL_ID
 
 # adding some sleep here just so you can see the instances spinning up
 sleep 2m
+
+echo "Getting the lb attachment id from pool info"
+LB_ATTACHMENT_ID=$(oci compute-management instance-pool get --instance-pool-id $INSTANCE_POOL_ID --query 'data."load-balancers"[0].id' --raw-output)
+
+echo 'Getting the lb attachment info'
+oci compute-management instance-pool lb-attachment get --instance-pool-id $INSTANCE_POOL_ID --lb-attachment-id $LB_ATTACHMENT_ID
 
 echo "Moving the instance pool resource into compartment $ANOTHER_COMPARTMENT_ID"
 oci compute-management instance-pool change-compartment --instance-pool-id $INSTANCE_POOL_ID --compartment-id $ANOTHER_COMPARTMENT_ID

@@ -36,6 +36,7 @@ Commands:
                                   on...
   nat-gateway                     A NAT (Network Address Translation)
                                   gateway,...
+  nsg                             A *network security group* (NSG) provides...
   private-ip                      A *private IP* is a conceptual term that...
   public-ip                       A *public IP* is a conceptual term that...
   remote-peering-connection       A remote peering connection (RPC) is an...
@@ -5032,6 +5033,798 @@ Options:
                                   commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
+$ oci network nsg --help
+Usage: oci network nsg [OPTIONS] COMMAND [ARGS]...
+
+  A *network security group* (NSG) provides virtual firewall rules for a
+  specific set of [VNICs] in a VCN. Compare NSGs with [SecurityLists], which
+  provide virtual firewall rules to all the VNICs in a *subnet*.
+
+  A network security group consists of two items:
+
+    * The set of [VNICs] that all have the same security rule needs (for
+    example, a group of Compute instances all running the same application)
+    * A set of NSG [SecurityRules] that apply to the VNICs in the group
+
+  After creating an NSG, you can add VNICs and security rules to it. For
+  example, when you create an instance, you can specify one or more NSGs to
+  add the instance to (see [CreateVnicDetails]). Or you can add an existing
+  instance to an NSG with [UpdateVnic].
+
+  To add security rules to an NSG, see [AddNetworkSecurityGroupSecurityRules].
+
+  To list the VNICs in an NSG, see [ListNetworkSecurityGroupVnics].
+
+  To list the security rules in an NSG, see
+  [ListNetworkSecurityGroupSecurityRules].
+
+  For more information about network security groups, see [Network Security
+  Groups].
+
+  **Important:** Oracle Cloud Infrastructure Compute service images
+  automatically include firewall rules (for example, Linux iptables, Windows
+  firewall). If there are issues with some type of access to an instance, make
+  sure all of the following are set correctly:
+
+    * Any security rules in any NSGs the instance's VNIC belongs to   * Any
+    [SecurityLists] associated with the instance's subnet   * The instance's
+    OS firewall rules
+
+  To use any of the API operations, you must be authorized in an IAM policy.
+  If you're not authorized, talk to an administrator. If you're an
+  administrator who needs to write policies to give users access, see [Getting
+  Started with Policies].
+
+  **Warning:** Oracle recommends that you avoid using any confidential
+  information when you supply string values using the API.
+
+Options:
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
+
+Commands:
+  create  Creates a new network security group for the...
+  delete  Deletes the specified network security group.
+  get     Gets the specified network security group's...
+  list    Lists the network security groups in the...
+  rules   A security rule is one of the items in a...
+  update  Updates the specified network security group.
+  vnics   Information about a VNIC that belongs to a...
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci network nsg create --help
+Usage: oci network nsg create [OPTIONS]
+
+  Creates a new network security group for the specified VCN.
+
+Options:
+  -c, --compartment-id TEXT       The [OCID] of the compartment to contain the
+                                  network security group. [required]
+  --vcn-id TEXT                   The [OCID] of the VCN to create the network
+                                  security group in. [required]
+  --defined-tags COMPLEX TYPE     Defined tags for this resource. Each key is
+                                  predefined and scoped to a namespace. For more
+                                  information, see [Resource Tags].
+                                  
+                                  Example:
+                                  `{"Operations": {"CostCenter": "42"}}`
+                                  This is
+                                  a complex type whose value must be valid JSON.
+                                  The value can be provided as a string on the
+                                  command line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+  --display-name TEXT             A user-friendly name for the network security
+                                  group. Does not have to be unique. Avoid
+                                  entering confidential information.
+  --freeform-tags COMPLEX TYPE    Free-form tags for this resource. Each tag is
+                                  a simple key-value pair with no predefined
+                                  name, type, or namespace. For more
+                                  information, see [Resource Tags].
+                                  
+                                  Example:
+                                  `{"Department": "Finance"}`
+                                  This is a complex
+                                  type whose value must be valid JSON. The value
+                                  can be provided as a string on the command
+                                  line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+  --wait-for-state [PROVISIONING|AVAILABLE|TERMINATING|TERMINATED]
+                                  This operation creates, modifies or deletes a
+                                  resource that has a defined lifecycle state.
+                                  Specify this option to perform the action and
+                                  then wait until the resource reaches a given
+                                  lifecycle state. If timeout is reached, a
+                                  return code of 2 is returned. For any other
+                                  error, a return code of 1 is returned.
+  --max-wait-seconds INTEGER      The maximum time to wait for the resource to
+                                  reach the lifecycle state defined by --wait-
+                                  for-state. Defaults to 1200 seconds.
+  --wait-interval-seconds INTEGER
+                                  Check every --wait-interval-seconds to see
+                                  whether the resource to see if it has reached
+                                  the lifecycle state defined by --wait-for-
+                                  state. Defaults to 30 seconds.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file using the file://path-
+                                  to/file syntax.
+                                  
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci network nsg delete --help
+Usage: oci network nsg delete [OPTIONS]
+
+  Deletes the specified network security group. The group must not contain any
+  VNICs.
+
+  To get a list of the VNICs in a network security group, use
+  [ListNetworkSecurityGroupVnics]. Each returned [NetworkSecurityGroupVnic]
+  object contains both the OCID of the VNIC and the OCID of the VNIC's parent
+  resource (for example, the Compute instance that the VNIC is attached to).
+
+Options:
+  --if-match TEXT                 For optimistic concurrency control. In the PUT
+                                  or DELETE call for a resource, set the `if-
+                                  match` parameter to the value of the etag from
+                                  a previous GET or POST response for that
+                                  resource.  The resource will be updated or
+                                  deleted only if the etag you provide matches
+                                  the resource's current etag value.
+  --force                         Perform deletion without prompting for
+                                  confirmation.
+  --wait-for-state [PROVISIONING|AVAILABLE|TERMINATING|TERMINATED]
+                                  This operation creates, modifies or deletes a
+                                  resource that has a defined lifecycle state.
+                                  Specify this option to perform the action and
+                                  then wait until the resource reaches a given
+                                  lifecycle state. If timeout is reached, a
+                                  return code of 2 is returned. For any other
+                                  error, a return code of 1 is returned.
+  --max-wait-seconds INTEGER      The maximum time to wait for the resource to
+                                  reach the lifecycle state defined by --wait-
+                                  for-state. Defaults to 1200 seconds.
+  --wait-interval-seconds INTEGER
+                                  Check every --wait-interval-seconds to see
+                                  whether the resource to see if it has reached
+                                  the lifecycle state defined by --wait-for-
+                                  state. Defaults to 30 seconds.
+  --nsg-id TEXT                   The [OCID] of the network security group.
+                                  [required]
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file using the file://path-
+                                  to/file syntax.
+                                  
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci network nsg get --help
+Usage: oci network nsg get [OPTIONS]
+
+  Gets the specified network security group's information.
+
+  To list the VNICs in an NSG, see [ListNetworkSecurityGroupVnics].
+
+  To list the security rules in an NSG, see
+  [ListNetworkSecurityGroupSecurityRules].
+
+Options:
+  --nsg-id TEXT     The [OCID] of the network security group. [required]
+  --from-json TEXT  Provide input to this command as a JSON document from a file
+                    using the file://path-to/file syntax.
+                    
+                    The --generate-full-
+                    command-json-input option can be used to generate a sample
+                    json file to be used with this command option. The key names
+                    are pre-populated and match the command option names
+                    (converted to camelCase format, e.g. compartment-id -->
+                    compartmentId), while the values of the keys need to be
+                    populated by the user before using the sample file as an
+                    input to this command. For any command option that accepts
+                    multiple values, the value of the key can be a JSON array.
+                    Options can still be provided on the command line. If an
+                    option exists in both the JSON document and the command line
+                    then the command line specified value will be used.
+                    
+                    For
+                    examples on usage of this option, please see our "using CLI
+                    with advanced JSON options" link: https://docs.cloud.oracle.
+                    com/iaas/Content/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                    s
+  -?, -h, --help    For detailed help on any of these individual commands, enter
+                    <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci network nsg list --help
+Usage: oci network nsg list [OPTIONS]
+
+  Lists the network security groups in the specified compartment.
+
+Options:
+  -c, --compartment-id TEXT       The [OCID] of the compartment. [required]
+  --vcn-id TEXT                   The [OCID] of the VCN.
+  --limit INTEGER                 For list pagination. The maximum number of
+                                  results per page, or items to return in a
+                                  paginated "List" call. For important details
+                                  about how pagination works, see [List
+                                  Pagination].
+                                  
+                                  Example: `50`
+  --page TEXT                     For list pagination. The value of the `opc-
+                                  next-page` response header from the previous
+                                  "List" call. For important details about how
+                                  pagination works, see [List Pagination].
+  --display-name TEXT             A filter to return only resources that match
+                                  the given display name exactly.
+  --sort-by [TIMECREATED|DISPLAYNAME]
+                                  The field to sort by. You can provide one sort
+                                  order (`sortOrder`). Default order for
+                                  TIMECREATED is descending. Default order for
+                                  DISPLAYNAME is ascending. The DISPLAYNAME sort
+                                  order is case sensitive.
+                                  
+                                  **Note:** In
+                                  general, some "List" operations (for example,
+                                  `ListInstances`) let you optionally filter by
+                                  availability domain if the scope of the
+                                  resource type is within a single availability
+                                  domain. If you call one of these "List"
+                                  operations without specifying an availability
+                                  domain, the resources are grouped by
+                                  availability domain, then sorted.
+  --sort-order [ASC|DESC]         The sort order to use, either ascending
+                                  (`ASC`) or descending (`DESC`). The
+                                  DISPLAYNAME sort order is case sensitive.
+  --lifecycle-state [PROVISIONING|AVAILABLE|TERMINATING|TERMINATED]
+                                  A filter to return only resources that match
+                                  the specified lifecycle state. The value is
+                                  case insensitive.
+  --all                           Fetches all pages of results. If you provide
+                                  this option, then you cannot provide the
+                                  --limit option.
+  --page-size INTEGER             When fetching results, the number of results
+                                  to fetch per call. Only valid when used with
+                                  --all or --limit, and ignored otherwise.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file using the file://path-
+                                  to/file syntax.
+                                  
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci network nsg rules --help
+Usage: oci network nsg rules [OPTIONS] COMMAND [ARGS]...
+
+  A security rule is one of the items in a [NetworkSecurityGroup]. It is a
+  virtual firewall rule for the VNICs in the network security group. A rule
+  can be for either inbound (`direction`= INGRESS) or outbound (`direction`=
+  EGRESS) IP packets.
+
+Options:
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
+
+Commands:
+  add     Adds one or more security rules to the...
+  list    Lists the security rules in the specified...
+  remove  Removes one or more security rules from the...
+  update  Updates one or more security rules in the...
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci network nsg rules add --help
+Usage: oci network nsg rules add [OPTIONS]
+
+  Adds one or more security rules to the specified network security group.
+
+Options:
+  --security-rules COMPLEX TYPE  The NSG security rules to add.
+                                 
+                                 This option is
+                                 a JSON list with items of type
+                                 AddSecurityRuleDetails.  For documentation on
+                                 AddSecurityRuleDetails please see our API
+                                 reference: https://docs.cloud.oracle.com/api/#/
+                                 en/iaas/20160918/datatypes/AddSecurityRuleDetai
+                                 ls.
+                                 This is a complex type whose value must be
+                                 valid JSON. The value can be provided as a
+                                 string on the command line or passed in as a
+                                 file using
+                                 the file://path/to/file syntax.
+                                 
+                                 The
+                                 --generate-param-json-input option can be used
+                                 to generate an example of the JSON which must
+                                 be provided. We recommend storing this example
+                                 in a file, modifying it as needed and then
+                                 passing it back in via the file:// syntax.
+  --nsg-id TEXT                  The [OCID] of the network security group.
+                                 [required]
+  --from-json TEXT               Provide input to this command as a JSON
+                                 document from a file using the file://path-
+                                 to/file syntax.
+                                 
+                                 The --generate-full-command-
+                                 json-input option can be used to generate a
+                                 sample json file to be used with this command
+                                 option. The key names are pre-populated and
+                                 match the command option names (converted to
+                                 camelCase format, e.g. compartment-id -->
+                                 compartmentId), while the values of the keys
+                                 need to be populated by the user before using
+                                 the sample file as an input to this command.
+                                 For any command option that accepts multiple
+                                 values, the value of the key can be a JSON
+                                 array.
+                                 
+                                 Options can still be provided on the
+                                 command line. If an option exists in both the
+                                 JSON document and the command line then the
+                                 command line specified value will be used.
+                                 
+                                 For
+                                 examples on usage of this option, please see
+                                 our "using CLI with advanced JSON options"
+                                 link: https://docs.cloud.oracle.com/iaas/Conten
+                                 t/API/SDKDocs/cliusing.htm#AdvancedJSONOptions
+  -?, -h, --help                 For detailed help on any of these individual
+                                 commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci network nsg rules list --help
+Usage: oci network nsg rules list [OPTIONS]
+
+  Lists the security rules in the specified network security group.
+
+Options:
+  --direction [EGRESS|INGRESS]  Direction of the security rule. Set to `EGRESS`
+                                for rules that allow outbound IP packets, or
+                                `INGRESS` for rules that allow inbound IP
+                                packets.
+  --limit INTEGER               For list pagination. The maximum number of
+                                results per page, or items to return in a
+                                paginated "List" call. For important details
+                                about how pagination works, see [List
+                                Pagination].
+                                
+                                Example: `50`
+  --page TEXT                   For list pagination. The value of the `opc-next-
+                                page` response header from the previous "List"
+                                call. For important details about how pagination
+                                works, see [List Pagination].
+  --sort-by [TIMECREATED]       The field to sort by.
+  --sort-order [ASC|DESC]       The sort order to use, either ascending (`ASC`)
+                                or descending (`DESC`). The DISPLAYNAME sort
+                                order is case sensitive.
+  --all                         Fetches all pages of results. If you provide
+                                this option, then you cannot provide the --limit
+                                option.
+  --page-size INTEGER           When fetching results, the number of results to
+                                fetch per call. Only valid when used with --all
+                                or --limit, and ignored otherwise.
+  --nsg-id TEXT                 The [OCID] of the network security group.
+                                [required]
+  --from-json TEXT              Provide input to this command as a JSON document
+                                from a file using the file://path-to/file
+                                syntax.
+                                
+                                The --generate-full-command-json-input
+                                option can be used to generate a sample json
+                                file to be used with this command option. The
+                                key names are pre-populated and match the
+                                command option names (converted to camelCase
+                                format, e.g. compartment-id --> compartmentId),
+                                while the values of the keys need to be
+                                populated by the user before using the sample
+                                file as an input to this command. For any
+                                command option that accepts multiple values, the
+                                value of the key can be a JSON array.
+                                
+                                Options
+                                can still be provided on the command line. If an
+                                option exists in both the JSON document and the
+                                command line then the command line specified
+                                value will be used.
+                                
+                                For examples on usage of
+                                this option, please see our "using CLI with
+                                advanced JSON options" link: https://docs.cloud.
+                                oracle.com/iaas/Content/API/SDKDocs/cliusing.htm
+                                #AdvancedJSONOptions
+  -?, -h, --help                For detailed help on any of these individual
+                                commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci network nsg rules remove --help
+Usage: oci network nsg rules remove [OPTIONS]
+
+  Removes one or more security rules from the specified network security
+  group.
+
+Options:
+  --security-rule-ids COMPLEX TYPE
+                                  The Oracle-assigned ID of each [SecurityRule]
+                                  to be deleted.
+                                  This is a complex type whose
+                                  value must be valid JSON. The value can be
+                                  provided as a string on the command line or
+                                  passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+  --nsg-id TEXT                   The [OCID] of the network security group.
+                                  [required]
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file using the file://path-
+                                  to/file syntax.
+                                  
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci network nsg rules update --help
+Usage: oci network nsg rules update [OPTIONS]
+
+  Updates one or more security rules in the specified network security group.
+
+Options:
+  --security-rules COMPLEX TYPE  The NSG security rules to update.
+                                 
+                                 This option
+                                 is a JSON list with items of type
+                                 UpdateSecurityRuleDetails.  For documentation
+                                 on UpdateSecurityRuleDetails please see our API
+                                 reference: https://docs.cloud.oracle.com/api/#/
+                                 en/iaas/20160918/datatypes/UpdateSecurityRuleDe
+                                 tails.
+                                 This is a complex type whose value must
+                                 be valid JSON. The value can be provided as a
+                                 string on the command line or passed in as a
+                                 file using
+                                 the file://path/to/file syntax.
+                                 
+                                 The
+                                 --generate-param-json-input option can be used
+                                 to generate an example of the JSON which must
+                                 be provided. We recommend storing this example
+                                 in a file, modifying it as needed and then
+                                 passing it back in via the file:// syntax.
+  --nsg-id TEXT                  The [OCID] of the network security group.
+                                 [required]
+  --from-json TEXT               Provide input to this command as a JSON
+                                 document from a file using the file://path-
+                                 to/file syntax.
+                                 
+                                 The --generate-full-command-
+                                 json-input option can be used to generate a
+                                 sample json file to be used with this command
+                                 option. The key names are pre-populated and
+                                 match the command option names (converted to
+                                 camelCase format, e.g. compartment-id -->
+                                 compartmentId), while the values of the keys
+                                 need to be populated by the user before using
+                                 the sample file as an input to this command.
+                                 For any command option that accepts multiple
+                                 values, the value of the key can be a JSON
+                                 array.
+                                 
+                                 Options can still be provided on the
+                                 command line. If an option exists in both the
+                                 JSON document and the command line then the
+                                 command line specified value will be used.
+                                 
+                                 For
+                                 examples on usage of this option, please see
+                                 our "using CLI with advanced JSON options"
+                                 link: https://docs.cloud.oracle.com/iaas/Conten
+                                 t/API/SDKDocs/cliusing.htm#AdvancedJSONOptions
+  -?, -h, --help                 For detailed help on any of these individual
+                                 commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci network nsg update --help
+Usage: oci network nsg update [OPTIONS]
+
+  Updates the specified network security group.
+
+  To add or remove an existing VNIC from the group, use [UpdateVnic].
+
+  To add a VNIC to the group *when you create the VNIC*, specify the NSG's
+  OCID during creation. For example, see the `nsgIds` attribute in
+  [CreateVnicDetails].
+
+  To add or remove security rules from the group, use
+  [AddNetworkSecurityGroupSecurityRules] or
+  [RemoveNetworkSecurityGroupSecurityRules].
+
+  To edit the contents of existing security rules in the group, use
+  [UpdateNetworkSecurityGroupSecurityRules].
+
+Options:
+  --defined-tags COMPLEX TYPE     Defined tags for this resource. Each key is
+                                  predefined and scoped to a namespace. For more
+                                  information, see [Resource Tags].
+                                  
+                                  Example:
+                                  `{"Operations": {"CostCenter": "42"}}`
+                                  This is
+                                  a complex type whose value must be valid JSON.
+                                  The value can be provided as a string on the
+                                  command line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+  --display-name TEXT             A user-friendly name. Does not have to be
+                                  unique, and it's changeable.
+  --freeform-tags COMPLEX TYPE    Free-form tags for this resource. Each tag is
+                                  a simple key-value pair with no predefined
+                                  name, type, or namespace. For more
+                                  information, see [Resource Tags].
+                                  
+                                  Example:
+                                  `{"Department": "Finance"}`
+                                  This is a complex
+                                  type whose value must be valid JSON. The value
+                                  can be provided as a string on the command
+                                  line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+  --if-match TEXT                 For optimistic concurrency control. In the PUT
+                                  or DELETE call for a resource, set the `if-
+                                  match` parameter to the value of the etag from
+                                  a previous GET or POST response for that
+                                  resource.  The resource will be updated or
+                                  deleted only if the etag you provide matches
+                                  the resource's current etag value.
+  --force                         Perform update without prompting for
+                                  confirmation.
+  --wait-for-state [PROVISIONING|AVAILABLE|TERMINATING|TERMINATED]
+                                  This operation creates, modifies or deletes a
+                                  resource that has a defined lifecycle state.
+                                  Specify this option to perform the action and
+                                  then wait until the resource reaches a given
+                                  lifecycle state. If timeout is reached, a
+                                  return code of 2 is returned. For any other
+                                  error, a return code of 1 is returned.
+  --max-wait-seconds INTEGER      The maximum time to wait for the resource to
+                                  reach the lifecycle state defined by --wait-
+                                  for-state. Defaults to 1200 seconds.
+  --wait-interval-seconds INTEGER
+                                  Check every --wait-interval-seconds to see
+                                  whether the resource to see if it has reached
+                                  the lifecycle state defined by --wait-for-
+                                  state. Defaults to 30 seconds.
+  --nsg-id TEXT                   The [OCID] of the network security group.
+                                  [required]
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file using the file://path-
+                                  to/file syntax.
+                                  
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci network nsg vnics --help
+Usage: oci network nsg vnics [OPTIONS] COMMAND [ARGS]...
+
+  Information about a VNIC that belongs to a network security group.
+
+Options:
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
+
+Commands:
+  list  Lists the VNICs in the specified network...
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci network nsg vnics list --help
+Usage: oci network nsg vnics list [OPTIONS]
+
+  Lists the VNICs in the specified network security group.
+
+Options:
+  --limit INTEGER             For list pagination. The maximum number of results
+                              per page, or items to return in a paginated "List"
+                              call. For important details about how pagination
+                              works, see [List Pagination].
+                              
+                              Example: `50`
+  --page TEXT                 For list pagination. The value of the `opc-next-
+                              page` response header from the previous "List"
+                              call. For important details about how pagination
+                              works, see [List Pagination].
+  --sort-by [TIMEASSOCIATED]  The field to sort by.
+  --sort-order [ASC|DESC]     The sort order to use, either ascending (`ASC`) or
+                              descending (`DESC`). The DISPLAYNAME sort order is
+                              case sensitive.
+  --all                       Fetches all pages of results. If you provide this
+                              option, then you cannot provide the --limit
+                              option.
+  --page-size INTEGER         When fetching results, the number of results to
+                              fetch per call. Only valid when used with --all or
+                              --limit, and ignored otherwise.
+  --nsg-id TEXT               The [OCID] of the network security group.
+                              [required]
+  --from-json TEXT            Provide input to this command as a JSON document
+                              from a file using the file://path-to/file syntax.
+                              The --generate-full-command-json-input option can
+                              be used to generate a sample json file to be used
+                              with this command option. The key names are pre-
+                              populated and match the command option names
+                              (converted to camelCase format, e.g. compartment-
+                              id --> compartmentId), while the values of the
+                              keys need to be populated by the user before using
+                              the sample file as an input to this command. For
+                              any command option that accepts multiple values,
+                              the value of the key can be a JSON array.
+                              
+                              Options
+                              can still be provided on the command line. If an
+                              option exists in both the JSON document and the
+                              command line then the command line specified value
+                              will be used.
+                              
+                              For examples on usage of this
+                              option, please see our "using CLI with advanced
+                              JSON options" link: https://docs.cloud.oracle.com/
+                              iaas/Content/API/SDKDocs/cliusing.htm#AdvancedJSON
+                              Options
+  -?, -h, --help              For detailed help on any of these individual
+                              commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network private-ip --help
 Usage: oci network private-ip [OPTIONS] COMMAND [ARGS]...
 
@@ -6255,11 +7048,50 @@ Options:
                   <command> --help.
 
 Commands:
-  create  Creates a new route table for the specified...
-  delete  Deletes the specified route table, but only...
-  get     Gets the specified route table's information.
-  list    Lists the route tables in the specified VCN...
-  update  Updates the specified route table's display...
+  change-compartment  Moves a route table into a different...
+  create              Creates a new route table for the specified...
+  delete              Deletes the specified route table, but only...
+  get                 Gets the specified route table's information.
+  list                Lists the route tables in the specified VCN...
+  update              Updates the specified route table's display...
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci network route-table change-compartment --help
+Usage: oci network route-table change-compartment [OPTIONS]
+
+  Moves a route table into a different compartment within the same tenancy.
+  For information about moving resources between compartments, see [Moving
+  Resources to a Different Compartment].
+
+Options:
+  --rt-id TEXT               The OCID of the route table. [required]
+  -c, --compartment-id TEXT  The [OCID] of the compartment to move the route
+                             table to. [required]
+  --from-json TEXT           Provide input to this command as a JSON document
+                             from a file using the file://path-to/file syntax.
+                             The --generate-full-command-json-input option can
+                             be used to generate a sample json file to be used
+                             with this command option. The key names are pre-
+                             populated and match the command option names
+                             (converted to camelCase format, e.g. compartment-id
+                             --> compartmentId), while the values of the keys
+                             need to be populated by the user before using the
+                             sample file as an input to this command. For any
+                             command option that accepts multiple values, the
+                             value of the key can be a JSON array.
+                             
+                             Options can
+                             still be provided on the command line. If an option
+                             exists in both the JSON document and the command
+                             line then the command line specified value will be
+                             used.
+                             
+                             For examples on usage of this option, please
+                             see our "using CLI with advanced JSON options"
+                             link: https://docs.cloud.oracle.com/iaas/Content/AP
+                             I/SDKDocs/cliusing.htm#AdvancedJSONOptions
+  -?, -h, --help             For detailed help on any of these individual
+                             commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network route-table create --help
@@ -6727,6 +7559,11 @@ Usage: oci network security-list [OPTIONS] COMMAND [ARGS]...
   traffic for the individual instances in the subnet. The rules can be
   stateful or stateless. For more information, see [Security Lists].
 
+  **Note:** Compare security lists to [NetworkSecurityGroup]s, which let you
+  apply a set of security rules to a *specific set of VNICs* instead of an
+  entire subnet. Oracle recommends using network security groups instead of
+  security lists, although you can use either or both together.
+
   **Important:** Oracle Cloud Infrastructure Compute service images
   automatically include firewall rules (for example, Linux iptables, Windows
   firewall). If there are issues with some type of access to an instance, make
@@ -6746,11 +7583,50 @@ Options:
                   <command> --help.
 
 Commands:
-  create  Creates a new security list for the specified...
-  delete  Deletes the specified security list, but only...
-  get     Gets the specified security list's...
-  list    Lists the security lists in the specified VCN...
-  update  Updates the specified security list's display...
+  change-compartment  Moves a security list into a different...
+  create              Creates a new security list for the specified...
+  delete              Deletes the specified security list, but only...
+  get                 Gets the specified security list's...
+  list                Lists the security lists in the specified VCN...
+  update              Updates the specified security list's display...
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci network security-list change-compartment --help
+Usage: oci network security-list change-compartment [OPTIONS]
+
+  Moves a security list into a different compartment within the same tenancy.
+  For information about moving resources between compartments, see [Moving
+  Resources to a Different Compartment].
+
+Options:
+  --security-list-id TEXT    The OCID of the security list. [required]
+  -c, --compartment-id TEXT  The [OCID] of the compartment to move the security
+                             list to. [required]
+  --from-json TEXT           Provide input to this command as a JSON document
+                             from a file using the file://path-to/file syntax.
+                             The --generate-full-command-json-input option can
+                             be used to generate a sample json file to be used
+                             with this command option. The key names are pre-
+                             populated and match the command option names
+                             (converted to camelCase format, e.g. compartment-id
+                             --> compartmentId), while the values of the keys
+                             need to be populated by the user before using the
+                             sample file as an input to this command. For any
+                             command option that accepts multiple values, the
+                             value of the key can be a JSON array.
+                             
+                             Options can
+                             still be provided on the command line. If an option
+                             exists in both the JSON document and the command
+                             line then the command line specified value will be
+                             used.
+                             
+                             For examples on usage of this option, please
+                             see our "using CLI with advanced JSON options"
+                             link: https://docs.cloud.oracle.com/iaas/Content/AP
+                             I/SDKDocs/cliusing.htm#AdvancedJSONOptions
+  -?, -h, --help             For detailed help on any of these individual
+                             commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network security-list create --help
@@ -8057,11 +8933,50 @@ Options:
                   <command> --help.
 
 Commands:
-  create  Creates a new subnet in the specified VCN.
-  delete  Deletes the specified subnet, but only if...
-  get     Gets the specified subnet's information.
-  list    Lists the subnets in the specified VCN and...
-  update  Updates the specified subnet.
+  change-compartment  Moves a subnet into a different compartment...
+  create              Creates a new subnet in the specified VCN.
+  delete              Deletes the specified subnet, but only if...
+  get                 Gets the specified subnet's information.
+  list                Lists the subnets in the specified VCN and...
+  update              Updates the specified subnet.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci network subnet change-compartment --help
+Usage: oci network subnet change-compartment [OPTIONS]
+
+  Moves a subnet into a different compartment within the same tenancy. For
+  information about moving resources between compartments, see [Moving
+  Resources to a Different Compartment].
+
+Options:
+  --subnet-id TEXT           The OCID of the subnet. [required]
+  -c, --compartment-id TEXT  The [OCID] of the compartment to move the subnet
+                             to. [required]
+  --from-json TEXT           Provide input to this command as a JSON document
+                             from a file using the file://path-to/file syntax.
+                             The --generate-full-command-json-input option can
+                             be used to generate a sample json file to be used
+                             with this command option. The key names are pre-
+                             populated and match the command option names
+                             (converted to camelCase format, e.g. compartment-id
+                             --> compartmentId), while the values of the keys
+                             need to be populated by the user before using the
+                             sample file as an input to this command. For any
+                             command option that accepts multiple values, the
+                             value of the key can be a JSON array.
+                             
+                             Options can
+                             still be provided on the command line. If an option
+                             exists in both the JSON document and the command
+                             line then the command line specified value will be
+                             used.
+                             
+                             For examples on usage of this option, please
+                             see our "using CLI with advanced JSON options"
+                             link: https://docs.cloud.oracle.com/iaas/Content/AP
+                             I/SDKDocs/cliusing.htm#AdvancedJSONOptions
+  -?, -h, --help             For detailed help on any of these individual
+                             commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network subnet create --help
@@ -8615,11 +9530,50 @@ Options:
                   <command> --help.
 
 Commands:
-  create  Creates a new virtual cloud network (VCN).
-  delete  Deletes the specified VCN.
-  get     Gets the specified VCN's information.
-  list    Lists the virtual cloud networks (VCNs) in...
-  update  Updates the specified VCN.
+  change-compartment  Moves a VCN into a different compartment...
+  create              Creates a new virtual cloud network (VCN).
+  delete              Deletes the specified VCN.
+  get                 Gets the specified VCN's information.
+  list                Lists the virtual cloud networks (VCNs) in...
+  update              Updates the specified VCN.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci network vcn change-compartment --help
+Usage: oci network vcn change-compartment [OPTIONS]
+
+  Moves a VCN into a different compartment within the same tenancy. For
+  information about moving resources between compartments, see [Moving
+  Resources to a Different Compartment].
+
+Options:
+  --vcn-id TEXT              The [OCID] of the VCN. [required]
+  -c, --compartment-id TEXT  The [OCID] of the compartment to move the VCN to.
+                             [required]
+  --from-json TEXT           Provide input to this command as a JSON document
+                             from a file using the file://path-to/file syntax.
+                             The --generate-full-command-json-input option can
+                             be used to generate a sample json file to be used
+                             with this command option. The key names are pre-
+                             populated and match the command option names
+                             (converted to camelCase format, e.g. compartment-id
+                             --> compartmentId), while the values of the keys
+                             need to be populated by the user before using the
+                             sample file as an input to this command. For any
+                             command option that accepts multiple values, the
+                             value of the key can be a JSON array.
+                             
+                             Options can
+                             still be provided on the command line. If an option
+                             exists in both the JSON document and the command
+                             line then the command line specified value will be
+                             used.
+                             
+                             For examples on usage of this option, please
+                             see our "using CLI with advanced JSON options"
+                             link: https://docs.cloud.oracle.com/iaas/Content/AP
+                             I/SDKDocs/cliusing.htm#AdvancedJSONOptions
+  -?, -h, --help             For detailed help on any of these individual
+                             commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network vcn create --help
@@ -10053,6 +11007,25 @@ Options:
                                   For more
                                   information, see [DNS in Your Virtual Cloud
                                   Network].
+  --nsg-ids COMPLEX TYPE          A list of the OCIDs of the network security
+                                  groups (NSGs) to add the VNIC to. Setting this
+                                  as an empty array removes the VNIC from all
+                                  network security groups.
+                                  
+                                  For more information
+                                  about NSGs, see [NetworkSecurityGroup].
+                                  This
+                                  is a complex type whose value must be valid
+                                  JSON. The value can be provided as a string on
+                                  the command line or passed in as a file using
+                                  the file://path/to/file syntax.
+                                  
+                                  The
+                                  --generate-param-json-input option can be used
+                                  to generate an example of the JSON which must
+                                  be provided. We recommend storing this example
+                                  in a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
   --skip-source-dest-check BOOLEAN
                                   Whether the source/destination check is
                                   disabled on the VNIC. Defaults to `false`,
