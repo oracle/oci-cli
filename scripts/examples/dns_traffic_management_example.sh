@@ -7,6 +7,7 @@
 #   * DNS_ZONE_NAME: The second is the name of the DNS zone to create (e.g. my-example-zone.com)
 #   * STEERING_POLICY_NAME: The third is the name of the Steering Policy (e.g. "Example Load Balance Policy")
 #   * DOMAIN_NAME: The fourth is the domain name within the zone to attach the policy to. The domain must be within the zone. (e.g. www.my-example-zone.com)
+#   * TARGET_COMPARTMENT_ID: The fifth argument is the OCID of the compartment into which the DNS Steering Policy should be moved
 #
 # Requirements for running this script:
 #   - OCI CLI v2.4.40 or later (you can check this by running oci --version)
@@ -14,10 +15,30 @@
 
 set -e
 
-COMPARTMENT_ID=""
-DNS_ZONE_NAME=""
-STEERING_POLICY_NAME=""
-DOMAIN_NAME=""
+if [ "${COMPARTMENT_ID}" == "" ]; then
+  echo $0: "COMPARTMENT_ID must be defined in the environment"
+  exit 1
+fi
+
+if [ "${DNS_ZONE_NAME}" == "" ]; then
+  echo $0: "DNS_ZONE_NAME must be defined in the environment"
+  exit 1
+fi
+
+if [ "${STEERING_POLICY_NAME}" == "" ]; then
+  echo $0: "STEERING_POLICY_NAME must be defined in the environment"
+  exit 1
+fi
+
+if [ "${DOMAIN_NAME}" == "" ]; then
+  echo $0: "DOMAIN_NAME must be defined in the environment"
+  exit 1
+fi
+
+if [ "${TARGET_COMPARTMENT_ID}" == "" ]; then
+  echo $0: "TARGET_COMPARTMENT_ID must be defined in the environment"
+  exit 1
+fi
 
 BORDER="=========================================="
 
@@ -71,6 +92,10 @@ ATTACHMENT_ID=$(oci dns steering-policy-attachment create --steering-policy-id $
     --domain-name "$DOMAIN_NAME" \
     --raw-output --query 'data.id')
 echo "Attachment ID: $ATTACHMENT_ID"
+
+# We can move the Steering Policy to another compartment
+echo "Changing the compartment Steering Policy: $STEERING_POLICY_NAME"
+oci dns steering-policy change-compartment --steering-policy-id $POLICY_ID --compartment-id $TARGET_COMPARTMENT_ID
 
 # At this point the policy has been applied to the specified domain and answers to DNS queries for
 # A records at that domain will be computed using the policy.

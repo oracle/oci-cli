@@ -1,0 +1,9 @@
+{
+  "cookie_name": "X-Oracle-OCI-lb_persist_cookie_1", 
+  "disable_fallback": false, 
+  "domain": "mydomain.com", 
+  "is_http_only": true, 
+  "is_secure": false, 
+  "max_age_in_seconds": 180, 
+  "path": "/path"
+}

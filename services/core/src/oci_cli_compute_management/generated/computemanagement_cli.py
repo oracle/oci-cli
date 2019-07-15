@@ -123,6 +123,8 @@ def attach_load_balancer(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 
 @instance_configuration_group.command(name=cli_util.override('change_instance_configuration_compartment.command_name', 'change-compartment'), help=u"""Moves an instance configuration into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].
 
+When you move an instance configuration to a different compartment, associated resources such as instance pools are not moved.
+
 **Important:** Most of the properties for an existing instance configuration, including the compartment, cannot be modified after you create the instance configuration. Although you can move an instance configuration to a different compartment, you will not be able to use the instance configuration to manage instance pools in the new compartment. If you want to update an instance configuration to point to a different compartment, you should instead create a new instance configuration in the target compartment using [CreateInstanceConfiguration].""")
 @cli_util.option('--instance-configuration-id', required=True, help=u"""The OCID of the instance configuration.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the instance configuration to.""")

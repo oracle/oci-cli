@@ -38,6 +38,16 @@
       {
         "action": "REMOVE_HTTP_RESPONSE_HEADER",
         "header": "AnyHeaderName6"
+      },
+      {
+        "action": "ALLOW",
+        "description": "Allow traffic from internet clients",
+        "conditions": [
+          {
+            "attributeName": "SOURCE_IP_ADDRESS",
+            "attributeValue": "111.111.111.111/32"
+          }
+        ]
       }
     ]
   }

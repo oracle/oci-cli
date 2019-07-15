@@ -88,6 +88,12 @@ def load_balancer_protocol_group():
     pass
 
 
+@click.command(cli_util.override('listener_rule_group.command_name', 'listener-rule'), cls=CommandGroupWithAlias, help="""The attributes of a rule associated with the specified listener, and the name of the rule set that the rule belongs to.""")
+@cli_util.help_option_group
+def listener_rule_group():
+    pass
+
+
 @click.command(cli_util.override('load_balancer_health_group.command_name', 'load-balancer-health'), cls=CommandGroupWithAlias, help="""The health status details for the specified load balancer.
 
 This object does not explicitly enumerate backend sets with a status of `OK`. However, they are included in the `totalBackendSetCount` sum.""")
@@ -124,6 +130,8 @@ def rule_set_group():
 
 @click.command(cli_util.override('backend_set_group.command_name', 'backend-set'), cls=CommandGroupWithAlias, help="""The configuration of a load balancer backend set. For more information on backend set configuration, see [Managing Backend Sets].
 
+**Note:** The `sessionPersistenceConfiguration` (application cookie stickiness) and `lbCookieSessionPersistenceConfiguration` (LB cookie stickiness) attributes are mutually exclusive. To avoid returning an error, configure only one of these two attributes per backend set.
+
 **Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
 @cli_util.help_option_group
 def backend_set_group():
@@ -151,6 +159,7 @@ lb_root_group.add_command(backend_set_health_group)
 lb_root_group.add_command(health_checker_group)
 lb_root_group.add_command(path_route_set_group)
 lb_root_group.add_command(load_balancer_protocol_group)
+lb_root_group.add_command(listener_rule_group)
 lb_root_group.add_command(load_balancer_health_group)
 lb_root_group.add_command(hostname_group)
 lb_root_group.add_command(load_balancer_policy_group)
@@ -159,6 +168,64 @@ lb_root_group.add_command(rule_set_group)
 lb_root_group.add_command(backend_set_group)
 lb_root_group.add_command(backend_group)
 lb_root_group.add_command(network_security_groups_group)
+
+
+@load_balancer_group.command(name=cli_util.override('change_load_balancer_compartment.command_name', 'change-compartment'), help=u"""Moves a load balancer into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].""")
+@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer to move.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the load balancer to.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. Set the if-match parameter to the value of the ETag from a previous GET or POST response for that resource. The resource is moved only if the ETag you provide matches the resource's current ETag value.
+
+Example: `example-etag`""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_load_balancer_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, load_balancer_id, compartment_id, if_match):
+
+    if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
+        raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    details = {}
+    details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('load_balancer', ctx)
+    result = client.change_load_balancer_compartment(
+        load_balancer_id=load_balancer_id,
+        change_load_balancer_compartment_details=details,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
 
 
 @backend_group.command(name=cli_util.override('create_backend.command_name', 'create'), help=u"""Adds a backend server to a backend set.""")
@@ -267,15 +334,16 @@ Example: `LEAST_CONNECTIONS`""")
 This option is a JSON list with items of type BackendDetails.  For documentation on BackendDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/loadbalancer/20170115/datatypes/BackendDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--ssl-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--session-persistence-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--lb-cookie-session-persistence-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'backends': {'module': 'load_balancer', 'class': 'list[BackendDetails]'}, 'health-checker': {'module': 'load_balancer', 'class': 'HealthCheckerDetails'}, 'ssl-configuration': {'module': 'load_balancer', 'class': 'SSLConfigurationDetails'}, 'session-persistence-configuration': {'module': 'load_balancer', 'class': 'SessionPersistenceConfigurationDetails'}})
+@json_skeleton_utils.get_cli_json_input_option({'backends': {'module': 'load_balancer', 'class': 'list[BackendDetails]'}, 'health-checker': {'module': 'load_balancer', 'class': 'HealthCheckerDetails'}, 'ssl-configuration': {'module': 'load_balancer', 'class': 'SSLConfigurationDetails'}, 'session-persistence-configuration': {'module': 'load_balancer', 'class': 'SessionPersistenceConfigurationDetails'}, 'lb-cookie-session-persistence-configuration': {'module': 'load_balancer', 'class': 'LBCookieSessionPersistenceConfigurationDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'backends': {'module': 'load_balancer', 'class': 'list[BackendDetails]'}, 'health-checker': {'module': 'load_balancer', 'class': 'HealthCheckerDetails'}, 'ssl-configuration': {'module': 'load_balancer', 'class': 'SSLConfigurationDetails'}, 'session-persistence-configuration': {'module': 'load_balancer', 'class': 'SessionPersistenceConfigurationDetails'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'backends': {'module': 'load_balancer', 'class': 'list[BackendDetails]'}, 'health-checker': {'module': 'load_balancer', 'class': 'HealthCheckerDetails'}, 'ssl-configuration': {'module': 'load_balancer', 'class': 'SSLConfigurationDetails'}, 'session-persistence-configuration': {'module': 'load_balancer', 'class': 'SessionPersistenceConfigurationDetails'}, 'lb-cookie-session-persistence-configuration': {'module': 'load_balancer', 'class': 'LBCookieSessionPersistenceConfigurationDetails'}})
 @cli_util.wrap_exceptions
-def create_backend_set(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, policy, health_checker, load_balancer_id, backends, ssl_configuration, session_persistence_configuration):
+def create_backend_set(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, policy, health_checker, load_balancer_id, backends, ssl_configuration, session_persistence_configuration, lb_cookie_session_persistence_configuration):
 
     if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
@@ -296,6 +364,9 @@ def create_backend_set(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
     if session_persistence_configuration is not None:
         details['sessionPersistenceConfiguration'] = cli_util.parse_json_parameter("session_persistence_configuration", session_persistence_configuration)
+
+    if lb_cookie_session_persistence_configuration is not None:
+        details['lbCookieSessionPersistenceConfiguration'] = cli_util.parse_json_parameter("lb_cookie_session_persistence_configuration", lb_cookie_session_persistence_configuration)
 
     client = cli_util.build_client('load_balancer', ctx)
     result = client.create_backend_set(
@@ -1668,6 +1739,36 @@ def list_hostnames(ctx, from_json, all_pages, load_balancer_id):
     cli_util.render_response(result, ctx)
 
 
+@listener_rule_group.command(name=cli_util.override('list_listener_rules.command_name', 'list'), help=u"""Lists all of the rules from all of the rule sets associated with the specified listener. The response organizes the rules in the following order:
+
+*  Access control rules *  Allow method rules *  Request header rules *  Response header rules""")
+@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer associated with the listener.""")
+@cli_util.option('--listener-name', required=True, help=u"""The name of the listener the rules are associated with.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'load_balancer', 'class': 'list[ListenerRuleSummary]'})
+@cli_util.wrap_exceptions
+def list_listener_rules(ctx, from_json, all_pages, load_balancer_id, listener_name):
+
+    if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
+        raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
+
+    if isinstance(listener_name, six.string_types) and len(listener_name.strip()) == 0:
+        raise click.UsageError('Parameter --listener-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('load_balancer', ctx)
+    result = client.list_listener_rules(
+        load_balancer_id=load_balancer_id,
+        listener_name=listener_name,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @load_balancer_health_group.command(name=cli_util.override('list_load_balancer_healths.command_name', 'list'), help=u"""Lists the summary health statuses for all load balancers in the specified compartment.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the load balancers to return health status information for.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
@@ -2143,16 +2244,17 @@ Example: `LEAST_CONNECTIONS`""")
 Example: `example_backend_set`""")
 @cli_util.option('--ssl-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--session-persistence-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--lb-cookie-session-persistence-configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'backends': {'module': 'load_balancer', 'class': 'list[BackendDetails]'}, 'health-checker': {'module': 'load_balancer', 'class': 'HealthCheckerDetails'}, 'ssl-configuration': {'module': 'load_balancer', 'class': 'SSLConfigurationDetails'}, 'session-persistence-configuration': {'module': 'load_balancer', 'class': 'SessionPersistenceConfigurationDetails'}})
+@json_skeleton_utils.get_cli_json_input_option({'backends': {'module': 'load_balancer', 'class': 'list[BackendDetails]'}, 'health-checker': {'module': 'load_balancer', 'class': 'HealthCheckerDetails'}, 'ssl-configuration': {'module': 'load_balancer', 'class': 'SSLConfigurationDetails'}, 'session-persistence-configuration': {'module': 'load_balancer', 'class': 'SessionPersistenceConfigurationDetails'}, 'lb-cookie-session-persistence-configuration': {'module': 'load_balancer', 'class': 'LBCookieSessionPersistenceConfigurationDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'backends': {'module': 'load_balancer', 'class': 'list[BackendDetails]'}, 'health-checker': {'module': 'load_balancer', 'class': 'HealthCheckerDetails'}, 'ssl-configuration': {'module': 'load_balancer', 'class': 'SSLConfigurationDetails'}, 'session-persistence-configuration': {'module': 'load_balancer', 'class': 'SessionPersistenceConfigurationDetails'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'backends': {'module': 'load_balancer', 'class': 'list[BackendDetails]'}, 'health-checker': {'module': 'load_balancer', 'class': 'HealthCheckerDetails'}, 'ssl-configuration': {'module': 'load_balancer', 'class': 'SSLConfigurationDetails'}, 'session-persistence-configuration': {'module': 'load_balancer', 'class': 'SessionPersistenceConfigurationDetails'}, 'lb-cookie-session-persistence-configuration': {'module': 'load_balancer', 'class': 'LBCookieSessionPersistenceConfigurationDetails'}})
 @cli_util.wrap_exceptions
-def update_backend_set(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, policy, backends, health_checker, load_balancer_id, backend_set_name, ssl_configuration, session_persistence_configuration):
+def update_backend_set(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, policy, backends, health_checker, load_balancer_id, backend_set_name, ssl_configuration, session_persistence_configuration, lb_cookie_session_persistence_configuration):
 
     if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
         raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
@@ -2160,8 +2262,8 @@ def update_backend_set(ctx, from_json, force, wait_for_state, max_wait_seconds, 
     if isinstance(backend_set_name, six.string_types) and len(backend_set_name.strip()) == 0:
         raise click.UsageError('Parameter --backend-set-name cannot be whitespace or empty string')
     if not force:
-        if backends or health_checker or ssl_configuration or session_persistence_configuration:
-            if not click.confirm("WARNING: Updates to backends and health-checker and ssl-configuration and session-persistence-configuration will replace any existing values. Are you sure you want to continue?"):
+        if backends or health_checker or ssl_configuration or session_persistence_configuration or lb_cookie_session_persistence_configuration:
+            if not click.confirm("WARNING: Updates to backends and health-checker and ssl-configuration and session-persistence-configuration and lb-cookie-session-persistence-configuration will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -2177,6 +2279,9 @@ def update_backend_set(ctx, from_json, force, wait_for_state, max_wait_seconds, 
 
     if session_persistence_configuration is not None:
         details['sessionPersistenceConfiguration'] = cli_util.parse_json_parameter("session_persistence_configuration", session_persistence_configuration)
+
+    if lb_cookie_session_persistence_configuration is not None:
+        details['lbCookieSessionPersistenceConfiguration'] = cli_util.parse_json_parameter("lb_cookie_session_persistence_configuration", lb_cookie_session_persistence_configuration)
 
     client = cli_util.build_client('load_balancer', ctx)
     result = client.update_backend_set(

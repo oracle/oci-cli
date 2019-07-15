@@ -436,6 +436,7 @@ Commands:
   delete  Deletes the specified compartment.
   get     Gets the specified compartment's information.
   list    Lists the compartments in a specified...
+  move    Move the compartment tree to a different...
   update  Updates the specified compartment's...
 
 ++++++++++++++++++++++++++++++++++++++++++++++
@@ -722,6 +723,71 @@ Options:
   --page-size INTEGER             When fetching results, the number of results
                                   to fetch per call. Only valid when used with
                                   --all or --limit, and ignored otherwise.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file using the file://path-
+                                  to/file syntax.
+                                  
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci iam compartment move --help
+Usage: oci iam compartment move [OPTIONS]
+
+  Move the compartment tree to a different parent compartment.
+
+Options:
+  -c, --compartment-id TEXT       The OCID of the compartment. [required]
+  --target-compartment-id TEXT    The [OCID] of the parent compartment into
+                                  which the compartment should be moved.
+                                  [required]
+  --if-match TEXT                 For optimistic concurrency control. In the PUT
+                                  or DELETE call for a resource, set the `if-
+                                  match` parameter to the value of the etag from
+                                  a previous GET or POST response for that
+                                  resource.  The resource will be updated or
+                                  deleted only if the etag you provide matches
+                                  the resource's current etag value.
+  --wait-for-state [ACCEPTED|IN_PROGRESS|FAILED|SUCCEEDED|CANCELING|CANCELED]
+                                  This operation asynchronously creates,
+                                  modifies or deletes a resource and uses a work
+                                  request to track the progress of the
+                                  operation. Specify this option to perform the
+                                  action and then wait until the work request
+                                  reaches a certain state. If timeout is
+                                  reached, a return code of 2 is returned. For
+                                  any other error, a return code of 1 is
+                                  returned.
+  --max-wait-seconds INTEGER      The maximum time to wait for the work request
+                                  to reach the state defined by --wait-for-
+                                  state. Defaults to 1200 seconds.
+  --wait-interval-seconds INTEGER
+                                  Check every --wait-interval-seconds to see
+                                  whether the work request to see if it has
+                                  reached the state defined by --wait-for-state.
+                                  Defaults to 30 seconds.
   --from-json TEXT                Provide input to this command as a JSON
                                   document from a file using the file://path-
                                   to/file syntax.

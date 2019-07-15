@@ -1,16 +1,30 @@
 #!/bin/bash
-# This script provides a basic example of how to use the DNS service in the CLI. The two variables at the beginning of the script must be specified accordingly:
+# Copyright (c) 2016, 2019, Oracle and/or its affiliates. All rights reserved.
+# This script provides a basic example of how to use the DNS service in the CLI. The three variables at the beginning of the script must be specified accordingly:
 #
 #   * COMPARTMENT_ID: The first argument is the OCID of the compartment where we'll create a DNS zone
 #   * DNS_ZONE_NAME: The second is the name of the DNS zone to create (e.g. my-example-zone.com)
+#   * TARGET_COMPARTMENT_ID: The OCID of the compartment into which the DNS zone should be moved
 #
 # Requirements for running this script:
 #   - OCI CLI v2.4.16 or later (you can check this by running oci --version)
 
 set -e
 
-COMPARTMENT_ID=""
-DNS_ZONE_NAME=""
+if [ "${COMPARTMENT_ID}" == "" ]; then
+  echo $0: "COMPARTMENT_ID must be defined in the environment"
+  exit 1
+fi
+
+if [ "${DNS_ZONE_NAME}" == "" ]; then
+  echo $0: "DNS_ZONE_NAME must be defined in the environment"
+  exit 1
+fi
+
+if [ "${TARGET_COMPARTMENT_ID}" == "" ]; then
+  echo $0: "TARGET_COMPARTMENT_ID must be defined in the environment"
+  exit 1
+fi
 
 BORDER="=========================================="
 
@@ -40,11 +54,11 @@ oci dns zone list -c $C_CLI --name $DNS_ZONE_NAME --sort-by timeCreated --sort-o
 # sure they are included in the update.
 #
 # Downloading the existing collection, editing it, and calling update is not easy from the command line so
-# we strongly recommend using the 'patch' functionality shown below to add / update / delete records. If 
+# we strongly recommend using the 'patch' functionality shown below to add / update / delete records. If
 # you really want to use update, you can see an example in tests/test_dns.py::test_update_zone_records
 
 # In addition to updates, we can use the patch operation to add and remove records from the zone without
-# having to send through the complete list of records each time. In this example, we'll add 2 TXT records and 
+# having to send through the complete list of records each time. In this example, we'll add 2 TXT records and
 # remove one
 print_header "Original Zone Records"
 oci dns record zone get -c $C_CLI --zone-name-or-id $DNS_ZONE_NAME
@@ -90,6 +104,9 @@ set +e
 echo 'Repeating same patch with PROHIBIT precondition, which now fails because the record exists...'
 oci dns record zone patch --zone-name-or-id $DNS_ZONE_NAME --items file://dns_example/prohibit_if_present_then_add_record.json
 set -e
+
+echo "Changing the compartment DNS zone: $DNS_ZONE_NAME"
+oci dns zone change-compartment --zone-id $ZONE_ID --compartment-id $TARGET_COMPARTMENT_ID
 
 echo "Deleting DNS zone: $DNS_ZONE_NAME"
 oci dns zone delete --zone-name-or-id $DNS_ZONE_NAME --force

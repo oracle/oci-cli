@@ -14,12 +14,12 @@ from oci_cli import custom_types  # noqa: F401
 from oci_cli.aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('healthchecks_root_group.command_name', 'healthchecks'), cls=CommandGroupWithAlias, help=cli_util.override('healthchecks_root_group.help', """API for the Health Checks service. Use this API to manage endpoint probes and monitors.
+@cli.command(cli_util.override('health_checks_root_group.command_name', 'health-checks'), cls=CommandGroupWithAlias, help=cli_util.override('health_checks_root_group.help', """API for the Health Checks service. Use this API to manage endpoint probes and monitors.
 For more information, see
 [Overview of the Health Checks Service](/iaas/Content/HealthChecks/Concepts/healthchecks.htm).
-"""), short_help=cli_util.override('healthchecks_root_group.short_help', """Health Checks API"""))
+"""), short_help=cli_util.override('health_checks_root_group.short_help', """Health Checks API"""))
 @cli_util.help_option_group
-def healthchecks_root_group():
+def health_checks_root_group():
     pass
 
 
@@ -65,13 +65,13 @@ def http_probe_group():
     pass
 
 
-healthchecks_root_group.add_command(ping_monitor_group)
-healthchecks_root_group.add_command(ping_probe_group)
-healthchecks_root_group.add_command(health_checks_vantage_point_group)
-healthchecks_root_group.add_command(http_monitor_group)
-healthchecks_root_group.add_command(http_probe_result_group)
-healthchecks_root_group.add_command(ping_probe_result_group)
-healthchecks_root_group.add_command(http_probe_group)
+health_checks_root_group.add_command(ping_monitor_group)
+health_checks_root_group.add_command(ping_probe_group)
+health_checks_root_group.add_command(health_checks_vantage_point_group)
+health_checks_root_group.add_command(http_monitor_group)
+health_checks_root_group.add_command(http_probe_result_group)
+health_checks_root_group.add_command(ping_probe_result_group)
+health_checks_root_group.add_command(http_probe_group)
 
 
 @http_monitor_group.command(name=cli_util.override('create_http_monitor.command_name', 'create'), help=u"""Creates an HTTP monitor. Vantage points will be automatically selected if not specified, and probes will be initiated from each vantage point to each of the targets at the frequency specified by `intervalInSeconds`.""")

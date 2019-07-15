@@ -53,6 +53,7 @@ def message_group():
 # Re-work notification control plane commands
 notificationcontrolplane_cli.notification_topic_group.add_command(notificationcontrolplane_cli.delete_topic)
 cli_util.rename_command(ons_service_cli.ons_service_group, notificationcontrolplane_cli.notification_topic_group, "topic")
+cli_util.rename_command(notificationcontrolplane_cli.notification_topic_group, notificationcontrolplane_cli.delete_topic, "delete")
 ons_service_cli.ons_service_group.commands.pop(notificationcontrolplane_cli.notification_control_plane_root_group.name)
 
 # Re-work notification data plane commands

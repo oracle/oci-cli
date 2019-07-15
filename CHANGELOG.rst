@@ -6,86 +6,167 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.5.19 - 2019-07-16
+-------------------
+Added
+~~~~~
+* Support for moving KMS keys and vaults across compartments.
+
+  * ``oci kms management vault change-compartment --compartment-id``
+  * ``oci kms management key change-compartment --compartment-id``
+
+* Support for Service Gateway Transit Routing feature.
+
+  * Ability to associate route table when creating service-gateway (``oci network service-gateway create --route-table-id``)
+  * An example using the feature can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/create_service_gateway_example.sh>`__.
+
+* Support for moving compartment tree to a different parent compartment
+
+  * ``oci iam compartment move``
+
+* Support for LB Cookie Session Persistence in LB backend sets
+
+  * ``oci lb backend create --lb-cookie-session-persistence-configuration``
+
+* Support for REST method restrictions in Load Balancer rule sets.
+
+* Support for adding AllowRules to a RuleSet for access control by source IP address.
+
+  * ``oci lb load-balancer create --rule-sets``
+
+* Support for listing a summary of rules for a listener
+
+  * ``oci lb listener-rule list``
+
+* Support for changing the compartment of an instance in the Compute service
+
+  * ``oci compute instance change-compartment``
+  * An example can be found here: `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/change-compartment.sh>`__
+  * An example using work requests to determine status can be found here: `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/change-compartment-using-work-request-id.sh>`__
+
+* Support for using kms key when copying volume backups
+
+  * ``oci bv backup copy --kms-key-id``
+
+* Support for moving a Topic across compartments:
+
+  * ``oci ons topic change-compartment --topic-id --compartment-id``
+
+* Support for moving a Subscription across compartments
+
+  * ``oci ons subscription change-compartment --subscription-id --compartment-id``
+
+* Support for moving a DNS Zone compartment.
+
+  * ``oci dns zone change-compartment --zone-id --compartment-id``
+
+* Support for moving a DNS Steering Policy compartment.
+
+  * ``oci dns steering-policy change-compartment --steering-policy-id --compartment-id``
+
+* Support for moving Load Balancers between compartments 
+
+  * ``oci lb load-balancer change-compartment``
+
+* Support for managing Compartment Resource Quotas
+
+  * ``oci limits quota``
+  * An example on using the feature can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/quotas_example.sh>`__.
+
+* Support for Oracle Functions
+
+  * ``oci fn``
+  * An example on using Oracle Functions can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/functions_example.sh>`__.
+
+Fixed
+~~~~~
+* Service error for ``oci bv backup copy`` command when `wait-for-state` option is passed.
+
+Changed
+~~~~~~~
+* Man pages for the commands now display Required, Optional and Global parameters if available.
+* Updates for `CLI Command Reference <https://docs.cloud.oracle.com/iaas/tools/oci-cli/latest/oci_cli_docs/>`__ pages.
+
 2.5.18 - 2019-07-09
 -------------------
 Added
 ~~~~~
 * Support to managing lb attachments for instance pools
 
-  * (``oci compute-management instance-pool lb-attachment get``)
-  * (``oci compute-management instance-pool lb-attachment attach``)
-  * (``oci compute-management instance-pool lb-attachment detach``)
+  * ``oci compute-management instance-pool lb-attachment get``
+  * ``oci compute-management instance-pool lb-attachment attach``
+  * ``oci compute-management instance-pool lb-attachment detach``
 
-*  Support for specifying nsgIds and backupNetworkNsgIds parameters for LaunchDbSystemDetails, LaunchDbSystemFromBackupDetails and UpdateDbSystemDetails.
+* Support for specifying nsgIds and backupNetworkNsgIds parameters for LaunchDbSystemDetails, LaunchDbSystemFromBackupDetails and UpdateDbSystemDetails
 
-  * (``oci db system launch --backup-network-nsg-ids  --nsg-ids``)
-  * (``oci db system launch-from-backup --backup-network-nsg-ids --nsg-ids``)
-  * (``oci db system launch-from-database --backup-network-nsg-ids --nsg-ids``)
-  * (``oci db system update --backup-network-nsg-ids --nsg-ids``)
+  * ``oci db system launch --backup-network-nsg-ids --nsg-ids``
+  * ``oci db system launch-from-backup --backup-network-nsg-ids --nsg-ids``
+  * ``oci db system launch-from-database --backup-network-nsg-ids --nsg-ids``
+  * ``oci db system update --backup-network-nsg-ids --nsg-ids``
 
 * Support for Managing Network Security Group
 
-  * (``oci network nsg create | get | update | delete | list``)
-  * (``oci network nsg rules add | update | remove | list``)
+  * ``oci network nsg create | get | update | delete | list``
+  * ``oci network nsg rules add | update | remove | list``
 
 * Support for associating a Vnic with a Network Security Group
 
-  * (``oci network vnic update --nsg-ids``)
-  * (``oci network nsg vnics list``)
+  * ``oci network vnic update --nsg-ids``
+  * ``oci network nsg vnics list``
 
 * Support for associating primary Vnic with a Network Security Group
 
-  * (``oci compute instance launch --nsg-ids``)
-  * (``oci compute instance attach-vnic --nsg-ids``)
+  * ``oci compute instance launch --nsg-ids``
+  * ``oci compute instance attach-vnic --nsg-ids``
 
 * Support for network security groups in LBaaS
 
-  * (``oci lb network-security-groups update``)
+  * ``oci lb network-security-groups update``
 
 * Support for moving VCN compartment in Core Service.
 
-  * (``oci network vcn change-compartment --vcn-id  --compartment-id``)
+  * ``oci network vcn change-compartment --vcn-id  --compartment-id``
 
 * Support for moving Subnet compartment in Core Service.
 
-  * (``oci network subnet change-compartment --subnet-id  --compartment-id``)
+  * ``oci network subnet change-compartment --subnet-id  --compartment-id``
 
 * Support for moving RouteTable compartment in Core Service.
 
-  * (``oci network route-table change-compartment --vcn-id  --compartment-id``)
+  * ``oci network route-table change-compartment --vcn-id  --compartment-id``
 
 * Support for moving SecurityList compartment in Core Service.
 
-  * (``oci network security-list change-compartment --vcn-id  --compartment-id``)
+  * ``oci network security-list change-compartment --vcn-id  --compartment-id``
 
 * Support for moving Resource Manager Stacks across compartments
 
-  * (oci resource-manager stack change-compartment --compartment-id, --stack-id)
+  * ``oci resource-manager stack change-compartment --compartment-id, --stack-id``
 
 * Support for Preview Database service for Autonomous Databases
 
-  * (``oci db autonomous-database create --is-preview-version-with-service-terms-accepted [boolean]``)
+  * ``oci db autonomous-database create --is-preview-version-with-service-terms-accepted [boolean]``
 
 * Support for Preview version list API for Autonomous Databases
 
-  * (``oci db autonomous-db-preview-version list --compartment-id [compartment ID]``)
- 
+  * ``oci db autonomous-db-preview-version list --compartment-id [compartment ID]``
+
 2.5.17 - 2019-07-02
 -------------------
 Added
 ~~~~~
 * Support for moving instance-pools and instance-configurations across compartments
 
-    * (``oci compute-management instance-configuration change-compartment``)
-    * (``oci compute-management instance-pool change-compartment``)
+  * ``oci compute-management instance-configuration change-compartment``
+  * ``oci compute-management instance-pool change-compartment``
 
 * Support for moving autoscaling-configurations across compartments
 
-    * (``oci autoscaling configuration change-compartment``)
+  * ``oci autoscaling configuration change-compartment``
 
 * Support for moving custom images across compartments
 
-    * (``oci compute image change-compartment``)
+  * ``oci compute image change-compartment``
 
 Changed
 ~~~~~~~
@@ -96,12 +177,12 @@ Changed
 Added
 ~~~~~
 * Support for moving Nat Gateway across compartments
- 
-  * (``oci network nat-gateway change-compartment``)
+
+  * ``oci network nat-gateway change-compartment``
 
 * Support for moving sender compartment in Email Service.
 
-  * (``oci email sender change-compartment --sender-id  --compartment-id``)
+  * ``oci email sender change-compartment --sender-id --compartment-id``
 
 2.5.15 - 2019-06-18
 -------------------
@@ -109,23 +190,23 @@ Added
 ~~~~~
 * Support for moving block volumes, block volume backups, boot volumes, boot volume backups, volume groups, volume group backups across compartments in the Block Storage Service
 
-  * (``oci bv backup change-compartment``)
-  * (``oci bv boot-volume change-compartment``)
-  * (``oci bv boot-volume-backup change-compartment``)
-  * (``oci bv volume change-compartment``)
-  * (``oci bv volume-group change-compartment``)
-  * (``oci bv volume-group-backup change-compartment``)
+  * ``oci bv backup change-compartment``
+  * ``oci bv boot-volume change-compartment``
+  * ``oci bv boot-volume-backup change-compartment``
+  * ``oci bv volume change-compartment``
+  * ``oci bv volume-group change-compartment``
+  * ``oci bv volume-group-backup change-compartment``
 
 * Support for scheduling and cancelling deletion for KMS keys in the Key Management Service
 
-  * (``oci kms management key schedule-deletion --time-of-deletion``)
-  * (``oci kms management key cancel-deletion``)
+  * ``oci kms management key schedule-deletion --time-of-deletion``
+  * ``oci kms management key cancel-deletion``
 
 * Support for python 3.7 on Windows, Linux, and MacOS
 
 * Support for moving Service Gateway across compartments in the Networking Service
 
-  * (``oci network service-gateway change-compartment``)
+  * ``oci network service-gateway change-compartment``
 
 2.5.14 - 2019-06-11
 -------------------
@@ -133,24 +214,24 @@ Added
 ~~~~~
 * Support for Autonomous Database (Dedicated) features as part of the Database Service
 
-  * (``oci db autonomous-exadata-infrastructure``)
-  * (``oci db autonomous-container-database``)
-  * (``oci db autonomous-database``)
-  * (``oci db maintenance-run``)
+  * ``oci db autonomous-container-database``
+  * ``oci db autonomous-database``
+  * ``oci db maintenance-run``
+  * ``oci db autonomous-exadata-infrastructure``
 
 * Support for specifying bootVolumeSizeInGBs parameter during creation of instance config in the Compute Management service.
 
-  * (``oci compute-management instance-configuration create --instance-details``)
+  * ``oci compute-management instance-configuration create --instance-details``
 
 Changed
 ~~~~~~~~
 * \*NIX installer, install.sh, supports more options for non-interactive installations.
 
-  * (``./install.sh --accept-all-defaults --python-install-location <dir> --optional-features [db] --install-dir <dir> --exec-dir <dir> --update-path-and-enable-tab-completion --rc-file-path <file-path> --oci-cli-version <version> --help``)
+  * ``./install.sh --accept-all-defaults --python-install-location <dir> --optional-features [db] --install-dir <dir> --exec-dir <dir> --update-path-and-enable-tab-completion --rc-file-path <file-path> --oci-cli-version <version> --help``
 
 * Windows installer, install.ps1, supports more options for non-interactive installations.
 
-  * (``.\install.ps1 -AcceptAllDefaults -PythonInstallLocation <dir> -OptionalFeatures [db] -UpdatePathAndEnableTabCompletion -OciCliVersion <version>``)
+  * ``.\install.ps1 -AcceptAllDefaults -PythonInstallLocation <dir> -OptionalFeatures [db] -UpdatePathAndEnableTabCompletion -OciCliVersion <version>``
 
 * The installer no longer checks for required native dependencies on linux systems.
 
@@ -162,18 +243,18 @@ Added
 ~~~~~
 * Support for delete Tag Namespace and Tag Definition in the Identity Service
 
-  * (``oci iam tag delete``)
-  * (``oci iam tag-namespace delete``)
+  * ``oci iam tag delete``
+  * ``oci iam tag-namespace delete``
   * An example on using the feature can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/tagging_example.sh>`__.
 
 * Support for iscsi type volume-attachment for compute resources.
 
-  * (``oci compute volume-attachment attach-iscsi-volume``)
+  * ``oci compute volume-attachment attach-iscsi-volume``
 
 * Support for specifying the FAULT_DOMAIN parameter for instances as part of InstanceConfiguration details.
 
-  * (``oci compute-management instance-configuration create``)
-  * (``oci compute-management instance-configuration launch-compute-instance``)
+  * ``oci compute-management instance-configuration create``
+  * ``oci compute-management instance-configuration launch-compute-instance``
 
 * Support for Auto Scale in the Database service for Autonomous Databases (--is-auto-scaling-enabled for ``oci db autonomous-database``)
 
@@ -181,23 +262,20 @@ Changed
 ~~~~~~~
 * New parameters to handle Tag Definition and Tag Namespace lifecycle state
 
-  * (``oci iam tag-namespace update --wait-for-state --max-wait-seconds --wait-interval-seconds``)
-  * (``oci iam tag-namespace list --lifecycle-state``)
-  * (``oci iam tag update --wait-for-state --max-wait-seconds --wait-interval-seconds``)
-  * (``oci iam tag create --wait-for-state --max-wait-seconds --wait-interval-seconds``)
+  * ``oci iam tag-namespace update --wait-for-state --max-wait-seconds --wait-interval-seconds``
+  * ``oci iam tag-namespace list --lifecycle-state``
+  * ``oci iam tag update --wait-for-state --max-wait-seconds --wait-interval-seconds``
+  * ``oci iam tag create --wait-for-state --max-wait-seconds --wait-interval-seconds``
 
 Fixed
 ~~~~~
 * JSON generated for ``oci compute instance launch`` using ``--generate-full-command-json-input`` option.
 
-* (``oci os object restore-status``) now returns accurate restoration time. Earlier for restoration time greater than a day, it did not display the number of days.
+* ``oci os object restore-status`` now returns accurate restoration time. Earlier for restoration time greater than a day, it did not display the number of days.
 
 * Load balancer service endpoints.
 
 * Filters, sort options for ``oci db database list`` command.
-
-  * (``oci db database list``)
-
 
 2.5.12 - 2019-05-28
 -------------------
@@ -205,25 +283,25 @@ Added
 ~~~~~
 * Support to get user UI password creation date in Identity service.
 
-  * (``oci iam ui-password-information get-user --user-id``)
+  * ``oci iam ui-password-information get-user --user-id``
 
 * Support for Work Requests Service
 
-  * (``oci work-requests``)
+  * ``oci work-requests``
   * An example of using the Work Requests Service can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/get_work_requests_example.sh>`__.
 
 * Tags returned in File Storage Summary objects
 
 * Change compartment support for File Storage Service.
 
-  * (``oci fs file-system change-compartment --file-system-id --compartment-id``)
-  * (``oci fs mount-target change-compartment --mount-target-id --compartment-id``)
+  * ``oci fs file-system change-compartment --file-system-id --compartment-id``
+  * ``oci fs mount-target change-compartment --mount-target-id --compartment-id``
 
 Fixed
 ~~~~~
 * Missing emulated type for volume-attachment. (`Issue 146 <https://github.com/oracle/oci-cli/issues/146>`__)
 
-  * (``oci compute volume-attachment attach --type``)
+  * ``oci compute volume-attachment attach --type``
 
 * Fixed metrics example. (`Issue 149 <https://github.com/oracle/oci-cli/issues/149>`_, `Issue 150 <https://github.com/oracle/oci-cli/issues/150>`_)
 
@@ -234,31 +312,31 @@ Added
 ~~~~~
 * Improvement for VPN IPSec service usability: support BGP dynamic routing and allow customer to input PSK.
 
-  * (``oci network ip-sec-tunnel get``)
-  * (``oci network ip-sec-tunnel list``)
-  * (``oci network ip-sec-tunnel update``)
-  * (``oci network ip-sec-psk get``)
-  * (``oci network ip-sec-psk update``)
+  * ``oci network ip-sec-tunnel get``
+  * ``oci network ip-sec-tunnel list``
+  * ``oci network ip-sec-tunnel update``
+  * ``oci network ip-sec-psk get``
+  * ``oci network ip-sec-psk update``
 
 * Support for getting Object Storage namespace of another tenancy by using their compartment ID.
 
-  * (``oci os ns get --compartment-id``)
+  * ``oci os ns get --compartment-id``
   * An example on getting namespace using compartment ID can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/object_storage_get_namespace.sh>`__.
 
 Changed
 ~~~~~~~
 * IPSec connection create command: it now includes --tunnel-configuration option.
 
-  * (``oci network ip-sec-connection create --tunnel-configuration``)
+  * ``oci network ip-sec-connection create --tunnel-configuration``
 
 * Listing for Instance Configs and Pools: they now return defined and freeform tags.
 
-  * (``oci compute-management instance-configuration list --compartment-id``)
-  * (``oci compute-management instance-pool list --compartment-id``)
+  * ``oci compute-management instance-configuration list --compartment-id``
+  * ``oci compute-management instance-pool list --compartment-id``
 
 * Listing for Autoscaling configurations: they now return defined and freeform tags.
 
-  * (``oci autoscaling configuration list --compartment-id``)
+  * ``oci autoscaling configuration list --compartment-id``
 
 2.5.10 - 2019-05-14
 -------------------
@@ -269,9 +347,9 @@ Added
 * Support for LoggingContext option in Key Management Service (``--logging-context`` option for ``oci kms crypto encrypt|decrypt|generate-data-encryption-key``)
 
   * An example on using Key Management Service LoggingContext option can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/kms_example.sh>`__.
-  * (``oci kms crypto encrypt --logging-context``)
-  * (``oci kms crypto decrypt --logging-context``)
-  * (``oci kms crypto generate-data-encryption-key --logging-context``)
+  * ``oci kms crypto encrypt --logging-context``
+  * ``oci kms crypto decrypt --logging-context``
+  * ``oci kms crypto generate-data-encryption-key --logging-context``
 
 * opc-prev-page header added to Email List responses (``oci email sender list``)
 
@@ -295,33 +373,33 @@ Added
 ~~~~~
 * Improve information to customer premise equipment by introducing Customer Reference Name in the VPN Service.
 
-  * (``oci network cpe create --customer-reference-name [text]``)
-  * (``oci network cpe update --customer-reference-name [text]``)
+  * ``oci network cpe create --customer-reference-name [text]``
+  * ``oci network cpe update --customer-reference-name [text]``
 
 * Improve information to IPSecConnection by introducing Customer Reference Name in the VPN Service.
 
-  * (``oci network ipsecconnection create --customer-reference-name [text]``)
-  * (``oci network ipsecconnection update --customer-reference-name [text]``)
+  * ``oci network ipsecconnection create --customer-reference-name [text]``
+  * ``oci network ipsecconnection update --customer-reference-name [text]``
 
 * Improve information to RemorePeeringConnection by introducing Provider Service Key Name in the VPN Service.
 
-  * (``oci network remote-peering-connection create --provider-service-key-name [text]``)
-  * (``oci network remote-peering-connection update --provider-service-key-name [text]``)
+  * ``oci network remote-peering-connection create --provider-service-key-name [text]``
+  * ``oci network remote-peering-connection update --provider-service-key-name [text]``
 
 * Support Autonomous Database to change the License Type in the Database Service.
 
-  * (``oci db autonomous-database update --license-model [LICENSE_INCLUDED|BRING_YOUR_OWN_LICENSE]``)
+  * ``oci db autonomous-database update --license-model [LICENSE_INCLUDED|BRING_YOUR_OWN_LICENSE]``
 
 * Support Autonomous Database to change the whitelistips in the Database Service.
 
-  * (``oci db autonomous-database update --whitelisted-ips '[  "1.1.1.1","2.2.2.2/24" ]'``)
+  * ``oci db autonomous-database update --whitelisted-ips '[  "1.1.1.1","2.2.2.2/24" ]'``
 
 * Content-type auto option for object storage put and bulk-upload commands.
 
 * Tagging support for create Dynamic Group and update Dynamic Group flow as part of the Identity Service
 
-  * (``oci iam dynamic-group create --defined-tags --freeform-tags``)
-  * (``oci iam dynamic-group update --defined-tags --freeform-tags``)
+  * ``oci iam dynamic-group create --defined-tags --freeform-tags``
+  * ``oci iam dynamic-group update --defined-tags --freeform-tags``
 
 Fixed
 ~~~~~
@@ -346,15 +424,15 @@ Added
 
 * Improvement that introduces --customer-reference-name to CrossConnect and CrossConnectGroup in the FastConnectService.
 
-  * (``oci network cross-connect create --customer-reference-name [text]``)
-  * (``oci network cross-connect update --customer-reference-name [text]``)
-  * (``oci network cross-connect-group create --customer-reference-name [text]``)
-  * (``oci network cross-connect-group update --customer-reference-name [text]``)
+  * ``oci network cross-connect create --customer-reference-name [text]``
+  * ``oci network cross-connect update --customer-reference-name [text]``
+  * ``oci network cross-connect-group create --customer-reference-name [text]``
+  * ``oci network cross-connect-group update --customer-reference-name [text]``
 
 * Improvement that introduces --provider-service-key-name to VirtualCircuit in the FastConnect Service.
 
-  * (``oci network virtual-circuit create --provider-service-key-name [text]``)
-  * (``oci network virtual-circuit update --provider-service-key-name [text]``)
+  * ``oci network virtual-circuit create --provider-service-key-name [text]``
+  * ``oci network virtual-circuit update --provider-service-key-name [text]``
 
 Changed
 ~~~~~~~~
@@ -379,16 +457,16 @@ Added
 ~~~~~
 * Support for token-based authentication for the CLI allowing customers to authenticate their session interactively, then use the CLI for a single session without an API signing key
 
- * ``oci session authenticate``
- * ``oci session export``
- * ``oci session import``
- * ``oci session refresh``
- * ``oci session terminate``
- * ``oci session validate``
+  * ``oci session authenticate``
+  * ``oci session export``
+  * ``oci session import``
+  * ``oci session refresh``
+  * ``oci session terminate``
+  * ``oci session validate``
 
 * Support for an interactive process to create a CLI config file using username / password based login through a browser. Also handles generating API keys and uploading them to your Oracle Cloud Infrastructure account.
 
- * ``oci setup bootstrap``
+  * ``oci setup bootstrap``
 
 * Support for obtaining and updating Authentication Policy in the Identity Service.
 
@@ -422,42 +500,42 @@ Added
 ~~~~~
 * Support DbSystem timezone on provisioning API.
 
-  * (``oci db system launch --time-zone``)
+  * ``oci db system launch --time-zone``
   * An example on using the feature can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/database_launch_exadata_sparse_example.sh>`__.
 
 * DbWorkload Type Introduced for Autonomous Database Create Request.
 
-  * (``oci db autonomous-database create --db-workload``)
-  * (``oci db autonomous-database list --db-workload``)
+  * ``oci db autonomous-database create --db-workload``
+  * ``oci db autonomous-database list --db-workload``
 
 * Support for enabling I/O Resource Management (IORM) feature for Exadata Database Systems
 
-  * (``oci db system get-exadata-iorm-config``)
-  * (``oci db system update-exadata-iorm-config``)
+  * ``oci db system get-exadata-iorm-config``
+  * ``oci db system update-exadata-iorm-config``
   * An example on using the feature can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/database_exadata_iorm_example.sh>`__.
 
 * Support for Tag Default feature as a part of the Identity Service
 
-  * (``oci iam tag-default``)
+  * ``oci iam tag-default``
   * An example on using the feature can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/tagging_example.sh>`__.
 
 * Support for email on user accounts in the Identity Service
 
-  * (``oci iam user create --email``)
-  * (``oci iam user update --email``)
+  * ``oci iam user create --email``
+  * ``oci iam user update --email``
 
 * Support for OCI Budget Service.
 
-  * (``oci budgets budget create``)
-  * (``oci budgets budget delete``)
-  * (``oci budgets budget get``)
-  * (``oci budgets budget list``)
-  * (``oci budgets budget update``)
-  * (``oci budgets alert-rule create``)
-  * (``oci budgets alert-rule delete``)
-  * (``oci budgets alert-rule get``)
-  * (``oci budgets alert-rule list``)
-  * (``oci budgets alert-rule update``)
+  * ``oci budgets budget create``
+  * ``oci budgets budget delete``
+  * ``oci budgets budget get``
+  * ``oci budgets budget list``
+  * ``oci budgets budget update``
+  * ``oci budgets alert-rule create``
+  * ``oci budgets alert-rule delete``
+  * ``oci budgets alert-rule get``
+  * ``oci budgets alert-rule list``
+  * ``oci budgets alert-rule update``
   * An example on using the feature can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/budget_example.sh>`__.
 
 2.5.2 - 2019-02-28
@@ -466,58 +544,58 @@ Added
 ~~~~~
 * Support for OCI Monitoring Service
 
-  * (``oci monitoring``)
+  * ``oci monitoring``
   * An example using monitoring alarms can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/monitoring_alarm_example.sh>`__.
   * An example using monitoring metrics can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/monitoring_metrics_example.sh>`__.
 
 * Support for Resource Manager service
 
-  * (``oci resource-manager``)
+  * ``oci resource-manager``
   * An example of using the feature can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/resource_manager_example.sh>`__
 
 * Support for Notification service
 
-  * (``oci ons``)
+  * ``oci ons``
   * An example of using notification subscriptions can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/notification_subscription_example.sh>`__
   * An example of using notification topics can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/notification_topic_example.sh>`__
 
 * Support for Auto Scaling Configurations as part of Compute Autoscaling Service
 
-  * (``oci autoscaling configuration create``)
-  * (``oci autoscaling configuration delete``)
-  * (``oci autoscaling configuration get``)
-  * (``oci autoscaling configuration list``)
-  * (``oci autoscaling configuration update``)
+  * ``oci autoscaling configuration create``
+  * ``oci autoscaling configuration delete``
+  * ``oci autoscaling configuration get``
+  * ``oci autoscaling configuration list``
+  * ``oci autoscaling configuration update``
   * An example using the feature can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/autoscaling_example.sh>`__.
 
 * Support for Auto Scaling Policies as part of Compute Autoscaling Service
 
-  * (``oci autoscaling policy create``)
-  * (``oci autoscaling policy delete``)
-  * (``oci autoscaling policy get``)
-  * (``oci autoscaling policy list``)
-  * (``oci autoscaling policy update``)
+  * ``oci autoscaling policy create``
+  * ``oci autoscaling policy delete``
+  * ``oci autoscaling policy get``
+  * ``oci autoscaling policy list``
+  * ``oci autoscaling policy update``
 
 * Support to specify fault domains in Database system launch in Database service.
 
-   * (``oci db system launch --fault-domains``)
-   * An example using the feature can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/database_launch_dbsystem_example.sh>`__.
+  * ``oci db system launch --fault-domains``
+  * An example using the feature can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/database_launch_dbsystem_example.sh>`__.
 
 * Support for Load Balancers for Instance Pools
 
-    * (``oci compute-management instance-pool attach-lb``)
-    * (``oci compute-management instance-pool detach-lb``)
-    * An example using the feature can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/instance_pools_example.sh>`__.
+  * ``oci compute-management instance-pool attach-lb``
+  * ``oci compute-management instance-pool detach-lb``
+  * An example using the feature can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/instance_pools_example.sh>`__.
 
 * Support for change Tag Namespace Compartment as a part of the Identity Service
 
-  * (``oci iam tag-namespace change-compartment``)
+  * ``oci iam tag-namespace change-compartment``
   * An example using the feature can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/tagging_example.sh>`__.
 
 * Support for instance launch with agent configuration for enabling monitoring and retrieving agent configuration
- 
-  * (``oci compute instance launch --agent-config``) 
-  * (``oci compute instance update --agent-config``)
+
+  * ``oci compute instance launch --agent-config``
+  * ``oci compute instance update --agent-config``
   * An example using the feature can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/compute_agent_enable_disable_example.sh>`__
 
 2.5.1 - 2019-02-21
@@ -546,7 +624,6 @@ Fixed
 
 * Help text for Announcements Service (``oci announce``)
 
-
 2.4.44 - 2019-02-07
 -------------------
 Added
@@ -554,13 +631,14 @@ Added
 * Connection Strings for Database Resource API in Database Service
 
   * The following commands responses have a new attribute `connectionStrings` added to them.
-     * (``oci db database get``)
-     * (``oci db database list``)
+
+    * ``oci db database get``
+    * ``oci db database list``
 
 * Support for OCI DNS Traffic Management
 
-  * (``oci dns steering-policy``)
-  * (``oci dns steering-policy-attachment``)
+  * ``oci dns steering-policy``
+  * ``oci dns steering-policy-attachment``
 
 * Support for Health Check Service (``oci health-checks``)
 
@@ -571,8 +649,8 @@ Added
 
 * Support for tagging Approved Senders in the Email Service.
 
-  * (``oci email sender create --defined-tags --freeform-tags``)
-  * (``oci email sender update --defined-tags --freeform-tags``)
+  * ``oci email sender create --defined-tags --freeform-tags``
+  * ``oci email sender update --defined-tags --freeform-tags``
 
 * Support for Web Application Acceleration and Security Service (``oci waas``)
 
@@ -621,15 +699,15 @@ Added
 ~~~~~
 * Support for passing device while attaching volume to instance in Compute service
 
-  * (``oci compute volume-attachment attach --device``)
+  * ``oci compute volume-attachment attach --device``
 
 * Support for fetching devices for an instance in Compute service
 
-  * (``oci compute device list-instance``)
+  * ``oci compute device list-instance``
 
 * Support for Custom Header Rule Sets in the Load Balancer service
 
-  * (``oci lb rule-set``)
+  * ``oci lb rule-set``
 
 2.4.40 - 2018-12-13
 -------------------
@@ -637,13 +715,13 @@ Added
 ~~~~~
 * Support for sparse diskgroup option with Exadata shape in the following command:
 
-  * (``oci db system launch``)
+  * ``oci db system launch``
 
 * Support for Data Guard on VM DB Shape
 
 * Support create option with-new-db-system along with from-existing-db-system
 
-  * (``oci db data-guard-association create with-new-db-system``)
+  * ``oci db data-guard-association create with-new-db-system``
 
 * Support for tagging Zones in the DNS service.
 
@@ -653,15 +731,15 @@ Added
 
 * Support for resetting idp scim client as part of Identity Service.
 
-  * (``oci iam scim-client-credentials reset-idp-scim-client --identity-provider-id``)
+  * ``oci iam scim-client-credentials reset-idp-scim-client --identity-provider-id``
 
 * Support for updating user capabilities as part of Identity Service.
 
-  * (``oci iam user update-user-capabilities --user-id``)
+  * ``oci iam user update-user-capabilities --user-id``
 
 * Support for listing identity provider groups as part of Identity Service.
 
-  * (oci iam identity-provider-group list)
+  * ``oci iam identity-provider-group list``
 
 Changed
 ~~~~~~~
@@ -675,7 +753,7 @@ Added
 ~~~~~
 * Support for fetching bucket statistics in Object Storage getBucket service.
 
-  * (``oci os bucket get --bucket-name --namespace-name --fields``)
+  * ``oci os bucket get --bucket-name --namespace-name --fields``
   * An example on using the feature can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/get_bucket_example.sh>`__
 
 2.4.38 - 2018-11-15
@@ -684,11 +762,11 @@ Added
 ~~~~~
 * VCN Transit Routing (VTR) feature as part of Virtual Cloud Network
 
-    * Ability to associate route table when creating drg-attachment (`oci network drg-attachment create --routeTableId`)
-    * Ability to associate route table when creating local-peering-gateway (`oci network local-peering-gateway create --routeTableId`)
-    * Ability to associate route table when updating drg-attachment (`oci network drg-attachment update --routeTableId`)
-    * Ability to associate route table when updating local-peering-gateway (`oci network local-peering-gateway update --routeTableId`)
-    * An example using the feature can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/vcn_transit_routing.sh>`__.
+  * Ability to associate route table when creating drg-attachment (`oci network drg-attachment create --routeTableId`)
+  * Ability to associate route table when creating local-peering-gateway (`oci network local-peering-gateway create --routeTableId`)
+  * Ability to associate route table when updating drg-attachment (`oci network drg-attachment update --routeTableId`)
+  * Ability to associate route table when updating local-peering-gateway (`oci network local-peering-gateway update --routeTableId`)
+  * An example using the feature can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/vcn_transit_routing.sh>`__.
 
 2.4.37 - 2018-11-01
 -------------------
@@ -696,16 +774,16 @@ Added
 ~~~~~
 * Support for tagging as part of FSS
 
-  * (``oci fs file-system create --freeform-tags --defined-tags``)
-  * (``oci fs snapshot create --freeform-tags --defined-tags``)
-  * (``oci fs mount-target create --freeform-tags --defined-tags``)
+  * ``oci fs file-system create --freeform-tags --defined-tags``
+  * ``oci fs snapshot create --freeform-tags --defined-tags``
+  * ``oci fs mount-target create --freeform-tags --defined-tags``
 
 * Support for modifying the route table, DHCP options, or security lists associated with a subnet.
 
 * Improvements to access control of compartments by allowing users to only show accessible compartments and list all compartments under the current tenancy.
 
-  * (``oci iam compartment list --access-level``)
-  * (``oci iam compartment list --compartment-id-in-subtree``)
+  * ``oci iam compartment list --access-level``
+  * ``oci iam compartment list --compartment-id-in-subtree``
 
 2.4.36 - 2018-10-26
 ---------------------
@@ -719,8 +797,8 @@ Added
 ~~~~~~~~
 * Support to Generate and Download wallet for Autonomous Transaction Processing Database and Autonomous Data Warehouse
 
-  * (``oci db autonomous-data-warehouse generate-wallet``)
-  * (``oci db autonomous-database generate-wallet``)
+  * ``oci db autonomous-data-warehouse generate-wallet``
+  * ``oci db autonomous-database generate-wallet``
 
 * Support for creating a standalone backup from an on-premises database as part of the Database service
 
@@ -729,41 +807,41 @@ Added
 
 * Support for Cross Region Backup Copy in Block Storage.
 
-  * (``oci bv backup copy --volume-backup-id --destination-region``)
+  * ``oci bv backup copy --volume-backup-id --destination-region``
 
 * Support for Cost Tracking Tags as part of Identity Service.
 
-  * (``oci iam tag create --is-cost-tracking``)
-  * (``oci iam tag update --is-cost-tracking``)
-  * (``oci iam tag list-cost-tracking``)
+  * ``oci iam tag create --is-cost-tracking``
+  * ``oci iam tag update --is-cost-tracking``
+  * ``oci iam tag list-cost-tracking``
 
 * Support for Compartment Delete, listing WorkRequests under a compartment and getting details for a work request.
 
-  * (``oci iam compartment delete --compartment-id``)
-  * (``oci iam work-request list --compartment-id``)
-  * (``oci iam work-request get --work-request-id``)
+  * ``oci iam compartment delete --compartment-id``
+  * ``oci iam work-request list --compartment-id``
+  * ``oci iam work-request get --work-request-id``
 
 * Support for Instance Configurations as part of Compute Management service
 
-  * (``oci compute-management instance-configuration create``)
-  * (``oci compute-management instance-configuration delete``)
-  * (``oci compute-management instance-configuration get``)
-  * (``oci compute-management instance-configuration list``)
-  * (``oci compute-management instance-configuration update``)
-  * (``oci compute-management instance-configuration launch-compute-instance``)
+  * ``oci compute-management instance-configuration create``
+  * ``oci compute-management instance-configuration delete``
+  * ``oci compute-management instance-configuration get``
+  * ``oci compute-management instance-configuration list``
+  * ``oci compute-management instance-configuration update``
+  * ``oci compute-management instance-configuration launch-compute-instance``
 
 * Support for Instance Pools as part of Compute Management service
 
-  * (``oci compute-management instance-pool create``)
-  * (``oci compute-management instance-pool terminate``)
-  * (``oci compute-management instance-pool get``)
-  * (``oci compute-management instance-pool list``)
-  * (``oci compute-management instance-pool update``)
-  * (``oci compute-management instance-pool reset``)
-  * (``oci compute-management instance-pool softreset``)
-  * (``oci compute-management instance-pool start``)
-  * (``oci compute-management instance-pool stop``)
-  * (``oci compute-management instance-pool list-instances``)
+  * ``oci compute-management instance-pool create``
+  * ``oci compute-management instance-pool terminate``
+  * ``oci compute-management instance-pool get``
+  * ``oci compute-management instance-pool list``
+  * ``oci compute-management instance-pool update``
+  * ``oci compute-management instance-pool reset``
+  * ``oci compute-management instance-pool softreset``
+  * ``oci compute-management instance-pool start``
+  * ``oci compute-management instance-pool stop``
+  * ``oci compute-management instance-pool list-instances``
 
 Changed
 ~~~~~~~~
@@ -776,30 +854,29 @@ Added
 ~~~~~~~~
 * Support to consume Image Catalog Listings as part of Compute Service
 
-  * (``oci compute pic listing``)
-  * (``oci compute pic version``)
-  * (``oci compute pic agreements``)
-  * (``oci compute pic subscription``)  
+  * ``oci compute pic listing``
+  * ``oci compute pic version``
+  * ``oci compute pic agreements``
+  * ``oci compute pic subscription``
 
 * Support for Cross Region Copy in Object Storage.
 
-  * (``oci os object copy --bucket-name --source-object-name --destination-region --destination-namespace --destination-bucket --destination-object``)
-
+  * ``oci os object copy --bucket-name --source-object-name --destination-region --destination-namespace --destination-bucket --destination-object``
   * An example on using the feature can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/copy_object_example.sh>`__
 
 * Support for Object Lifecycle Management as part of the Object Storage service.
 
-  * (``oci os object-lifecycle-policy put``)
-  * (``oci os object-lifecycle-policy get``)
-  * (``oci os object-lifecycle-policy delete``)
+  * ``oci os object-lifecycle-policy put``
+  * ``oci os object-lifecycle-policy get``
+  * ``oci os object-lifecycle-policy delete``
 
 * Support for network address translation gateway in Networking service
 
-  * (``oci network nat-gateway create``)
-  * (``oci network nat-gateway delete``)
-  * (``oci network nat-gateway get``)
-  * (``oci network nat-gateway list``)
-  * (``oci network nat-gateway update``)
+  * ``oci network nat-gateway create``
+  * ``oci network nat-gateway delete``
+  * ``oci network nat-gateway get``
+  * ``oci network nat-gateway list``
+  * ``oci network nat-gateway update``
 
 2.4.33 - 2018-09-27
 ---------------------
@@ -811,7 +888,7 @@ Added
 * Support for ``--wait-for-state`` option on multiple commands.
 * Improved custom image support by introducing PARAVIRTUALIZED as a launch mode option in the Image Import command.
 
-  * (``oci compute image import --launch-mode PARAVIRTUALIZED``)
+  * ``oci compute image import --launch-mode PARAVIRTUALIZED``
 * Support for creating bucket with ``--kms-key-id``, updating ``--kms-key-id`` of a bucket.
 * Support for creating data volume, boot volume, launch instance with ``--kms-key-id``, updating ``--kms-key-id`` for a data volume or boot volume.
 
@@ -821,12 +898,12 @@ Added
 ~~~~~~~~
 * Support for updating user custom metadata on an instance in the Compute service after the instance has launched
 
-  * (``oci compute instance update --instance-id --metadata --extended-metadata``)
+  * ``oci compute instance update --instance-id --metadata --extended-metadata``
 
 * Ability to increase size of boot and block volumes during creation (from clone or restore from backup) in the Block Storage Service.
 
-  * (``oci bv boot-volume create --size-in-gbs``)
-  * (``oci bv volume create --size-in-gbs``)
+  * ``oci bv boot-volume create --size-in-gbs``
+  * ``oci bv volume create --size-in-gbs``
 
 Changed
 ~~~~~~~~
@@ -839,15 +916,15 @@ Added
 ~~~~~~~~
 * Support for Autonomous DataWarehouse and Autonomous Transaction Processing features as a part of the Database Service
 
-  * (``oci db autonomous-data-warehouse``)
-  * (``oci db autonomous-data-warehouse-backup``)
-  * (``oci db autonomous-database``)
-  * (``oci db autonomous-database-backup``)
+  * ``oci db autonomous-data-warehouse``
+  * ``oci db autonomous-data-warehouse-backup``
+  * ``oci db autonomous-database``
+  * ``oci db autonomous-database-backup``
 
 * Ability to increase size of boot and block volumes in the Block Storage Service.
-   
-  * (``oci bv boot-volume update --size-in-gbs``)
-  * (``oci bv volume update --size-in-gbs``)
+
+  * ``oci bv boot-volume update --size-in-gbs``
+  * ``oci bv volume update --size-in-gbs``
 
 * Support for Fault Domains feature in the Identity Service. (``oci iam fault-domain``)
 
@@ -886,17 +963,17 @@ Added
 * Human-friendly Resource, Compartment and User name fields in Events listed by Audit Service (``oci audit event list``).
 * Improve access control to file systems by introducing NFS Export option in the File Storage Service.
 
-  * (``oci fs export create --export-options``)
-  * (``oci fs export update --export-options``)
+  * ``oci fs export create --export-options``
+  * ``oci fs export update --export-options``
 
 * Support for updating a load balancer.
 
-  * (``oci lb load-balancer update``)
+  * ``oci lb load-balancer update``
 
 * Support for tagging of load balancer resource enabled in the Load Balancer service.
 
-  * (``oci lb load-balancer create --defined-tags --freeform-tags``)
-  * (``oci lb load-balancer update --defined-tags --freeform-tags``)
+  * ``oci lb load-balancer create --defined-tags --freeform-tags``
+  * ``oci lb load-balancer update --defined-tags --freeform-tags``
 
 Fixed
 ~~~~~~~~
