@@ -41,6 +41,8 @@ compute_cli.instance_group.commands.pop(compute_cli.launch_instance_instance_sou
 
 compute_cli.image_group.commands.pop(compute_cli.export_image.name)
 
+compute_cli.instance_group.commands.pop(compute_cli.change_instance_compartment.name)
+
 compute_cli.compute_root_group.add_command(compute_cli.instance_group)
 compute_cli.compute_root_group.add_command(compute_cli.shape_group)
 compute_cli.compute_root_group.add_command(compute_cli.vnic_attachment_group)
@@ -662,3 +664,63 @@ def get_plink_connection_string(ctx, from_json, instance_console_connection_id, 
 
     # print directly to avoid escaping double quotes
     click.echo(connection_string)
+
+
+@cli_util.copy_params_from_generated_command(compute_cli.change_instance_compartment)
+@compute_cli.instance_group.command(name='change-compartment', help=compute_cli.change_instance_compartment.help)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_instance_compartment(ctx, instance_id, compartment_id, if_match, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds):
+
+    if isinstance(instance_id, six.string_types) and len(instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --instance-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    details = {'compartmentId': compartment_id}
+
+    client = cli_util.build_client('compute', ctx)
+    result = client.change_instance_compartment(
+        instance_id=instance_id,
+        change_instance_compartment_details=details,
+        **kwargs
+    )
+    work_request_client = cli_util.build_client('work_request', ctx)
+    if wait_for_state:
+        if hasattr(work_request_client, 'get_work_request') and callable(getattr(work_request_client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+
+                # There's an inconsistency in WorkRequest model returned by the service and API spec.
+                # Service returns the WorkRequest state as Accepted, In_Progress, Failed, Succeeded(Case mis-match with Spec). We cannot directly compare wait_for_state and WorkRequest.status.
+                # Defined a lambda function to perform the case-insensitive comparison.
+                result = wait_until(work_request_client, work_request_client.get_work_request(result.headers['opc-work-request-id']), evaluate_response=lambda r: r.data.status and r.data.status.lower() == wait_for_state.lower(), **wait_period_kwargs)
+
+            except MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+
+    cli_util.render_response(result, ctx)

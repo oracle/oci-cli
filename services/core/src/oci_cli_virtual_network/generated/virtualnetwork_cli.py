@@ -1924,6 +1924,11 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--route-table-id', help=u"""The OCID of the route table the service gateway will use.
+
+If you don't specify a route table here, the service gateway is created without an associated route table. The Networking service does NOT automatically associate the attached VCN's default route table with the service gateway.
+
+For information about why you would associate a route table with a service gateway, see [Transit Routing: Private Access to Oracle Services Network].""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -1932,7 +1937,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'services': {'module': 'core', 'class': 'list[ServiceIdRequestDetails]'}}, output_type={'module': 'core', 'class': 'ServiceGateway'})
 @cli_util.wrap_exceptions
-def create_service_gateway(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, services, vcn_id, defined_tags, display_name, freeform_tags):
+def create_service_gateway(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, services, vcn_id, defined_tags, display_name, freeform_tags, route_table_id):
 
     kwargs = {}
 
@@ -1949,6 +1954,9 @@ def create_service_gateway(ctx, from_json, wait_for_state, max_wait_seconds, wai
 
     if freeform_tags is not None:
         details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if route_table_id is not None:
+        details['routeTableId'] = route_table_id
 
     client = cli_util.build_client('virtual_network', ctx)
     result = client.create_service_gateway(
@@ -2196,7 +2204,7 @@ You may optionally specify a *display name* for the virtual circuit. It does not
 
 **Important:** When creating a virtual circuit, you specify a DRG for the traffic to flow through. Make sure you attach the DRG to your VCN and confirm the VCN's routing sends traffic to the DRG. Otherwise traffic will not flow. For more information, see [Route Tables].""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to contain the virtual circuit.""")
-@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["PUBLIC", "PRIVATE"]), help=u"""The type of IP addresses used in this virtual circuit. PRIVATE means [RFC 1918] addresses (10.0.0.0/8, 172.16/12, and 192.168/16). Only PRIVATE is supported.""")
+@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["PUBLIC", "PRIVATE"]), help=u"""The type of IP addresses used in this virtual circuit. PRIVATE means [RFC 1918] addresses (10.0.0.0/8, 172.16/12, and 192.168/16).""")
 @cli_util.option('--bandwidth-shape-name', help=u"""The provisioned data rate of the connection.  To get a list of the available bandwidth levels (that is, shapes), see [ListFastConnectProviderServiceVirtualCircuitBandwidthShapes].
 
 Example: `10 Gbps`""")
@@ -7381,6 +7389,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--route-table-id', help=u"""The OCID of the route table the service gateway will use. For information about why you would associate a route table with a service gateway, see [Transit Routing: Private Access to Oracle Services Network].""")
 @cli_util.option('--services', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of all the `Service` objects you want enabled on this service gateway. Sending an empty list means you want to disable all services. Omitting this parameter entirely keeps the existing list of services intact.
 
 You can also enable or disable a particular `Service` by using [AttachServiceId] or [DetachServiceId].
@@ -7398,7 +7407,7 @@ This option is a JSON list with items of type ServiceIdRequestDetails.  For docu
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'services': {'module': 'core', 'class': 'list[ServiceIdRequestDetails]'}}, output_type={'module': 'core', 'class': 'ServiceGateway'})
 @cli_util.wrap_exceptions
-def update_service_gateway(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, service_gateway_id, block_traffic, defined_tags, display_name, freeform_tags, services, if_match):
+def update_service_gateway(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, service_gateway_id, block_traffic, defined_tags, display_name, freeform_tags, route_table_id, services, if_match):
 
     if isinstance(service_gateway_id, six.string_types) and len(service_gateway_id.strip()) == 0:
         raise click.UsageError('Parameter --service-gateway-id cannot be whitespace or empty string')
@@ -7424,6 +7433,9 @@ def update_service_gateway(ctx, from_json, force, wait_for_state, max_wait_secon
 
     if freeform_tags is not None:
         details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if route_table_id is not None:
+        details['routeTableId'] = route_table_id
 
     if services is not None:
         details['services'] = cli_util.parse_json_parameter("services", services)

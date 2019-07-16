@@ -48,7 +48,7 @@ Options:
                   <command> --help.
 
 Commands:
-  change-compartment  Change the compartment of a volume backup
+  change-compartment  Moves a volume backup into a different...
   copy                Creates a volume backup copy in specified...
   create              Creates a new backup of the specified volume.
   delete              Deletes a volume backup.
@@ -60,11 +60,14 @@ Commands:
 $ oci bv backup change-compartment --help
 Usage: oci bv backup change-compartment [OPTIONS]
 
-  Change the compartment of a volume backup
+  Moves a volume backup into a different compartment within the same tenancy.
+  For information about moving resources between compartments, see [Moving
+  Resources to a Different Compartment].
 
 Options:
   --volume-backup-id TEXT    The OCID of the volume backup. [required]
-  -c, --compartment-id TEXT  The OCID of the new compartment [required]
+  -c, --compartment-id TEXT  The [OCID] of the compartment to move the volume
+                             backup to. [required]
   --from-json TEXT           Provide input to this command as a JSON document
                              from a file using the file://path-to/file syntax.
                              The --generate-full-command-json-input option can
@@ -108,6 +111,18 @@ Options:
                                   Does not have to be unique and it's
                                   changeable. Avoid entering confidential
                                   information.
+  --kms-key-id TEXT               The OCID of the KMS key in the destination
+                                  region which will be the master encryption key
+                                  for the copied volume backup. If you do not
+                                  specify this attribute the volume backup will
+                                  be encrypted with the Oracle-provided
+                                  encryption key when it is copied to the
+                                  destination region.
+                                  
+                                  For more information
+                                  about the Key Management service and
+                                  encryption keys, see [Overview of Key
+                                  Management] and [Using Keys].
   --wait-for-state [CREATING|AVAILABLE|TERMINATING|TERMINATED|FAULTY|REQUEST_RECEIVED]
                                   This operation creates, modifies or deletes a
                                   resource that has a defined lifecycle state.
@@ -568,7 +583,7 @@ Options:
                   <command> --help.
 
 Commands:
-  change-compartment  Change the compartment of a boot volume
+  change-compartment  Moves a boot volume into a different...
   create              Creates a new boot volume in the specified...
   delete              Deletes the specified boot volume.
   get                 Gets information for the specified boot...
@@ -579,11 +594,14 @@ Commands:
 $ oci bv boot-volume change-compartment --help
 Usage: oci bv boot-volume change-compartment [OPTIONS]
 
-  Change the compartment of a boot volume
+  Moves a boot volume into a different compartment within the same tenancy.
+  For information about moving resources between compartments, see [Moving
+  Resources to a Different Compartment].
 
 Options:
   --boot-volume-id TEXT      The OCID of the boot volume. [required]
-  -c, --compartment-id TEXT  The OCID of the new compartment [required]
+  -c, --compartment-id TEXT  The [OCID] of the compartment to move the boot
+                             volume to. [required]
   --from-json TEXT           Provide input to this command as a JSON document
                              from a file using the file://path-to/file syntax.
                              The --generate-full-command-json-input option can
@@ -1023,7 +1041,7 @@ Options:
                   <command> --help.
 
 Commands:
-  change-compartment  Change the compartment of a boot volume...
+  change-compartment  Moves a boot volume backup into a different...
   create              Creates a new boot volume backup of the...
   delete              Deletes a boot volume backup.
   get                 Gets information for the specified boot...
@@ -1034,11 +1052,14 @@ Commands:
 $ oci bv boot-volume-backup change-compartment --help
 Usage: oci bv boot-volume-backup change-compartment [OPTIONS]
 
-  Change the compartment of a boot volume backup
+  Moves a boot volume backup into a different compartment within the same
+  tenancy. For information about moving resources between compartments, see
+  [Moving Resources to a Different Compartment].
 
 Options:
   --boot-volume-backup-id TEXT  The OCID of the boot volume backup. [required]
-  -c, --compartment-id TEXT     The OCID of the new compartment [required]
+  -c, --compartment-id TEXT     The [OCID] of the compartment to move the boot
+                                volume backup to. [required]
   --from-json TEXT              Provide input to this command as a JSON document
                                 from a file using the file://path-to/file
                                 syntax.
@@ -1624,7 +1645,7 @@ Options:
                   <command> --help.
 
 Commands:
-  change-compartment  Change the compartment of a volume
+  change-compartment  Moves a volume into a different compartment...
   create              Creates a new volume in the specified...
   delete              Deletes the specified volume.
   get                 Gets information for the specified volume.
@@ -1635,11 +1656,14 @@ Commands:
 $ oci bv volume change-compartment --help
 Usage: oci bv volume change-compartment [OPTIONS]
 
-  Change the compartment of a volume
+  Moves a volume into a different compartment within the same tenancy. For
+  information about moving resources between compartments, see [Moving
+  Resources to a Different Compartment].
 
 Options:
   --volume-id TEXT           The OCID of the volume. [required]
-  -c, --compartment-id TEXT  The OCID of the new compartment [required]
+  -c, --compartment-id TEXT  The [OCID] of the compartment to move the volume
+                             to. [required]
   --from-json TEXT           Provide input to this command as a JSON document
                              from a file using the file://path-to/file syntax.
                              The --generate-full-command-json-input option can
@@ -2390,7 +2414,7 @@ Options:
                   <command> --help.
 
 Commands:
-  change-compartment  Change the compartment of a volume group
+  change-compartment  Moves a volume group into a different...
   create              Creates a new volume group in the specified...
   delete              Deletes the specified volume group.
   get                 Gets information for the specified volume...
@@ -2401,12 +2425,15 @@ Commands:
 $ oci bv volume-group change-compartment --help
 Usage: oci bv volume-group change-compartment [OPTIONS]
 
-  Change the compartment of a volume group
+  Moves a volume group into a different compartment within the same tenancy.
+  For information about moving resources between compartments, see [Moving
+  Resources to a Different Compartment].
 
 Options:
   --volume-group-id TEXT     The Oracle Cloud ID (OCID) that uniquely identifies
                              the volume group. [required]
-  -c, --compartment-id TEXT  The OCID of the new compartment [required]
+  -c, --compartment-id TEXT  The [OCID] of the compartment to move the volume
+                             group to. [required]
   --from-json TEXT           Provide input to this command as a JSON document
                              from a file using the file://path-to/file syntax.
                              The --generate-full-command-json-input option can
@@ -2889,7 +2916,7 @@ Options:
                   <command> --help.
 
 Commands:
-  change-compartment  Change the compartment of a volume group...
+  change-compartment  Moves a volume group backup into a different...
   create              Creates a new backup volume group of the...
   delete              Deletes a volume group backup.
   get                 Gets information for the specified volume...
@@ -2900,12 +2927,15 @@ Commands:
 $ oci bv volume-group-backup change-compartment --help
 Usage: oci bv volume-group-backup change-compartment [OPTIONS]
 
-  Change the compartment of a volume group backup
+  Moves a volume group backup into a different compartment within the same
+  tenancy. For information about moving resources between compartments, see
+  [Moving Resources to a Different Compartment].
 
 Options:
   --volume-group-backup-id TEXT  The Oracle Cloud ID (OCID) that uniquely
                                  identifies the volume group backup. [required]
-  -c, --compartment-id TEXT      The OCID of the new compartment [required]
+  -c, --compartment-id TEXT      The [OCID] of the compartment to move the
+                                 volume group backup to. [required]
   --from-json TEXT               Provide input to this command as a JSON
                                  document from a file using the file://path-
                                  to/file syntax.

@@ -15,11 +15,29 @@
 #   - demjson (http://deron.meranda.us/python/demjson/). This is not a strict requirement fpr normal CLI usage, it is just used to strip comments and explanatory notes from the example
 #     input files which support this script
 
-COMPARTMENT_ID=""  # Your compartment OCID
-AVAILABILITY_DOMAIN_ONE="" # An availability domain, e.g. Uocm:IAD-AD-1
-AVAILABILITY_DOMAIN_TWO="" # An availability domain, but different to AVAILABILITY_DOMAIN_TWO, e.g. Uocm:IAD-AD-2
-NSG_IDS_JSON_FILE="scripts/create_load_balancer_example/nsg_ids.json"
-UPDATE_NSG_IDS_JSON_FILE="scripts/create_load_balancer_example/update_nsg_ids.json"
+# Locals variables section. Define these in your environment prior to executing the script.
+# COMPARTMENT_ID: An OCID for a compartment in your tenancy where we'll create an LB
+if [ -z ${COMPARTMENT_ID} ];then
+    echo "COMPARTMENT_ID must be defined in your environment".
+    exit 1
+fi 
+# TARGET_COMPARTMENT_ID: An additional compartment OCID where we will relocate an LB after creation
+if [ -z ${TARGET_COMPARTMENT_ID} ];then
+    echo "TARGET_COMPARTMENT_ID must be defined in your environment".
+    exit 1
+fi 
+# AVAILABILITY_DOMAIN_ONE: An availability domain, e.g. Uocm:IAD-AD-1
+if [ -z ${AVAILABILITY_DOMAIN_ONE} ];then
+    echo "AVAILABILITY_DOMAIN_ONE must be defined in your environment".
+    exit 1
+fi 
+# AVAILABILITY_DOMAIN_TWO: An availability domain, but different than AVAILABILITY_DOMAIN_ONE, e.g. Uocm:IAD-AD-2
+if [ -z ${AVAILABILITY_DOMAIN_TWO} ];then
+    echo "AVAILABILITY_DOMAIN_TWO must be defined in your environment".
+    exit 1
+fi 
+NSG_IDS_JSON_FILE="scripts/examples/create_load_balancer_example/nsg_ids.json"
+UPDATE_NSG_IDS_JSON_FILE="scripts/examples/create_load_balancer_example/update_nsg_ids.json"
 
 CREATED_VCN=$(oci network vcn create -c $COMPARTMENT_ID --display-name createLbExampleVcn --cidr-block 10.0.0.0/16 --dns-label createLbExample --wait-for-state AVAILABLE 2>/dev/null)
 VCN_ID=$(jq -r '.data.id' <<< "$CREATED_VCN")
@@ -229,6 +247,9 @@ function create_lb_with_minimum_then_add_related_resources() {
         --ssl-certificate-name my_cert_bundle \
         --ssl-verify-depth 3 \
         --ssl-verify-peer-certificate false
+    # If you would like to use the LB Cookie Session Persistence Configuration instead of "Sesssion Persistence" include the following line INSTEAD 
+    # of '--session-persistence=cookie-name' and '--session-persistence-disable-fallback' as these features are mutually exclusive:
+    #    --lb-cookie-session-persistence-configuration file://scripts/create_load_balancer_example/lb_cookie_session_persistence_configuration_with_comments.json
 
     # Now that we have our backend set, we can add backends to it by calling "oci lb backend create" multiple times
     oci lb backend create --load-balancer-id $LB_ID --backend-set-name backendSetName --ip-address 10.10.10.4 --port 80 --weight 3
@@ -259,7 +280,7 @@ function create_lb_with_minimum_then_add_related_resources() {
     # We can create one or more rule sets to attach to the load balancer listener.
     oci lb rule-set create --load-balancer-id $LB_ID \
         --name ruleSetName\ 
-        --items '[{"action": "REMOVE_HTTP_REQUEST_HEADER","header": "AnyHeaderName3"},{"action": "ADD_HTTP_RESPONSE_HEADER","header": "AnyHeaderName4","value": "Any Value for Header"}]'
+        --items '[{"action": "REMOVE_HTTP_REQUEST_HEADER","header": "AnyHeaderName3"},{"action": "ADD_HTTP_RESPONSE_HEADER","header": "AnyHeaderName4","value": "Any Value for Header"},{"action": "CONTROL_ACCESS_USING_HTTP_METHODS", "allowedMethods": ["PUT", "POST"], "statusCode": "403"}]'
 
     # Now that we have our certificates, backend set, path route set, and rule set we can add a listener. We need to specify a backend set which exists (e.g. the one we made)
     #
@@ -280,6 +301,13 @@ function create_lb_with_minimum_then_add_related_resources() {
 
     # Print out information about the load balancer
     oci lb load-balancer get --load-balancer-id $LB_ID
+
+    # We can list out our listener rules in the following manner
+    echo "Displaying rules via listener-rule GET"
+    oci lb listener-rule list \
+        --listener-name myListener \
+        --load-balancer-id $LB_ID \
+        --all
 
     # Delete the load balancer, and sleep a bit to make sure it has been deleted
     oci lb load-balancer delete --load-balancer-id $LB_ID --force

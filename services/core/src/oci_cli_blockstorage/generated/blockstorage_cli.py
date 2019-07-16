@@ -120,9 +120,9 @@ blockstorage_root_group.add_command(volume_backup_policy_group)
 blockstorage_root_group.add_command(volume_kms_key_group)
 
 
-@boot_volume_backup_group.command(name=cli_util.override('change_boot_volume_backup_compartment.command_name', 'change-compartment'), help=u"""Change the compartment of a boot volume backup""")
+@boot_volume_backup_group.command(name=cli_util.override('change_boot_volume_backup_compartment.command_name', 'change-compartment'), help=u"""Moves a boot volume backup into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].""")
 @cli_util.option('--boot-volume-backup-id', required=True, help=u"""The OCID of the boot volume backup.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the new compartment""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the boot volume backup to.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -148,9 +148,9 @@ def change_boot_volume_backup_compartment(ctx, from_json, boot_volume_backup_id,
     cli_util.render_response(result, ctx)
 
 
-@boot_volume_group.command(name=cli_util.override('change_boot_volume_compartment.command_name', 'change-compartment'), help=u"""Change the compartment of a boot volume""")
+@boot_volume_group.command(name=cli_util.override('change_boot_volume_compartment.command_name', 'change-compartment'), help=u"""Moves a boot volume into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].""")
 @cli_util.option('--boot-volume-id', required=True, help=u"""The OCID of the boot volume.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the new compartment""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the boot volume to.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -176,9 +176,9 @@ def change_boot_volume_compartment(ctx, from_json, boot_volume_id, compartment_i
     cli_util.render_response(result, ctx)
 
 
-@volume_backup_group.command(name=cli_util.override('change_volume_backup_compartment.command_name', 'change-compartment'), help=u"""Change the compartment of a volume backup""")
+@volume_backup_group.command(name=cli_util.override('change_volume_backup_compartment.command_name', 'change-compartment'), help=u"""Moves a volume backup into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].""")
 @cli_util.option('--volume-backup-id', required=True, help=u"""The OCID of the volume backup.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the new compartment""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the volume backup to.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -204,9 +204,9 @@ def change_volume_backup_compartment(ctx, from_json, volume_backup_id, compartme
     cli_util.render_response(result, ctx)
 
 
-@volume_group.command(name=cli_util.override('change_volume_compartment.command_name', 'change-compartment'), help=u"""Change the compartment of a volume""")
+@volume_group.command(name=cli_util.override('change_volume_compartment.command_name', 'change-compartment'), help=u"""Moves a volume into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].""")
 @cli_util.option('--volume-id', required=True, help=u"""The OCID of the volume.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the new compartment""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the volume to.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -232,9 +232,9 @@ def change_volume_compartment(ctx, from_json, volume_id, compartment_id):
     cli_util.render_response(result, ctx)
 
 
-@volume_group_backup_group.command(name=cli_util.override('change_volume_group_backup_compartment.command_name', 'change-compartment'), help=u"""Change the compartment of a volume group backup""")
+@volume_group_backup_group.command(name=cli_util.override('change_volume_group_backup_compartment.command_name', 'change-compartment'), help=u"""Moves a volume group backup into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].""")
 @cli_util.option('--volume-group-backup-id', required=True, help=u"""The Oracle Cloud ID (OCID) that uniquely identifies the volume group backup.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the new compartment""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the volume group backup to.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -260,9 +260,9 @@ def change_volume_group_backup_compartment(ctx, from_json, volume_group_backup_i
     cli_util.render_response(result, ctx)
 
 
-@volume_group_group.command(name=cli_util.override('change_volume_group_compartment.command_name', 'change-compartment'), help=u"""Change the compartment of a volume group""")
+@volume_group_group.command(name=cli_util.override('change_volume_group_compartment.command_name', 'change-compartment'), help=u"""Moves a volume group into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].""")
 @cli_util.option('--volume-group-id', required=True, help=u"""The Oracle Cloud ID (OCID) that uniquely identifies the volume group.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the new compartment""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the volume group to.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -294,6 +294,9 @@ def change_volume_group_compartment(ctx, from_json, volume_group_id, compartment
 
 Example: `us-ashburn-1`""")
 @cli_util.option('--display-name', help=u"""A user-friendly name for the volume backup. Does not have to be unique and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--kms-key-id', help=u"""The OCID of the KMS key in the destination region which will be the master encryption key for the copied volume backup. If you do not specify this attribute the volume backup will be encrypted with the Oracle-provided encryption key when it is copied to the destination region.
+
+ For more information about the Key Management service and encryption keys, see [Overview of Key Management] and [Using Keys].""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY", "REQUEST_RECEIVED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -302,7 +305,7 @@ Example: `us-ashburn-1`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'VolumeBackup'})
 @cli_util.wrap_exceptions
-def copy_volume_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, volume_backup_id, destination_region, display_name):
+def copy_volume_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, volume_backup_id, destination_region, display_name, kms_key_id):
 
     if isinstance(volume_backup_id, six.string_types) and len(volume_backup_id.strip()) == 0:
         raise click.UsageError('Parameter --volume-backup-id cannot be whitespace or empty string')
@@ -315,6 +318,9 @@ def copy_volume_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
     if display_name is not None:
         details['displayName'] = display_name
+
+    if kms_key_id is not None:
+        details['kmsKeyId'] = kms_key_id
 
     client = cli_util.build_client('blockstorage', ctx)
     result = client.copy_volume_backup(

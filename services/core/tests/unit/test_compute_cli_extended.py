@@ -48,3 +48,11 @@ class TestCompute(unittest.TestCase):
 
         result = util.invoke_command(['compute', 'volume-attachment', 'attach-iscsi-volume'])
         assert 'Error: Missing option(s) --instance-id, --volume-id.' in result.output
+
+    # verify if change-compartment takes --wait-for-state option
+    def test_change_compartment(self):
+        result = util.invoke_command(['compute', 'instance'])
+        assert 'change-compartment' in result.output
+        result = util.invoke_command(['compute', 'instance', 'change-compartment', '--instance-id', 'dummy',
+                                      '--compartment-id', 'dummy', '--wait-for-state', 'ACCEPTED'])
+        assert 'ServiceError' in result.output

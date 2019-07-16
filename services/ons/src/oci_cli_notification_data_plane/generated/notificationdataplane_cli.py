@@ -14,17 +14,11 @@ from oci_cli.aliasing import CommandGroupWithAlias
 from services.ons.src.oci_cli_ons.generated import ons_service_cli
 
 
-@click.command(cli_util.override('notification_data_plane_root_group.command_name', 'notification-data-plane'), cls=CommandGroupWithAlias, help=cli_util.override('notification_data_plane_root_group.help', """Use the Notification API to broadcast messages to distributed components by topic, using a publish-subscribe pattern.
-For information about managing topics, subscriptions, and messages, see [Notification Overview](/iaas/Content/Notification/Concepts/notificationoverview.htm).
-"""), short_help=cli_util.override('notification_data_plane_root_group.short_help', """Notification API"""))
+@click.command(cli_util.override('notification_data_plane_root_group.command_name', 'notification-data-plane'), cls=CommandGroupWithAlias, help=cli_util.override('notification_data_plane_root_group.help', """Use the Notifications API to broadcast messages to distributed components by topic, using a publish-subscribe pattern.
+For information about managing topics, subscriptions, and messages, see [Notifications Overview](/iaas/Content/Notification/Concepts/notificationoverview.htm).
+"""), short_help=cli_util.override('notification_data_plane_root_group.short_help', """Notifications API"""))
 @cli_util.help_option_group
 def notification_data_plane_root_group():
-    pass
-
-
-@click.command(cli_util.override('publish_result_group.command_name', 'publish-result'), cls=CommandGroupWithAlias, help="""The response to a PublishMessage call.""")
-@cli_util.help_option_group
-def publish_result_group():
     pass
 
 
@@ -34,33 +28,53 @@ def subscription_group():
     pass
 
 
-@click.command(cli_util.override('update_subscription_details_group.command_name', 'update-subscription-details'), cls=CommandGroupWithAlias, help="""The configuration details for updating the subscription.""")
+@click.command(cli_util.override('notification_topic_group.command_name', 'notification-topic'), cls=CommandGroupWithAlias, help="""The properties that define a topic.""")
 @cli_util.help_option_group
-def update_subscription_details_group():
-    pass
-
-
-@click.command(cli_util.override('confirmation_result_group.command_name', 'confirmation-result'), cls=CommandGroupWithAlias, help="""The confirmation result.""")
-@cli_util.help_option_group
-def confirmation_result_group():
-    pass
-
-
-@click.command(cli_util.override('string_group.command_name', 'string'), cls=CommandGroupWithAlias, help="""""")
-@cli_util.help_option_group
-def string_group():
+def notification_topic_group():
     pass
 
 
 ons_service_cli.ons_service_group.add_command(notification_data_plane_root_group)
-notification_data_plane_root_group.add_command(publish_result_group)
 notification_data_plane_root_group.add_command(subscription_group)
-notification_data_plane_root_group.add_command(update_subscription_details_group)
-notification_data_plane_root_group.add_command(confirmation_result_group)
-notification_data_plane_root_group.add_command(string_group)
+notification_data_plane_root_group.add_command(notification_topic_group)
 
 
-@subscription_group.command(name=cli_util.override('create_subscription.command_name', 'create'), help=u"""Creates a subscription for the specified topic.""")
+@subscription_group.command(name=cli_util.override('change_subscription_compartment.command_name', 'change-compartment'), help=u"""Moves a subscription into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].
+
+Transactions Per Minute (TPM) per-tenancy limit for this operation: 60.""")
+@cli_util.option('--subscription-id', required=True, help=u"""The [OCID] of the subscription to move.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the specified topic or subscription to.""")
+@cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_subscription_compartment(ctx, from_json, subscription_id, compartment_id, if_match):
+
+    if isinstance(subscription_id, six.string_types) and len(subscription_id.strip()) == 0:
+        raise click.UsageError('Parameter --subscription-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    details = {}
+    details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('notification_data_plane', ctx)
+    result = client.change_subscription_compartment(
+        subscription_id=subscription_id,
+        change_subscription_compartment_details=details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@subscription_group.command(name=cli_util.override('create_subscription.command_name', 'create'), help=u"""Creates a subscription for the specified topic.
+
+Transactions Per Minute (TPM) per-tenancy limit for this operation: 60.""")
 @cli_util.option('--topic-id', required=True, help=u"""The [OCID] of the topic for the subscription.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment for the subscription.""")
 @cli_util.option('--protocol', required=True, help=u"""The protocol to use for delivering messages. Valid values: EMAIL, HTTPS.""")
@@ -130,7 +144,9 @@ def create_subscription(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     cli_util.render_response(result, ctx)
 
 
-@subscription_group.command(name=cli_util.override('delete_subscription.command_name', 'delete'), help=u"""Deletes the specified subscription.""")
+@subscription_group.command(name=cli_util.override('delete_subscription.command_name', 'delete'), help=u"""Deletes the specified subscription.
+
+Transactions Per Minute (TPM) per-tenancy limit for this operation: 60.""")
 @cli_util.option('--subscription-id', required=True, help=u"""The [OCID] of the subscription to delete.""")
 @cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -193,8 +209,10 @@ def delete_subscription(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     cli_util.render_response(result, ctx)
 
 
-@confirmation_result_group.command(name=cli_util.override('get_confirm_subscription.command_name', 'get-confirm-subscription'), help=u"""Gets the confirmation details for the specified subscription.""")
-@cli_util.option('--id', required=True, help=u"""The subscription ID.""")
+@subscription_group.command(name=cli_util.override('get_confirm_subscription.command_name', 'get-confirm'), help=u"""Gets the confirmation details for the specified subscription.
+
+Transactions Per Minute (TPM) per-tenancy limit for this operation: 60.""")
+@cli_util.option('--id', required=True, help=u"""The [OCID] of the subscription to get the confirmation details for.""")
 @cli_util.option('--token', required=True, help=u"""The subscription confirmation token.""")
 @cli_util.option('--protocol', required=True, help=u"""The subscription protocol. Valid values: EMAIL, HTTPS.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -219,7 +237,9 @@ def get_confirm_subscription(ctx, from_json, id, token, protocol):
     cli_util.render_response(result, ctx)
 
 
-@subscription_group.command(name=cli_util.override('get_subscription.command_name', 'get'), help=u"""Gets the specified subscription's configuration information.""")
+@subscription_group.command(name=cli_util.override('get_subscription.command_name', 'get'), help=u"""Gets the specified subscription's configuration information.
+
+Transactions Per Minute (TPM) per-tenancy limit for this operation: 60.""")
 @cli_util.option('--subscription-id', required=True, help=u"""The [OCID] of the subscription to retrieve.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -241,7 +261,9 @@ def get_subscription(ctx, from_json, subscription_id):
     cli_util.render_response(result, ctx)
 
 
-@string_group.command(name=cli_util.override('get_unsubscription.command_name', 'get-unsubscription'), help=u"""Gets the unsubscription details for the specified subscription.""")
+@subscription_group.command(name=cli_util.override('get_unsubscription.command_name', 'get-un'), help=u"""Gets the unsubscription details for the specified subscription.
+
+Transactions Per Minute (TPM) per-tenancy limit for this operation: 60.""")
 @cli_util.option('--id', required=True, help=u"""The [OCID] of the subscription to unsubscribe from.""")
 @cli_util.option('--token', required=True, help=u"""The subscription confirmation token.""")
 @cli_util.option('--protocol', required=True, help=u"""The subscription protocol. Valid values: EMAIL, HTTPS.""")
@@ -267,7 +289,9 @@ def get_unsubscription(ctx, from_json, id, token, protocol):
     cli_util.render_response(result, ctx)
 
 
-@subscription_group.command(name=cli_util.override('list_subscriptions.command_name', 'list'), help=u"""Lists the subscriptions in the specified compartment or topic.""")
+@subscription_group.command(name=cli_util.override('list_subscriptions.command_name', 'list'), help=u"""Lists the subscriptions in the specified compartment or topic.
+
+Transactions Per Minute (TPM) per-tenancy limit for this operation: 60.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--topic-id', help=u"""Return all subscriptions that are subscribed to the given topic OCID. Either this query parameter or the compartmentId query parameter must be set.""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the opc-next-page response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
@@ -318,11 +342,19 @@ def list_subscriptions(ctx, from_json, all_pages, page_size, compartment_id, top
     cli_util.render_response(result, ctx)
 
 
-@publish_result_group.command(name=cli_util.override('publish_message.command_name', 'publish-message'), help=u"""Publishes a message to the specified topic. For more information about publishing messages, see [Publishing Messages].""")
+@notification_topic_group.command(name=cli_util.override('publish_message.command_name', 'publish-message'), help=u"""Publishes a message to the specified topic. Limits information follows.
+
+Message size limit per request: 64KB.
+
+Message delivery rate limit per endpoint: 60 messages per minute for HTTPS (PagerDuty) protocol, 10 messages per minute for Email protocol.
+
+Transactions Per Minute (TPM) per-tenancy limit for this operation: 60 per topic.
+
+For more information about publishing messages, see [Publishing Messages].""")
 @cli_util.option('--topic-id', required=True, help=u"""The [OCID] of the topic.""")
 @cli_util.option('--body', required=True, help=u"""The body of the message to be published. For `messageType` of JSON, a default key-value pair is required. Example: `{\"default\": \"Alarm breached\", \"Email\": \"Alarm breached: <url>\"}.` Avoid entering confidential information.""")
 @cli_util.option('--title', help=u"""The title of the message to be published. Avoid entering confidential information.""")
-@cli_util.option('--message-type', type=custom_types.CliCaseInsensitiveChoice(["JSON", "RAW_TEXT"]), help=u"""Type of message body in the request. Default value: JSON.""")
+@cli_util.option('--message-type', type=custom_types.CliCaseInsensitiveChoice(["JSON", "RAW_TEXT"]), help=u"""Type of message body in the request.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -353,7 +385,9 @@ def publish_message(ctx, from_json, topic_id, body, title, message_type):
     cli_util.render_response(result, ctx)
 
 
-@subscription_group.command(name=cli_util.override('resend_subscription_confirmation.command_name', 'resend-subscription-confirmation'), help=u"""Resends the confirmation details for the specified subscription.""")
+@subscription_group.command(name=cli_util.override('resend_subscription_confirmation.command_name', 'resend-subscription-confirmation'), help=u"""Resends the confirmation details for the specified subscription.
+
+Transactions Per Minute (TPM) per-tenancy limit for this operation: 60.""")
 @cli_util.option('--id', required=True, help=u"""The [OCID] of the subscription to resend the confirmation for.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -375,7 +409,9 @@ def resend_subscription_confirmation(ctx, from_json, id):
     cli_util.render_response(result, ctx)
 
 
-@update_subscription_details_group.command(name=cli_util.override('update_subscription.command_name', 'update-subscription'), help=u"""Updates the specified subscription's configuration.""")
+@subscription_group.command(name=cli_util.override('update_subscription.command_name', 'update'), help=u"""Updates the specified subscription's configuration.
+
+Transactions Per Minute (TPM) per-tenancy limit for this operation: 60.""")
 @cli_util.option('--subscription-id', required=True, help=u"""The [OCID] of the subscription to update.""")
 @cli_util.option('--delivery-policy', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The delivery policy of the subscription. Stored as a JSON string.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].

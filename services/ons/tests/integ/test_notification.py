@@ -3,12 +3,14 @@
 
 import json
 import oci_cli
+import os
 import pytest
 
 from tests import util
 from tests import test_config_container
 
 CASSETTE_LIBRARY_DIR = 'services/ons/tests/cassettes'
+COMPARTMENT_ID_CHANGE_TO = os.getenv('OCI_CLI_CHANGE_TO_COMPARTMENT_ID')
 util.set_admin_pass_phrase()
 
 
@@ -52,6 +54,17 @@ def test_topic_crud(runner, config_file, config_profile):
         result = invoke(runner, config_file, config_profile, params)
         util.validate_response(result)
         assert len(json.loads(result.output)['data']) > 0
+
+        # Change compartment
+        if COMPARTMENT_ID_CHANGE_TO:
+            params = [
+                'ons', 'topic', 'change-compartment',
+                '--topic-id', topic_id,
+                '--compartment-id', COMPARTMENT_ID_CHANGE_TO
+            ]
+            result = invoke(runner, config_file, config_profile, params)
+            util.validate_response(result)
+            assert result.output != ''
     finally:
         if topic_id:
             params = [
@@ -63,6 +76,9 @@ def test_topic_crud(runner, config_file, config_profile):
             util.validate_response(result)
 
 
+# TODO: Test is failing in py2.7:
+#    Comment to record new tests.
+#    Later on fix running in 2.7
 @pytest.mark.skip('Test failing only in Python 2.7')
 def test_subscription_crud(runner, config_file, config_profile):
     topic_id = None
@@ -115,6 +131,19 @@ def test_subscription_crud(runner, config_file, config_profile):
         ]
         result = invoke(runner, config_file, config_profile, params)
         util.validate_response(result)
+
+        # Change compartment
+        # Need to find a way to confirm the subscription before we can change the compartment.
+        TEST_SUBSCRIPTION_CHANGE_COMPARTMENT = False
+        if COMPARTMENT_ID_CHANGE_TO and TEST_SUBSCRIPTION_CHANGE_COMPARTMENT:
+            params = [
+                'ons', 'subscription', 'change-compartment',
+                '--subscription-id', subscription_id,
+                '--compartment-id', COMPARTMENT_ID_CHANGE_TO
+            ]
+            result = invoke(runner, config_file, config_profile, params)
+            util.validate_response(result)
+            assert result.output != ''
     finally:
 
         if topic_id:

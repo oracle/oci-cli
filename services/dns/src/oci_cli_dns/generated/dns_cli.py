@@ -79,6 +79,66 @@ dns_root_group.add_command(records_group)
 dns_root_group.add_command(zones_group)
 
 
+@steering_policy_group.command(name=cli_util.override('change_steering_policy_compartment.command_name', 'change-compartment'), help=u"""Moves a steering policy into a different compartment. When provided, If-Match is checked against ETag values of the resource.""")
+@cli_util.option('--steering-policy-id', required=True, help=u"""The OCID of the target steering policy.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the steering policy should be moved.""")
+@cli_util.option('--if-match', help=u"""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_steering_policy_compartment(ctx, from_json, steering_policy_id, compartment_id, if_match):
+
+    if isinstance(steering_policy_id, six.string_types) and len(steering_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --steering-policy-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+
+    details = {}
+    details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('dns', ctx)
+    result = client.change_steering_policy_compartment(
+        steering_policy_id=steering_policy_id,
+        change_steering_policy_compartment_details=details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@zone_group.command(name=cli_util.override('change_zone_compartment.command_name', 'change-compartment'), help=u"""Moves a zone into a different compartment. When provided, If-Match is checked against ETag values of the resource. **Note:** All SteeringPolicyAttachment objects associated with this zone will also be moved into the provided compartment.""")
+@cli_util.option('--zone-id', required=True, help=u"""The OCID of the target zone.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the zone should be moved.""")
+@cli_util.option('--if-match', help=u"""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_zone_compartment(ctx, from_json, zone_id, compartment_id, if_match):
+
+    if isinstance(zone_id, six.string_types) and len(zone_id.strip()) == 0:
+        raise click.UsageError('Parameter --zone-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+
+    details = {}
+    details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('dns', ctx)
+    result = client.change_zone_compartment(
+        zone_id=zone_id,
+        change_zone_compartment_details=details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @steering_policy_group.command(name=cli_util.override('create_steering_policy.command_name', 'create'), help=u"""Creates a new steering policy in the specified compartment. For more information on creating policies with templates, see [Traffic Management API Guide].""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment containing the steering policy.""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name for the steering policy. Does not have to be unique and can be changed. Avoid entering confidential information.""")

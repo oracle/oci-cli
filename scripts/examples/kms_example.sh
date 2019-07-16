@@ -31,14 +31,15 @@
 #    export FREEFORM_TAG_NEW_PAIR = # <optional different freeform tag key value pair for resource update API to append tag to existing resource>
 #    export DEFINED_TAG_PAIR = # <optional defined tag namespace and key value pairs for resource creation API>
 #    export LOGGING_CONTEXT = # <optional logging context for kms crypto audit logging. An example: '{"loggingContextKey":"loggingContextValue"}'>
+#    export TARGET_COMPARTMENT_ID - Target compartment for key/vault move operation
 # Requirements for running this script:
 #   - OCI CLI v2.4.31 or later (you can check this by running oci --version)
 #   - Please make sure the user and tenancy used by the CLI have the appropriate permissions for these operations
 
 set -e
 
-if [[ -z "$FREEFORM_TAG_PAIR" || -z "$FREEFORM_TAG_NEW_PAIR" || -z "$DEFINED_TAG_PAIR" || -z "$VAULT_OCID" || -z "$COMPARTMENT_ID" || -z "$VAULT_NAME_NEW" || -z "$KEY_NAME" || -z "$KEY_NAME_NEW" || -z "$KEY_SHAPE" || -z "$PLAINTEXT" || -z "$LOGGING_CONTEXT" ]];then
-echo "FREEFORM_TAG_PAIR, FREEFORM_TAG_NEW_PAIR, DEFINED_TAG_PAIR, VAULT_OCID, COMPARTMENT_ID, VAULT_NAME_NEW, KEY_NAME, KEY_NAME_NEW, KEY_SHAPE, PLAINTEXT and LOGGING_CONTEXT must be defined in the environment. "
+if [[ -z "$FREEFORM_TAG_PAIR" || -z "$FREEFORM_TAG_NEW_PAIR" || -z "$DEFINED_TAG_PAIR" || -z "$VAULT_OCID" || -z "$COMPARTMENT_ID" || -z "$VAULT_NAME_NEW" || -z "$KEY_NAME" || -z "$KEY_NAME_NEW" || -z "$KEY_SHAPE" || -z "$PLAINTEXT" || -z "$LOGGING_CONTEXT" || -z "$TARGET_COMPARTMENT_ID" ]];then
+echo "FREEFORM_TAG_PAIR, FREEFORM_TAG_NEW_PAIR, DEFINED_TAG_PAIR, VAULT_OCID, COMPARTMENT_ID, VAULT_NAME_NEW, KEY_NAME, KEY_NAME_NEW, KEY_SHAPE, PLAINTEXT, LOGGING_CONTEXT and TARGET_COMPARTMENT_ID must be defined in the environment. "
 exit 1
 fi
 
@@ -78,6 +79,12 @@ sleep 30
 echo "Cancelling deletion of Vault with OCID: $VAULT_OCID"
 oci kms management vault cancel-deletion --vault-id $VAULT_OCID
 echo "Wait a bit for Vault deletion to be cancelled"
+sleep 30
+
+# Update the compartment of the vault
+echo "Changing compartment of the vault with OCID: $VAULT_OCID"
+oci kms management vault change-compartment --key-id $KEY_OCID --compartment-id $TARGET_COMPARTMENT_ID --endpoint $MANAGEMENT_ENDPOINT
+echo "Wait a bit for vault compartment to be updated"
 sleep 30
 
 # KMS Key Operations
@@ -130,6 +137,12 @@ oci kms management key schedule-deletion --key-id $KEY_OCID --endpoint $MANAGEME
 # The Key may stay in CANCELING_DELETION state for a short period of time, and then transit to ENABLED state
 echo "Canceling Key deletion with OCID: $KEY_OCID"
 oci kms management key cancel-deletion --key-id $KEY_OCID --endpoint $MANAGEMENT_ENDPOINT --wait-for-state ENABLED
+
+# Update the compartment of the key
+echo "Changing compartment of the key with OCID: $KEY_OCID"
+oci kms management key change-compartment --key-id $KEY_OCID --compartment-id $TARGET_COMPARTMENT_ID --endpoint $MANAGEMENT_ENDPOINT
+echo "Wait a bit for Key compartment to be updated"
+sleep 30
 
 # Update the display name and tags of the Key
 echo "Updating DisplayName and tags of Key with OCID: $KEY_OCID"

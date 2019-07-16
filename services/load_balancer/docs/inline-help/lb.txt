@@ -23,6 +23,7 @@ Commands:
   health-checker        The health check policy configuration.
   hostname              A hostname resource associated with a load...
   listener              The listener's configuration.
+  listener-rule         The attributes of a rule associated with the...
   load-balancer         The properties that define a load balancer.
   load-balancer-health  The health status details for the specified...
   nsg
@@ -463,6 +464,11 @@ Usage: oci lb backend-set [OPTIONS] COMMAND [ARGS]...
   The configuration of a load balancer backend set. For more information on
   backend set configuration, see [Managing Backend Sets].
 
+  **Note:** The `sessionPersistenceConfiguration` (application cookie
+  stickiness) and `lbCookieSessionPersistenceConfiguration` (LB cookie
+  stickiness) attributes are mutually exclusive. To avoid returning an error,
+  configure only one of these two attributes per backend set.
+
   **Warning:** Oracle recommends that you avoid using any confidential
   information when you supply string values using the API.
 
@@ -520,6 +526,19 @@ Options:
                                   be provided. We recommend storing this example
                                   in a file, modifying it as needed and then
                                   passing it back in via the file:// syntax.
+  --lb-cookie-session-persistence-configuration COMPLEX TYPE
+                                  This is a complex type whose value must be
+                                  valid JSON. The value can be provided as a
+                                  string on the command line or passed in as a
+                                  file using
+                                  the file://path/to/file syntax.
+                                  The --generate-param-json-input option can be
+                                  used to generate an example of the JSON which
+                                  must be provided. We recommend storing this
+                                  example
+                                  in a file, modifying it as needed and
+                                  then passing it back in via the file://
+                                  syntax.
   --wait-for-state [ACCEPTED|IN_PROGRESS|FAILED|SUCCEEDED]
                                   This operation asynchronously creates,
                                   modifies or deletes a resource and uses a work
@@ -815,6 +834,19 @@ Options:
                                   with the backend set. [required]
   --backend-set-name TEXT         The name of the backend set to update.
                                   Example: `example_backend_set` [required]
+  --lb-cookie-session-persistence-configuration COMPLEX TYPE
+                                  This is a complex type whose value must be
+                                  valid JSON. The value can be provided as a
+                                  string on the command line or passed in as a
+                                  file using
+                                  the file://path/to/file syntax.
+                                  The --generate-param-json-input option can be
+                                  used to generate an example of the JSON which
+                                  must be provided. We recommend storing this
+                                  example
+                                  in a file, modifying it as needed and
+                                  then passing it back in via the file://
+                                  syntax.
   --force                         Perform update without prompting for
                                   confirmation.
   --wait-for-state [ACCEPTED|IN_PROGRESS|FAILED|SUCCEEDED]
@@ -2026,6 +2058,64 @@ Options:
                                   commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
+$ oci lb listener-rule --help
+Usage: oci lb listener-rule [OPTIONS] COMMAND [ARGS]...
+
+  The attributes of a rule associated with the specified listener, and the
+  name of the rule set that the rule belongs to.
+
+Options:
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
+
+Commands:
+  list  Lists all of the rules from all of the rule...
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci lb listener-rule list --help
+Usage: oci lb listener-rule list [OPTIONS]
+
+  Lists all of the rules from all of the rule sets associated with the
+  specified listener. The response organizes the rules in the following order:
+
+  *  Access control rules *  Allow method rules *  Request header rules *
+  Response header rules
+
+Options:
+  --load-balancer-id TEXT  The [OCID] of the load balancer associated with the
+                           listener. [required]
+  --listener-name TEXT     The name of the listener the rules are associated
+                           with. [required]
+  --all                    Fetches all pages of results.
+  --from-json TEXT         Provide input to this command as a JSON document from
+                           a file using the file://path-to/file syntax.
+                           
+                           The
+                           --generate-full-command-json-input option can be used
+                           to generate a sample json file to be used with this
+                           command option. The key names are pre-populated and
+                           match the command option names (converted to
+                           camelCase format, e.g. compartment-id -->
+                           compartmentId), while the values of the keys need to
+                           be populated by the user before using the sample file
+                           as an input to this command. For any command option
+                           that accepts multiple values, the value of the key
+                           can be a JSON array.
+                           
+                           Options can still be provided
+                           on the command line. If an option exists in both the
+                           JSON document and the command line then the command
+                           line specified value will be used.
+                           
+                           For examples on
+                           usage of this option, please see our "using CLI with
+                           advanced JSON options" link: https://docs.cloud.oracl
+                           e.com/iaas/Content/API/SDKDocs/cliusing.htm#AdvancedJ
+                           SONOptions
+  -?, -h, --help           For detailed help on any of these individual
+                           commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
 $ oci lb load-balancer --help
 Usage: oci lb load-balancer [OPTIONS] COMMAND [ARGS]...
 
@@ -2046,11 +2136,80 @@ Options:
                   <command> --help.
 
 Commands:
-  create  Creates a new load balancer in the specified...
-  delete  Stops a load balancer and removes it from...
-  get     Gets the specified load balancer's...
-  list    Lists all load balancers in the specified...
-  update  Updates a load balancer's configuration.
+  change-compartment  Moves a load balancer into a different...
+  create              Creates a new load balancer in the specified...
+  delete              Stops a load balancer and removes it from...
+  get                 Gets the specified load balancer's...
+  list                Lists all load balancers in the specified...
+  update              Updates a load balancer's configuration.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci lb load-balancer change-compartment --help
+Usage: oci lb load-balancer change-compartment [OPTIONS]
+
+  Moves a load balancer into a different compartment within the same tenancy.
+  For information about moving resources between compartments, see [Moving
+  Resources to a Different Compartment].
+
+Options:
+  --load-balancer-id TEXT         The [OCID] of the load balancer to move.
+                                  [required]
+  -c, --compartment-id TEXT       The [OCID] of the compartment to move the load
+                                  balancer to. [required]
+  --if-match TEXT                 For optimistic concurrency control. Set the
+                                  if-match parameter to the value of the ETag
+                                  from a previous GET or POST response for that
+                                  resource. The resource is moved only if the
+                                  ETag you provide matches the resource's
+                                  current ETag value.
+                                  
+                                  Example: `example-etag`
+  --wait-for-state [ACCEPTED|IN_PROGRESS|FAILED|SUCCEEDED]
+                                  This operation asynchronously creates,
+                                  modifies or deletes a resource and uses a work
+                                  request to track the progress of the
+                                  operation. Specify this option to perform the
+                                  action and then wait until the work request
+                                  reaches a certain state. If timeout is
+                                  reached, a return code of 2 is returned. For
+                                  any other error, a return code of 1 is
+                                  returned.
+  --max-wait-seconds INTEGER      The maximum time to wait for the work request
+                                  to reach the state defined by --wait-for-
+                                  state. Defaults to 1200 seconds.
+  --wait-interval-seconds INTEGER
+                                  Check every --wait-interval-seconds to see
+                                  whether the work request to see if it has
+                                  reached the state defined by --wait-for-state.
+                                  Defaults to 30 seconds.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file using the file://path-
+                                  to/file syntax.
+                                  
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci lb load-balancer create --help

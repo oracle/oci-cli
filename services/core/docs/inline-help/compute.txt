@@ -1809,6 +1809,7 @@ Options:
 Commands:
   action                     Performs one of the following power actions...
   attach-vnic                Creates a secondary VNIC and attaches it to...
+  change-compartment         Moves an instance into a different...
   detach-vnic                Detaches and deletes the specified secondary...
   get                        Gets information about the specified...
   get-windows-initial-creds  Gets the generated credentials for the...
@@ -1850,7 +1851,7 @@ Options:
                                   resource.  The resource will be updated or
                                   deleted only if the etag you provide matches
                                   the resource's current etag value.
-  --wait-for-state [PROVISIONING|RUNNING|STARTING|STOPPING|STOPPED|CREATING_IMAGE|TERMINATING|TERMINATED]
+  --wait-for-state [MOVING|PROVISIONING|RUNNING|STARTING|STOPPING|STOPPED|CREATING_IMAGE|TERMINATING|TERMINATED]
                                   This operation creates, modifies or deletes a
                                   resource that has a defined lifecycle state.
                                   Specify this option to perform the action and
@@ -2033,6 +2034,54 @@ Options:
                                   s
   -?, -h, --help                  For detailed help on any of these individual
                                   commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci compute instance change-compartment --help
+Usage: oci compute instance change-compartment [OPTIONS]
+
+  Moves an instance into a different compartment within the same tenancy. For
+  information about moving resources between compartments, see [Moving
+  Resources to a Different Compartment].
+
+  When you move an instance to a different compartment, associated resources
+  such as boot volumes and VNICs are not moved.
+
+Options:
+  --instance-id TEXT         The OCID of the instance. [required]
+  -c, --compartment-id TEXT  The [OCID] of the compartment to move the instance
+                             to. [required]
+  --if-match TEXT            For optimistic concurrency control. In the PUT or
+                             DELETE call for a resource, set the `if-match`
+                             parameter to the value of the etag from a previous
+                             GET or POST response for that resource.  The
+                             resource will be updated or deleted only if the
+                             etag you provide matches the resource's current
+                             etag value.
+  --from-json TEXT           Provide input to this command as a JSON document
+                             from a file using the file://path-to/file syntax.
+                             The --generate-full-command-json-input option can
+                             be used to generate a sample json file to be used
+                             with this command option. The key names are pre-
+                             populated and match the command option names
+                             (converted to camelCase format, e.g. compartment-id
+                             --> compartmentId), while the values of the keys
+                             need to be populated by the user before using the
+                             sample file as an input to this command. For any
+                             command option that accepts multiple values, the
+                             value of the key can be a JSON array.
+                             
+                             Options can
+                             still be provided on the command line. If an option
+                             exists in both the JSON document and the command
+                             line then the command line specified value will be
+                             used.
+                             
+                             For examples on usage of this option, please
+                             see our "using CLI with advanced JSON options"
+                             link: https://docs.cloud.oracle.com/iaas/Content/AP
+                             I/SDKDocs/cliusing.htm#AdvancedJSONOptions
+  -?, -h, --help             For detailed help on any of these individual
+                             commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci compute instance detach-vnic --help
@@ -2408,7 +2457,7 @@ Options:
                                   Whether to enable in-transit encryption for
                                   the data volume's paravirtualized attachment.
                                   The default value is false.
-  --wait-for-state [PROVISIONING|RUNNING|STARTING|STOPPING|STOPPED|CREATING_IMAGE|TERMINATING|TERMINATED]
+  --wait-for-state [MOVING|PROVISIONING|RUNNING|STARTING|STOPPING|STOPPED|CREATING_IMAGE|TERMINATING|TERMINATED]
                                   This operation creates, modifies or deletes a
                                   resource that has a defined lifecycle state.
                                   Specify this option to perform the action and
@@ -2579,7 +2628,7 @@ Options:
   --sort-order [ASC|DESC]         The sort order to use, either ascending
                                   (`ASC`) or descending (`DESC`). The
                                   DISPLAYNAME sort order is case sensitive.
-  --lifecycle-state [PROVISIONING|RUNNING|STARTING|STOPPING|STOPPED|CREATING_IMAGE|TERMINATING|TERMINATED]
+  --lifecycle-state [MOVING|PROVISIONING|RUNNING|STARTING|STOPPING|STOPPED|CREATING_IMAGE|TERMINATING|TERMINATED]
                                   A filter to only return resources that match
                                   the given lifecycle state.  The state value is
                                   case-insensitive.
@@ -2693,7 +2742,7 @@ Options:
                                   default value is false.
   --force                         Perform deletion without prompting for
                                   confirmation.
-  --wait-for-state [PROVISIONING|RUNNING|STARTING|STOPPING|STOPPED|CREATING_IMAGE|TERMINATING|TERMINATED]
+  --wait-for-state [MOVING|PROVISIONING|RUNNING|STARTING|STOPPING|STOPPED|CREATING_IMAGE|TERMINATING|TERMINATED]
                                   This operation creates, modifies or deletes a
                                   resource that has a defined lifecycle state.
                                   Specify this option to perform the action and
@@ -2886,7 +2935,7 @@ Options:
                                   the resource's current etag value.
   --force                         Perform update without prompting for
                                   confirmation.
-  --wait-for-state [PROVISIONING|RUNNING|STARTING|STOPPING|STOPPED|CREATING_IMAGE|TERMINATING|TERMINATED]
+  --wait-for-state [MOVING|PROVISIONING|RUNNING|STARTING|STOPPING|STOPPED|CREATING_IMAGE|TERMINATING|TERMINATED]
                                   This operation creates, modifies or deletes a
                                   resource that has a defined lifecycle state.
                                   Specify this option to perform the action and

@@ -171,6 +171,77 @@ Epoch seconds
 Example: 1412195400
     """
 
+    VALID_DATETIME_CLI_HELP_MESSAGE_RST = """
+
+The following datetime formats are supported:
+
+UTC with milliseconds
+***********************
+.. code::
+
+    Format: YYYY-MM-DDTHH:mm:ss.sssTZD
+    Example: 2017-09-15T20:30:00.123Z
+
+UTC without milliseconds
+**************************
+.. code::
+
+    Format: YYYY-MM-DDTHH:mm:ssTZD
+    Example: 2017-09-15T20:30:00Z
+
+UTC with minute precision
+**************************
+.. code::
+
+    Format: YYYY-MM-DDTHH:mmTZD
+    Example: 2017-09-15T20:30Z
+
+Timezone with milliseconds
+***************************
+.. code::
+
+    Format: YYYY-MM-DDTHH:mm:ssTZD
+    Example: 2017-09-15T12:30:00.456-08:00, 2017-09-15T12:30:00.456-0800
+
+Timezone without milliseconds
+*******************************
+.. code::
+
+    Format: YYYY-MM-DDTHH:mm:ssTZD
+    Example: 2017-09-15T12:30:00-08:00, 2017-09-15T12:30:00-0800
+
+Timezone with minute precision
+*******************************
+.. code::
+
+    Format: YYYY-MM-DDTHH:mmTZD
+    Example: 2017-09-15T12:30-08:00, 2017-09-15T12:30-0800
+
+Short date and time
+********************
+The timezone for this date and time will be taken as UTC (Needs to be surrounded by single or double quotes)
+
+.. code::
+
+    Format: 'YYYY-MM-DD HH:mm' or "YYYY-MM-DD HH:mm"
+    Example: '2017-09-15 17:25'
+
+Date Only
+**********
+This date will be taken as midnight UTC of that day
+
+.. code::
+
+    Format: YYYY-MM-DD
+    Example: 2017-09-15
+
+Epoch seconds
+**************
+.. code::
+
+    Example: 1412195400
+    """
+
     def __init__(self, apply_rounding=None):
         # Currently only the audit operations need rounding to the nearest minute
         if apply_rounding is not None and apply_rounding != 'minute':

@@ -8469,6 +8469,21 @@ Options:
                                   in
                                   a file, modifying it as needed and then
                                   passing it back in via the file:// syntax.
+  --route-table-id TEXT           The OCID of the route table the service
+                                  gateway will use.
+                                  
+                                  If you don't specify a
+                                  route table here, the service gateway is
+                                  created without an associated route table. The
+                                  Networking service does NOT automatically
+                                  associate the attached VCN's default route
+                                  table with the service gateway.
+                                  
+                                  For
+                                  information about why you would associate a
+                                  route table with a service gateway, see
+                                  [Transit Routing: Private Access to Oracle
+                                  Services Network].
   --wait-for-state [PROVISIONING|AVAILABLE|TERMINATING|TERMINATED]
                                   This operation creates, modifies or deletes a
                                   resource that has a defined lifecycle state.
@@ -8822,6 +8837,11 @@ Options:
                                   in
                                   a file, modifying it as needed and then
                                   passing it back in via the file:// syntax.
+  --route-table-id TEXT           The OCID of the route table the service
+                                  gateway will use. For information about why
+                                  you would associate a route table with a
+                                  service gateway, see [Transit Routing: Private
+                                  Access to Oracle Services Network].
   --services COMPLEX TYPE         List of all the `Service` objects you want
                                   enabled on this service gateway. Sending an
                                   empty list means you want to disable all
@@ -10078,8 +10098,8 @@ Options:
                                   virtual circuit. [required]
   --type [PUBLIC|PRIVATE]         The type of IP addresses used in this virtual
                                   circuit. PRIVATE means [RFC 1918] addresses
-                                  (10.0.0.0/8, 172.16/12, and 192.168/16). Only
-                                  PRIVATE is supported. [required]
+                                  (10.0.0.0/8, 172.16/12, and 192.168/16).
+                                  [required]
   --bandwidth-shape-name TEXT     The provisioned data rate of the connection.
                                   To get a list of the available bandwidth
                                   levels (that is, shapes), see [ListFastConnect

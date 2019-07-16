@@ -14,9 +14,9 @@ from oci_cli import custom_types  # noqa: F401
 from oci_cli.aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('budget_root_group.command_name', 'budget'), cls=CommandGroupWithAlias, help=cli_util.override('budget_root_group.help', """Use the Budgets API to manage budgets and budget alerts."""), short_help=cli_util.override('budget_root_group.short_help', """Budgets API"""))
+@cli.command(cli_util.override('budgets_root_group.command_name', 'budgets'), cls=CommandGroupWithAlias, help=cli_util.override('budgets_root_group.help', """Use the Budgets API to manage budgets and budget alerts."""), short_help=cli_util.override('budgets_root_group.short_help', """Budgets API"""))
 @cli_util.help_option_group
-def budget_root_group():
+def budgets_root_group():
     pass
 
 
@@ -32,8 +32,8 @@ def budget_group():
     pass
 
 
-budget_root_group.add_command(alert_rule_group)
-budget_root_group.add_command(budget_group)
+budgets_root_group.add_command(alert_rule_group)
+budgets_root_group.add_command(budget_group)
 
 
 @alert_rule_group.command(name=cli_util.override('create_alert_rule.command_name', 'create'), help=u"""Creates a new Alert Rule.""")
