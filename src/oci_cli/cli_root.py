@@ -9,6 +9,7 @@ import os.path
 import logging
 from oci.util import Sentinel
 import six
+import importlib
 
 from .version import __version__
 from .aliasing import parameter_alias, CommandGroupWithAlias
@@ -285,6 +286,18 @@ def cli(ctx, config_file, profile, defaults_file, request_id, region, endpoint, 
         ctx.obj['help'] = True
         if is_top_level_help(ctx) and not cli_util.parse_boolean(ctx.obj.get('settings', {}).get(cli_constants.CLI_RC_GENERIC_SETTINGS_USE_CLICK_HELP, False)):
             help_text_producer.render_help_text(ctx, [sys.argv[1]])
+
+    # Support inititialization for a subcommand.
+    # In an "extended" file, add a mapping of the subcommand to the subcommand_init_module.
+    # The subcommand_init_module can be the extended file itself or a separate module altogether.
+    # The subcommand_init_module must have an init() function defined which will be called by this logic.
+    # Ex: cli_util.SUBCOMMAND_TO_SERVICE_INIT_MODULE['dts'] = 'services.dts.src.oci_cli_dts.dts_service_cli_extended.py'
+    try:
+        subcommand_init_module_name = cli_util.SUBCOMMAND_TO_SERVICE_INIT_MODULE[ctx.invoked_subcommand]
+        subcommand_init_module = importlib.import_module(subcommand_init_module_name)
+        subcommand_init_module.init()
+    except Exception as e:
+        pass
 
 
 def is_top_level_help(ctx):

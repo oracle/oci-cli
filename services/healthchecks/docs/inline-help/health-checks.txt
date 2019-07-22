@@ -35,11 +35,56 @@ Options:
                   <command> --help.
 
 Commands:
-  create  Creates an HTTP monitor.
-  delete  Deletes the HTTP monitor and its...
-  get     Gets the configuration for the specified...
-  list    Gets a list of HTTP monitors.
-  update  Updates the configuration of the specified...
+  change-compartment  Moves a monitor into a different compartment.
+  create              Creates an HTTP monitor.
+  delete              Deletes the HTTP monitor and its...
+  get                 Gets the configuration for the specified...
+  list                Gets a list of HTTP monitors.
+  update              Updates the configuration of the specified...
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci health-checks http-monitor change-compartment --help
+Usage: oci health-checks http-monitor change-compartment [OPTIONS]
+
+  Moves a monitor into a different compartment. When provided, `If-Match` is
+  checked against ETag values of the resource.
+
+Options:
+  --monitor-id TEXT          The OCID of a monitor. [required]
+  -c, --compartment-id TEXT  The [OCID] of the compartment into which the
+                             resource should be moved. [required]
+  --if-match TEXT            For optimistic concurrency control. In the PUT or
+                             DELETE call for a resource, set the `if-match`
+                             parameter to the value of the etag from a previous
+                             GET or POST response for that resource.  The
+                             resource will be updated or deleted only if the
+                             etag you provide matches the resource's current
+                             etag value.
+  --from-json TEXT           Provide input to this command as a JSON document
+                             from a file using the file://path-to/file syntax.
+                             The --generate-full-command-json-input option can
+                             be used to generate a sample json file to be used
+                             with this command option. The key names are pre-
+                             populated and match the command option names
+                             (converted to camelCase format, e.g. compartment-id
+                             --> compartmentId), while the values of the keys
+                             need to be populated by the user before using the
+                             sample file as an input to this command. For any
+                             command option that accepts multiple values, the
+                             value of the key can be a JSON array.
+                             
+                             Options can
+                             still be provided on the command line. If an option
+                             exists in both the JSON document and the command
+                             line then the command line specified value will be
+                             used.
+                             
+                             For examples on usage of this option, please
+                             see our "using CLI with advanced JSON options"
+                             link: https://docs.cloud.oracle.com/iaas/Content/AP
+                             I/SDKDocs/cliusing.htm#AdvancedJSONOptions
+  -?, -h, --help             For detailed help on any of these individual
+                             commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci health-checks http-monitor create --help
@@ -51,37 +96,45 @@ Usage: oci health-checks http-monitor create [OPTIONS]
 
 Options:
   -c, --compartment-id TEXT       The OCID of the compartment. [required]
-  --targets COMPLEX TYPE          This is a complex type whose value must be
-                                  valid JSON. The value can be provided as a
-                                  string on the command line or passed in as a
-                                  file using
-                                  the file://path/to/file syntax.
-                                  The --generate-param-json-input option can be
-                                  used to generate an example of the JSON which
-                                  must be provided. We recommend storing this
-                                  example
-                                  in a file, modifying it as needed and
-                                  then passing it back in via the file://
-                                  syntax.
-                                   [required]
+  --targets COMPLEX TYPE          A list of targets (hostnames or IP addresses)
+                                  of the probe.
+                                  This is a complex type whose
+                                  value must be valid JSON. The value can be
+                                  provided as a string on the command line or
+                                  passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+                                  [required]
   --protocol [HTTP|HTTPS]         [required]
   --display-name TEXT             A user-friendly and mutable name suitable for
                                   display in a user interface. [required]
   --interval-in-seconds INTEGER   The monitor interval in seconds. Valid values:
                                   10, 30, and 60. [required]
   --vantage-point-names COMPLEX TYPE
-                                  This is a complex type whose value must be
-                                  valid JSON. The value can be provided as a
-                                  string on the command line or passed in as a
-                                  file using
-                                  the file://path/to/file syntax.
-                                  The --generate-param-json-input option can be
-                                  used to generate an example of the JSON which
-                                  must be provided. We recommend storing this
-                                  example
-                                  in a file, modifying it as needed and
-                                  then passing it back in via the file://
-                                  syntax.
+                                  A list of names of vantage points from which
+                                  to execute the probe.
+                                  This is a complex type
+                                  whose value must be valid JSON. The value can
+                                  be provided as a string on the command line or
+                                  passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
   --port INTEGER                  The port on which to probe endpoints. If
                                   unspecified, probes will use the default port
                                   of their protocol.
@@ -317,31 +370,39 @@ Usage: oci health-checks http-monitor update [OPTIONS]
 
 Options:
   --monitor-id TEXT               The OCID of a monitor. [required]
-  --targets COMPLEX TYPE          This is a complex type whose value must be
-                                  valid JSON. The value can be provided as a
-                                  string on the command line or passed in as a
-                                  file using
-                                  the file://path/to/file syntax.
-                                  The --generate-param-json-input option can be
-                                  used to generate an example of the JSON which
-                                  must be provided. We recommend storing this
-                                  example
-                                  in a file, modifying it as needed and
-                                  then passing it back in via the file://
-                                  syntax.
+  --targets COMPLEX TYPE          A list of targets (hostnames or IP addresses)
+                                  of the probe.
+                                  This is a complex type whose
+                                  value must be valid JSON. The value can be
+                                  provided as a string on the command line or
+                                  passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
   --vantage-point-names COMPLEX TYPE
-                                  This is a complex type whose value must be
-                                  valid JSON. The value can be provided as a
-                                  string on the command line or passed in as a
-                                  file using
-                                  the file://path/to/file syntax.
-                                  The --generate-param-json-input option can be
-                                  used to generate an example of the JSON which
-                                  must be provided. We recommend storing this
-                                  example
-                                  in a file, modifying it as needed and
-                                  then passing it back in via the file://
-                                  syntax.
+                                  A list of names of vantage points from which
+                                  to execute the probe.
+                                  This is a complex type
+                                  whose value must be valid JSON. The value can
+                                  be provided as a string on the command line or
+                                  passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
   --port INTEGER                  The port on which to probe endpoints. If
                                   unspecified, probes will use the default port
                                   of their protocol.
@@ -478,33 +539,41 @@ Usage: oci health-checks http-probe create-on-demand [OPTIONS]
 
 Options:
   -c, --compartment-id TEXT       The OCID of the compartment. [required]
-  --targets COMPLEX TYPE          This is a complex type whose value must be
-                                  valid JSON. The value can be provided as a
-                                  string on the command line or passed in as a
-                                  file using
-                                  the file://path/to/file syntax.
-                                  The --generate-param-json-input option can be
-                                  used to generate an example of the JSON which
-                                  must be provided. We recommend storing this
-                                  example
-                                  in a file, modifying it as needed and
-                                  then passing it back in via the file://
-                                  syntax.
-                                   [required]
+  --targets COMPLEX TYPE          A list of targets (hostnames or IP addresses)
+                                  of the probe.
+                                  This is a complex type whose
+                                  value must be valid JSON. The value can be
+                                  provided as a string on the command line or
+                                  passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+                                  [required]
   --protocol [HTTP|HTTPS]         [required]
   --vantage-point-names COMPLEX TYPE
-                                  This is a complex type whose value must be
-                                  valid JSON. The value can be provided as a
-                                  string on the command line or passed in as a
-                                  file using
-                                  the file://path/to/file syntax.
-                                  The --generate-param-json-input option can be
-                                  used to generate an example of the JSON which
-                                  must be provided. We recommend storing this
-                                  example
-                                  in a file, modifying it as needed and
-                                  then passing it back in via the file://
-                                  syntax.
+                                  A list of names of vantage points from which
+                                  to execute the probe.
+                                  This is a complex type
+                                  whose value must be valid JSON. The value can
+                                  be provided as a string on the command line or
+                                  passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
   --port INTEGER                  The port on which to probe endpoints. If
                                   unspecified, probes will use the default port
                                   of their protocol.
@@ -649,11 +718,56 @@ Options:
                   <command> --help.
 
 Commands:
-  create  Creates a ping monitor.
-  delete  Deletes the ping monitor and its...
-  get     Gets the configuration for the specified ping...
-  list    Gets a list of configured ping monitors.
-  update  Updates the configuration of the specified...
+  change-compartment  Moves a monitor into a different compartment.
+  create              Creates a ping monitor.
+  delete              Deletes the ping monitor and its...
+  get                 Gets the configuration for the specified ping...
+  list                Gets a list of configured ping monitors.
+  update              Updates the configuration of the specified...
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci health-checks ping-monitor change-compartment --help
+Usage: oci health-checks ping-monitor change-compartment [OPTIONS]
+
+  Moves a monitor into a different compartment. When provided, `If-Match` is
+  checked against ETag values of the resource.
+
+Options:
+  --monitor-id TEXT          The OCID of a monitor. [required]
+  -c, --compartment-id TEXT  The [OCID] of the compartment into which the
+                             resource should be moved. [required]
+  --if-match TEXT            For optimistic concurrency control. In the PUT or
+                             DELETE call for a resource, set the `if-match`
+                             parameter to the value of the etag from a previous
+                             GET or POST response for that resource.  The
+                             resource will be updated or deleted only if the
+                             etag you provide matches the resource's current
+                             etag value.
+  --from-json TEXT           Provide input to this command as a JSON document
+                             from a file using the file://path-to/file syntax.
+                             The --generate-full-command-json-input option can
+                             be used to generate a sample json file to be used
+                             with this command option. The key names are pre-
+                             populated and match the command option names
+                             (converted to camelCase format, e.g. compartment-id
+                             --> compartmentId), while the values of the keys
+                             need to be populated by the user before using the
+                             sample file as an input to this command. For any
+                             command option that accepts multiple values, the
+                             value of the key can be a JSON array.
+                             
+                             Options can
+                             still be provided on the command line. If an option
+                             exists in both the JSON document and the command
+                             line then the command line specified value will be
+                             used.
+                             
+                             For examples on usage of this option, please
+                             see our "using CLI with advanced JSON options"
+                             link: https://docs.cloud.oracle.com/iaas/Content/AP
+                             I/SDKDocs/cliusing.htm#AdvancedJSONOptions
+  -?, -h, --help             For detailed help on any of these individual
+                             commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci health-checks ping-monitor create --help
@@ -665,37 +779,45 @@ Usage: oci health-checks ping-monitor create [OPTIONS]
 
 Options:
   -c, --compartment-id TEXT       The OCID of the compartment. [required]
-  --targets COMPLEX TYPE          This is a complex type whose value must be
-                                  valid JSON. The value can be provided as a
-                                  string on the command line or passed in as a
-                                  file using
-                                  the file://path/to/file syntax.
-                                  The --generate-param-json-input option can be
-                                  used to generate an example of the JSON which
-                                  must be provided. We recommend storing this
-                                  example
-                                  in a file, modifying it as needed and
-                                  then passing it back in via the file://
-                                  syntax.
-                                   [required]
+  --targets COMPLEX TYPE          A list of targets (hostnames or IP addresses)
+                                  of the probe.
+                                  This is a complex type whose
+                                  value must be valid JSON. The value can be
+                                  provided as a string on the command line or
+                                  passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+                                  [required]
   --protocol [ICMP|TCP]           [required]
   --display-name TEXT             A user-friendly and mutable name suitable for
                                   display in a user interface. [required]
   --interval-in-seconds INTEGER   The monitor interval in seconds. Valid values:
                                   10, 30, and 60. [required]
   --vantage-point-names COMPLEX TYPE
-                                  This is a complex type whose value must be
-                                  valid JSON. The value can be provided as a
-                                  string on the command line or passed in as a
-                                  file using
-                                  the file://path/to/file syntax.
-                                  The --generate-param-json-input option can be
-                                  used to generate an example of the JSON which
-                                  must be provided. We recommend storing this
-                                  example
-                                  in a file, modifying it as needed and
-                                  then passing it back in via the file://
-                                  syntax.
+                                  A list of names of vantage points from which
+                                  to execute the probe.
+                                  This is a complex type
+                                  whose value must be valid JSON. The value can
+                                  be provided as a string on the command line or
+                                  passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
   --port INTEGER                  The port on which to probe endpoints. If
                                   unspecified, probes will use the default port
                                   of their protocol.
@@ -912,31 +1034,39 @@ Usage: oci health-checks ping-monitor update [OPTIONS]
 
 Options:
   --monitor-id TEXT               The OCID of a monitor. [required]
-  --targets COMPLEX TYPE          This is a complex type whose value must be
-                                  valid JSON. The value can be provided as a
-                                  string on the command line or passed in as a
-                                  file using
-                                  the file://path/to/file syntax.
-                                  The --generate-param-json-input option can be
-                                  used to generate an example of the JSON which
-                                  must be provided. We recommend storing this
-                                  example
-                                  in a file, modifying it as needed and
-                                  then passing it back in via the file://
-                                  syntax.
+  --targets COMPLEX TYPE          A list of targets (hostnames or IP addresses)
+                                  of the probe.
+                                  This is a complex type whose
+                                  value must be valid JSON. The value can be
+                                  provided as a string on the command line or
+                                  passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
   --vantage-point-names COMPLEX TYPE
-                                  This is a complex type whose value must be
-                                  valid JSON. The value can be provided as a
-                                  string on the command line or passed in as a
-                                  file using
-                                  the file://path/to/file syntax.
-                                  The --generate-param-json-input option can be
-                                  used to generate an example of the JSON which
-                                  must be provided. We recommend storing this
-                                  example
-                                  in a file, modifying it as needed and
-                                  then passing it back in via the file://
-                                  syntax.
+                                  A list of names of vantage points from which
+                                  to execute the probe.
+                                  This is a complex type
+                                  whose value must be valid JSON. The value can
+                                  be provided as a string on the command line or
+                                  passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
   --port INTEGER                  The port on which to probe endpoints. If
                                   unspecified, probes will use the default port
                                   of their protocol.
@@ -1051,33 +1181,41 @@ Usage: oci health-checks ping-probe create-on-demand [OPTIONS]
 
 Options:
   -c, --compartment-id TEXT       The OCID of the compartment. [required]
-  --targets COMPLEX TYPE          This is a complex type whose value must be
-                                  valid JSON. The value can be provided as a
-                                  string on the command line or passed in as a
-                                  file using
-                                  the file://path/to/file syntax.
-                                  The --generate-param-json-input option can be
-                                  used to generate an example of the JSON which
-                                  must be provided. We recommend storing this
-                                  example
-                                  in a file, modifying it as needed and
-                                  then passing it back in via the file://
-                                  syntax.
-                                   [required]
+  --targets COMPLEX TYPE          A list of targets (hostnames or IP addresses)
+                                  of the probe.
+                                  This is a complex type whose
+                                  value must be valid JSON. The value can be
+                                  provided as a string on the command line or
+                                  passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+                                  [required]
   --protocol [ICMP|TCP]           [required]
   --vantage-point-names COMPLEX TYPE
-                                  This is a complex type whose value must be
-                                  valid JSON. The value can be provided as a
-                                  string on the command line or passed in as a
-                                  file using
-                                  the file://path/to/file syntax.
-                                  The --generate-param-json-input option can be
-                                  used to generate an example of the JSON which
-                                  must be provided. We recommend storing this
-                                  example
-                                  in a file, modifying it as needed and
-                                  then passing it back in via the file://
-                                  syntax.
+                                  A list of names of vantage points from which
+                                  to execute the probe.
+                                  This is a complex type
+                                  whose value must be valid JSON. The value can
+                                  be provided as a string on the command line or
+                                  passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
   --port INTEGER                  The port on which to probe endpoints. If
                                   unspecified, probes will use the default port
                                   of their protocol.

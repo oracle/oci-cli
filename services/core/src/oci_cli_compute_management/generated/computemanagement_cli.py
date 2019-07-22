@@ -191,6 +191,48 @@ def change_instance_pool_compartment(ctx, from_json, instance_pool_id, compartme
 
 @instance_configuration_group.command(name=cli_util.override('create_instance_configuration.command_name', 'create'), help=u"""Creates an instance configuration""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment containing the instance configuration.""")
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help=u"""A user-friendly name for the instance configuration""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--source', type=custom_types.CliCaseInsensitiveChoice(["NONE", "INSTANCE"]), help=u"""The source of the instance configuration: NONE for creating a new instance configuration from the API input. INSTANCE for creating a new instance configuration from an existing instance. The default is NONE.""")
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'InstanceConfiguration'})
+@cli_util.wrap_exceptions
+def create_instance_configuration(ctx, from_json, compartment_id, defined_tags, display_name, freeform_tags, source):
+
+    kwargs = {}
+
+    details = {}
+    details['compartmentId'] = compartment_id
+
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if display_name is not None:
+        details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if source is not None:
+        details['source'] = source
+
+    client = cli_util.build_client('compute_management', ctx)
+    result = client.create_instance_configuration(
+        create_instance_configuration=details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@instance_configuration_group.command(name=cli_util.override('create_instance_configuration_create_instance_configuration_details.command_name', 'create-instance-configuration-create-instance-configuration-details'), help=u"""Creates an instance configuration""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment containing the instance configuration.""")
 @cli_util.option('--instance-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
@@ -204,7 +246,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'instance-details': {'module': 'core', 'class': 'InstanceConfigurationInstanceDetails'}}, output_type={'module': 'core', 'class': 'InstanceConfiguration'})
 @cli_util.wrap_exceptions
-def create_instance_configuration(ctx, from_json, compartment_id, instance_details, defined_tags, display_name, freeform_tags):
+def create_instance_configuration_create_instance_configuration_details(ctx, from_json, compartment_id, instance_details, defined_tags, display_name, freeform_tags):
 
     kwargs = {}
 
@@ -221,6 +263,8 @@ def create_instance_configuration(ctx, from_json, compartment_id, instance_detai
     if freeform_tags is not None:
         details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
+    details['source'] = 'NONE'
+
     client = cli_util.build_client('compute_management', ctx)
     result = client.create_instance_configuration(
         create_instance_configuration=details,
@@ -229,8 +273,9 @@ def create_instance_configuration(ctx, from_json, compartment_id, instance_detai
     cli_util.render_response(result, ctx)
 
 
-@instance_configuration_group.command(name=cli_util.override('create_instance_configuration_compute_instance_details.command_name', 'create-instance-configuration-compute-instance-details'), help=u"""Creates an instance configuration""")
+@instance_configuration_group.command(name=cli_util.override('create_instance_configuration_create_instance_configuration_from_instance_details.command_name', 'create-instance-configuration-create-instance-configuration-from-instance-details'), help=u"""Creates an instance configuration""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment containing the instance configuration.""")
+@cli_util.option('--instance-id', required=True, help=u"""The ID of the instance that will be used to create instance configuration.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -238,24 +283,18 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--instance-details-block-volumes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""
-
-This option is a JSON list with items of type InstanceConfigurationBlockVolumeDetails.  For documentation on InstanceConfigurationBlockVolumeDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/InstanceConfigurationBlockVolumeDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--instance-details-launch-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--instance-details-secondary-vnics', type=custom_types.CLI_COMPLEX_TYPE, help=u"""
-
-This option is a JSON list with items of type InstanceConfigurationAttachVnicDetails.  For documentation on InstanceConfigurationAttachVnicDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/InstanceConfigurationAttachVnicDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'block-volumes': {'module': 'core', 'class': 'list[InstanceConfigurationBlockVolumeDetails]'}, 'launch-details': {'module': 'core', 'class': 'InstanceConfigurationLaunchInstanceDetails'}, 'secondary-vnics': {'module': 'core', 'class': 'list[InstanceConfigurationAttachVnicDetails]'}})
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'block-volumes': {'module': 'core', 'class': 'list[InstanceConfigurationBlockVolumeDetails]'}, 'launch-details': {'module': 'core', 'class': 'InstanceConfigurationLaunchInstanceDetails'}, 'secondary-vnics': {'module': 'core', 'class': 'list[InstanceConfigurationAttachVnicDetails]'}}, output_type={'module': 'core', 'class': 'InstanceConfiguration'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'InstanceConfiguration'})
 @cli_util.wrap_exceptions
-def create_instance_configuration_compute_instance_details(ctx, from_json, compartment_id, defined_tags, display_name, freeform_tags, instance_details_block_volumes, instance_details_launch_details, instance_details_secondary_vnics):
+def create_instance_configuration_create_instance_configuration_from_instance_details(ctx, from_json, compartment_id, instance_id, defined_tags, display_name, freeform_tags):
 
     kwargs = {}
 
     details = {}
     details['compartmentId'] = compartment_id
+    details['instanceId'] = instance_id
 
     if defined_tags is not None:
         details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
@@ -266,16 +305,7 @@ def create_instance_configuration_compute_instance_details(ctx, from_json, compa
     if freeform_tags is not None:
         details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
-    if instance_details_block_volumes is not None:
-        details['instanceDetails']['blockVolumes'] = cli_util.parse_json_parameter("instance_details_block_volumes", instance_details_block_volumes)
-
-    if instance_details_launch_details is not None:
-        details['instanceDetails']['launchDetails'] = cli_util.parse_json_parameter("instance_details_launch_details", instance_details_launch_details)
-
-    if instance_details_secondary_vnics is not None:
-        details['instanceDetails']['secondaryVnics'] = cli_util.parse_json_parameter("instance_details_secondary_vnics", instance_details_secondary_vnics)
-
-    details['instanceDetails']['instanceType'] = 'compute'
+    details['source'] = 'INSTANCE'
 
     client = cli_util.build_client('compute_management', ctx)
     result = client.create_instance_configuration(

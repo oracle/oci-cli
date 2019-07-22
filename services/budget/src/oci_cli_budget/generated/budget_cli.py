@@ -121,11 +121,13 @@ def create_alert_rule(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 
 @budget_group.command(name=cli_util.override('create_budget.command_name', 'create'), help=u"""Creates a new Budget.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment""")
-@cli_util.option('--target-compartment-id', required=True, help=u"""The OCID of the compartment on which budget is applied""")
 @cli_util.option('--amount', required=True, type=click.FLOAT, help=u"""The amount of the budget expressed as a whole number in the currency of the customer's rate card.""")
 @cli_util.option('--reset-period', required=True, type=custom_types.CliCaseInsensitiveChoice(["MONTHLY"]), help=u"""The reset period for the budget.""")
+@cli_util.option('--target-compartment-id', help=u"""This is DEPRECTAED. Set the target compartment id in targets instead.""")
 @cli_util.option('--display-name', help=u"""The displayName of the budget.""")
 @cli_util.option('--description', help=u"""The description of the budget.""")
+@cli_util.option('--target-type', type=custom_types.CliCaseInsensitiveChoice(["COMPARTMENT", "TAG"]), help=u"""The type of target on which the budget is applied.""")
+@cli_util.option('--targets', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of targets on which the budget is applied.   If targetType is \"COMPARTMENT\", targets contains list of compartment OCIDs.   If targetType is \"TAG\", targets contains list of tag identifiers in the form of \"{tagNamespace}.{tagKey}.{tagValue}\". Curerntly, the array should contain EXACT ONE item.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -135,27 +137,35 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'budget', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'budget', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'targets': {'module': 'budget', 'class': 'list[string]'}, 'freeform-tags': {'module': 'budget', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'budget', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'budget', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'budget', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'budget', 'class': 'Budget'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'targets': {'module': 'budget', 'class': 'list[string]'}, 'freeform-tags': {'module': 'budget', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'budget', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'budget', 'class': 'Budget'})
 @cli_util.wrap_exceptions
-def create_budget(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, target_compartment_id, amount, reset_period, display_name, description, freeform_tags, defined_tags):
+def create_budget(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, amount, reset_period, target_compartment_id, display_name, description, target_type, targets, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     details = {}
     details['compartmentId'] = compartment_id
-    details['targetCompartmentId'] = target_compartment_id
     details['amount'] = amount
     details['resetPeriod'] = reset_period
+
+    if target_compartment_id is not None:
+        details['targetCompartmentId'] = target_compartment_id
 
     if display_name is not None:
         details['displayName'] = display_name
 
     if description is not None:
         details['description'] = description
+
+    if target_type is not None:
+        details['targetType'] = target_type
+
+    if targets is not None:
+        details['targets'] = cli_util.parse_json_parameter("targets", targets)
 
     if freeform_tags is not None:
         details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -401,7 +411,13 @@ def list_alert_rules(ctx, from_json, all_pages, page_size, budget_id, limit, pag
     cli_util.render_response(result, ctx)
 
 
-@budget_group.command(name=cli_util.override('list_budgets.command_name', 'list'), help=u"""Gets a list of all Budgets in a compartment.""")
+@budget_group.command(name=cli_util.override('list_budgets.command_name', 'list'), help=u"""Gets a list of Budgets in a compartment.
+
+By default, ListBudgets returns budgets of 'COMPARTMENT' target type and the budget records with only ONE target compartment OCID.
+
+To list ALL budgets, set the targetType query parameter to ALL. Example:   'targetType=ALL'
+
+Additional targetTypes would be available in future releases. Clients should ignore new targetType or upgrade to latest version of client SDK to handle new targetType.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
@@ -411,6 +427,7 @@ def list_alert_rules(ctx, from_json, all_pages, page_size, budget_id, limit, pag
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable.
 
 Example: `My new resource`""")
+@cli_util.option('--target-type', type=custom_types.CliCaseInsensitiveChoice(["ALL", "COMPARTMENT", "TAG"]), help=u"""The type of target to filter by.   * ALL - List all budgets   * COMPARTMENT - List all budgets with targetType == \"COMPARTMENT\"   * TAG - List all budgets with targetType == \"TAG\"""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -418,7 +435,7 @@ Example: `My new resource`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'budget', 'class': 'list[BudgetSummary]'})
 @cli_util.wrap_exceptions
-def list_budgets(ctx, from_json, all_pages, page_size, compartment_id, limit, page, sort_order, sort_by, lifecycle_state, display_name):
+def list_budgets(ctx, from_json, all_pages, page_size, compartment_id, limit, page, sort_order, sort_by, lifecycle_state, display_name, target_type):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -436,6 +453,8 @@ def list_budgets(ctx, from_json, all_pages, page_size, compartment_id, limit, pa
         kwargs['lifecycle_state'] = lifecycle_state
     if display_name is not None:
         kwargs['display_name'] = display_name
+    if target_type is not None:
+        kwargs['target_type'] = target_type
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('budget', ctx)
     if all_pages:

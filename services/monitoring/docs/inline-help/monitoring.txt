@@ -7,8 +7,10 @@ $ oci monitoring --help
 Usage: oci monitoring [OPTIONS] COMMAND [ARGS]...
 
   Use the Monitoring CLI to manage metric queries and alarms for assessing the
-  health, capacity, and performance of your cloud resources. For information
-  about monitoring, see [Monitoring
+  health, capacity, and performance of your cloud resources. Endpoints vary by
+  operation. For PostMetric, use the `telemetry-ingestion` endpoints; for all
+  other operations, use the `telemetry` endpoints. For information about
+  monitoring, see [Monitoring
   Overview](/iaas/Content/Monitoring/Concepts/monitoringoverview.htm).
 
 Options:
@@ -44,11 +46,58 @@ Options:
                   <command> --help.
 
 Commands:
-  create  Creates a new alarm in the specified...
-  delete  Deletes the specified alarm.
-  get     Gets the specified alarm.
-  list    Lists the alarms for the specified...
-  update  Updates the specified alarm.
+  change-compartment  Moves an alarm into a different compartment...
+  create              Creates a new alarm in the specified...
+  delete              Deletes the specified alarm.
+  get                 Gets the specified alarm.
+  list                Lists the alarms for the specified...
+  update              Updates the specified alarm.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci monitoring alarm change-compartment --help
+Usage: oci monitoring alarm change-compartment [OPTIONS]
+
+  Moves an alarm into a different compartment within the same tenancy.
+
+  For information about moving resources between compartments, see [Moving
+  Resources Between Compartments].
+
+Options:
+  --alarm-id TEXT            The [OCID] of an alarm. [required]
+  -c, --compartment-id TEXT  The [OCID] of the compartment to move the alarm to.
+                             [required]
+  --if-match TEXT            For optimistic concurrency control. In the PUT or
+                             DELETE call for a resource, set the `if-match`
+                             parameter to the value of the etag from a previous
+                             GET or POST response for that resource.  The
+                             resource will be updated or deleted only if the
+                             etag you provide matches the resource's current
+                             etag value.
+  --from-json TEXT           Provide input to this command as a JSON document
+                             from a file using the file://path-to/file syntax.
+                             The --generate-full-command-json-input option can
+                             be used to generate a sample json file to be used
+                             with this command option. The key names are pre-
+                             populated and match the command option names
+                             (converted to camelCase format, e.g. compartment-id
+                             --> compartmentId), while the values of the keys
+                             need to be populated by the user before using the
+                             sample file as an input to this command. For any
+                             command option that accepts multiple values, the
+                             value of the key can be a JSON array.
+                             
+                             Options can
+                             still be provided on the command line. If an option
+                             exists in both the JSON document and the command
+                             line then the command line specified value will be
+                             used.
+                             
+                             For examples on usage of this option, please
+                             see our "using CLI with advanced JSON options"
+                             link: https://docs.cloud.oracle.com/iaas/Content/AP
+                             I/SDKDocs/cliusing.htm#AdvancedJSONOptions
+  -?, -h, --help             For detailed help on any of these individual
+                             commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci monitoring alarm create --help
@@ -80,26 +129,30 @@ Options:
                                   
                                   Example:
                                   `CRITICAL` [required]
-  --destinations COMPLEX TYPE     An array of [OCIDs] to which the notifications
-                                  for this alarm will be delivered. An example
-                                  destination is an OCID for a topic managed by
-                                  the Oracle Cloud Infrastructure Notification
-                                  service.
-                                  This is a complex type whose value
-                                  must be valid JSON. The value can be provided
-                                  as a string on the command line or passed in
-                                  as a file using
-                                  the file://path/to/file
-                                  syntax.
+  --destinations COMPLEX TYPE     A list of destinations to which the
+                                  notifications for this alarm will be
+                                  delivered. Each destination is represented by
+                                  an [OCID] related to the supported destination
+                                  service. For example, a destination using the
+                                  Notifications service is represented by a
+                                  topic OCID. Supported destination services:
+                                  Notifications Service. Limit: One destination
+                                  per supported destination service.
+                                  This is a
+                                  complex type whose value must be valid JSON.
+                                  The value can be provided as a string on the
+                                  command line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
                                   
-                                  The --generate-param-json-input
-                                  option can be used to generate an example of
-                                  the JSON which must be provided. We recommend
-                                  storing this example
-                                  in a file, modifying it
-                                  as needed and then passing it back in via the
-                                  file:// syntax.
-                                   [required]
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+                                  [required]
   --is-enabled BOOLEAN            Whether the alarm is enabled.
                                   
                                   Example: `true`
@@ -297,10 +350,20 @@ Options:
 $ oci monitoring alarm delete --help
 Usage: oci monitoring alarm delete [OPTIONS]
 
-  Deletes the specified alarm.
+  Deletes the specified alarm. For important limits information, see [Limits
+  on Monitoring].
+
+  Transactions Per Second (TPS) per-tenancy limit for this operation: 1.
 
 Options:
   --alarm-id TEXT                 The [OCID] of an alarm. [required]
+  --if-match TEXT                 For optimistic concurrency control. In the PUT
+                                  or DELETE call for a resource, set the `if-
+                                  match` parameter to the value of the etag from
+                                  a previous GET or POST response for that
+                                  resource.  The resource will be updated or
+                                  deleted only if the etag you provide matches
+                                  the resource's current etag value.
   --force                         Perform deletion without prompting for
                                   confirmation.
   --wait-for-state [ACTIVE|DELETING|DELETED]
@@ -352,7 +415,10 @@ Options:
 $ oci monitoring alarm get --help
 Usage: oci monitoring alarm get [OPTIONS]
 
-  Gets the specified alarm.
+  Gets the specified alarm. For important limits information, see [Limits on
+  Monitoring].
+
+  Transactions Per Second (TPS) per-tenancy limit for this operation: 1.
 
 Options:
   --alarm-id TEXT   The [OCID] of an alarm. [required]
@@ -384,22 +450,30 @@ Options:
 $ oci monitoring alarm list --help
 Usage: oci monitoring alarm list [OPTIONS]
 
-  Lists the alarms for the specified compartment.
+  Lists the alarms for the specified compartment. For important limits
+  information, see [Limits on Monitoring].
+
+  Transactions Per Second (TPS) per-tenancy limit for this operation: 1.
 
 Options:
   -c, --compartment-id TEXT       The [OCID] of the compartment containing the
                                   resources monitored by the metric that you are
                                   searching for. Use tenancyId to search in the
-                                  root compartment. [required]
+                                  root compartment.
+                                  
+                                  Example:
+                                  `ocid1.compartment.oc1..exampleuniqueID`
+                                  [required]
   --page TEXT                     For list pagination. The value of the `opc-
                                   next-page` response header from the previous
                                   "List" call. For important details about how
                                   pagination works, see [List Pagination].
   --limit INTEGER                 For list pagination. The maximum number of
                                   results per page, or items to return in a
-                                  paginated "List" call. 1 is the minimum, 1000
-                                  is the maximum. For important details about
-                                  how pagination works, see [List Pagination].
+                                  paginated "List" call. For important details
+                                  about how pagination works, see [List
+                                  Pagination].
+                                  
                                   Default: 1000
                                   
                                   Example: 500
@@ -549,25 +623,29 @@ Options:
                                   
                                   Example: `High CPU usage alert.
                                   Follow runbook instructions for resolution.`
-  --destinations COMPLEX TYPE     An array of [OCIDs] to which the notifications
-                                  for this alarm will be delivered. An example
-                                  destination is an OCID for a topic managed by
-                                  the Oracle Cloud Infrastructure Notification
-                                  service.
-                                  This is a complex type whose value
-                                  must be valid JSON. The value can be provided
-                                  as a string on the command line or passed in
-                                  as a file using
-                                  the file://path/to/file
-                                  syntax.
+  --destinations COMPLEX TYPE     A list of destinations to which the
+                                  notifications for this alarm will be
+                                  delivered. Each destination is represented by
+                                  an [OCID] related to the supported destination
+                                  service. For example, a destination using the
+                                  Notifications service is represented by a
+                                  topic OCID. Supported destination services:
+                                  Notifications Service. Limit: One destination
+                                  per supported destination service.
+                                  This is a
+                                  complex type whose value must be valid JSON.
+                                  The value can be provided as a string on the
+                                  command line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
                                   
-                                  The --generate-param-json-input
-                                  option can be used to generate an example of
-                                  the JSON which must be provided. We recommend
-                                  storing this example
-                                  in a file, modifying it
-                                  as needed and then passing it back in via the
-                                  file:// syntax.
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
   --repeat-notification-duration TEXT
                                   The frequency at which notifications are re-
                                   submitted, if the alarm keeps firing without
@@ -630,6 +708,13 @@ Options:
                                   in
                                   a file, modifying it as needed and then
                                   passing it back in via the file:// syntax.
+  --if-match TEXT                 For optimistic concurrency control. In the PUT
+                                  or DELETE call for a resource, set the `if-
+                                  match` parameter to the value of the etag from
+                                  a previous GET or POST response for that
+                                  resource.  The resource will be updated or
+                                  deleted only if the etag you provide matches
+                                  the resource's current etag value.
   --force                         Perform update without prompting for
                                   confirmation.
   --wait-for-state [ACTIVE|DELETING|DELETED]
@@ -731,7 +816,10 @@ $ oci monitoring alarm-history-collection get-alarm-history --help
 Usage: oci monitoring alarm-history-collection get-alarm-history 
            [OPTIONS]
 
-  Get the history of the specified alarm.
+  Get the history of the specified alarm. For important limits information,
+  see [Limits on Monitoring].
+
+  Transactions Per Second (TPS) per-tenancy limit for this operation: 1.
 
 Options:
   --alarm-id TEXT                 The [OCID] of an alarm. [required]
@@ -749,9 +837,10 @@ Options:
                                   pagination works, see [List Pagination].
   --limit INTEGER                 For list pagination. The maximum number of
                                   results per page, or items to return in a
-                                  paginated "List" call. 1 is the minimum, 1000
-                                  is the maximum. For important details about
-                                  how pagination works, see [List Pagination].
+                                  paginated "List" call. For important details
+                                  about how pagination works, see [List
+                                  Pagination].
+                                  
                                   Default: 1000
                                   
                                   Example: 500
@@ -963,13 +1052,20 @@ Commands:
 $ oci monitoring alarm-status list-alarms-status --help
 Usage: oci monitoring alarm-status list-alarms-status [OPTIONS]
 
-  List the status of each alarm in the specified compartment.
+  List the status of each alarm in the specified compartment. For important
+  limits information, see [Limits on Monitoring].
+
+  Transactions Per Second (TPS) per-tenancy limit for this operation: 1.
 
 Options:
   -c, --compartment-id TEXT       The [OCID] of the compartment containing the
                                   resources monitored by the metric that you are
                                   searching for. Use tenancyId to search in the
-                                  root compartment. [required]
+                                  root compartment.
+                                  
+                                  Example:
+                                  `ocid1.compartment.oc1..exampleuniqueID`
+                                  [required]
   --compartment-id-in-subtree BOOLEAN
                                   When true, returns resources from all
                                   compartments and subcompartments. The
@@ -987,9 +1083,10 @@ Options:
                                   pagination works, see [List Pagination].
   --limit INTEGER                 For list pagination. The maximum number of
                                   results per page, or items to return in a
-                                  paginated "List" call. 1 is the minimum, 1000
-                                  is the maximum. For important details about
-                                  how pagination works, see [List Pagination].
+                                  paginated "List" call. For important details
+                                  about how pagination works, see [List
+                                  Pagination].
+                                  
                                   Default: 1000
                                   
                                   Example: 500
@@ -1064,13 +1161,19 @@ Usage: oci monitoring metric list [OPTIONS]
 
   Returns metric definitions that match the criteria specified in the request.
   Compartment OCID required. For information about metrics, see [Metrics
-  Overview].
+  Overview]. For important limits information, see [Limits on Monitoring].
+
+  Transactions Per Second (TPS) per-tenancy limit for this operation: 1.
 
 Options:
   -c, --compartment-id TEXT       The [OCID] of the compartment containing the
                                   resources monitored by the metric that you are
                                   searching for. Use tenancyId to search in the
-                                  root compartment. [required]
+                                  root compartment.
+                                  
+                                  Example:
+                                  `ocid1.compartment.oc1..exampleuniqueID`
+                                  [required]
   --name TEXT                     The metric name to use when searching for
                                   metric definitions.
                                   
@@ -1109,12 +1212,11 @@ Options:
                                   "namespace" field.
                                   
                                   Example - group by
-                                  namespace and resource: `[ "namespace",
-                                  "resourceId" ]`
-                                  This is a complex type whose
-                                  value must be valid JSON. The value can be
-                                  provided as a string on the command line or
-                                  passed in as a file using
+                                  namespace: `[ "namespace" ]`
+                                  This is a complex
+                                  type whose value must be valid JSON. The value
+                                  can be provided as a string on the command
+                                  line or passed in as a file using
                                   the
                                   file://path/to/file syntax.
                                   
@@ -1141,9 +1243,10 @@ Options:
                                   pagination works, see [List Pagination].
   --limit INTEGER                 For list pagination. The maximum number of
                                   results per page, or items to return in a
-                                  paginated "List" call. 1 is the minimum, 1000
-                                  is the maximum. For important details about
-                                  how pagination works, see [List Pagination].
+                                  paginated "List" call. For important details
+                                  about how pagination works, see [List
+                                  Pagination].
+                                  
                                   Default: 1000
                                   
                                   Example: 500
@@ -1200,6 +1303,19 @@ Usage: oci monitoring metric-data [OPTIONS] COMMAND [ARGS]...
   The set of aggregated data returned for a metric. For information about
   metrics, see [Metrics Overview].
 
+  Limits information for returned data follows.
+
+  * Data points: 100,000. * Metric streams* within data points: 2,000. * Time
+  range returned for 1-hour resolution: 90 days. * Time range returned for
+  5-minute resolution: 30 days. * Time range returned for any other
+  resolution: 7 days.
+
+  *A metric stream is an individual set of aggregated data for a metric,
+  typically specific to a single resource. Metric streams cannot be aggregated
+  across metric groups. A metric group is the combination of a given metric,
+  metric namespace, and tenancy for the purpose of determining limits. For
+  more information about metric-related concepts, see [Monitoring Concepts].
+
 Options:
   -?, -h, --help  For detailed help on any of these individual commands, enter
                   <command> --help.
@@ -1213,7 +1329,20 @@ $ oci monitoring metric-data post --help
 Usage: oci monitoring metric-data post [OPTIONS]
 
   Publishes raw metric data points to the Monitoring service. For more
-  information about publishing metrics, see [Publishing Custom Metrics].
+  information about publishing metrics, see [Publishing Custom Metrics]. For
+  important limits information, see [Limits on Monitoring].
+
+  Per-call limits information follows.
+
+  * Dimensions per metric group*. Maximum: 20. Minimum: 1. * Unique metric
+  streams*. Maximum: 50. * Transactions Per Second (TPS) per-tenancy limit for
+  this operation: 50.
+
+  *A metric group is the combination of a given metric, metric namespace, and
+  tenancy for the purpose of determining limits. A dimension is a qualifier
+  provided in a metric definition. A metric stream is an individual set of
+  aggregated data for a metric, typically specific to a resource. For more
+  information about metric-related concepts, see [Monitoring Concepts].
 
   The endpoints for this operation differ from other Monitoring operations.
   Replace the string `telemetry` with `telemetry-ingestion` in the endpoint,
@@ -1293,7 +1422,11 @@ Options:
   -c, --compartment-id TEXT       The [OCID] of the compartment containing the
                                   resources monitored by the metric that you are
                                   searching for. Use tenancyId to search in the
-                                  root compartment. [required]
+                                  root compartment.
+                                  
+                                  Example:
+                                  `ocid1.compartment.oc1..exampleuniqueID`
+                                  [required]
   --namespace TEXT                The source service or application to use when
                                   searching for metric data points to aggregate.
                                   Example: `oci_computeagent` [required]
@@ -1545,10 +1678,19 @@ Commands:
 $ oci monitoring suppression remove --help
 Usage: oci monitoring suppression remove [OPTIONS]
 
-  Removes any existing suppression for the specified alarm.
+  Removes any existing suppression for the specified alarm. For important
+  limits information, see [Limits on Monitoring].
+
+  Transactions Per Second (TPS) per-tenancy limit for this operation: 1.
 
 Options:
   --alarm-id TEXT   The [OCID] of an alarm. [required]
+  --if-match TEXT   For optimistic concurrency control. In the PUT or DELETE
+                    call for a resource, set the `if-match` parameter to the
+                    value of the etag from a previous GET or POST response for
+                    that resource.  The resource will be updated or deleted only
+                    if the etag you provide matches the resource's current etag
+                    value.
   --from-json TEXT  Provide input to this command as a JSON document from a file
                     using the file://path-to/file syntax.
                     

@@ -6,6 +6,46 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.5.20 - 2019-07-23
+-------------------
+Added
+~~~~~
+* Support for moving alarm compartment in Monitoring Service.
+
+  * ``oci monitoring alarm change-compartment --alarm-id --compartment-id``
+
+* Support for Cost Tracking Tag Budget Alert in Budget Service
+
+  * --target-type option for ``oci budgets budget create``
+  * --targets option for ``oci budgets budget create``
+  * --target-type option for ``oci budgets budget list``
+  * An example on using the feature can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/budget_example.sh)>`__.
+
+* Ability to create instance configuration from a running instance.
+
+  * ``oci compute-management instance-configuration create``
+  * ``oci compute-management instance-configuration create-from-instance``
+
+* Support for change compartment feature for Autonomous Container Database, Autonomous Database, Autonomous Exadata Infrastructure, and DB Systems as a part of the Database Service
+
+  * ``oci db autonomous-container-database change-compartment``
+  * ``oci db autonomous-database change-compartment``
+  * ``oci db autonomous-exadata-infrastructure change-compartment``
+  * ``oci db system change-compartment``
+
+* Ability to change a compartment for health check monitors.
+
+  * ``oci health-checks ping-monitor change-compartment``
+  * ``oci health-checks http-monitor change-compartment``
+
+Changed
+~~~~~~~
+* Examples have been distributed into subdirectories under the services directory. 
+
+  * For example, database examples will now be found under `services/database/examples_and_test_scripts` and so on for other services. 
+  * `services/core/examples_and_test_scripts` will contain examples for compute, networking, block volume, etc.
+
+
 2.5.19 - 2019-07-16
 -------------------
 Added
