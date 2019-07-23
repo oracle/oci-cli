@@ -66,6 +66,10 @@ OVERRIDES = {}
 # This list is populated by the cli_extended files found in /services/<service>/src/oci_cli_<service>.
 SERVICES_REQUIRING_ENDPOINTS = []
 
+# Used to map a subcommand to a python module which contains an init() method.
+# See further comments in cli_root.
+SUBCOMMAND_TO_SERVICE_INIT_MODULE = {}
+
 GENERIC_JSON_FORMAT_HELP = """This must be provided in JSON format. See API reference for additional help."""
 
 PARAM_LOOKUP_HEIRARCHY_TOP_LEVEL = ''

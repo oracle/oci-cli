@@ -23,7 +23,6 @@ class TestBudget(unittest.TestCase):
         result = util.invoke_command(['budgets', 'budget', 'create'])
         assert 'Error: Missing option(s)' in result.output
         assert '--compartment-id' in result.output
-        assert '--target-compartment-id' in result.output
         assert '--amount' in result.output
         assert '--reset-period' in result.output
 

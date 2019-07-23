@@ -419,7 +419,7 @@ Commands:
   create  Creates a new Budget.
   delete  Deletes a specified Budget resource
   get     Gets a Budget by identifier
-  list    Gets a list of all Budgets in a compartment.
+  list    Gets a list of Budgets in a compartment.
   update  Update a Budget identified by the OCID
 
 ++++++++++++++++++++++++++++++++++++++++++++++
@@ -430,14 +430,37 @@ Usage: oci budgets budget create [OPTIONS]
 
 Options:
   -c, --compartment-id TEXT       The OCID of the compartment [required]
-  --target-compartment-id TEXT    The OCID of the compartment on which budget is
-                                  applied [required]
   --amount FLOAT                  The amount of the budget expressed as a whole
                                   number in the currency of the customer's rate
                                   card. [required]
   --reset-period [MONTHLY]        The reset period for the budget. [required]
+  --target-compartment-id TEXT    This is DEPRECTAED. Set the target compartment
+                                  id in targets instead.
   --display-name TEXT             The displayName of the budget.
   --description TEXT              The description of the budget.
+  --target-type [COMPARTMENT|TAG]
+                                  The type of target on which the budget is
+                                  applied.
+  --targets COMPLEX TYPE          The list of targets on which the budget is
+                                  applied.   If targetType is "COMPARTMENT",
+                                  targets contains list of compartment OCIDs.
+                                  If targetType is "TAG", targets contains list
+                                  of tag identifiers in the form of
+                                  "{tagNamespace}.{tagKey}.{tagValue}".
+                                  Curerntly, the array should contain EXACT ONE
+                                  item.
+                                  This is a complex type whose value must
+                                  be valid JSON. The value can be provided as a
+                                  string on the command line or passed in as a
+                                  file using
+                                  the file://path/to/file syntax.
+                                  The --generate-param-json-input option can be
+                                  used to generate an example of the JSON which
+                                  must be provided. We recommend storing this
+                                  example
+                                  in a file, modifying it as needed and
+                                  then passing it back in via the file://
+                                  syntax.
   --freeform-tags COMPLEX TYPE    Free-form tags for this resource. Each tag is
                                   a simple key-value pair with no predefined
                                   name, type, or namespace. For more
@@ -622,55 +645,78 @@ Options:
 $ oci budgets budget list --help
 Usage: oci budgets budget list [OPTIONS]
 
-  Gets a list of all Budgets in a compartment.
+  Gets a list of Budgets in a compartment.
+
+  By default, ListBudgets returns budgets of 'COMPARTMENT' target type and the
+  budget records with only ONE target compartment OCID.
+
+  To list ALL budgets, set the targetType query parameter to ALL. Example:
+  'targetType=ALL'
+
+  Additional targetTypes would be available in future releases. Clients should
+  ignore new targetType or upgrade to latest version of client SDK to handle
+  new targetType.
 
 Options:
-  -c, --compartment-id TEXT  The ID of the compartment in which to list
-                             resources. [required]
-  --limit INTEGER            The maximum number of items to return.
-  --page TEXT                The page token representing the page at which to
-                             start retrieving results. This is usually retrieved
-                             from a previous list call.
-  --sort-order [ASC|DESC]    The sort order to use, either 'asc' or 'desc'.
-  --sort-by TEXT             The field to sort by. If not specified, the default
-                             is timeCreated. The default sort order for
-                             timeCreated is DESC. The default sort order for
-                             displayName is ASC in alphanumeric order.
-  --lifecycle-state TEXT     The current state of the resource to filter by.
-  --display-name TEXT        A user-friendly name. Does not have to be unique,
-                             and it's changeable.
-                             
-                             Example: `My new resource`
-  --all                      Fetches all pages of results. If you provide this
-                             option, then you cannot provide the --limit option.
-  --page-size INTEGER        When fetching results, the number of results to
-                             fetch per call. Only valid when used with --all or
-                             --limit, and ignored otherwise.
-  --from-json TEXT           Provide input to this command as a JSON document
-                             from a file using the file://path-to/file syntax.
-                             The --generate-full-command-json-input option can
-                             be used to generate a sample json file to be used
-                             with this command option. The key names are pre-
-                             populated and match the command option names
-                             (converted to camelCase format, e.g. compartment-id
-                             --> compartmentId), while the values of the keys
-                             need to be populated by the user before using the
-                             sample file as an input to this command. For any
-                             command option that accepts multiple values, the
-                             value of the key can be a JSON array.
-                             
-                             Options can
-                             still be provided on the command line. If an option
-                             exists in both the JSON document and the command
-                             line then the command line specified value will be
-                             used.
-                             
-                             For examples on usage of this option, please
-                             see our "using CLI with advanced JSON options"
-                             link: https://docs.cloud.oracle.com/iaas/Content/AP
-                             I/SDKDocs/cliusing.htm#AdvancedJSONOptions
-  -?, -h, --help             For detailed help on any of these individual
-                             commands, enter <command> --help.
+  -c, --compartment-id TEXT       The ID of the compartment in which to list
+                                  resources. [required]
+  --limit INTEGER                 The maximum number of items to return.
+  --page TEXT                     The page token representing the page at which
+                                  to start retrieving results. This is usually
+                                  retrieved from a previous list call.
+  --sort-order [ASC|DESC]         The sort order to use, either 'asc' or 'desc'.
+  --sort-by TEXT                  The field to sort by. If not specified, the
+                                  default is timeCreated. The default sort order
+                                  for timeCreated is DESC. The default sort
+                                  order for displayName is ASC in alphanumeric
+                                  order.
+  --lifecycle-state TEXT          The current state of the resource to filter
+                                  by.
+  --display-name TEXT             A user-friendly name. Does not have to be
+                                  unique, and it's changeable.
+                                  
+                                  Example: `My new
+                                  resource`
+  --target-type [ALL|COMPARTMENT|TAG]
+                                  The type of target to filter by.   * ALL -
+                                  List all budgets   * COMPARTMENT - List all
+                                  budgets with targetType == "COMPARTMENT"   *
+                                  TAG - List all budgets with targetType ==
+                                  "TAG"
+  --all                           Fetches all pages of results. If you provide
+                                  this option, then you cannot provide the
+                                  --limit option.
+  --page-size INTEGER             When fetching results, the number of results
+                                  to fetch per call. Only valid when used with
+                                  --all or --limit, and ignored otherwise.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file using the file://path-
+                                  to/file syntax.
+                                  
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci budgets budget update --help

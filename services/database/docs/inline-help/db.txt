@@ -47,12 +47,65 @@ Options:
                   <command> --help.
 
 Commands:
-  create     Create a new Autonomous Container Database in...
-  get        Gets information about the specified...
-  list       Gets a list of the Autonomous Container...
-  restart    Rolling restarts the specified Autonomous...
-  terminate  Terminates an Autonomous Container Database,...
-  update     Updates the properties of an Autonomous...
+  change-compartment  Move the Autonomous Container Database and...
+  create              Create a new Autonomous Container Database in...
+  get                 Gets information about the specified...
+  list                Gets a list of the Autonomous Container...
+  restart             Rolling restarts the specified Autonomous...
+  terminate           Terminates an Autonomous Container Database,...
+  update              Updates the properties of an Autonomous...
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci db autonomous-container-database change-compartment --help
+Usage: oci db autonomous-container-database change-compartment 
+           [OPTIONS]
+
+  Move the Autonomous Container Database and its dependent resources to the
+  specified compartment. For more information about moving Autonomous
+  Container Databases, see [Moving Database Resources to a Different
+  Compartment].
+
+Options:
+  -c, --compartment-id TEXT       The [OCID] of the compartment to move the
+                                  resource to. [required]
+  --autonomous-container-database-id TEXT
+                                  The Autonomous Container Database [OCID].
+                                  [required]
+  --if-match TEXT                 For optimistic concurrency control. In the PUT
+                                  or DELETE call for a resource, set the `if-
+                                  match` parameter to the value of the etag from
+                                  a previous GET or POST response for that
+                                  resource.  The resource will be updated or
+                                  deleted only if the etag you provide matches
+                                  the resource's current etag value.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file using the file://path-
+                                  to/file syntax.
+                                  
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci db autonomous-container-database create --help
@@ -636,7 +689,7 @@ Options:
                                   in
                                   a file, modifying it as needed and then
                                   passing it back in via the file:// syntax.
-  --wait-for-state [PROVISIONING|AVAILABLE|STOPPING|STOPPED|STARTING|TERMINATING|TERMINATED|UNAVAILABLE|RESTORE_IN_PROGRESS|BACKUP_IN_PROGRESS|SCALE_IN_PROGRESS|AVAILABLE_NEEDS_ATTENTION]
+  --wait-for-state [PROVISIONING|AVAILABLE|STOPPING|STOPPED|STARTING|TERMINATING|TERMINATED|UNAVAILABLE|RESTORE_IN_PROGRESS|BACKUP_IN_PROGRESS|SCALE_IN_PROGRESS|AVAILABLE_NEEDS_ATTENTION|UPDATING]
                                   This operation creates, modifies or deletes a
                                   resource that has a defined lifecycle state.
                                   Specify this option to perform the action and
@@ -700,7 +753,7 @@ Options:
                                   the resource's current etag value.
   --force                         Perform deletion without prompting for
                                   confirmation.
-  --wait-for-state [PROVISIONING|AVAILABLE|STOPPING|STOPPED|STARTING|TERMINATING|TERMINATED|UNAVAILABLE|RESTORE_IN_PROGRESS|BACKUP_IN_PROGRESS|SCALE_IN_PROGRESS|AVAILABLE_NEEDS_ATTENTION]
+  --wait-for-state [PROVISIONING|AVAILABLE|STOPPING|STOPPED|STARTING|TERMINATING|TERMINATED|UNAVAILABLE|RESTORE_IN_PROGRESS|BACKUP_IN_PROGRESS|SCALE_IN_PROGRESS|AVAILABLE_NEEDS_ATTENTION|UPDATING]
                                   This operation creates, modifies or deletes a
                                   resource that has a defined lifecycle state.
                                   Specify this option to perform the action and
@@ -856,7 +909,7 @@ Options:
                                   domain, then sorted.
   --sort-order [ASC|DESC]         The sort order to use, either ascending
                                   (`ASC`) or descending (`DESC`).
-  --lifecycle-state [PROVISIONING|AVAILABLE|STOPPING|STOPPED|STARTING|TERMINATING|TERMINATED|UNAVAILABLE|RESTORE_IN_PROGRESS|BACKUP_IN_PROGRESS|SCALE_IN_PROGRESS|AVAILABLE_NEEDS_ATTENTION]
+  --lifecycle-state [PROVISIONING|AVAILABLE|STOPPING|STOPPED|STARTING|TERMINATING|TERMINATED|UNAVAILABLE|RESTORE_IN_PROGRESS|BACKUP_IN_PROGRESS|SCALE_IN_PROGRESS|AVAILABLE_NEEDS_ATTENTION|UPDATING]
                                   A filter to return only resources that match
                                   the given lifecycle state exactly.
   --display-name TEXT             A filter to return only resources that match
@@ -986,7 +1039,7 @@ Options:
                                   resource.  The resource will be updated or
                                   deleted only if the etag you provide matches
                                   the resource's current etag value.
-  --wait-for-state [PROVISIONING|AVAILABLE|STOPPING|STOPPED|STARTING|TERMINATING|TERMINATED|UNAVAILABLE|RESTORE_IN_PROGRESS|BACKUP_IN_PROGRESS|SCALE_IN_PROGRESS|AVAILABLE_NEEDS_ATTENTION]
+  --wait-for-state [PROVISIONING|AVAILABLE|STOPPING|STOPPED|STARTING|TERMINATING|TERMINATED|UNAVAILABLE|RESTORE_IN_PROGRESS|BACKUP_IN_PROGRESS|SCALE_IN_PROGRESS|AVAILABLE_NEEDS_ATTENTION|UPDATING]
                                   This operation creates, modifies or deletes a
                                   resource that has a defined lifecycle state.
                                   Specify this option to perform the action and
@@ -1048,7 +1101,7 @@ Options:
                                   resource.  The resource will be updated or
                                   deleted only if the etag you provide matches
                                   the resource's current etag value.
-  --wait-for-state [PROVISIONING|AVAILABLE|STOPPING|STOPPED|STARTING|TERMINATING|TERMINATED|UNAVAILABLE|RESTORE_IN_PROGRESS|BACKUP_IN_PROGRESS|SCALE_IN_PROGRESS|AVAILABLE_NEEDS_ATTENTION]
+  --wait-for-state [PROVISIONING|AVAILABLE|STOPPING|STOPPED|STARTING|TERMINATING|TERMINATED|UNAVAILABLE|RESTORE_IN_PROGRESS|BACKUP_IN_PROGRESS|SCALE_IN_PROGRESS|AVAILABLE_NEEDS_ATTENTION|UPDATING]
                                   This operation creates, modifies or deletes a
                                   resource that has a defined lifecycle state.
                                   Specify this option to perform the action and
@@ -1110,7 +1163,7 @@ Options:
                                   resource.  The resource will be updated or
                                   deleted only if the etag you provide matches
                                   the resource's current etag value.
-  --wait-for-state [PROVISIONING|AVAILABLE|STOPPING|STOPPED|STARTING|TERMINATING|TERMINATED|UNAVAILABLE|RESTORE_IN_PROGRESS|BACKUP_IN_PROGRESS|SCALE_IN_PROGRESS|AVAILABLE_NEEDS_ATTENTION]
+  --wait-for-state [PROVISIONING|AVAILABLE|STOPPING|STOPPED|STARTING|TERMINATING|TERMINATED|UNAVAILABLE|RESTORE_IN_PROGRESS|BACKUP_IN_PROGRESS|SCALE_IN_PROGRESS|AVAILABLE_NEEDS_ATTENTION|UPDATING]
                                   This operation creates, modifies or deletes a
                                   resource that has a defined lifecycle state.
                                   Specify this option to perform the action and
@@ -1231,7 +1284,7 @@ Options:
                                   the resource's current etag value.
   --force                         Perform update without prompting for
                                   confirmation.
-  --wait-for-state [PROVISIONING|AVAILABLE|STOPPING|STOPPED|STARTING|TERMINATING|TERMINATED|UNAVAILABLE|RESTORE_IN_PROGRESS|BACKUP_IN_PROGRESS|SCALE_IN_PROGRESS|AVAILABLE_NEEDS_ATTENTION]
+  --wait-for-state [PROVISIONING|AVAILABLE|STOPPING|STOPPED|STARTING|TERMINATING|TERMINATED|UNAVAILABLE|RESTORE_IN_PROGRESS|BACKUP_IN_PROGRESS|SCALE_IN_PROGRESS|AVAILABLE_NEEDS_ATTENTION|UPDATING]
                                   This operation creates, modifies or deletes a
                                   resource that has a defined lifecycle state.
                                   Specify this option to perform the action and
@@ -1469,16 +1522,66 @@ Options:
                   <command> --help.
 
 Commands:
-  create             Creates a new Autonomous Database.
-  create-from-clone  Creates a new Autonomous Database.
-  delete             Deletes the specified Autonomous Database.
-  generate-wallet    Creates and downloads a wallet for the...
-  get                Gets the details of the specified Autonomous...
-  list               Gets a list of Autonomous Databases.
-  restore            Restores an Autonomous Database based on the...
-  start              Starts the specified Autonomous Database.
-  stop               Stops the specified Autonomous Database.
-  update             Updates the specified Autonomous Database...
+  change-compartment  Move the Autonomous Database and its...
+  create              Creates a new Autonomous Database.
+  create-from-clone   Creates a new Autonomous Database.
+  delete              Deletes the specified Autonomous Database.
+  generate-wallet     Creates and downloads a wallet for the...
+  get                 Gets the details of the specified Autonomous...
+  list                Gets a list of Autonomous Databases.
+  restore             Restores an Autonomous Database based on the...
+  start               Starts the specified Autonomous Database.
+  stop                Stops the specified Autonomous Database.
+  update              Updates the specified Autonomous Database...
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci db autonomous-database change-compartment --help
+Usage: oci db autonomous-database change-compartment [OPTIONS]
+
+  Move the Autonomous Database and its dependent resources to the specified
+  compartment. For more information about moving Autonomous Databases, see
+  [Moving Database Resources to a Different Compartment].
+
+Options:
+  -c, --compartment-id TEXT      The [OCID] of the compartment to move the
+                                 resource to. [required]
+  --autonomous-database-id TEXT  The database [OCID]. [required]
+  --if-match TEXT                For optimistic concurrency control. In the PUT
+                                 or DELETE call for a resource, set the `if-
+                                 match` parameter to the value of the etag from
+                                 a previous GET or POST response for that
+                                 resource.  The resource will be updated or
+                                 deleted only if the etag you provide matches
+                                 the resource's current etag value.
+  --from-json TEXT               Provide input to this command as a JSON
+                                 document from a file using the file://path-
+                                 to/file syntax.
+                                 
+                                 The --generate-full-command-
+                                 json-input option can be used to generate a
+                                 sample json file to be used with this command
+                                 option. The key names are pre-populated and
+                                 match the command option names (converted to
+                                 camelCase format, e.g. compartment-id -->
+                                 compartmentId), while the values of the keys
+                                 need to be populated by the user before using
+                                 the sample file as an input to this command.
+                                 For any command option that accepts multiple
+                                 values, the value of the key can be a JSON
+                                 array.
+                                 
+                                 Options can still be provided on the
+                                 command line. If an option exists in both the
+                                 JSON document and the command line then the
+                                 command line specified value will be used.
+                                 
+                                 For
+                                 examples on usage of this option, please see
+                                 our "using CLI with advanced JSON options"
+                                 link: https://docs.cloud.oracle.com/iaas/Conten
+                                 t/API/SDKDocs/cliusing.htm#AdvancedJSONOptions
+  -?, -h, --help                 For detailed help on any of these individual
+                                 commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci db autonomous-database create --help
@@ -1516,17 +1619,25 @@ Options:
   --license-model [LICENSE_INCLUDED|BRING_YOUR_OWN_LICENSE]
                                   The Oracle license model that applies to the
                                   Oracle Autonomous Database. The default is
-                                  BRING_YOUR_OWN_LICENSE.
+                                  BRING_YOUR_OWN_LICENSE. Note that when
+                                  provisioning an Autonomous Database using the
+                                  [dedicated deployment] option, this attribute
+                                  must be null.
   --is-preview-version-with-service-terms-accepted BOOLEAN
                                   If set to true, indicates that an Autonomous
                                   Database preview version is being provisioned,
                                   and that the preview version's terms of
-                                  service have been accepted.
+                                  service have been accepted. Note that preview
+                                  version software is only available for
+                                  [serverless deployments].
   --is-auto-scaling-enabled BOOLEAN
                                   Indicates if auto scaling is enabled for the
                                   Autonomous Database CPU core count. The
-                                  default value is false.
-  --is-dedicated BOOLEAN          True if it is dedicated database.
+                                  default value is false. Note that auto scaling
+                                  is available for [serverless deployments]
+                                  only.
+  --is-dedicated BOOLEAN          True if the database uses the [dedicated
+                                  deployment] option.
   --autonomous-container-database-id TEXT
                                   The Autonomous Container Database [OCID].
   --freeform-tags COMPLEX TYPE    Free-form tags for this resource. Each tag is
@@ -1655,17 +1766,25 @@ Options:
   --license-model [LICENSE_INCLUDED|BRING_YOUR_OWN_LICENSE]
                                   The Oracle license model that applies to the
                                   Oracle Autonomous Database. The default is
-                                  BRING_YOUR_OWN_LICENSE.
+                                  BRING_YOUR_OWN_LICENSE. Note that when
+                                  provisioning an Autonomous Database using the
+                                  [dedicated deployment] option, this attribute
+                                  must be null.
   --is-preview-version-with-service-terms-accepted BOOLEAN
                                   If set to true, indicates that an Autonomous
                                   Database preview version is being provisioned,
                                   and that the preview version's terms of
-                                  service have been accepted.
+                                  service have been accepted. Note that preview
+                                  version software is only available for
+                                  [serverless deployments].
   --is-auto-scaling-enabled BOOLEAN
                                   Indicates if auto scaling is enabled for the
                                   Autonomous Database CPU core count. The
-                                  default value is false.
-  --is-dedicated BOOLEAN          True if it is dedicated database.
+                                  default value is false. Note that auto scaling
+                                  is available for [serverless deployments]
+                                  only.
+  --is-dedicated BOOLEAN          True if the database uses the [dedicated
+                                  deployment] option.
   --autonomous-container-database-id TEXT
                                   The Autonomous Container Database [OCID].
   --freeform-tags COMPLEX TYPE    Free-form tags for this resource. Each tag is
@@ -2300,30 +2419,39 @@ Options:
   --license-model [LICENSE_INCLUDED|BRING_YOUR_OWN_LICENSE]
                                   The new Oracle license model that applies to
                                   the Oracle Autonomous Transaction Processing
-                                  database.
-  --whitelisted-ips COMPLEX TYPE  The client IP access control list (ACL). Only
-                                  clients connecting from an IP address included
-                                  in the ACL may access the Autonomous Database
-                                  instance. This is an array of CIDR (Classless
-                                  Inter-Domain Routing) notations for a subnet.
-                                  To delete all the existing white listed IP’s,
-                                  use an array with a single empty string entry.
-                                  This is a complex type whose value must be
-                                  valid JSON. The value can be provided as a
-                                  string on the command line or passed in as a
-                                  file using
-                                  the file://path/to/file syntax.
-                                  The --generate-param-json-input option can be
-                                  used to generate an example of the JSON which
-                                  must be provided. We recommend storing this
-                                  example
-                                  in a file, modifying it as needed and
-                                  then passing it back in via the file://
-                                  syntax.
+                                  database. Note that when updating an
+                                  Autonomous Database that uses the [dedicated
+                                  deployment] option, this attribute must be
+                                  null.
+  --whitelisted-ips COMPLEX TYPE  The client IP access control list (ACL). This
+                                  feature is available for [serverless
+                                  deployments] only. Only clients connecting
+                                  from an IP address included in the ACL may
+                                  access the Autonomous Database instance. This
+                                  is an array of CIDR (Classless Inter-Domain
+                                  Routing) notations for a subnet. To delete all
+                                  the existing white listed IP’s, use an array
+                                  with a single empty string entry.
+                                  This is a
+                                  complex type whose value must be valid JSON.
+                                  The value can be provided as a string on the
+                                  command line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
   --is-auto-scaling-enabled BOOLEAN
                                   Indicates if auto scaling is enabled for the
                                   Autonomous Database CPU core count. The
-                                  default value is false.
+                                  default value is false. Note that auto scaling
+                                  is available for [serverless deployments]
+                                  only.
   --if-match TEXT                 For optimistic concurrency control. In the PUT
                                   or DELETE call for a resource, set the `if-
                                   match` parameter to the value of the etag from
@@ -2560,12 +2688,8 @@ Options:
 $ oci db autonomous-db-preview-version --help
 Usage: oci db autonomous-db-preview-version [OPTIONS] COMMAND [ARGS]...
 
-  The Autonomous Database preview version.
-
-  To use any of the API operations, you must be authorized in an IAM policy.
-  If you're not authorized, talk to an administrator. If you're an
-  administrator who needs to write policies to give users access, see [Getting
-  Started with Policies].
+  The Autonomous Database preview version. Note that preview version software
+  is only available for [serverless deployments].
 
 Options:
   -?, -h, --help  For detailed help on any of these individual commands, enter
@@ -2578,7 +2702,8 @@ Commands:
 $ oci db autonomous-db-preview-version list --help
 Usage: oci db autonomous-db-preview-version list [OPTIONS]
 
-  Gets a list of supported Autonomous Database versions.
+  Gets a list of supported Autonomous Database versions. Note that preview
+  version software is only available for [serverless deployments].
 
 Options:
   -c, --compartment-id TEXT  The compartment [OCID]. [required]
@@ -2633,11 +2758,64 @@ Options:
                   <command> --help.
 
 Commands:
-  get        Gets information about the specified...
-  launch     Launches a new Autonomous Exadata...
-  list       Gets a list of the Autonomous Exadata...
-  terminate  Terminates an Autonomous Exadata...
-  update     Updates the properties of an Autonomous...
+  change-compartment  Move the Autonomous Exadata Infrastructure...
+  get                 Gets information about the specified...
+  launch              Launches a new Autonomous Exadata...
+  list                Gets a list of the Autonomous Exadata...
+  terminate           Terminates an Autonomous Exadata...
+  update              Updates the properties of an Autonomous...
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci db autonomous-exadata-infrastructure change-compartment --help
+Usage: oci db autonomous-exadata-infrastructure change-compartment 
+           [OPTIONS]
+
+  Move the Autonomous Exadata Infrastructure and its dependent resources to
+  the specified compartment. For more information about moving Autonomous
+  Exadata Infrastructures, see [Moving Database Resources to a Different
+  Compartment].
+
+Options:
+  -c, --compartment-id TEXT       The [OCID] of the compartment to move the
+                                  resource to. [required]
+  --autonomous-exadata-infrastructure-id TEXT
+                                  The Autonomous Exadata Infrastructure  [OCID].
+                                  [required]
+  --if-match TEXT                 For optimistic concurrency control. In the PUT
+                                  or DELETE call for a resource, set the `if-
+                                  match` parameter to the value of the etag from
+                                  a previous GET or POST response for that
+                                  resource.  The resource will be updated or
+                                  deleted only if the etag you provide matches
+                                  the resource's current etag value.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file using the file://path-
+                                  to/file syntax.
+                                  
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci db autonomous-exadata-infrastructure get --help
@@ -5684,6 +5862,7 @@ Options:
                   <command> --help.
 
 Commands:
+  change-compartment          Move the DB system and its dependent...
   get                         Gets information about the specified DB...
   get-exadata-iorm-config     Gets `IORM` Setting for the requested Exadata...
   launch                      Launches a new DB system in the specified...
@@ -5693,6 +5872,51 @@ Commands:
   terminate                   Terminates a DB system and permanently...
   update                      Updates the properties of a DB system, such...
   update-exadata-iorm-config  Update `IORM` Settings for the requested...
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci db system change-compartment --help
+Usage: oci db system change-compartment [OPTIONS]
+
+  Move the DB system and its dependent resources to the specified compartment.
+  For more information about moving DB systems, see [Moving Database Resources
+  to a Different Compartment].
+
+Options:
+  -c, --compartment-id TEXT  The [OCID] of the compartment to move the resource
+                             to. [required]
+  --db-system-id TEXT        The DB system [OCID]. [required]
+  --if-match TEXT            For optimistic concurrency control. In the PUT or
+                             DELETE call for a resource, set the `if-match`
+                             parameter to the value of the etag from a previous
+                             GET or POST response for that resource.  The
+                             resource will be updated or deleted only if the
+                             etag you provide matches the resource's current
+                             etag value.
+  --from-json TEXT           Provide input to this command as a JSON document
+                             from a file using the file://path-to/file syntax.
+                             The --generate-full-command-json-input option can
+                             be used to generate a sample json file to be used
+                             with this command option. The key names are pre-
+                             populated and match the command option names
+                             (converted to camelCase format, e.g. compartment-id
+                             --> compartmentId), while the values of the keys
+                             need to be populated by the user before using the
+                             sample file as an input to this command. For any
+                             command option that accepts multiple values, the
+                             value of the key can be a JSON array.
+                             
+                             Options can
+                             still be provided on the command line. If an option
+                             exists in both the JSON document and the command
+                             line then the command line specified value will be
+                             used.
+                             
+                             For examples on usage of this option, please
+                             see our "using CLI with advanced JSON options"
+                             link: https://docs.cloud.oracle.com/iaas/Content/AP
+                             I/SDKDocs/cliusing.htm#AdvancedJSONOptions
+  -?, -h, --help             For detailed help on any of these individual
+                             commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci db system get --help
@@ -5831,24 +6055,25 @@ Options:
                                   -
                                   BM.DenseIO1.36 - Specify a multiple of 2, from
                                   2 to 36. - BM.DenseIO2.52 - Specify a multiple
-                                  of 2, from 2 to 52. - Exadata.Quarter1.84 -
-                                  Specify a multiple of 2, from 22 to 84. -
-                                  Exadata.Half1.168 - Specify a multiple of 4,
-                                  from 44 to 168. - Exadata.Full1.336 - Specify
-                                  a multiple of 8, from 88 to 336. -
-                                  Exadata.Quarter2.92 - Specify a multiple of 2,
-                                  from 0 to 92. - Exadata.Half2.184 - Specify a
-                                  multiple of 4, from 0 to 184. -
-                                  Exadata.Full2.368 - Specify a multiple of 8,
-                                  from 0 to 368.
+                                  of 2, from 2 to 52. - Exadata.Base.48 -
+                                  Specify a multiple of 2, from 0 to 48. -
+                                  Exadata.Quarter1.84 - Specify a multiple of 2,
+                                  from 22 to 84. - Exadata.Half1.168 - Specify a
+                                  multiple of 4, from 44 to 168. -
+                                  Exadata.Full1.336 - Specify a multiple of 8,
+                                  from 88 to 336. - Exadata.Quarter2.92 -
+                                  Specify a multiple of 2, from 0 to 92. -
+                                  Exadata.Half2.184 - Specify a multiple of 4,
+                                  from 0 to 184. - Exadata.Full2.368 - Specify a
+                                  multiple of 8, from 0 to 368.
                                   
-                                  This parameter is not used for
-                                  virtual machine DB systems because virtual
-                                  machine DB systems have a set number of cores
-                                  for each shape. For information about the
-                                  number of cores for a virtual machine DB
-                                  system shape, see [Virtual Machine DB Systems]
-                                  [required]
+                                  This parameter
+                                  is not used for virtual machine DB systems
+                                  because virtual machine DB systems have a set
+                                  number of cores for each shape. For
+                                  information about the number of cores for a
+                                  virtual machine DB system shape, see [Virtual
+                                  Machine DB Systems] [required]
   --database-edition [STANDARD_EDITION|ENTERPRISE_EDITION|ENTERPRISE_EDITION_HIGH_PERFORMANCE|ENTERPRISE_EDITION_EXTREME_PERFORMANCE]
                                   The Oracle Database Edition that applies to
                                   all the databases on the DB system. Exadata DB
@@ -5907,9 +6132,12 @@ Options:
                                   **Subnet Restrictions:**
                                   See the subnet restrictions information for
                                   **subnetId**.
-  --nsg-ids COMPLEX TYPE          The list of Network Security Group [OCIDs]
-                                  associated with this DB system. A maximum of 5
-                                  allowed.
+  --nsg-ids COMPLEX TYPE          A list of the [OCIDs] of the network security
+                                  groups (NSGs) that this DB system belongs to.
+                                  Setting this to an empty array after the list
+                                  is created removes the resource from all NSGs.
+                                  For more information about NSGs, see [Security
+                                  Rules].
                                   This is a complex type whose value
                                   must be valid JSON. The value can be provided
                                   as a string on the command line or passed in
@@ -5925,14 +6153,17 @@ Options:
                                   as needed and then passing it back in via the
                                   file:// syntax.
   --backup-network-nsg-ids COMPLEX TYPE
-                                  The list of Network Security Group [OCIDs]
-                                  associated with the backup network of this DB
-                                  system. Applicable only to Exadata DB systems.
-                                  A maximum of 5 allowed.
-                                  This is a complex type
-                                  whose value must be valid JSON. The value can
-                                  be provided as a string on the command line or
-                                  passed in as a file using
+                                  A list of the [OCIDs] of the network security
+                                  groups (NSGs) that the backup network of this
+                                  DB system belongs to. Setting this to an empty
+                                  array after the list is created removes the
+                                  resource from all NSGs. For more information
+                                  about NSGs, see [Security Rules]. Applicable
+                                  only to Exadata DB systems.
+                                  This is a complex
+                                  type whose value must be valid JSON. The value
+                                  can be provided as a string on the command
+                                  line or passed in as a file using
                                   the
                                   file://path/to/file syntax.
                                   
@@ -6212,24 +6443,25 @@ Options:
                                   -
                                   BM.DenseIO1.36 - Specify a multiple of 2, from
                                   2 to 36. - BM.DenseIO2.52 - Specify a multiple
-                                  of 2, from 2 to 52. - Exadata.Quarter1.84 -
-                                  Specify a multiple of 2, from 22 to 84. -
-                                  Exadata.Half1.168 - Specify a multiple of 4,
-                                  from 44 to 168. - Exadata.Full1.336 - Specify
-                                  a multiple of 8, from 88 to 336. -
-                                  Exadata.Quarter2.92 - Specify a multiple of 2,
-                                  from 0 to 92. - Exadata.Half2.184 - Specify a
-                                  multiple of 4, from 0 to 184. -
-                                  Exadata.Full2.368 - Specify a multiple of 8,
-                                  from 0 to 368.
+                                  of 2, from 2 to 52. - Exadata.Base.48 -
+                                  Specify a multiple of 2, from 0 to 48. -
+                                  Exadata.Quarter1.84 - Specify a multiple of 2,
+                                  from 22 to 84. - Exadata.Half1.168 - Specify a
+                                  multiple of 4, from 44 to 168. -
+                                  Exadata.Full1.336 - Specify a multiple of 8,
+                                  from 88 to 336. - Exadata.Quarter2.92 -
+                                  Specify a multiple of 2, from 0 to 92. -
+                                  Exadata.Half2.184 - Specify a multiple of 4,
+                                  from 0 to 184. - Exadata.Full2.368 - Specify a
+                                  multiple of 8, from 0 to 368.
                                   
-                                  This parameter is not used for
-                                  virtual machine DB systems because virtual
-                                  machine DB systems have a set number of cores
-                                  for each shape. For information about the
-                                  number of cores for a virtual machine DB
-                                  system shape, see [Virtual Machine DB Systems]
-                                  [required]
+                                  This parameter
+                                  is not used for virtual machine DB systems
+                                  because virtual machine DB systems have a set
+                                  number of cores for each shape. For
+                                  information about the number of cores for a
+                                  virtual machine DB system shape, see [Virtual
+                                  Machine DB Systems] [required]
   --database-edition [STANDARD_EDITION|ENTERPRISE_EDITION|ENTERPRISE_EDITION_HIGH_PERFORMANCE|ENTERPRISE_EDITION_EXTREME_PERFORMANCE]
                                   The Oracle Database Edition that applies to
                                   all the databases on the DB system. Exadata DB
@@ -6288,9 +6520,12 @@ Options:
                                   **Subnet Restrictions:**
                                   See the subnet restrictions information for
                                   **subnetId**.
-  --nsg-ids COMPLEX TYPE          The list of Network Security Group [OCIDs]
-                                  associated with this DB system. A maximum of 5
-                                  allowed.
+  --nsg-ids COMPLEX TYPE          A list of the [OCIDs] of the network security
+                                  groups (NSGs) that this DB system belongs to.
+                                  Setting this to an empty array after the list
+                                  is created removes the resource from all NSGs.
+                                  For more information about NSGs, see [Security
+                                  Rules].
                                   This is a complex type whose value
                                   must be valid JSON. The value can be provided
                                   as a string on the command line or passed in
@@ -6306,14 +6541,17 @@ Options:
                                   as needed and then passing it back in via the
                                   file:// syntax.
   --backup-network-nsg-ids COMPLEX TYPE
-                                  The list of Network Security Group [OCIDs]
-                                  associated with the backup network of this DB
-                                  system. Applicable only to Exadata DB systems.
-                                  A maximum of 5 allowed.
-                                  This is a complex type
-                                  whose value must be valid JSON. The value can
-                                  be provided as a string on the command line or
-                                  passed in as a file using
+                                  A list of the [OCIDs] of the network security
+                                  groups (NSGs) that the backup network of this
+                                  DB system belongs to. Setting this to an empty
+                                  array after the list is created removes the
+                                  resource from all NSGs. For more information
+                                  about NSGs, see [Security Rules]. Applicable
+                                  only to Exadata DB systems.
+                                  This is a complex
+                                  type whose value must be valid JSON. The value
+                                  can be provided as a string on the command
+                                  line or passed in as a file using
                                   the
                                   file://path/to/file syntax.
                                   
@@ -6491,9 +6729,9 @@ Options:
                                   page.
   --page TEXT                     The pagination token to continue listing from.
   --backup-id TEXT                The [OCID] of the backup. Specify a backupId
-                                  to list only the DB systems that support
-                                  creating a database using this backup in this
-                                  compartment.
+                                  to list only the DB systems or DB homes that
+                                  support creating a database using this backup
+                                  in this compartment.
   --sort-by [TIMECREATED|DISPLAYNAME]
                                   The field to sort by.  You can provide one
                                   sort order (`sortOrder`).  Default order for
@@ -6713,9 +6951,12 @@ Options:
                                   in
                                   a file, modifying it as needed and then
                                   passing it back in via the file:// syntax.
-  --nsg-ids COMPLEX TYPE          The list of Network Security Group [OCIDs]
-                                  associated with this DB system. A maximum of 5
-                                  allowed.
+  --nsg-ids COMPLEX TYPE          A list of the [OCIDs] of the network security
+                                  groups (NSGs) that this DB system belongs to.
+                                  Setting this to an empty array after the list
+                                  is created removes the resource from all NSGs.
+                                  For more information about NSGs, see [Security
+                                  Rules].
                                   This is a complex type whose value
                                   must be valid JSON. The value can be provided
                                   as a string on the command line or passed in
@@ -6731,14 +6972,17 @@ Options:
                                   as needed and then passing it back in via the
                                   file:// syntax.
   --backup-network-nsg-ids COMPLEX TYPE
-                                  The list of Network Security Group [OCIDs]
-                                  associated with the backup network of this DB
-                                  system. Applicable only to Exadata DB systems.
-                                  A maximum of 5 allowed.
-                                  This is a complex type
-                                  whose value must be valid JSON. The value can
-                                  be provided as a string on the command line or
-                                  passed in as a file using
+                                  A list of the [OCIDs] of the network security
+                                  groups (NSGs) that the backup network of this
+                                  DB system belongs to. Setting this to an empty
+                                  array after the list is created removes the
+                                  resource from all NSGs. For more information
+                                  about NSGs, see [Security Rules]. Applicable
+                                  only to Exadata DB systems.
+                                  This is a complex
+                                  type whose value must be valid JSON. The value
+                                  can be provided as a string on the command
+                                  line or passed in as a file using
                                   the
                                   file://path/to/file syntax.
                                   
