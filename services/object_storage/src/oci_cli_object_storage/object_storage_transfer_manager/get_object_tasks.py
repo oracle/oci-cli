@@ -6,7 +6,7 @@ from .work_pool_task import WorkPoolTask
 from .work_pool_task import WorkPoolTaskCallbacksContainer, WorkPoolTaskErrorCallback
 
 from retrying import retry
-from .. import retry_utils
+from oci_cli import retry_utils
 
 import heapq
 import oci

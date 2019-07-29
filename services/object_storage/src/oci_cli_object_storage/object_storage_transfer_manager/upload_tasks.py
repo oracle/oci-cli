@@ -4,7 +4,7 @@
 from oci.object_storage import UploadManager
 from .work_pool_task import WorkPoolTask
 from retrying import retry
-from .. import retry_utils
+from oci_cli import retry_utils
 
 
 # A simple task which uploads a single file to Object Storage

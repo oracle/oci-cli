@@ -26,7 +26,7 @@ CLICK_TYPES_TO_EXAMPLE_VALUES = {
     click.INT: 0,
     click.FLOAT: 0.0,
     click.BOOL: True,
-    CLI_DATETIME: '2017-01-01T00:00:00.000000+00:00'
+    CLI_DATETIME: '2017-01-01T00:00:00+00:00',
 }
 
 
@@ -35,19 +35,25 @@ PRIMITIVE_TYPES_TO_EXAMPLE_SCALAR_VALUES = {
     'str': 'string',
     'string': 'string',
     'date': '2017-01-01',
-    'datetime': '2017-01-01T00:00:00.000000+00:00',
+    'datetime': '2017-01-01T00:00:00+00:00',
     'bool': True,
     'int': 0,
+    'integer': 0,
     'float': 0.0
 }
 
+STORAGE_UNIT_MAP = {
+    'MBs': 'Mbs',
+    'KBs': 'Kbs',
+    'GBs': 'Gbs'
+}
 
 # There are some intentional synonyms here (e.g. "str" and "string")
 PRIMITIVE_TYPES_TO_EXAMPLE_KEY_VALUES = {
     'str': ['string1', 'string2'],
     'string': ['string1', 'string2'],
     'date': ['2017-01-01', '2017-01-02'],
-    'datetime': ['2017-01-01T00:00:00.000000+00:00', '2017-01-02T00:00:00.000000+00:00'],
+    'datetime': ['2017-01-01T00:00:00+00:00', '2017-01-01T00:00:00+00:00'],
     'bool': [True, False],
     'int': [0, 1],
     'float': [0.0, 0.5]
@@ -176,11 +182,13 @@ def generate_input_dict_for_skeleton(ctx, targeted_complex_param=None):
                 if leading_dashes_removed not in input_params_to_complex_types:
                     attribute_name = camelize(leading_dashes_removed)
                     already_processed_params.add(attribute_name)
-
                     if option_type in CLICK_TYPES_TO_EXAMPLE_VALUES:
                         input_as_dict[attribute_name] = CLICK_TYPES_TO_EXAMPLE_VALUES[option_type]
                     elif isinstance(option_type, click.Choice):
-                        input_as_dict[attribute_name] = '|'.join(option_type.choices)
+                        if o.multiple:
+                            input_as_dict[attribute_name] = ['|'.join(option_type.choices)]
+                        else:
+                            input_as_dict[attribute_name] = '|'.join(option_type.choices)
                     elif isinstance(option_type, click.File):
                         input_as_dict[attribute_name] = '/path/to/file'
 
@@ -328,6 +336,9 @@ def cli_json_input_callback(ctx, param, value):
             # Deeper than that we're dealing with a complex object which a customer would usually pass as a command line argument
             # as a JSON string or a reference to a JSON file, in which case it's just going to get shuttled along to the underlying
             # Python SDK functionality anyway, so we leave it untouched
+            for unit in STORAGE_UNIT_MAP:
+                if key.endswith(unit):
+                    key = key.replace(unit, STORAGE_UNIT_MAP[unit])
             underscored_key = underscore(key)
             ctx.default_map[underscored_key] = val
 

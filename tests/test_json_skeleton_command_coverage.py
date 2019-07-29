@@ -7,6 +7,9 @@ import click
 import json
 import oci_cli
 import six
+import random
+import vcr
+import os
 
 
 # Commands which we skip evaluation of because they don't have the JSON input
@@ -22,7 +25,34 @@ IGNORED_COMMANDS = [
     ['session', 'import'],
     ['session', 'refresh'],
     ['session', 'terminate'],
-    ['session', 'validate']
+    ['session', 'validate'],
+    # Note this is being added b/c python sdk doesn't generate models
+    # for top level enums.
+    # This means that the --generate-full-command-json-input will not work
+    # for these commands.
+    ['cims', 'incident', 'create'],
+    ['cims', 'incident', 'update']
+]
+
+# List of extended commands for which test_run_all_commands will fail. These tests fail because of the extended code, where we
+# check for a combination of input params. Please add a new command to this list, if the test is failing because of extended code.
+IGNORE_EXTENDED_TESTS_COMMANDS = [
+    ['bv', 'boot-volume', 'create'],
+    ['bv', 'volume', 'create'],
+    ['compute', 'instance', 'launch'],
+    ['iam', 'api-key', 'upload'],
+    ['iam', 'user', 'api-key', 'upload'],
+    ['network', 'public-ip', 'get'],
+    ['os', 'object', 'bulk-download'],
+    ['os', 'object', 'bulk-upload'],
+    ['os', 'object', 'put'],
+    ['os', 'object', 'resume-put'],
+    ['os', 'object', 'bulk-delete'],
+    ['batch', 'job-log', 'get'],
+    ['waas', 'protection-settings', 'update'],
+    ['resource-manager', 'stack', 'update'],
+    ['resource-manager', 'stack', 'create'],
+    ['waas', 'protection-settings', 'update']
 ]
 
 
@@ -86,6 +116,94 @@ def test_all_commands_generate_skeleton():
     assert len(commands_with_bad_json) == 0, 'The following commands had invalid JSON skeletons: {}'.format(commands_with_bad_json)
 
 
+none_mode_vcr = vcr.VCR(record_mode='none')
+
+
+# Test which invokes all the command using the request formed by invoking --generate-full-command-json-input option.
+# The main aim of this test is to verify if all the generated CLI code is function and CLI <-> PythonSDK interaction.
+# In this test, we use VCR with record mode none as to stop any out-going http request.
+@none_mode_vcr.use_cassette('invalid-file-path')
+def test_run_all_commands(runner, config_file, config_profile, tmpdir):
+    failed_commands = []
+    for cmd in commands_list:
+        if cmd not in IGNORE_EXTENDED_TESTS_COMMANDS:
+            full_command = list(cmd)
+            try:
+                if cmd not in COMMANDS_WITH_NO_PARAMS:
+                    result = util.invoke_command(full_command + ['--generate-full-command-json-input'])
+                    try:
+                        assert result.exit_code == 0
+                    except AssertionError as ae:
+                        print("--generate-full-command-json-input failure for: {}".format(full_command))
+                        print(ae)
+                        print(result.output)
+                        failed_commands.append(cmd)
+                        continue
+                    json_input = process_json_input(result.output, tmpdir)
+                    json_input = json.dumps(json_input)
+                    full_command.extend(['--from-json', json_input])
+
+                    result = invoke(runner, config_file, 'ADMIN', full_command)
+
+                    if 'Error: Missing option --endpoint.' in result.output:
+                        # some services require --endpoint to be passed.
+                        full_command.extend(['--endpoint', 'https://region.domain.com'])
+                        result = invoke(runner, config_file, 'ADMIN', full_command)
+
+                    if result.exit_code != 0 and 'CannotOverwriteExistingCassetteException' not in result.output:
+                        failed_commands.append(cmd)
+                        print(cmd)
+                        print(result.output)
+                else:
+                    result = invoke(runner, config_file, 'ADMIN', full_command)
+                    if result.exit_code != 0 and 'CannotOverwriteExistingCassetteException' not in result.output:
+                        failed_commands.append(cmd)
+                        print(cmd)
+                        print(result.output)
+
+            except Exception:
+                failed_commands.append(cmd)
+
+    assert len(failed_commands) == 0, 'The following commands failed to run: {}'.format(failed_commands)
+
+
+def process_json_input(input, tmpdir):
+    modified_input = json.loads(input)
+    # if the command accepts list of objects, we will process the first element in the list and pass it to the test.
+    if type(input) == list:
+        modified_input = modified_input[0]
+    # Remove waiter and listing options
+    modified_input.pop('waitForState', None)
+    modified_input.pop('limit', None)
+    modified_input.pop('all', None)
+    for key in modified_input:
+        # if input is a Multiple choice option, this will extract a single choice from the choice list.
+        if isinstance(modified_input[key], list) and len(modified_input[key]) == 1 and isinstance(modified_input[key][0], six.string_types):
+            first_val = str(modified_input[key][0])
+            if "|" in first_val:
+                modified_input[key][0] = get_choice_from_choices(first_val)
+        # input is a choice option, get the first choice.
+        if "|" in str(modified_input[key]):
+            modified_input[key] = get_choice_from_choices(str(modified_input[key]))
+
+        if modified_input[key] == '/path/to/file':
+            # create a temp file.
+            fh = tmpdir.join("input.txt")
+            fh.write("sample text")
+            filepath = os.path.join(fh.dirname, fh.basename)
+            modified_input[key] = filepath
+
+    if type(json.loads(input)) is list:
+        return [modified_input]
+
+    return modified_input
+
+
+def get_choice_from_choices(choices):
+    choice = random.choice(choices.split('|'))
+    return choice
+
+
 def test_all_commands_can_accept_from_json_input():
     with test_config_container.create_vcr().use_cassette('json_skeleton_command_coverage_test_all_commands_can_accept_from_json_input.yml'):
         for cmd in commands_list:
@@ -135,3 +253,17 @@ def reset_prompt_in_group(click_group):
                 if p.expose_value is False and '--force' in p.opts:
                     p.prompt = "Are you sure you want to delete this resource?"
                     p.callback = oci_cli.cli_util.confirmation_callback
+
+
+def invoke(runner, config_file, config_profile, params, debug=False, root_params=None, strip_progress_bar=True, strip_multipart_stderr_output=True, ** args):
+    root_params = ['--config-file', config_file]
+
+    if config_profile:
+        root_params.extend(['--profile', config_profile])
+
+    if debug is True:
+        result = runner.invoke(oci_cli.cli, root_params + ['--debug'] + params, ** args)
+    else:
+        result = runner.invoke(oci_cli.cli, root_params + params, ** args)
+
+    return result

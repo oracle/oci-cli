@@ -870,10 +870,9 @@ def test_bulk_operation_table_output_query(object_storage_client):
 
 
 def invoke(commands, debug=False, ** args):
-        if debug is True:
-            commands = ['--debug'] + commands
-
-        return util.invoke_command(commands, ** args)
+    if debug is True:
+        commands = ['--debug'] + commands
+    return util.invoke_command(commands, ** args)
 
 
 def get_count_of_files_in_folder_and_subfolders(directory):

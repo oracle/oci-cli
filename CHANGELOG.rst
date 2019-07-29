@@ -6,6 +6,46 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.5.21 - 2019-07-30
+---------------------
+Added
+~~~~~
+* Support for calling Oracle Cloud Infrastructure services in the Mumbai region (``--region ap-mumbai-1``)
+
+* Support for change of compartments for WAF policy and Certificate resources in WAF Policy Service.
+
+  * ``oci waas waas-policy change-compartment --waas-policy-id  --compartment-id``
+  * ``oci waas certificate change-compartment --certificate-id  --compartment-id``
+
+* Support for change of compartments for Customer Premise Equipment (CPE), IPSecConnection, Cross connect group, Cross connect, Remote Peering Connection (RPC) and Virtual Circuit resources in the Networking service.
+
+  * ``oci network cpe change-compartment --cpe-id  --compartment-id``
+  * ``oci network ip-sec-connection change-compartment --ip-sec-connection-id  --compartment-id``
+  * ``oci network cross-connect-group change-compartment --cross-connect-group-id  --compartment-id``
+  * ``oci network cross-conenct change-compartment --cross-connect-id  --compartment-id``
+  * ``oci network remote-peering-connection change-compartment --remote-peering-connection-id  --compartment-id``
+  * ``oci network virtual-circuit change-compartment --virtual-circuit-id  --compartment-id``
+
+* Support for Events Service
+
+  * ``oci events``
+  * An example on using the Events Service can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/services/events/examples_and_test_scripts/example_events.sh>`__.
+
+* Support for adding tags to Cross connect group, Cross connect, Remote Peering Connection and Virtual Circuit resources in the Networking Service.
+
+  * ``oci network cross-connect-group create --defined-tags --freeform-tags``
+  * ``oci network cross-connect-group update --defined-tags --freeform-tags``
+  * ``oci network cross-connect create --defined-tags --freeform-tags``
+  * ``oci network cross-connect update --defined-tags --freeform-tags``
+  * ``oci network remote-peering-connection create --defined-tags --freeform-tags``
+  * ``oci network remote-peering-connection update --defined-tags --freeform-tags``
+  * ``oci network virtual-circuit create --defined-tags --freeform-tags``
+  * ``oci network virtual-circuit update --defined-tags --freeform-tags``
+
+* Support for moving streams into a different compartment in Streaming service
+
+  * ``oci streaming admin stream change-compartment [OPTIONS]``
+
 2.5.20 - 2019-07-23
 -------------------
 Added

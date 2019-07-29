@@ -423,6 +423,11 @@ def prompt_for_passphrase():
 def build_config(command_args):
     """Load the config object from file, and apply any overrides found in command_args."""
 
+    # In case --endpoint is specified, the 'region' entry is removed from the REQUIRED list
+    # Adding it back for subsequent calls
+    if "region" not in config.REQUIRED:
+        config.REQUIRED.add("region")
+
     try:
         client_config = config.from_file(file_location=command_args['config_file'], profile_name=command_args['profile'])
     except exceptions.ProfileNotFound as e:

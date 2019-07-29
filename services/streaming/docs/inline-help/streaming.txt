@@ -40,11 +40,57 @@ Options:
                   <command> --help.
 
 Commands:
-  create  Starts the provisioning of a new stream.
-  delete  Deletes a stream and its content.
-  get     Gets detailed information about a stream,...
-  list    Lists the streams.
-  update  Updates the tags applied to the stream.
+  change-compartment  Moves a resource into a different...
+  create              Starts the provisioning of a new stream.
+  delete              Deletes a stream and its content.
+  get                 Gets detailed information about a stream,...
+  list                Lists the streams.
+  update              Updates the tags applied to the stream.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci streaming admin stream change-compartment --help
+Usage: oci streaming admin stream change-compartment [OPTIONS]
+
+  Moves a resource into a different compartment. When provided, If-Match is
+  checked against ETag values of the resource.
+
+Options:
+  --stream-id TEXT           The OCID of the stream to change compatment for.
+                             [required]
+  -c, --compartment-id TEXT  The [OCID] of the compartment into which the
+                             resource should be moved. [required]
+  --if-match TEXT            For optimistic concurrency control. In the PUT or
+                             DELETE call for a resource, set the if-match
+                             parameter to the value of the etag from a previous
+                             GET or POST response for that resource. The
+                             resource will be updated or deleted only if the
+                             etag you provide matches the resource's current
+                             etag value.
+  --from-json TEXT           Provide input to this command as a JSON document
+                             from a file using the file://path-to/file syntax.
+                             The --generate-full-command-json-input option can
+                             be used to generate a sample json file to be used
+                             with this command option. The key names are pre-
+                             populated and match the command option names
+                             (converted to camelCase format, e.g. compartment-id
+                             --> compartmentId), while the values of the keys
+                             need to be populated by the user before using the
+                             sample file as an input to this command. For any
+                             command option that accepts multiple values, the
+                             value of the key can be a JSON array.
+                             
+                             Options can
+                             still be provided on the command line. If an option
+                             exists in both the JSON document and the command
+                             line then the command line specified value will be
+                             used.
+                             
+                             For examples on usage of this option, please
+                             see our "using CLI with advanced JSON options"
+                             link: https://docs.cloud.oracle.com/iaas/Content/AP
+                             I/SDKDocs/cliusing.htm#AdvancedJSONOptions
+  -?, -h, --help             For detailed help on any of these individual
+                             commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci streaming admin stream create --help
