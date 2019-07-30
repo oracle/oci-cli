@@ -15,7 +15,7 @@ from oci_cli.file_filters import BaseFileFilterCollection
 from oci_cli.file_filters import SingleTypeFileFilterCollection
 from retrying import retry
 from oci_cli import retry_utils
-from oci_cli.object_storage_transfer_manager import TransferManager, TransferManagerConfig, WorkPoolTaskCallback, WorkPoolTaskErrorCallback, WorkPoolTaskSuccessCallback, WorkPoolTaskCallbacksContainer
+from services.object_storage.src.oci_cli_object_storage.object_storage_transfer_manager import TransferManager, TransferManagerConfig, WorkPoolTaskCallback, WorkPoolTaskErrorCallback, WorkPoolTaskSuccessCallback, WorkPoolTaskCallbacksContainer
 from oci_cli import json_skeleton_utils
 from oci_cli.aliasing import CommandGroupWithAlias
 from oci_cli import custom_types  # noqa: F401

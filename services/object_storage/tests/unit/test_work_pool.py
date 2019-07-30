@@ -3,8 +3,8 @@
 
 import unittest
 import time
-from oci_cli.object_storage_transfer_manager.work_pool import WorkPool, WorkPoolFuture, WorkPoolFutureCollection
-from oci_cli.object_storage_transfer_manager.work_pool_task import WorkPoolTask
+from services.object_storage.src.oci_cli_object_storage.object_storage_transfer_manager.work_pool import WorkPool, WorkPoolFuture, WorkPoolFutureCollection
+from services.object_storage.src.oci_cli_object_storage.object_storage_transfer_manager.work_pool_task import WorkPoolTask
 
 
 def sleep_function():

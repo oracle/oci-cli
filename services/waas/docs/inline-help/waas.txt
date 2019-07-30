@@ -106,17 +106,22 @@ Usage: oci waas access-rule update [OPTIONS]
   conditions. A rule action can be set to allow, detect, or block requests.
   The detect setting allows the request to pass through the Web Application
   Firewall and is tagged with a `DETECT` flag in the Web Application
-  Firewall's log. This operation can create, delete, update, and/or reorder
-  access rules depending on the structure of the request body. Updating an
-  existing access rule can be accomplished by changing the properties of the
-  access rule object with a non-empty `key` property in the list. Reordering
-  of access rules can be accomplished by changing the order of the access
-  rules in the list when updating. Creating an access rule can be accomplished
-  by adding a new access rule object to the list without a `key` property. A
-  `key` will be generated for the new access rule upon update. Deleting an
-  access rule can be accomplished by removing the existing access rule object
-  from the list. Any existing access rule with a `key` that is not present in
-  the list of access rules sent in the request will be deleted.
+  Firewall's log.
+
+  This operation can create, delete, update, and/or reorder access rules
+  depending on the structure of the request body.
+
+  Access rules can be updated by changing the properties of the access rule
+  object with the rule's key specified in the key field. Access rules can be
+  reordered by changing the order of the access rules in the list when
+  updating.
+
+  Access rules can be created by adding a new access rule object to the list
+  without a `key` property specified. A `key` will be generated for the new
+  access rule upon update.
+
+  Any existing access rules that are not specified with a `key` in the list of
+  access rules will be deleted upon update.
 
 Options:
   --waas-policy-id TEXT           The [OCID] of the WAAS policy. [required]
@@ -387,14 +392,18 @@ Usage: oci waas captcha update [OPTIONS]
 
   Updates the list of CAPTCHA challenges in the Web Application Firewall
   configuration for a WAAS policy. This operation can create, update, or
-  delete CAPTCHAs depending on the structure of the request body. Updating an
-  existing CAPTCHA can be accomplished by changing the properties of the
-  CAPTCHA object with a non-empty `key` property in the list. Creating a
-  CAPTCHA can be accomplished by adding a new CAPTCHA object to the list
-  without a `key` property. A `key` will be generated for the new CAPTCHA upon
-  update. Deleting a CAPTCHA can be accomplished by removing the existing
-  CAPTCHA object from the list. Any existing CAPTCHA with a `key` that is not
-  present in the list of CAPTCHAs sent in the request will be deleted.
+  delete CAPTCHAs depending on the structure of the request body. CAPTCHA
+  challenges can be updated by changing the properties of the CAPTCHA object
+  with the rule's key specified in the key field. CAPTCHA challenges can be
+  reordered by changing the order of the CAPTCHA challenges in the list when
+  updating.
+
+  CAPTCHA challenges can be created by adding a new access rule object to the
+  list without a `key` property specified. A `key` will be generated for the
+  new CAPTCHA challenges upon update.
+
+  Any existing CAPTCHA challenges that are not specified with a `key` in the
+  list of CAPTCHA challenges will be deleted upon update.
 
 Options:
   --waas-policy-id TEXT           The [OCID] of the WAAS policy. [required]
@@ -481,11 +490,58 @@ Options:
                   <command> --help.
 
 Commands:
-  create  Allows an SSL certificate to be added to a...
-  delete  Deletes an SSL certificate from the WAAS...
-  get     Gets the details of an SSL certificate.
-  list    Gets a list of SSL certificates that can be...
-  update  It is not possible to update a certificate,...
+  change-compartment  Moves certificate into a different...
+  create              Allows an SSL certificate to be added to a...
+  delete              Deletes an SSL certificate from the WAAS...
+  get                 Gets the details of an SSL certificate.
+  list                Gets a list of SSL certificates that can be...
+  update              It is not possible to update a certificate,...
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci waas certificate change-compartment --help
+Usage: oci waas certificate change-compartment [OPTIONS]
+
+  Moves certificate into a different compartment. When provided, If-Match is
+  checked against ETag values of the certificate.
+
+Options:
+  --certificate-id TEXT      The [OCID] of the SSL certificate used in the WAAS
+                             policy. This number is generated when the
+                             certificate is added to the policy. [required]
+  -c, --compartment-id TEXT  The [OCID] of the compartment into which the
+                             resource should be moved. [required]
+  --if-match TEXT            For optimistic concurrency control. In the `PUT` or
+                             `DELETE` call for a resource, set the `if-match`
+                             parameter to the value of the etag from a previous
+                             `GET` or `POST` response for that resource. The
+                             resource will be updated or deleted only if the
+                             etag provided matches the resource's current etag
+                             value.
+  --from-json TEXT           Provide input to this command as a JSON document
+                             from a file using the file://path-to/file syntax.
+                             The --generate-full-command-json-input option can
+                             be used to generate a sample json file to be used
+                             with this command option. The key names are pre-
+                             populated and match the command option names
+                             (converted to camelCase format, e.g. compartment-id
+                             --> compartmentId), while the values of the keys
+                             need to be populated by the user before using the
+                             sample file as an input to this command. For any
+                             command option that accepts multiple values, the
+                             value of the key can be a JSON array.
+                             
+                             Options can
+                             still be provided on the command line. If an option
+                             exists in both the JSON document and the command
+                             line then the command line specified value will be
+                             used.
+                             
+                             For examples on usage of this option, please
+                             see our "using CLI with advanced JSON options"
+                             link: https://docs.cloud.oracle.com/iaas/Content/AP
+                             I/SDKDocs/cliusing.htm#AdvancedJSONOptions
+  -?, -h, --help             For detailed help on any of these individual
+                             commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci waas certificate create --help
@@ -509,25 +565,10 @@ Options:
   --is-trust-verification-disabled BOOLEAN
                                   Set to true if the SSL certificate is self-
                                   signed.
-  --freeform-tags COMPLEX TYPE    A simple key-value pair without any defined
-                                  schema.
-                                  This is a complex type whose value
-                                  must be valid JSON. The value can be provided
-                                  as a string on the command line or passed in
-                                  as a file using
-                                  the file://path/to/file
-                                  syntax.
-                                  
-                                  The --generate-param-json-input
-                                  option can be used to generate an example of
-                                  the JSON which must be provided. We recommend
-                                  storing this example
-                                  in a file, modifying it
-                                  as needed and then passing it back in via the
-                                  file:// syntax.
-  --defined-tags COMPLEX TYPE     A key-value pair with a defined schema that
-                                  restricts the values of tags. These predefined
-                                  keys are scoped to namespaces.
+  --freeform-tags COMPLEX TYPE    Free-form tags for this resource. Each tag is
+                                  a simple key-value pair with no predefined
+                                  name, type, or namespace. For more
+                                  information, see [Resource Tags].
                                   This is a
                                   complex type whose value must be valid JSON.
                                   The value can be provided as a string on the
@@ -542,6 +583,21 @@ Options:
                                   in
                                   a file, modifying it as needed and then
                                   passing it back in via the file:// syntax.
+  --defined-tags COMPLEX TYPE     Defined tags for this resource. Each key is
+                                  predefined and scoped to a namespace. For more
+                                  information, see [Resource Tags]. Example:
+                                  This is a complex type whose value must be
+                                  valid JSON. The value can be provided as a
+                                  string on the command line or passed in as a
+                                  file using
+                                  the file://path/to/file syntax.
+                                  The --generate-param-json-input option can be
+                                  used to generate an example of the JSON which
+                                  must be provided. We recommend storing this
+                                  example
+                                  in a file, modifying it as needed and
+                                  then passing it back in via the file://
+                                  syntax.
   --wait-for-state [CREATING|ACTIVE|FAILED|UPDATING|DELETING|DELETED]
                                   This operation creates, modifies or deletes a
                                   resource that has a defined lifecycle state.
@@ -1254,7 +1310,7 @@ Usage: oci waas good-bot list [OPTIONS]
   Gets the list of good bots defined in the Web Application Firewall
   configuration for a WAAS policy.
 
-  The list is sorted ascending by `key`.
+  The list is sorted by `key`, in ascending order.
 
 Options:
   --waas-policy-id TEXT  The [OCID] of the WAAS policy. [required]
@@ -1301,8 +1357,7 @@ Usage: oci waas good-bot update [OPTIONS]
   all other configuration properties will remain unchanged.
 
   Good bots allows you to manage access for bots from known providers, such as
-  Google or Baidu. For more information about good bots, please see [Bot
-  Management].
+  Google or Baidu. For more information about good bots, see [Bot Management].
 
 Options:
   --waas-policy-id TEXT           The [OCID] of the WAAS policy. [required]
@@ -1834,7 +1889,7 @@ Options:
 
 Commands:
   get     Gets the details of a protection rule in the...
-  list    Gets the list of protection rules in the Web...
+  list    Gets the list of available protection rules...
   update  Updates the action for each specified...
 
 ++++++++++++++++++++++++++++++++++++++++++++++
@@ -1878,9 +1933,11 @@ Options:
 $ oci waas protection-rule list --help
 Usage: oci waas protection-rule list [OPTIONS]
 
-  Gets the list of protection rules in the Web Application Firewall
-  configuration for a WAAS policy, including currently defined rules and
-  recommended rules. The list is sorted ascending by `key`.
+  Gets the list of available protection rules for a WAAS policy. Use the
+  `GetWafConfig` operation to view a list of currently configured protection
+  rules for the Web Application Firewall, or use the `ListRecommendations`
+  operation to get a list of recommended protection rules for the Web
+  Application Firewall. The list is sorted by `key`, in ascending order.
 
 Options:
   --waas-policy-id TEXT        The [OCID] of the WAAS policy. [required]
@@ -1932,9 +1989,9 @@ Usage: oci waas protection-rule update [OPTIONS]
   be allowed, blocked, or trigger an alert if they meet the parameters of an
   applied rule. For more information on protection rules, see [WAF Protection
   Rules]. This operation can update or disable protection rules depending on
-  the structure of the request body. Updating an existing protection rule can
-  be accomplished by changing the properties of the protection rule object
-  with a non-empty `key` property in the list.
+  the structure of the request body. Protection rules can be updated by
+  changing the properties of the protection rule object with the rule's key
+  specified in the key field.
 
 Options:
   --waas-policy-id TEXT           The [OCID] of the WAAS policy. [required]
@@ -2097,15 +2154,36 @@ Options:
                                   website owner. Please contact support.`
   --max-argument-count INTEGER    The maximum number of arguments allowed to be
                                   passed to your application before an action is
-                                  taken. If unspecified, defaults to `255`.
+                                  taken. Arguements are query parameters or body
+                                  parameters in a PUT or POST request. If
+                                  unspecified, defaults to `255`. This setting
+                                  only applies if a corresponding protection
+                                  rule is enabled, such as the "Number of
+                                  Arguments Limits" rule (key: 960335).
+                                  Example: If `maxArgumentCount` to `2` for the
+                                  Max Number of Arguments protection rule (key:
+                                  960335), the following requests would be
+                                  blocked: `GET
+                                  /myapp/path?query=one&query=two&query=three`
+                                  `POST /myapp/path` with Body `{"argument1":"on
+                                  e","argument2":"two","argument3":"three"}`
   --max-name-length-per-argument INTEGER
                                   The maximum length allowed for each argument
-                                  name, in characters. If unspecified, defaults
-                                  to `400`.
+                                  name, in characters. Arguements are query
+                                  parameters or body parameters in a PUT or POST
+                                  request. If unspecified, defaults to `400`.
+                                  This setting only applies if a corresponding
+                                  protection rule is enabled, such as the
+                                  "Values Limits" rule (key: 960208).
   --max-total-name-length-of-arguments INTEGER
-                                  The maximum length allowed for the sum of all
-                                  argument names, in characters. If unspecified,
-                                  defaults to `64000`.
+                                  The maximum length allowed for the sum of the
+                                  argument name and value, in characters.
+                                  Arguements are query parameters or body
+                                  parameters in a PUT or POST request. If
+                                  unspecified, defaults to `64000`. This setting
+                                  only applies if a corresponding protection
+                                  rule is enabled, such as the "Total Arguments
+                                  Limits" rule (key: 960341).
   --recommendations-period-in-days INTEGER
                                   The length of time to analyze traffic traffic,
                                   in days. After the analysis period,
@@ -2132,27 +2210,16 @@ Options:
   --allowed-http-methods [OPTIONS|GET|HEAD|POST|PUT|DELETE|TRACE|CONNECT|PATCH|PROPFIND]
                                   The list of allowed HTTP methods. If
                                   unspecified, default to `[OPTIONS, GET, HEAD,
-                                  POST]`.
-                                  This is a complex type whose value
-                                  must be valid JSON. The value can be provided
-                                  as a string on the command line or passed in
-                                  as a file using
-                                  the file://path/to/file
-                                  syntax.
-                                  
-                                  The --generate-param-json-input
-                                  option can be used to generate an example of
-                                  the JSON which must be provided. We recommend
-                                  storing this example
-                                  in a file, modifying it
-                                  as needed and then passing it back in via the
-                                  file:// syntax.
+                                  POST]`. This setting only applies if a
+                                  corresponding protection rule is enabled, such
+                                  as the "Restrict HTTP Request Methods" rule
+                                  (key: 911100).
   --media-types COMPLEX TYPE      The list of media types to allow for
                                   inspection, if `isResponseInspected` is
                                   enabled. Only responses with MIME types in
                                   this list will be inspected. If unspecified,
-                                  defaults to `[`text/html`, `text/plain`,
-                                  `text/xml`]`.
+                                  defaults to `["text/html", "text/plain",
+                                  "text/xml"]`.
                                   
                                       Supported MIME types
                                   include:
@@ -2351,8 +2418,8 @@ Usage: oci waas recommendation list [OPTIONS]
   Use the `POST
   /waasPolicies/{waasPolicyId}/actions/acceptWafConfigRecommendations` method
   to accept recommended Web Application Firewall protection rules. For more
-  information, see [WAF Protection Rules]. The list is sorted ascending by
-  `key`.
+  information, see [WAF Protection Rules]. The list is sorted by `key`, in
+  ascending order.
 
 Options:
   --waas-policy-id TEXT           The [OCID] of the WAAS policy. [required]
@@ -2422,7 +2489,7 @@ $ oci waas threat-feed list --help
 Usage: oci waas threat-feed list [OPTIONS]
 
   Gets the list of available web application threat intelligence feeds and the
-  actions set for each feed. The list is sorted ascending by `key`.
+  actions set for each feed. The list is sorted by `key`, in ascending order.
 
 Options:
   --waas-policy-id TEXT  The [OCID] of the WAAS policy. [required]
@@ -2559,11 +2626,56 @@ Options:
                   <command> --help.
 
 Commands:
-  create  Creates a new Web Application Acceleration...
-  delete  Deletes a policy.
-  get     Gets the details of a WAAS policy.
-  list    Gets a list of WAAS policies.
-  update  Updates the details of a WAAS policy,...
+  change-compartment  Moves WAAS policy into a different...
+  create              Creates a new Web Application Acceleration...
+  delete              Deletes a policy.
+  get                 Gets the details of a WAAS policy.
+  list                Gets a list of WAAS policies.
+  update              Updates the details of a WAAS policy,...
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci waas waas-policy change-compartment --help
+Usage: oci waas waas-policy change-compartment [OPTIONS]
+
+  Moves WAAS policy into a different compartment. When provided, If-Match is
+  checked against ETag values of the WAAS policy.
+
+Options:
+  --waas-policy-id TEXT      The [OCID] of the WAAS policy. [required]
+  -c, --compartment-id TEXT  The [OCID] of the compartment into which the
+                             resource should be moved. [required]
+  --if-match TEXT            For optimistic concurrency control. In the `PUT` or
+                             `DELETE` call for a resource, set the `if-match`
+                             parameter to the value of the etag from a previous
+                             `GET` or `POST` response for that resource. The
+                             resource will be updated or deleted only if the
+                             etag provided matches the resource's current etag
+                             value.
+  --from-json TEXT           Provide input to this command as a JSON document
+                             from a file using the file://path-to/file syntax.
+                             The --generate-full-command-json-input option can
+                             be used to generate a sample json file to be used
+                             with this command option. The key names are pre-
+                             populated and match the command option names
+                             (converted to camelCase format, e.g. compartment-id
+                             --> compartmentId), while the values of the keys
+                             need to be populated by the user before using the
+                             sample file as an input to this command. For any
+                             command option that accepts multiple values, the
+                             value of the key can be a JSON array.
+                             
+                             Options can
+                             still be provided on the command line. If an option
+                             exists in both the JSON document and the command
+                             line then the command line specified value will be
+                             used.
+                             
+                             For examples on usage of this option, please
+                             see our "using CLI with advanced JSON options"
+                             link: https://docs.cloud.oracle.com/iaas/Content/AP
+                             I/SDKDocs/cliusing.htm#AdvancedJSONOptions
+  -?, -h, --help             For detailed help on any of these individual
+                             commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci waas waas-policy create --help
@@ -3067,7 +3179,7 @@ Usage: oci waas waas-policy update [OPTIONS]
   Updates the details of a WAAS policy, including origins and tags. Only the
   fields specified in the request body will be updated; all other properties
   will remain unchanged. To update platform provided resources such as
-  `GoodBots`, `ProtectionRules`, and `ThreatFeeds` first retrieve the list of
+  `GoodBots`, `ProtectionRules`, and `ThreatFeeds`, first retrieve the list of
   available resources with the related list operation such as `GetThreatFeeds`
   or `GetProtectionRules`. The returned list will contain objects with `key`
   properties that can be used to update the resource during the
@@ -3248,7 +3360,8 @@ $ oci waas waf-blocked-request list --help
 Usage: oci waas waf-blocked-request list [OPTIONS]
 
   Gets the number of blocked requests by a Web Application Firewall feature in
-  five minute blocks, in ascending order by `timeObserved`.
+  five minute blocks, sorted by `timeObserved` in ascending order (starting
+  from oldest data).
 
 Options:
   --waas-policy-id TEXT           The [OCID] of the WAAS policy. [required]
@@ -3504,8 +3617,8 @@ Usage: oci waas waf-config update [OPTIONS]
   policy.
 
   To update platform provided resources such as `GoodBots`, `ProtectionRules`,
-  and `ThreatFeeds` first retrieve the list of available resources with the
-  related list operation such as `GetThreatFeeds` or `GetProtectionRules`.
+  and `ThreatFeeds`, first retrieve the list of available resources with the
+  related list operation, such as `GetThreatFeeds` or `GetProtectionRules`.
 
   The returned list will contain objects with `key` properties that can be
   used to update the resource during the `UpdateWafConfig` request.
@@ -3793,10 +3906,11 @@ Options:
 $ oci waas waf-log --help
 Usage: oci waas waf-log [OPTIONS] COMMAND [ARGS]...
 
-  A list of Web Application Firewall log entries. Each entry is a JSON object
-  whose fields vary based on log type. Logs record what rules and
-  countermeasures are triggered by requests and are used as a basis to move
-  request handling into block mode.
+  A list of Web Application Firewall log entries. Each entry is a JSON object,
+  including a timestamp property and other fields varying based on log type.
+  Logs record what rules and countermeasures are triggered by requests and are
+  used as a basis to move request handling into block mode. For more
+  information about WAF logs, see [WAF Logs].
 
 Options:
   -?, -h, --help  For detailed help on any of these individual commands, enter
@@ -3809,9 +3923,9 @@ Commands:
 $ oci waas waf-log list --help
 Usage: oci waas waf-log list [OPTIONS]
 
-  Gets structured Web Application Firewall event logs for a WAAS policy. The
-  list is sorted by the `timeObserved` starting from the oldest recorded event
-  (ascending).
+  Gets structured Web Application Firewall event logs for a WAAS policy.
+  Sorted by the `timeObserved` in ascending order (starting from the oldest
+  recorded event).
 
 Options:
   --waas-policy-id TEXT           The [OCID] of the WAAS policy. [required]
@@ -4050,7 +4164,7 @@ Usage: oci waas waf-request list [OPTIONS]
 
   Gets the number of requests managed by a Web Application Firewall over a
   specified period of time, including blocked requests. Sorted by
-  `timeObserved` with oldest requests first (ascending).
+  `timeObserved` in ascending order (starting from oldest requests).
 
 Options:
   --waas-policy-id TEXT           The [OCID] of the WAAS policy. [required]
@@ -4265,7 +4379,7 @@ $ oci waas waf-traffic-datum list-waf-traffic --help
 Usage: oci waas waf-traffic-datum list-waf-traffic [OPTIONS]
 
   Gets the Web Application Firewall traffic data for a WAAS policy. Sorted by
-  `timeObserved` with oldest data points first (ascending).
+  `timeObserved` in ascending order (starting from oldest data).
 
 Options:
   --waas-policy-id TEXT           The [OCID] of the WAAS policy. [required]
@@ -4525,17 +4639,23 @@ Usage: oci waas whitelist update [OPTIONS]
 
   Updates the list of IP addresses that bypass the Web Application Firewall
   for a WAAS policy. Supports both single IP addresses or subnet masks (CIDR
-  notation). This operation can create, delete, update, and/or reorder
-  whitelists depending on the structure of the request body. Updating an
-  existing whitelist can be accomplished by changing the properties of the
-  whitelist object with a non-empty `key` property in the list. Reordering of
-  whitelists can be accomplished by changing the order of the whitelists in
-  the list when updating. Creating a whitelist can be accomplished by adding a
-  new whitelist object to the list without a `key` property. A `key` will be
-  generated for the new whitelist upon update. Deleting a whitelist can be
-  accomplished by removing the existing whitelist object from the list. Any
-  existing whitelist with a `key` that is not present in the list of
-  whitelists sent in the request will be deleted.
+  notation).
+
+  This operation can create, delete, update, and/or reorder whitelists
+  depending on the structure of the request body.
+
+  Whitelists can be updated by changing the properties of the whitelist object
+  with the rule's key specified in the `key` field. Whitelists can be
+  reordered by changing the order of the whitelists in the list of objects
+  when updating.
+
+  Whitelists can be created by adding a new whitelist object to the list
+  without a `key` property specified. A `key` will be generated for the new
+  whitelist upon update.
+
+  Whitelists can be deleted by removing the existing whitelist object from the
+  list. Any existing whitelists that are not specified with a `key` in the
+  list of access rules will be deleted upon update.
 
 Options:
   --waas-policy-id TEXT           The [OCID] of the WAAS policy. [required]

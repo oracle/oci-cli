@@ -30,6 +30,37 @@ streaming_service_cli.streaming_service_group.add_command(stream_admin_root_grou
 stream_admin_root_group.add_command(stream_group)
 
 
+@stream_group.command(name=cli_util.override('change_stream_compartment.command_name', 'change-compartment'), help=u"""Moves a resource into a different compartment. When provided, If-Match is checked against ETag values of the resource.""")
+@cli_util.option('--stream-id', required=True, help=u"""The OCID of the stream to change compatment for.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_stream_compartment(ctx, from_json, stream_id, compartment_id, if_match):
+
+    if isinstance(stream_id, six.string_types) and len(stream_id.strip()) == 0:
+        raise click.UsageError('Parameter --stream-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    details = {}
+    details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('stream_admin', ctx)
+    result = client.change_stream_compartment(
+        stream_id=stream_id,
+        change_stream_compartment_details=details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @stream_group.command(name=cli_util.override('create_stream.command_name', 'create'), help=u"""Starts the provisioning of a new stream. To track the progress of the provisioning, you can periodically call [GetStream]. In the response, the `lifecycleState` parameter of the [Stream] object tells you its current state.""")
 @cli_util.option('--name', required=True, help=u"""The name of the stream. Avoid entering confidential information.
 

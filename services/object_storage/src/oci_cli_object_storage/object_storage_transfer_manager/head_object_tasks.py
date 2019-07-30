@@ -4,7 +4,7 @@
 from oci import exceptions
 from retrying import retry
 from .work_pool_task import WorkPoolTask
-from .. import retry_utils
+from oci_cli import retry_utils
 
 
 # A task which can HEAD an object from Object Storage

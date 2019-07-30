@@ -63,7 +63,7 @@ from . import cli_session  # noqa: F401,E402
 from . import cli_setup_bootstrap  # noqa: F401,E402
 from . import cli_util  # noqa: F401,E402
 from . import cli_exceptions  # noqa: F401,E402
-from . import object_storage_transfer_manager  # noqa: F401,E402
+import services.object_storage.src.oci_cli_object_storage.object_storage_transfer_manager  # noqa: F401,E402
 from . import json_skeleton_utils  # noqa: F401,E402
 from . import string_utils  # noqa: F401,E402
 from . import help_text_producer  # noqa: F401,E402

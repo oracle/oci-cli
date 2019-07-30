@@ -73,11 +73,50 @@ Options:
                   <command> --help.
 
 Commands:
-  create  Creates a new virtual customer-premises...
-  delete  Deletes the specified CPE object.
-  get     Gets the specified CPE's information.
-  list    Lists the customer-premises equipment objects...
-  update  Updates the specified CPE's display name or...
+  change-compartment  Moves a CPE object into a different...
+  create              Creates a new virtual customer-premises...
+  delete              Deletes the specified CPE object.
+  get                 Gets the specified CPE's information.
+  list                Lists the customer-premises equipment objects...
+  update              Updates the specified CPE's display name or...
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci network cpe change-compartment --help
+Usage: oci network cpe change-compartment [OPTIONS]
+
+  Moves a CPE object into a different compartment within the same tenancy. For
+  information about moving resources between compartments, see [Moving
+  Resources to a Different Compartment].
+
+Options:
+  --cpe-id TEXT              The OCID of the CPE. [required]
+  -c, --compartment-id TEXT  The [OCID] of the compartment to move the CPE
+                             object to. [required]
+  --from-json TEXT           Provide input to this command as a JSON document
+                             from a file using the file://path-to/file syntax.
+                             The --generate-full-command-json-input option can
+                             be used to generate a sample json file to be used
+                             with this command option. The key names are pre-
+                             populated and match the command option names
+                             (converted to camelCase format, e.g. compartment-id
+                             --> compartmentId), while the values of the keys
+                             need to be populated by the user before using the
+                             sample file as an input to this command. For any
+                             command option that accepts multiple values, the
+                             value of the key can be a JSON array.
+                             
+                             Options can
+                             still be provided on the command line. If an option
+                             exists in both the JSON document and the command
+                             line then the command line specified value will be
+                             used.
+                             
+                             For examples on usage of this option, please
+                             see our "using CLI with advanced JSON options"
+                             link: https://docs.cloud.oracle.com/iaas/Content/AP
+                             I/SDKDocs/cliusing.htm#AdvancedJSONOptions
+  -?, -h, --help             For detailed help on any of these individual
+                             commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network cpe create --help
@@ -423,11 +462,50 @@ Options:
                   <command> --help.
 
 Commands:
-  create  Creates a new cross-connect.
-  delete  Deletes the specified cross-connect.
-  get     Gets the specified cross-connect's...
-  list    Lists the cross-connects in the specified...
-  update  Updates the specified cross-connect.
+  change-compartment  Moves a cross-connect into a different...
+  create              Creates a new cross-connect.
+  delete              Deletes the specified cross-connect.
+  get                 Gets the specified cross-connect's...
+  list                Lists the cross-connects in the specified...
+  update              Updates the specified cross-connect.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci network cross-connect change-compartment --help
+Usage: oci network cross-connect change-compartment [OPTIONS]
+
+  Moves a cross-connect into a different compartment within the same tenancy.
+  For information about moving resources between compartments, see [Moving
+  Resources to a Different Compartment].
+
+Options:
+  --cross-connect-id TEXT    The OCID of the cross-connect. [required]
+  -c, --compartment-id TEXT  The [OCID] of the compartment to move the cross-
+                             connect to. [required]
+  --from-json TEXT           Provide input to this command as a JSON document
+                             from a file using the file://path-to/file syntax.
+                             The --generate-full-command-json-input option can
+                             be used to generate a sample json file to be used
+                             with this command option. The key names are pre-
+                             populated and match the command option names
+                             (converted to camelCase format, e.g. compartment-id
+                             --> compartmentId), while the values of the keys
+                             need to be populated by the user before using the
+                             sample file as an input to this command. For any
+                             command option that accepts multiple values, the
+                             value of the key can be a JSON array.
+                             
+                             Options can
+                             still be provided on the command line. If an option
+                             exists in both the JSON document and the command
+                             line then the command line specified value will be
+                             used.
+                             
+                             For examples on usage of this option, please
+                             see our "using CLI with advanced JSON options"
+                             link: https://docs.cloud.oracle.com/iaas/Content/AP
+                             I/SDKDocs/cliusing.htm#AdvancedJSONOptions
+  -?, -h, --help             For detailed help on any of these individual
+                             commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network cross-connect create --help
@@ -470,6 +548,26 @@ Options:
                                   `10 Gbps` [required]
   --cross-connect-group-id TEXT   The OCID of the cross-connect group to put
                                   this cross-connect in.
+  --defined-tags COMPLEX TYPE     Defined tags for this resource. Each key is
+                                  predefined and scoped to a namespace. For more
+                                  information, see [Resource Tags].
+                                  
+                                  Example:
+                                  `{"Operations": {"CostCenter": "42"}}`
+                                  This is
+                                  a complex type whose value must be valid JSON.
+                                  The value can be provided as a string on the
+                                  command line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
   --display-name TEXT             A user-friendly name. Does not have to be
                                   unique, and it's changeable. Avoid entering
                                   confidential information.
@@ -480,6 +578,27 @@ Options:
                                   to be on a different router (for the purposes
                                   of redundancy), provide the OCID of that
                                   existing cross-connect or cross-connect group.
+  --freeform-tags COMPLEX TYPE    Free-form tags for this resource. Each tag is
+                                  a simple key-value pair with no predefined
+                                  name, type, or namespace. For more
+                                  information, see [Resource Tags].
+                                  
+                                  Example:
+                                  `{"Department": "Finance"}`
+                                  This is a complex
+                                  type whose value must be valid JSON. The value
+                                  can be provided as a string on the command
+                                  line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
   --near-cross-connect-or-cross-connect-group-id TEXT
                                   If you already have an existing cross-connect
                                   or cross-connect group at this FastConnect
@@ -723,9 +842,50 @@ Usage: oci network cross-connect update [OPTIONS]
 
 Options:
   --cross-connect-id TEXT         The OCID of the cross-connect. [required]
+  --defined-tags COMPLEX TYPE     Defined tags for this resource. Each key is
+                                  predefined and scoped to a namespace. For more
+                                  information, see [Resource Tags].
+                                  
+                                  Example:
+                                  `{"Operations": {"CostCenter": "42"}}`
+                                  This is
+                                  a complex type whose value must be valid JSON.
+                                  The value can be provided as a string on the
+                                  command line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
   --display-name TEXT             A user-friendly name. Does not have to be
                                   unique, and it's changeable. Avoid entering
                                   confidential information.
+  --freeform-tags COMPLEX TYPE    Free-form tags for this resource. Each tag is
+                                  a simple key-value pair with no predefined
+                                  name, type, or namespace. For more
+                                  information, see [Resource Tags].
+                                  
+                                  Example:
+                                  `{"Department": "Finance"}`
+                                  This is a complex
+                                  type whose value must be valid JSON. The value
+                                  can be provided as a string on the command
+                                  line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
   --is-active BOOLEAN             Set to true to activate the cross-connect. You
                                   activate it after the physical cabling is
                                   complete, and you've confirmed the cross-
@@ -745,6 +905,8 @@ Options:
                                   resource.  The resource will be updated or
                                   deleted only if the etag you provide matches
                                   the resource's current etag value.
+  --force                         Perform update without prompting for
+                                  confirmation.
   --wait-for-state [PENDING_CUSTOMER|PROVISIONING|PROVISIONED|INACTIVE|TERMINATING|TERMINATED]
                                   This operation creates, modifies or deletes a
                                   resource that has a defined lifecycle state.
@@ -818,11 +980,54 @@ Options:
                   <command> --help.
 
 Commands:
-  create  Creates a new cross-connect group to use with...
-  delete  Deletes the specified cross-connect group.
-  get     Gets the specified cross-connect group's...
-  list    Lists the cross-connect groups in the...
-  update  Updates the specified cross-connect group's...
+  change-compartment  Moves a cross-connect group into a different...
+  create              Creates a new cross-connect group to use with...
+  delete              Deletes the specified cross-connect group.
+  get                 Gets the specified cross-connect group's...
+  list                Lists the cross-connect groups in the...
+  update              Updates the specified cross-connect group's...
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci network cross-connect-group change-compartment --help
+Usage: oci network cross-connect-group change-compartment [OPTIONS]
+
+  Moves a cross-connect group into a different compartment within the same
+  tenancy. For information about moving resources between compartments, see
+  [Moving Resources to a Different Compartment].
+
+Options:
+  --cross-connect-group-id TEXT  The OCID of the cross-connect group. [required]
+  -c, --compartment-id TEXT      The [OCID] of the compartment to move the
+                                 cross-connect group to. [required]
+  --from-json TEXT               Provide input to this command as a JSON
+                                 document from a file using the file://path-
+                                 to/file syntax.
+                                 
+                                 The --generate-full-command-
+                                 json-input option can be used to generate a
+                                 sample json file to be used with this command
+                                 option. The key names are pre-populated and
+                                 match the command option names (converted to
+                                 camelCase format, e.g. compartment-id -->
+                                 compartmentId), while the values of the keys
+                                 need to be populated by the user before using
+                                 the sample file as an input to this command.
+                                 For any command option that accepts multiple
+                                 values, the value of the key can be a JSON
+                                 array.
+                                 
+                                 Options can still be provided on the
+                                 command line. If an option exists in both the
+                                 JSON document and the command line then the
+                                 command line specified value will be used.
+                                 
+                                 For
+                                 examples on usage of this option, please see
+                                 our "using CLI with advanced JSON options"
+                                 link: https://docs.cloud.oracle.com/iaas/Conten
+                                 t/API/SDKDocs/cliusing.htm#AdvancedJSONOptions
+  -?, -h, --help                 For detailed help on any of these individual
+                                 commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network cross-connect-group create --help
@@ -845,12 +1050,53 @@ Usage: oci network cross-connect-group create [OPTIONS]
 Options:
   -c, --compartment-id TEXT       The OCID of the compartment to contain the
                                   cross-connect group. [required]
+  --defined-tags COMPLEX TYPE     Defined tags for this resource. Each key is
+                                  predefined and scoped to a namespace. For more
+                                  information, see [Resource Tags].
+                                  
+                                  Example:
+                                  `{"Operations": {"CostCenter": "42"}}`
+                                  This is
+                                  a complex type whose value must be valid JSON.
+                                  The value can be provided as a string on the
+                                  command line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
   --display-name TEXT             A user-friendly name. Does not have to be
                                   unique, and it's changeable. Avoid entering
                                   confidential information.
   --customer-reference-name TEXT  A reference name or identifier for the
                                   physical fiber connection that this cross-
                                   connect group uses.
+  --freeform-tags COMPLEX TYPE    Free-form tags for this resource. Each tag is
+                                  a simple key-value pair with no predefined
+                                  name, type, or namespace. For more
+                                  information, see [Resource Tags].
+                                  
+                                  Example:
+                                  `{"Department": "Finance"}`
+                                  This is a complex
+                                  type whose value must be valid JSON. The value
+                                  can be provided as a string on the command
+                                  line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
   --wait-for-state [PROVISIONING|PROVISIONED|INACTIVE|TERMINATING|TERMINATED]
                                   This operation creates, modifies or deletes a
                                   resource that has a defined lifecycle state.
@@ -1087,12 +1333,53 @@ Usage: oci network cross-connect-group update [OPTIONS]
 Options:
   --cross-connect-group-id TEXT   The OCID of the cross-connect group.
                                   [required]
+  --defined-tags COMPLEX TYPE     Defined tags for this resource. Each key is
+                                  predefined and scoped to a namespace. For more
+                                  information, see [Resource Tags].
+                                  
+                                  Example:
+                                  `{"Operations": {"CostCenter": "42"}}`
+                                  This is
+                                  a complex type whose value must be valid JSON.
+                                  The value can be provided as a string on the
+                                  command line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
   --display-name TEXT             A user-friendly name. Does not have to be
                                   unique, and it's changeable. Avoid entering
                                   confidential information.
   --customer-reference-name TEXT  A reference name or identifier for the
                                   physical fiber connection that this cross-
                                   connect group uses.
+  --freeform-tags COMPLEX TYPE    Free-form tags for this resource. Each tag is
+                                  a simple key-value pair with no predefined
+                                  name, type, or namespace. For more
+                                  information, see [Resource Tags].
+                                  
+                                  Example:
+                                  `{"Department": "Finance"}`
+                                  This is a complex
+                                  type whose value must be valid JSON. The value
+                                  can be provided as a string on the command
+                                  line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
   --if-match TEXT                 For optimistic concurrency control. In the PUT
                                   or DELETE call for a resource, set the `if-
                                   match` parameter to the value of the etag from
@@ -1100,6 +1387,8 @@ Options:
                                   resource.  The resource will be updated or
                                   deleted only if the etag you provide matches
                                   the resource's current etag value.
+  --force                         Perform update without prompting for
+                                  confirmation.
   --wait-for-state [PROVISIONING|PROVISIONED|INACTIVE|TERMINATING|TERMINATED]
                                   This operation creates, modifies or deletes a
                                   resource that has a defined lifecycle state.
@@ -3242,13 +3531,52 @@ Options:
                   <command> --help.
 
 Commands:
-  create      Creates a new IPSec connection between the...
-  delete      Deletes the specified IPSec connection.
-  get         Gets the specified IPSec connection's basic...
-  get-config  Deprecated.
-  get-status  Deprecated.
-  list        Lists the IPSec connections for the specified...
-  update      Updates the specified IPSec connection.
+  change-compartment  Moves an IPSec connection into a different...
+  create              Creates a new IPSec connection between the...
+  delete              Deletes the specified IPSec connection.
+  get                 Gets the specified IPSec connection's basic...
+  get-config          Deprecated.
+  get-status          Deprecated.
+  list                Lists the IPSec connections for the specified...
+  update              Updates the specified IPSec connection.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci network ip-sec-connection change-compartment --help
+Usage: oci network ip-sec-connection change-compartment [OPTIONS]
+
+  Moves an IPSec connection into a different compartment within the same
+  tenancy. For information about moving resources between compartments, see
+  [Moving Resources to a Different Compartment].
+
+Options:
+  --ipsc-id TEXT             The OCID of the IPSec connection. [required]
+  -c, --compartment-id TEXT  The [OCID] of the compartment to move the IPSec
+                             connection to. [required]
+  --from-json TEXT           Provide input to this command as a JSON document
+                             from a file using the file://path-to/file syntax.
+                             The --generate-full-command-json-input option can
+                             be used to generate a sample json file to be used
+                             with this command option. The key names are pre-
+                             populated and match the command option names
+                             (converted to camelCase format, e.g. compartment-id
+                             --> compartmentId), while the values of the keys
+                             need to be populated by the user before using the
+                             sample file as an input to this command. For any
+                             command option that accepts multiple values, the
+                             value of the key can be a JSON array.
+                             
+                             Options can
+                             still be provided on the command line. If an option
+                             exists in both the JSON document and the command
+                             line then the command line specified value will be
+                             used.
+                             
+                             For examples on usage of this option, please
+                             see our "using CLI with advanced JSON options"
+                             link: https://docs.cloud.oracle.com/iaas/Content/AP
+                             I/SDKDocs/cliusing.htm#AdvancedJSONOptions
+  -?, -h, --help             For detailed help on any of these individual
+                             commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network ip-sec-connection create --help
@@ -6683,12 +7011,57 @@ Options:
                   <command> --help.
 
 Commands:
-  connect  Connects this RPC to another one in a...
-  create   Creates a new remote peering connection (RPC)...
-  delete   Deletes the remote peering connection (RPC).
-  get      Get the specified remote peering connection's...
-  list     Lists the remote peering connections (RPCs)...
-  update   Updates the specified remote peering...
+  change-compartment  Moves a remote peering connection (RPC) into...
+  connect             Connects this RPC to another one in a...
+  create              Creates a new remote peering connection (RPC)...
+  delete              Deletes the remote peering connection (RPC).
+  get                 Get the specified remote peering connection's...
+  list                Lists the remote peering connections (RPCs)...
+  update              Updates the specified remote peering...
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci network remote-peering-connection change-compartment --help
+Usage: oci network remote-peering-connection change-compartment 
+           [OPTIONS]
+
+  Moves a remote peering connection (RPC) into a different compartment within
+  the same tenancy. For information about moving resources between
+  compartments, see [Moving Resources to a Different Compartment].
+
+Options:
+  --remote-peering-connection-id TEXT
+                                  The OCID of the remote peering connection
+                                  (RPC). [required]
+  -c, --compartment-id TEXT       The [OCID] of the compartment to move the
+                                  remote peering connection to. [required]
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file using the file://path-
+                                  to/file syntax.
+                                  
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network remote-peering-connection connect --help
@@ -6757,9 +7130,50 @@ Options:
                                   RPC. [required]
   --drg-id TEXT                   The OCID of the DRG the RPC belongs to.
                                   [required]
+  --defined-tags COMPLEX TYPE     Defined tags for this resource. Each key is
+                                  predefined and scoped to a namespace. For more
+                                  information, see [Resource Tags].
+                                  
+                                  Example:
+                                  `{"Operations": {"CostCenter": "42"}}`
+                                  This is
+                                  a complex type whose value must be valid JSON.
+                                  The value can be provided as a string on the
+                                  command line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
   --display-name TEXT             A user-friendly name. Does not have to be
                                   unique, and it's changeable. Avoid entering
                                   confidential information.
+  --freeform-tags COMPLEX TYPE    Free-form tags for this resource. Each tag is
+                                  a simple key-value pair with no predefined
+                                  name, type, or namespace. For more
+                                  information, see [Resource Tags].
+                                  
+                                  Example:
+                                  `{"Department": "Finance"}`
+                                  This is a complex
+                                  type whose value must be valid JSON. The value
+                                  can be provided as a string on the command
+                                  line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
   --wait-for-state [AVAILABLE|PROVISIONING|TERMINATING|TERMINATED]
                                   This operation creates, modifies or deletes a
                                   resource that has a defined lifecycle state.
@@ -6972,9 +7386,50 @@ Options:
   --remote-peering-connection-id TEXT
                                   The OCID of the remote peering connection
                                   (RPC). [required]
+  --defined-tags COMPLEX TYPE     Defined tags for this resource. Each key is
+                                  predefined and scoped to a namespace. For more
+                                  information, see [Resource Tags].
+                                  
+                                  Example:
+                                  `{"Operations": {"CostCenter": "42"}}`
+                                  This is
+                                  a complex type whose value must be valid JSON.
+                                  The value can be provided as a string on the
+                                  command line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
   --display-name TEXT             A user-friendly name. Does not have to be
                                   unique, and it's changeable. Avoid entering
                                   confidential information.
+  --freeform-tags COMPLEX TYPE    Free-form tags for this resource. Each tag is
+                                  a simple key-value pair with no predefined
+                                  name, type, or namespace. For more
+                                  information, see [Resource Tags].
+                                  
+                                  Example:
+                                  `{"Department": "Finance"}`
+                                  This is a complex
+                                  type whose value must be valid JSON. The value
+                                  can be provided as a string on the command
+                                  line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
   --if-match TEXT                 For optimistic concurrency control. In the PUT
                                   or DELETE call for a resource, set the `if-
                                   match` parameter to the value of the etag from
@@ -6982,6 +7437,8 @@ Options:
                                   resource.  The resource will be updated or
                                   deleted only if the etag you provide matches
                                   the resource's current etag value.
+  --force                         Perform update without prompting for
+                                  confirmation.
   --wait-for-state [AVAILABLE|PROVISIONING|TERMINATING|TERMINATED]
                                   This operation creates, modifies or deletes a
                                   resource that has a defined lifecycle state.
@@ -10064,11 +10521,50 @@ Options:
                   <command> --help.
 
 Commands:
-  create  Creates a new virtual circuit to use with...
-  delete  Deletes the specified virtual circuit.
-  get     Gets the specified virtual circuit's...
-  list    Lists the virtual circuits in the specified...
-  update  Updates the specified virtual circuit.
+  change-compartment  Moves a virtual circuit into a different...
+  create              Creates a new virtual circuit to use with...
+  delete              Deletes the specified virtual circuit.
+  get                 Gets the specified virtual circuit's...
+  list                Lists the virtual circuits in the specified...
+  update              Updates the specified virtual circuit.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci network virtual-circuit change-compartment --help
+Usage: oci network virtual-circuit change-compartment [OPTIONS]
+
+  Moves a virtual circuit into a different compartment within the same
+  tenancy. For information about moving resources between compartments, see
+  [Moving Resources to a Different Compartment].
+
+Options:
+  --virtual-circuit-id TEXT  The OCID of the virtual circuit. [required]
+  -c, --compartment-id TEXT  The [OCID] of the compartment to move the virtual
+                             circuit to. [required]
+  --from-json TEXT           Provide input to this command as a JSON document
+                             from a file using the file://path-to/file syntax.
+                             The --generate-full-command-json-input option can
+                             be used to generate a sample json file to be used
+                             with this command option. The key names are pre-
+                             populated and match the command option names
+                             (converted to camelCase format, e.g. compartment-id
+                             --> compartmentId), while the values of the keys
+                             need to be populated by the user before using the
+                             sample file as an input to this command. For any
+                             command option that accepts multiple values, the
+                             value of the key can be a JSON array.
+                             
+                             Options can
+                             still be provided on the command line. If an option
+                             exists in both the JSON document and the command
+                             line then the command line specified value will be
+                             used.
+                             
+                             For examples on usage of this option, please
+                             see our "using CLI with advanced JSON options"
+                             link: https://docs.cloud.oracle.com/iaas/Content/AP
+                             I/SDKDocs/cliusing.htm#AdvancedJSONOptions
+  -?, -h, --help             For detailed help on any of these individual
+                             commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network virtual-circuit create --help
@@ -10134,9 +10630,50 @@ Options:
                                   Provide this value only if there's a BGP
                                   session that goes from your edge router to
                                   Oracle. Otherwise, leave this empty or null.
+  --defined-tags COMPLEX TYPE     Defined tags for this resource. Each key is
+                                  predefined and scoped to a namespace. For more
+                                  information, see [Resource Tags].
+                                  
+                                  Example:
+                                  `{"Operations": {"CostCenter": "42"}}`
+                                  This is
+                                  a complex type whose value must be valid JSON.
+                                  The value can be provided as a string on the
+                                  command line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
   --display-name TEXT             A user-friendly name. Does not have to be
                                   unique, and it's changeable. Avoid entering
                                   confidential information.
+  --freeform-tags COMPLEX TYPE    Free-form tags for this resource. Each tag is
+                                  a simple key-value pair with no predefined
+                                  name, type, or namespace. For more
+                                  information, see [Resource Tags].
+                                  
+                                  Example:
+                                  `{"Department": "Finance"}`
+                                  This is a complex
+                                  type whose value must be valid JSON. The value
+                                  can be provided as a string on the command
+                                  line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
   --gateway-id TEXT               For private virtual circuits only. The OCID of
                                   the [dynamic routing gateway (DRG)] that this
                                   virtual circuit uses.
@@ -10486,12 +11023,53 @@ Options:
                                   provider's edge router to Oracle, the required
                                   value is the provider's ASN, and it can be
                                   updated only by the provider.
+  --defined-tags COMPLEX TYPE     Defined tags for this resource. Each key is
+                                  predefined and scoped to a namespace. For more
+                                  information, see [Resource Tags].
+                                  
+                                  Example:
+                                  `{"Operations": {"CostCenter": "42"}}`
+                                  This is
+                                  a complex type whose value must be valid JSON.
+                                  The value can be provided as a string on the
+                                  command line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
   --display-name TEXT             A user-friendly name. Does not have to be
                                   unique. Avoid entering confidential
                                   information.
                                   
                                   To be updated only by the
                                   customer who owns the virtual circuit.
+  --freeform-tags COMPLEX TYPE    Free-form tags for this resource. Each tag is
+                                  a simple key-value pair with no predefined
+                                  name, type, or namespace. For more
+                                  information, see [Resource Tags].
+                                  
+                                  Example:
+                                  `{"Department": "Finance"}`
+                                  This is a complex
+                                  type whose value must be valid JSON. The value
+                                  can be provided as a string on the command
+                                  line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
   --gateway-id TEXT               The OCID of the [dynamic routing gateway
                                   (DRG)] that this private virtual circuit uses.
                                   To be updated only by the customer who owns

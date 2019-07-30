@@ -123,21 +123,26 @@ Usage: oci audit event list [OPTIONS]
 
 Options:
   -c, --compartment-id TEXT  The OCID of the compartment. [required]
+  --page TEXT                The value of the `opc-next-page` response header
+                             from the previous list query.
+  --all                      Fetches all pages of results.
+  --skip-deserialization     Skips deserializing service response into python
+                             sdk response models and returns as plain JSON
+                             object.
+  --stream-output            Print output to stdout as it is fetched so the full
+                             response is not stored in memory. This only works
+                             with --all.
   --start-time DATETIME      Returns events that were processed at or after this
-                             start date and time. For example, a start value of
+                             start date and time, expressed in [RFC 3339]
+                             timestamp format. For example, a start value of
                              `2017-01-15T11:30:00Z` will retrieve a list of all
                              events processed since 30 minutes after the 11th
                              hour of January 15, 2017, in Coordinated Universal
-                             Time (UTC).
-                             You can specify a value with
-                             granularity to the minute. If seconds are provided
-                             then this will be rounded to the nearest minute,
-                             with greater than or equal to 30 seconds rounding
-                             up and less than 30 seconds rounding down.
-                             
+                             Time (UTC). You can specify a value with
+                             granularity to the minute. Seconds (and
+                             milliseconds, if included) must be set to `0`.
                              
-                             The
-                             following datetime formats are supported:
+                             The following datetime formats are supported:
                              
                              UTC
                              with milliseconds
@@ -205,26 +210,27 @@ Options:
                              Epoch seconds
                              **************
                              Example: 1412195400
+                                 [required]
   --end-time DATETIME        Returns events that were processed before this end
-                             date and time. For example, a start value of
+                             date and time, expressed in [RFC 3339] timestamp
+                             format. For example, a start value of
                              `2017-01-01T00:00:00Z` and an end value of
                              `2017-01-02T00:00:00Z` will retrieve a list of all
                              events processed on January 1, 2017. Similarly, a
                              start value of `2017-01-01T00:00:00Z` and an end
                              value of `2017-02-01T00:00:00Z` will result in a
                              list of all events processed between January 1,
-                             2017 and January 31, 2017.
-                             You can specify a value
-                             with granularity to the minute. If seconds are
-                             provided then this will be rounded to the nearest
-                             minute, with greater than or equal to 30 seconds
-                             rounding up and less than 30 seconds rounding down.
+                             2017 and January 31, 2017. You can specify a value
+                             with granularity to the minute. Seconds (and
+                             milliseconds, if included) must be set to `0`.
                              
                              The following datetime formats are supported:
                              
-                             UTC with milliseconds
+                             UTC
+                             with milliseconds
                              ***********************
-                             Format: YYYY-MM-DDTHH:mm:ss.sssTZD
+                             Format:
+                             YYYY-MM-DDTHH:mm:ss.sssTZD
                              Example:
                              2017-09-15T20:30:00.123Z
                              
@@ -286,15 +292,7 @@ Options:
                              Epoch seconds
                              **************
                              Example: 1412195400
-  --page TEXT                The value of the `opc-next-page` response header
-                             from the previous list query.
-  --all                      Fetches all pages of results.
-  --skip-deserialization     Skips deserializing service response into python
-                             sdk response models and returns as plain JSON
-                             object.
-  --stream-output            Print output to stdout as it is fetched so the full
-                             response is not stored in memory. This only works
-                             with --all.
+                                 [required]
   --from-json TEXT           Provide input to this command as a JSON document
                              from a file using the file://path-to/file syntax.
                              The --generate-full-command-json-input option can

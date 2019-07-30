@@ -565,6 +565,118 @@ def bulk_delete_virtual_circuit_public_prefixes(ctx, from_json, virtual_circuit_
     cli_util.render_response(result, ctx)
 
 
+@cpe_group.command(name=cli_util.override('change_cpe_compartment.command_name', 'change-compartment'), help=u"""Moves a CPE object into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].""")
+@cli_util.option('--cpe-id', required=True, help=u"""The OCID of the CPE.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the CPE object to.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_cpe_compartment(ctx, from_json, cpe_id, compartment_id):
+
+    if isinstance(cpe_id, six.string_types) and len(cpe_id.strip()) == 0:
+        raise click.UsageError('Parameter --cpe-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    details = {}
+    details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('virtual_network', ctx)
+    result = client.change_cpe_compartment(
+        cpe_id=cpe_id,
+        change_cpe_compartment_details=details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@cross_connect_group.command(name=cli_util.override('change_cross_connect_compartment.command_name', 'change-compartment'), help=u"""Moves a cross-connect into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].""")
+@cli_util.option('--cross-connect-id', required=True, help=u"""The OCID of the cross-connect.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the cross-connect to.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_cross_connect_compartment(ctx, from_json, cross_connect_id, compartment_id):
+
+    if isinstance(cross_connect_id, six.string_types) and len(cross_connect_id.strip()) == 0:
+        raise click.UsageError('Parameter --cross-connect-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    details = {}
+    details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('virtual_network', ctx)
+    result = client.change_cross_connect_compartment(
+        cross_connect_id=cross_connect_id,
+        change_cross_connect_compartment_details=details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@cross_connect_group_group.command(name=cli_util.override('change_cross_connect_group_compartment.command_name', 'change-compartment'), help=u"""Moves a cross-connect group into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].""")
+@cli_util.option('--cross-connect-group-id', required=True, help=u"""The OCID of the cross-connect group.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the cross-connect group to.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_cross_connect_group_compartment(ctx, from_json, cross_connect_group_id, compartment_id):
+
+    if isinstance(cross_connect_group_id, six.string_types) and len(cross_connect_group_id.strip()) == 0:
+        raise click.UsageError('Parameter --cross-connect-group-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    details = {}
+    details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('virtual_network', ctx)
+    result = client.change_cross_connect_group_compartment(
+        cross_connect_group_id=cross_connect_group_id,
+        change_cross_connect_group_compartment_details=details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@ip_sec_connection_group.command(name=cli_util.override('change_ip_sec_connection_compartment.command_name', 'change-compartment'), help=u"""Moves an IPSec connection into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].""")
+@cli_util.option('--ipsc-id', required=True, help=u"""The OCID of the IPSec connection.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the IPSec connection to.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_ip_sec_connection_compartment(ctx, from_json, ipsc_id, compartment_id):
+
+    if isinstance(ipsc_id, six.string_types) and len(ipsc_id.strip()) == 0:
+        raise click.UsageError('Parameter --ipsc-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    details = {}
+    details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('virtual_network', ctx)
+    result = client.change_ip_sec_connection_compartment(
+        ipsc_id=ipsc_id,
+        change_ip_sec_connection_compartment_details=details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @nat_gateway_group.command(name=cli_util.override('change_nat_gateway_compartment.command_name', 'change-compartment'), help=u"""Moves a NAT gateway into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].""")
 @cli_util.option('--nat-gateway-id', required=True, help=u"""The NAT gateway's [OCID].""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the NAT gateway to.""")
@@ -588,6 +700,34 @@ def change_nat_gateway_compartment(ctx, from_json, nat_gateway_id, compartment_i
     result = client.change_nat_gateway_compartment(
         nat_gateway_id=nat_gateway_id,
         change_nat_gateway_compartment_details=details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@remote_peering_connection_group.command(name=cli_util.override('change_remote_peering_connection_compartment.command_name', 'change-compartment'), help=u"""Moves a remote peering connection (RPC) into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].""")
+@cli_util.option('--remote-peering-connection-id', required=True, help=u"""The OCID of the remote peering connection (RPC).""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the remote peering connection to.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_remote_peering_connection_compartment(ctx, from_json, remote_peering_connection_id, compartment_id):
+
+    if isinstance(remote_peering_connection_id, six.string_types) and len(remote_peering_connection_id.strip()) == 0:
+        raise click.UsageError('Parameter --remote-peering-connection-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    details = {}
+    details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('virtual_network', ctx)
+    result = client.change_remote_peering_connection_compartment(
+        remote_peering_connection_id=remote_peering_connection_id,
+        change_remote_peering_connection_compartment_details=details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -733,6 +873,34 @@ def change_vcn_compartment(ctx, from_json, vcn_id, compartment_id):
     cli_util.render_response(result, ctx)
 
 
+@virtual_circuit_group.command(name=cli_util.override('change_virtual_circuit_compartment.command_name', 'change-compartment'), help=u"""Moves a virtual circuit into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].""")
+@cli_util.option('--virtual-circuit-id', required=True, help=u"""The OCID of the virtual circuit.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the virtual circuit to.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_virtual_circuit_compartment(ctx, from_json, virtual_circuit_id, compartment_id):
+
+    if isinstance(virtual_circuit_id, six.string_types) and len(virtual_circuit_id.strip()) == 0:
+        raise click.UsageError('Parameter --virtual-circuit-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    details = {}
+    details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('virtual_network', ctx)
+    result = client.change_virtual_circuit_compartment(
+        virtual_circuit_id=virtual_circuit_id,
+        change_virtual_circuit_compartment_details=details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @local_peering_gateway_group.command(name=cli_util.override('connect_local_peering_gateways.command_name', 'connect'), help=u"""Connects this local peering gateway (LPG) to another one in the same region.
 
 This operation must be called by the VCN administrator who is designated as the *requestor* in the peering relationship. The *acceptor* must implement an Identity and Access Management (IAM) policy that gives the requestor permission to connect to LPGs in the acceptor's compartment. Without that permission, this operation will fail. For more information, see [VCN Peering].""")
@@ -858,19 +1026,25 @@ Example: `CyrusOne, Chandler, AZ`""")
 
 Example: `10 Gbps`""")
 @cli_util.option('--cross-connect-group-id', help=u"""The OCID of the cross-connect group to put this cross-connect in.""")
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--far-cross-connect-or-cross-connect-group-id', help=u"""If you already have an existing cross-connect or cross-connect group at this FastConnect location, and you want this new cross-connect to be on a different router (for the purposes of redundancy), provide the OCID of that existing cross-connect or cross-connect group.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--near-cross-connect-or-cross-connect-group-id', help=u"""If you already have an existing cross-connect or cross-connect group at this FastConnect location, and you want this new cross-connect to be on the same router, provide the OCID of that existing cross-connect or cross-connect group.""")
 @cli_util.option('--customer-reference-name', help=u"""A reference name or identifier for the physical fiber connection that this cross-connect uses.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PENDING_CUSTOMER", "PROVISIONING", "PROVISIONED", "INACTIVE", "TERMINATING", "TERMINATED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'CrossConnect'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'CrossConnect'})
 @cli_util.wrap_exceptions
-def create_cross_connect(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, location_name, port_speed_shape_name, cross_connect_group_id, display_name, far_cross_connect_or_cross_connect_group_id, near_cross_connect_or_cross_connect_group_id, customer_reference_name):
+def create_cross_connect(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, location_name, port_speed_shape_name, cross_connect_group_id, defined_tags, display_name, far_cross_connect_or_cross_connect_group_id, freeform_tags, near_cross_connect_or_cross_connect_group_id, customer_reference_name):
 
     kwargs = {}
 
@@ -882,11 +1056,17 @@ def create_cross_connect(ctx, from_json, wait_for_state, max_wait_seconds, wait_
     if cross_connect_group_id is not None:
         details['crossConnectGroupId'] = cross_connect_group_id
 
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
     if display_name is not None:
         details['displayName'] = display_name
 
     if far_cross_connect_or_cross_connect_group_id is not None:
         details['farCrossConnectOrCrossConnectGroupId'] = far_cross_connect_or_cross_connect_group_id
+
+    if freeform_tags is not None:
+        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if near_cross_connect_or_cross_connect_group_id is not None:
         details['nearCrossConnectOrCrossConnectGroupId'] = near_cross_connect_or_cross_connect_group_id
@@ -930,28 +1110,40 @@ For the purposes of access control, you must provide the OCID of the compartment
 
 You may optionally specify a *display name* for the cross-connect group. It does not have to be unique, and you can change it. Avoid entering confidential information.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to contain the cross-connect group.""")
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--customer-reference-name', help=u"""A reference name or identifier for the physical fiber connection that this cross-connect group uses.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "PROVISIONED", "INACTIVE", "TERMINATING", "TERMINATED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'CrossConnectGroup'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'CrossConnectGroup'})
 @cli_util.wrap_exceptions
-def create_cross_connect_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, customer_reference_name):
+def create_cross_connect_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, defined_tags, display_name, customer_reference_name, freeform_tags):
 
     kwargs = {}
 
     details = {}
     details['compartmentId'] = compartment_id
 
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
     if display_name is not None:
         details['displayName'] = display_name
 
     if customer_reference_name is not None:
         details['customerReferenceName'] = customer_reference_name
+
+    if freeform_tags is not None:
+        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     client = cli_util.build_client('virtual_network', ctx)
     result = client.create_cross_connect_group(
@@ -1713,16 +1905,22 @@ def create_public_ip(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 @remote_peering_connection_group.command(name=cli_util.override('create_remote_peering_connection.command_name', 'create'), help=u"""Creates a new remote peering connection (RPC) for the specified DRG.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to contain the RPC.""")
 @cli_util.option('--drg-id', required=True, help=u"""The OCID of the DRG the RPC belongs to.""")
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["AVAILABLE", "PROVISIONING", "TERMINATING", "TERMINATED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'RemotePeeringConnection'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'RemotePeeringConnection'})
 @cli_util.wrap_exceptions
-def create_remote_peering_connection(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, drg_id, display_name):
+def create_remote_peering_connection(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, drg_id, defined_tags, display_name, freeform_tags):
 
     kwargs = {}
 
@@ -1730,8 +1928,14 @@ def create_remote_peering_connection(ctx, from_json, wait_for_state, max_wait_se
     details['compartmentId'] = compartment_id
     details['drgId'] = drg_id
 
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
     if display_name is not None:
         details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     client = cli_util.build_client('virtual_network', ctx)
     result = client.create_remote_peering_connection(
@@ -2212,7 +2416,13 @@ Example: `10 Gbps`""")
 
 This option is a JSON list with items of type CrossConnectMapping.  For documentation on CrossConnectMapping please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/CrossConnectMapping.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--customer-bgp-asn', type=click.INT, help=u"""Your BGP ASN (either public or private). Provide this value only if there's a BGP session that goes from your edge router to Oracle. Otherwise, leave this empty or null.""")
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--gateway-id', help=u"""For private virtual circuits only. The OCID of the [dynamic routing gateway (DRG)] that this virtual circuit uses.""")
 @cli_util.option('--provider-name', help=u"""Deprecated. Instead use `providerServiceId`. To get a list of the provider names, see [ListFastConnectProviderServices].""")
 @cli_util.option('--provider-service-id', help=u"""The OCID of the service offered by the provider (if you're connecting via a provider). To get a list of the available service offerings, see [ListFastConnectProviderServices].""")
@@ -2225,12 +2435,12 @@ This option is a JSON list with items of type CreateVirtualCircuitPublicPrefixDe
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PENDING_PROVIDER", "VERIFYING", "PROVISIONING", "PROVISIONED", "FAILED", "INACTIVE", "TERMINATING", "TERMINATED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'cross-connect-mappings': {'module': 'core', 'class': 'list[CrossConnectMapping]'}, 'public-prefixes': {'module': 'core', 'class': 'list[CreateVirtualCircuitPublicPrefixDetails]'}})
+@json_skeleton_utils.get_cli_json_input_option({'cross-connect-mappings': {'module': 'core', 'class': 'list[CrossConnectMapping]'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'public-prefixes': {'module': 'core', 'class': 'list[CreateVirtualCircuitPublicPrefixDetails]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'cross-connect-mappings': {'module': 'core', 'class': 'list[CrossConnectMapping]'}, 'public-prefixes': {'module': 'core', 'class': 'list[CreateVirtualCircuitPublicPrefixDetails]'}}, output_type={'module': 'core', 'class': 'VirtualCircuit'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'cross-connect-mappings': {'module': 'core', 'class': 'list[CrossConnectMapping]'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'public-prefixes': {'module': 'core', 'class': 'list[CreateVirtualCircuitPublicPrefixDetails]'}}, output_type={'module': 'core', 'class': 'VirtualCircuit'})
 @cli_util.wrap_exceptions
-def create_virtual_circuit(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, type, bandwidth_shape_name, cross_connect_mappings, customer_bgp_asn, display_name, gateway_id, provider_name, provider_service_id, provider_service_key_name, provider_service_name, public_prefixes, region):
+def create_virtual_circuit(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, type, bandwidth_shape_name, cross_connect_mappings, customer_bgp_asn, defined_tags, display_name, freeform_tags, gateway_id, provider_name, provider_service_id, provider_service_key_name, provider_service_name, public_prefixes, region):
 
     kwargs = {}
 
@@ -2247,8 +2457,14 @@ def create_virtual_circuit(ctx, from_json, wait_for_state, max_wait_seconds, wai
     if customer_bgp_asn is not None:
         details['customerBgpAsn'] = customer_bgp_asn
 
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
     if display_name is not None:
         details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if gateway_id is not None:
         details['gatewayId'] = gateway_id
@@ -6080,24 +6296,35 @@ def update_cpe(ctx, from_json, force, cpe_id, defined_tags, display_name, freefo
 
 @cross_connect_group.command(name=cli_util.override('update_cross_connect.command_name', 'update'), help=u"""Updates the specified cross-connect.""")
 @cli_util.option('--cross-connect-id', required=True, help=u"""The OCID of the cross-connect.""")
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-active', type=click.BOOL, help=u"""Set to true to activate the cross-connect. You activate it after the physical cabling is complete, and you've confirmed the cross-connect's light levels are good and your side of the interface is up. Activation indicates to Oracle that the physical connection is ready.
 
 Example: `true`""")
 @cli_util.option('--customer-reference-name', help=u"""A reference name or identifier for the physical fiber connection that this cross-connect uses.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PENDING_CUSTOMER", "PROVISIONING", "PROVISIONED", "INACTIVE", "TERMINATING", "TERMINATED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'CrossConnect'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'CrossConnect'})
 @cli_util.wrap_exceptions
-def update_cross_connect(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, cross_connect_id, display_name, is_active, customer_reference_name, if_match):
+def update_cross_connect(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, cross_connect_id, defined_tags, display_name, freeform_tags, is_active, customer_reference_name, if_match):
 
     if isinstance(cross_connect_id, six.string_types) and len(cross_connect_id.strip()) == 0:
         raise click.UsageError('Parameter --cross-connect-id cannot be whitespace or empty string')
+    if not force:
+        if defined_tags or freeform_tags:
+            if not click.confirm("WARNING: Updates to defined-tags and freeform-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
 
     kwargs = {}
     if if_match is not None:
@@ -6105,8 +6332,14 @@ def update_cross_connect(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 
     details = {}
 
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
     if display_name is not None:
         details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if is_active is not None:
         details['isActive'] = is_active
@@ -6147,21 +6380,32 @@ def update_cross_connect(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 
 @cross_connect_group_group.command(name=cli_util.override('update_cross_connect_group.command_name', 'update'), help=u"""Updates the specified cross-connect group's display name. Avoid entering confidential information.""")
 @cli_util.option('--cross-connect-group-id', required=True, help=u"""The OCID of the cross-connect group.""")
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--customer-reference-name', help=u"""A reference name or identifier for the physical fiber connection that this cross-connect group uses.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "PROVISIONED", "INACTIVE", "TERMINATING", "TERMINATED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'CrossConnectGroup'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'CrossConnectGroup'})
 @cli_util.wrap_exceptions
-def update_cross_connect_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, cross_connect_group_id, display_name, customer_reference_name, if_match):
+def update_cross_connect_group(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, cross_connect_group_id, defined_tags, display_name, customer_reference_name, freeform_tags, if_match):
 
     if isinstance(cross_connect_group_id, six.string_types) and len(cross_connect_group_id.strip()) == 0:
         raise click.UsageError('Parameter --cross-connect-group-id cannot be whitespace or empty string')
+    if not force:
+        if defined_tags or freeform_tags:
+            if not click.confirm("WARNING: Updates to defined-tags and freeform-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
 
     kwargs = {}
     if if_match is not None:
@@ -6169,11 +6413,17 @@ def update_cross_connect_group(ctx, from_json, wait_for_state, max_wait_seconds,
 
     details = {}
 
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
     if display_name is not None:
         details['displayName'] = display_name
 
     if customer_reference_name is not None:
         details['customerReferenceName'] = customer_reference_name
+
+    if freeform_tags is not None:
+        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     client = cli_util.build_client('virtual_network', ctx)
     result = client.update_cross_connect_group(
@@ -7152,20 +7402,31 @@ def update_public_ip(ctx, from_json, force, wait_for_state, max_wait_seconds, wa
 
 @remote_peering_connection_group.command(name=cli_util.override('update_remote_peering_connection.command_name', 'update'), help=u"""Updates the specified remote peering connection (RPC).""")
 @cli_util.option('--remote-peering-connection-id', required=True, help=u"""The OCID of the remote peering connection (RPC).""")
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["AVAILABLE", "PROVISIONING", "TERMINATING", "TERMINATED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'RemotePeeringConnection'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'RemotePeeringConnection'})
 @cli_util.wrap_exceptions
-def update_remote_peering_connection(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, remote_peering_connection_id, display_name, if_match):
+def update_remote_peering_connection(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, remote_peering_connection_id, defined_tags, display_name, freeform_tags, if_match):
 
     if isinstance(remote_peering_connection_id, six.string_types) and len(remote_peering_connection_id.strip()) == 0:
         raise click.UsageError('Parameter --remote-peering-connection-id cannot be whitespace or empty string')
+    if not force:
+        if defined_tags or freeform_tags:
+            if not click.confirm("WARNING: Updates to defined-tags and freeform-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
 
     kwargs = {}
     if if_match is not None:
@@ -7173,8 +7434,14 @@ def update_remote_peering_connection(ctx, from_json, wait_for_state, max_wait_se
 
     details = {}
 
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
     if display_name is not None:
         details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     client = cli_util.build_client('virtual_network', ctx)
     result = client.update_remote_peering_connection(
@@ -7648,9 +7915,15 @@ This option is a JSON list with items of type CrossConnectMapping.  For document
 If the BGP session is from the customer's edge router to Oracle, the required value is the customer's ASN, and it can be updated only by the customer.
 
 If the BGP session is from the provider's edge router to Oracle, the required value is the provider's ASN, and it can be updated only by the provider.""")
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique. Avoid entering confidential information.
 
 To be updated only by the customer who owns the virtual circuit.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--gateway-id', help=u"""The OCID of the [dynamic routing gateway (DRG)] that this private virtual circuit uses.
 
 To be updated only by the customer who owns the virtual circuit.""")
@@ -7666,18 +7939,18 @@ To be updated only by the provider.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PENDING_PROVIDER", "VERIFYING", "PROVISIONING", "PROVISIONED", "FAILED", "INACTIVE", "TERMINATING", "TERMINATED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'cross-connect-mappings': {'module': 'core', 'class': 'list[CrossConnectMapping]'}})
+@json_skeleton_utils.get_cli_json_input_option({'cross-connect-mappings': {'module': 'core', 'class': 'list[CrossConnectMapping]'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'cross-connect-mappings': {'module': 'core', 'class': 'list[CrossConnectMapping]'}}, output_type={'module': 'core', 'class': 'VirtualCircuit'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'cross-connect-mappings': {'module': 'core', 'class': 'list[CrossConnectMapping]'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'VirtualCircuit'})
 @cli_util.wrap_exceptions
-def update_virtual_circuit(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, virtual_circuit_id, bandwidth_shape_name, cross_connect_mappings, customer_bgp_asn, display_name, gateway_id, provider_state, provider_service_key_name, reference_comment, if_match):
+def update_virtual_circuit(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, virtual_circuit_id, bandwidth_shape_name, cross_connect_mappings, customer_bgp_asn, defined_tags, display_name, freeform_tags, gateway_id, provider_state, provider_service_key_name, reference_comment, if_match):
 
     if isinstance(virtual_circuit_id, six.string_types) and len(virtual_circuit_id.strip()) == 0:
         raise click.UsageError('Parameter --virtual-circuit-id cannot be whitespace or empty string')
     if not force:
-        if cross_connect_mappings:
-            if not click.confirm("WARNING: Updates to cross-connect-mappings will replace any existing values. Are you sure you want to continue?"):
+        if cross_connect_mappings or defined_tags or freeform_tags:
+            if not click.confirm("WARNING: Updates to cross-connect-mappings and defined-tags and freeform-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -7695,8 +7968,14 @@ def update_virtual_circuit(ctx, from_json, force, wait_for_state, max_wait_secon
     if customer_bgp_asn is not None:
         details['customerBgpAsn'] = customer_bgp_asn
 
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
     if display_name is not None:
         details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if gateway_id is not None:
         details['gatewayId'] = gateway_id

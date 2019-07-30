@@ -126,7 +126,7 @@ def address_rate_limiting_group():
     pass
 
 
-@click.command(cli_util.override('waf_log_group.command_name', 'waf-log'), cls=CommandGroupWithAlias, help="""A list of Web Application Firewall log entries. Each entry is a JSON object whose fields vary based on log type. Logs record what rules and countermeasures are triggered by requests and are used as a basis to move request handling into block mode.""")
+@click.command(cli_util.override('waf_log_group.command_name', 'waf-log'), cls=CommandGroupWithAlias, help="""A list of Web Application Firewall log entries. Each entry is a JSON object, including a timestamp property and other fields varying based on log type. Logs record what rules and countermeasures are triggered by requests and are used as a basis to move request handling into block mode. For more information about WAF logs, see [WAF Logs].""")
 @cli_util.help_option_group
 def waf_log_group():
     pass
@@ -191,10 +191,10 @@ Use the `GET /waasPolicies/{waasPolicyId}/wafConfig/recommendations` method to v
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'protection-rule-keys': {'module': 'waas', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'protection-rule-keys': {'module': 'waas', 'class': 'list[string]'}})
 @cli_util.wrap_exceptions
 def accept_recommendations(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, waas_policy_id, protection_rule_keys, if_match):
 
@@ -262,6 +262,68 @@ def cancel_work_request(ctx, from_json, work_request_id, if_match):
     cli_util.render_response(result, ctx)
 
 
+@certificate_group.command(name=cli_util.override('change_certificate_compartment.command_name', 'change-compartment'), help=u"""Moves certificate into a different compartment. When provided, If-Match is checked against ETag values of the certificate.""")
+@cli_util.option('--certificate-id', required=True, help=u"""The [OCID] of the SSL certificate used in the WAAS policy. This number is generated when the certificate is added to the policy.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the `PUT` or `DELETE` call for a resource, set the `if-match` parameter to the value of the etag from a previous `GET` or `POST` response for that resource. The resource will be updated or deleted only if the etag provided matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_certificate_compartment(ctx, from_json, certificate_id, compartment_id, if_match):
+
+    if isinstance(certificate_id, six.string_types) and len(certificate_id.strip()) == 0:
+        raise click.UsageError('Parameter --certificate-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    details = {}
+    details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('waas', ctx)
+    result = client.change_certificate_compartment(
+        certificate_id=certificate_id,
+        change_certificate_compartment_details=details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@waas_policy_group.command(name=cli_util.override('change_waas_policy_compartment.command_name', 'change-compartment'), help=u"""Moves WAAS policy into a different compartment. When provided, If-Match is checked against ETag values of the WAAS policy.""")
+@cli_util.option('--waas-policy-id', required=True, help=u"""The [OCID] of the WAAS policy.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the `PUT` or `DELETE` call for a resource, set the `if-match` parameter to the value of the etag from a previous `GET` or `POST` response for that resource. The resource will be updated or deleted only if the etag provided matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_waas_policy_compartment(ctx, from_json, waas_policy_id, compartment_id, if_match):
+
+    if isinstance(waas_policy_id, six.string_types) and len(waas_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --waas-policy-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    details = {}
+    details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('waas', ctx)
+    result = client.change_waas_policy_compartment(
+        waas_policy_id=waas_policy_id,
+        change_waas_policy_compartment_details=details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @certificate_group.command(name=cli_util.override('create_certificate.command_name', 'create'), help=u"""Allows an SSL certificate to be added to a WAAS policy. The Web Application Firewall terminates SSL connections to inspect requests in runtime, and then re-encrypts requests before sending them to the origin for fulfillment.
 
 For more information, see [WAF Settings].""")
@@ -270,8 +332,8 @@ For more information, see [WAF Settings].""")
 @cli_util.option('--private-key-data', required=True, help=u"""The private key of the SSL certificate.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name for the SSL certificate. The name can be changed and does not need to be unique.""")
 @cli_util.option('--is-trust-verification-disabled', type=click.BOOL, help=u"""Set to true if the SSL certificate is self-signed.""")
-@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A simple key-value pair without any defined schema.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A key-value pair with a defined schema that restricts the values of tags. These predefined keys are scoped to namespaces.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example:""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "FAILED", "UPDATING", "DELETING", "DELETED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -895,17 +957,17 @@ def list_captchas(ctx, from_json, all_pages, page_size, waas_policy_id, limit, p
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous paginated call.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["id", "compartmentId", "displayName", "notValidAfter", "timeCreated"]), help=u"""The value by which certificate summaries are sorted in a paginated 'List' call. If unspecified, defaults to `timeCreated`.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The value of the sorting direction of resources in a paginated 'List' call. If unspecified, defaults to `DESC`.""")
-@cli_util.option('--id', help=u"""Filter certificates using a list of certificates OCIDs.""")
-@cli_util.option('--display-name', help=u"""Filter certificates using a list of display names.""")
-@cli_util.option('--lifecycle-state', help=u"""Filter certificates using a list of lifecycle states.""")
+@cli_util.option('--id', multiple=True, help=u"""Filter certificates using a list of certificates OCIDs.""")
+@cli_util.option('--display-name', multiple=True, help=u"""Filter certificates using a list of display names.""")
+@cli_util.option('--lifecycle-state', multiple=True, help=u"""Filter certificates using a list of lifecycle states.""")
 @cli_util.option('--time-created-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""A filter that matches certificates created on or after the specified date-time.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-created-less-than', type=custom_types.CLI_DATETIME, help=u"""A filter that matches certificates created before the specified date-time.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'id': {'module': 'waas', 'class': 'list[string]'}, 'display-name': {'module': 'waas', 'class': 'list[string]'}, 'lifecycle-state': {'module': 'waas', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'waas', 'class': 'list[CertificateSummary]'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'id': {'module': 'waas', 'class': 'list[string]'}, 'display-name': {'module': 'waas', 'class': 'list[string]'}, 'lifecycle-state': {'module': 'waas', 'class': 'list[string]'}}, output_type={'module': 'waas', 'class': 'list[CertificateSummary]'})
 @cli_util.wrap_exceptions
 def list_certificates(ctx, from_json, all_pages, page_size, compartment_id, limit, page, sort_by, sort_order, id, display_name, lifecycle_state, time_created_greater_than_or_equal_to, time_created_less_than):
 
@@ -1010,7 +1072,7 @@ def list_edge_subnets(ctx, from_json, all_pages, page_size, limit, page, sort_by
 
 @good_bot_group.command(name=cli_util.override('list_good_bots.command_name', 'list'), help=u"""Gets the list of good bots defined in the Web Application Firewall configuration for a WAAS policy.
 
-The list is sorted ascending by `key`.""")
+The list is sorted by `key`, in ascending order.""")
 @cli_util.option('--waas-policy-id', required=True, help=u"""The [OCID] of the WAAS policy.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated call. In unspecified, defaults to `10`.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous paginated call.""")
@@ -1061,18 +1123,18 @@ def list_good_bots(ctx, from_json, all_pages, page_size, waas_policy_id, limit, 
     cli_util.render_response(result, ctx)
 
 
-@protection_rule_group.command(name=cli_util.override('list_protection_rules.command_name', 'list'), help=u"""Gets the list of protection rules in the Web Application Firewall configuration for a WAAS policy, including currently defined rules and recommended rules. The list is sorted ascending by `key`.""")
+@protection_rule_group.command(name=cli_util.override('list_protection_rules.command_name', 'list'), help=u"""Gets the list of available protection rules for a WAAS policy. Use the `GetWafConfig` operation to view a list of currently configured protection rules for the Web Application Firewall, or use the `ListRecommendations` operation to get a list of recommended protection rules for the Web Application Firewall. The list is sorted by `key`, in ascending order.""")
 @cli_util.option('--waas-policy-id', required=True, help=u"""The [OCID] of the WAAS policy.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated call. In unspecified, defaults to `10`.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous paginated call.""")
-@cli_util.option('--mod-security-rule-id', help=u"""Filter rules using a list of ModSecurity rule IDs.""")
+@cli_util.option('--mod-security-rule-id', multiple=True, help=u"""Filter rules using a list of ModSecurity rule IDs.""")
 @cli_util.option('--action', type=custom_types.CliCaseInsensitiveChoice(["OFF", "DETECT", "BLOCK"]), multiple=True, help=u"""Filter rules using a list of actions.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'mod-security-rule-id': {'module': 'waas', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'waas', 'class': 'list[ProtectionRule]'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'mod-security-rule-id': {'module': 'waas', 'class': 'list[string]'}}, output_type={'module': 'waas', 'class': 'list[ProtectionRule]'})
 @cli_util.wrap_exceptions
 def list_protection_rules(ctx, from_json, all_pages, page_size, waas_policy_id, limit, page, mod_security_rule_id, action):
 
@@ -1120,7 +1182,7 @@ def list_protection_rules(ctx, from_json, all_pages, page_size, waas_policy_id, 
 
 @recommendation_group.command(name=cli_util.override('list_recommendations.command_name', 'list'), help=u"""Gets the list of recommended Web Application Firewall protection rules.
 
-Use the `POST /waasPolicies/{waasPolicyId}/actions/acceptWafConfigRecommendations` method to accept recommended Web Application Firewall protection rules. For more information, see [WAF Protection Rules]. The list is sorted ascending by `key`.""")
+Use the `POST /waasPolicies/{waasPolicyId}/actions/acceptWafConfigRecommendations` method to accept recommended Web Application Firewall protection rules. For more information, see [WAF Protection Rules]. The list is sorted by `key`, in ascending order.""")
 @cli_util.option('--waas-policy-id', required=True, help=u"""The [OCID] of the WAAS policy.""")
 @cli_util.option('--recommended-action', type=custom_types.CliCaseInsensitiveChoice(["DETECT", "BLOCK"]), help=u"""A filter that matches recommended protection rules based on the selected action. If unspecified, rules with any action type are returned.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated call. In unspecified, defaults to `10`.""")
@@ -1174,7 +1236,7 @@ def list_recommendations(ctx, from_json, all_pages, page_size, waas_policy_id, r
     cli_util.render_response(result, ctx)
 
 
-@threat_feed_group.command(name=cli_util.override('list_threat_feeds.command_name', 'list'), help=u"""Gets the list of available web application threat intelligence feeds and the actions set for each feed. The list is sorted ascending by `key`.""")
+@threat_feed_group.command(name=cli_util.override('list_threat_feeds.command_name', 'list'), help=u"""Gets the list of available web application threat intelligence feeds and the actions set for each feed. The list is sorted by `key`, in ascending order.""")
 @cli_util.option('--waas-policy-id', required=True, help=u"""The [OCID] of the WAAS policy.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated call. In unspecified, defaults to `10`.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous paginated call.""")
@@ -1231,17 +1293,17 @@ def list_threat_feeds(ctx, from_json, all_pages, page_size, waas_policy_id, limi
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous paginated call.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["id", "displayName", "timeCreated"]), help=u"""The value by which policies are sorted in a paginated 'List' call.  If unspecified, defaults to `timeCreated`.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The value of the sorting direction of resources in a paginated 'List' call. If unspecified, defaults to `DESC`.""")
-@cli_util.option('--id', help=u"""Filter policies using a list of policy OCIDs.""")
-@cli_util.option('--display-name', help=u"""Filter policies using a list of display names.""")
-@cli_util.option('--lifecycle-state', help=u"""Filter policies using a list of lifecycle states.""")
+@cli_util.option('--id', multiple=True, help=u"""Filter policies using a list of policy OCIDs.""")
+@cli_util.option('--display-name', multiple=True, help=u"""Filter policies using a list of display names.""")
+@cli_util.option('--lifecycle-state', multiple=True, help=u"""Filter policies using a list of lifecycle states.""")
 @cli_util.option('--time-created-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""A filter that matches policies created on or after the specified date and time.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-created-less-than', type=custom_types.CLI_DATETIME, help=u"""A filter that matches policies created before the specified date-time.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'id': {'module': 'waas', 'class': 'list[string]'}, 'display-name': {'module': 'waas', 'class': 'list[string]'}, 'lifecycle-state': {'module': 'waas', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'waas', 'class': 'list[WaasPolicySummary]'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'id': {'module': 'waas', 'class': 'list[string]'}, 'display-name': {'module': 'waas', 'class': 'list[string]'}, 'lifecycle-state': {'module': 'waas', 'class': 'list[string]'}}, output_type={'module': 'waas', 'class': 'list[WaasPolicySummary]'})
 @cli_util.wrap_exceptions
 def list_waas_policies(ctx, from_json, all_pages, page_size, compartment_id, limit, page, sort_by, sort_order, id, display_name, lifecycle_state, time_created_greater_than_or_equal_to, time_created_less_than):
 
@@ -1294,7 +1356,7 @@ def list_waas_policies(ctx, from_json, all_pages, page_size, compartment_id, lim
     cli_util.render_response(result, ctx)
 
 
-@waf_blocked_request_group.command(name=cli_util.override('list_waf_blocked_requests.command_name', 'list'), help=u"""Gets the number of blocked requests by a Web Application Firewall feature in five minute blocks, in ascending order by `timeObserved`.""")
+@waf_blocked_request_group.command(name=cli_util.override('list_waf_blocked_requests.command_name', 'list'), help=u"""Gets the number of blocked requests by a Web Application Firewall feature in five minute blocks, sorted by `timeObserved` in ascending order (starting from oldest data).""")
 @cli_util.option('--waas-policy-id', required=True, help=u"""The [OCID] of the WAAS policy.""")
 @cli_util.option('--time-observed-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""A filter that limits returned events to those occurring on or after a date and time, specified in RFC 3339 format. If unspecified, defaults to 30 minutes before receipt of the request.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-observed-less-than', type=custom_types.CLI_DATETIME, help=u"""A filter that limits returned events to those occurring before a date and time, specified in RFC 3339 format.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -1354,35 +1416,35 @@ def list_waf_blocked_requests(ctx, from_json, all_pages, page_size, waas_policy_
     cli_util.render_response(result, ctx)
 
 
-@waf_log_group.command(name=cli_util.override('list_waf_logs.command_name', 'list'), help=u"""Gets structured Web Application Firewall event logs for a WAAS policy. The list is sorted by the `timeObserved` starting from the oldest recorded event (ascending).""")
+@waf_log_group.command(name=cli_util.override('list_waf_logs.command_name', 'list'), help=u"""Gets structured Web Application Firewall event logs for a WAAS policy. Sorted by the `timeObserved` in ascending order (starting from the oldest recorded event).""")
 @cli_util.option('--waas-policy-id', required=True, help=u"""The [OCID] of the WAAS policy.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated call. In unspecified, defaults to `20`.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous paginated call.""")
 @cli_util.option('--time-observed-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""A filter that matches log entries where the observed event occurred on or after a date and time specified in RFC 3339 format. If unspecified, defaults to two hours before receipt of the request.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-observed-less-than', type=custom_types.CLI_DATETIME, help=u"""A filter that matches log entries where the observed event occurred before a date and time, specified in RFC 3339 format.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--text-contains', help=u"""A full text search for logs.""")
-@cli_util.option('--access-rule-key', help=u"""Filters logs by access rule key.""")
+@cli_util.option('--access-rule-key', multiple=True, help=u"""Filters logs by access rule key.""")
 @cli_util.option('--action', type=custom_types.CliCaseInsensitiveChoice(["BLOCK", "DETECT", "BYPASS", "LOG", "REDIRECTED"]), multiple=True, help=u"""Filters logs by Web Application Firewall action.""")
-@cli_util.option('--client-address', help=u"""Filters logs by client IP address.""")
-@cli_util.option('--country-code', help=u"""Filters logs by country code. Country codes are in ISO 3166-1 alpha-2 format. For a list of codes, see [ISO's website].""")
-@cli_util.option('--country-name', help=u"""Filter logs by country name.""")
-@cli_util.option('--fingerprint', help=u"""Filter logs by device fingerprint.""")
+@cli_util.option('--client-address', multiple=True, help=u"""Filters logs by client IP address.""")
+@cli_util.option('--country-code', multiple=True, help=u"""Filters logs by country code. Country codes are in ISO 3166-1 alpha-2 format. For a list of codes, see [ISO's website].""")
+@cli_util.option('--country-name', multiple=True, help=u"""Filter logs by country name.""")
+@cli_util.option('--fingerprint', multiple=True, help=u"""Filter logs by device fingerprint.""")
 @cli_util.option('--http-method', type=custom_types.CliCaseInsensitiveChoice(["OPTIONS", "GET", "HEAD", "POST", "PUT", "DELETE", "TRACE", "CONNECT"]), multiple=True, help=u"""Filter logs by HTTP method.""")
-@cli_util.option('--incident-key', help=u"""Filter logs by incident key.""")
+@cli_util.option('--incident-key', multiple=True, help=u"""Filter logs by incident key.""")
 @cli_util.option('--log-type', type=custom_types.CliCaseInsensitiveChoice(["ACCESS", "PROTECTION_RULES", "JS_CHALLENGE", "CAPTCHA", "ACCESS_RULES", "THREAT_FEEDS", "HUMAN_INTERACTION_CHALLENGE", "DEVICE_FINGERPRINT_CHALLENGE", "ADDRESS_RATE_LIMITING"]), multiple=True, help=u"""Filter by log type.""")
-@cli_util.option('--origin-address', help=u"""Filter by origin IP address.""")
-@cli_util.option('--referrer', help=u"""Filter by referrer.""")
-@cli_util.option('--request-url', help=u"""Filter by request URL.""")
-@cli_util.option('--response-code', help=u"""Filter by response code.""")
-@cli_util.option('--threat-feed-key', help=u"""Filter by threat feed key.""")
-@cli_util.option('--user-agent', help=u"""Filter by user agent.""")
-@cli_util.option('--protection-rule-key', help=u"""Filter by protection rule key.""")
+@cli_util.option('--origin-address', multiple=True, help=u"""Filter by origin IP address.""")
+@cli_util.option('--referrer', multiple=True, help=u"""Filter by referrer.""")
+@cli_util.option('--request-url', multiple=True, help=u"""Filter by request URL.""")
+@cli_util.option('--response-code', multiple=True, help=u"""Filter by response code.""")
+@cli_util.option('--threat-feed-key', multiple=True, help=u"""Filter by threat feed key.""")
+@cli_util.option('--user-agent', multiple=True, help=u"""Filter by user agent.""")
+@cli_util.option('--protection-rule-key', multiple=True, help=u"""Filter by protection rule key.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'access-rule-key': {'module': 'waas', 'class': 'list[string]'}, 'client-address': {'module': 'waas', 'class': 'list[string]'}, 'country-code': {'module': 'waas', 'class': 'list[string]'}, 'country-name': {'module': 'waas', 'class': 'list[string]'}, 'fingerprint': {'module': 'waas', 'class': 'list[string]'}, 'incident-key': {'module': 'waas', 'class': 'list[string]'}, 'origin-address': {'module': 'waas', 'class': 'list[string]'}, 'referrer': {'module': 'waas', 'class': 'list[string]'}, 'request-url': {'module': 'waas', 'class': 'list[string]'}, 'response-code': {'module': 'waas', 'class': 'list[integer]'}, 'threat-feed-key': {'module': 'waas', 'class': 'list[string]'}, 'user-agent': {'module': 'waas', 'class': 'list[string]'}, 'protection-rule-key': {'module': 'waas', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'waas', 'class': 'list[WafLog]'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'access-rule-key': {'module': 'waas', 'class': 'list[string]'}, 'client-address': {'module': 'waas', 'class': 'list[string]'}, 'country-code': {'module': 'waas', 'class': 'list[string]'}, 'country-name': {'module': 'waas', 'class': 'list[string]'}, 'fingerprint': {'module': 'waas', 'class': 'list[string]'}, 'incident-key': {'module': 'waas', 'class': 'list[string]'}, 'origin-address': {'module': 'waas', 'class': 'list[string]'}, 'referrer': {'module': 'waas', 'class': 'list[string]'}, 'request-url': {'module': 'waas', 'class': 'list[string]'}, 'response-code': {'module': 'waas', 'class': 'list[integer]'}, 'threat-feed-key': {'module': 'waas', 'class': 'list[string]'}, 'user-agent': {'module': 'waas', 'class': 'list[string]'}, 'protection-rule-key': {'module': 'waas', 'class': 'list[string]'}}, output_type={'module': 'waas', 'class': 'list[WafLog]'})
 @cli_util.wrap_exceptions
 def list_waf_logs(ctx, from_json, all_pages, page_size, waas_policy_id, limit, page, time_observed_greater_than_or_equal_to, time_observed_less_than, text_contains, access_rule_key, action, client_address, country_code, country_name, fingerprint, http_method, incident_key, log_type, origin_address, referrer, request_url, response_code, threat_feed_key, user_agent, protection_rule_key):
 
@@ -1462,7 +1524,7 @@ def list_waf_logs(ctx, from_json, all_pages, page_size, waas_policy_id, limit, p
     cli_util.render_response(result, ctx)
 
 
-@waf_request_group.command(name=cli_util.override('list_waf_requests.command_name', 'list'), help=u"""Gets the number of requests managed by a Web Application Firewall over a specified period of time, including blocked requests. Sorted by `timeObserved` with oldest requests first (ascending).""")
+@waf_request_group.command(name=cli_util.override('list_waf_requests.command_name', 'list'), help=u"""Gets the number of requests managed by a Web Application Firewall over a specified period of time, including blocked requests. Sorted by `timeObserved` in ascending order (starting from oldest requests).""")
 @cli_util.option('--waas-policy-id', required=True, help=u"""The [OCID] of the WAAS policy.""")
 @cli_util.option('--time-observed-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""A filter that limits returned events to those occurring on or after a date and time, specified in RFC 3339 format. If unspecified, defaults to 30 minutes before receipt of the request.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-observed-less-than', type=custom_types.CLI_DATETIME, help=u"""A filter that limits returned events to those occurring before a date and time, specified in RFC 3339 format.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -1519,7 +1581,7 @@ def list_waf_requests(ctx, from_json, all_pages, page_size, waas_policy_id, time
     cli_util.render_response(result, ctx)
 
 
-@waf_traffic_datum_group.command(name=cli_util.override('list_waf_traffic.command_name', 'list-waf-traffic'), help=u"""Gets the Web Application Firewall traffic data for a WAAS policy. Sorted by `timeObserved` with oldest data points first (ascending).""")
+@waf_traffic_datum_group.command(name=cli_util.override('list_waf_traffic.command_name', 'list-waf-traffic'), help=u"""Gets the Web Application Firewall traffic data for a WAAS policy. Sorted by `timeObserved` in ascending order (starting from oldest data).""")
 @cli_util.option('--waas-policy-id', required=True, help=u"""The [OCID] of the WAAS policy.""")
 @cli_util.option('--time-observed-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""A filter that limits returned events to those occurring on or after a date and time, specified in RFC 3339 format. If unspecified, defaults to 30 minutes before receipt of the request.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-observed-less-than', type=custom_types.CLI_DATETIME, help=u"""A filter that limits returned events to those occurring before a date and time, specified in RFC 3339 format.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -1685,17 +1747,25 @@ def list_work_requests(ctx, from_json, all_pages, page_size, waas_policy_id, com
     cli_util.render_response(result, ctx)
 
 
-@access_rule_group.command(name=cli_util.override('update_access_rules.command_name', 'update'), help=u"""Updates the list of access rules in the Web Application Firewall configuration for a specified WAAS policy. Access rules allow explicit actions to be defined and executed for requests that meet various conditions. A rule action can be set to allow, detect, or block requests. The detect setting allows the request to pass through the Web Application Firewall and is tagged with a `DETECT` flag in the Web Application Firewall's log. This operation can create, delete, update, and/or reorder access rules depending on the structure of the request body. Updating an existing access rule can be accomplished by changing the properties of the access rule object with a non-empty `key` property in the list. Reordering of access rules can be accomplished by changing the order of the access rules in the list when updating. Creating an access rule can be accomplished by adding a new access rule object to the list without a `key` property. A `key` will be generated for the new access rule upon update. Deleting an access rule can be accomplished by removing the existing access rule object from the list. Any existing access rule with a `key` that is not present in the list of access rules sent in the request will be deleted.""")
+@access_rule_group.command(name=cli_util.override('update_access_rules.command_name', 'update'), help=u"""Updates the list of access rules in the Web Application Firewall configuration for a specified WAAS policy. Access rules allow explicit actions to be defined and executed for requests that meet various conditions. A rule action can be set to allow, detect, or block requests. The detect setting allows the request to pass through the Web Application Firewall and is tagged with a `DETECT` flag in the Web Application Firewall's log.
+
+This operation can create, delete, update, and/or reorder access rules depending on the structure of the request body.
+
+Access rules can be updated by changing the properties of the access rule object with the rule's key specified in the key field. Access rules can be reordered by changing the order of the access rules in the list when updating.
+
+Access rules can be created by adding a new access rule object to the list without a `key` property specified. A `key` will be generated for the new access rule upon update.
+
+Any existing access rules that are not specified with a `key` in the list of access rules will be deleted upon update.""")
 @cli_util.option('--waas-policy-id', required=True, help=u"""The [OCID] of the WAAS policy.""")
 @cli_util.option('--access-rules', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the `PUT` or `DELETE` call for a resource, set the `if-match` parameter to the value of the etag from a previous `GET` or `POST` response for that resource. The resource will be updated or deleted only if the etag provided matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'access-rules': {'module': 'waas', 'class': 'list[AccessRule]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'access-rules': {'module': 'waas', 'class': 'list[AccessRule]'}})
 @cli_util.wrap_exceptions
 def update_access_rules(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, waas_policy_id, access_rules, if_match):
 
@@ -1737,17 +1807,21 @@ def update_access_rules(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     cli_util.render_response(result, ctx)
 
 
-@captcha_group.command(name=cli_util.override('update_captchas.command_name', 'update'), help=u"""Updates the list of CAPTCHA challenges in the Web Application Firewall configuration for a WAAS policy. This operation can create, update, or delete CAPTCHAs depending on the structure of the request body. Updating an existing CAPTCHA can be accomplished by changing the properties of the CAPTCHA object with a non-empty `key` property in the list. Creating a CAPTCHA can be accomplished by adding a new CAPTCHA object to the list without a `key` property. A `key` will be generated for the new CAPTCHA upon update. Deleting a CAPTCHA can be accomplished by removing the existing CAPTCHA object from the list. Any existing CAPTCHA with a `key` that is not present in the list of CAPTCHAs sent in the request will be deleted.""")
+@captcha_group.command(name=cli_util.override('update_captchas.command_name', 'update'), help=u"""Updates the list of CAPTCHA challenges in the Web Application Firewall configuration for a WAAS policy. This operation can create, update, or delete CAPTCHAs depending on the structure of the request body. CAPTCHA challenges can be updated by changing the properties of the CAPTCHA object with the rule's key specified in the key field. CAPTCHA challenges can be reordered by changing the order of the CAPTCHA challenges in the list when updating.
+
+CAPTCHA challenges can be created by adding a new access rule object to the list without a `key` property specified. A `key` will be generated for the new CAPTCHA challenges upon update.
+
+Any existing CAPTCHA challenges that are not specified with a `key` in the list of CAPTCHA challenges will be deleted upon update.""")
 @cli_util.option('--waas-policy-id', required=True, help=u"""The [OCID] of the WAAS policy.""")
 @cli_util.option('--captchas', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of CAPTCHA details.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the `PUT` or `DELETE` call for a resource, set the `if-match` parameter to the value of the etag from a previous `GET` or `POST` response for that resource. The resource will be updated or deleted only if the etag provided matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'captchas': {'module': 'waas', 'class': 'list[Captcha]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'captchas': {'module': 'waas', 'class': 'list[Captcha]'}})
 @cli_util.wrap_exceptions
 def update_captchas(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, waas_policy_id, captchas, if_match):
 
@@ -1955,17 +2029,17 @@ def update_device_fingerprint_challenge(ctx, from_json, force, wait_for_state, m
 
 @good_bot_group.command(name=cli_util.override('update_good_bots.command_name', 'update'), help=u"""Updates the list of good bots in the Web Application Firewall configuration for a policy. Only the fields specified in the request body will be updated, all other configuration properties will remain unchanged.
 
-Good bots allows you to manage access for bots from known providers, such as Google or Baidu. For more information about good bots, please see [Bot Management].""")
+Good bots allows you to manage access for bots from known providers, such as Google or Baidu. For more information about good bots, see [Bot Management].""")
 @cli_util.option('--waas-policy-id', required=True, help=u"""The [OCID] of the WAAS policy.""")
 @cli_util.option('--good-bots', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the `PUT` or `DELETE` call for a resource, set the `if-match` parameter to the value of the etag from a previous `GET` or `POST` response for that resource. The resource will be updated or deleted only if the etag provided matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'good-bots': {'module': 'waas', 'class': 'list[GoodBot]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'good-bots': {'module': 'waas', 'class': 'list[GoodBot]'}})
 @cli_util.wrap_exceptions
 def update_good_bots(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, waas_policy_id, good_bots, if_match):
 
@@ -2247,17 +2321,17 @@ def update_policy_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_
     cli_util.render_response(result, ctx)
 
 
-@protection_rule_group.command(name=cli_util.override('update_protection_rules.command_name', 'update'), help=u"""Updates the action for each specified protection rule. Requests can either be allowed, blocked, or trigger an alert if they meet the parameters of an applied rule. For more information on protection rules, see [WAF Protection Rules]. This operation can update or disable protection rules depending on the structure of the request body. Updating an existing protection rule can be accomplished by changing the properties of the protection rule object with a non-empty `key` property in the list.""")
+@protection_rule_group.command(name=cli_util.override('update_protection_rules.command_name', 'update'), help=u"""Updates the action for each specified protection rule. Requests can either be allowed, blocked, or trigger an alert if they meet the parameters of an applied rule. For more information on protection rules, see [WAF Protection Rules]. This operation can update or disable protection rules depending on the structure of the request body. Protection rules can be updated by changing the properties of the protection rule object with the rule's key specified in the key field.""")
 @cli_util.option('--waas-policy-id', required=True, help=u"""The [OCID] of the WAAS policy.""")
 @cli_util.option('--protection-rules', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the `PUT` or `DELETE` call for a resource, set the `if-match` parameter to the value of the etag from a previous `GET` or `POST` response for that resource. The resource will be updated or deleted only if the etag provided matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'protection-rules': {'module': 'waas', 'class': 'list[ProtectionRuleAction]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'protection-rules': {'module': 'waas', 'class': 'list[ProtectionRuleAction]'}})
 @cli_util.wrap_exceptions
 def update_protection_rules(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, waas_policy_id, protection_rules, if_match):
 
@@ -2306,9 +2380,11 @@ def update_protection_rules(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @cli_util.option('--block-error-page-message', help=u"""The message to show on the error page when `action` is set to `BLOCK`, `blockAction` is set to `SHOW_ERROR_PAGE`, and the traffic is detected as malicious by a protection rule. If unspecified, defaults to 'Access to the website is blocked.'""")
 @cli_util.option('--block-error-page-code', help=u"""The error code to show on the error page when `action` is set to `BLOCK`, `blockAction` is set to `SHOW_ERROR_PAGE`, and the traffic is detected as malicious by a protection rule. If unspecified, defaults to `403`.""")
 @cli_util.option('--block-error-page-description', help=u"""The description text to show on the error page when `action` is set to `BLOCK`, `blockAction` is set to `SHOW_ERROR_PAGE`, and the traffic is detected as malicious by a protection rule. If unspecified, defaults to `Access blocked by website owner. Please contact support.`""")
-@cli_util.option('--max-argument-count', type=click.INT, help=u"""The maximum number of arguments allowed to be passed to your application before an action is taken. If unspecified, defaults to `255`.""")
-@cli_util.option('--max-name-length-per-argument', type=click.INT, help=u"""The maximum length allowed for each argument name, in characters. If unspecified, defaults to `400`.""")
-@cli_util.option('--max-total-name-length-of-arguments', type=click.INT, help=u"""The maximum length allowed for the sum of all argument names, in characters. If unspecified, defaults to `64000`.""")
+@cli_util.option('--max-argument-count', type=click.INT, help=u"""The maximum number of arguments allowed to be passed to your application before an action is taken. Arguements are query parameters or body parameters in a PUT or POST request. If unspecified, defaults to `255`. This setting only applies if a corresponding protection rule is enabled, such as the \"Number of Arguments Limits\" rule (key: 960335).
+
+Example: If `maxArgumentCount` to `2` for the Max Number of Arguments protection rule (key: 960335), the following requests would be blocked: `GET /myapp/path?query=one&query=two&query=three` `POST /myapp/path` with Body `{\"argument1\":\"one\",\"argument2\":\"two\",\"argument3\":\"three\"}`""")
+@cli_util.option('--max-name-length-per-argument', type=click.INT, help=u"""The maximum length allowed for each argument name, in characters. Arguements are query parameters or body parameters in a PUT or POST request. If unspecified, defaults to `400`. This setting only applies if a corresponding protection rule is enabled, such as the \"Values Limits\" rule (key: 960208).""")
+@cli_util.option('--max-total-name-length-of-arguments', type=click.INT, help=u"""The maximum length allowed for the sum of the argument name and value, in characters. Arguements are query parameters or body parameters in a PUT or POST request. If unspecified, defaults to `64000`. This setting only applies if a corresponding protection rule is enabled, such as the \"Total Arguments Limits\" rule (key: 960341).""")
 @cli_util.option('--recommendations-period-in-days', type=click.INT, help=u"""The length of time to analyze traffic traffic, in days. After the analysis period, `WafRecommendations` will be populated. If unspecified, defaults to `10`.
 
 Use `GET /waasPolicies/{waasPolicyId}/wafRecommendations` to view WAF recommendations.""")
@@ -2316,8 +2392,8 @@ Use `GET /waasPolicies/{waasPolicyId}/wafRecommendations` to view WAF recommenda
 
 **Note:** Only origin responses with a Content-Type matching a value in `mediaTypes` will be inspected.""")
 @cli_util.option('--max-response-size-in-ki-b', type=click.INT, help=u"""The maximum response size to be fully inspected, in binary kilobytes (KiB). Anything over this limit will be partially inspected. If unspecified, defaults to `1024`.""")
-@cli_util.option('--allowed-http-methods', type=custom_types.CliCaseInsensitiveChoice(["OPTIONS", "GET", "HEAD", "POST", "PUT", "DELETE", "TRACE", "CONNECT", "PATCH", "PROPFIND"]), help=u"""The list of allowed HTTP methods. If unspecified, default to `[OPTIONS, GET, HEAD, POST]`.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--media-types', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of media types to allow for inspection, if `isResponseInspected` is enabled. Only responses with MIME types in this list will be inspected. If unspecified, defaults to `[`text/html`, `text/plain`, `text/xml`]`.
+@cli_util.option('--allowed-http-methods', type=custom_types.CliCaseInsensitiveChoice(["OPTIONS", "GET", "HEAD", "POST", "PUT", "DELETE", "TRACE", "CONNECT", "PATCH", "PROPFIND"]), help=u"""The list of allowed HTTP methods. If unspecified, default to `[OPTIONS, GET, HEAD, POST]`. This setting only applies if a corresponding protection rule is enabled, such as the \"Restrict HTTP Request Methods\" rule (key: 911100).""")
+@cli_util.option('--media-types', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of media types to allow for inspection, if `isResponseInspected` is enabled. Only responses with MIME types in this list will be inspected. If unspecified, defaults to `[\"text/html\", \"text/plain\", \"text/xml\"]`.
 
     Supported MIME types include:
 
@@ -2327,10 +2403,10 @@ Use `GET /waasPolicies/{waasPolicyId}/wafRecommendations` to view WAF recommenda
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'allowed-http-methods': {'module': 'waas', 'class': 'list[string]'}, 'media-types': {'module': 'waas', 'class': 'list[string]'}})
+@json_skeleton_utils.get_cli_json_input_option({'media-types': {'module': 'waas', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'allowed-http-methods': {'module': 'waas', 'class': 'list[string]'}, 'media-types': {'module': 'waas', 'class': 'list[string]'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'media-types': {'module': 'waas', 'class': 'list[string]'}})
 @cli_util.wrap_exceptions
 def update_protection_settings(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, waas_policy_id, block_action, block_response_code, block_error_page_message, block_error_page_code, block_error_page_description, max_argument_count, max_name_length_per_argument, max_total_name_length_of_arguments, recommendations_period_in_days, is_response_inspected, max_response_size_in_ki_b, allowed_http_methods, media_types, if_match):
 
@@ -2425,10 +2501,10 @@ def update_protection_settings(ctx, from_json, force, wait_for_state, max_wait_s
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'threat-feeds': {'module': 'waas', 'class': 'list[ThreatFeedAction]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'threat-feeds': {'module': 'waas', 'class': 'list[ThreatFeedAction]'}})
 @cli_util.wrap_exceptions
 def update_threat_feeds(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, waas_policy_id, threat_feeds, if_match):
 
@@ -2470,7 +2546,7 @@ def update_threat_feeds(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     cli_util.render_response(result, ctx)
 
 
-@waas_policy_group.command(name=cli_util.override('update_waas_policy.command_name', 'update'), help=u"""Updates the details of a WAAS policy, including origins and tags. Only the fields specified in the request body will be updated; all other properties will remain unchanged. To update platform provided resources such as `GoodBots`, `ProtectionRules`, and `ThreatFeeds` first retrieve the list of available resources with the related list operation such as `GetThreatFeeds` or `GetProtectionRules`. The returned list will contain objects with `key` properties that can be used to update the resource during the `UpdateWaasPolicy` request.""")
+@waas_policy_group.command(name=cli_util.override('update_waas_policy.command_name', 'update'), help=u"""Updates the details of a WAAS policy, including origins and tags. Only the fields specified in the request body will be updated; all other properties will remain unchanged. To update platform provided resources such as `GoodBots`, `ProtectionRules`, and `ThreatFeeds`, first retrieve the list of available resources with the related list operation such as `GetThreatFeeds` or `GetProtectionRules`. The returned list will contain objects with `key` properties that can be used to update the resource during the `UpdateWaasPolicy` request.""")
 @cli_util.option('--waas-policy-id', required=True, help=u"""The [OCID] of the WAAS policy.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name for the WAAS policy. The name is can be changed and does not need to be unique.""")
 @cli_util.option('--additional-domains', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of additional domains protected by this WAAS policy.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2629,7 +2705,7 @@ def update_waf_address_rate_limiting(ctx, from_json, wait_for_state, max_wait_se
 
 @waf_config_group.command(name=cli_util.override('update_waf_config.command_name', 'update'), help=u"""Updates the Web Application Firewall configuration for a specified WAAS policy.
 
-To update platform provided resources such as `GoodBots`, `ProtectionRules`, and `ThreatFeeds` first retrieve the list of available resources with the related list operation such as `GetThreatFeeds` or `GetProtectionRules`.
+To update platform provided resources such as `GoodBots`, `ProtectionRules`, and `ThreatFeeds`, first retrieve the list of available resources with the related list operation, such as `GetThreatFeeds` or `GetProtectionRules`.
 
 The returned list will contain objects with `key` properties that can be used to update the resource during the `UpdateWafConfig` request.""")
 @cli_util.option('--waas-policy-id', required=True, help=u"""The [OCID] of the WAAS policy.""")
@@ -2750,17 +2826,25 @@ def update_waf_config(ctx, from_json, force, wait_for_state, max_wait_seconds, w
     cli_util.render_response(result, ctx)
 
 
-@whitelist_group.command(name=cli_util.override('update_whitelists.command_name', 'update'), help=u"""Updates the list of IP addresses that bypass the Web Application Firewall for a WAAS policy. Supports both single IP addresses or subnet masks (CIDR notation). This operation can create, delete, update, and/or reorder whitelists depending on the structure of the request body. Updating an existing whitelist can be accomplished by changing the properties of the whitelist object with a non-empty `key` property in the list. Reordering of whitelists can be accomplished by changing the order of the whitelists in the list when updating. Creating a whitelist can be accomplished by adding a new whitelist object to the list without a `key` property. A `key` will be generated for the new whitelist upon update. Deleting a whitelist can be accomplished by removing the existing whitelist object from the list. Any existing whitelist with a `key` that is not present in the list of whitelists sent in the request will be deleted.""")
+@whitelist_group.command(name=cli_util.override('update_whitelists.command_name', 'update'), help=u"""Updates the list of IP addresses that bypass the Web Application Firewall for a WAAS policy. Supports both single IP addresses or subnet masks (CIDR notation).
+
+This operation can create, delete, update, and/or reorder whitelists depending on the structure of the request body.
+
+Whitelists can be updated by changing the properties of the whitelist object with the rule's key specified in the `key` field. Whitelists can be reordered by changing the order of the whitelists in the list of objects when updating.
+
+Whitelists can be created by adding a new whitelist object to the list without a `key` property specified. A `key` will be generated for the new whitelist upon update.
+
+Whitelists can be deleted by removing the existing whitelist object from the list. Any existing whitelists that are not specified with a `key` in the list of access rules will be deleted upon update.""")
 @cli_util.option('--waas-policy-id', required=True, help=u"""The [OCID] of the WAAS policy.""")
 @cli_util.option('--whitelists', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the `PUT` or `DELETE` call for a resource, set the `if-match` parameter to the value of the etag from a previous `GET` or `POST` response for that resource. The resource will be updated or deleted only if the etag provided matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'whitelists': {'module': 'waas', 'class': 'list[Whitelist]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'whitelists': {'module': 'waas', 'class': 'list[Whitelist]'}})
 @cli_util.wrap_exceptions
 def update_whitelists(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, waas_policy_id, whitelists, if_match):
 
