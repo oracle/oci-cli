@@ -29,7 +29,6 @@ Added
 * Support for Events Service
 
   * ``oci events``
-  * An example on using the Events Service can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/services/events/examples_and_test_scripts/example_events.sh>`__.
 
 * Support for adding tags to Cross connect group, Cross connect, Remote Peering Connection and Virtual Circuit resources in the Networking Service.
 
