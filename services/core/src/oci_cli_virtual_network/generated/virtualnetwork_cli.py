@@ -109,7 +109,9 @@ def virtual_circuit_public_prefix_group():
 
 @click.command(cli_util.override('private_ip_group.command_name', 'private-ip'), cls=CommandGroupWithAlias, help="""A *private IP* is a conceptual term that refers to an IPv4 private IP address and related properties. The `privateIp` object is the API representation of a private IP.
 
- Each instance has a *primary private IP* that is automatically created and assigned to the primary VNIC during instance launch. If you add a secondary VNIC to the instance, it also automatically gets a primary private IP. You can't remove a primary private IP from its VNIC. The primary private IP is automatically deleted when the VNIC is terminated.
+**Note:** For information about IPv6 addresses, see [Ipv6].
+
+Each instance has a *primary private IP* that is automatically created and assigned to the primary VNIC during instance launch. If you add a secondary VNIC to the instance, it also automatically gets a primary private IP. You can't remove a primary private IP from its VNIC. The primary private IP is automatically deleted when the VNIC is terminated.
 
 You can add *secondary private IPs* to a VNIC after it's created. For more information, see the `privateIp` operations and also [IP Addresses].
 
@@ -150,6 +152,16 @@ To use any of the API operations, you must be authorized in an IAM policy. If yo
 **Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
 @cli_util.help_option_group
 def local_peering_gateway_group():
+    pass
+
+
+@click.command(cli_util.override('ipv6_group.command_name', 'ipv6'), cls=CommandGroupWithAlias, help="""An *IPv6* is a conceptual term that refers to an IPv6 address and related properties. The `IPv6` object is the API representation of an IPv6.
+
+You can create and assign an IPv6 to any VNIC that is in an IPv6-enabled subnet in an IPv6-enabled VCN.
+
+For important details about IPv6 addressing in a VCN, see [IPv6 Addresses].""")
+@cli_util.help_option_group
+def ipv6_group():
     pass
 
 
@@ -398,6 +410,7 @@ virtual_network_root_group.add_command(private_ip_group)
 virtual_network_root_group.add_command(ip_sec_connection_tunnel_shared_secret_group)
 virtual_network_root_group.add_command(virtual_circuit_group)
 virtual_network_root_group.add_command(local_peering_gateway_group)
+virtual_network_root_group.add_command(ipv6_group)
 virtual_network_root_group.add_command(cross_connect_port_speed_shape_group)
 virtual_network_root_group.add_command(drg_group)
 virtual_network_root_group.add_command(route_table_group)
@@ -1560,6 +1573,84 @@ def create_ip_sec_connection(ctx, from_json, wait_for_state, max_wait_seconds, w
     cli_util.render_response(result, ctx)
 
 
+@ipv6_group.command(name=cli_util.override('create_ipv6.command_name', 'create'), help=u"""Creates an IPv6 for the specified VNIC.""")
+@cli_util.option('--vnic-id', required=True, help=u"""The [OCID] of the VNIC to assign the IPv6 to. The IPv6 will be in the VNIC's subnet.""")
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--ip-address', help=u"""An IPv6 address of your choice. Must be an available IP address within the subnet's CIDR. If you don't specify a value, Oracle automatically assigns an IPv6 address from the subnet. The subnet is the one that contains the VNIC you specify in `vnicId`.
+
+Example: `2001:0db8:0123:1111:abcd:ef01:2345:6789`""")
+@cli_util.option('--is-internet-access-allowed', type=click.BOOL, help=u"""Whether the IPv6 can be used for internet communication. Allowed by default for an IPv6 in a public subnet. Never allowed for an IPv6 in a private subnet. If the value is `true`, the IPv6 uses its public IP address for internet communication.
+
+If `isInternetAccessAllowed` is set to `false`, the resulting `publicIpAddress` attribute for the Ipv6 is null.
+
+Example: `true`""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'Ipv6'})
+@cli_util.wrap_exceptions
+def create_ipv6(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, vnic_id, defined_tags, display_name, freeform_tags, ip_address, is_internet_access_allowed):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    details = {}
+    details['vnicId'] = vnic_id
+
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if display_name is not None:
+        details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if ip_address is not None:
+        details['ipAddress'] = ip_address
+
+    if is_internet_access_allowed is not None:
+        details['isInternetAccessAllowed'] = is_internet_access_allowed
+
+    client = cli_util.build_client('virtual_network', ctx)
+    result = client.create_ipv6(
+        create_ipv6_details=details,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_ipv6') and callable(getattr(client, 'get_ipv6')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_ipv6(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @local_peering_gateway_group.command(name=cli_util.override('create_local_peering_gateway.command_name', 'create'), help=u"""Creates a new local peering gateway (LPG) for the specified VCN.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment containing the local peering gateway (LPG).""")
 @cli_util.option('--vcn-id', required=True, help=u"""The OCID of the VCN the LPG belongs to.""")
@@ -2232,9 +2323,16 @@ Example: `subnet123`""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--ipv6-cidr-block', help=u"""Use this to enable IPv6 addressing for this subnet. The VCN must be enabled for IPv6. You can't change this subnet characteristic later. All subnets are /64 in size. The subnet portion of the IPv6 address is the fourth hextet from the left (1111 in the following example).
+
+For important details about IPv6 addressing in a VCN, see [IPv6 Addresses].
+
+Example: `2001:0db8:0123:1111::/64`""")
 @cli_util.option('--prohibit-public-ip-on-vnic', type=click.BOOL, help=u"""Whether VNICs within this subnet can have public IP addresses. Defaults to false, which means VNICs created in this subnet will automatically be assigned public IP addresses unless specified otherwise during instance launch or VNIC creation (with the `assignPublicIp` flag in [CreateVnicDetails]). If `prohibitPublicIpOnVnic` is set to true, VNICs created in this subnet cannot have public IP addresses (that is, it's a private subnet).
 
- Example: `true`""")
+For IPv6, if `prohibitPublicIpOnVnic` is set to `true`, internet access is not allowed for any IPv6s assigned to VNICs in the subnet.
+
+Example: `true`""")
 @cli_util.option('--route-table-id', help=u"""The OCID of the route table the subnet will use. If you don't provide a value, the subnet uses the VCN's default route table.""")
 @cli_util.option('--security-list-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The OCIDs of the security list or lists the subnet will use. If you don't provide a value, the subnet uses the VCN's default security list. Remember that security lists are associated *with the subnet*, but the rules are applied to the individual VNICs in the subnet.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -2245,7 +2343,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'security-list-ids': {'module': 'core', 'class': 'list[string]'}}, output_type={'module': 'core', 'class': 'Subnet'})
 @cli_util.wrap_exceptions
-def create_subnet(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, cidr_block, compartment_id, vcn_id, availability_domain, defined_tags, dhcp_options_id, display_name, dns_label, freeform_tags, prohibit_public_ip_on_vnic, route_table_id, security_list_ids):
+def create_subnet(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, cidr_block, compartment_id, vcn_id, availability_domain, defined_tags, dhcp_options_id, display_name, dns_label, freeform_tags, ipv6_cidr_block, prohibit_public_ip_on_vnic, route_table_id, security_list_ids):
 
     kwargs = {}
 
@@ -2271,6 +2369,9 @@ def create_subnet(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 
     if freeform_tags is not None:
         details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if ipv6_cidr_block is not None:
+        details['ipv6CidrBlock'] = ipv6_cidr_block
 
     if prohibit_public_ip_on_vnic is not None:
         details['prohibitPublicIpOnVnic'] = prohibit_public_ip_on_vnic
@@ -2328,6 +2429,15 @@ The VCN and subnets you create are not accessible until you attach an internet g
 
 Example: `172.16.0.0/16`""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to contain the VCN.""")
+@cli_util.option('--ipv6-cidr-block', help=u"""If you enable IPv6 for the VCN (see `isIpv6Enabled`), you may optionally provide an IPv6 /48 CIDR block from the supported ranges (see [IPv6 Addresses]. The addresses in this block will be considered private and cannot be accessed from the internet. The documentation refers to this as a *custom CIDR* for the VCN.
+
+If you don't provide a custom CIDR for the VCN, Oracle assigns the VCN's IPv6 /48 CIDR block.
+
+Regardless of whether you or Oracle assigns the `ipv6CidrBlock`, Oracle *also* assigns the VCN an IPv6 CIDR block for the VCN's public IP address space (see the `ipv6PublicCidrBlock` of the [Vcn] object). If you do not assign a custom CIDR, Oracle uses the *same* Oracle-assigned CIDR for both the private IP address space (`ipv6CidrBlock` in the `Vcn` object) and the public IP addreses space (`ipv6PublicCidrBlock` in the `Vcn` object). This means that a given VNIC might use the same IPv6 IP address for both private and public (internet) communication. You control whether an IPv6 address can be used for internet communication by using the `isInternetAccessAllowed` attribute in the [Ipv6] object.
+
+For important details about IPv6 addressing in a VCN, see [IPv6 Addresses].
+
+Example: `2001:0db8:0123::/48`""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2342,6 +2452,9 @@ Example: `vcn1`""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-ipv6-enabled', type=click.BOOL, help=u"""Whether IPv6 is enabled for the VCN. Default is `false`. You cannot change this later. For important details about IPv6 addressing in a VCN, see [IPv6 Addresses].
+
+Example: `true`""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -2350,13 +2463,16 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'Vcn'})
 @cli_util.wrap_exceptions
-def create_vcn(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, cidr_block, compartment_id, defined_tags, display_name, dns_label, freeform_tags):
+def create_vcn(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, cidr_block, compartment_id, ipv6_cidr_block, defined_tags, display_name, dns_label, freeform_tags, is_ipv6_enabled):
 
     kwargs = {}
 
     details = {}
     details['cidrBlock'] = cidr_block
     details['compartmentId'] = compartment_id
+
+    if ipv6_cidr_block is not None:
+        details['ipv6CidrBlock'] = ipv6_cidr_block
 
     if defined_tags is not None:
         details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
@@ -2369,6 +2485,9 @@ def create_vcn(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
 
     if freeform_tags is not None:
         details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if is_ipv6_enabled is not None:
+        details['isIpv6Enabled'] = is_ipv6_enabled
 
     client = cli_util.build_client('virtual_network', ctx)
     result = client.create_vcn(
@@ -2956,6 +3075,69 @@ def delete_ip_sec_connection(ctx, from_json, wait_for_state, max_wait_seconds, w
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 oci.wait_until(client, client.get_ip_sec_connection(ipsc_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except oci.exceptions.ServiceError as e:
+                # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
+                # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
+                # will result in an exception that reflects a HTTP 404. In this case, we can exit with success (rather than raising
+                # the exception) since this would have been the behaviour in the waiter anyway (as for delete we provide the argument
+                # succeed_on_not_found=True to the waiter).
+                #
+                # Any non-404 should still result in the exception being thrown.
+                if e.status == 404:
+                    pass
+                else:
+                    raise
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@ipv6_group.command(name=cli_util.override('delete_ipv6.command_name', 'delete'), help=u"""Unassigns and deletes the specified IPv6. You must specify the object's OCID. The IPv6 address is returned to the subnet's pool of available addresses.""")
+@cli_util.option('--ipv6-id', required=True, help=u"""The [OCID] of the IPv6.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_ipv6(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, ipv6_id, if_match):
+
+    if isinstance(ipv6_id, six.string_types) and len(ipv6_id.strip()) == 0:
+        raise click.UsageError('Parameter --ipv6-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('virtual_network', ctx)
+    result = client.delete_ipv6(
+        ipv6_id=ipv6_id,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_ipv6') and callable(getattr(client, 'get_ipv6')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                oci.wait_until(client, client.get_ipv6(ipv6_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
             except oci.exceptions.ServiceError as e:
                 # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
                 # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
@@ -4123,6 +4305,28 @@ def get_ip_sec_connection_tunnel_shared_secret(ctx, from_json, ipsc_id, tunnel_i
     cli_util.render_response(result, ctx)
 
 
+@ipv6_group.command(name=cli_util.override('get_ipv6.command_name', 'get'), help=u"""Gets the specified IPv6. You must specify the object's OCID. Alternatively, you can get the object by using [ListIpv6s] with the IPv6 address (for example, 2001:0db8:0123:1111:98fe:dcba:9876:4321) and subnet OCID.""")
+@cli_util.option('--ipv6-id', required=True, help=u"""The [OCID] of the IPv6.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'Ipv6'})
+@cli_util.wrap_exceptions
+def get_ipv6(ctx, from_json, ipv6_id):
+
+    if isinstance(ipv6_id, six.string_types) and len(ipv6_id.strip()) == 0:
+        raise click.UsageError('Parameter --ipv6-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('virtual_network', ctx)
+    result = client.get_ipv6(
+        ipv6_id=ipv6_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @local_peering_gateway_group.command(name=cli_util.override('get_local_peering_gateway.command_name', 'get'), help=u"""Gets the specified local peering gateway's information.""")
 @cli_util.option('--local-peering-gateway-id', required=True, help=u"""The OCID of the local peering gateway.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -5220,6 +5424,63 @@ def list_ip_sec_connections(ctx, from_json, all_pages, page_size, compartment_id
     cli_util.render_response(result, ctx)
 
 
+@ipv6_group.command(name=cli_util.override('list_ipv6s.command_name', 'list'), help=u"""Lists the [IPv6] objects based on one of these filters:
+
+  * Subnet OCID.   * VNIC OCID.   * Both IPv6 address and subnet OCID: This lets you get an `Ipv6` object based on its private   IPv6 address (for example, 2001:0db8:0123:1111:abcd:ef01:2345:6789) and not its OCID. For comparison,   [GetIpv6] requires the OCID.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
+
+Example: `50`""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--ip-address', help=u"""An IP address. This could be either IPv4 or IPv6, depending on the resource. Example: `10.0.3.3`""")
+@cli_util.option('--subnet-id', help=u"""The OCID of the subnet.""")
+@cli_util.option('--vnic-id', help=u"""The OCID of the VNIC.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[Ipv6]'})
+@cli_util.wrap_exceptions
+def list_ipv6s(ctx, from_json, all_pages, page_size, limit, page, ip_address, subnet_id, vnic_id):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if ip_address is not None:
+        kwargs['ip_address'] = ip_address
+    if subnet_id is not None:
+        kwargs['subnet_id'] = subnet_id
+    if vnic_id is not None:
+        kwargs['vnic_id'] = vnic_id
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('virtual_network', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_ipv6s,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_ipv6s,
+            limit,
+            page_size,
+            **kwargs
+        )
+    else:
+        result = client.list_ipv6s(
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
 @local_peering_gateway_group.command(name=cli_util.override('list_local_peering_gateways.command_name', 'list'), help=u"""Lists the local peering gateways (LPGs) for the specified VCN and compartment (the LPG's compartment).""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--vcn-id', required=True, help=u"""The [OCID] of the VCN.""")
@@ -5533,7 +5794,7 @@ If you're listing all the private IPs associated with a given subnet or VNIC, th
 
 Example: `50`""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
-@cli_util.option('--ip-address', help=u"""An IP address. Example: `10.0.3.3`""")
+@cli_util.option('--ip-address', help=u"""An IP address. This could be either IPv4 or IPv6, depending on the resource. Example: `10.0.3.3`""")
 @cli_util.option('--subnet-id', help=u"""The OCID of the subnet.""")
 @cli_util.option('--vnic-id', help=u"""The OCID of the VNIC.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -6969,6 +7230,95 @@ def update_ip_sec_connection_tunnel_shared_secret(ctx, from_json, ipsc_id, tunne
         update_ip_sec_connection_tunnel_shared_secret_details=details,
         **kwargs
     )
+    cli_util.render_response(result, ctx)
+
+
+@ipv6_group.command(name=cli_util.override('update_ipv6.command_name', 'update'), help=u"""Updates the specified IPv6. You must specify the object's OCID. Use this operation if you want to:
+
+  * Move an IPv6 to a different VNIC in the same subnet.   * Enable/disable internet access for an IPv6.   * Change the display name for an IPv6.   * Update resource tags for an IPv6.""")
+@cli_util.option('--ipv6-id', required=True, help=u"""The [OCID] of the IPv6.""")
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-internet-access-allowed', type=click.BOOL, help=u"""Whether the IPv6 can be used for internet communication. Allowed by default for an IPv6 in a public subnet. Never allowed for an IPv6 in a private subnet. If the value is `true`, the IPv6 uses its public IP address for internet communication.
+
+If you switch this from `true` to `false`, the `publicIpAddress` attribute for the IPv6 becomes null.
+
+Example: `false`""")
+@cli_util.option('--vnic-id', help=u"""The [OCID] of the VNIC to reassign the IPv6 to. The VNIC must be in the same subnet as the current VNIC.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'Ipv6'})
+@cli_util.wrap_exceptions
+def update_ipv6(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, ipv6_id, defined_tags, display_name, freeform_tags, is_internet_access_allowed, vnic_id, if_match):
+
+    if isinstance(ipv6_id, six.string_types) and len(ipv6_id.strip()) == 0:
+        raise click.UsageError('Parameter --ipv6-id cannot be whitespace or empty string')
+    if not force:
+        if defined_tags or freeform_tags:
+            if not click.confirm("WARNING: Updates to defined-tags and freeform-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    details = {}
+
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if display_name is not None:
+        details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if is_internet_access_allowed is not None:
+        details['isInternetAccessAllowed'] = is_internet_access_allowed
+
+    if vnic_id is not None:
+        details['vnicId'] = vnic_id
+
+    client = cli_util.build_client('virtual_network', ctx)
+    result = client.update_ipv6(
+        ipv6_id=ipv6_id,
+        update_ipv6_details=details,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_ipv6') and callable(getattr(client, 'get_ipv6')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_ipv6(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
