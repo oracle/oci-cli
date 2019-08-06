@@ -52,7 +52,9 @@ IGNORE_EXTENDED_TESTS_COMMANDS = [
     ['waas', 'protection-settings', 'update'],
     ['resource-manager', 'stack', 'update'],
     ['resource-manager', 'stack', 'create'],
-    ['waas', 'protection-settings', 'update']
+    ['waas', 'protection-settings', 'update'],
+    ['waas', 'waas-policy', 'list'],
+    ['waas', 'certificate', 'list']
 ]
 
 

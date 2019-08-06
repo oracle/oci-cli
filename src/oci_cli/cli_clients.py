@@ -10,7 +10,7 @@ MODULE_TO_TYPE_MAPPINGS = {}
 ALL_SERVICES_DIR = "services"
 
 this_file_path = abspath(getsourcefile(lambda: 0))
-if "site-packages" in this_file_path:
+if "site-packages" in this_file_path or "dist-packages" in this_file_path:
     python_cli_root_dir = this_file_path[0:this_file_path.index("oci_cli")]
 else:
     python_cli_root_dir = this_file_path[0:this_file_path.index("/src/oci_cli")]

@@ -24,7 +24,7 @@ if fips_libcrypto_file:
 # Add platformization directories to the python system path (PYTHONPATH)
 # This has to be done prior to importing cli_root.
 this_file_path = abspath(getsourcefile(lambda: 0))
-if "site-packages" in this_file_path:
+if "site-packages" in this_file_path or "dist-packages" in this_file_path:
     python_cli_root_dir = this_file_path[0:this_file_path.index("oci_cli")]
 else:
     python_cli_root_dir = this_file_path[0:this_file_path.index("/src/oci_cli")]

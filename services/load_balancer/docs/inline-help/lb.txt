@@ -2298,6 +2298,18 @@ Options:
                                   Balancing Works].
                                   
                                   Example: `true`
+  --ip-mode [IPV4|IPV6]           Whether the load balancer has an IPv4 or IPv6
+                                  IP address.
+                                  
+                                  If "IPV4", the service assigns an
+                                  IPv4 address and the load balancer supports
+                                  IPv4 traffic.
+                                  
+                                  If "IPV6", the service assigns
+                                  an IPv6 address and the load balancer supports
+                                  IPv6 traffic.
+                                  
+                                  Example: "ipMode":"IPV6"
   --listeners COMPLEX TYPE        This option is a JSON dictionary of type
                                   dict(str, ListenerDetails).  For documentation
                                   on ListenerDetails please see our API

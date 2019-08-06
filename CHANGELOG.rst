@@ -6,6 +6,33 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.5.22 - 2019-08-06
+---------------------
+Added
+~~~~~
+* Support for Enabling IPV6 support in the networking service:
+
+    * ``oci network ipv6 list --subnet-id``
+    * ``oci network ipv6 get --ipv6-id``
+    * ``oci network ipv6 update --ipv6-id``
+    * ``oci network ipv6 delete --ipv6-id``
+
+* Support for IPV6 load balancers by providing ``--ip-mode`` option for the load-balancer create command.
+
+    * ``oci lb load-balancer create --ip-mode``
+
+* Support for private IPv6 addressing to establish the BGP peering for FastConnect Service.
+
+	* Adding oracleBgpPeeringIpv6 and customerBgpPeeringIpv6 fields to JSON object CrossConnectMappings (``oci network virtual-circuit create --cross-connect-mappings``)
+
+Removed
+~~~~~~~
+* Dependency on httpsig_cffi package
+
+Updated
+~~~~~~~
+* Check for service directory import to include 'dist-packages'
+
 2.5.21 - 2019-07-30
 ---------------------
 Added

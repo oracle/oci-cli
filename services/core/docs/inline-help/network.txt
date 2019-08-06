@@ -32,6 +32,8 @@ Commands:
   ip-sec-psk                      The tunnel's shared secret (pre-shared key).
   ip-sec-tunnel                   Information about a single tunnel in an
                                   IPSec...
+  ipv6                            An *IPv6* is a conceptual term that refers
+                                  to...
   local-peering-gateway           A local peering gateway (LPG) is an object
                                   on...
   nat-gateway                     A NAT (Network Address Translation)
@@ -4438,6 +4440,434 @@ Options:
                                   commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
+$ oci network ipv6 --help
+Usage: oci network ipv6 [OPTIONS] COMMAND [ARGS]...
+
+  An *IPv6* is a conceptual term that refers to an IPv6 address and related
+  properties. The `IPv6` object is the API representation of an IPv6.
+
+  You can create and assign an IPv6 to any VNIC that is in an IPv6-enabled
+  subnet in an IPv6-enabled VCN.
+
+  For important details about IPv6 addressing in a VCN, see [IPv6 Addresses].
+
+Options:
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
+
+Commands:
+  create  Creates an IPv6 for the specified VNIC.
+  delete  Unassigns and deletes the specified IPv6.
+  get     Gets the specified IPv6.
+  list    Lists the [IPv6] objects based on one of...
+  update  Updates the specified IPv6.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci network ipv6 create --help
+Usage: oci network ipv6 create [OPTIONS]
+
+  Creates an IPv6 for the specified VNIC.
+
+Options:
+  --vnic-id TEXT                  The [OCID] of the VNIC to assign the IPv6 to.
+                                  The IPv6 will be in the VNIC's subnet.
+                                  [required]
+  --defined-tags COMPLEX TYPE     Defined tags for this resource. Each key is
+                                  predefined and scoped to a namespace. For more
+                                  information, see [Resource Tags].
+                                  
+                                  Example:
+                                  `{"Operations": {"CostCenter": "42"}}`
+                                  This is
+                                  a complex type whose value must be valid JSON.
+                                  The value can be provided as a string on the
+                                  command line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+  --display-name TEXT             A user-friendly name. Does not have to be
+                                  unique, and it's changeable. Avoid entering
+                                  confidential information.
+  --freeform-tags COMPLEX TYPE    Free-form tags for this resource. Each tag is
+                                  a simple key-value pair with no predefined
+                                  name, type, or namespace. For more
+                                  information, see [Resource Tags].
+                                  
+                                  Example:
+                                  `{"Department": "Finance"}`
+                                  This is a complex
+                                  type whose value must be valid JSON. The value
+                                  can be provided as a string on the command
+                                  line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+  --ip-address TEXT               An IPv6 address of your choice. Must be an
+                                  available IP address within the subnet's CIDR.
+                                  If you don't specify a value, Oracle
+                                  automatically assigns an IPv6 address from the
+                                  subnet. The subnet is the one that contains
+                                  the VNIC you specify in `vnicId`.
+                                  
+                                  Example:
+                                  `2001:0db8:0123:1111:abcd:ef01:2345:6789`
+  --is-internet-access-allowed BOOLEAN
+                                  Whether the IPv6 can be used for internet
+                                  communication. Allowed by default for an IPv6
+                                  in a public subnet. Never allowed for an IPv6
+                                  in a private subnet. If the value is `true`,
+                                  the IPv6 uses its public IP address for
+                                  internet communication.
+                                  
+                                  If
+                                  `isInternetAccessAllowed` is set to `false`,
+                                  the resulting `publicIpAddress` attribute for
+                                  the Ipv6 is null.
+                                  
+                                  Example: `true`
+  --wait-for-state [PROVISIONING|AVAILABLE|TERMINATING|TERMINATED]
+                                  This operation creates, modifies or deletes a
+                                  resource that has a defined lifecycle state.
+                                  Specify this option to perform the action and
+                                  then wait until the resource reaches a given
+                                  lifecycle state. If timeout is reached, a
+                                  return code of 2 is returned. For any other
+                                  error, a return code of 1 is returned.
+  --max-wait-seconds INTEGER      The maximum time to wait for the resource to
+                                  reach the lifecycle state defined by --wait-
+                                  for-state. Defaults to 1200 seconds.
+  --wait-interval-seconds INTEGER
+                                  Check every --wait-interval-seconds to see
+                                  whether the resource to see if it has reached
+                                  the lifecycle state defined by --wait-for-
+                                  state. Defaults to 30 seconds.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file using the file://path-
+                                  to/file syntax.
+                                  
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci network ipv6 delete --help
+Usage: oci network ipv6 delete [OPTIONS]
+
+  Unassigns and deletes the specified IPv6. You must specify the object's
+  OCID. The IPv6 address is returned to the subnet's pool of available
+  addresses.
+
+Options:
+  --ipv6-id TEXT                  The [OCID] of the IPv6. [required]
+  --if-match TEXT                 For optimistic concurrency control. In the PUT
+                                  or DELETE call for a resource, set the `if-
+                                  match` parameter to the value of the etag from
+                                  a previous GET or POST response for that
+                                  resource.  The resource will be updated or
+                                  deleted only if the etag you provide matches
+                                  the resource's current etag value.
+  --force                         Perform deletion without prompting for
+                                  confirmation.
+  --wait-for-state [PROVISIONING|AVAILABLE|TERMINATING|TERMINATED]
+                                  This operation creates, modifies or deletes a
+                                  resource that has a defined lifecycle state.
+                                  Specify this option to perform the action and
+                                  then wait until the resource reaches a given
+                                  lifecycle state. If timeout is reached, a
+                                  return code of 2 is returned. For any other
+                                  error, a return code of 1 is returned.
+  --max-wait-seconds INTEGER      The maximum time to wait for the resource to
+                                  reach the lifecycle state defined by --wait-
+                                  for-state. Defaults to 1200 seconds.
+  --wait-interval-seconds INTEGER
+                                  Check every --wait-interval-seconds to see
+                                  whether the resource to see if it has reached
+                                  the lifecycle state defined by --wait-for-
+                                  state. Defaults to 30 seconds.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file using the file://path-
+                                  to/file syntax.
+                                  
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci network ipv6 get --help
+Usage: oci network ipv6 get [OPTIONS]
+
+  Gets the specified IPv6. You must specify the object's OCID. Alternatively,
+  you can get the object by using [ListIpv6s] with the IPv6 address (for
+  example, 2001:0db8:0123:1111:98fe:dcba:9876:4321) and subnet OCID.
+
+Options:
+  --ipv6-id TEXT    The [OCID] of the IPv6. [required]
+  --from-json TEXT  Provide input to this command as a JSON document from a file
+                    using the file://path-to/file syntax.
+                    
+                    The --generate-full-
+                    command-json-input option can be used to generate a sample
+                    json file to be used with this command option. The key names
+                    are pre-populated and match the command option names
+                    (converted to camelCase format, e.g. compartment-id -->
+                    compartmentId), while the values of the keys need to be
+                    populated by the user before using the sample file as an
+                    input to this command. For any command option that accepts
+                    multiple values, the value of the key can be a JSON array.
+                    Options can still be provided on the command line. If an
+                    option exists in both the JSON document and the command line
+                    then the command line specified value will be used.
+                    
+                    For
+                    examples on usage of this option, please see our "using CLI
+                    with advanced JSON options" link: https://docs.cloud.oracle.
+                    com/iaas/Content/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                    s
+  -?, -h, --help    For detailed help on any of these individual commands, enter
+                    <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci network ipv6 list --help
+Usage: oci network ipv6 list [OPTIONS]
+
+  Lists the [IPv6] objects based on one of these filters:
+
+  * Subnet OCID.   * VNIC OCID.   * Both IPv6 address and subnet OCID: This
+  lets you get an `Ipv6` object based on its private   IPv6 address (for
+  example, 2001:0db8:0123:1111:abcd:ef01:2345:6789) and not its OCID. For
+  comparison,   [GetIpv6] requires the OCID.
+
+Options:
+  --limit INTEGER      For list pagination. The maximum number of results per
+                       page, or items to return in a paginated "List" call. For
+                       important details about how pagination works, see [List
+                       Pagination].
+                       
+                       Example: `50`
+  --page TEXT          For list pagination. The value of the `opc-next-page`
+                       response header from the previous "List" call. For
+                       important details about how pagination works, see [List
+                       Pagination].
+  --ip-address TEXT    An IP address. This could be either IPv4 or IPv6,
+                       depending on the resource. Example: `10.0.3.3`
+  --subnet-id TEXT     The OCID of the subnet.
+  --vnic-id TEXT       The OCID of the VNIC.
+  --all                Fetches all pages of results. If you provide this option,
+                       then you cannot provide the --limit option.
+  --page-size INTEGER  When fetching results, the number of results to fetch per
+                       call. Only valid when used with --all or --limit, and
+                       ignored otherwise.
+  --from-json TEXT     Provide input to this command as a JSON document from a
+                       file using the file://path-to/file syntax.
+                       
+                       The
+                       --generate-full-command-json-input option can be used to
+                       generate a sample json file to be used with this command
+                       option. The key names are pre-populated and match the
+                       command option names (converted to camelCase format, e.g.
+                       compartment-id --> compartmentId), while the values of
+                       the keys need to be populated by the user before using
+                       the sample file as an input to this command. For any
+                       command option that accepts multiple values, the value of
+                       the key can be a JSON array.
+                       
+                       Options can still be
+                       provided on the command line. If an option exists in both
+                       the JSON document and the command line then the command
+                       line specified value will be used.
+                       
+                       For examples on usage
+                       of this option, please see our "using CLI with advanced
+                       JSON options" link: https://docs.cloud.oracle.com/iaas/Co
+                       ntent/API/SDKDocs/cliusing.htm#AdvancedJSONOptions
+  -?, -h, --help       For detailed help on any of these individual commands,
+                       enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci network ipv6 update --help
+Usage: oci network ipv6 update [OPTIONS]
+
+  Updates the specified IPv6. You must specify the object's OCID. Use this
+  operation if you want to:
+
+  * Move an IPv6 to a different VNIC in the same subnet.   * Enable/disable
+  internet access for an IPv6.   * Change the display name for an IPv6.   *
+  Update resource tags for an IPv6.
+
+Options:
+  --ipv6-id TEXT                  The [OCID] of the IPv6. [required]
+  --defined-tags COMPLEX TYPE     Defined tags for this resource. Each key is
+                                  predefined and scoped to a namespace. For more
+                                  information, see [Resource Tags].
+                                  
+                                  Example:
+                                  `{"Operations": {"CostCenter": "42"}}`
+                                  This is
+                                  a complex type whose value must be valid JSON.
+                                  The value can be provided as a string on the
+                                  command line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+  --display-name TEXT             A user-friendly name. Does not have to be
+                                  unique, and it's changeable. Avoid entering
+                                  confidential information.
+  --freeform-tags COMPLEX TYPE    Free-form tags for this resource. Each tag is
+                                  a simple key-value pair with no predefined
+                                  name, type, or namespace. For more
+                                  information, see [Resource Tags].
+                                  
+                                  Example:
+                                  `{"Department": "Finance"}`
+                                  This is a complex
+                                  type whose value must be valid JSON. The value
+                                  can be provided as a string on the command
+                                  line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+  --is-internet-access-allowed BOOLEAN
+                                  Whether the IPv6 can be used for internet
+                                  communication. Allowed by default for an IPv6
+                                  in a public subnet. Never allowed for an IPv6
+                                  in a private subnet. If the value is `true`,
+                                  the IPv6 uses its public IP address for
+                                  internet communication.
+                                  
+                                  If you switch this
+                                  from `true` to `false`, the `publicIpAddress`
+                                  attribute for the IPv6 becomes null.
+                                  
+                                  Example:
+                                  `false`
+  --vnic-id TEXT                  The [OCID] of the VNIC to reassign the IPv6
+                                  to. The VNIC must be in the same subnet as the
+                                  current VNIC.
+  --if-match TEXT                 For optimistic concurrency control. In the PUT
+                                  or DELETE call for a resource, set the `if-
+                                  match` parameter to the value of the etag from
+                                  a previous GET or POST response for that
+                                  resource.  The resource will be updated or
+                                  deleted only if the etag you provide matches
+                                  the resource's current etag value.
+  --force                         Perform update without prompting for
+                                  confirmation.
+  --wait-for-state [PROVISIONING|AVAILABLE|TERMINATING|TERMINATED]
+                                  This operation creates, modifies or deletes a
+                                  resource that has a defined lifecycle state.
+                                  Specify this option to perform the action and
+                                  then wait until the resource reaches a given
+                                  lifecycle state. If timeout is reached, a
+                                  return code of 2 is returned. For any other
+                                  error, a return code of 1 is returned.
+  --max-wait-seconds INTEGER      The maximum time to wait for the resource to
+                                  reach the lifecycle state defined by --wait-
+                                  for-state. Defaults to 1200 seconds.
+  --wait-interval-seconds INTEGER
+                                  Check every --wait-interval-seconds to see
+                                  whether the resource to see if it has reached
+                                  the lifecycle state defined by --wait-for-
+                                  state. Defaults to 30 seconds.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file using the file://path-
+                                  to/file syntax.
+                                  
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network local-peering-gateway --help
 Usage: oci network local-peering-gateway [OPTIONS] COMMAND [ARGS]...
 
@@ -6160,11 +6590,13 @@ Usage: oci network private-ip [OPTIONS] COMMAND [ARGS]...
   address and related properties. The `privateIp` object is the API
   representation of a private IP.
 
-   Each instance has a *primary private IP* that is automatically created and
-   assigned to the primary VNIC during instance launch. If you add a secondary
-   VNIC to the instance, it also automatically gets a primary private IP. You
-   can't remove a primary private IP from its VNIC. The primary private IP is
-   automatically deleted when the VNIC is terminated.
+  **Note:** For information about IPv6 addresses, see [Ipv6].
+
+  Each instance has a *primary private IP* that is automatically created and
+  assigned to the primary VNIC during instance launch. If you add a secondary
+  VNIC to the instance, it also automatically gets a primary private IP. You
+  can't remove a primary private IP from its VNIC. The primary private IP is
+  automatically deleted when the VNIC is terminated.
 
   You can add *secondary private IPs* to a VNIC after it's created. For more
   information, see the `privateIp` operations and also [IP Addresses].
@@ -6308,7 +6740,8 @@ Options:
                        response header from the previous "List" call. For
                        important details about how pagination works, see [List
                        Pagination].
-  --ip-address TEXT    An IP address. Example: `10.0.3.3`
+  --ip-address TEXT    An IP address. This could be either IPv4 or IPv6,
+                       depending on the resource. Example: `10.0.3.3`
   --subnet-id TEXT     The OCID of the subnet.
   --vnic-id TEXT       The OCID of the VNIC.
   --all                Fetches all pages of results. If you provide this option,
@@ -9592,6 +10025,17 @@ Options:
                                   in
                                   a file, modifying it as needed and then
                                   passing it back in via the file:// syntax.
+  --ipv6-cidr-block TEXT          Use this to enable IPv6 addressing for this
+                                  subnet. The VCN must be enabled for IPv6. You
+                                  can't change this subnet characteristic later.
+                                  All subnets are /64 in size. The subnet
+                                  portion of the IPv6 address is the fourth
+                                  hextet from the left (1111 in the following
+                                  example).
+                                  
+                                  For important details about IPv6
+                                  addressing in a VCN, see [IPv6 Addresses].
+                                  Example: `2001:0db8:0123:1111::/64`
   --prohibit-public-ip-on-vnic BOOLEAN
                                   Whether VNICs within this subnet can have
                                   public IP addresses. Defaults to false, which
@@ -10095,6 +10539,43 @@ Options:
                                   Example: `172.16.0.0/16` [required]
   -c, --compartment-id TEXT       The OCID of the compartment to contain the
                                   VCN. [required]
+  --ipv6-cidr-block TEXT          If you enable IPv6 for the VCN (see
+                                  `isIpv6Enabled`), you may optionally provide
+                                  an IPv6 /48 CIDR block from the supported
+                                  ranges (see [IPv6 Addresses]. The addresses in
+                                  this block will be considered private and
+                                  cannot be accessed from the internet. The
+                                  documentation refers to this as a *custom
+                                  CIDR* for the VCN.
+                                  
+                                  If you don't provide a
+                                  custom CIDR for the VCN, Oracle assigns the
+                                  VCN's IPv6 /48 CIDR block.
+                                  
+                                  Regardless of
+                                  whether you or Oracle assigns the
+                                  `ipv6CidrBlock`, Oracle *also* assigns the VCN
+                                  an IPv6 CIDR block for the VCN's public IP
+                                  address space (see the `ipv6PublicCidrBlock`
+                                  of the [Vcn] object). If you do not assign a
+                                  custom CIDR, Oracle uses the *same* Oracle-
+                                  assigned CIDR for both the private IP address
+                                  space (`ipv6CidrBlock` in the `Vcn` object)
+                                  and the public IP addreses space
+                                  (`ipv6PublicCidrBlock` in the `Vcn` object).
+                                  This means that a given VNIC might use the
+                                  same IPv6 IP address for both private and
+                                  public (internet) communication. You control
+                                  whether an IPv6 address can be used for
+                                  internet communication by using the
+                                  `isInternetAccessAllowed` attribute in the
+                                  [Ipv6] object.
+                                  
+                                  For important details about
+                                  IPv6 addressing in a VCN, see [IPv6
+                                  Addresses].
+                                  
+                                  Example: `2001:0db8:0123::/48`
   --defined-tags COMPLEX TYPE     Defined tags for this resource. Each key is
                                   predefined and scoped to a namespace. For more
                                   information, see [Resource Tags].
@@ -10159,6 +10640,12 @@ Options:
                                   in
                                   a file, modifying it as needed and then
                                   passing it back in via the file:// syntax.
+  --is-ipv6-enabled BOOLEAN       Whether IPv6 is enabled for the VCN. Default
+                                  is `false`. You cannot change this later. For
+                                  important details about IPv6 addressing in a
+                                  VCN, see [IPv6 Addresses].
+                                  
+                                  Example: `true`
   --wait-for-state [PROVISIONING|AVAILABLE|TERMINATING|TERMINATED]
                                   This operation creates, modifies or deletes a
                                   resource that has a defined lifecycle state.

@@ -662,6 +662,13 @@ If \"false\", the service assigns a public IP address to the load balancer.
 A public load balancer is accessible from the internet, depending on your VCN's [security list rules]. For more information about public and private load balancers, see [How Load Balancing Works].
 
 Example: `true`""")
+@cli_util.option('--ip-mode', type=custom_types.CliCaseInsensitiveChoice(["IPV4", "IPV6"]), help=u"""Whether the load balancer has an IPv4 or IPv6 IP address.
+
+If \"IPV4\", the service assigns an IPv4 address and the load balancer supports IPv4 traffic.
+
+If \"IPV6\", the service assigns an IPv6 address and the load balancer supports IPv6 traffic.
+
+Example: \"ipMode\":\"IPV6\"""")
 @cli_util.option('--listeners', type=custom_types.CLI_COMPLEX_TYPE, help=u"""
 
 This option is a JSON dictionary of type dict(str, ListenerDetails).  For documentation on ListenerDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/loadbalancer/20170115/datatypes/ListenerDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -695,7 +702,7 @@ This option is a JSON dictionary of type dict(str, RuleSetDetails).  For documen
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'listeners': {'module': 'load_balancer', 'class': 'dict(str, ListenerDetails)'}, 'hostnames': {'module': 'load_balancer', 'class': 'dict(str, HostnameDetails)'}, 'backend-sets': {'module': 'load_balancer', 'class': 'dict(str, BackendSetDetails)'}, 'network-security-group-ids': {'module': 'load_balancer', 'class': 'list[string]'}, 'subnet-ids': {'module': 'load_balancer', 'class': 'list[string]'}, 'certificates': {'module': 'load_balancer', 'class': 'dict(str, CertificateDetails)'}, 'path-route-sets': {'module': 'load_balancer', 'class': 'dict(str, PathRouteSetDetails)'}, 'freeform-tags': {'module': 'load_balancer', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'load_balancer', 'class': 'dict(str, dict(str, object))'}, 'rule-sets': {'module': 'load_balancer', 'class': 'dict(str, RuleSetDetails)'}})
 @cli_util.wrap_exceptions
-def create_load_balancer(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, shape_name, subnet_ids, is_private, listeners, hostnames, backend_sets, network_security_group_ids, certificates, path_route_sets, freeform_tags, defined_tags, rule_sets):
+def create_load_balancer(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, shape_name, subnet_ids, is_private, ip_mode, listeners, hostnames, backend_sets, network_security_group_ids, certificates, path_route_sets, freeform_tags, defined_tags, rule_sets):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -708,6 +715,9 @@ def create_load_balancer(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 
     if is_private is not None:
         details['isPrivate'] = is_private
+
+    if ip_mode is not None:
+        details['ipMode'] = ip_mode
 
     if listeners is not None:
         details['listeners'] = cli_util.parse_json_parameter("listeners", listeners)
