@@ -416,6 +416,7 @@ def write_config(filename, user_id=None, fingerprint=None, key_file=None, tenanc
 
         if security_token_file:
             f.write("security_token_file={}\n".format(security_token_file))
+            apply_user_only_access_permissions(security_token_file)
 
     # only user has R/W permissions to the config file
     apply_user_only_access_permissions(filename)
