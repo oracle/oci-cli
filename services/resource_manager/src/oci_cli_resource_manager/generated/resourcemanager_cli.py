@@ -335,6 +335,7 @@ def create_stack_create_zip_upload_config_source_details(ctx, from_json, wait_fo
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     details = {}
+    details['configSource'] = {}
     details['compartmentId'] = compartment_id
     details['configSource']['zipFileBase64Encoded'] = config_source_zip_file_base64_encoded
 
@@ -1203,6 +1204,7 @@ def update_stack_update_zip_upload_config_source_details(ctx, from_json, force, 
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     details = {}
+    details['configSource'] = {}
 
     if display_name is not None:
         details['displayName'] = display_name

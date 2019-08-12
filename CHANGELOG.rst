@@ -6,24 +6,48 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.6.0 - 2019-08-13
+-------------------
+Added
+~~~~~
+* Support for calling Oracle Cloud Infrastructure services in the Zurich region (``--region eu-zurich-1``)
+
+* Support for Data Transfer Service
+
+  * ``oci dts``
+
+Fixed
+~~~~~~~
+* JSON input generation for certain commands
+
+* Help text for certain commands was displaying required parameters as optional
+
+* Links to GitHub examples are being updated in the changelog itself.
+
+Updated
+~~~~~~~
+* [Breaking] Changes to response structure for certain WAF commands
+
+  * ``oci waas``
+
 2.5.22 - 2019-08-06
 ---------------------
 Added
 ~~~~~
 * Support for Enabling IPV6 support in the networking service:
 
-    * ``oci network ipv6 list --subnet-id``
-    * ``oci network ipv6 get --ipv6-id``
-    * ``oci network ipv6 update --ipv6-id``
-    * ``oci network ipv6 delete --ipv6-id``
+  * ``oci network ipv6 list --subnet-id``
+  * ``oci network ipv6 get --ipv6-id``
+  * ``oci network ipv6 update --ipv6-id``
+  * ``oci network ipv6 delete --ipv6-id``
 
 * Support for IPV6 load balancers by providing ``--ip-mode`` option for the load-balancer create command.
 
-    * ``oci lb load-balancer create --ip-mode``
+  * ``oci lb load-balancer create --ip-mode``
 
 * Support for private IPv6 addressing to establish the BGP peering for FastConnect Service.
 
-	* Adding oracleBgpPeeringIpv6 and customerBgpPeeringIpv6 fields to JSON object CrossConnectMappings (``oci network virtual-circuit create --cross-connect-mappings``)
+  * Adding oracleBgpPeeringIpv6 and customerBgpPeeringIpv6 fields to JSON object CrossConnectMappings (``oci network virtual-circuit create --cross-connect-mappings``)
 
 Removed
 ~~~~~~~
@@ -56,6 +80,7 @@ Added
 * Support for Events Service
 
   * ``oci events``
+  * An example on using the Events Service can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/services/events/examples_and_test_scripts/events_example.sh>`__.
 
 * Support for adding tags to Cross connect group, Cross connect, Remote Peering Connection and Virtual Circuit resources in the Networking Service.
 
@@ -85,7 +110,7 @@ Added
   * --target-type option for ``oci budgets budget create``
   * --targets option for ``oci budgets budget create``
   * --target-type option for ``oci budgets budget list``
-  * An example on using the feature can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/budget_example.sh)>`__.
+  * An example on using the feature can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/services/budget/examples_and_test_scripts/budget_example.sh)>`__.
 
 * Ability to create instance configuration from a running instance.
 
@@ -124,7 +149,7 @@ Added
 * Support for Service Gateway Transit Routing feature.
 
   * Ability to associate route table when creating service-gateway (``oci network service-gateway create --route-table-id``)
-  * An example using the feature can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/create_service_gateway_example.sh>`__.
+  * An example using the feature can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/services/core/examples_and_test_scripts/create_service_gateway_example.sh>`__.
 
 * Support for moving compartment tree to a different parent compartment
 
@@ -147,8 +172,8 @@ Added
 * Support for changing the compartment of an instance in the Compute service
 
   * ``oci compute instance change-compartment``
-  * An example can be found here: `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/change-compartment.sh>`__
-  * An example using work requests to determine status can be found here: `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/change-compartment-using-work-request-id.sh>`__
+  * An example can be found here: `GitHub <https://github.com/oracle/oci-cli/blob/master/services/core/examples_and_test_scripts/change-compartment.sh>`__
+  * An example using work requests to determine status can be found here: `GitHub <https://github.com/oracle/oci-cli/blob/master/services/core/examples_and_test_scripts/change-compartment-using-work-request-id.sh>`__
 
 * Support for using kms key when copying volume backups
 
@@ -177,12 +202,12 @@ Added
 * Support for managing Compartment Resource Quotas
 
   * ``oci limits quota``
-  * An example on using the feature can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/quotas_example.sh>`__.
+  * An example on using the feature can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/services/limits/examples_and_test_scripts/quotas_example.sh>`__.
 
 * Support for Oracle Functions
 
   * ``oci fn``
-  * An example on using Oracle Functions can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/functions_example.sh>`__.
+  * An example on using Oracle Functions can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/services/functions/examples_and_test_scripts/functions_example.sh>`__.
 
 Fixed
 ~~~~~
@@ -351,7 +376,7 @@ Added
 
   * ``oci iam tag delete``
   * ``oci iam tag-namespace delete``
-  * An example on using the feature can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/tagging_example.sh>`__.
+  * An example on using the feature can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/services/identity/examples_and_test_scripts/tagging_example.sh>`__.
 
 * Support for iscsi type volume-attachment for compute resources.
 
@@ -394,7 +419,7 @@ Added
 * Support for Work Requests Service
 
   * ``oci work-requests``
-  * An example of using the Work Requests Service can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/get_work_requests_example.sh>`__.
+  * An example of using the Work Requests Service can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/services/work_requests/examples_and_test_scripts/get_work_requests_example.sh>`__.
 
 * Tags returned in File Storage Summary objects
 
@@ -427,7 +452,7 @@ Added
 * Support for getting Object Storage namespace of another tenancy by using their compartment ID.
 
   * ``oci os ns get --compartment-id``
-  * An example on getting namespace using compartment ID can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/object_storage_get_namespace.sh>`__.
+  * An example on getting namespace using compartment ID can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/services/object_storage/examples_and_test_scripts/object_storage_get_namespace.sh>`__.
 
 Changed
 ~~~~~~~
@@ -452,7 +477,7 @@ Added
 
 * Support for LoggingContext option in Key Management Service (``--logging-context`` option for ``oci kms crypto encrypt|decrypt|generate-data-encryption-key``)
 
-  * An example on using Key Management Service LoggingContext option can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/kms_example.sh>`__.
+  * An example on using Key Management Service LoggingContext option can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/services/key_management/examples_and_test_scripts/kms_example.sh>`__.
   * ``oci kms crypto encrypt --logging-context``
   * ``oci kms crypto decrypt --logging-context``
   * ``oci kms crypto generate-data-encryption-key --logging-context``
@@ -584,7 +609,7 @@ Changed
 
 * Improve Object Lifecycle Management policy in Object Storage by supporting glob patterns and exclusions.
 
-  * An example on writing object lifecycle policy can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/write_object_lifecycle_policy.sh>`__.
+  * An example on writing object lifecycle policy can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/services/object_storage/examples_and_test_scripts/write_object_lifecycle_policy.sh>`__.
 
 
 2.5.4 - 2019-03-19
@@ -594,7 +619,7 @@ Added
 * Support for provisioning a new autonomous database or autonomous data warehouse as a clone of another in the Database service
 
   * ``oci db autonomous-database create-from-clone``
-  * An example on using the feature can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/database_example.sh>`__.
+  * An example on using the feature can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/services/database/examples_and_test_scripts/database_example.sh>`__.
 
 * Support for specifying metadata on node pools in the Container Engine for Kubernetes service
 
@@ -607,7 +632,7 @@ Added
 * Support DbSystem timezone on provisioning API.
 
   * ``oci db system launch --time-zone``
-  * An example on using the feature can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/database_launch_exadata_sparse_example.sh>`__.
+  * An example on using the feature can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/services/database/examples_and_test_scripts/database_launch_exadata_sparse_example.sh>`__.
 
 * DbWorkload Type Introduced for Autonomous Database Create Request.
 
@@ -618,12 +643,12 @@ Added
 
   * ``oci db system get-exadata-iorm-config``
   * ``oci db system update-exadata-iorm-config``
-  * An example on using the feature can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/database_exadata_iorm_example.sh>`__.
+  * An example on using the feature can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/services/database/examples_and_test_scripts/database_exadata_iorm_example.sh>`__.
 
 * Support for Tag Default feature as a part of the Identity Service
 
   * ``oci iam tag-default``
-  * An example on using the feature can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/tagging_example.sh>`__.
+  * An example on using the feature can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/services/identity/examples_and_test_scripts/tagging_example.sh>`__.
 
 * Support for email on user accounts in the Identity Service
 
@@ -642,7 +667,7 @@ Added
   * ``oci budgets alert-rule get``
   * ``oci budgets alert-rule list``
   * ``oci budgets alert-rule update``
-  * An example on using the feature can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/budget_example.sh>`__.
+  * An example on using the feature can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/services/budget/examples_and_test_scripts/budget_example.sh>`__.
 
 2.5.2 - 2019-02-28
 ------------------
@@ -651,19 +676,19 @@ Added
 * Support for OCI Monitoring Service
 
   * ``oci monitoring``
-  * An example using monitoring alarms can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/monitoring_alarm_example.sh>`__.
-  * An example using monitoring metrics can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/monitoring_metrics_example.sh>`__.
+  * An example using monitoring alarms can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/services/monitoring/examples_and_test_scripts/monitoring_alarm_example.sh>`__.
+  * An example using monitoring metrics can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/services/monitoring/examples_and_test_scripts/monitoring_metrics_example.sh>`__.
 
 * Support for Resource Manager service
 
   * ``oci resource-manager``
-  * An example of using the feature can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/resource_manager_example.sh>`__
+  * An example of using the feature can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/services/resource_manager/examples_and_test_scripts/resource_manager_example.sh>`__
 
 * Support for Notification service
 
   * ``oci ons``
-  * An example of using notification subscriptions can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/notification_subscription_example.sh>`__
-  * An example of using notification topics can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/notification_topic_example.sh>`__
+  * An example of using notification subscriptions can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/services/ons/examples_and_test_scripts/notification_subscription_example.sh>`__
+  * An example of using notification topics can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/services/ons/examples_and_test_scripts/notification_topic_example.sh>`__
 
 * Support for Auto Scaling Configurations as part of Compute Autoscaling Service
 
@@ -672,7 +697,7 @@ Added
   * ``oci autoscaling configuration get``
   * ``oci autoscaling configuration list``
   * ``oci autoscaling configuration update``
-  * An example using the feature can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/autoscaling_example.sh>`__.
+  * An example using the feature can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/services/autoscaling/examples_and_test_scripts/autoscaling_example.sh>`__.
 
 * Support for Auto Scaling Policies as part of Compute Autoscaling Service
 
@@ -685,24 +710,24 @@ Added
 * Support to specify fault domains in Database system launch in Database service.
 
   * ``oci db system launch --fault-domains``
-  * An example using the feature can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/database_launch_dbsystem_example.sh>`__.
+  * An example using the feature can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/services/database/examples_and_test_scripts/database_launch_dbsystem_example.sh>`__.
 
 * Support for Load Balancers for Instance Pools
 
   * ``oci compute-management instance-pool attach-lb``
   * ``oci compute-management instance-pool detach-lb``
-  * An example using the feature can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/instance_pools_example.sh>`__.
+  * An example using the feature can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/services/core/examples_and_test_scripts/instance_pools_example.sh>`__.
 
 * Support for change Tag Namespace Compartment as a part of the Identity Service
 
   * ``oci iam tag-namespace change-compartment``
-  * An example using the feature can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/tagging_example.sh>`__.
+  * An example using the feature can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/services/identity/examples_and_test_scripts/tagging_example.sh>`__.
 
 * Support for instance launch with agent configuration for enabling monitoring and retrieving agent configuration
 
   * ``oci compute instance launch --agent-config``
   * ``oci compute instance update --agent-config``
-  * An example using the feature can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/compute_agent_enable_disable_example.sh>`__
+  * An example using the feature can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/services/core/examples_and_test_scripts/compute_agent_enable_disable_example.sh>`__
 
 2.5.1 - 2019-02-21
 ------------------
@@ -710,11 +735,11 @@ Added
 ~~~~~
 * Tagging support for Key Management (``--freeform-tags`` and ``--defined-tags`` option for ``oci kms management vault/key create/update``)
 
-  * An example on using KMS tagging can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/kms_example.sh>`__.
+  * An example on using KMS tagging can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/services/key_management/examples_and_test_scripts/kms_example.sh>`__.
 
 * Support for Oracle Streaming Service. (``oci streaming``)
 
-  * An example on using the Streaming Service can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/streaming_example.sh>`__.
+  * An example on using the Streaming Service can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/services/streaming/examples_and_test_scripts/streaming_example.sh>`__.
 
 Changed
 ~~~~~~~
@@ -760,7 +785,7 @@ Added
 
 * Support for Web Application Acceleration and Security Service (``oci waas``)
 
-  * An example on using the WAAS Service can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/waas_example.sh>`__.
+  * An example on using the WAAS Service can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/services/waas/examples_and_test_scripts/waas_example.sh>`__.
 
 Changed
 ~~~~~~~
@@ -781,7 +806,7 @@ Added
 ~~~~~
 * Support for Announcements Service (``oci announce``)
 
-  * An example on using the Announcements Service can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/announcements_service_example.sh>`__.
+  * An example on using the Announcements Service can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/services/announcements_service/examples_and_test_scripts/announcements_service_example.sh>`__.
 
 2.4.42 - 2019-01-24
 -------------------
@@ -791,7 +816,7 @@ Added
 
 * Support for renaming the new database when launching new dbsystem from a database backup (--db-name option for ``oci db system launch-from-backup``)
 
-  * An example on using --db-name parameter while restoring a database from backup can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/rename_database_during_backup_restore.sh>`__.
+  * An example on using --db-name parameter while restoring a database from backup can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/services/database/examples_and_test_scripts/rename_database_during_backup_restore.sh>`__.
 
 * Support for calling Oracle Cloud Infrastructure services in the ``ca-toronto-1`` region (``--region ca-toronto-1``)
 
@@ -860,7 +885,7 @@ Added
 * Support for fetching bucket statistics in Object Storage getBucket service.
 
   * ``oci os bucket get --bucket-name --namespace-name --fields``
-  * An example on using the feature can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/get_bucket_example.sh>`__
+  * An example on using the feature can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/services/object_storage/examples_and_test_scripts/get_bucket_example.sh>`__
 
 2.4.38 - 2018-11-15
 -------------------
@@ -872,7 +897,7 @@ Added
   * Ability to associate route table when creating local-peering-gateway (`oci network local-peering-gateway create --routeTableId`)
   * Ability to associate route table when updating drg-attachment (`oci network drg-attachment update --routeTableId`)
   * Ability to associate route table when updating local-peering-gateway (`oci network local-peering-gateway update --routeTableId`)
-  * An example using the feature can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/vcn_transit_routing.sh>`__.
+  * An example using the feature can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/services/core/examples_and_test_scripts/vcn_transit_routing.sh>`__.
 
 2.4.37 - 2018-11-01
 -------------------
@@ -968,7 +993,7 @@ Added
 * Support for Cross Region Copy in Object Storage.
 
   * ``oci os object copy --bucket-name --source-object-name --destination-region --destination-namespace --destination-bucket --destination-object``
-  * An example on using the feature can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/copy_object_example.sh>`__
+  * An example on using the feature can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/services/object_storage/examples_and_test_scripts/copy_object_example.sh>`__
 
 * Support for Object Lifecycle Management as part of the Object Storage service.
 
@@ -990,7 +1015,7 @@ Added
 ~~~~~~~~
 * Support for Key Management Service (``oci kms``)
 
-  * Examples on using the Key Management Service can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/kms_example.sh>`__.
+  * Examples on using the Key Management Service can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/services/key_management/examples_and_test_scripts/kms_example.sh>`__.
 * Support for ``--wait-for-state`` option on multiple commands.
 * Improved custom image support by introducing PARAVIRTUALIZED as a launch mode option in the Image Import command.
 
@@ -1058,7 +1083,7 @@ Added
 ~~~~~~~~
 * Support for Resource Search service (``oci search``)
 
-  * An example on using the Resource Search Service can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/resource_search_example.sh>`__.
+  * An example on using the Resource Search Service can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/services/resource_search/examples_and_test_scripts/resource_search_example.sh>`__.
 
 * Ability to set the scheduled backup policy on Boot Volume creation in the Block Storage Service. (``oci bv boot-volume create --backup-policy-id``)
 
@@ -1166,7 +1191,7 @@ Fixed
 Added
 ~~~~~~~~
 * Support for returning ``event-name`` in logs extracted from Audit Service. (``oci audit event list``)
-* Support for multiple hostnames per listener in Load Balancer Service. An example can be found on `Github <https://github.com/oracle/oci-cli/blob/master/scripts/examples/create_load_balancer.sh>`__ (``oci lb hostname`` and ``oci lb listener create --hostname-names``)
+* Support for multiple hostnames per listener in Load Balancer Service. An example can be found on `Github <https://github.com/oracle/oci-cli/blob/master/services/load_balancer/examples_and_test_scripts/create_load_balancer.sh>`__ (``oci lb hostname`` and ``oci lb listener create --hostname-names``)
 * Support for FastConnect service. New commands as mentioned below are added:
 
   * ``oci network cross-connect-group``
@@ -1203,7 +1228,7 @@ Added
 ---------------------
 Added
 ~~~~~~~~
-* An example of how to scale existing VM instances using the CLI can be found on `Github <https://github.com/oracle/oci-cli/blob/master/scripts/examples/scale_vm_example.sh>`__
+* An example of how to scale existing VM instances using the CLI can be found on `Github <https://github.com/oracle/oci-cli/blob/master/services/core/examples_and_test_scripts/scale_vm_example.sh>`__
 * A warning message informing use of ``--all`` flag to get all items during list operations.
 
 Fixed
@@ -1272,7 +1297,7 @@ Fixed
 Added
 ~~~~~~~~~~
 * Support for the File Storage Service. (``oci fs``)
-* Support for Path Route Sets in the Load Balancer Service. An example can be found on `Github <https://github.com/oracle/oci-cli/blob/master/scripts/examples/create_load_balancer.sh>`__ (``oci lb path-route-set``)
+* Support for Path Route Sets in the Load Balancer Service. An example can be found on `Github <https://github.com/oracle/oci-cli/blob/master/services/load_balancer/examples_and_test_scripts/create_load_balancer.sh>`__ (``oci lb path-route-set``)
 * Tagging support for *Bucket* resources in the Object Storage Service
 
   * Create a bucket with tags: ``oci os bucket create --defined-tags --freeform-tags``
@@ -1289,7 +1314,7 @@ Added
 ~~~~~~~~~~
 * Support for Domain Name System Service (oci dns)
 
-  * An example on using the Domain Name System Service can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/scripts/examples/dns_example.sh>`__.
+  * An example on using the Domain Name System Service can be found on `GitHub <https://github.com/oracle/oci-cli/blob/master/services/dns/examples_and_test_scripts/dns_example.sh>`__.
 
 * Support for Reserved Public IPs in Virtual Networking Service (oci network public-ip)
 * Support for the following features in Block Storage Service
@@ -1314,7 +1339,7 @@ Added
 
   * Tags and tag namespaces can be managed via the 'oci iam tag-namespace' and 'oci iam tag' commands
   * Operations which support applying tags will have --defined-tags and --freeform-tags options. Check the help dump (https://github.com/oracle/oci-cli/blob/master/tests/output/inline_help_dump.txt) for resources which support tags. A general list of taggable resources can also be found in: https://docs.cloud.oracle.com/Content/Identity/Concepts/taggingoverview.htm#Taggable
-  * An example of using tagging can be found at https://github.com/oracle/oci-cli/blob/master/scripts/examples/tagging_example.sh
+  * An example of using tagging can be found at https://github.com/oracle/oci-cli/blob/master/services/identity/examples_and_test_scripts/tagging_example.sh
 
 * Support for bringing your own custom image for emulation mode virtual machines in Compute Service (--launch-mode parameter on create image)
 * Support for returning unquoted strings when the result of a JMESPath --query is a single string value (using --raw-output option)
@@ -1338,7 +1363,7 @@ Added
 ~~~~~~~~~~
 * Support for Load Balancing Service operations ('oci lb')
 
-  * An example of creating a load balancer can be found a https://github.com/oracle/oci-cli/blob/master/scripts/examples/create_load_balancer.sh
+  * An example of creating a load balancer can be found a https://github.com/oracle/oci-cli/blob/master/services/load_balancer/examples_and_test_scripts/create_load_balancer.sh
 
 * Support for user managed boot volumes: 'oci bv boot-volume', 'oci compute instance launch --source-details', 'oci compute instance terminate --preserve-boot-volume'
 * Operations which create, update or delete resources with a lifecycle-state now support a --wait-for-state option which allows you to perform the action and then wait until the resource reaches a given state

@@ -1,0 +1,35 @@
+{
+    /* 
+     * Each entry in this dictionary represents a certificate bundle which should be used by the load balancer.
+     * For caCertificate, privateKey and publicCertificate these should be the PEM-formatted strings
+     *
+     * The dictionary key should be the same as the certificate name in the dictionary value. In order to specify multiple 
+     * certificate bundles, add multiple entries to this dictionary. 
+     */
+    "my_cert_bundle" : {
+        /*
+         * For information about each of these fields, see: https://docs.cloud.oracle.com/api/#/en/loadbalancer/20170115/requests/CreateCertificateDetails
+         *
+         * Note that the attribute names here have to match what is shown in the above link.
+         *
+         * Also note that the caCertificate, privateKey and publicCertificate PEM format strings should be a single string, so we have the newline separator (\n) in the strings
+         */
+        "caCertificate": "-----BEGIN CERTIFICATE-----\nMIID5jCCAs6gAwIBAgIJAIJzz.....0jYrWJDHaJK9ZzD6eyX5vxK/JD\n-----END CERTIFICATE-----\n",
+        "certificateName": "my_cert_bundle",
+        "privateKey": "-----BEGIN RSA PRIVATE KEY-----\nMIIEpQIBAAKCAQE....R5yhn/jXbEjdHotZv/HflKLy07FQ=\n-----END RSA PRIVATE KEY-----\n",
+        "publicCertificate": "-----BEGIN CERTIFICATE-----\nMIID5jCCAs6gAwIBAgIJAIJzz.....0jYrWJDHaJK9ZzD6eyX5vxK/JD\n-----END CERTIFICATE-----\n"
+        //If your private key has a passphrase, also provide it
+        //, "passphrase": "myPassPhrase"
+    }
+    // Uncommenting the below would add another certificate bundle when creating the load balancer. You could copy it
+    // as many times as necessary to add all the certificate bundles you need to
+    /*
+      , "my_second_cert_bundle": {
+        "caCertificate": "PEM-formatted string",
+        "certificateName": "my_second_cert_bundle",
+        "passphrase": "string",
+        "privateKey": "PEM-formatted string",
+        "publicCertificate": "PEM-formatted string"
+      }
+     */
+}

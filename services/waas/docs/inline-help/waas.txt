@@ -56,7 +56,7 @@ $ oci waas access-rule list --help
 Usage: oci waas access-rule list [OPTIONS]
 
   Gets the currently configured access rules for the Web Application Firewall
-  configration of a specified WAAS policy. The order of the access rules is
+  configuration of a specified WAAS policy. The order of the access rules is
   important. The rules will be checked in the order they are specified and the
   first matching rule will be used.
 
@@ -556,23 +556,43 @@ Usage: oci waas certificate create [OPTIONS]
 Options:
   -c, --compartment-id TEXT       The [OCID] of the compartment in which to
                                   create the SSL certificate. [required]
-  --certificate-data TEXT         The data of the SSL certificate. [required]
+  --certificate-data TEXT         The data of the SSL certificate.
+                                  
+                                  **Note:**
+                                  Many SSL certificate providers require an
+                                  intermediate certificate chain to ensure a
+                                  trusted status. If your SSL certificate
+                                  requires an intermediate certificate chain,
+                                  please append the intermediate certificate key
+                                  in the `certificateData` field after the leaf
+                                  certificate issued by the SSL certificate
+                                  provider. If you are unsure if your
+                                  certificate requires an intermediate
+                                  certificate chain, see your certificate
+                                  provider's documentation.
+                                  
+                                  The example below
+                                  shows an intermediate certificate appended to
+                                  a leaf certificate. [required]
   --private-key-data TEXT         The private key of the SSL certificate.
                                   [required]
   --display-name TEXT             A user-friendly name for the SSL certificate.
                                   The name can be changed and does not need to
                                   be unique.
   --is-trust-verification-disabled BOOLEAN
-                                  Set to true if the SSL certificate is self-
+                                  Set to `true` if the SSL certificate is self-
                                   signed.
   --freeform-tags COMPLEX TYPE    Free-form tags for this resource. Each tag is
                                   a simple key-value pair with no predefined
                                   name, type, or namespace. For more
                                   information, see [Resource Tags].
-                                  This is a
-                                  complex type whose value must be valid JSON.
-                                  The value can be provided as a string on the
-                                  command line or passed in as a file using
+                                  
+                                  Example:
+                                  `{"Department": "Finance"}`
+                                  This is a complex
+                                  type whose value must be valid JSON. The value
+                                  can be provided as a string on the command
+                                  line or passed in as a file using
                                   the
                                   file://path/to/file syntax.
                                   
@@ -585,19 +605,24 @@ Options:
                                   passing it back in via the file:// syntax.
   --defined-tags COMPLEX TYPE     Defined tags for this resource. Each key is
                                   predefined and scoped to a namespace. For more
-                                  information, see [Resource Tags]. Example:
-                                  This is a complex type whose value must be
-                                  valid JSON. The value can be provided as a
-                                  string on the command line or passed in as a
-                                  file using
-                                  the file://path/to/file syntax.
-                                  The --generate-param-json-input option can be
-                                  used to generate an example of the JSON which
-                                  must be provided. We recommend storing this
-                                  example
-                                  in a file, modifying it as needed and
-                                  then passing it back in via the file://
-                                  syntax.
+                                  information, see [Resource Tags].
+                                  
+                                  Example:
+                                  `{"Operations": {"CostCenter": "42"}}`
+                                  This is
+                                  a complex type whose value must be valid JSON.
+                                  The value can be provided as a string on the
+                                  command line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
   --wait-for-state [CREATING|ACTIVE|FAILED|UPDATING|DELETING|DELETED]
                                   This operation creates, modifies or deletes a
                                   resource that has a defined lifecycle state.
@@ -768,7 +793,8 @@ Options:
                                   certificates OCIDs.
   --display-name TEXT             Filter certificates using a list of display
                                   names.
-  --lifecycle-state TEXT          Filter certificates using a list of lifecycle
+  --lifecycle-state [CREATING|ACTIVE|FAILED|UPDATING|DELETING|DELETED]
+                                  Filter certificates using a list of lifecycle
                                   states.
   --time-created-greater-than-or-equal-to DATETIME
                                   A filter that matches certificates created on
@@ -973,27 +999,35 @@ Options:
   --display-name TEXT             A user-friendly name for the SSL certificate.
                                   The name can be changed and does not need to
                                   be unique.
-  --freeform-tags COMPLEX TYPE    A simple key-value pair without any defined
-                                  schema.
-                                  This is a complex type whose value
-                                  must be valid JSON. The value can be provided
-                                  as a string on the command line or passed in
-                                  as a file using
-                                  the file://path/to/file
-                                  syntax.
+  --freeform-tags COMPLEX TYPE    Free-form tags for this resource. Each tag is
+                                  a simple key-value pair with no predefined
+                                  name, type, or namespace. For more
+                                  information, see [Resource Tags].
                                   
-                                  The --generate-param-json-input
-                                  option can be used to generate an example of
-                                  the JSON which must be provided. We recommend
-                                  storing this example
-                                  in a file, modifying it
-                                  as needed and then passing it back in via the
-                                  file:// syntax.
-  --defined-tags COMPLEX TYPE     A key-value pair with a defined schema that
-                                  restricts the values of tags. These predefined
-                                  keys are scoped to namespaces.
-                                  This is a
-                                  complex type whose value must be valid JSON.
+                                  Example:
+                                  `{"Department": "Finance"}`
+                                  This is a complex
+                                  type whose value must be valid JSON. The value
+                                  can be provided as a string on the command
+                                  line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+  --defined-tags COMPLEX TYPE     Defined tags for this resource. Each key is
+                                  predefined and scoped to a namespace. For more
+                                  information, see [Resource Tags].
+                                  
+                                  Example:
+                                  `{"Operations": {"CostCenter": "42"}}`
+                                  This is
+                                  a complex type whose value must be valid JSON.
                                   The value can be provided as a string on the
                                   command line or passed in as a file using
                                   the
@@ -2719,7 +2753,7 @@ Options:
   --domain TEXT                   The web application domain that the WAAS
                                   policy protects. [required]
   --display-name TEXT             A user-friendly name for the WAAS policy. The
-                                  name is can be changed and does not need to be
+                                  name can be changed and does not need to be
                                   unique.
   --additional-domains COMPLEX TYPE
                                   An array of additional domains for the
@@ -2786,27 +2820,35 @@ Options:
                                   in a file, modifying it as needed and
                                   then passing it back in via the file://
                                   syntax.
-  --freeform-tags COMPLEX TYPE    A simple key-value pair without any defined
-                                  schema.
-                                  This is a complex type whose value
-                                  must be valid JSON. The value can be provided
-                                  as a string on the command line or passed in
-                                  as a file using
-                                  the file://path/to/file
-                                  syntax.
+  --freeform-tags COMPLEX TYPE    Free-form tags for this resource. Each tag is
+                                  a simple key-value pair with no predefined
+                                  name, type, or namespace. For more
+                                  information, see [Resource Tags].
                                   
-                                  The --generate-param-json-input
-                                  option can be used to generate an example of
-                                  the JSON which must be provided. We recommend
-                                  storing this example
-                                  in a file, modifying it
-                                  as needed and then passing it back in via the
-                                  file:// syntax.
-  --defined-tags COMPLEX TYPE     A key-value pair with a defined schema that
-                                  restricts the values of tags. These predefined
-                                  keys are scoped to namespaces.
-                                  This is a
-                                  complex type whose value must be valid JSON.
+                                  Example:
+                                  `{"Department": "Finance"}`
+                                  This is a complex
+                                  type whose value must be valid JSON. The value
+                                  can be provided as a string on the command
+                                  line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+  --defined-tags COMPLEX TYPE     Defined tags for this resource. Each key is
+                                  predefined and scoped to a namespace. For more
+                                  information, see [Resource Tags].
+                                  
+                                  Example:
+                                  `{"Operations": {"CostCenter": "42"}}`
+                                  This is
+                                  a complex type whose value must be valid JSON.
                                   The value can be provided as a string on the
                                   command line or passed in as a file using
                                   the
@@ -2987,7 +3029,8 @@ Options:
                                   unspecified, defaults to `DESC`.
   --id TEXT                       Filter policies using a list of policy OCIDs.
   --display-name TEXT             Filter policies using a list of display names.
-  --lifecycle-state TEXT          Filter policies using a list of lifecycle
+  --lifecycle-state [CREATING|ACTIVE|FAILED|UPDATING|DELETING|DELETED]
+                                  Filter policies using a list of lifecycle
                                   states.
   --time-created-greater-than-or-equal-to DATETIME
                                   A filter that matches policies created on or
@@ -3188,7 +3231,7 @@ Usage: oci waas waas-policy update [OPTIONS]
 Options:
   --waas-policy-id TEXT           The [OCID] of the WAAS policy. [required]
   --display-name TEXT             A user-friendly name for the WAAS policy. The
-                                  name is can be changed and does not need to be
+                                  name can be changed and does not need to be
                                   unique.
   --additional-domains COMPLEX TYPE
                                   An array of additional domains protected by
@@ -3255,27 +3298,35 @@ Options:
                                   in a file, modifying it as needed and
                                   then passing it back in via the file://
                                   syntax.
-  --freeform-tags COMPLEX TYPE    A simple key-value pair without any defined
-                                  schema.
-                                  This is a complex type whose value
-                                  must be valid JSON. The value can be provided
-                                  as a string on the command line or passed in
-                                  as a file using
-                                  the file://path/to/file
-                                  syntax.
+  --freeform-tags COMPLEX TYPE    Free-form tags for this resource. Each tag is
+                                  a simple key-value pair with no predefined
+                                  name, type, or namespace. For more
+                                  information, see [Resource Tags].
                                   
-                                  The --generate-param-json-input
-                                  option can be used to generate an example of
-                                  the JSON which must be provided. We recommend
-                                  storing this example
-                                  in a file, modifying it
-                                  as needed and then passing it back in via the
-                                  file:// syntax.
+                                  Example:
+                                  `{"Department": "Finance"}`
+                                  This is a complex
+                                  type whose value must be valid JSON. The value
+                                  can be provided as a string on the command
+                                  line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
   --defined-tags COMPLEX TYPE     Defined tags for this resource. Each key is
                                   predefined and scoped to a namespace. For more
                                   information, see [Resource Tags].
-                                  This is a
-                                  complex type whose value must be valid JSON.
+                                  
+                                  Example:
+                                  `{"Operations": {"CostCenter": "42"}}`
+                                  This is
+                                  a complex type whose value must be valid JSON.
                                   The value can be provided as a string on the
                                   command line or passed in as a file using
                                   the

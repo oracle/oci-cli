@@ -328,12 +328,20 @@ def change_waas_policy_compartment(ctx, from_json, waas_policy_id, compartment_i
 
 For more information, see [WAF Settings].""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which to create the SSL certificate.""")
-@cli_util.option('--certificate-data', required=True, help=u"""The data of the SSL certificate.""")
+@cli_util.option('--certificate-data', required=True, help=u"""The data of the SSL certificate.
+
+ **Note:** Many SSL certificate providers require an intermediate certificate chain to ensure a trusted status. If your SSL certificate requires an intermediate certificate chain, please append the intermediate certificate key in the `certificateData` field after the leaf certificate issued by the SSL certificate provider. If you are unsure if your certificate requires an intermediate certificate chain, see your certificate provider's documentation.
+
+ The example below shows an intermediate certificate appended to a leaf certificate.""")
 @cli_util.option('--private-key-data', required=True, help=u"""The private key of the SSL certificate.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name for the SSL certificate. The name can be changed and does not need to be unique.""")
-@cli_util.option('--is-trust-verification-disabled', type=click.BOOL, help=u"""Set to true if the SSL certificate is self-signed.""")
-@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example:""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-trust-verification-disabled', type=click.BOOL, help=u"""Set to `true` if the SSL certificate is self-signed.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "FAILED", "UPDATING", "DELETING", "DELETED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -409,15 +417,19 @@ All Oracle Cloud Infrastructure resources, including WAAS policies, receive a un
 **Note:** After sending the POST request, the new object's state will temporarily be `CREATING`. Ensure that the resource's state has changed to `ACTIVE` before use.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which to create the WAAS policy.""")
 @cli_util.option('--domain', required=True, help=u"""The web application domain that the WAAS policy protects.""")
-@cli_util.option('--display-name', help=u"""A user-friendly name for the WAAS policy. The name is can be changed and does not need to be unique.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name for the WAAS policy. The name can be changed and does not need to be unique.""")
 @cli_util.option('--additional-domains', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of additional domains for the specified web application.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--origins', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A map of host to origin for the web application. The key should be a customer friendly name for the host, ex. primary, secondary, etc.
 
 This option is a JSON dictionary of type dict(str, Origin).  For documentation on Origin please see our API reference: https://docs.cloud.oracle.com/api/#/en/waas/20181116/datatypes/Origin.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--policy-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--waf-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A simple key-value pair without any defined schema.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A key-value pair with a defined schema that restricts the values of tags. These predefined keys are scoped to namespaces.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -847,7 +859,7 @@ def get_work_request(ctx, from_json, work_request_id):
     cli_util.render_response(result, ctx)
 
 
-@access_rule_group.command(name=cli_util.override('list_access_rules.command_name', 'list'), help=u"""Gets the currently configured access rules for the Web Application Firewall configration of a specified WAAS policy. The order of the access rules is important. The rules will be checked in the order they are specified and the first matching rule will be used.""")
+@access_rule_group.command(name=cli_util.override('list_access_rules.command_name', 'list'), help=u"""Gets the currently configured access rules for the Web Application Firewall configuration of a specified WAAS policy. The order of the access rules is important. The rules will be checked in the order they are specified and the first matching rule will be used.""")
 @cli_util.option('--waas-policy-id', required=True, help=u"""The [OCID] of the WAAS policy.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated call. In unspecified, defaults to `10`.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous paginated call.""")
@@ -959,15 +971,15 @@ def list_captchas(ctx, from_json, all_pages, page_size, waas_policy_id, limit, p
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The value of the sorting direction of resources in a paginated 'List' call. If unspecified, defaults to `DESC`.""")
 @cli_util.option('--id', multiple=True, help=u"""Filter certificates using a list of certificates OCIDs.""")
 @cli_util.option('--display-name', multiple=True, help=u"""Filter certificates using a list of display names.""")
-@cli_util.option('--lifecycle-state', multiple=True, help=u"""Filter certificates using a list of lifecycle states.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "FAILED", "UPDATING", "DELETING", "DELETED"]), multiple=True, help=u"""Filter certificates using a list of lifecycle states.""")
 @cli_util.option('--time-created-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""A filter that matches certificates created on or after the specified date-time.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-created-less-than', type=custom_types.CLI_DATETIME, help=u"""A filter that matches certificates created before the specified date-time.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
-@json_skeleton_utils.get_cli_json_input_option({'id': {'module': 'waas', 'class': 'list[string]'}, 'display-name': {'module': 'waas', 'class': 'list[string]'}, 'lifecycle-state': {'module': 'waas', 'class': 'list[string]'}})
+@json_skeleton_utils.get_cli_json_input_option({'id': {'module': 'waas', 'class': 'list[string]'}, 'display-name': {'module': 'waas', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'id': {'module': 'waas', 'class': 'list[string]'}, 'display-name': {'module': 'waas', 'class': 'list[string]'}, 'lifecycle-state': {'module': 'waas', 'class': 'list[string]'}}, output_type={'module': 'waas', 'class': 'list[CertificateSummary]'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'id': {'module': 'waas', 'class': 'list[string]'}, 'display-name': {'module': 'waas', 'class': 'list[string]'}}, output_type={'module': 'waas', 'class': 'list[CertificateSummary]'})
 @cli_util.wrap_exceptions
 def list_certificates(ctx, from_json, all_pages, page_size, compartment_id, limit, page, sort_by, sort_order, id, display_name, lifecycle_state, time_created_greater_than_or_equal_to, time_created_less_than):
 
@@ -1295,15 +1307,15 @@ def list_threat_feeds(ctx, from_json, all_pages, page_size, waas_policy_id, limi
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The value of the sorting direction of resources in a paginated 'List' call. If unspecified, defaults to `DESC`.""")
 @cli_util.option('--id', multiple=True, help=u"""Filter policies using a list of policy OCIDs.""")
 @cli_util.option('--display-name', multiple=True, help=u"""Filter policies using a list of display names.""")
-@cli_util.option('--lifecycle-state', multiple=True, help=u"""Filter policies using a list of lifecycle states.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "FAILED", "UPDATING", "DELETING", "DELETED"]), multiple=True, help=u"""Filter policies using a list of lifecycle states.""")
 @cli_util.option('--time-created-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""A filter that matches policies created on or after the specified date and time.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-created-less-than', type=custom_types.CLI_DATETIME, help=u"""A filter that matches policies created before the specified date-time.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
-@json_skeleton_utils.get_cli_json_input_option({'id': {'module': 'waas', 'class': 'list[string]'}, 'display-name': {'module': 'waas', 'class': 'list[string]'}, 'lifecycle-state': {'module': 'waas', 'class': 'list[string]'}})
+@json_skeleton_utils.get_cli_json_input_option({'id': {'module': 'waas', 'class': 'list[string]'}, 'display-name': {'module': 'waas', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'id': {'module': 'waas', 'class': 'list[string]'}, 'display-name': {'module': 'waas', 'class': 'list[string]'}, 'lifecycle-state': {'module': 'waas', 'class': 'list[string]'}}, output_type={'module': 'waas', 'class': 'list[WaasPolicySummary]'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'id': {'module': 'waas', 'class': 'list[string]'}, 'display-name': {'module': 'waas', 'class': 'list[string]'}}, output_type={'module': 'waas', 'class': 'list[WaasPolicySummary]'})
 @cli_util.wrap_exceptions
 def list_waas_policies(ctx, from_json, all_pages, page_size, compartment_id, limit, page, sort_by, sort_order, id, display_name, lifecycle_state, time_created_greater_than_or_equal_to, time_created_less_than):
 
@@ -1867,8 +1879,12 @@ def update_captchas(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 @cli_util.option('--certificate-id', required=True, help=u"""The [OCID] of the SSL certificate used in the WAAS policy. This number is generated when the certificate is added to the policy.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the `PUT` or `DELETE` call for a resource, set the `if-match` parameter to the value of the etag from a previous `GET` or `POST` response for that resource. The resource will be updated or deleted only if the etag provided matches the resource's current etag value.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name for the SSL certificate. The name can be changed and does not need to be unique.""")
-@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A simple key-value pair without any defined schema.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A key-value pair with a defined schema that restricts the values of tags. These predefined keys are scoped to namespaces.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "FAILED", "UPDATING", "DELETING", "DELETED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -2548,15 +2564,19 @@ def update_threat_feeds(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 
 @waas_policy_group.command(name=cli_util.override('update_waas_policy.command_name', 'update'), help=u"""Updates the details of a WAAS policy, including origins and tags. Only the fields specified in the request body will be updated; all other properties will remain unchanged. To update platform provided resources such as `GoodBots`, `ProtectionRules`, and `ThreatFeeds`, first retrieve the list of available resources with the related list operation such as `GetThreatFeeds` or `GetProtectionRules`. The returned list will contain objects with `key` properties that can be used to update the resource during the `UpdateWaasPolicy` request.""")
 @cli_util.option('--waas-policy-id', required=True, help=u"""The [OCID] of the WAAS policy.""")
-@cli_util.option('--display-name', help=u"""A user-friendly name for the WAAS policy. The name is can be changed and does not need to be unique.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name for the WAAS policy. The name can be changed and does not need to be unique.""")
 @cli_util.option('--additional-domains', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of additional domains protected by this WAAS policy.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--origins', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A map of host to origin for the web application. The key should be a customer friendly name for the host, ex. primary, secondary, etc.
 
 This option is a JSON dictionary of type dict(str, Origin).  For documentation on Origin please see our API reference: https://docs.cloud.oracle.com/api/#/en/waas/20181116/datatypes/Origin.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--policy-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--waf-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A simple key-value pair without any defined schema.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the `PUT` or `DELETE` call for a resource, set the `if-match` parameter to the value of the etag from a previous `GET` or `POST` response for that resource. The resource will be updated or deleted only if the etag provided matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")

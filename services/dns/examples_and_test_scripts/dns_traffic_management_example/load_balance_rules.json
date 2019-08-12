@@ -1,0 +1,32 @@
+[
+  {
+    "ruleType": "FILTER",
+    "defaultAnswerData": [
+      {
+        "answerCondition": "answer.isDisabled != true",
+        "shouldKeep": true
+      }
+    ]
+  },
+  {
+    "ruleType": "WEIGHTED",
+    "defaultAnswerData": [
+      {
+        "answerCondition": "answer.name == 'Server 1'",
+        "value": 75
+      },
+      {
+        "answerCondition": "answer.name == 'Server 2'",
+        "value": 25
+      },
+      {
+        "answerCondition": "answer.name == 'Server 3'",
+        "value": 1
+      }
+    ]
+  },
+  {
+    "ruleType": "LIMIT",
+    "defaultCount": 1
+  }
+]

@@ -1,0 +1,128 @@
+{
+    /*
+     * The keys of our dictionary should correspond to option names without the "--". For example the "certificates" key maps to the "--certificates"
+     * option, the "backend-sets" key maps to the "--backend-sets" option etc.
+     */
+    "certificates": {
+        // The content here aligns with the example in the certificates_with_comments.json file
+        "my_cert_bundle" : {
+            "caCertificate": "-----BEGIN CERTIFICATE-----\nMIID5jCCAs6gAwIBAgIJAIJzz4qUDQybMA0GCSqGSIb3DQEBCwUAMFUxCzAJBgNV\nBAYTAlVTMQswCQYDVQQIEwJXQTEQMA4GA1UEBxMHU2VhdHRsZTENMAsGA1UEChME\nVGVzdDEYMBYGA1UEAxMPd3d3LmV4YW1wbGUuY29tMB4XDTE3MTIwODAzMzQ1NVoX\nDTE4MTIwODAzMzQ1NVowVTELMAkGA1UEBhMCVVMxCzAJBgNVBAgTAldBMRAwDgYD\nVQQHEwdTZWF0dGxlMQ0wCwYDVQQKEwRUZXN0MRgwFgYDVQQDEw93d3cuZXhhbXBs\nZS5jb20wggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDl4XNTy7kQ41kM\nFvRzIq+6rjC1fiFLeT9uOpKljmG6anoR3KpxeKjiL14gos0iQrfglMSpRP5wPzzX\njt4t3GkLgVjsrQPfQNCa4tX2QAWJqaGvJn4ZIBPhUj2jsWcdmGiXXpEkN3FIJWJ+\noWKrnG42NRYvwK+2o90PF6pz8Zk6WOx/ZfDWt5kenKnh76TNurAS5ko4jgWunFsU\n2oM3eDIYX81jU2KGMH0lsW/Mmib6kvzJiYe55eaK4yB9rcok0hztIkbRK1odgp1Q\ntni43DW+AWwwXH52p5aNEwmekCnWef0p1x0md9DK17GFXAgJzauuwOq3Dk18nOEk\nANxloRWnAgMBAAGjgbgwgbUwHQYDVR0OBBYEFMM4gymGlbAd9Guqi9kKsIzxFC9T\nMIGFBgNVHSMEfjB8gBTDOIMphpWwHfRrqovZCrCM8RQvU6FZpFcwVTELMAkGA1UE\nBhMCVVMxCzAJBgNVBAgTAldBMRAwDgYDVQQHEwdTZWF0dGxlMQ0wCwYDVQQKEwRU\nZXN0MRgwFgYDVQQDEw93d3cuZXhhbXBsZS5jb22CCQCCc8+KlA0MmzAMBgNVHRME\nBTADAQH/MA0GCSqGSIb3DQEBCwUAA4IBAQCkOJMF/oVPHjO+7bHu3jEo7QczL5oU\nAZ0IfiwPzaMElC1fZbclNZtee2TfzBtWd37zZ/EmaTc+E7w68sZ2C7hlYza6wh71\nAVBKTPxfUrHTNBVtWOyhm+9tUhvv71BRaPn02XTb1L4fppRXtKn0CnFh/CiaFIYc\n03+DA3ziIeJrXgt6fle4efmCdkWINATF1+Gcb1Jd0BnohvP1hiNR3h0/kRgxqjz5\noy33t9aGoj2RYly+h84f/da1aBcwMp5vegTntzvrHDQvGEspMfWsFYHayBYw6PDd\nlXeeP9yY7X03pFTWJ2Lt4p4Vrx2gCL0jYrWJDHaJK9ZzD6eyX5vxK/JD\n-----END CERTIFICATE-----\n",
+            "certificateName": "my_cert_bundle",
+            "privateKey": "-----BEGIN RSA PRIVATE KEY-----\nMIIEpQIBAAKCAQEA5eFzU8u5EONZDBb0cyKvuq4wtX4hS3k/bjqSpY5hump6Edyq\ncXio4i9eIKLNIkK34JTEqUT+cD88147eLdxpC4FY7K0D30DQmuLV9kAFiamhryZ+\nGSAT4VI9o7FnHZhol16RJDdxSCVifqFiq5xuNjUWL8CvtqPdDxeqc/GZOljsf2Xw\n1reZHpyp4e+kzbqwEuZKOI4FrpxbFNqDN3gyGF/NY1NihjB9JbFvzJom+pL8yYmH\nueXmiuMgfa3KJNIc7SJG0StaHYKdULZ4uNw1vgFsMFx+dqeWjRMJnpAp1nn9Kdcd\nJnfQytexhVwICc2rrsDqtw5NfJzhJADcZaEVpwIDAQABAoIBAExAs4upORM0Brau\n6plCeT4YR8n8M7kgV/0NatWF3D8E0McaBmOrXYHhqnxy5E6oCOxzDKUFYM0E/P6X\nwnU99o49cqzXW0Bz9H5cHhMX+35FiX9a6lsVO+Ly78VbtFOp2Y/Ua5qy1V3UIM7W\nY69/LUPH6jse1GpmAo7eD8lz65rhgVyj8bUoMp8Sk2rXGo/CKKlQAoEap/lxBf6V\nHHoBF3R3u2Y6C5O1RCNzq0u8qBKkT5A381zAijZIVYQFPtJIVGODSne/P4BhRg0a\n7243LEP3FzxydnpooRkQAKaPCQUdrJ12Ss8nWuBpbbODtSs8dC1zE2od7NQ8P4+5\nCPoGOfkCgYEA+J4pzAQjctlN47k0GOx5c0kFIPShfFPpOD14InrJ+p/X7k5RkkfO\nJ2zn1DHe80PGDJsMZ53FS7pmwKDLjJ6w3zw1cvjgmsJUsM6RfxMqwOzG9G03oMxr\n2nEsyU9nhwnB9MChAMxOeQQlljD63ZVGbEb+c7YaKWOtsexLs+7XiDsCgYEA7LTb\n7eLRq5iiA2nQFEKcZB14TyjNQiSr0WoZ4jmwSKtIjZSScAxBVxFPfjHdrD0XIAJ/\nxKkQhOCu63PC9way/02oF0AsC1n+HqV8DYwJrU40IUK9xGso0QPgA2WSgf1hln/b\nm8OXOZvNvm3JmYoeSF430KQSYfGE1k8BZl6//YUCgYEAtu3BOUDuSEoF2oHiCFiu\nwBnBMU9uJomjN2NbKpuIU+Uav1hXArfcwvuJ1ILhVcLPTWUkCnV2vtKnWiK1woDd\nCVRGy5K9yIEmSXWkbojO02ckuKJH5QOkc/UEDBdlyGFwmcLGdEzfjIF1mn3th+6X\nA4J1JPSfaUbTfe+sf/dEFRMCgYEAq3AKYe8HgMrZfLNke2gLMQ+PFXYtw5wfvVql\nSI4TuW4k7DYRIYoewNrOwk2HibntR8fHlj4Estiwl+ON77AwcGxkNALMY6RYQwYE\nJSOp1pVveC+Ilfwu4cN2ub8VL4S+62vLOLOekaDgkO2fN88rQ6rJrhlHHxz34ufx\n0Z0KXKkCgYEAuAP9Z3m9uz67kFhkIMe8qoJFhEGvQYsjWmsopCwHtqqUS6TntXIW\nSA6WX6aCO0oJjkIFdVINkMuTXm4SKMXIdX0mtY1EdsjFePKVde40SizFJOF/B3rf\n+CNNgwr6jPkaA94zyyhyPwD1FnaR5yhn/jXbEjdHotZv/HflKLy07FQ=\n-----END RSA PRIVATE KEY-----\n",
+            "publicCertificate": "-----BEGIN CERTIFICATE-----\nMIID5jCCAs6gAwIBAgIJAIJzz4qUDQybMA0GCSqGSIb3DQEBCwUAMFUxCzAJBgNV\nBAYTAlVTMQswCQYDVQQIEwJXQTEQMA4GA1UEBxMHU2VhdHRsZTENMAsGA1UEChME\nVGVzdDEYMBYGA1UEAxMPd3d3LmV4YW1wbGUuY29tMB4XDTE3MTIwODAzMzQ1NVoX\nDTE4MTIwODAzMzQ1NVowVTELMAkGA1UEBhMCVVMxCzAJBgNVBAgTAldBMRAwDgYD\nVQQHEwdTZWF0dGxlMQ0wCwYDVQQKEwRUZXN0MRgwFgYDVQQDEw93d3cuZXhhbXBs\nZS5jb20wggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDl4XNTy7kQ41kM\nFvRzIq+6rjC1fiFLeT9uOpKljmG6anoR3KpxeKjiL14gos0iQrfglMSpRP5wPzzX\njt4t3GkLgVjsrQPfQNCa4tX2QAWJqaGvJn4ZIBPhUj2jsWcdmGiXXpEkN3FIJWJ+\noWKrnG42NRYvwK+2o90PF6pz8Zk6WOx/ZfDWt5kenKnh76TNurAS5ko4jgWunFsU\n2oM3eDIYX81jU2KGMH0lsW/Mmib6kvzJiYe55eaK4yB9rcok0hztIkbRK1odgp1Q\ntni43DW+AWwwXH52p5aNEwmekCnWef0p1x0md9DK17GFXAgJzauuwOq3Dk18nOEk\nANxloRWnAgMBAAGjgbgwgbUwHQYDVR0OBBYEFMM4gymGlbAd9Guqi9kKsIzxFC9T\nMIGFBgNVHSMEfjB8gBTDOIMphpWwHfRrqovZCrCM8RQvU6FZpFcwVTELMAkGA1UE\nBhMCVVMxCzAJBgNVBAgTAldBMRAwDgYDVQQHEwdTZWF0dGxlMQ0wCwYDVQQKEwRU\nZXN0MRgwFgYDVQQDEw93d3cuZXhhbXBsZS5jb22CCQCCc8+KlA0MmzAMBgNVHRME\nBTADAQH/MA0GCSqGSIb3DQEBCwUAA4IBAQCkOJMF/oVPHjO+7bHu3jEo7QczL5oU\nAZ0IfiwPzaMElC1fZbclNZtee2TfzBtWd37zZ/EmaTc+E7w68sZ2C7hlYza6wh71\nAVBKTPxfUrHTNBVtWOyhm+9tUhvv71BRaPn02XTb1L4fppRXtKn0CnFh/CiaFIYc\n03+DA3ziIeJrXgt6fle4efmCdkWINATF1+Gcb1Jd0BnohvP1hiNR3h0/kRgxqjz5\noy33t9aGoj2RYly+h84f/da1aBcwMp5vegTntzvrHDQvGEspMfWsFYHayBYw6PDd\nlXeeP9yY7X03pFTWJ2Lt4p4Vrx2gCL0jYrWJDHaJK9ZzD6eyX5vxK/JD\n-----END CERTIFICATE-----\n"
+            //If your private key has a passphrase, also provide it
+            //, "passphrase": "myPassPhrase"
+        }
+    },
+    "backend-sets": {
+        // The content here aligns with the example in the backend_sets_with_comments.json file
+        "backendSetName": {
+            "policy": "ROUND_ROBIN",
+            "backends": [
+                {
+                    "ipAddress": "10.10.10.4",
+                    "port": 80,
+                    "weight": 3
+                },
+                {
+                    "ipAddress": "10.10.10.5",
+                    "port": 80,
+                    "weight": 3
+                }
+            ],
+            "healthChecker": {
+                "protocol": "HTTP",
+                "urlPath": "/healthChecker",
+                "returnCode": 200,
+                "retries": 5,
+                "timeoutInMillis": 5000,
+                "intervalInMillis": 45000
+            },
+            "sessionPersistenceConfiguration": {
+                "cookieName": "myCookie",
+                "disableFallback": false
+            },
+            "sslConfiguration": {
+                "certificateName": "my_cert_bundle",
+                "verifyDepth": 3,
+                "verifyPeerCertificate": false
+            }
+        }
+    },
+    "hostnames": {
+        // The content here aligns with the example in the hostnames_with_comments.json file
+        "hostname1": {
+            "hostname": "host1.name.com",
+            "name": "hostname1"
+        },
+        "hostname2": {
+            "hostname": "host2.name.com",
+            "name": "hostname2"
+        }
+    },
+    "listeners": {
+        // The content here aligns with the example in the listeners_with_comments.json file
+        "listenerName": {
+            "defaultBackendSetName": "backendSetName",
+            "hostnameNames": [
+                "hostname1",
+                "hostname2"
+            ],
+            "port": 8080,
+            "protocol": "HTTP",
+            "pathRouteSetName": "PathRouteSetName",
+            "ruleSetNames": ["ruleSetName"]
+        }
+    },
+    "pathRouteSets": {
+        "PathRouteSetName": {
+            "pathRoutes": [
+                {
+                    "backendSetName": "backendSetName",
+                    "path": "/video",
+                    "pathMatchType": {
+                        "matchType": "EXACT_MATCH"
+                    }
+                }
+           ]
+        }
+    },
+    "ruleSets": {
+        // The content here aligns with the example in the rule_sets_with_comments.json file
+        "ruleSetName": {
+            "name": "ruleSetName",
+            "items": [
+                {
+                    "action": "ADD_HTTP_REQUEST_HEADER",
+                    "header": "AnyHeaderName",
+                    "value": "Any Value for Header"        
+                  },
+                  {
+                    "action": "EXTEND_HTTP_REQUEST_HEADER_VALUE",
+                    "header": "AnyHeaderName2",
+                    "prefix": "Any String to Prepend to Header",
+                    "suffix": "Any String to Append to Header",  
+                  },
+                  {
+                    "action": "REMOVE_HTTP_REQUEST_HEADER",
+                    "header": "AnyHeaderName3"
+                  },
+                  {
+                    "action": "ADD_HTTP_RESPONSE_HEADER",
+                    "header": "AnyHeaderName4",
+                    "value": "Any Value for Header"
+                  },
+                  {
+                    "action": "EXTEND_HTTP_RESPONSE_HEADER_VALUE",
+                    "header": "AnyHeaderName5",
+                    "prefix": "Any String to Prepend to Header",
+                    "suffix": "Any String to Append to Header",        
+                  },
+                  {
+                    "action": "REMOVE_HTTP_RESPONSE_HEADER",
+                    "header": "AnyHeaderName6"
+                  }
+            ]
+        }
+    }
+}

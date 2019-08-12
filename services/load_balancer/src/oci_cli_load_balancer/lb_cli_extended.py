@@ -193,7 +193,7 @@ def create_certificate(ctx, **kwargs):
 @json_skeleton_utils.get_cli_json_input_option({'backends': {'module': 'load_balancer', 'class': 'list[BackendDetails]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'backends': {'module': 'load_balancer', 'class': 'list[BackendDetails]'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'backends': {'module': 'load_balancer', 'class': 'list[BackendDetails]'}, 'lb-cookie-session-persistence-configuration': {'module': 'load_balancer', 'class': 'LBCookieSessionPersistenceConfigurationDetails'}})
 @cli_util.wrap_exceptions
 def create_backend_set(ctx, **kwargs):
     process_health_checker_kwargs(kwargs)
@@ -221,7 +221,7 @@ def create_backend_set(ctx, **kwargs):
 @json_skeleton_utils.get_cli_json_input_option({'backends': {'module': 'load_balancer', 'class': 'list[BackendDetails]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'backends': {'module': 'load_balancer', 'class': 'list[BackendDetails]'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'backends': {'module': 'load_balancer', 'class': 'list[BackendDetails]'}, 'lb-cookie-session-persistence-configuration': {'module': 'load_balancer', 'class': 'LBCookieSessionPersistenceConfigurationDetails'}})
 @cli_util.wrap_exceptions
 def update_backend_set(ctx, **kwargs):
     process_health_checker_kwargs(kwargs)
@@ -238,7 +238,7 @@ def update_backend_set(ctx, **kwargs):
 @cli_util.option('--ssl-verify-peer-certificate', type=click.BOOL, help="""Whether the load balancer listener should verify peer certificates.""")
 @cli_util.option('--connection-configuration-idle-timeout', type=click.INT, help="""The maximum idle time, in seconds, allowed between two successive receive or two successive send operations between the client and backend servers.""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'hostname-names': {'module': 'load_balancer', 'class': 'list[string]'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'hostname-names': {'module': 'load_balancer', 'class': 'list[string]'}, 'rule-set-names': {'module': 'load_balancer', 'class': 'list[string]'}})
 @cli_util.wrap_exceptions
 def create_listener(ctx, **kwargs):
     process_ssl_configuration_kwargs(kwargs)
@@ -254,7 +254,7 @@ def create_listener(ctx, **kwargs):
 @cli_util.option('--ssl-verify-peer-certificate', type=click.BOOL, help="""Whether the load balancer listener should verify peer certificates.""")
 @cli_util.option('--connection-configuration-idle-timeout', type=click.INT, help="""The maximum idle time, in seconds, allowed between two successive receive or two successive send operations between the client and backend servers.""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'hostname-names': {'module': 'load_balancer', 'class': 'list[string]'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'hostname-names': {'module': 'load_balancer', 'class': 'list[string]'}, 'rule-set-names': {'module': 'load_balancer', 'class': 'list[string]'}})
 @cli_util.wrap_exceptions
 def update_listener(ctx, **kwargs):
     process_ssl_configuration_kwargs(kwargs)

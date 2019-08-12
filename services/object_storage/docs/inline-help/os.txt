@@ -502,8 +502,8 @@ Usage: oci os multipart abort [OPTIONS]
 
   Aborts an uncommitted multipart upload
 
-  Example:     oci os multipart abort -ns mynamespace -bn mybucket --name
-  myfile.txt --upload-id my-upload-id
+  Example:     oci os multipart abort -ns mynamespace -bn mybucket --object-
+  name myfile.txt --upload-id my-upload-id
 
 Options:
   -ns, --namespace, --namespace-name TEXT

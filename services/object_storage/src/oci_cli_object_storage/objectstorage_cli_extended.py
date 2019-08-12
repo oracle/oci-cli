@@ -1472,7 +1472,7 @@ def multipart_abort(ctx, from_json, namespace, bucket_name, object_name, upload_
     Aborts an uncommitted multipart upload
 
     Example:
-        oci os multipart abort -ns mynamespace -bn mybucket --name myfile.txt --upload-id my-upload-id
+        oci os multipart abort -ns mynamespace -bn mybucket --object-name myfile.txt --upload-id my-upload-id
     """
     client = build_client('object_storage', ctx)
 
@@ -1495,7 +1495,7 @@ def multipart_abort(ctx, from_json, namespace, bucket_name, object_name, upload_
 @cli_util.option('--destination-namespace', help="""The destination namespace object will be copied to.""")
 @cli_util.option('--destination-object-name', help="""The destination name for the copy object.""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler({})
+@json_skeleton_utils.json_skeleton_generation_handler({'destination-object-metadata': {'module': 'object_storage', 'class': 'dict(str, string)'}})
 @cli_util.wrap_exceptions
 def copy_object(ctx, **kwargs):
     if 'source_object_name' in kwargs and ('destination_object_name' not in kwargs or kwargs['destination_object_name'] is None):

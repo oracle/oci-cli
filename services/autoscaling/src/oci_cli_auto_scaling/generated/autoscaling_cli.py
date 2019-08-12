@@ -148,6 +148,7 @@ def create_auto_scaling_configuration_instance_pool_resource(ctx, from_json, com
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     details = {}
+    details['resource'] = {}
     details['compartmentId'] = compartment_id
     details['policies'] = cli_util.parse_json_parameter("policies", policies)
     details['resource']['id'] = resource_id

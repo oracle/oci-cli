@@ -23,6 +23,7 @@ import sys
 import uuid
 import struct
 import base64
+import logging
 from .formatting import render_config_errors
 from terminaltables import AsciiTable
 from timeit import default_timer as timer
@@ -83,6 +84,10 @@ MODULE_TO_TYPE_MAPPINGS = MODULE_TO_TYPE_MAPPINGS
 LIST_NOT_ALL_ITEMS_RETURNED_WARNING = "WARNING: This operation supports pagination and not all resources were returned.  Re-run using the --all option to auto paginate and list all resources."
 
 TOKEN_PRESENT_BUT_NOT_USED_FOR_AUTH_WARNING = "WARNING: The active profile contains a value for 'security_token_file' which is not being used. To authenticate using the token, specify --auth {}".format(cli_constants.OCI_CLI_AUTH_SESSION_TOKEN)
+
+logger = logging.getLogger("{}".format(__name__))
+logger.addHandler(logging.NullHandler())
+logger.setLevel(logging.DEBUG)
 
 
 class FilePermissionChecker(object):
@@ -192,7 +197,7 @@ def output_memory(msg):
     if not is_windows():
         import resource  # noqa: E402
         memory_usage = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
-        print(msg + '{} ({})'.format(sizeof_fmt(memory_usage), memory_usage), file=sys.stderr)
+        logger.debug(oci.base_client.utc_now() + msg + '{} ({})'.format(sizeof_fmt(memory_usage), memory_usage))
 
 
 # A utility/data class to hold a Python SDK config and a signer
@@ -471,7 +476,7 @@ def render(data, headers, ctx, display_all_headers=False, nest_data_in_data_attr
             display_dictionary["data"] = to_dict(data)
             if ctx.obj['debug']:
                 end_to_dict = timer()
-                print('time elapsed calling to_dict from render: {}'.format(str(end_to_dict - start_to_dict)), file=sys.stderr)
+                logger.debug(oci.base_client.utc_now() + 'time elapsed calling to_dict from render: {}'.format(str(end_to_dict - start_to_dict)))
         else:
             display_dictionary = to_dict(data)
 
@@ -492,7 +497,8 @@ def render(data, headers, ctx, display_all_headers=False, nest_data_in_data_attr
             display_data = expression.search(display_dictionary)
             if ctx.obj['debug']:
                 end_search = timer()
-                print('time elapsed evaluating expression: {}'.format(str(end_search - start_search)), file=sys.stderr)
+                logger.debug(oci.base_client.utc_now() + 'time elapsed evaluating expression: {}'.format(str(end_search - start_search)))
+
             if not display_data:
                 click.echo("Query returned empty result, no output to show.", file=sys.stderr)
                 return
@@ -508,7 +514,7 @@ def render(data, headers, ctx, display_all_headers=False, nest_data_in_data_attr
                 print(pretty_print_format(display_data))
                 if ctx.obj['debug']:
                     end_format = timer()
-                    print('Time elapsed printing response data: {}'.format(str(end_format - start_format)), file=sys.stderr)
+                    logger.debug(oci.base_client.utc_now() + 'Time elapsed printing response data: {}'.format(str(end_format - start_format)))
         elif ctx.obj['output'] == 'table':
             table_data = display_data
 
@@ -522,7 +528,7 @@ def render(data, headers, ctx, display_all_headers=False, nest_data_in_data_attr
             print_table(table_data)
             if ctx.obj['debug']:
                 end_format = timer()
-                print('Time elapsed printing response data: {}'.format(str(end_format - start_format)), file=sys.stderr)
+                logger.debug(oci.base_client.utc_now() + 'Time elapsed printing response data: {}'.format(str(end_format - start_format)))
 
             # if there were any additional headers in the response, print them out here, below the table
             # if there is no 'data' in the display dictionary (i.e. oci os object put) then all we have is headers
@@ -903,15 +909,22 @@ def update_param_help(command, param_name, updated_help, append=False, example=N
     """Update help for the given parameter and command, either by replacing or adding to existing help."""
     param = get_param(command, param_name)
 
-    if append and len(param.help) > 0:
-        updated_help = param.help + " " + updated_help
+    required_param = False
+    current_help = param.help if append else updated_help
+
+    if len(current_help) > 0:
+        required_param = current_help.endswith(" [required]")
+        if required_param:
+            current_help = current_help.replace(" [required]", "")
+
+    updated_help = current_help + (" " + updated_help if append and len(current_help) > 0 else "")
 
     if example:
         updated_help = """{help}
 
 Example: {example}""".format(help=updated_help, example=example)
 
-    param.help = updated_help
+    param.help = updated_help + (" [required]" if required_param else "")
 
 
 def override_command_short_help_and_help(command, help_text):
@@ -1665,7 +1678,7 @@ def list_call_get_all_results(list_func_ref, ctx=None, is_json=False, stream_out
             keep_paginating = call_result.has_next_page
             if ctx and ctx.obj['debug']:
                 end = timer()
-                print('time elapsed evaluating logic after page {}: {}'.format(str(page_index), str(end - start)), file=sys.stderr)
+                logger.debug(oci.base_client.utc_now() + 'time elapsed evaluating logic after page {}: {}'.format(str(page_index), str(end - start)))
                 output_memory('total memory usage after evaluating page' + str(page_index) + ': ')
             page_index = page_index + 1
     finally:
@@ -1716,7 +1729,7 @@ def execute_query(expression, input, ctx):
         print(e, file=sys.stderr)
     if ctx.obj['debug']:
         end_search = timer()
-        print('time elapsed evaluating expression: {}'.format(str(end_search - start_search)), file=sys.stderr)
+        logger.debug(oci.base_client.utc_now() + 'time elapsed evaluating expression: {}'.format(str(end_search - start_search)))
     return search_data
 
 

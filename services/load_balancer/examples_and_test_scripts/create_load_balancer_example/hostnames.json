@@ -1,0 +1,10 @@
+{
+  "hostname1": {
+    "hostname": "host1.name.com",
+    "name": "hostname1"
+  },
+  "hostname2": {
+    "hostname": "host2.name.com",
+    "name": "hostname2"
+  }
+}

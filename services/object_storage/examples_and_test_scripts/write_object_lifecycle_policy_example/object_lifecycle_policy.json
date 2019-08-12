@@ -1,0 +1,36 @@
+[
+  {
+    "action": "ARCHIVE",
+    "isEnabled": true,
+    "name": "archive-all-objects-after-30-days",
+    "timeAmount": 30,
+    "timeUnit": "DAYS"
+  },
+  {
+    "action": "ARCHIVE",
+    "isEnabled": true,
+    "name": "archive-tmp-objects-after-1-day",
+    "objectNameFilter": {
+      "inclusionPrefixes": [
+        "/tmp/"
+      ]
+    },
+    "timeAmount": 1,
+    "timeUnit": "DAYS"
+  },
+  {
+    "action": "DELETE",
+    "isEnabled": true,
+    "name": "delete-non-auth-log-objects-after-14-days",
+    "objectNameFilter": {
+      "inclusionPatterns": [
+        "*.log*"
+      ],
+      "exclusionPatterns": [
+        "*/auth/*"
+      ]
+    },
+    "timeAmount": 14,
+    "timeUnit": "DAYS"
+  }
+]

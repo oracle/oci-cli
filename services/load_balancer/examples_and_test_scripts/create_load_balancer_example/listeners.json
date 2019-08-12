@@ -1,0 +1,12 @@
+{
+    "listenerName": {
+        "defaultBackendSetName": "backendSetName",
+        "hostnameNames": [
+            "hostname1",
+            "hostname2"
+        ],
+        "pathRouteSetName": "PathRouteSetName",
+        "port": 8080,
+        "protocol": "HTTP"
+    }
+}
