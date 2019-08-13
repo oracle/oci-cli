@@ -391,7 +391,7 @@ def list_network_security_group_vnics_extended(ctx, **kwargs):
 @virtualnetwork_cli.security_rule_group.command(name=cli_util.override('add_network_security_group_security_rules.command_name', 'add'), help=virtualnetwork_cli.add_network_security_group_security_rules.help)
 @cli_util.option('--nsg-id', required=True, help=u"""The [OCID] of the network security group.""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'security-rules': {'module': 'core', 'class': 'list[AddSecurityRuleDetails]'}})
 @cli_util.wrap_exceptions
 def add_network_security_group_security_rules_extended(ctx, **kwargs):
     if 'nsg_id' in kwargs:
@@ -417,7 +417,7 @@ def list_network_security_group_security_rules_extended(ctx, **kwargs):
 @virtualnetwork_cli.security_rule_group.command(name=cli_util.override('remove_network_security_group_security_rules.command_name', 'remove'), help=virtualnetwork_cli.remove_network_security_group_security_rules.help)
 @cli_util.option('--nsg-id', required=True, help=u"""The [OCID] of the network security group.""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'security-rule-ids': {'module': 'core', 'class': 'list[string]'}})
 @cli_util.wrap_exceptions
 def remove_network_security_group_security_rules_extended(ctx, **kwargs):
     if 'nsg_id' in kwargs:
@@ -430,7 +430,7 @@ def remove_network_security_group_security_rules_extended(ctx, **kwargs):
 @virtualnetwork_cli.security_rule_group.command(name=cli_util.override('update_network_security_group_security_rules.command_name', 'update'), help=virtualnetwork_cli.update_network_security_group_security_rules.help)
 @cli_util.option('--nsg-id', required=True, help=u"""The [OCID] of the network security group.""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'security-rules': {'module': 'core', 'class': 'list[UpdateSecurityRuleDetails]'}})
 @cli_util.wrap_exceptions
 def update_network_security_group_security_rules_extended(ctx, **kwargs):
     if 'nsg_id' in kwargs:

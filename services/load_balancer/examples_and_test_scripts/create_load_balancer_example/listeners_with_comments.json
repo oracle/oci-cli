@@ -1,0 +1,59 @@
+{
+    /* 
+     * Each entry in this dictionary represents a listener which should be used by the load balancer. The dictionary
+     * key should be the name you want to apply to the listener and the value represents the details about
+     * the listener to create
+     */
+    "listenerName": {
+        /*
+         * For information about each attribute, see: https://docs.cloud.oracle.com/api/#/en/loadbalancer/20170115/requests/BackendSetDetails
+         * Note that the attribute names here have to match what is shown in the above link. Optional attributes can be omitted entirely from the 
+         * data sent
+         */
+
+        // This should match the name of a backend set which has been/will be associated with a load balancer (e.g. via the 
+        // --backend-sets option when doing a "oci lb load-balancer create")
+        "defaultBackendSetName": "backendSetName",
+
+        // This should match the name of hostname group which has been/will be associated with a load balancer (e.g. via the
+        // --hostnames option when doing a "oci lb load-balancer create")
+        // You can assign one or more virtual hostnames to any listener you create for your load balancer.
+        // Each hostname can correspond to an application served from your backend.
+        "hostnameNames": [
+            "hostname1",
+            "hostname2"
+        ],
+
+        // This should match the name of a path route set which has been/will be associated with a load balancer (e.g. via the
+        // --path-route-sets option when doing a "oci lb load-balancer create")
+        // A path route set includes all path route strings and matching rules that define the data routing for a particular listener.
+        "pathRouteSetName": "PathRouteSetName",
+
+        "port": 8080,
+
+        // You can get valid protocol values by calling "oci lb protocol list"
+        "protocol": "HTTP"
+    }
+    // Uncomment the below (and change information as needed) to add another listener when creating the load balancer. You could copy it
+    // as many times as necessary to add all the listeners you need
+    /*
+    , "mySecondListenerName": {
+        "connectionConfiguration": {
+            "idleTimeout": 0
+        },
+        "defaultBackendSetName": "backendSetName2",
+        "hostnameNames": [
+            "hostname3",
+            "hostname4"
+        ],
+        "pathRouteSetName": "pathRouteSetName2",
+        "port": 80,
+        "protocol": "HTTP",
+        "sslConfiguration": {
+            "certificateName": "my_cert_bundle",
+            "verifyDepth": 3,
+            "verifyPeerCertificate": false
+        }
+    }
+    */
+}

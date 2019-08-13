@@ -1,0 +1,115 @@
+{
+    /* 
+     * Each entry in this dictionary represents a backend set which should be used by the load balancer. The dictionary
+     * key should be the name you want to apply to the backend set and the value represents the details of the backend set to create
+     */
+    "backendSetName": {
+        /*
+         * For information about each attribute, see: https://docs.cloud.oracle.com/api/#/en/loadbalancer/20170115/requests/BackendSetDetails
+         * Note that the attribute names here have to match what is shown in the above link. 
+         */
+
+        "policy": "ROUND_ROBIN",
+
+        /*
+         * This is an array/list/collection of backends which comprise this backend set. Note that each item is its own object (enclosed in
+         * the curly braces). For information about each attribute, see: https://docs.cloud.oracle.com/api/#/en/loadbalancer/20170115/requests/BackendDetails
+         *
+         * Note that the attribute names here have to match what is shown in the above link. For attributes you do not want to provide,
+         * you don't have to supply them here (i.e. delete their key and value). For example, if you don't want to provide
+         * a sessionPersistenceConfiguration, delete the "sessionPersistenceConfiguration": {...}, part of the object
+         */
+        "backends": [
+            {
+                "ipAddress": "10.10.10.4",
+                "port": 80,
+                "weight": 3
+            },
+            {
+                "ipAddress": "10.10.10.5",
+                "port": 80,
+                "weight": 3
+            }
+        ],
+        "healthChecker": {
+            /*
+             * We can only define one health checker. 
+             * For information about each attribute, see: https://docs.cloud.oracle.com/api/#/en/loadbalancer/20170115/requests/HealthCheckerDetails
+             * 
+             * Note that the attribute names here have to match what is shown in the above link. For attributes you do not want to provide,
+             * you don't have to supply them here (i.e. delete their key and value). As an example, if you didn't want to supply timeout or retry
+             * information then the below would look like:
+             *
+             *      protocol: "HTTP",
+             *      "urlPath": "/healthChecker",
+             *      "returnCode": 200
+             */
+            "protocol": "HTTP",
+            "urlPath": "/healthChecker",
+            "returnCode": 200,
+            "retries": 5,
+            "timeoutInMillis": 5000,
+            "intervalInMillis": 45000
+        },
+        "sessionPersistenceConfiguration": {
+            /*
+             * For more information, see: https://docs.cloud.oracle.com/api/#/en/loadbalancer/20170115/requests/SessionPersistenceConfigurationDetails
+             * 
+             * Note that the attribtue names here have to match what is shown in the above link. For attributes you do not want to provide,
+             * you don't have to supply them here (i.e. delete their key and value)
+             */
+            "cookieName": "myCookie",
+            "disableFallback": false
+        },
+        "sslConfiguration": {
+            /*
+             * For more information, see: https://docs.cloud.oracle.com/api/#/en/loadbalancer/20170115/requests/SSLConfigurationDetails
+             *
+             * Note that attribute names here have to match what is shown in the above link. For attribtues you do not want to provide,
+             * you don't have to supply them here (i.e. delete their key and value)
+             *
+             * The certificate bundle should match the name of a bundle which has been/will be associated with a load balancer (e.g. via the 
+             * --certificates option when doing a "oci lb load-balancer create")
+             */
+            "certificateName": "my_cert_bundle",
+            "verifyDepth": 3,
+            "verifyPeerCertificate": false
+        }
+    }
+    // Uncomment the below (and change information as needed) to add another backend set when creating the load balancer. You could copy it
+    // as many times as necessary to add all the backend sets you need
+    /*
+        "mySecondBackendSetName": {
+            "policy": "ROUND_ROBIN",
+            "backends": [
+                {
+                    "ipAddress": "10.10.10.4",
+                    "port": 80,
+                    "weight": 3
+                },
+                {
+                    "ipAddress": "10.10.10.5",
+                    "port": 80,
+                    "weight": 3
+                }
+            ],
+            "healthChecker": {
+                "protocol": "HTTP",
+                "urlPath": "/healthChecker",
+                "returnCode": 200,
+                "retries": 5,
+                "timeoutInMillis": 5000,
+                "intervalInMillis": 45000
+            },
+            "sessionPersistenceConfiguration": {
+                "cookieName": "myCookie",
+                "disableFallback": false
+            },
+            "sslConfiguration": {
+                "certificateName": "my_cert_bundle",
+                "verifyDepth": 3,
+                "verifyPeerCertificate": false
+            }
+        }
+    */
+}

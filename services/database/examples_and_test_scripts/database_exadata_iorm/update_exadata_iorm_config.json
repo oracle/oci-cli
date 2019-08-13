@@ -1,0 +1,10 @@
+[
+  {
+    "dbName": "default",
+    "share": 1
+  },
+  {
+    "dbName": "db1",
+    "share": 5
+  }
+]

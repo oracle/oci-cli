@@ -1,0 +1,25 @@
+{
+  /*
+   * Each entry in this dictionary represents a virtual hostname. You can assign a virtual hostname
+   * to any listener you create for your load balancer. Each hostname can correspond to an
+   * application served from your backend. For more information on virtual hostnames, see
+   * https://docs.cloud.oracle.com/Content/Balance/Tasks/managingrequest.htm#vhost
+   */
+
+   // The key value below should be the name of the "hostname" resource.
+  "hostname1": {
+
+    // hostname is the URL associated with the listener and hence a backend set.
+    // Multiple hostnames, backed by DNS entries, can point to the same load balancer IP address.
+    // Once the request reaches the LB service the hostname in  used to identify the backendset
+    "hostname": "host1.name.com",
+
+    // The name attribute mentioned below is optional since we already mention the name of the resource as
+    // the key above.
+    "name": "hostname1"
+  },
+  "hostname2": {
+    "hostname": "host2.name.com",
+    "name": "hostname2"
+  }
+}

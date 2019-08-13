@@ -1,0 +1,54 @@
+{
+  /*
+   * Each entry in this dictionary represents a path route set which can be used
+   * by a load balancer. A path route set includes all path route strings and
+   * matching rules that define the data routing for a particular listener.
+   */
+  "PathRouteSetName": {
+    /* A path route is a string that the Load Balancing service matches against
+     * an incoming URI to determine the appropriate destination backend set. A
+     * path route rule consists of a path route string and a pattern match type.
+     */
+    /* For more information about each attribute and the feature, refer this link:
+     * https://docs.cloud.oracle.com/Content/Balance/Tasks/managingrequest.htm#path
+     */
+    "pathRoutes": [
+      {
+        // The backend set to which the traffic should be routed
+        "backendSetName": "backendSetName",
+        // The path string to be used for matching with the incoming HTTP/HTTPS URI
+        // The unique part of the URI e.g. /video, /data, etc.
+        "path": "/video",
+        // Rule match type. Pick one option from below link:
+        // https://docs.cloud.oracle.com/api/#/en/loadbalancer/20170115/requests/PathMatchType
+        "pathMatchType": {
+          "matchType": "EXACT_MATCH"
+        }
+      }
+    ]
+  }
+  // Uncomment the below (and change information as needed) to add another path
+  // route set when creating the load balancer. You could copy it as many times
+  // as necessary to add all the path route stes you need
+  /*
+  , "PathRouteSetName2": {
+    // A path route set can have more than one path routes. A maximum of 20 are allowed.
+    "pathRoutes": [
+      {
+        "backendSetName": "mySecondBackendSetName",
+        "path": "/cgi",
+        "pathMatchType": {
+          "matchType": "FORCE_LONGEST_PREFIX_MATCH"
+        }
+      },
+      {
+        "backendSetName": "myThirdBackendSetName",
+        "path": "/data",
+        "pathMatchType": {
+          "matchType": "SUFFIX_MATCH"
+        }
+      }
+    ]
+  }
+  */
+}

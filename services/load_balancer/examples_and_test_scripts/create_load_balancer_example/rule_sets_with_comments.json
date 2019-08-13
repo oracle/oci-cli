@@ -1,0 +1,54 @@
+{
+  /*
+   * Please refer to https://docs.cloud.oracle.com/iaas/api/#/en/loadbalancer/latest/RuleSet/CreateRuleSet
+   * for more information on the creation and use of rule sets.
+   * This object represents a rule set which can be used by a listener. A rule set contains a group of 
+   * rules which may add, remove or extend the headers associated with either incoming HTTP requests or 
+   * outgoing HTTP responses.
+   */
+  "ruleSetName": {
+    "name": "ruleSetName",
+    "items":[
+      {
+        "action": "ADD_HTTP_REQUEST_HEADER",
+        "header": "AnyHeaderName",
+        "value": "Any Value for Header"        
+      },
+      {
+        "action": "EXTEND_HTTP_REQUEST_HEADER_VALUE",
+        "header": "AnyHeaderName2",
+        "prefix": "Any String to Prepend to Header",
+        "suffix": "Any String to Append to Header",  
+      },
+      {
+        "action": "REMOVE_HTTP_REQUEST_HEADER",
+        "header": "AnyHeaderName3"
+      },
+      {
+        "action": "ADD_HTTP_RESPONSE_HEADER",
+        "header": "AnyHeaderName4",
+        "value": "Any Value for Header"
+      },
+      {
+        "action": "EXTEND_HTTP_RESPONSE_HEADER_VALUE",
+        "header": "AnyHeaderName5",
+        "prefix": "Any String to Prepend to Header",
+        "suffix": "Any String to Append to Header",        
+      },
+      {
+        "action": "REMOVE_HTTP_RESPONSE_HEADER",
+        "header": "AnyHeaderName6"
+      },
+      {
+        "action": "ALLOW",
+        "description": "Allow traffic from internet clients",
+        "conditions": [
+          {
+            "attributeName": "SOURCE_IP_ADDRESS",
+            "attributeValue": "111.111.111.111/32"
+          }
+        ]
+      }
+    ]
+  }
+}

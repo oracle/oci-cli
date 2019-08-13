@@ -917,6 +917,7 @@ def create_image_image_source_via_object_storage_tuple_details(ctx, from_json, w
     kwargs = {}
 
     details = {}
+    details['imageSourceDetails'] = {}
     details['compartmentId'] = compartment_id
     details['imageSourceDetails']['bucketName'] = image_source_details_bucket_name
     details['imageSourceDetails']['namespaceName'] = image_source_details_namespace_name
@@ -1022,6 +1023,7 @@ def create_image_image_source_via_object_storage_uri_details(ctx, from_json, wai
     kwargs = {}
 
     details = {}
+    details['imageSourceDetails'] = {}
     details['compartmentId'] = compartment_id
     details['imageSourceDetails']['sourceUri'] = image_source_details_source_uri
 
@@ -2347,6 +2349,7 @@ def launch_instance_instance_source_via_image_details(ctx, from_json, wait_for_s
     kwargs = {}
 
     details = {}
+    details['sourceDetails'] = {}
     details['availabilityDomain'] = availability_domain
     details['compartmentId'] = compartment_id
     details['shape'] = shape
@@ -2527,6 +2530,7 @@ def launch_instance_instance_source_via_boot_volume_details(ctx, from_json, wait
     kwargs = {}
 
     details = {}
+    details['sourceDetails'] = {}
     details['availabilityDomain'] = availability_domain
     details['compartmentId'] = compartment_id
     details['shape'] = shape

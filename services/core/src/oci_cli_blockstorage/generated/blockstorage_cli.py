@@ -463,6 +463,7 @@ def create_boot_volume_boot_volume_source_from_boot_volume_backup_details(ctx, f
     kwargs = {}
 
     details = {}
+    details['sourceDetails'] = {}
     details['availabilityDomain'] = availability_domain
     details['compartmentId'] = compartment_id
     details['sourceDetails']['id'] = source_details_id
@@ -546,6 +547,7 @@ def create_boot_volume_boot_volume_source_from_boot_volume_details(ctx, from_jso
     kwargs = {}
 
     details = {}
+    details['sourceDetails'] = {}
     details['availabilityDomain'] = availability_domain
     details['compartmentId'] = compartment_id
     details['sourceDetails']['id'] = source_details_id
@@ -799,6 +801,7 @@ def create_volume_volume_source_from_volume_details(ctx, from_json, wait_for_sta
     kwargs = {}
 
     details = {}
+    details['sourceDetails'] = {}
     details['availabilityDomain'] = availability_domain
     details['compartmentId'] = compartment_id
     details['sourceDetails']['id'] = source_details_id
@@ -894,6 +897,7 @@ def create_volume_volume_source_from_volume_backup_details(ctx, from_json, wait_
     kwargs = {}
 
     details = {}
+    details['sourceDetails'] = {}
     details['availabilityDomain'] = availability_domain
     details['compartmentId'] = compartment_id
     details['sourceDetails']['id'] = source_details_id
@@ -1142,6 +1146,7 @@ def create_volume_group_volume_group_source_from_volume_group_details(ctx, from_
     kwargs = {}
 
     details = {}
+    details['sourceDetails'] = {}
     details['availabilityDomain'] = availability_domain
     details['compartmentId'] = compartment_id
     details['sourceDetails']['volumeGroupId'] = source_details_volume_group_id
@@ -1213,6 +1218,7 @@ def create_volume_group_volume_group_source_from_volumes_details(ctx, from_json,
     kwargs = {}
 
     details = {}
+    details['sourceDetails'] = {}
     details['availabilityDomain'] = availability_domain
     details['compartmentId'] = compartment_id
     details['sourceDetails']['volumeIds'] = cli_util.parse_json_parameter("source_details_volume_ids", source_details_volume_ids)
@@ -1284,6 +1290,7 @@ def create_volume_group_volume_group_source_from_volume_group_backup_details(ctx
     kwargs = {}
 
     details = {}
+    details['sourceDetails'] = {}
     details['availabilityDomain'] = availability_domain
     details['compartmentId'] = compartment_id
     details['sourceDetails']['volumeGroupBackupId'] = source_details_volume_group_backup_id

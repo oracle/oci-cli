@@ -1,0 +1,22 @@
+[
+  // The first answer is an A record that points to the IPv4 address 1.2.3.4
+  {
+    "name": "Server 1",
+    "rtype": "A",
+    "rdata": "1.2.3.4"
+  },
+  // The second answer is an A record that points to the IPv4 address 2.3.4.5
+  {
+    "name": "Server 2",
+    "rtype": "A",
+    "rdata": "2.3.4.5"
+  },
+  // The third answer is an A record that points to the IPv4 address 3.4.5.6, but it is manually
+  // disabled.
+  {
+    "name": "Server 1",
+    "rtype": "A",
+    "rdata": "3.4.5.6",
+    "isDisabled": true
+  }
+]

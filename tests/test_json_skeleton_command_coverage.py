@@ -31,7 +31,26 @@ IGNORED_COMMANDS = [
     # This means that the --generate-full-command-json-input will not work
     # for these commands.
     ['cims', 'incident', 'create'],
-    ['cims', 'incident', 'update']
+    ['cims', 'incident', 'update'],
+    ['dts', 'nfs-dataset', 'activate'],
+    ['dts', 'nfs-dataset', 'create'],
+    ['dts', 'nfs-dataset', 'deactivate'],
+    ['dts', 'nfs-dataset', 'delete'],
+    ['dts', 'nfs-dataset', 'get-seal-manifest'],
+    ['dts', 'nfs-dataset', 'list'],
+    ['dts', 'nfs-dataset', 'reopen'],
+    ['dts', 'nfs-dataset', 'seal'],
+    ['dts', 'nfs-dataset', 'seal-status'],
+    ['dts', 'nfs-dataset', 'set-export'],
+    ['dts', 'nfs-dataset', 'show'],
+    ['dts', 'physical-appliance', 'list'],
+    ['dts', 'physical-appliance', 'show'],
+    ['dts', 'physical-appliance', 'unregister'],
+    ['dts', 'physical-appliance', 'configure-encryption'],
+    ['dts', 'physical-appliance', 'finalize'],
+    ['dts', 'physical-appliance', 'initialize-authentication'],
+    ['dts', 'physical-appliance', 'unlock'],
+    ['dts', 'job', 'verify-upload-user-credentials']
 ]
 
 # List of extended commands for which test_run_all_commands will fail. These tests fail because of the extended code, where we
@@ -53,6 +72,25 @@ IGNORE_EXTENDED_TESTS_COMMANDS = [
     ['resource-manager', 'stack', 'update'],
     ['resource-manager', 'stack', 'create'],
     ['waas', 'protection-settings', 'update'],
+    ['dts', 'nfs-dataset', 'activate'],
+    ['dts', 'nfs-dataset', 'create'],
+    ['dts', 'nfs-dataset', 'deactivate'],
+    ['dts', 'nfs-dataset', 'delete'],
+    ['dts', 'nfs-dataset', 'get-seal-manifest'],
+    ['dts', 'nfs-dataset', 'list'],
+    ['dts', 'nfs-dataset', 'reopen'],
+    ['dts', 'nfs-dataset', 'seal'],
+    ['dts', 'nfs-dataset', 'seal-status'],
+    ['dts', 'nfs-dataset', 'set-export'],
+    ['dts', 'nfs-dataset', 'show'],
+    ['dts', 'physical-appliance', 'list'],
+    ['dts', 'physical-appliance', 'show'],
+    ['dts', 'physical-appliance', 'unregister'],
+    ['dts', 'physical-appliance', 'configure-encryption'],
+    ['dts', 'physical-appliance', 'finalize'],
+    ['dts', 'physical-appliance', 'initialize-authentication'],
+    ['dts', 'physical-appliance', 'unlock'],
+    ['dts', 'job', 'verify-upload-user-credentials'],
     ['waas', 'waas-policy', 'list'],
     ['waas', 'certificate', 'list']
 ]
@@ -204,6 +242,28 @@ def process_json_input(input, tmpdir):
 def get_choice_from_choices(choices):
     choice = random.choice(choices.split('|'))
     return choice
+
+
+def _traverse_oci_cli(command, path, failed_commands):
+    if hasattr(command, "commands"):
+        for name, command in six.iteritems(command.commands):
+            _traverse_oci_cli(command, path + [name], failed_commands)
+    else:
+        if path not in IGNORED_COMMANDS:
+            complex_options = [option for option in command.params if str(option.type) == 'COMPLEX_TYPE']
+            if complex_options:
+                for option in complex_options:
+                    full_command = path + ['--generate-param-json-input', option.name.replace('_', '-')]
+                    result = util.invoke_command(full_command)
+                    if result.exit_code != 0 or 'is not a recognized complex type, so no example JSON can be produced. Invoke help for this command' in result.output:
+                        print(full_command, result.exit_code)
+                        failed_commands.append(full_command)
+
+
+def test_generate_param_json_input_for_all_complex_types():
+    failed_commands = []
+    _traverse_oci_cli(oci_cli.cli, [], failed_commands)
+    assert len(failed_commands) == 0, 'The following commands failed to run: {}'.format(failed_commands)
 
 
 def test_all_commands_can_accept_from_json_input():

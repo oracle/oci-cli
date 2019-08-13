@@ -2584,9 +2584,11 @@ Options:
                                   in
                                   a file, modifying it as needed and then
                                   passing it back in via the file:// syntax.
-                                  [required] This must be provided in JSON
-                                  format. See API reference for additional help.
-                                  Example: '["statement 1","statement 2"]'
+                                  This must be provided in JSON format. See API
+                                  reference for additional help.
+                                  
+                                  Example:
+                                  '["statement 1","statement 2"]' [required]
   --description TEXT              The description you assign to the policy
                                   during creation. Does not have to be unique,
                                   and it's changeable. [required]

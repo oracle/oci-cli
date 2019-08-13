@@ -1,0 +1,13 @@
+{
+  "PathRouteSetName": {
+    "pathRoutes": [
+      {
+        "backendSetName": "backendSetName",
+        "path": "/video",
+        "pathMatchType": {
+          "matchType": "EXACT_MATCH"
+        }
+      }
+    ]
+  }
+}

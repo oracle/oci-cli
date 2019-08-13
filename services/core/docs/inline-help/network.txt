@@ -1687,12 +1687,9 @@ Options:
                                   in
                                   a file, modifying it as needed and then
                                   passing it back in via the file:// syntax.
-                                  [required] 
-                                  
-                                  Example: '[{"type":
-                                  "DomainNameServer", "customDnsServers":
-                                  ["202.44.61.9"], "serverType":
-                                  "CustomDnsServer"}]'
+                                  Example: '[{"type": "DomainNameServer",
+                                  "customDnsServers": ["202.44.61.9"],
+                                  "serverType": "CustomDnsServer"}]' [required]
   --vcn-id TEXT                   The OCID of the VCN the set of DHCP options
                                   belongs to. [required]
   --defined-tags COMPLEX TYPE     Defined tags for this resource. Each key is
@@ -8024,12 +8021,10 @@ Options:
                                   in
                                   a file, modifying it as needed and then
                                   passing it back in via the file:// syntax.
-                                  [required] 
-                                  
-                                  Example: '[{"cidrBlock":"0.0.0.0/
-                                  0","networkEntityId":"ocid1.internetgateway.oc
-                                  1.phx.aaaaaaaaxtfqb2srw7hoi5cmdum4n6ow2xm2zhrz
-                                  qqypmlteiiebtmvl75ya"}]'
+                                  Example: '[{"cidrBlock":"0.0.0.0/0","networkEn
+                                  tityId":"ocid1.internetgateway.oc1.phx.aaaaaaa
+                                  axtfqb2srw7hoi5cmdum4n6ow2xm2zhrzqqypmlteiiebt
+                                  mvl75ya"}]' [required]
   --vcn-id TEXT                   The OCID of the VCN the route table belongs
                                   to. [required]
   --defined-tags COMPLEX TYPE     Defined tags for this resource. Each key is
@@ -8558,13 +8553,11 @@ Options:
                                   in
                                   a file, modifying it as needed and then
                                   passing it back in via the file:// syntax.
-                                  [required] 
-                                  
-                                  Example: '[{"destination":
-                                  "10.0.2.0/24", "protocol": "6", "isStateless":
-                                  true, "tcpOptions": {"destinationPortRange":
-                                  {"max": 1521, "min": 1521}, "sourcePortRange":
-                                  {"max": 1521, "min": 1521}}}]'
+                                  Example: '[{"destination": "10.0.2.0/24",
+                                  "protocol": "6", "isStateless": true,
+                                  "tcpOptions": {"destinationPortRange": {"max":
+                                  1521, "min": 1521}, "sourcePortRange": {"max":
+                                  1521, "min": 1521}}}]' [required]
   --ingress-security-rules COMPLEX TYPE
                                   Rules for allowing ingress IP packets.
                                   This is
@@ -8581,13 +8574,11 @@ Options:
                                   in
                                   a file, modifying it as needed and then
                                   passing it back in via the file:// syntax.
-                                  [required] 
-                                  
-                                  Example: '[{"source":
-                                  "10.0.2.0/24", "protocol": "6", "isStateless":
-                                  true, "tcpOptions": {"destinationPortRange":
-                                  {"max": 1521, "min": 1521}, "sourcePortRange":
-                                  {"max": 1521, "min": 1521}}}]'
+                                  Example: '[{"source": "10.0.2.0/24",
+                                  "protocol": "6", "isStateless": true,
+                                  "tcpOptions": {"destinationPortRange": {"max":
+                                  1521, "min": 1521}, "sourcePortRange": {"max":
+                                  1521, "min": 1521}}}]' [required]
   --vcn-id TEXT                   The OCID of the VCN the security list belongs
                                   to. [required]
   --defined-tags COMPLEX TYPE     Defined tags for this resource. Each key is

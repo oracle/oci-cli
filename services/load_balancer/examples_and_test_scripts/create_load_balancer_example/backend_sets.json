@@ -1,0 +1,34 @@
+{
+    "backendSetName": {
+        "policy": "ROUND_ROBIN",
+        "backends": [
+            {
+                "ipAddress": "10.10.10.4",
+                "port": 80,
+                "weight": 3
+            },
+            {
+                "ipAddress": "10.10.10.5",
+                "port": 80,
+                "weight": 3
+            }
+        ],
+        "healthChecker": {
+            "protocol": "HTTP",
+            "urlPath": "/healthChecker",
+            "returnCode": 200,
+            "retries": 5,
+            "timeoutInMillis": 5000,
+            "intervalInMillis": 45000
+        },
+        "sessionPersistenceConfiguration": {
+            "cookieName": "myCookie",
+            "disableFallback": false
+        },
+        "sslConfiguration": {
+            "certificateName": "my_cert_bundle",
+            "verifyDepth": 3,
+            "verifyPeerCertificate": false
+        }
+    }
+}
