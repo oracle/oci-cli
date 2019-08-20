@@ -1628,7 +1628,8 @@ def _get_progress_bar_label(original_label, object_name, prefix='Processing'):
 
         if len(object_name) > remaining_width:
             object_name_to_use = object_name[(object_name.rfind('/') + 1):]
-            if len(object_name_to_use) > remaining_width:
+            object_name_length = len(object_name_to_use)
+            if object_name_length > remaining_width or object_name_length == 0:
                 object_name_to_use = 'item'
         else:
             object_name_to_use = object_name

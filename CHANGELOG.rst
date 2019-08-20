@@ -96,6 +96,8 @@ Fixed
 
 * Links to GitHub examples are being updated in the changelog itself.
 
+* os bulk-delete did not print long object names that ended with slash
+
 Updated
 ~~~~~~~
 * [Breaking] Changes to response structure for certain WAF commands
