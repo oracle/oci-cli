@@ -27,7 +27,312 @@ Options:
                   <command> --help.
 
 Commands:
-  stream  Detailed representation of a stream,...
+  archiver  Represents the current state of the stream...
+  stream    Detailed representation of a stream,...
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci streaming admin archiver --help
+Usage: oci streaming admin archiver [OPTIONS] COMMAND [ARGS]...
+
+  Represents the current state of the stream archiver.
+
+Options:
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
+
+Commands:
+  create  Starts the provisioning of a new stream...
+  get     Returns the current state of the stream...
+  start   Start the archiver for the specified stream.
+  stop    Stop the archiver for the specified stream.
+  update  Update the stream archiver parameters.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci streaming admin archiver create --help
+Usage: oci streaming admin archiver create [OPTIONS]
+
+  Starts the provisioning of a new stream archiver. To track the progress of
+  the provisioning, you can periodically call [GetArchiver]. In the response,
+  the `lifecycleState` parameter of the [Stream] object tells you its current
+  state.
+
+Options:
+  --stream-id TEXT                The OCID of the stream. [required]
+  --bucket-name TEXT              The name of the bucket. [required]
+  --use-existing-bucket BOOLEAN   The flag to create a new bucket or use
+                                  existing one. [required]
+  --start-position [LATEST|TRIM_HORIZON]
+                                  The start message. [required]
+  --batch-rollover-size-in-mbs INTEGER
+                                  The batch rollover size in megabytes.
+                                  [required]
+  --batch-rollover-time-in-seconds INTEGER
+                                  The rollover time in seconds. [required]
+  --wait-for-state [CREATING|STOPPED|STARTING|RUNNING|STOPPING|UPDATING]
+                                  This operation creates, modifies or deletes a
+                                  resource that has a defined lifecycle state.
+                                  Specify this option to perform the action and
+                                  then wait until the resource reaches a given
+                                  lifecycle state. If timeout is reached, a
+                                  return code of 2 is returned. For any other
+                                  error, a return code of 1 is returned.
+  --max-wait-seconds INTEGER      The maximum time to wait for the resource to
+                                  reach the lifecycle state defined by --wait-
+                                  for-state. Defaults to 1200 seconds.
+  --wait-interval-seconds INTEGER
+                                  Check every --wait-interval-seconds to see
+                                  whether the resource to see if it has reached
+                                  the lifecycle state defined by --wait-for-
+                                  state. Defaults to 30 seconds.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file using the file://path-
+                                  to/file syntax.
+                                  
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci streaming admin archiver get --help
+Usage: oci streaming admin archiver get [OPTIONS]
+
+  Returns the current state of the stream archiver.
+
+Options:
+  --stream-id TEXT  The OCID of the stream. [required]
+  --from-json TEXT  Provide input to this command as a JSON document from a file
+                    using the file://path-to/file syntax.
+                    
+                    The --generate-full-
+                    command-json-input option can be used to generate a sample
+                    json file to be used with this command option. The key names
+                    are pre-populated and match the command option names
+                    (converted to camelCase format, e.g. compartment-id -->
+                    compartmentId), while the values of the keys need to be
+                    populated by the user before using the sample file as an
+                    input to this command. For any command option that accepts
+                    multiple values, the value of the key can be a JSON array.
+                    Options can still be provided on the command line. If an
+                    option exists in both the JSON document and the command line
+                    then the command line specified value will be used.
+                    
+                    For
+                    examples on usage of this option, please see our "using CLI
+                    with advanced JSON options" link: https://docs.cloud.oracle.
+                    com/iaas/Content/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                    s
+  -?, -h, --help    For detailed help on any of these individual commands, enter
+                    <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci streaming admin archiver start --help
+Usage: oci streaming admin archiver start [OPTIONS]
+
+  Start the archiver for the specified stream.
+
+Options:
+  --stream-id TEXT                The OCID of the stream. [required]
+  --if-match TEXT                 For optimistic concurrency control. In the PUT
+                                  or DELETE call for a resource, set the if-
+                                  match parameter to the value of the etag from
+                                  a previous GET or POST response for that
+                                  resource. The resource will be updated or
+                                  deleted only if the etag you provide matches
+                                  the resource's current etag value.
+  --wait-for-state [CREATING|STOPPED|STARTING|RUNNING|STOPPING|UPDATING]
+                                  This operation creates, modifies or deletes a
+                                  resource that has a defined lifecycle state.
+                                  Specify this option to perform the action and
+                                  then wait until the resource reaches a given
+                                  lifecycle state. If timeout is reached, a
+                                  return code of 2 is returned. For any other
+                                  error, a return code of 1 is returned.
+  --max-wait-seconds INTEGER      The maximum time to wait for the resource to
+                                  reach the lifecycle state defined by --wait-
+                                  for-state. Defaults to 1200 seconds.
+  --wait-interval-seconds INTEGER
+                                  Check every --wait-interval-seconds to see
+                                  whether the resource to see if it has reached
+                                  the lifecycle state defined by --wait-for-
+                                  state. Defaults to 30 seconds.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file using the file://path-
+                                  to/file syntax.
+                                  
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci streaming admin archiver stop --help
+Usage: oci streaming admin archiver stop [OPTIONS]
+
+  Stop the archiver for the specified stream.
+
+Options:
+  --stream-id TEXT                The OCID of the stream. [required]
+  --if-match TEXT                 For optimistic concurrency control. In the PUT
+                                  or DELETE call for a resource, set the if-
+                                  match parameter to the value of the etag from
+                                  a previous GET or POST response for that
+                                  resource. The resource will be updated or
+                                  deleted only if the etag you provide matches
+                                  the resource's current etag value.
+  --wait-for-state [CREATING|STOPPED|STARTING|RUNNING|STOPPING|UPDATING]
+                                  This operation creates, modifies or deletes a
+                                  resource that has a defined lifecycle state.
+                                  Specify this option to perform the action and
+                                  then wait until the resource reaches a given
+                                  lifecycle state. If timeout is reached, a
+                                  return code of 2 is returned. For any other
+                                  error, a return code of 1 is returned.
+  --max-wait-seconds INTEGER      The maximum time to wait for the resource to
+                                  reach the lifecycle state defined by --wait-
+                                  for-state. Defaults to 1200 seconds.
+  --wait-interval-seconds INTEGER
+                                  Check every --wait-interval-seconds to see
+                                  whether the resource to see if it has reached
+                                  the lifecycle state defined by --wait-for-
+                                  state. Defaults to 30 seconds.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file using the file://path-
+                                  to/file syntax.
+                                  
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci streaming admin archiver update --help
+Usage: oci streaming admin archiver update [OPTIONS]
+
+  Update the stream archiver parameters.
+
+Options:
+  --stream-id TEXT                The OCID of the stream. [required]
+  --bucket-name TEXT              The name of the bucket.
+  --use-existing-bucket BOOLEAN   The flag to create a new bucket or use
+                                  existing one.
+  --start-position [LATEST|TRIM_HORIZON]
+                                  The start message.
+  --batch-rollover-size-in-mbs INTEGER
+                                  The batch rollover size in megabytes.
+  --batch-rollover-time-in-seconds INTEGER
+                                  The rollover time in seconds.
+  --if-match TEXT                 For optimistic concurrency control. In the PUT
+                                  or DELETE call for a resource, set the if-
+                                  match parameter to the value of the etag from
+                                  a previous GET or POST response for that
+                                  resource. The resource will be updated or
+                                  deleted only if the etag you provide matches
+                                  the resource's current etag value.
+  --wait-for-state [CREATING|STOPPED|STARTING|RUNNING|STOPPING|UPDATING]
+                                  This operation creates, modifies or deletes a
+                                  resource that has a defined lifecycle state.
+                                  Specify this option to perform the action and
+                                  then wait until the resource reaches a given
+                                  lifecycle state. If timeout is reached, a
+                                  return code of 2 is returned. For any other
+                                  error, a return code of 1 is returned.
+  --max-wait-seconds INTEGER      The maximum time to wait for the resource to
+                                  reach the lifecycle state defined by --wait-
+                                  for-state. Defaults to 1200 seconds.
+  --wait-interval-seconds INTEGER
+                                  Check every --wait-interval-seconds to see
+                                  whether the resource to see if it has reached
+                                  the lifecycle state defined by --wait-for-
+                                  state. Defaults to 30 seconds.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file using the file://path-
+                                  to/file syntax.
+                                  
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci streaming admin stream --help
@@ -217,6 +522,13 @@ Usage: oci streaming admin stream delete [OPTIONS]
 
 Options:
   --stream-id TEXT                The OCID of the stream to delete. [required]
+  --if-match TEXT                 For optimistic concurrency control. In the PUT
+                                  or DELETE call for a resource, set the if-
+                                  match parameter to the value of the etag from
+                                  a previous GET or POST response for that
+                                  resource. The resource will be updated or
+                                  deleted only if the etag you provide matches
+                                  the resource's current etag value.
   --force                         Perform deletion without prompting for
                                   confirmation.
   --wait-for-state [CREATING|ACTIVE|DELETING|DELETED|FAILED]
@@ -407,6 +719,13 @@ Options:
                                   in
                                   a file, modifying it as needed and then
                                   passing it back in via the file:// syntax.
+  --if-match TEXT                 For optimistic concurrency control. In the PUT
+                                  or DELETE call for a resource, set the if-
+                                  match parameter to the value of the etag from
+                                  a previous GET or POST response for that
+                                  resource. The resource will be updated or
+                                  deleted only if the etag you provide matches
+                                  the resource's current etag value.
   --force                         Perform update without prompting for
                                   confirmation.
   --wait-for-state [CREATING|ACTIVE|DELETING|DELETED|FAILED]

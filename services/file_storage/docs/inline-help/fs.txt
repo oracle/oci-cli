@@ -806,6 +806,9 @@ Options:
                                   in
                                   a file, modifying it as needed and then
                                   passing it back in via the file:// syntax.
+  --kms-key-id TEXT               The OCID of KMS key used to encrypt the
+                                  encryption keys associated with this file
+                                  system.
   --wait-for-state [CREATING|ACTIVE|DELETING|DELETED]
                                   This operation creates, modifies or deletes a
                                   resource that has a defined lifecycle state.
@@ -1081,6 +1084,14 @@ Options:
                                   in
                                   a file, modifying it as needed and then
                                   passing it back in via the file:// syntax.
+  --kms-key-id TEXT               A KMS key OCID that will be associated with
+                                  the given file system. If it is empty the
+                                  Update operation will actually remove the KMS
+                                  key, if there is one, from the given file
+                                  system. Note that the old KMS key should still
+                                  be enabled in KMS otherwise all the files in
+                                  the file system encrypted with the old KMS key
+                                  will no longer be accessible.
   --if-match TEXT                 For optimistic concurrency control. In the PUT
                                   or DELETE call for a resource, set the `if-
                                   match` parameter to the value of the etag from

@@ -82,7 +82,7 @@ def launch_db_system_extended(ctx, **kwargs):
             db_backup_config['autoBackupEnabled'] = kwargs['auto_backup_enabled']
         if kwargs['recovery_window_in_days'] is not None:
             db_backup_config['recoveryWindowInDays'] = kwargs['recovery_window_in_days']
-        create_database_details['db_backup_config'] = json.dumps(db_backup_config)
+        create_database_details['db_backup_config'] = db_backup_config
     create_db_home_details['database'] = create_database_details
 
     kwargs['db_home'] = json.dumps(create_db_home_details)

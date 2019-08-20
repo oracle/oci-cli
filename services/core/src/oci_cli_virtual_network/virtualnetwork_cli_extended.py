@@ -4,6 +4,7 @@
 from __future__ import print_function
 import click
 import sys
+import six  # noqa: F401
 
 from services.core.src.oci_cli_virtual_network.generated import virtualnetwork_cli
 
@@ -335,6 +336,27 @@ virtualnetwork_cli.list_fast_connect_provider_virtual_circuit_bandwidth_shapes.n
 virtual_circuit_bandwidth_shape_group.add_command(virtualnetwork_cli.list_fast_connect_provider_virtual_circuit_bandwidth_shapes)
 
 
+def swap_nsg_id_value(kwargs):
+    nsg_id = kwargs.pop('nsg_id')
+    kwargs['network_security_group_id'] = nsg_id
+    if isinstance(nsg_id, six.string_types) and len(nsg_id.strip()) == 0:
+        raise click.UsageError('Parameter --nsg-id cannot be whitespace or empty string')
+    return kwargs
+
+
+# This command is to enable change_network_security_group_compartment command to be shortened using nsg_id
+@cli_util.copy_params_from_generated_command(virtualnetwork_cli.change_network_security_group_compartment, params_to_exclude=['network_security_group_id'])
+@virtualnetwork_cli.network_security_group_group.command(name=cli_util.override('change_network_security_group_compartment.command_name', 'change-compartment'), help=virtualnetwork_cli.change_network_security_group_compartment.help)
+@cli_util.option('--nsg-id', required=True, help=u"""The [OCID] of the network security group.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_network_security_group_compartment_extended(ctx, **kwargs):
+    if 'nsg_id' in kwargs:
+        kwargs = swap_nsg_id_value(kwargs)
+    ctx.invoke(virtualnetwork_cli.change_network_security_group_compartment, **kwargs)
+
+
 @cli_util.copy_params_from_generated_command(virtualnetwork_cli.delete_network_security_group, params_to_exclude=['network_security_group_id'])
 @virtualnetwork_cli.network_security_group_group.command(name=cli_util.override('delete_network_security_group.command_name', 'delete'), help=virtualnetwork_cli.delete_network_security_group.help)
 @cli_util.option('--nsg-id', required=True, help=u"""The [OCID] of the network security group.""")
@@ -343,8 +365,7 @@ virtual_circuit_bandwidth_shape_group.add_command(virtualnetwork_cli.list_fast_c
 @cli_util.wrap_exceptions
 def delete_network_security_group_extended(ctx, **kwargs):
     if 'nsg_id' in kwargs:
-        kwargs['network_security_group_id'] = kwargs['nsg_id']
-        kwargs.pop('nsg_id')
+        kwargs = swap_nsg_id_value(kwargs)
     ctx.invoke(virtualnetwork_cli.delete_network_security_group, **kwargs)
 
 
@@ -356,8 +377,7 @@ def delete_network_security_group_extended(ctx, **kwargs):
 @cli_util.wrap_exceptions
 def get_network_security_group_extended(ctx, **kwargs):
     if 'nsg_id' in kwargs:
-        kwargs['network_security_group_id'] = kwargs['nsg_id']
-        kwargs.pop('nsg_id')
+        kwargs = swap_nsg_id_value(kwargs)
     ctx.invoke(virtualnetwork_cli.get_network_security_group, **kwargs)
 
 
@@ -369,8 +389,7 @@ def get_network_security_group_extended(ctx, **kwargs):
 @cli_util.wrap_exceptions
 def update_network_security_group_extended(ctx, **kwargs):
     if 'nsg_id' in kwargs:
-        kwargs['network_security_group_id'] = kwargs['nsg_id']
-        kwargs.pop('nsg_id')
+        kwargs = swap_nsg_id_value(kwargs)
     ctx.invoke(virtualnetwork_cli.update_network_security_group, **kwargs)
 
 
@@ -382,8 +401,7 @@ def update_network_security_group_extended(ctx, **kwargs):
 @cli_util.wrap_exceptions
 def list_network_security_group_vnics_extended(ctx, **kwargs):
     if 'nsg_id' in kwargs:
-        kwargs['network_security_group_id'] = kwargs['nsg_id']
-        kwargs.pop('nsg_id')
+        kwargs = swap_nsg_id_value(kwargs)
     ctx.invoke(virtualnetwork_cli.list_network_security_group_vnics, **kwargs)
 
 
@@ -395,8 +413,7 @@ def list_network_security_group_vnics_extended(ctx, **kwargs):
 @cli_util.wrap_exceptions
 def add_network_security_group_security_rules_extended(ctx, **kwargs):
     if 'nsg_id' in kwargs:
-        kwargs['network_security_group_id'] = kwargs['nsg_id']
-        kwargs.pop('nsg_id')
+        kwargs = swap_nsg_id_value(kwargs)
     ctx.invoke(virtualnetwork_cli.add_network_security_group_security_rules, **kwargs)
 
 
@@ -408,8 +425,7 @@ def add_network_security_group_security_rules_extended(ctx, **kwargs):
 @cli_util.wrap_exceptions
 def list_network_security_group_security_rules_extended(ctx, **kwargs):
     if 'nsg_id' in kwargs:
-        kwargs['network_security_group_id'] = kwargs['nsg_id']
-        kwargs.pop('nsg_id')
+        kwargs = swap_nsg_id_value(kwargs)
     ctx.invoke(virtualnetwork_cli.list_network_security_group_security_rules, **kwargs)
 
 
@@ -421,8 +437,7 @@ def list_network_security_group_security_rules_extended(ctx, **kwargs):
 @cli_util.wrap_exceptions
 def remove_network_security_group_security_rules_extended(ctx, **kwargs):
     if 'nsg_id' in kwargs:
-        kwargs['network_security_group_id'] = kwargs['nsg_id']
-        kwargs.pop('nsg_id')
+        kwargs = swap_nsg_id_value(kwargs)
     ctx.invoke(virtualnetwork_cli.remove_network_security_group_security_rules, **kwargs)
 
 
@@ -434,6 +449,5 @@ def remove_network_security_group_security_rules_extended(ctx, **kwargs):
 @cli_util.wrap_exceptions
 def update_network_security_group_security_rules_extended(ctx, **kwargs):
     if 'nsg_id' in kwargs:
-        kwargs['network_security_group_id'] = kwargs['nsg_id']
-        kwargs.pop('nsg_id')
+        kwargs = swap_nsg_id_value(kwargs)
     ctx.invoke(virtualnetwork_cli.update_network_security_group_security_rules, **kwargs)

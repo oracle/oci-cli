@@ -159,6 +159,8 @@ def local_peering_gateway_group():
 
 You can create and assign an IPv6 to any VNIC that is in an IPv6-enabled subnet in an IPv6-enabled VCN.
 
+**Note:** IPv6 addressing is currently supported only in the Government Cloud.
+
 For important details about IPv6 addressing in a VCN, see [IPv6 Addresses].""")
 @cli_util.help_option_group
 def ipv6_group():
@@ -662,6 +664,62 @@ def change_cross_connect_group_compartment(ctx, from_json, cross_connect_group_i
     cli_util.render_response(result, ctx)
 
 
+@dhcp_options_group.command(name=cli_util.override('change_dhcp_options_compartment.command_name', 'change-compartment'), help=u"""Moves a set of DHCP options into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].""")
+@cli_util.option('--dhcp-id', required=True, help=u"""The OCID for the set of DHCP options.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the set of DHCP options to.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_dhcp_options_compartment(ctx, from_json, dhcp_id, compartment_id):
+
+    if isinstance(dhcp_id, six.string_types) and len(dhcp_id.strip()) == 0:
+        raise click.UsageError('Parameter --dhcp-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    details = {}
+    details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('virtual_network', ctx)
+    result = client.change_dhcp_options_compartment(
+        dhcp_id=dhcp_id,
+        change_dhcp_options_compartment_details=details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@internet_gateway_group.command(name=cli_util.override('change_internet_gateway_compartment.command_name', 'change-compartment'), help=u"""Moves an internet gateway into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].""")
+@cli_util.option('--ig-id', required=True, help=u"""The OCID of the internet gateway.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the internet gateway to.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_internet_gateway_compartment(ctx, from_json, ig_id, compartment_id):
+
+    if isinstance(ig_id, six.string_types) and len(ig_id.strip()) == 0:
+        raise click.UsageError('Parameter --ig-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    details = {}
+    details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('virtual_network', ctx)
+    result = client.change_internet_gateway_compartment(
+        ig_id=ig_id,
+        change_internet_gateway_compartment_details=details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @ip_sec_connection_group.command(name=cli_util.override('change_ip_sec_connection_compartment.command_name', 'change-compartment'), help=u"""Moves an IPSec connection into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].""")
 @cli_util.option('--ipsc-id', required=True, help=u"""The OCID of the IPSec connection.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the IPSec connection to.""")
@@ -690,6 +748,34 @@ def change_ip_sec_connection_compartment(ctx, from_json, ipsc_id, compartment_id
     cli_util.render_response(result, ctx)
 
 
+@local_peering_gateway_group.command(name=cli_util.override('change_local_peering_gateway_compartment.command_name', 'change-compartment'), help=u"""Moves a local peering gateway into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].""")
+@cli_util.option('--local-peering-gateway-id', required=True, help=u"""The OCID of the local peering gateway.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the local peering gateway to.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_local_peering_gateway_compartment(ctx, from_json, local_peering_gateway_id, compartment_id):
+
+    if isinstance(local_peering_gateway_id, six.string_types) and len(local_peering_gateway_id.strip()) == 0:
+        raise click.UsageError('Parameter --local-peering-gateway-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    details = {}
+    details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('virtual_network', ctx)
+    result = client.change_local_peering_gateway_compartment(
+        local_peering_gateway_id=local_peering_gateway_id,
+        change_local_peering_gateway_compartment_details=details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @nat_gateway_group.command(name=cli_util.override('change_nat_gateway_compartment.command_name', 'change-compartment'), help=u"""Moves a NAT gateway into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].""")
 @cli_util.option('--nat-gateway-id', required=True, help=u"""The NAT gateway's [OCID].""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the NAT gateway to.""")
@@ -713,6 +799,64 @@ def change_nat_gateway_compartment(ctx, from_json, nat_gateway_id, compartment_i
     result = client.change_nat_gateway_compartment(
         nat_gateway_id=nat_gateway_id,
         change_nat_gateway_compartment_details=details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@network_security_group_group.command(name=cli_util.override('change_network_security_group_compartment.command_name', 'change-compartment'), help=u"""Moves a network security group into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].""")
+@cli_util.option('--network-security-group-id', required=True, help=u"""The [OCID] of the network security group.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the network security group to.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_network_security_group_compartment(ctx, from_json, network_security_group_id, compartment_id):
+
+    if isinstance(network_security_group_id, six.string_types) and len(network_security_group_id.strip()) == 0:
+        raise click.UsageError('Parameter --network-security-group-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    details = {}
+    details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('virtual_network', ctx)
+    result = client.change_network_security_group_compartment(
+        network_security_group_id=network_security_group_id,
+        change_network_security_group_compartment_details=details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@public_ip_group.command(name=cli_util.override('change_public_ip_compartment.command_name', 'change-compartment'), help=u"""Moves a public IP into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].
+
+This operation applies only to reserved public IPs. Ephemeral public IPs always belong to the same compartment as their VNIC and move accordingly.""")
+@cli_util.option('--public-ip-id', required=True, help=u"""The OCID of the public IP.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the public IP to.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_public_ip_compartment(ctx, from_json, public_ip_id, compartment_id):
+
+    if isinstance(public_ip_id, six.string_types) and len(public_ip_id.strip()) == 0:
+        raise click.UsageError('Parameter --public-ip-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    details = {}
+    details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('virtual_network', ctx)
+    result = client.change_public_ip_compartment(
+        public_ip_id=public_ip_id,
+        change_public_ip_compartment_details=details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -1338,7 +1482,9 @@ For the purposes of access control, the DRG attachment is automatically placed i
 
 If you don't specify a route table here, the DRG attachment is created without an associated route table. The Networking service does NOT automatically associate the attached VCN's default route table with the DRG attachment.
 
-For information about why you would associate a route table with a DRG attachment, see [Advanced Scenario: Transit Routing].""")
+For information about why you would associate a route table with a DRG attachment, see:
+
+  * [Transit Routing: Access to Multiple VCNs in Same Region]   * [Transit Routing: Private Access to Oracle Services]""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ATTACHING", "ATTACHED", "DETACHING", "DETACHED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -1665,7 +1811,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 
 If you don't specify a route table here, the LPG is created without an associated route table. The Networking service does NOT automatically associate the attached VCN's default route table with the LPG.
 
-For information about why you would associate a route table with an LPG, see [Advanced Scenario: Transit Routing].""")
+For information about why you would associate a route table with an LPG, see [Transit Routing: Access to Multiple VCNs in Same Region].""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -2223,7 +2369,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 
 If you don't specify a route table here, the service gateway is created without an associated route table. The Networking service does NOT automatically associate the attached VCN's default route table with the service gateway.
 
-For information about why you would associate a route table with a service gateway, see [Transit Routing: Private Access to Oracle Services Network].""")
+For information about why you would associate a route table with a service gateway, see [Transit Routing: Private Access to Oracle Services].""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -6876,7 +7022,11 @@ def update_drg(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_int
 @drg_attachment_group.command(name=cli_util.override('update_drg_attachment.command_name', 'update'), help=u"""Updates the display name for the specified `DrgAttachment`. Avoid entering confidential information.""")
 @cli_util.option('--drg-attachment-id', required=True, help=u"""The OCID of the DRG attachment.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
-@cli_util.option('--route-table-id', help=u"""The OCID of the route table the DRG attachment will use. For information about why you would associate a route table with a DRG attachment, see [Advanced Scenario: Transit Routing].""")
+@cli_util.option('--route-table-id', help=u"""The OCID of the route table the DRG attachment will use.
+
+For information about why you would associate a route table with a DRG attachment, see:
+
+  * [Transit Routing: Access to Multiple VCNs in Same Region]   * [Transit Routing: Private Access to Oracle Services]""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ATTACHING", "ATTACHED", "DETACHING", "DETACHED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -7331,7 +7481,9 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--route-table-id', help=u"""The OCID of the route table the LPG will use. For information about why you would associate a route table with an LPG, see [Advanced Scenario: Transit Routing].""")
+@cli_util.option('--route-table-id', help=u"""The OCID of the route table the LPG will use.
+
+For information about why you would associate a route table with an LPG, see [Transit Routing: Access to Multiple VCNs in Same Region].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -7493,7 +7645,7 @@ To edit the contents of existing security rules in the group, use [UpdateNetwork
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -8006,7 +8158,9 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--route-table-id', help=u"""The OCID of the route table the service gateway will use. For information about why you would associate a route table with a service gateway, see [Transit Routing: Private Access to Oracle Services Network].""")
+@cli_util.option('--route-table-id', help=u"""The OCID of the route table the service gateway will use.
+
+For information about why you would associate a route table with a service gateway, see [Transit Routing: Private Access to Oracle Services].""")
 @cli_util.option('--services', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of all the `Service` objects you want enabled on this service gateway. Sending an empty list means you want to disable all services. Omitting this parameter entirely keeps the existing list of services intact.
 
 You can also enable or disable a particular `Service` by using [AttachServiceId] or [DetachServiceId].
@@ -8375,7 +8529,7 @@ def update_virtual_circuit(ctx, from_json, force, wait_for_state, max_wait_secon
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)

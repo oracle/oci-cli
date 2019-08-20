@@ -485,9 +485,8 @@ Options:
                                   in
                                   a file, modifying it as needed and then
                                   passing it back in via the file:// syntax.
-  --display-name TEXT             A friendly user-specified name for the volume
-                                  backup. Avoid entering confidential
-                                  information.
+  --display-name TEXT             A user-friendly name for the volume backup.
+                                  Avoid entering confidential information.
   --freeform-tags COMPLEX TYPE    Free-form tags for this resource. Each tag is
                                   a simple key-value pair with no predefined
                                   name, type, or namespace. For more
@@ -2521,7 +2520,8 @@ Options:
                                   passing it back in via the file:// syntax.
   --display-name TEXT             A user-friendly name for the volume group.
                                   Does not have to be unique, and it's
-                                  changeable.
+                                  changeable. Avoid entering confidential
+                                  information.
   --freeform-tags COMPLEX TYPE    Free-form tags for this resource. Each tag is
                                   a simple key-value pair with no predefined
                                   name, type, or namespace. For more
@@ -2807,6 +2807,7 @@ Options:
                                   a file, modifying it as needed and then
                                   passing it back in via the file:// syntax.
   --display-name TEXT             A user-friendly name for the volume group.
+                                  Avoid entering confidential information.
   --freeform-tags COMPLEX TYPE    Free-form tags for this resource. Each tag is
                                   a simple key-value pair with no predefined
                                   name, type, or namespace. For more
@@ -3002,7 +3003,8 @@ Options:
                                   passing it back in via the file:// syntax.
   --display-name TEXT             A user-friendly name for the volume group
                                   backup. Does not have to be unique and it's
-                                  changeable.
+                                  changeable. Avoid entering confidential
+                                  information.
   --freeform-tags COMPLEX TYPE    Free-form tags for this resource. Each tag is
                                   a simple key-value pair with no predefined
                                   name, type, or namespace. For more
@@ -3282,8 +3284,9 @@ Options:
                                   in
                                   a file, modifying it as needed and then
                                   passing it back in via the file:// syntax.
-  --display-name TEXT             A friendly user-specified name for the volume
-                                  group backup.
+  --display-name TEXT             A user-friendly name for the volume group
+                                  backup. Avoid entering confidential
+                                  information.
   --freeform-tags COMPLEX TYPE    Free-form tags for this resource. Each tag is
                                   a simple key-value pair with no predefined
                                   name, type, or namespace. For more

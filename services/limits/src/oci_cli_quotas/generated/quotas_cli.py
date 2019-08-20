@@ -6,17 +6,17 @@ import click
 import oci  # noqa: F401
 import six  # noqa: F401
 import sys  # noqa: F401
-from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
 from oci_cli import json_skeleton_utils
 from oci_cli import custom_types  # noqa: F401
 from oci_cli.aliasing import CommandGroupWithAlias
+from services.limits.src.oci_cli_limits.generated import limits_service_cli
 
 
-@cli.command(cli_util.override('limits_root_group.command_name', 'limits'), cls=CommandGroupWithAlias, help=cli_util.override('limits_root_group.help', """APIs for managing Compartment Resource Quotas."""), short_help=cli_util.override('limits_root_group.short_help', """Quotas APIs"""))
+@click.command(cli_util.override('quotas_root_group.command_name', 'quotas'), cls=CommandGroupWithAlias, help=cli_util.override('quotas_root_group.help', """APIs that interact with the resource limits of a specific resource type"""), short_help=cli_util.override('quotas_root_group.short_help', """Service limits APIs"""))
 @cli_util.help_option_group
-def limits_root_group():
+def quotas_root_group():
     pass
 
 
@@ -26,14 +26,15 @@ def quota_group():
     pass
 
 
-limits_root_group.add_command(quota_group)
+limits_service_cli.limits_service_group.add_command(quotas_root_group)
+quotas_root_group.add_command(quota_group)
 
 
 @quota_group.command(name=cli_util.override('create_quota.command_name', 'create'), help=u"""Creates a new quota with the details supplied.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment containing the resource this quota applies to.""")
 @cli_util.option('--description', required=True, help=u"""The description you assign to the quota.""")
 @cli_util.option('--name', required=True, help=u"""The name you assign to the quota during creation. The name must be unique across all quotas in the tenancy and cannot be changed.""")
-@cli_util.option('--statements', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of quota statements written in the declarative language.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--statements', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of quota statements written in the declarative quota statement language.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -182,7 +183,7 @@ def get_quota(ctx, from_json, quota_id):
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call.""")
 @cli_util.option('--name', help=u"""name""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE"]), help=u"""Filters returned quotas based on whether the given state.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'. By default it will be ascending.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["NAME", "TIMECREATED"]), help=u"""The field to sort by. Only one sort order may be provided. Time created is default ordered as descending. Display name is default ordered as ascending.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -239,7 +240,7 @@ def list_quotas(ctx, from_json, all_pages, page_size, compartment_id, page, limi
 @quota_group.command(name=cli_util.override('update_quota.command_name', 'update'), help=u"""Updates the quota corresponding to given OCID with the details supplied.""")
 @cli_util.option('--quota-id', required=True, help=u"""The OCID of the quota.""")
 @cli_util.option('--description', help=u"""The description you assign to the quota.""")
-@cli_util.option('--statements', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of quota statements written in the declarative language.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--statements', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of quota statements written in the declarative quota statement language.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")

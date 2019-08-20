@@ -1643,11 +1643,50 @@ Options:
                   <command> --help.
 
 Commands:
-  create  Creates a new set of DHCP options for the...
-  delete  Deletes the specified set of DHCP options,...
-  get     Gets the specified set of DHCP options.
-  list    Lists the sets of DHCP options in the...
-  update  Updates the specified set of DHCP options.
+  change-compartment  Moves a set of DHCP options into a different...
+  create              Creates a new set of DHCP options for the...
+  delete              Deletes the specified set of DHCP options,...
+  get                 Gets the specified set of DHCP options.
+  list                Lists the sets of DHCP options in the...
+  update              Updates the specified set of DHCP options.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci network dhcp-options change-compartment --help
+Usage: oci network dhcp-options change-compartment [OPTIONS]
+
+  Moves a set of DHCP options into a different compartment within the same
+  tenancy. For information about moving resources between compartments, see
+  [Moving Resources to a Different Compartment].
+
+Options:
+  --dhcp-id TEXT             The OCID for the set of DHCP options. [required]
+  -c, --compartment-id TEXT  The [OCID] of the compartment to move the set of
+                             DHCP options to. [required]
+  --from-json TEXT           Provide input to this command as a JSON document
+                             from a file using the file://path-to/file syntax.
+                             The --generate-full-command-json-input option can
+                             be used to generate a sample json file to be used
+                             with this command option. The key names are pre-
+                             populated and match the command option names
+                             (converted to camelCase format, e.g. compartment-id
+                             --> compartmentId), while the values of the keys
+                             need to be populated by the user before using the
+                             sample file as an input to this command. For any
+                             command option that accepts multiple values, the
+                             value of the key can be a JSON array.
+                             
+                             Options can
+                             still be provided on the command line. If an option
+                             exists in both the JSON document and the command
+                             line then the command line specified value will be
+                             used.
+                             
+                             For examples on usage of this option, please
+                             see our "using CLI with advanced JSON options"
+                             link: https://docs.cloud.oracle.com/iaas/Content/AP
+                             I/SDKDocs/cliusing.htm#AdvancedJSONOptions
+  -?, -h, --help             For detailed help on any of these individual
+                             commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network dhcp-options create --help
@@ -2545,8 +2584,11 @@ Options:
                                   
                                   For information about why you
                                   would associate a route table with a DRG
-                                  attachment, see [Advanced Scenario: Transit
-                                  Routing].
+                                  attachment, see:
+                                  
+                                    * [Transit Routing: Access
+                                  to Multiple VCNs in Same Region]   * [Transit
+                                  Routing: Private Access to Oracle Services]
   --wait-for-state [ATTACHING|ATTACHED|DETACHING|DETACHED]
                                   This operation creates, modifies or deletes a
                                   resource that has a defined lifecycle state.
@@ -2755,9 +2797,15 @@ Options:
                                   unique, and it's changeable. Avoid entering
                                   confidential information.
   --route-table-id TEXT           The OCID of the route table the DRG attachment
-                                  will use. For information about why you would
+                                  will use.
+                                  
+                                  For information about why you would
                                   associate a route table with a DRG attachment,
-                                  see [Advanced Scenario: Transit Routing].
+                                  see:
+                                  
+                                    * [Transit Routing: Access to Multiple
+                                  VCNs in Same Region]   * [Transit Routing:
+                                  Private Access to Oracle Services]
   --if-match TEXT                 For optimistic concurrency control. In the PUT
                                   or DELETE call for a resource, set the `if-
                                   match` parameter to the value of the etag from
@@ -3071,11 +3119,50 @@ Options:
                   <command> --help.
 
 Commands:
-  create  Creates a new internet gateway for the...
-  delete  Deletes the specified internet gateway.
-  get     Gets the specified internet gateway's...
-  list    Lists the internet gateways in the specified...
-  update  Updates the specified internet gateway.
+  change-compartment  Moves an internet gateway into a different...
+  create              Creates a new internet gateway for the...
+  delete              Deletes the specified internet gateway.
+  get                 Gets the specified internet gateway's...
+  list                Lists the internet gateways in the specified...
+  update              Updates the specified internet gateway.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci network internet-gateway change-compartment --help
+Usage: oci network internet-gateway change-compartment [OPTIONS]
+
+  Moves an internet gateway into a different compartment within the same
+  tenancy. For information about moving resources between compartments, see
+  [Moving Resources to a Different Compartment].
+
+Options:
+  --ig-id TEXT               The OCID of the internet gateway. [required]
+  -c, --compartment-id TEXT  The [OCID] of the compartment to move the internet
+                             gateway to. [required]
+  --from-json TEXT           Provide input to this command as a JSON document
+                             from a file using the file://path-to/file syntax.
+                             The --generate-full-command-json-input option can
+                             be used to generate a sample json file to be used
+                             with this command option. The key names are pre-
+                             populated and match the command option names
+                             (converted to camelCase format, e.g. compartment-id
+                             --> compartmentId), while the values of the keys
+                             need to be populated by the user before using the
+                             sample file as an input to this command. For any
+                             command option that accepts multiple values, the
+                             value of the key can be a JSON array.
+                             
+                             Options can
+                             still be provided on the command line. If an option
+                             exists in both the JSON document and the command
+                             line then the command line specified value will be
+                             used.
+                             
+                             For examples on usage of this option, please
+                             see our "using CLI with advanced JSON options"
+                             link: https://docs.cloud.oracle.com/iaas/Content/AP
+                             I/SDKDocs/cliusing.htm#AdvancedJSONOptions
+  -?, -h, --help             For detailed help on any of these individual
+                             commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network internet-gateway create --help
@@ -4446,6 +4533,9 @@ Usage: oci network ipv6 [OPTIONS] COMMAND [ARGS]...
   You can create and assign an IPv6 to any VNIC that is in an IPv6-enabled
   subnet in an IPv6-enabled VCN.
 
+  **Note:** IPv6 addressing is currently supported only in the Government
+  Cloud.
+
   For important details about IPv6 addressing in a VCN, see [IPv6 Addresses].
 
 Options:
@@ -4887,12 +4977,56 @@ Options:
                   <command> --help.
 
 Commands:
-  connect  Connects this local peering gateway (LPG) to...
-  create   Creates a new local peering gateway (LPG) for...
-  delete   Deletes the specified local peering gateway...
-  get      Gets the specified local peering gateway's...
-  list     Lists the local peering gateways (LPGs) for...
-  update   Updates the specified local peering gateway...
+  change-compartment  Moves a local peering gateway into a...
+  connect             Connects this local peering gateway (LPG) to...
+  create              Creates a new local peering gateway (LPG) for...
+  delete              Deletes the specified local peering gateway...
+  get                 Gets the specified local peering gateway's...
+  list                Lists the local peering gateways (LPGs) for...
+  update              Updates the specified local peering gateway...
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci network local-peering-gateway change-compartment --help
+Usage: oci network local-peering-gateway change-compartment [OPTIONS]
+
+  Moves a local peering gateway into a different compartment within the same
+  tenancy. For information about moving resources between compartments, see
+  [Moving Resources to a Different Compartment].
+
+Options:
+  --local-peering-gateway-id TEXT
+                                  The OCID of the local peering gateway.
+                                  [required]
+  -c, --compartment-id TEXT       The [OCID] of the compartment to move the
+                                  local peering gateway to. [required]
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file using the file://path-
+                                  to/file syntax.
+                                  
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network local-peering-gateway connect --help
@@ -5006,8 +5140,8 @@ Options:
                                   
                                   For
                                   information about why you would associate a
-                                  route table with an LPG, see [Advanced
-                                  Scenario: Transit Routing].
+                                  route table with an LPG, see [Transit Routing:
+                                  Access to Multiple VCNs in Same Region].
   --wait-for-state [PROVISIONING|AVAILABLE|TERMINATING|TERMINATED]
                                   This operation creates, modifies or deletes a
                                   resource that has a defined lifecycle state.
@@ -5267,8 +5401,9 @@ Options:
                                   passing it back in via the file:// syntax.
   --route-table-id TEXT           The OCID of the route table the LPG will use.
                                   For information about why you would associate
-                                  a route table with an LPG, see [Advanced
-                                  Scenario: Transit Routing].
+                                  a route table with an LPG, see [Transit
+                                  Routing: Access to Multiple VCNs in Same
+                                  Region].
   --if-match TEXT                 For optimistic concurrency control. In the PUT
                                   or DELETE call for a resource, set the `if-
                                   match` parameter to the value of the etag from
@@ -5838,13 +5973,53 @@ Options:
                   <command> --help.
 
 Commands:
-  create  Creates a new network security group for the...
-  delete  Deletes the specified network security group.
-  get     Gets the specified network security group's...
-  list    Lists the network security groups in the...
-  rules   A security rule is one of the items in a...
-  update  Updates the specified network security group.
-  vnics   Information about a VNIC that belongs to a...
+  change-compartment  Moves a network security group into a...
+  create              Creates a new network security group for the...
+  delete              Deletes the specified network security group.
+  get                 Gets the specified network security group's...
+  list                Lists the network security groups in the...
+  rules               A security rule is one of the items in a...
+  update              Updates the specified network security group.
+  vnics               Information about a VNIC that belongs to a...
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci network nsg change-compartment --help
+Usage: oci network nsg change-compartment [OPTIONS]
+
+  Moves a network security group into a different compartment within the same
+  tenancy. For information about moving resources between compartments, see
+  [Moving Resources to a Different Compartment].
+
+Options:
+  -c, --compartment-id TEXT  The [OCID] of the compartment to move the network
+                             security group to. [required]
+  --nsg-id TEXT              The [OCID] of the network security group.
+                             [required]
+  --from-json TEXT           Provide input to this command as a JSON document
+                             from a file using the file://path-to/file syntax.
+                             The --generate-full-command-json-input option can
+                             be used to generate a sample json file to be used
+                             with this command option. The key names are pre-
+                             populated and match the command option names
+                             (converted to camelCase format, e.g. compartment-id
+                             --> compartmentId), while the values of the keys
+                             need to be populated by the user before using the
+                             sample file as an input to this command. For any
+                             command option that accepts multiple values, the
+                             value of the key can be a JSON array.
+                             
+                             Options can
+                             still be provided on the command line. If an option
+                             exists in both the JSON document and the command
+                             line then the command line specified value will be
+                             used.
+                             
+                             For examples on usage of this option, please
+                             see our "using CLI with advanced JSON options"
+                             link: https://docs.cloud.oracle.com/iaas/Content/AP
+                             I/SDKDocs/cliusing.htm#AdvancedJSONOptions
+  -?, -h, --help             For detailed help on any of these individual
+                             commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network nsg create --help
@@ -6432,7 +6607,8 @@ Options:
                                   a file, modifying it as needed and then
                                   passing it back in via the file:// syntax.
   --display-name TEXT             A user-friendly name. Does not have to be
-                                  unique, and it's changeable.
+                                  unique, and it's changeable. Avoid entering
+                                  confidential information.
   --freeform-tags COMPLEX TYPE    Free-form tags for this resource. Each tag is
                                   a simple key-value pair with no predefined
                                   name, type, or namespace. For more
@@ -6906,11 +7082,53 @@ Options:
                   <command> --help.
 
 Commands:
-  create  Creates a public IP.
-  delete  Unassigns and deletes the specified public IP...
-  get     Gets the specified public IP object.
-  list    Lists the [PublicIp] objects in the specified...
-  update  Updates the specified public IP.
+  change-compartment  Moves a public IP into a different...
+  create              Creates a public IP.
+  delete              Unassigns and deletes the specified public IP...
+  get                 Gets the specified public IP object.
+  list                Lists the [PublicIp] objects in the specified...
+  update              Updates the specified public IP.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci network public-ip change-compartment --help
+Usage: oci network public-ip change-compartment [OPTIONS]
+
+  Moves a public IP into a different compartment within the same tenancy. For
+  information about moving resources between compartments, see [Moving
+  Resources to a Different Compartment].
+
+  This operation applies only to reserved public IPs. Ephemeral public IPs
+  always belong to the same compartment as their VNIC and move accordingly.
+
+Options:
+  --public-ip-id TEXT        The OCID of the public IP. [required]
+  -c, --compartment-id TEXT  The [OCID] of the compartment to move the public IP
+                             to. [required]
+  --from-json TEXT           Provide input to this command as a JSON document
+                             from a file using the file://path-to/file syntax.
+                             The --generate-full-command-json-input option can
+                             be used to generate a sample json file to be used
+                             with this command option. The key names are pre-
+                             populated and match the command option names
+                             (converted to camelCase format, e.g. compartment-id
+                             --> compartmentId), while the values of the keys
+                             need to be populated by the user before using the
+                             sample file as an input to this command. For any
+                             command option that accepts multiple values, the
+                             value of the key can be a JSON array.
+                             
+                             Options can
+                             still be provided on the command line. If an option
+                             exists in both the JSON document and the command
+                             line then the command line specified value will be
+                             used.
+                             
+                             For examples on usage of this option, please
+                             see our "using CLI with advanced JSON options"
+                             link: https://docs.cloud.oracle.com/iaas/Content/AP
+                             I/SDKDocs/cliusing.htm#AdvancedJSONOptions
+  -?, -h, --help             For detailed help on any of these individual
+                             commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci network public-ip create --help
@@ -9364,7 +9582,7 @@ Options:
                                   information about why you would associate a
                                   route table with a service gateway, see
                                   [Transit Routing: Private Access to Oracle
-                                  Services Network].
+                                  Services].
   --wait-for-state [PROVISIONING|AVAILABLE|TERMINATING|TERMINATED]
                                   This operation creates, modifies or deletes a
                                   resource that has a defined lifecycle state.
@@ -9719,10 +9937,12 @@ Options:
                                   a file, modifying it as needed and then
                                   passing it back in via the file:// syntax.
   --route-table-id TEXT           The OCID of the route table the service
-                                  gateway will use. For information about why
+                                  gateway will use.
+                                  
+                                  For information about why
                                   you would associate a route table with a
                                   service gateway, see [Transit Routing: Private
-                                  Access to Oracle Services Network].
+                                  Access to Oracle Services].
   --services COMPLEX TYPE         List of all the `Service` objects you want
                                   enabled on this service gateway. Sending an
                                   empty list means you want to disable all
@@ -12046,7 +12266,8 @@ Options:
                                   a file, modifying it as needed and then
                                   passing it back in via the file:// syntax.
   --display-name TEXT             A user-friendly name. Does not have to be
-                                  unique, and it's changeable.
+                                  unique, and it's changeable. Avoid entering
+                                  confidential information.
   --freeform-tags COMPLEX TYPE    Free-form tags for this resource. Each tag is
                                   a simple key-value pair with no predefined
                                   name, type, or namespace. For more
