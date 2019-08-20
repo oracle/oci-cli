@@ -72,6 +72,7 @@ IGNORE_EXTENDED_TESTS_COMMANDS = [
     ['resource-manager', 'stack', 'update'],
     ['resource-manager', 'stack', 'create'],
     ['waas', 'protection-settings', 'update'],
+    ['waas', 'policy-config', 'update'],
     ['dts', 'nfs-dataset', 'activate'],
     ['dts', 'nfs-dataset', 'create'],
     ['dts', 'nfs-dataset', 'deactivate'],

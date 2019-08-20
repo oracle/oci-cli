@@ -224,7 +224,7 @@ def attach_boot_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @vnic_attachment_group.command(name=cli_util.override('attach_vnic.command_name', 'attach'), help=u"""Creates a secondary VNIC and attaches it to the specified instance. For more information about secondary VNICs, see [Virtual Network Interface Cards (VNICs)].""")
 @cli_util.option('--create-vnic-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Details for creating a new VNIC.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--instance-id', required=True, help=u"""The OCID of the instance.""")
-@cli_util.option('--display-name', help=u"""A user-friendly name for the attachment. Does not have to be unique, and it cannot be changed.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name for the attachment. Does not have to be unique, and it cannot be changed. Avoid entering confidential information.""")
 @cli_util.option('--nic-index', type=click.INT, help=u"""Which physical network interface card (NIC) the VNIC will use. Defaults to 0. Certain bare metal instance shapes have two active physical NICs (0 and 1). If you add a secondary VNIC to one of these instances, you can specify which NIC the VNIC will use. For more information, see [Virtual Network Interface Cards (VNICs)].""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ATTACHING", "ATTACHED", "DETACHING", "DETACHED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -610,7 +610,7 @@ The `CaptureConsoleHistory` operation works with the other console history opera
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -793,7 +793,7 @@ When importing an image based on the Object Storage URL, use [ImageSourceViaObje
 For more information about importing exported images, see [Image Import/Export].
 
 You may optionally specify a *display name* for the image, which is simply a friendly name or description. It does not have to be unique, and you can change it. See [UpdateImage]. Avoid entering confidential information.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment containing the instance you want to use as the basis for the image.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment you want the image to be created in.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -884,7 +884,7 @@ When importing an image based on the Object Storage URL, use [ImageSourceViaObje
 For more information about importing exported images, see [Image Import/Export].
 
 You may optionally specify a *display name* for the image, which is simply a friendly name or description. It does not have to be unique, and you can change it. See [UpdateImage]. Avoid entering confidential information.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment containing the instance you want to use as the basis for the image.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment you want the image to be created in.""")
 @cli_util.option('--image-source-details-bucket-name', required=True, help=u"""The Object Storage bucket for the image.""")
 @cli_util.option('--image-source-details-namespace-name', required=True, help=u"""The Object Storage namespace for the image.""")
 @cli_util.option('--image-source-details-object-name', required=True, help=u"""The Object Storage name for the image.""")
@@ -992,7 +992,7 @@ When importing an image based on the Object Storage URL, use [ImageSourceViaObje
 For more information about importing exported images, see [Image Import/Export].
 
 You may optionally specify a *display name* for the image, which is simply a friendly name or description. It does not have to be unique, and you can change it. See [UpdateImage]. Avoid entering confidential information.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment containing the instance you want to use as the basis for the image.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment you want the image to be created in.""")
 @cli_util.option('--image-source-details-source-uri', required=True, help=u"""The Object Storage URL for the image.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
@@ -3432,7 +3432,7 @@ def terminate_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)

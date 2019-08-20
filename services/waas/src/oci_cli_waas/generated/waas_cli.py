@@ -52,12 +52,6 @@ def waf_traffic_datum_group():
     pass
 
 
-@click.command(cli_util.override('policy_config_group.command_name', 'policy-config'), cls=CommandGroupWithAlias, help="""The configuration details for the WAAS policy.""")
-@cli_util.help_option_group
-def policy_config_group():
-    pass
-
-
 @click.command(cli_util.override('certificate_group.command_name', 'certificate'), cls=CommandGroupWithAlias, help="""The details of the SSL certificate. **Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
 @cli_util.help_option_group
 def certificate_group():
@@ -78,15 +72,65 @@ def recommendation_group():
     pass
 
 
-@click.command(cli_util.override('waf_request_group.command_name', 'waf-request'), cls=CommandGroupWithAlias, help="""A time series of request counts handled by the Web Application Firewall, including blocked requests.""")
+@click.command(cli_util.override('waas_policy_custom_protection_rule_group.command_name', 'waas-policy-custom-protection-rule'), cls=CommandGroupWithAlias, help="""Summary information about a Custom Protection rule.""")
 @cli_util.help_option_group
-def waf_request_group():
+def waas_policy_custom_protection_rule_group():
     pass
 
 
 @click.command(cli_util.override('js_challenge_group.command_name', 'js-challenge'), cls=CommandGroupWithAlias, help="""The JavaScript challenge settings. Javascript Challenge is the function to filter abnormal or malicious bots and allow access to real clients.""")
 @cli_util.help_option_group
 def js_challenge_group():
+    pass
+
+
+@click.command(cli_util.override('work_request_group.command_name', 'work-request'), cls=CommandGroupWithAlias, help="""Many of the API requests you use to create and configure WAAS policies do not take effect immediately. In these cases, the request spawns an asynchronous work flow to fulfill the request. `WorkRequest` objects provide visibility for in-progress work flows. For more information about work requests, see [Viewing the State of a Work Request].""")
+@cli_util.help_option_group
+def work_request_group():
+    pass
+
+
+@click.command(cli_util.override('custom_protection_rule_group.command_name', 'custom-protection-rule'), cls=CommandGroupWithAlias, help="""The details of a Custom Protection rule.""")
+@cli_util.help_option_group
+def custom_protection_rule_group():
+    pass
+
+
+@click.command(cli_util.override('address_rate_limiting_group.command_name', 'address-rate-limiting'), cls=CommandGroupWithAlias, help="""The IP rate limiting configuration. Defines the amount of allowed requests from a unique IP address and the resulting block response code when that threshold is exceeded.""")
+@cli_util.help_option_group
+def address_rate_limiting_group():
+    pass
+
+
+@click.command(cli_util.override('captcha_group.command_name', 'captcha'), cls=CommandGroupWithAlias, help="""The settings of the CAPTCHA challenge. If a specific URL should be accessed only by a human, a CAPTCHA challenge can be placed at the URL to protect the web application from bots.
+
+*Warning:* Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
+@cli_util.help_option_group
+def captcha_group():
+    pass
+
+
+@click.command(cli_util.override('custom_protection_rule_setting_group.command_name', 'custom-protection-rule-setting'), cls=CommandGroupWithAlias, help="""The OCID and action of a Custom Protection rule.""")
+@cli_util.help_option_group
+def custom_protection_rule_setting_group():
+    pass
+
+
+@click.command(cli_util.override('waf_blocked_request_group.command_name', 'waf-blocked-request'), cls=CommandGroupWithAlias, help="""""")
+@cli_util.help_option_group
+def waf_blocked_request_group():
+    pass
+
+
+@click.command(cli_util.override('policy_config_group.command_name', 'policy-config'), cls=CommandGroupWithAlias, help="""The configuration details for the WAAS policy.""")
+@cli_util.help_option_group
+def policy_config_group():
+    pass
+
+
+@click.command(cli_util.override('waf_request_group.command_name', 'waf-request'), cls=CommandGroupWithAlias, help="""A time series of request counts handled by the Web Application Firewall, including blocked requests.""")
+@cli_util.help_option_group
+def waf_request_group():
     pass
 
 
@@ -102,9 +146,9 @@ def whitelist_group():
     pass
 
 
-@click.command(cli_util.override('work_request_group.command_name', 'work-request'), cls=CommandGroupWithAlias, help="""Many of the API requests you use to create and configure WAAS policies do not take effect immediately. In these cases, the request spawns an asynchronous work flow to fulfill the request. `WorkRequest` objects provide visibility for in-progress work flows. For more information about work requests, see [Viewing the State of a Work Request].""")
+@click.command(cli_util.override('purge_cache_group.command_name', 'purge-cache'), cls=CommandGroupWithAlias, help="""The list of resources for cache purge. If a resources property is not provided, the purge targets all resources in a policy.""")
 @cli_util.help_option_group
-def work_request_group():
+def purge_cache_group():
     pass
 
 
@@ -120,9 +164,9 @@ def device_fingerprint_challenge_group():
     pass
 
 
-@click.command(cli_util.override('address_rate_limiting_group.command_name', 'address-rate-limiting'), cls=CommandGroupWithAlias, help="""The IP rate limiting configuration. Defines the amount of allowed requests from a unique IP address and the resulting block response code when that threshold is exceeded.""")
+@click.command(cli_util.override('address_list_group.command_name', 'address-list'), cls=CommandGroupWithAlias, help="""The details of the address list.""")
 @cli_util.help_option_group
-def address_rate_limiting_group():
+def address_list_group():
     pass
 
 
@@ -132,11 +176,9 @@ def waf_log_group():
     pass
 
 
-@click.command(cli_util.override('captcha_group.command_name', 'captcha'), cls=CommandGroupWithAlias, help="""The settings of the CAPTCHA challenge. If a specific URL should be accessed only by a human, a CAPTCHA challenge can be placed at the URL to protect the web application from bots.
-
-*Warning:* Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
+@click.command(cli_util.override('caching_rule_group.command_name', 'caching-rule'), cls=CommandGroupWithAlias, help="""""")
 @cli_util.help_option_group
-def captcha_group():
+def caching_rule_group():
     pass
 
 
@@ -152,34 +194,34 @@ def waf_config_group():
     pass
 
 
-@click.command(cli_util.override('waf_blocked_request_group.command_name', 'waf-blocked-request'), cls=CommandGroupWithAlias, help="""""")
-@cli_util.help_option_group
-def waf_blocked_request_group():
-    pass
-
-
 waas_root_group.add_command(waas_policy_group)
 waas_root_group.add_command(access_rule_group)
 waas_root_group.add_command(good_bot_group)
 waas_root_group.add_command(threat_feed_group)
 waas_root_group.add_command(waf_traffic_datum_group)
-waas_root_group.add_command(policy_config_group)
 waas_root_group.add_command(certificate_group)
 waas_root_group.add_command(edge_subnet_group)
 waas_root_group.add_command(recommendation_group)
-waas_root_group.add_command(waf_request_group)
+waas_root_group.add_command(waas_policy_custom_protection_rule_group)
 waas_root_group.add_command(js_challenge_group)
+waas_root_group.add_command(work_request_group)
+waas_root_group.add_command(custom_protection_rule_group)
+waas_root_group.add_command(address_rate_limiting_group)
+waas_root_group.add_command(captcha_group)
+waas_root_group.add_command(custom_protection_rule_setting_group)
+waas_root_group.add_command(waf_blocked_request_group)
+waas_root_group.add_command(policy_config_group)
+waas_root_group.add_command(waf_request_group)
 waas_root_group.add_command(protection_rule_group)
 waas_root_group.add_command(whitelist_group)
-waas_root_group.add_command(work_request_group)
+waas_root_group.add_command(purge_cache_group)
 waas_root_group.add_command(human_interaction_challenge_group)
 waas_root_group.add_command(device_fingerprint_challenge_group)
-waas_root_group.add_command(address_rate_limiting_group)
+waas_root_group.add_command(address_list_group)
 waas_root_group.add_command(waf_log_group)
-waas_root_group.add_command(captcha_group)
+waas_root_group.add_command(caching_rule_group)
 waas_root_group.add_command(protection_settings_group)
 waas_root_group.add_command(waf_config_group)
-waas_root_group.add_command(waf_blocked_request_group)
 
 
 @recommendation_group.command(name=cli_util.override('accept_recommendations.command_name', 'accept'), help=u"""Accepts a list of recommended Web Application Firewall protection rules. Web Application Firewall protection rule recommendations are sets of rules generated by observed traffic patterns through the Web Application Firewall and are meant to optimize the Web Application Firewall's security profile. Only the rules specified in the request body will be updated; all other rules will remain unchanged.
@@ -262,6 +304,37 @@ def cancel_work_request(ctx, from_json, work_request_id, if_match):
     cli_util.render_response(result, ctx)
 
 
+@address_list_group.command(name=cli_util.override('change_address_list_compartment.command_name', 'change-compartment'), help=u"""Moves address list into a different compartment. When provided, If-Match is checked against ETag values of the address list.""")
+@cli_util.option('--address-list-id', required=True, help=u"""The [OCID] of the address list. This number is generated when the address list is added to the compartment.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the `PUT` or `DELETE` call for a resource, set the `if-match` parameter to the value of the etag from a previous `GET` or `POST` response for that resource. The resource will be updated or deleted only if the etag provided matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_address_list_compartment(ctx, from_json, address_list_id, compartment_id, if_match):
+
+    if isinstance(address_list_id, six.string_types) and len(address_list_id.strip()) == 0:
+        raise click.UsageError('Parameter --address-list-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    details = {}
+    details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('waas', ctx)
+    result = client.change_address_list_compartment(
+        address_list_id=address_list_id,
+        change_address_list_compartment_details=details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @certificate_group.command(name=cli_util.override('change_certificate_compartment.command_name', 'change-compartment'), help=u"""Moves certificate into a different compartment. When provided, If-Match is checked against ETag values of the certificate.""")
 @cli_util.option('--certificate-id', required=True, help=u"""The [OCID] of the SSL certificate used in the WAAS policy. This number is generated when the certificate is added to the policy.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
@@ -288,6 +361,37 @@ def change_certificate_compartment(ctx, from_json, certificate_id, compartment_i
     result = client.change_certificate_compartment(
         certificate_id=certificate_id,
         change_certificate_compartment_details=details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@custom_protection_rule_group.command(name=cli_util.override('change_custom_protection_rule_compartment.command_name', 'change-compartment'), help=u"""Moves Custom Protection rule into a different compartment. When provided, If-Match is checked against ETag values of the Custom Protection rule.""")
+@cli_util.option('--custom-protection-rule-id', required=True, help=u"""The [OCID] of the Custom Protection rule. This number is generated when the Custom Protection rule is added to the compartment.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the `PUT` or `DELETE` call for a resource, set the `if-match` parameter to the value of the etag from a previous `GET` or `POST` response for that resource. The resource will be updated or deleted only if the etag provided matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_custom_protection_rule_compartment(ctx, from_json, custom_protection_rule_id, compartment_id, if_match):
+
+    if isinstance(custom_protection_rule_id, six.string_types) and len(custom_protection_rule_id.strip()) == 0:
+        raise click.UsageError('Parameter --custom-protection-rule-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    details = {}
+    details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('waas', ctx)
+    result = client.change_custom_protection_rule_compartment(
+        custom_protection_rule_id=custom_protection_rule_id,
+        change_custom_protection_rule_compartment_details=details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -321,6 +425,70 @@ def change_waas_policy_compartment(ctx, from_json, waas_policy_id, compartment_i
         change_waas_policy_compartment_details=details,
         **kwargs
     )
+    cli_util.render_response(result, ctx)
+
+
+@address_list_group.command(name=cli_util.override('create_address_list.command_name', 'create'), help=u"""Creates an address list in set compartment and allows it to be used in a WAAS policy. For more information, see [WAF Settings].""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which to create the address list.""")
+@cli_util.option('--display-name', required=True, help=u"""A unique user-friendly name for the address list.""")
+@cli_util.option('--addresses', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of IP addresses or CIDR notations.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "FAILED", "UPDATING", "DELETING", "DELETED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'addresses': {'module': 'waas', 'class': 'list[string]'}, 'freeform-tags': {'module': 'waas', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'waas', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'addresses': {'module': 'waas', 'class': 'list[string]'}, 'freeform-tags': {'module': 'waas', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'waas', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'waas', 'class': 'AddressList'})
+@cli_util.wrap_exceptions
+def create_address_list(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, addresses, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    details = {}
+    details['compartmentId'] = compartment_id
+    details['displayName'] = display_name
+    details['addresses'] = cli_util.parse_json_parameter("addresses", addresses)
+
+    if freeform_tags is not None:
+        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('waas', ctx)
+    result = client.create_address_list(
+        create_address_list_details=details,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_address_list') and callable(getattr(client, 'get_address_list')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_address_list(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -402,6 +570,82 @@ def create_certificate(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     cli_util.render_response(result, ctx)
 
 
+@custom_protection_rule_group.command(name=cli_util.override('create_custom_protection_rule.command_name', 'create'), help=u"""Creates a new Custom Protection rule in the specified compartment.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which to create the Custom Protection rule.""")
+@cli_util.option('--display-name', required=True, help=u"""A user-friendly name for the Custom Protection rule.""")
+@cli_util.option('--template', required=True, help=u"""The template text of the Custom Protection rule. The syntax is based on ModSecurity Rule Language. Additionaly it needs to include two variables / placeholders which will be replaced during publishing.
+
+- **{{mode}}** - rule action, defined by user in UI, like `OFF`, `DETECT` or `BLOCK`.
+
+- **{{id_1}}** - unique rule ID which identifies a `SecRule`, generated by the system. Multiple IDs can be used by increasing the number of the variable for every `SecRule` defined in the template.
+
+*Example usage:*   ```   SecRule REQUEST_COOKIES \"regex matching SQL injection - part 1/2\" \\           \"phase:2,                                                 \\           msg:'Detects chained SQL injection attempts 1/2.',        \\           id: {{id_1}},                                             \\           ctl:ruleEngine={{mode}},                                  \\           deny\"   SecRule REQUEST_COOKIES \"regex matching SQL injection - part 2/2\" \\           \"phase:2,                                                 \\           msg:'Detects chained SQL injection attempts 2/2.',        \\           id: {{id_2}},                                             \\           ctl:ruleEngine={{mode}},                                  \\           deny\"   ```   The example contains two `SecRules` each having distinct regex expression to match   `Cookie` header value during second input analysis phase.   The disruptive `deny` action takes effect only when `{{mode}}` is set to `BLOCK`.   The message is logged either when `{{mode}}` is set to `DETECT` or `BLOCK`.
+
+ For more information about ModSecurity's open source WAF rules, see [Mod Security's documentation].""")
+@cli_util.option('--description', help=u"""A description for the Custom Protection rule.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "FAILED", "UPDATING", "DELETING", "DELETED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'waas', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'waas', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'waas', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'waas', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'waas', 'class': 'CustomProtectionRule'})
+@cli_util.wrap_exceptions
+def create_custom_protection_rule(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, template, description, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    details = {}
+    details['compartmentId'] = compartment_id
+    details['displayName'] = display_name
+    details['template'] = template
+
+    if description is not None:
+        details['description'] = description
+
+    if freeform_tags is not None:
+        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('waas', ctx)
+    result = client.create_custom_protection_rule(
+        create_custom_protection_rule_details=details,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_custom_protection_rule') and callable(getattr(client, 'get_custom_protection_rule')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_custom_protection_rule(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @waas_policy_group.command(name=cli_util.override('create_waas_policy.command_name', 'create'), help=u"""Creates a new Web Application Acceleration and Security (WAAS) policy in the specified compartment. A WAAS policy must be established before creating Web Application Firewall (WAF) rules. To use WAF rules, your web application's origin servers must defined in the `WaasPolicy` schema.
 
 A domain name must be specified when creating a WAAS policy. The domain name should be different from the origins specified in your `WaasPolicy`. Once domain name is entered and stored, it is unchangeable.
@@ -422,6 +666,9 @@ All Oracle Cloud Infrastructure resources, including WAAS policies, receive a un
 @cli_util.option('--origins', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A map of host to origin for the web application. The key should be a customer friendly name for the host, ex. primary, secondary, etc.
 
 This option is a JSON dictionary of type dict(str, Origin).  For documentation on Origin please see our API reference: https://docs.cloud.oracle.com/api/#/en/waas/20181116/datatypes/Origin.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--origin-groups', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The map of origin groups and their keys used to associate origins to the wafConfig.
+
+This option is a JSON dictionary of type dict(str, OriginGroup).  For documentation on OriginGroup please see our API reference: https://docs.cloud.oracle.com/api/#/en/waas/20181116/datatypes/OriginGroup.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--policy-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--waf-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
@@ -433,12 +680,12 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'additional-domains': {'module': 'waas', 'class': 'list[string]'}, 'origins': {'module': 'waas', 'class': 'dict(str, Origin)'}, 'policy-config': {'module': 'waas', 'class': 'PolicyConfig'}, 'waf-config': {'module': 'waas', 'class': 'WafConfigDetails'}, 'freeform-tags': {'module': 'waas', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'waas', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'additional-domains': {'module': 'waas', 'class': 'list[string]'}, 'origins': {'module': 'waas', 'class': 'dict(str, Origin)'}, 'origin-groups': {'module': 'waas', 'class': 'dict(str, OriginGroup)'}, 'policy-config': {'module': 'waas', 'class': 'PolicyConfig'}, 'waf-config': {'module': 'waas', 'class': 'WafConfigDetails'}, 'freeform-tags': {'module': 'waas', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'waas', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'additional-domains': {'module': 'waas', 'class': 'list[string]'}, 'origins': {'module': 'waas', 'class': 'dict(str, Origin)'}, 'policy-config': {'module': 'waas', 'class': 'PolicyConfig'}, 'waf-config': {'module': 'waas', 'class': 'WafConfigDetails'}, 'freeform-tags': {'module': 'waas', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'waas', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'additional-domains': {'module': 'waas', 'class': 'list[string]'}, 'origins': {'module': 'waas', 'class': 'dict(str, Origin)'}, 'origin-groups': {'module': 'waas', 'class': 'dict(str, OriginGroup)'}, 'policy-config': {'module': 'waas', 'class': 'PolicyConfig'}, 'waf-config': {'module': 'waas', 'class': 'WafConfigDetails'}, 'freeform-tags': {'module': 'waas', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'waas', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def create_waas_policy(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, domain, display_name, additional_domains, origins, policy_config, waf_config, freeform_tags, defined_tags):
+def create_waas_policy(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, domain, display_name, additional_domains, origins, origin_groups, policy_config, waf_config, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -455,6 +702,9 @@ def create_waas_policy(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
     if origins is not None:
         details['origins'] = cli_util.parse_json_parameter("origins", origins)
+
+    if origin_groups is not None:
+        details['originGroups'] = cli_util.parse_json_parameter("origin_groups", origin_groups)
 
     if policy_config is not None:
         details['policyConfig'] = cli_util.parse_json_parameter("policy_config", policy_config)
@@ -498,6 +748,69 @@ def create_waas_policy(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     cli_util.render_response(result, ctx)
 
 
+@address_list_group.command(name=cli_util.override('delete_address_list.command_name', 'delete'), help=u"""Deletes the address list from the compartment if it is not used.""")
+@cli_util.option('--address-list-id', required=True, help=u"""The [OCID] of the address list. This number is generated when the address list is added to the compartment.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the `PUT` or `DELETE` call for a resource, set the `if-match` parameter to the value of the etag from a previous `GET` or `POST` response for that resource. The resource will be updated or deleted only if the etag provided matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "FAILED", "UPDATING", "DELETING", "DELETED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_address_list(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, address_list_id, if_match):
+
+    if isinstance(address_list_id, six.string_types) and len(address_list_id.strip()) == 0:
+        raise click.UsageError('Parameter --address-list-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('waas', ctx)
+    result = client.delete_address_list(
+        address_list_id=address_list_id,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_address_list') and callable(getattr(client, 'get_address_list')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                oci.wait_until(client, client.get_address_list(address_list_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except oci.exceptions.ServiceError as e:
+                # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
+                # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
+                # will result in an exception that reflects a HTTP 404. In this case, we can exit with success (rather than raising
+                # the exception) since this would have been the behaviour in the waiter anyway (as for delete we provide the argument
+                # succeed_on_not_found=True to the waiter).
+                #
+                # Any non-404 should still result in the exception being thrown.
+                if e.status == 404:
+                    pass
+                else:
+                    raise
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @certificate_group.command(name=cli_util.override('delete_certificate.command_name', 'delete'), help=u"""Deletes an SSL certificate from the WAAS service.""")
 @cli_util.option('--certificate-id', required=True, help=u"""The [OCID] of the SSL certificate used in the WAAS policy. This number is generated when the certificate is added to the policy.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the `PUT` or `DELETE` call for a resource, set the `if-match` parameter to the value of the etag from a previous `GET` or `POST` response for that resource. The resource will be updated or deleted only if the etag provided matches the resource's current etag value.""")
@@ -535,6 +848,69 @@ def delete_certificate(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 oci.wait_until(client, client.get_certificate(certificate_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except oci.exceptions.ServiceError as e:
+                # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
+                # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
+                # will result in an exception that reflects a HTTP 404. In this case, we can exit with success (rather than raising
+                # the exception) since this would have been the behaviour in the waiter anyway (as for delete we provide the argument
+                # succeed_on_not_found=True to the waiter).
+                #
+                # Any non-404 should still result in the exception being thrown.
+                if e.status == 404:
+                    pass
+                else:
+                    raise
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@custom_protection_rule_group.command(name=cli_util.override('delete_custom_protection_rule.command_name', 'delete'), help=u"""Deletes a Custom Protection rule.""")
+@cli_util.option('--custom-protection-rule-id', required=True, help=u"""The [OCID] of the Custom Protection rule. This number is generated when the Custom Protection rule is added to the compartment.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the `PUT` or `DELETE` call for a resource, set the `if-match` parameter to the value of the etag from a previous `GET` or `POST` response for that resource. The resource will be updated or deleted only if the etag provided matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "FAILED", "UPDATING", "DELETING", "DELETED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_custom_protection_rule(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, custom_protection_rule_id, if_match):
+
+    if isinstance(custom_protection_rule_id, six.string_types) and len(custom_protection_rule_id.strip()) == 0:
+        raise click.UsageError('Parameter --custom-protection-rule-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('waas', ctx)
+    result = client.delete_custom_protection_rule(
+        custom_protection_rule_id=custom_protection_rule_id,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_custom_protection_rule') and callable(getattr(client, 'get_custom_protection_rule')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                oci.wait_until(client, client.get_custom_protection_rule(custom_protection_rule_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
             except oci.exceptions.ServiceError as e:
                 # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
                 # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
@@ -612,6 +988,28 @@ def delete_waas_policy(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     cli_util.render_response(result, ctx)
 
 
+@address_list_group.command(name=cli_util.override('get_address_list.command_name', 'get'), help=u"""Gets the details of an address list.""")
+@cli_util.option('--address-list-id', required=True, help=u"""The [OCID] of the address list. This number is generated when the address list is added to the compartment.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'waas', 'class': 'AddressList'})
+@cli_util.wrap_exceptions
+def get_address_list(ctx, from_json, address_list_id):
+
+    if isinstance(address_list_id, six.string_types) and len(address_list_id.strip()) == 0:
+        raise click.UsageError('Parameter --address-list-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('waas', ctx)
+    result = client.get_address_list(
+        address_list_id=address_list_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @certificate_group.command(name=cli_util.override('get_certificate.command_name', 'get'), help=u"""Gets the details of an SSL certificate.""")
 @cli_util.option('--certificate-id', required=True, help=u"""The [OCID] of the SSL certificate used in the WAAS policy. This number is generated when the certificate is added to the policy.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -629,6 +1027,28 @@ def get_certificate(ctx, from_json, certificate_id):
     client = cli_util.build_client('waas', ctx)
     result = client.get_certificate(
         certificate_id=certificate_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@custom_protection_rule_group.command(name=cli_util.override('get_custom_protection_rule.command_name', 'get'), help=u"""Gets the details of a Custom Protection rule.""")
+@cli_util.option('--custom-protection-rule-id', required=True, help=u"""The [OCID] of the Custom Protection rule. This number is generated when the Custom Protection rule is added to the compartment.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'waas', 'class': 'CustomProtectionRule'})
+@cli_util.wrap_exceptions
+def get_custom_protection_rule(ctx, from_json, custom_protection_rule_id):
+
+    if isinstance(custom_protection_rule_id, six.string_types) and len(custom_protection_rule_id.strip()) == 0:
+        raise click.UsageError('Parameter --custom-protection-rule-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('waas', ctx)
+    result = client.get_custom_protection_rule(
+        custom_protection_rule_id=custom_protection_rule_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -910,6 +1330,126 @@ def list_access_rules(ctx, from_json, all_pages, page_size, waas_policy_id, limi
     cli_util.render_response(result, ctx)
 
 
+@address_list_group.command(name=cli_util.override('list_address_lists.command_name', 'list'), help=u"""Gets a list of address lists that can be used in a WAAS policy.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment. This number is generated when the compartment is created.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated call. In unspecified, defaults to `10`.""")
+@cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous paginated call.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["id", "name", "timeCreated"]), help=u"""The value by which address lists are sorted in a paginated 'List' call. If unspecified, defaults to `timeCreated`.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The value of the sorting direction of resources in a paginated 'List' call. If unspecified, defaults to `DESC`.""")
+@cli_util.option('--id', multiple=True, help=u"""Filter address lists using a list of address lists OCIDs.""")
+@cli_util.option('--name', multiple=True, help=u"""Filter address lists using a list of names.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "FAILED", "UPDATING", "DELETING", "DELETED"]), multiple=True, help=u"""Filter address lists using a list of lifecycle states.""")
+@cli_util.option('--time-created-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""A filter that matches address lists created on or after the specified date-time.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-created-less-than', type=custom_types.CLI_DATETIME, help=u"""A filter that matches address lists created before the specified date-time.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({'id': {'module': 'waas', 'class': 'list[string]'}, 'name': {'module': 'waas', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'id': {'module': 'waas', 'class': 'list[string]'}, 'name': {'module': 'waas', 'class': 'list[string]'}}, output_type={'module': 'waas', 'class': 'list[AddressListSummary]'})
+@cli_util.wrap_exceptions
+def list_address_lists(ctx, from_json, all_pages, page_size, compartment_id, limit, page, sort_by, sort_order, id, name, lifecycle_state, time_created_greater_than_or_equal_to, time_created_less_than):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if id is not None and len(id) > 0:
+        kwargs['id'] = id
+    if name is not None and len(name) > 0:
+        kwargs['name'] = name
+    if lifecycle_state is not None and len(lifecycle_state) > 0:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if time_created_greater_than_or_equal_to is not None:
+        kwargs['time_created_greater_than_or_equal_to'] = time_created_greater_than_or_equal_to
+    if time_created_less_than is not None:
+        kwargs['time_created_less_than'] = time_created_less_than
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('waas', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_address_lists,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_address_lists,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_address_lists(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@caching_rule_group.command(name=cli_util.override('list_caching_rules.command_name', 'list'), help=u"""Gets the currently configured caching rules for the Web Application Firewall configuration of a specified WAAS policy. The order of the caching rules is important. The rules will be checked in the order they are specified and the first matching rule will be used.""")
+@cli_util.option('--waas-policy-id', required=True, help=u"""The [OCID] of the WAAS policy.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated call. In unspecified, defaults to `10`.""")
+@cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous paginated call.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'waas', 'class': 'list[CachingRuleSummary]'})
+@cli_util.wrap_exceptions
+def list_caching_rules(ctx, from_json, all_pages, page_size, waas_policy_id, limit, page):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(waas_policy_id, six.string_types) and len(waas_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --waas-policy-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('waas', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_caching_rules,
+            waas_policy_id=waas_policy_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_caching_rules,
+            limit,
+            page_size,
+            waas_policy_id=waas_policy_id,
+            **kwargs
+        )
+    else:
+        result = client.list_caching_rules(
+            waas_policy_id=waas_policy_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
 @captcha_group.command(name=cli_util.override('list_captchas.command_name', 'list'), help=u"""Gets the list of currently configured CAPTCHA challenges in the Web Application Firewall configuration of a WAAS policy.
 
 The order of the CAPTCHA challenges is important. The URL for each CAPTCHA will be checked in the order they are created.""")
@@ -1026,6 +1566,75 @@ def list_certificates(ctx, from_json, all_pages, page_size, compartment_id, limi
         )
     else:
         result = client.list_certificates(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@custom_protection_rule_group.command(name=cli_util.override('list_custom_protection_rules.command_name', 'list'), help=u"""Gets a list of Custom Protection rules.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment. This number is generated when the compartment is created.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated call. In unspecified, defaults to `10`.""")
+@cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous paginated call.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["id", "compartmentId", "displayName", "modSecurityRuleId", "timeCreated"]), help=u"""The value by which Custom Protection rules are sorted in a paginated 'List' call. If unspecified, defaults to `timeCreated`.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The value of the sorting direction of resources in a paginated 'List' call. If unspecified, defaults to `DESC`.""")
+@cli_util.option('--id', multiple=True, help=u"""Filter Custom Protection rules using a list of Custom Protection rules OCIDs.""")
+@cli_util.option('--display-name', multiple=True, help=u"""Filter Custom Protection rules using a list of display names.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "FAILED", "UPDATING", "DELETING", "DELETED"]), multiple=True, help=u"""Filter Custom Protection rules using a list of lifecycle states.""")
+@cli_util.option('--time-created-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""A filter that matches Custom Protection rules created on or after the specified date-time.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-created-less-than', type=custom_types.CLI_DATETIME, help=u"""A filter that matches Custom Protection rules created before the specified date-time.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({'id': {'module': 'waas', 'class': 'list[string]'}, 'display-name': {'module': 'waas', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'id': {'module': 'waas', 'class': 'list[string]'}, 'display-name': {'module': 'waas', 'class': 'list[string]'}}, output_type={'module': 'waas', 'class': 'list[CustomProtectionRuleSummary]'})
+@cli_util.wrap_exceptions
+def list_custom_protection_rules(ctx, from_json, all_pages, page_size, compartment_id, limit, page, sort_by, sort_order, id, display_name, lifecycle_state, time_created_greater_than_or_equal_to, time_created_less_than):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if id is not None and len(id) > 0:
+        kwargs['id'] = id
+    if display_name is not None and len(display_name) > 0:
+        kwargs['display_name'] = display_name
+    if lifecycle_state is not None and len(lifecycle_state) > 0:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if time_created_greater_than_or_equal_to is not None:
+        kwargs['time_created_greater_than_or_equal_to'] = time_created_greater_than_or_equal_to
+    if time_created_less_than is not None:
+        kwargs['time_created_less_than'] = time_created_less_than
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('waas', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_custom_protection_rules,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_custom_protection_rules,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_custom_protection_rules(
             compartment_id=compartment_id,
             **kwargs
         )
@@ -1363,6 +1972,63 @@ def list_waas_policies(ctx, from_json, all_pages, page_size, compartment_id, lim
     else:
         result = client.list_waas_policies(
             compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@waas_policy_custom_protection_rule_group.command(name=cli_util.override('list_waas_policy_custom_protection_rules.command_name', 'list'), help=u"""Gets the list of currently configured custom protection rules for a WAAS policy.""")
+@cli_util.option('--waas-policy-id', required=True, help=u"""The [OCID] of the WAAS policy.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated call. In unspecified, defaults to `10`.""")
+@cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous paginated call.""")
+@cli_util.option('--mod-security-rule-id', multiple=True, help=u"""Filter rules using a list of ModSecurity rule IDs.""")
+@cli_util.option('--action', type=custom_types.CliCaseInsensitiveChoice(["DETECT", "BLOCK"]), multiple=True, help=u"""Filter rules using a list of actions.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({'mod-security-rule-id': {'module': 'waas', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'mod-security-rule-id': {'module': 'waas', 'class': 'list[string]'}}, output_type={'module': 'waas', 'class': 'list[WaasPolicyCustomProtectionRuleSummary]'})
+@cli_util.wrap_exceptions
+def list_waas_policy_custom_protection_rules(ctx, from_json, all_pages, page_size, waas_policy_id, limit, page, mod_security_rule_id, action):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(waas_policy_id, six.string_types) and len(waas_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --waas-policy-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if mod_security_rule_id is not None and len(mod_security_rule_id) > 0:
+        kwargs['mod_security_rule_id'] = mod_security_rule_id
+    if action is not None and len(action) > 0:
+        kwargs['action'] = action
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('waas', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_waas_policy_custom_protection_rules,
+            waas_policy_id=waas_policy_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_waas_policy_custom_protection_rules,
+            limit,
+            page_size,
+            waas_policy_id=waas_policy_id,
+            **kwargs
+        )
+    else:
+        result = client.list_waas_policy_custom_protection_rules(
+            waas_policy_id=waas_policy_id,
             **kwargs
         )
     cli_util.render_response(result, ctx)
@@ -1759,6 +2425,64 @@ def list_work_requests(ctx, from_json, all_pages, page_size, waas_policy_id, com
     cli_util.render_response(result, ctx)
 
 
+@purge_cache_group.command(name=cli_util.override('purge_cache.command_name', 'purge-cache'), help=u"""Accepts a list of resources that will get it's cache purged. If resources property is not passed, then the entire cache for Web Application will be purged.""")
+@cli_util.option('--waas-policy-id', required=True, help=u"""The [OCID] of the WAAS policy.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the `PUT` or `DELETE` call for a resource, set the `if-match` parameter to the value of the etag from a previous `GET` or `POST` response for that resource. The resource will be updated or deleted only if the etag provided matches the resource's current etag value.""")
+@cli_util.option('--resources', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A resource to purge, identified by either a hostless absolute path starting with a single slash (e.g., \"/path/to/resource\") or by a relative path in which the first component will be interpreted as a domain protected by this policy (e.g., \"example.com/path/to/resource\").""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'resources': {'module': 'waas', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'resources': {'module': 'waas', 'class': 'list[string]'}})
+@cli_util.wrap_exceptions
+def purge_cache(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, waas_policy_id, if_match, resources):
+
+    if isinstance(waas_policy_id, six.string_types) and len(waas_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --waas-policy-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    details = {}
+
+    if resources is not None:
+        details['resources'] = cli_util.parse_json_parameter("resources", resources)
+
+    client = cli_util.build_client('waas', ctx)
+    result = client.purge_cache(
+        waas_policy_id=waas_policy_id,
+        purge_cache=details,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @access_rule_group.command(name=cli_util.override('update_access_rules.command_name', 'update'), help=u"""Updates the list of access rules in the Web Application Firewall configuration for a specified WAAS policy. Access rules allow explicit actions to be defined and executed for requests that meet various conditions. A rule action can be set to allow, detect, or block requests. The detect setting allows the request to pass through the Web Application Firewall and is tagged with a `DETECT` flag in the Web Application Firewall's log.
 
 This operation can create, delete, update, and/or reorder access rules depending on the structure of the request body.
@@ -1792,6 +2516,137 @@ def update_access_rules(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     result = client.update_access_rules(
         waas_policy_id=waas_policy_id,
         access_rules=cli_util.parse_json_parameter("access_rules", access_rules),
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@certificate_group.command(name=cli_util.override('update_address_list.command_name', 'update-address-list'), help=u"""Updates the details of an address list. Only the fields specified in the request body will be updated; all other properties will remain unchanged.""")
+@cli_util.option('--address-list-id', required=True, help=u"""The [OCID] of the address list. This number is generated when the address list is added to the compartment.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the `PUT` or `DELETE` call for a resource, set the `if-match` parameter to the value of the etag from a previous `GET` or `POST` response for that resource. The resource will be updated or deleted only if the etag provided matches the resource's current etag value.""")
+@cli_util.option('--display-name', help=u"""A unique user-friendly name for the address list.""")
+@cli_util.option('--addresses', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of IP addresses or CIDR notations.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "FAILED", "UPDATING", "DELETING", "DELETED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'addresses': {'module': 'waas', 'class': 'list[string]'}, 'freeform-tags': {'module': 'waas', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'waas', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'addresses': {'module': 'waas', 'class': 'list[string]'}, 'freeform-tags': {'module': 'waas', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'waas', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'waas', 'class': 'AddressList'})
+@cli_util.wrap_exceptions
+def update_address_list(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, address_list_id, if_match, display_name, addresses, freeform_tags, defined_tags):
+
+    if isinstance(address_list_id, six.string_types) and len(address_list_id.strip()) == 0:
+        raise click.UsageError('Parameter --address-list-id cannot be whitespace or empty string')
+    if not force:
+        if addresses or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to addresses and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    details = {}
+
+    if display_name is not None:
+        details['displayName'] = display_name
+
+    if addresses is not None:
+        details['addresses'] = cli_util.parse_json_parameter("addresses", addresses)
+
+    if freeform_tags is not None:
+        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('waas', ctx)
+    result = client.update_address_list(
+        address_list_id=address_list_id,
+        update_address_list_details=details,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_address_list') and callable(getattr(client, 'get_address_list')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_address_list(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@caching_rule_group.command(name=cli_util.override('update_caching_rules.command_name', 'update'), help=u"""Updates the configuration for each specified caching rule. This operation can update or delete caching rules depending on the structure of the request body. Caching rules can be updated by changing the properties of the caching rule object with the rule's key specified in the key field. Any existing caching rules that are not specified with a key in the list of access rules will be deleted upon update.""")
+@cli_util.option('--waas-policy-id', required=True, help=u"""The [OCID] of the WAAS policy.""")
+@cli_util.option('--caching-rules-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the `PUT` or `DELETE` call for a resource, set the `if-match` parameter to the value of the etag from a previous `GET` or `POST` response for that resource. The resource will be updated or deleted only if the etag provided matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'caching-rules-details': {'module': 'waas', 'class': 'list[CachingRule]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'caching-rules-details': {'module': 'waas', 'class': 'list[CachingRule]'}})
+@cli_util.wrap_exceptions
+def update_caching_rules(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, waas_policy_id, caching_rules_details, if_match):
+
+    if isinstance(waas_policy_id, six.string_types) and len(waas_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --waas-policy-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('waas', ctx)
+    result = client.update_caching_rules(
+        waas_policy_id=waas_policy_id,
+        caching_rules_details=cli_util.parse_json_parameter("caching_rules_details", caching_rules_details),
         **kwargs
     )
     if wait_for_state:
@@ -1936,6 +2791,97 @@ def update_certificate(ctx, from_json, force, wait_for_state, max_wait_seconds, 
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 result = oci.wait_until(client, client.get_certificate(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@custom_protection_rule_group.command(name=cli_util.override('update_custom_protection_rule.command_name', 'update'), help=u"""Updates the details of a Custom Protection rule. Only the fields specified in the request body will be updated; all other properties will remain unchanged.""")
+@cli_util.option('--custom-protection-rule-id', required=True, help=u"""The [OCID] of the Custom Protection rule. This number is generated when the Custom Protection rule is added to the compartment.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name for the Custom Protection rule.""")
+@cli_util.option('--description', help=u"""A description for the Custom Protection rule.""")
+@cli_util.option('--template', help=u"""The template text of the Custom Protection rule. The syntax is based on ModSecurity Rule Language. Additionaly it needs to include two variables / placeholders which will be replaced during publishing.
+
+- **{{mode}}** - rule action, defined by user in UI, like `OFF`, `DETECT` or `BLOCK`.
+
+- **{{id_1}}** - unique rule ID which identifies a `SecRule`, generated by the system. Multiple IDs can be used by increasing the number of the variable for every `SecRule` defined in the template.
+
+*Example usage:*   ```   SecRule REQUEST_COOKIES \"regex matching SQL injection - part 1/2\" \\           \"phase:2,                                                 \\           msg:'Detects chained SQL injection attempts 1/2.',        \\           id: {{id_1}},                                             \\           ctl:ruleEngine={{mode}},                                  \\           deny\"   SecRule REQUEST_COOKIES \"regex matching SQL injection - part 2/2\" \\           \"phase:2,                                                 \\           msg:'Detects chained SQL injection attempts 2/2.',        \\           id: {{id_2}},                                             \\           ctl:ruleEngine={{mode}},                                  \\           deny\"   ```   The example contains two `SecRules` each having distinct regex expression to match   `Cookie` header value during second input analysis phase.   The disruptive `deny` action takes effect only when `{{mode}}` is set to `BLOCK`.   The message is logged either when `{{mode}}` is set to `DETECT` or `BLOCK`.
+
+ For more information about ModSecurity's open source WAF rules, see [Mod Security's documentation].""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the `PUT` or `DELETE` call for a resource, set the `if-match` parameter to the value of the etag from a previous `GET` or `POST` response for that resource. The resource will be updated or deleted only if the etag provided matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "FAILED", "UPDATING", "DELETING", "DELETED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'waas', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'waas', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'waas', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'waas', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'waas', 'class': 'CustomProtectionRule'})
+@cli_util.wrap_exceptions
+def update_custom_protection_rule(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, custom_protection_rule_id, display_name, description, template, freeform_tags, defined_tags, if_match):
+
+    if isinstance(custom_protection_rule_id, six.string_types) and len(custom_protection_rule_id.strip()) == 0:
+        raise click.UsageError('Parameter --custom-protection-rule-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    details = {}
+
+    if display_name is not None:
+        details['displayName'] = display_name
+
+    if description is not None:
+        details['description'] = description
+
+    if template is not None:
+        details['template'] = template
+
+    if freeform_tags is not None:
+        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('waas', ctx)
+    result = client.update_custom_protection_rule(
+        custom_protection_rule_id=custom_protection_rule_id,
+        update_custom_protection_rule_details=details,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_custom_protection_rule') and callable(getattr(client, 'get_custom_protection_rule')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_custom_protection_rule(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except oci.exceptions.MaximumWaitTimeExceeded as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -2276,7 +3222,33 @@ def update_js_challenge(ctx, from_json, force, wait_for_state, max_wait_seconds,
 @cli_util.option('--certificate-id', help=u"""The OCID of the SSL certificate to use if HTTPS is supported.""")
 @cli_util.option('--is-https-enabled', type=click.BOOL, help=u"""Enable or disable HTTPS support. If true, a `certificateId` is required. If unspecified, defaults to `false`.""")
 @cli_util.option('--is-https-forced', type=click.BOOL, help=u"""Force HTTP to HTTPS redirection. If unspecified, defaults to `false`.""")
+@cli_util.option('--tls-protocols', type=custom_types.CliCaseInsensitiveChoice(["TLS_V1", "TLS_V1_1", "TLS_V1_2", "TLS_V1_3"]), help=u"""A list of allowed TLS protocols. Only applicable when HTTPS support is enabled. It affects client's connection to the edge nodes. The most secure TLS version will be chosen. - **TLS_V1:** corresponds to TLS 1.0 specification.
+
+- **TLS_V1_1:** corresponds to TLS 1.1 specification.
+
+- **TLS_V1_2:** corresponds to TLS 1.2 specification.
+
+- **TLS_V1_3:** corresponds to TLS 1.3 specification.
+
+Enabled TLS protocols must go in a row. For example if TLS_v1_1 and TLS_V1_3 are enabled, TLS_V1_2 must be enabled too.""")
+@cli_util.option('--is-origin-compression-enabled', type=click.BOOL, help=u"""Enable or disable GZIP compression of origin responses. If enabled, the header `Accept-Encoding: gzip` is sent to origin, otherwise - empty `Accept-Encoding:` header is used.""")
+@cli_util.option('--is-behind-cdn', type=click.BOOL, help=u"""Enable or disable the use of CDN. It allows to specify true client IP address if clients do not connect directly to us.""")
+@cli_util.option('--client-address-header', type=custom_types.CliCaseInsensitiveChoice(["X_FORWARDED_FOR", "X_CLIENT_IP", "X_REAL_IP", "CLIENT_IP", "TRUE_CLIENT_IP"]), help=u"""The HTTP header used to pass the client IP address from the CDN if `isBehindCdn` is enabled. This feature consumes the header and its value as the true client IP address. It does not create the header. Using trusted chains (for example `X-Client-Ip: 11.1.1.1, 13.3.3.3`), the last IP address in the list will be used as true client IP address. In case of multiple headers with the same name, the first one will be used. If the header is not present it will use the connecting IP address as the true client IP address. It's assumed that CDN sets the correct client IP address and prevents spoofing.
+
+- **X_FORWARDED_FOR:** Corresponds to `X-Forwarded-For` header name.
+
+- **X_CLIENT_IP:** Corresponds to `X-Client-Ip` header name.
+
+- **X_REAL_IP:** Corresponds to `X-Real-Ip` header name.
+
+- **CLIENT_IP:** Corresponds to `Client-Ip` header name.
+
+- **TRUE_CLIENT_IP:** Corresponds to `True-Client-Ip` header name.""")
+@cli_util.option('--is-cache-control-respected', type=click.BOOL, help=u"""Enable or disable automatic content caching based on the response `cache-control` header. This feature enables the origin to act as a proxy cache. Caching policies are usually defined using `cache-control` header. For example `cache-control: max-age=120` means that the returned resource is valid for 120 seconds. Caching rules will overwrite this setting.""")
+@cli_util.option('--is-response-buffering-enabled', type=click.BOOL, help=u"""Enable or disable buffering of responses from the origin. Buffering improves overall stability in case of network issues, but slightly increases Time To First Byte.""")
+@cli_util.option('--cipher-group', type=custom_types.CliCaseInsensitiveChoice(["DEFAULT"]), help=u"""The cipher group - **DEFAULT:** Cipher group supports TLS 1.0, TLS 1.1, TLS 1.2, TLS 1.3 protocols. It has the following ciphers enabled: `ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:DHE-DSS-AES128-GCM-SHA256:kEDH+AESGCM:ECDHE-RSA-AES128-SHA256:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA:ECDHE-ECDSA-AES128-SHA:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA:ECDHE-ECDSA-AES256-SHA:DHE-RSA-AES128-SHA256:DHE-RSA-AES128-SHA:DHE-DSS-AES128-SHA256:DHE-RSA-AES256-SHA256:DHE-DSS-AES256-SHA:DHE-RSA-AES256-SHA:AES128-GCM-SHA256:AES256-GCM-SHA384:AES128-SHA256:AES256-SHA256:AES128-SHA:AES256-SHA:AES:CAMELLIA:!DES-CBC3-SHA:!aNULL:!eNULL:!EXPORT:!DES:!RC4:!MD5:!PSK:!aECDH:!EDH-DSS-DES-CBC3-SHA:!EDH-RSA-DES-CBC3-SHA:!KRB5-DES-CBC3-SHA`""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the `PUT` or `DELETE` call for a resource, set the `if-match` parameter to the value of the etag from a previous `GET` or `POST` response for that resource. The resource will be updated or deleted only if the etag provided matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -2285,10 +3257,14 @@ def update_js_challenge(ctx, from_json, force, wait_for_state, max_wait_seconds,
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def update_policy_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, waas_policy_id, certificate_id, is_https_enabled, is_https_forced, if_match):
+def update_policy_config(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, waas_policy_id, certificate_id, is_https_enabled, is_https_forced, tls_protocols, is_origin_compression_enabled, is_behind_cdn, client_address_header, is_cache_control_respected, is_response_buffering_enabled, cipher_group, if_match):
 
     if isinstance(waas_policy_id, six.string_types) and len(waas_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --waas-policy-id cannot be whitespace or empty string')
+    if not force:
+        if tls_protocols:
+            if not click.confirm("WARNING: Updates to tls-protocols will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
 
     kwargs = {}
     if if_match is not None:
@@ -2305,6 +3281,27 @@ def update_policy_config(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 
     if is_https_forced is not None:
         details['isHttpsForced'] = is_https_forced
+
+    if tls_protocols is not None:
+        details['tlsProtocols'] = cli_util.parse_json_parameter("tls_protocols", tls_protocols)
+
+    if is_origin_compression_enabled is not None:
+        details['isOriginCompressionEnabled'] = is_origin_compression_enabled
+
+    if is_behind_cdn is not None:
+        details['isBehindCdn'] = is_behind_cdn
+
+    if client_address_header is not None:
+        details['clientAddressHeader'] = client_address_header
+
+    if is_cache_control_respected is not None:
+        details['isCacheControlRespected'] = is_cache_control_respected
+
+    if is_response_buffering_enabled is not None:
+        details['isResponseBufferingEnabled'] = is_response_buffering_enabled
+
+    if cipher_group is not None:
+        details['cipherGroup'] = cipher_group
 
     client = cli_util.build_client('waas', ctx)
     result = client.update_policy_config(
@@ -2569,6 +3566,9 @@ def update_threat_feeds(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 @cli_util.option('--origins', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A map of host to origin for the web application. The key should be a customer friendly name for the host, ex. primary, secondary, etc.
 
 This option is a JSON dictionary of type dict(str, Origin).  For documentation on Origin please see our API reference: https://docs.cloud.oracle.com/api/#/en/waas/20181116/datatypes/Origin.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--origin-groups', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The map of origin groups and their keys used to associate origins to the wafConfig.
+
+This option is a JSON dictionary of type dict(str, OriginGroup).  For documentation on OriginGroup please see our API reference: https://docs.cloud.oracle.com/api/#/en/waas/20181116/datatypes/OriginGroup.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--policy-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--waf-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
@@ -2582,18 +3582,18 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'additional-domains': {'module': 'waas', 'class': 'list[string]'}, 'origins': {'module': 'waas', 'class': 'dict(str, Origin)'}, 'policy-config': {'module': 'waas', 'class': 'PolicyConfig'}, 'waf-config': {'module': 'waas', 'class': 'WafConfig'}, 'freeform-tags': {'module': 'waas', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'waas', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'additional-domains': {'module': 'waas', 'class': 'list[string]'}, 'origins': {'module': 'waas', 'class': 'dict(str, Origin)'}, 'origin-groups': {'module': 'waas', 'class': 'dict(str, OriginGroup)'}, 'policy-config': {'module': 'waas', 'class': 'PolicyConfig'}, 'waf-config': {'module': 'waas', 'class': 'WafConfig'}, 'freeform-tags': {'module': 'waas', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'waas', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'additional-domains': {'module': 'waas', 'class': 'list[string]'}, 'origins': {'module': 'waas', 'class': 'dict(str, Origin)'}, 'policy-config': {'module': 'waas', 'class': 'PolicyConfig'}, 'waf-config': {'module': 'waas', 'class': 'WafConfig'}, 'freeform-tags': {'module': 'waas', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'waas', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'additional-domains': {'module': 'waas', 'class': 'list[string]'}, 'origins': {'module': 'waas', 'class': 'dict(str, Origin)'}, 'origin-groups': {'module': 'waas', 'class': 'dict(str, OriginGroup)'}, 'policy-config': {'module': 'waas', 'class': 'PolicyConfig'}, 'waf-config': {'module': 'waas', 'class': 'WafConfig'}, 'freeform-tags': {'module': 'waas', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'waas', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_waas_policy(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, waas_policy_id, display_name, additional_domains, origins, policy_config, waf_config, freeform_tags, defined_tags, if_match):
+def update_waas_policy(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, waas_policy_id, display_name, additional_domains, origins, origin_groups, policy_config, waf_config, freeform_tags, defined_tags, if_match):
 
     if isinstance(waas_policy_id, six.string_types) and len(waas_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --waas-policy-id cannot be whitespace or empty string')
     if not force:
-        if additional_domains or origins or policy_config or waf_config or freeform_tags or defined_tags:
-            if not click.confirm("WARNING: Updates to additional-domains and origins and policy-config and waf-config and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+        if additional_domains or origins or origin_groups or policy_config or waf_config or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to additional-domains and origins and origin-groups and policy-config and waf-config and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -2612,6 +3612,9 @@ def update_waas_policy(ctx, from_json, force, wait_for_state, max_wait_seconds, 
     if origins is not None:
         details['origins'] = cli_util.parse_json_parameter("origins", origins)
 
+    if origin_groups is not None:
+        details['originGroups'] = cli_util.parse_json_parameter("origin_groups", origin_groups)
+
     if policy_config is not None:
         details['policyConfig'] = cli_util.parse_json_parameter("policy_config", policy_config)
 
@@ -2628,6 +3631,58 @@ def update_waas_policy(ctx, from_json, force, wait_for_state, max_wait_seconds, 
     result = client.update_waas_policy(
         waas_policy_id=waas_policy_id,
         update_waas_policy_details=details,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@custom_protection_rule_setting_group.command(name=cli_util.override('update_waas_policy_custom_protection_rules.command_name', 'update-waas-policy-custom-protection-rules'), help=u"""Updates the action for each specified custom protection rule. Only the `DETECT` and `BLOCK` actions can be set. Disabled rules should not be included in the list. For more information on protection rules, see [WAF Protection Rules].""")
+@cli_util.option('--waas-policy-id', required=True, help=u"""The [OCID] of the WAAS policy.""")
+@cli_util.option('--update-custom-protection-rules-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the `PUT` or `DELETE` call for a resource, set the `if-match` parameter to the value of the etag from a previous `GET` or `POST` response for that resource. The resource will be updated or deleted only if the etag provided matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'update-custom-protection-rules-details': {'module': 'waas', 'class': 'list[CustomProtectionRuleSetting]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'update-custom-protection-rules-details': {'module': 'waas', 'class': 'list[CustomProtectionRuleSetting]'}})
+@cli_util.wrap_exceptions
+def update_waas_policy_custom_protection_rules(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, waas_policy_id, update_custom_protection_rules_details, if_match):
+
+    if isinstance(waas_policy_id, six.string_types) and len(waas_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --waas-policy-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('waas', ctx)
+    result = client.update_waas_policy_custom_protection_rules(
+        waas_policy_id=waas_policy_id,
+        update_custom_protection_rules_details=cli_util.parse_json_parameter("update_custom_protection_rules_details", update_custom_protection_rules_details),
         **kwargs
     )
     if wait_for_state:
@@ -2743,6 +3798,13 @@ This option is a JSON list with items of type GoodBot.  For documentation on Goo
 @cli_util.option('--human-interaction-challenge', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The human interaction challenge settings. Used to look for natural human interactions such as mouse movements, time on site, and page scrolling to identify bots.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--js-challenge', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The JavaScript challenge settings. Used to challenge requests with a JavaScript challenge and take the action if a browser has no JavaScript support in order to block bots.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--origin', help=u"""The key in the map of origins referencing the origin used for the Web Application Firewall. The origin must already be included in `Origins`. Required when creating the `WafConfig` resource, but not on update.""")
+@cli_util.option('--caching-rules', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of caching rules applied to the web application.
+
+This option is a JSON list with items of type CachingRule.  For documentation on CachingRule please see our API reference: https://docs.cloud.oracle.com/api/#/en/waas/20181116/datatypes/CachingRule.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--custom-protection-rules', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of the custom protection rule OCIDs and their actions.
+
+This option is a JSON list with items of type CustomProtectionRuleSetting.  For documentation on CustomProtectionRuleSetting please see our API reference: https://docs.cloud.oracle.com/api/#/en/waas/20181116/datatypes/CustomProtectionRuleSetting.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--origin-groups', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of origin group references that provide support for additional origin servers. A list of combined unique origin servers from `origin` and `originGroups` will be used.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--protection-rules', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of the protection rules and their details.
 
 This option is a JSON list with items of type ProtectionRule.  For documentation on ProtectionRule please see our API reference: https://docs.cloud.oracle.com/api/#/en/waas/20181116/datatypes/ProtectionRule.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2758,18 +3820,18 @@ This option is a JSON list with items of type Whitelist.  For documentation on W
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'access-rules': {'module': 'waas', 'class': 'list[AccessRule]'}, 'address-rate-limiting': {'module': 'waas', 'class': 'AddressRateLimiting'}, 'captchas': {'module': 'waas', 'class': 'list[Captcha]'}, 'device-fingerprint-challenge': {'module': 'waas', 'class': 'DeviceFingerprintChallenge'}, 'good-bots': {'module': 'waas', 'class': 'list[GoodBot]'}, 'human-interaction-challenge': {'module': 'waas', 'class': 'HumanInteractionChallenge'}, 'js-challenge': {'module': 'waas', 'class': 'JsChallenge'}, 'protection-rules': {'module': 'waas', 'class': 'list[ProtectionRule]'}, 'protection-settings': {'module': 'waas', 'class': 'ProtectionSettings'}, 'threat-feeds': {'module': 'waas', 'class': 'list[ThreatFeed]'}, 'whitelists': {'module': 'waas', 'class': 'list[Whitelist]'}})
+@json_skeleton_utils.get_cli_json_input_option({'access-rules': {'module': 'waas', 'class': 'list[AccessRule]'}, 'address-rate-limiting': {'module': 'waas', 'class': 'AddressRateLimiting'}, 'captchas': {'module': 'waas', 'class': 'list[Captcha]'}, 'device-fingerprint-challenge': {'module': 'waas', 'class': 'DeviceFingerprintChallenge'}, 'good-bots': {'module': 'waas', 'class': 'list[GoodBot]'}, 'human-interaction-challenge': {'module': 'waas', 'class': 'HumanInteractionChallenge'}, 'js-challenge': {'module': 'waas', 'class': 'JsChallenge'}, 'caching-rules': {'module': 'waas', 'class': 'list[CachingRule]'}, 'custom-protection-rules': {'module': 'waas', 'class': 'list[CustomProtectionRuleSetting]'}, 'origin-groups': {'module': 'waas', 'class': 'list[string]'}, 'protection-rules': {'module': 'waas', 'class': 'list[ProtectionRule]'}, 'protection-settings': {'module': 'waas', 'class': 'ProtectionSettings'}, 'threat-feeds': {'module': 'waas', 'class': 'list[ThreatFeed]'}, 'whitelists': {'module': 'waas', 'class': 'list[Whitelist]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'access-rules': {'module': 'waas', 'class': 'list[AccessRule]'}, 'address-rate-limiting': {'module': 'waas', 'class': 'AddressRateLimiting'}, 'captchas': {'module': 'waas', 'class': 'list[Captcha]'}, 'device-fingerprint-challenge': {'module': 'waas', 'class': 'DeviceFingerprintChallenge'}, 'good-bots': {'module': 'waas', 'class': 'list[GoodBot]'}, 'human-interaction-challenge': {'module': 'waas', 'class': 'HumanInteractionChallenge'}, 'js-challenge': {'module': 'waas', 'class': 'JsChallenge'}, 'protection-rules': {'module': 'waas', 'class': 'list[ProtectionRule]'}, 'protection-settings': {'module': 'waas', 'class': 'ProtectionSettings'}, 'threat-feeds': {'module': 'waas', 'class': 'list[ThreatFeed]'}, 'whitelists': {'module': 'waas', 'class': 'list[Whitelist]'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'access-rules': {'module': 'waas', 'class': 'list[AccessRule]'}, 'address-rate-limiting': {'module': 'waas', 'class': 'AddressRateLimiting'}, 'captchas': {'module': 'waas', 'class': 'list[Captcha]'}, 'device-fingerprint-challenge': {'module': 'waas', 'class': 'DeviceFingerprintChallenge'}, 'good-bots': {'module': 'waas', 'class': 'list[GoodBot]'}, 'human-interaction-challenge': {'module': 'waas', 'class': 'HumanInteractionChallenge'}, 'js-challenge': {'module': 'waas', 'class': 'JsChallenge'}, 'caching-rules': {'module': 'waas', 'class': 'list[CachingRule]'}, 'custom-protection-rules': {'module': 'waas', 'class': 'list[CustomProtectionRuleSetting]'}, 'origin-groups': {'module': 'waas', 'class': 'list[string]'}, 'protection-rules': {'module': 'waas', 'class': 'list[ProtectionRule]'}, 'protection-settings': {'module': 'waas', 'class': 'ProtectionSettings'}, 'threat-feeds': {'module': 'waas', 'class': 'list[ThreatFeed]'}, 'whitelists': {'module': 'waas', 'class': 'list[Whitelist]'}})
 @cli_util.wrap_exceptions
-def update_waf_config(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, waas_policy_id, access_rules, address_rate_limiting, captchas, device_fingerprint_challenge, good_bots, human_interaction_challenge, js_challenge, origin, protection_rules, protection_settings, threat_feeds, whitelists, if_match):
+def update_waf_config(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, waas_policy_id, access_rules, address_rate_limiting, captchas, device_fingerprint_challenge, good_bots, human_interaction_challenge, js_challenge, origin, caching_rules, custom_protection_rules, origin_groups, protection_rules, protection_settings, threat_feeds, whitelists, if_match):
 
     if isinstance(waas_policy_id, six.string_types) and len(waas_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --waas-policy-id cannot be whitespace or empty string')
     if not force:
-        if access_rules or address_rate_limiting or captchas or device_fingerprint_challenge or good_bots or human_interaction_challenge or js_challenge or protection_rules or protection_settings or threat_feeds or whitelists:
-            if not click.confirm("WARNING: Updates to access-rules and address-rate-limiting and captchas and device-fingerprint-challenge and good-bots and human-interaction-challenge and js-challenge and protection-rules and protection-settings and threat-feeds and whitelists will replace any existing values. Are you sure you want to continue?"):
+        if access_rules or address_rate_limiting or captchas or device_fingerprint_challenge or good_bots or human_interaction_challenge or js_challenge or caching_rules or custom_protection_rules or origin_groups or protection_rules or protection_settings or threat_feeds or whitelists:
+            if not click.confirm("WARNING: Updates to access-rules and address-rate-limiting and captchas and device-fingerprint-challenge and good-bots and human-interaction-challenge and js-challenge and caching-rules and custom-protection-rules and origin-groups and protection-rules and protection-settings and threat-feeds and whitelists will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -2802,6 +3864,15 @@ def update_waf_config(ctx, from_json, force, wait_for_state, max_wait_seconds, w
 
     if origin is not None:
         details['origin'] = origin
+
+    if caching_rules is not None:
+        details['cachingRules'] = cli_util.parse_json_parameter("caching_rules", caching_rules)
+
+    if custom_protection_rules is not None:
+        details['customProtectionRules'] = cli_util.parse_json_parameter("custom_protection_rules", custom_protection_rules)
+
+    if origin_groups is not None:
+        details['originGroups'] = cli_util.parse_json_parameter("origin_groups", origin_groups)
 
     if protection_rules is not None:
         details['protectionRules'] = cli_util.parse_json_parameter("protection_rules", protection_rules)

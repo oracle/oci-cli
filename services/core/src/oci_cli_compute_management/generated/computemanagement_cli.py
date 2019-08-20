@@ -41,7 +41,7 @@ def instance_group():
     pass
 
 
-@click.command(cli_util.override('instance_configuration_group.command_name', 'instance-configuration'), cls=CommandGroupWithAlias, help="""An instance configuration is a template that defines the settings to use when creating Compute instances as part of an instance pool. For more information about instance pools and instance configurations, see [Managing Compute Instances].""")
+@click.command(cli_util.override('instance_configuration_group.command_name', 'instance-configuration'), cls=CommandGroupWithAlias, help="""An instance configuration is a template that defines the settings to use when creating Compute instances. For more information about instance configurations, see [Managing Compute Instances].""")
 @cli_util.help_option_group
 def instance_configuration_group():
     pass
@@ -189,16 +189,22 @@ def change_instance_pool_compartment(ctx, from_json, instance_pool_id, compartme
     cli_util.render_response(result, ctx)
 
 
-@instance_configuration_group.command(name=cli_util.override('create_instance_configuration.command_name', 'create'), help=u"""Creates an instance configuration""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment containing the instance configuration.""")
+@instance_configuration_group.command(name=cli_util.override('create_instance_configuration.command_name', 'create'), help=u"""Creates an instance configuration. An instance configuration is a template that defines the settings to use when creating Compute instances.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the instance configuration.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--display-name', help=u"""A user-friendly name for the instance configuration""")
+@cli_util.option('--display-name', help=u"""A user-friendly name for the instance configuration.  Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--source', type=custom_types.CliCaseInsensitiveChoice(["NONE", "INSTANCE"]), help=u"""The source of the instance configuration: NONE for creating a new instance configuration from the API input. INSTANCE for creating a new instance configuration from an existing instance. The default is NONE.""")
+@cli_util.option('--source', type=custom_types.CliCaseInsensitiveChoice(["NONE", "INSTANCE"]), help=u"""The source of the instance configuration. An instance configuration defines the settings to use when creating Compute instances, including details such as the base image, shape, and metadata. You can also specify the associated resources for the instance, such as block volume attachments and network configuration.
+
+The following values are supported:
+
+* `NONE`: Creates an instance configuration using the list of settings that you specify.
+
+* `INSTANCE`: Creates an instance configuration using an existing instance as a template. The instance configuration uses the same settings as the instance.""")
 @json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}})
 @cli_util.help_option
 @click.pass_context
@@ -231,13 +237,13 @@ def create_instance_configuration(ctx, from_json, compartment_id, defined_tags, 
     cli_util.render_response(result, ctx)
 
 
-@instance_configuration_group.command(name=cli_util.override('create_instance_configuration_create_instance_configuration_details.command_name', 'create-instance-configuration-create-instance-configuration-details'), help=u"""Creates an instance configuration""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment containing the instance configuration.""")
+@instance_configuration_group.command(name=cli_util.override('create_instance_configuration_create_instance_configuration_details.command_name', 'create-instance-configuration-create-instance-configuration-details'), help=u"""Creates an instance configuration. An instance configuration is a template that defines the settings to use when creating Compute instances.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the instance configuration.""")
 @cli_util.option('--instance-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--display-name', help=u"""A user-friendly name for the instance configuration""")
+@cli_util.option('--display-name', help=u"""A user-friendly name for the instance configuration.  Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -273,13 +279,13 @@ def create_instance_configuration_create_instance_configuration_details(ctx, fro
     cli_util.render_response(result, ctx)
 
 
-@instance_configuration_group.command(name=cli_util.override('create_instance_configuration_create_instance_configuration_from_instance_details.command_name', 'create-instance-configuration-create-instance-configuration-from-instance-details'), help=u"""Creates an instance configuration""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment containing the instance configuration.""")
-@cli_util.option('--instance-id', required=True, help=u"""The ID of the instance that will be used to create instance configuration.""")
+@instance_configuration_group.command(name=cli_util.override('create_instance_configuration_create_instance_configuration_from_instance_details.command_name', 'create-instance-configuration-create-instance-configuration-from-instance-details'), help=u"""Creates an instance configuration. An instance configuration is a template that defines the settings to use when creating Compute instances.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the instance configuration.""")
+@cli_util.option('--instance-id', required=True, help=u"""The [OCID] of the instance to use to create the instance configuration.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--display-name', help=u"""A user-friendly name for the instance configuration""")
+@cli_util.option('--display-name', help=u"""A user-friendly name for the instance configuration.  Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -325,7 +331,7 @@ To use the instance pool with a regional subnet, provide a placement configurati
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--display-name', help=u"""The user-friendly name.  Does not have to be unique.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name for the instance pool. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -542,7 +548,9 @@ def get_instance_pool_load_balancer_attachment(ctx, from_json, instance_pool_id,
     cli_util.render_response(result, ctx)
 
 
-@instance_group.command(name=cli_util.override('launch_instance_configuration.command_name', 'launch-instance-configuration'), help=u"""Launch an instance from an instance configuration""")
+@instance_group.command(name=cli_util.override('launch_instance_configuration.command_name', 'launch-instance-configuration'), help=u"""Launches an instance from an instance configuration.
+
+If the instance configuration does not include all of the parameters that are required to launch an instance, such as the availability domain and subnet ID, you must provide these parameters when you launch an instance from the instance configuration. For more information, see the [InstanceConfiguration] resource.""")
 @cli_util.option('--instance-configuration-id', required=True, help=u"""The OCID of the instance configuration.""")
 @cli_util.option('--instance-type', required=True, help=u"""The type of instance details. Supported instanceType is compute""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -569,7 +577,9 @@ def launch_instance_configuration(ctx, from_json, instance_configuration_id, ins
     cli_util.render_response(result, ctx)
 
 
-@instance_group.command(name=cli_util.override('launch_instance_configuration_compute_instance_details.command_name', 'launch-instance-configuration-compute-instance-details'), help=u"""Launch an instance from an instance configuration""")
+@instance_group.command(name=cli_util.override('launch_instance_configuration_compute_instance_details.command_name', 'launch-instance-configuration-compute-instance-details'), help=u"""Launches an instance from an instance configuration.
+
+If the instance configuration does not include all of the parameters that are required to launch an instance, such as the availability domain and subnet ID, you must provide these parameters when you launch an instance from the instance configuration. For more information, see the [InstanceConfiguration] resource.""")
 @cli_util.option('--instance-configuration-id', required=True, help=u"""The OCID of the instance configuration.""")
 @cli_util.option('--block-volumes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""
 
@@ -612,7 +622,7 @@ def launch_instance_configuration_compute_instance_details(ctx, from_json, insta
     cli_util.render_response(result, ctx)
 
 
-@instance_configuration_group.command(name=cli_util.override('list_instance_configurations.command_name', 'list'), help=u"""Lists the available instanceConfigurations in the specific compartment.""")
+@instance_configuration_group.command(name=cli_util.override('list_instance_configurations.command_name', 'list'), help=u"""Lists the instance configurations in the specified compartment.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
@@ -1057,7 +1067,7 @@ def terminate_instance_pool(ctx, from_json, wait_for_state, max_wait_seconds, wa
     cli_util.render_response(result, ctx)
 
 
-@instance_configuration_group.command(name=cli_util.override('update_instance_configuration.command_name', 'update'), help=u"""Updates the freeFormTags, definedTags, and display name of an instance configuration.""")
+@instance_configuration_group.command(name=cli_util.override('update_instance_configuration.command_name', 'update'), help=u"""Updates the free-form tags, defined tags, and display name of an instance configuration.""")
 @cli_util.option('--instance-configuration-id', required=True, help=u"""The OCID of the instance configuration.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
@@ -1113,7 +1123,7 @@ def update_instance_configuration(ctx, from_json, force, instance_configuration_
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--display-name', help=u"""The user-friendly name.  Does not have to be unique.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name for the instance pool. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)

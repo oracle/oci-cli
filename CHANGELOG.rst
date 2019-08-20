@@ -6,6 +6,78 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.6.1 - 2019-08-20
+-------------------
+Added
+~~~~~
+* Support for kms encryption of file system in the File Storage Service.
+
+  * ``oci fs file-system create --kms-key-id``
+  * ``oci fs file-system update --kms-key-id``
+
+* Support for an option to set up archiving to Object Storage in the Streaming Service.
+
+  * ``oci streaming admin archiver``
+
+* Support for interacting with the resource limits of a specific resource type in the Limits Service.
+
+  * ``oci limits definition list``
+  * ``oci limits resource-availability get``
+  * ``oci limits service list``
+  * ``oci limits value list``
+
+* Support for ETag on Streaming Resources.
+
+  * ``oci streaming admin stream delete --if-match``
+  * ``oci streaming admin stream update --if-match``
+
+* Support for change of compartments for Public IP, Dhcp Options, Local Peering Gateway, Internet Gateway, Network Security Group (nsg) resources in the Networking Service.
+
+  * oci network internet-gateway change-compartment --compartment-id, --ig-id
+  * oci network dhcp-options change-compartment --compartment-id, --dhcp-id
+  * oci network local-peering-gateway change-compartment --compartment-id, --local-peering-gateway-id
+  * oci network nsg change-compartment --compartment-id, --nsg-id
+  * oci network public-ip change-compartment --compartment-id, --public-ip-id
+
+* Support for AddressLists resource management in the WAF Policy Service:
+
+  * ``oci waas address-list``
+
+* Support for clearing cached resources in Edge nodes in the WAF Policy Service.
+
+  * ``oci waas purge-cache --waas-policy-id, --resources``
+
+* Support for Cache control in WAF Policy Service
+
+  * ``oci waas caching-rule list``
+  * ``oci waas caching-rule update``
+
+* Support for Custom Protection Rule resource management in the WAF Policy Service.
+
+  * ``oci waas customer-protection-rule``
+  * ``oci waas waas-policy custom-protection-rule list``
+
+* Improve support for WAF Policy settings by introducing new options in the WAF Policy Service.
+
+  * ``oci waas policy-config update --cipher-group, --client-address-header, --force, --is-behind-cdn, --is-cache-control-respected, --is-origin-compression-enabled, --is-response-buffering-enabled, --tls-protocols``
+
+* Improve support for WAF Policy by introducing custom-protection-rule usage configuration in the WAF Policy Service.
+
+  * ``oci waas waas-policy custom-protection-rule list --waas-policy-id, --action, --all-pages, --mod-security-rule-id``
+
+* Improve support for WAF Policy sercice by introducing new Origin Groups option in the WAF Policy Service.
+
+  * ``oci waas waas-policy create --origin-groups``
+  * ``oci waas waas-policy update --origin-groups``
+
+* Improve support for WAF config in WAF Policy service by introducing options for caching-rules, custom-protection-rules and origin-groups in the WAF Policy Service.
+
+  * ``oci waas waf-config update --caching-rules, --custom-protection-rules, --origin-groups``
+
+* Launching database system with --auto-backup-enabled and --recovery-window-in-days options in the Database Service.
+
+  * ``oci db system launch --auto-backup-enabled and --recovery-window-in-days``
+
 2.6.0 - 2019-08-13
 -------------------
 Added
