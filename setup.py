@@ -77,7 +77,7 @@ for package in packages:
 
 setup(
     name='oci-cli',
-    url='https://docs.cloud.oracle.com/Content/API/SDKDocs/cli.htm',
+    url='https://docs.cloud.oracle.com/iaas/Content/API/Concepts/cliconcepts.htm',
     version=version,
     author='Oracle',
     author_email='joe.levy@oracle.com',
