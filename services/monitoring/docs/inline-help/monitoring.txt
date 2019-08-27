@@ -171,6 +171,16 @@ Options:
                                   Default is false.
                                   
                                   Example: `true`
+  --resource-group TEXT           Resource group that you want to use as a
+                                  filter. The alarm retrieves metric data
+                                  associated with the specified resource group
+                                  only. Only one resource group can be applied
+                                  per metric. A valid resourceGroup value starts
+                                  with an alphabetical character and includes
+                                  only alphanumeric characters, periods (.),
+                                  underscores (_), hyphens (-), and dollar signs
+                                  ($). Avoid entering confidential information.
+                                  Example: `frontend-fleet`
   --resolution TEXT               The time between calculated aggregation
                                   windows for the alarm. Supported value: `1m`
   --pending-duration TEXT         The period of time that the condition defined
@@ -584,6 +594,16 @@ Options:
   --namespace TEXT                The source service or application emitting the
                                   metric that is evaluated by the alarm.
                                   Example: `oci_computeagent`
+  --resource-group TEXT           Resource group that you want to use as a
+                                  filter. The alarm retrieves metric data
+                                  associated with the specified resource group
+                                  only. Only one resource group can be applied
+                                  per metric. A valid resourceGroup value starts
+                                  with an alphabetical character and includes
+                                  only alphanumeric characters, periods (.),
+                                  underscores (_), hyphens (-), and dollar signs
+                                  ($). Avoid entering confidential information.
+                                  Example: `frontend-fleet`
   --resolution TEXT               The time between calculated aggregation
                                   windows for the alarm. Supported value: `1m`
   --pending-duration TEXT         The period of time that the condition defined
@@ -1185,6 +1205,16 @@ Options:
                                   
                                   Example:
                                   `oci_computeagent`
+  --resource-group TEXT           Resource group that you want to use as a
+                                  filter. The specified resource group must
+                                  exist in the definition of the posted metric.
+                                  Only one resource group can be applied per
+                                  metric. A valid resourceGroup value starts
+                                  with an alphabetical character and includes
+                                  only alphanumeric characters, periods (.),
+                                  underscores (_), hyphens (-), and dollar signs
+                                  ($). Avoid entering confidential information.
+                                  Example: `frontend-fleet`
   --dimension-filters COMPLEX TYPE
                                   Qualifiers that you want to use when searching
                                   for metric definitions. Available dimensions
@@ -1210,15 +1240,16 @@ Options:
                                   passing it back in via the file:// syntax.
   --group-by COMPLEX TYPE         Group metrics by these fields in the response.
                                   For example, to list all metric namespaces
-                                  available in a compartment, groupBy the
-                                  "namespace" field.
+                                  available           in a compartment, groupBy
+                                  the "namespace" field. Supported fields:
+                                  namespace, name, resourceGroup.
                                   
-                                  Example - group by
-                                  namespace: `[ "namespace" ]`
-                                  This is a complex
-                                  type whose value must be valid JSON. The value
-                                  can be provided as a string on the command
-                                  line or passed in as a file using
+                                  Example -
+                                  group by namespace: `[ "namespace" ]`
+                                  This is
+                                  a complex type whose value must be valid JSON.
+                                  The value can be provided as a string on the
+                                  command line or passed in as a file using
                                   the
                                   file://path/to/file syntax.
                                   
@@ -1229,7 +1260,8 @@ Options:
                                   in
                                   a file, modifying it as needed and then
                                   passing it back in via the file:// syntax.
-  --sort-by [NAMESPACE|NAME]      The field to use when sorting returned metric
+  --sort-by [NAMESPACE|NAME|RESOURCEGROUP]
+                                  The field to use when sorting returned metric
                                   definitions. Only one sorting level is
                                   provided.
                                   
@@ -1432,6 +1464,16 @@ Options:
   --namespace TEXT                The source service or application to use when
                                   searching for metric data points to aggregate.
                                   Example: `oci_computeagent` [required]
+  --resource-group TEXT           Resource group that you want to use as a
+                                  filter. The specified resource group must
+                                  exist in the definition of the posted metric.
+                                  Only one resource group can be applied per
+                                  metric. A valid resourceGroup value starts
+                                  with an alphabetical character and includes
+                                  only alphanumeric characters, periods (.),
+                                  underscores (_), hyphens (-), and dollar signs
+                                  ($). Avoid entering confidential information.
+                                  Example: `frontend-fleet`
   --start-time DATETIME           The beginning of the time range to use when
                                   searching for metric data points. Format is
                                   defined by RFC3339. The response includes
