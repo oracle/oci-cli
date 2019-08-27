@@ -29,6 +29,21 @@ cli.add_command(compute_cli.compute_root_group)
 compute_cli.compute_root_group.commands.pop(compute_cli.volume_group.name)
 compute_cli.compute_root_group.commands.pop(compute_cli.instance_credentials_group.name)
 
+
+# oci compute dedicated-vm-host-instance-shape list to
+# oci compute dedicated-vm-host instance-shape list
+compute_cli.compute_root_group.commands.pop(compute_cli.dedicated_vm_host_instance_shape_group.name)
+compute_cli.dedicated_vm_host_group.add_command(compute_cli.dedicated_vm_host_instance_shape_group)
+cli_util.rename_command(compute_cli.dedicated_vm_host_group, compute_cli.dedicated_vm_host_instance_shape_group, 'instance-shape')
+
+
+# oci compute dedicated-vm-host-shape list
+# oci compute dedicated-vm-host host-shape list
+compute_cli.compute_root_group.commands.pop(compute_cli.dedicated_vm_host_shape_group.name)
+compute_cli.dedicated_vm_host_group.add_command(compute_cli.dedicated_vm_host_shape_group)
+cli_util.rename_command(compute_cli.dedicated_vm_host_group, compute_cli.dedicated_vm_host_shape_group, 'host-shape')
+
+
 # Disabling subclass commands
 compute_cli.image_group.commands.pop(compute_cli.export_image_export_image_via_object_storage_uri_details.name)
 compute_cli.image_group.commands.pop(compute_cli.export_image_export_image_via_object_storage_tuple_details.name)

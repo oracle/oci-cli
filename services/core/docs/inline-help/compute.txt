@@ -15,6 +15,8 @@ Options:
 Commands:
   boot-volume-attachment       Represents an attachment between a boot...
   console-history              An instance's serial console data.
+  dedicated-vm-host            A dedicated virtual machine (VM) host that...
+  dedicated-vm-host-instance   Condensed instance data when listing...
   device                       Device Path corresponding to the block...
   image                        A boot disk image for launching an instance.
   instance                     A compute host.
@@ -710,6 +712,723 @@ Options:
                                   whether the resource to see if it has reached
                                   the lifecycle state defined by --wait-for-
                                   state. Defaults to 30 seconds.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file using the file://path-
+                                  to/file syntax.
+                                  
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci compute dedicated-vm-host --help
+Usage: oci compute dedicated-vm-host [OPTIONS] COMMAND [ARGS]...
+
+  A dedicated virtual machine (VM) host that enables you to host multiple
+  virtual machine instances on a dedicated host that is not shared with other
+  tenancies.
+
+Options:
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
+
+Commands:
+  change-compartment  Moves a dedicated vm host from one...
+  create              Creates a new dedicated virtual machine (VM)...
+  delete              Deletes the specified dedicated virtual...
+  get                 Gets information about the specified...
+  host-shape          The shape used to launch the dedicated...
+  instance-shape      The shape used to launch instances associated...
+  list                Returns the list of dedicated virtual machine...
+  update              Updates the displayName, freeformTags, and...
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci compute dedicated-vm-host change-compartment --help
+Usage: oci compute dedicated-vm-host change-compartment [OPTIONS]
+
+  Moves a dedicated vm host from one compartment to another
+
+Options:
+  --dedicated-vm-host-id TEXT  The OCID of the dedicated VM host. [required]
+  -c, --compartment-id TEXT    The [OCID] of the compartment into which the
+                               resource should be moved. [required]
+  --if-match TEXT              For optimistic concurrency control. In the PUT or
+                               DELETE call for a resource, set the `if-match`
+                               parameter to the value of the etag from a
+                               previous GET or POST response for that resource.
+                               The resource will be updated or deleted only if
+                               the etag you provide matches the resource's
+                               current etag value.
+  --from-json TEXT             Provide input to this command as a JSON document
+                               from a file using the file://path-to/file syntax.
+                               The --generate-full-command-json-input option can
+                               be used to generate a sample json file to be used
+                               with this command option. The key names are pre-
+                               populated and match the command option names
+                               (converted to camelCase format, e.g. compartment-
+                               id --> compartmentId), while the values of the
+                               keys need to be populated by the user before
+                               using the sample file as an input to this
+                               command. For any command option that accepts
+                               multiple values, the value of the key can be a
+                               JSON array.
+                               
+                               Options can still be provided on the
+                               command line. If an option exists in both the
+                               JSON document and the command line then the
+                               command line specified value will be used.
+                               
+                               For
+                               examples on usage of this option, please see our
+                               "using CLI with advanced JSON options" link: http
+                               s://docs.cloud.oracle.com/iaas/Content/API/SDKDoc
+                               s/cliusing.htm#AdvancedJSONOptions
+  -?, -h, --help               For detailed help on any of these individual
+                               commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci compute dedicated-vm-host create --help
+Usage: oci compute dedicated-vm-host create [OPTIONS]
+
+  Creates a new dedicated virtual machine (VM) host in the specified
+  compartment and the specified availability domain.
+
+Options:
+  --availability-domain TEXT      The availability domain of the dedicated VM
+                                  host.
+                                  
+                                  Example: `Uocm:PHX-AD-1` [required]
+  -c, --compartment-id TEXT       The OCID of the compartment. [required]
+  --dedicated-vm-host-shape TEXT  The shape of the dedicated VM host. The shape
+                                  determines the number of CPUs and other
+                                  resources available for VMs. [required]
+  --defined-tags COMPLEX TYPE     Defined tags for this resource. Each key is
+                                  predefined and scoped to a namespace. For more
+                                  information, see [Resource Tags].
+                                  
+                                  Example:
+                                  `{"Operations": {"CostCenter": "42"}}`
+                                  This is
+                                  a complex type whose value must be valid JSON.
+                                  The value can be provided as a string on the
+                                  command line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+  --display-name TEXT             A user-friendly name. Does not have to be
+                                  unique, and it's changeable. Avoid entering
+                                  confidential information.
+                                  
+                                  Example: `My
+                                  dedicated VM host`
+  --fault-domain TEXT             The fault domain for the dedicated VM host's
+                                  assigned instances. For more information, see
+                                  Fault Domains. If you do not specify the fault
+                                  domain, the system selects one for you. To
+                                  change the fault domain for a dedicated VM
+                                  host, delete it and create a new dedicated VM
+                                  host in the preferred fault domain.
+                                  
+                                  To get a
+                                  list of fault domains, use the
+                                  ListFaultDomains operation in the Identity and
+                                  Access Management Service API.
+                                  
+                                  Example:
+                                  `FAULT-DOMAIN-1`
+  --freeform-tags COMPLEX TYPE    Free-form tags for this resource. Each tag is
+                                  a simple key-value pair with no predefined
+                                  name, type, or namespace. For more
+                                  information, see [Resource Tags].
+                                  
+                                  Example:
+                                  `{"Department": "Finance"}`
+                                  This is a complex
+                                  type whose value must be valid JSON. The value
+                                  can be provided as a string on the command
+                                  line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+  --wait-for-state [CREATING|ACTIVE|UPDATING|DELETING|DELETED|FAILED]
+                                  This operation creates, modifies or deletes a
+                                  resource that has a defined lifecycle state.
+                                  Specify this option to perform the action and
+                                  then wait until the resource reaches a given
+                                  lifecycle state. If timeout is reached, a
+                                  return code of 2 is returned. For any other
+                                  error, a return code of 1 is returned.
+  --max-wait-seconds INTEGER      The maximum time to wait for the resource to
+                                  reach the lifecycle state defined by --wait-
+                                  for-state. Defaults to 1200 seconds.
+  --wait-interval-seconds INTEGER
+                                  Check every --wait-interval-seconds to see
+                                  whether the resource to see if it has reached
+                                  the lifecycle state defined by --wait-for-
+                                  state. Defaults to 30 seconds.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file using the file://path-
+                                  to/file syntax.
+                                  
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci compute dedicated-vm-host delete --help
+Usage: oci compute dedicated-vm-host delete [OPTIONS]
+
+  Deletes the specified dedicated virtual machine (VM) host.
+
+  If any VM instances are assigned to the dedicated VM host, it will not be
+  deleted and the service will return a 409 response code.
+
+Options:
+  --dedicated-vm-host-id TEXT     The OCID of the dedicated VM host. [required]
+  --force                         Perform deletion without prompting for
+                                  confirmation.
+  --wait-for-state [CREATING|ACTIVE|UPDATING|DELETING|DELETED|FAILED]
+                                  This operation creates, modifies or deletes a
+                                  resource that has a defined lifecycle state.
+                                  Specify this option to perform the action and
+                                  then wait until the resource reaches a given
+                                  lifecycle state. If timeout is reached, a
+                                  return code of 2 is returned. For any other
+                                  error, a return code of 1 is returned.
+  --max-wait-seconds INTEGER      The maximum time to wait for the resource to
+                                  reach the lifecycle state defined by --wait-
+                                  for-state. Defaults to 1200 seconds.
+  --wait-interval-seconds INTEGER
+                                  Check every --wait-interval-seconds to see
+                                  whether the resource to see if it has reached
+                                  the lifecycle state defined by --wait-for-
+                                  state. Defaults to 30 seconds.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file using the file://path-
+                                  to/file syntax.
+                                  
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci compute dedicated-vm-host get --help
+Usage: oci compute dedicated-vm-host get [OPTIONS]
+
+  Gets information about the specified dedicated virtual machine (VM) host.
+
+Options:
+  --dedicated-vm-host-id TEXT  The OCID of the dedicated VM host. [required]
+  --from-json TEXT             Provide input to this command as a JSON document
+                               from a file using the file://path-to/file syntax.
+                               The --generate-full-command-json-input option can
+                               be used to generate a sample json file to be used
+                               with this command option. The key names are pre-
+                               populated and match the command option names
+                               (converted to camelCase format, e.g. compartment-
+                               id --> compartmentId), while the values of the
+                               keys need to be populated by the user before
+                               using the sample file as an input to this
+                               command. For any command option that accepts
+                               multiple values, the value of the key can be a
+                               JSON array.
+                               
+                               Options can still be provided on the
+                               command line. If an option exists in both the
+                               JSON document and the command line then the
+                               command line specified value will be used.
+                               
+                               For
+                               examples on usage of this option, please see our
+                               "using CLI with advanced JSON options" link: http
+                               s://docs.cloud.oracle.com/iaas/Content/API/SDKDoc
+                               s/cliusing.htm#AdvancedJSONOptions
+  -?, -h, --help               For detailed help on any of these individual
+                               commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci compute dedicated-vm-host host-shape --help
+Usage: oci compute dedicated-vm-host host-shape [OPTIONS] COMMAND [ARGS]...
+
+  The shape used to launch the dedicated virtual machine (VM) host.
+
+Options:
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
+
+Commands:
+  list  Lists the shapes that can be used to launch a...
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci compute dedicated-vm-host host-shape list --help
+Usage: oci compute dedicated-vm-host host-shape list [OPTIONS]
+
+  Lists the shapes that can be used to launch a dedicated virtual machine (VM)
+  host within the specified compartment.
+
+Options:
+  -c, --compartment-id TEXT   The [OCID] of the compartment. [required]
+  --availability-domain TEXT  The name of the availability domain.
+                              
+                              Example:
+                              `Uocm:PHX-AD-1`
+  --instance-shape-name TEXT  Instance shape name
+  --limit INTEGER             For list pagination. The maximum number of results
+                              per page, or items to return in a paginated "List"
+                              call. For important details about how pagination
+                              works, see [List Pagination].
+                              
+                              Example: `50`
+  --page TEXT                 For list pagination. The value of the `opc-next-
+                              page` response header from the previous "List"
+                              call. For important details about how pagination
+                              works, see [List Pagination].
+  --all                       Fetches all pages of results. If you provide this
+                              option, then you cannot provide the --limit
+                              option.
+  --page-size INTEGER         When fetching results, the number of results to
+                              fetch per call. Only valid when used with --all or
+                              --limit, and ignored otherwise.
+  --from-json TEXT            Provide input to this command as a JSON document
+                              from a file using the file://path-to/file syntax.
+                              The --generate-full-command-json-input option can
+                              be used to generate a sample json file to be used
+                              with this command option. The key names are pre-
+                              populated and match the command option names
+                              (converted to camelCase format, e.g. compartment-
+                              id --> compartmentId), while the values of the
+                              keys need to be populated by the user before using
+                              the sample file as an input to this command. For
+                              any command option that accepts multiple values,
+                              the value of the key can be a JSON array.
+                              
+                              Options
+                              can still be provided on the command line. If an
+                              option exists in both the JSON document and the
+                              command line then the command line specified value
+                              will be used.
+                              
+                              For examples on usage of this
+                              option, please see our "using CLI with advanced
+                              JSON options" link: https://docs.cloud.oracle.com/
+                              iaas/Content/API/SDKDocs/cliusing.htm#AdvancedJSON
+                              Options
+  -?, -h, --help              For detailed help on any of these individual
+                              commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci compute dedicated-vm-host instance-shape --help
+Usage: oci compute dedicated-vm-host instance-shape [OPTIONS] COMMAND [ARGS]...
+
+  The shape used to launch instances associated with the dedicated VM host.
+
+Options:
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
+
+Commands:
+  list  Lists the shapes that can be used to launch a...
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci compute dedicated-vm-host instance-shape list --help
+Usage: oci compute dedicated-vm-host instance-shape list [OPTIONS]
+
+  Lists the shapes that can be used to launch a virtual machine (VM) instance
+  on a dedicated VM host within the specified compartment. You can filter the
+  list by compatibility with a specific dedicated VM host shape.
+
+Options:
+  -c, --compartment-id TEXT       The [OCID] of the compartment. [required]
+  --availability-domain TEXT      The name of the availability domain.
+                                  
+                                  Example:
+                                  `Uocm:PHX-AD-1`
+  --dedicated-vm-host-shape TEXT  Dedicated VM host shape name
+  --limit INTEGER                 For list pagination. The maximum number of
+                                  results per page, or items to return in a
+                                  paginated "List" call. For important details
+                                  about how pagination works, see [List
+                                  Pagination].
+                                  
+                                  Example: `50`
+  --page TEXT                     For list pagination. The value of the `opc-
+                                  next-page` response header from the previous
+                                  "List" call. For important details about how
+                                  pagination works, see [List Pagination].
+  --all                           Fetches all pages of results. If you provide
+                                  this option, then you cannot provide the
+                                  --limit option.
+  --page-size INTEGER             When fetching results, the number of results
+                                  to fetch per call. Only valid when used with
+                                  --all or --limit, and ignored otherwise.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file using the file://path-
+                                  to/file syntax.
+                                  
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci compute dedicated-vm-host list --help
+Usage: oci compute dedicated-vm-host list [OPTIONS]
+
+  Returns the list of dedicated virtual machine (VM) hosts that match the
+  specified criteria from the specified compartment.
+
+  You can limit the list by specifying a dedicated VM host display name. The
+  list will include all the identically-named dedicated VM hosts in the
+  compartment.
+
+Options:
+  -c, --compartment-id TEXT       The [OCID] of the compartment. [required]
+  --availability-domain TEXT      The name of the availability domain.
+                                  
+                                  Example:
+                                  `Uocm:PHX-AD-1`
+  --lifecycle-state [CREATING|ACTIVE|UPDATING|DELETING|DELETED|FAILED]
+                                  A filter to only return resources that match
+                                  the given lifecycle state.
+  --display-name TEXT             A filter to return only resources that match
+                                  the given display name exactly.
+  --instance-shape-name TEXT      Instance shape name
+  --limit INTEGER                 For list pagination. The maximum number of
+                                  results per page, or items to return in a
+                                  paginated "List" call. For important details
+                                  about how pagination works, see [List
+                                  Pagination].
+                                  
+                                  Example: `50`
+  --page TEXT                     For list pagination. The value of the `opc-
+                                  next-page` response header from the previous
+                                  "List" call. For important details about how
+                                  pagination works, see [List Pagination].
+  --sort-by [TIMECREATED|DISPLAYNAME]
+                                  The field to sort by. You can provide one sort
+                                  order (`sortOrder`). Default order for
+                                  TIMECREATED is descending. Default order for
+                                  DISPLAYNAME is ascending. The DISPLAYNAME sort
+                                  order is case sensitive.
+                                  
+                                  **Note:** In
+                                  general, some "List" operations (for example,
+                                  `ListInstances`) let you optionally filter by
+                                  availability domain if the scope of the
+                                  resource type is within a single availability
+                                  domain. If you call one of these "List"
+                                  operations without specifying an availability
+                                  domain, the resources are grouped by
+                                  availability domain, then sorted.
+  --sort-order [ASC|DESC]         The sort order to use, either ascending
+                                  (`ASC`) or descending (`DESC`). The
+                                  DISPLAYNAME sort order is case sensitive.
+  --all                           Fetches all pages of results. If you provide
+                                  this option, then you cannot provide the
+                                  --limit option.
+  --page-size INTEGER             When fetching results, the number of results
+                                  to fetch per call. Only valid when used with
+                                  --all or --limit, and ignored otherwise.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file using the file://path-
+                                  to/file syntax.
+                                  
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci compute dedicated-vm-host update --help
+Usage: oci compute dedicated-vm-host update [OPTIONS]
+
+  Updates the displayName, freeformTags, and definedTags attributes for the
+  specified dedicated virtual machine (VM) host. If an attribute value is not
+  included, it will not be updated.
+
+Options:
+  --dedicated-vm-host-id TEXT     The OCID of the dedicated VM host. [required]
+  --defined-tags COMPLEX TYPE     Defined tags for this resource. Each key is
+                                  predefined and scoped to a namespace. For more
+                                  information, see [Resource Tags].
+                                  
+                                  Example:
+                                  `{"Operations": {"CostCenter": "42"}}`
+                                  This is
+                                  a complex type whose value must be valid JSON.
+                                  The value can be provided as a string on the
+                                  command line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+  --display-name TEXT             A user-friendly name. Does not have to be
+                                  unique, and it's changeable. Avoid entering
+                                  confidential information.
+                                  
+                                  Example: `My
+                                  dedicated VM host`
+  --freeform-tags COMPLEX TYPE    Free-form tags for this resource. Each tag is
+                                  a simple key-value pair with no predefined
+                                  name, type, or namespace. For more
+                                  information, see [Resource Tags].
+                                  
+                                  Example:
+                                  `{"Department": "Finance"}`
+                                  This is a complex
+                                  type whose value must be valid JSON. The value
+                                  can be provided as a string on the command
+                                  line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+  --if-match TEXT                 For optimistic concurrency control. In the PUT
+                                  or DELETE call for a resource, set the `if-
+                                  match` parameter to the value of the etag from
+                                  a previous GET or POST response for that
+                                  resource.  The resource will be updated or
+                                  deleted only if the etag you provide matches
+                                  the resource's current etag value.
+  --force                         Perform update without prompting for
+                                  confirmation.
+  --wait-for-state [CREATING|ACTIVE|UPDATING|DELETING|DELETED|FAILED]
+                                  This operation creates, modifies or deletes a
+                                  resource that has a defined lifecycle state.
+                                  Specify this option to perform the action and
+                                  then wait until the resource reaches a given
+                                  lifecycle state. If timeout is reached, a
+                                  return code of 2 is returned. For any other
+                                  error, a return code of 1 is returned.
+  --max-wait-seconds INTEGER      The maximum time to wait for the resource to
+                                  reach the lifecycle state defined by --wait-
+                                  for-state. Defaults to 1200 seconds.
+  --wait-interval-seconds INTEGER
+                                  Check every --wait-interval-seconds to see
+                                  whether the resource to see if it has reached
+                                  the lifecycle state defined by --wait-for-
+                                  state. Defaults to 30 seconds.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file using the file://path-
+                                  to/file syntax.
+                                  
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci compute dedicated-vm-host-instance --help
+Usage: oci compute dedicated-vm-host-instance [OPTIONS] COMMAND [ARGS]...
+
+  Condensed instance data when listing instances on a dedicated VM host.
+
+Options:
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
+
+Commands:
+  list  Returns the list of instances on the...
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci compute dedicated-vm-host-instance list --help
+Usage: oci compute dedicated-vm-host-instance list [OPTIONS]
+
+  Returns the list of instances on the dedicated virtual machine (VM) hosts
+  that match the specified criteria.
+
+Options:
+  -c, --compartment-id TEXT       The [OCID] of the compartment. [required]
+  --dedicated-vm-host-id TEXT     The OCID of the dedicated VM host. [required]
+  --availability-domain TEXT      The name of the availability domain.
+                                  
+                                  Example:
+                                  `Uocm:PHX-AD-1`
+  --limit INTEGER                 For list pagination. The maximum number of
+                                  results per page, or items to return in a
+                                  paginated "List" call. For important details
+                                  about how pagination works, see [List
+                                  Pagination].
+                                  
+                                  Example: `50`
+  --page TEXT                     For list pagination. The value of the `opc-
+                                  next-page` response header from the previous
+                                  "List" call. For important details about how
+                                  pagination works, see [List Pagination].
+  --sort-by [TIMECREATED|DISPLAYNAME]
+                                  The field to sort by. You can provide one sort
+                                  order (`sortOrder`). Default order for
+                                  TIMECREATED is descending. Default order for
+                                  DISPLAYNAME is ascending. The DISPLAYNAME sort
+                                  order is case sensitive.
+                                  
+                                  **Note:** In
+                                  general, some "List" operations (for example,
+                                  `ListInstances`) let you optionally filter by
+                                  availability domain if the scope of the
+                                  resource type is within a single availability
+                                  domain. If you call one of these "List"
+                                  operations without specifying an availability
+                                  domain, the resources are grouped by
+                                  availability domain, then sorted.
+  --sort-order [ASC|DESC]         The sort order to use, either ascending
+                                  (`ASC`) or descending (`DESC`). The
+                                  DISPLAYNAME sort order is case sensitive.
+  --all                           Fetches all pages of results. If you provide
+                                  this option, then you cannot provide the
+                                  --limit option.
+  --page-size INTEGER             When fetching results, the number of results
+                                  to fetch per call. Only valid when used with
+                                  --all or --limit, and ignored otherwise.
   --from-json TEXT                Provide input to this command as a JSON
                                   document from a file using the file://path-
                                   to/file syntax.
@@ -2276,6 +2995,7 @@ Options:
                                   other resources allocated to the instance.
                                   You can enumerate all available shapes by
                                   calling [ListShapes]. [required]
+  --dedicated-vm-host-id TEXT     The OCID of dedicated VM host.
   --defined-tags COMPLEX TYPE     Defined tags for this resource. Each key is
                                   predefined and scoped to a namespace. For more
                                   information, see [Resource Tags].

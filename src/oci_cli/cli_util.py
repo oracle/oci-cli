@@ -1907,3 +1907,13 @@ def to_jwk(key_obj):
         'kid': 'Ignored'  # field expected but value is not in the publickey entry for SOUP
     }
     return json.dumps(obj)
+
+
+class CommandExample:
+
+    def __init__(self, description, usage, output):
+        if not (description and usage and output):
+            raise ValueError('Cannot pass empty or None values')
+        self.description = description
+        self.usage = usage
+        self.output = output

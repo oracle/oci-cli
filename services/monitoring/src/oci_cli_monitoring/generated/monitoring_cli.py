@@ -156,6 +156,9 @@ Example: `true`""")
 @cli_util.option('--metric-compartment-id-in-subtree', type=click.BOOL, help=u"""When true, the alarm evaluates metrics from all compartments and subcompartments. The parameter can only be set to true when metricCompartmentId is the tenancy OCID (the tenancy is the root compartment). A true value requires the user to have tenancy-level permissions. If this requirement is not met, then the call is rejected. When false, the alarm evaluates metrics from only the compartment specified in metricCompartmentId. Default is false.
 
 Example: `true`""")
+@cli_util.option('--resource-group', help=u"""Resource group that you want to use as a filter. The alarm retrieves metric data associated with the specified resource group only. Only one resource group can be applied per metric. A valid resourceGroup value starts with an alphabetical character and includes only alphanumeric characters, periods (.), underscores (_), hyphens (-), and dollar signs ($). Avoid entering confidential information.
+
+Example: `frontend-fleet`""")
 @cli_util.option('--resolution', help=u"""The time between calculated aggregation windows for the alarm. Supported value: `1m`""")
 @cli_util.option('--pending-duration', help=u"""The period of time that the condition defined in the alarm must persist before the alarm state changes from \"OK\" to \"FIRING\" or vice versa. For example, a value of 5 minutes means that the alarm must persist in breaching the condition for five minutes before the alarm updates its state to \"FIRING\"; likewise, the alarm must persist in not breaching the condition for five minutes before the alarm updates its state to \"OK.\"
 
@@ -183,7 +186,7 @@ Example: `PT2H`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'destinations': {'module': 'monitoring', 'class': 'list[string]'}, 'suppression': {'module': 'monitoring', 'class': 'Suppression'}, 'freeform-tags': {'module': 'monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'monitoring', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'monitoring', 'class': 'Alarm'})
 @cli_util.wrap_exceptions
-def create_alarm(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, metric_compartment_id, namespace, query, severity, destinations, is_enabled, metric_compartment_id_in_subtree, resolution, pending_duration, body, repeat_notification_duration, suppression, freeform_tags, defined_tags):
+def create_alarm(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, metric_compartment_id, namespace, query, severity, destinations, is_enabled, metric_compartment_id_in_subtree, resource_group, resolution, pending_duration, body, repeat_notification_duration, suppression, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -200,6 +203,9 @@ def create_alarm(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 
     if metric_compartment_id_in_subtree is not None:
         details['metricCompartmentIdInSubtree'] = metric_compartment_id_in_subtree
+
+    if resource_group is not None:
+        details['resourceGroup'] = resource_group
 
     if resolution is not None:
         details['resolution'] = resolution
@@ -549,13 +555,16 @@ Example: `CpuUtilization`""")
 @cli_util.option('--namespace', help=u"""The source service or application to use when searching for metric definitions.
 
 Example: `oci_computeagent`""")
+@cli_util.option('--resource-group', help=u"""Resource group that you want to use as a filter. The specified resource group must exist in the definition of the posted metric. Only one resource group can be applied per metric. A valid resourceGroup value starts with an alphabetical character and includes only alphanumeric characters, periods (.), underscores (_), hyphens (-), and dollar signs ($). Avoid entering confidential information.
+
+Example: `frontend-fleet`""")
 @cli_util.option('--dimension-filters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Qualifiers that you want to use when searching for metric definitions. Available dimensions vary by metric namespace. Each dimension takes the form of a key-value pair.
 
 Example: { \"resourceId\": \"<var>&lt;instance_OCID&gt;</var>\" }""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--group-by', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Group metrics by these fields in the response. For example, to list all metric namespaces available in a compartment, groupBy the \"namespace\" field.
+@cli_util.option('--group-by', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Group metrics by these fields in the response. For example, to list all metric namespaces available           in a compartment, groupBy the \"namespace\" field. Supported fields: namespace, name, resourceGroup.
 
 Example - group by namespace: `[ \"namespace\" ]`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["NAMESPACE", "NAME"]), help=u"""The field to use when sorting returned metric definitions. Only one sorting level is provided.
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["NAMESPACE", "NAME", "RESOURCEGROUP"]), help=u"""The field to use when sorting returned metric definitions. Only one sorting level is provided.
 
 Example: `NAMESPACE`""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use when sorting returned metric definitions. Ascending (ASC) or descending (DESC).
@@ -575,7 +584,7 @@ Example: 500""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'dimension-filters': {'module': 'monitoring', 'class': 'dict(str, string)'}, 'group-by': {'module': 'monitoring', 'class': 'list[string]'}}, output_type={'module': 'monitoring', 'class': 'list[Metric]'})
 @cli_util.wrap_exceptions
-def list_metrics(ctx, from_json, all_pages, page_size, compartment_id, name, namespace, dimension_filters, group_by, sort_by, sort_order, page, limit, compartment_id_in_subtree):
+def list_metrics(ctx, from_json, all_pages, page_size, compartment_id, name, namespace, resource_group, dimension_filters, group_by, sort_by, sort_order, page, limit, compartment_id_in_subtree):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -596,6 +605,9 @@ def list_metrics(ctx, from_json, all_pages, page_size, compartment_id, name, nam
 
     if namespace is not None:
         details['namespace'] = namespace
+
+    if resource_group is not None:
+        details['resourceGroup'] = resource_group
 
     if dimension_filters is not None:
         details['dimensionFilters'] = cli_util.parse_json_parameter("dimension_filters", dimension_filters)
@@ -720,6 +732,9 @@ Construct your query to avoid exceeding limits on returned data. See [MetricData
 For details about Monitoring Query Language (MQL), see [Monitoring Query Language (MQL) Reference]. For available dimensions, review the metric definition for the supported service. See [Supported Services].
 
 Example: `CpuUtilization[1m].sum()`""")
+@cli_util.option('--resource-group', help=u"""Resource group that you want to use as a filter. The specified resource group must exist in the definition of the posted metric. Only one resource group can be applied per metric. A valid resourceGroup value starts with an alphabetical character and includes only alphanumeric characters, periods (.), underscores (_), hyphens (-), and dollar signs ($). Avoid entering confidential information.
+
+Example: `frontend-fleet`""")
 @cli_util.option('--start-time', type=custom_types.CLI_DATETIME, help=u"""The beginning of the time range to use when searching for metric data points. Format is defined by RFC3339. The response includes metric data points for the startTime. Default value: the timestamp 3 hours before the call was sent.
 
 Example: `2019-02-01T01:02:29.600Z`""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -735,7 +750,7 @@ Example: `5m`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'monitoring', 'class': 'list[MetricData]'})
 @cli_util.wrap_exceptions
-def summarize_metrics_data(ctx, from_json, compartment_id, namespace, query, start_time, end_time, resolution, compartment_id_in_subtree):
+def summarize_metrics_data(ctx, from_json, compartment_id, namespace, query, resource_group, start_time, end_time, resolution, compartment_id_in_subtree):
 
     kwargs = {}
     if compartment_id_in_subtree is not None:
@@ -745,6 +760,9 @@ def summarize_metrics_data(ctx, from_json, compartment_id, namespace, query, sta
     details = {}
     details['namespace'] = namespace
     details['query'] = query
+
+    if resource_group is not None:
+        details['resourceGroup'] = resource_group
 
     if start_time is not None:
         details['startTime'] = start_time
@@ -781,6 +799,9 @@ Example: `true`""")
 @cli_util.option('--namespace', help=u"""The source service or application emitting the metric that is evaluated by the alarm.
 
 Example: `oci_computeagent`""")
+@cli_util.option('--resource-group', help=u"""Resource group that you want to use as a filter. The alarm retrieves metric data associated with the specified resource group only. Only one resource group can be applied per metric. A valid resourceGroup value starts with an alphabetical character and includes only alphanumeric characters, periods (.), underscores (_), hyphens (-), and dollar signs ($). Avoid entering confidential information.
+
+Example: `frontend-fleet`""")
 @cli_util.option('--query', help=u"""The Monitoring Query Language (MQL) expression to evaluate for the alarm. The Alarms feature of the Monitoring service interprets results for each returned time series as Boolean values, where zero represents false and a non-zero value represents true. A true value means that the trigger rule condition has been met. The query must specify a metric, statistic, interval, and trigger rule (threshold or absence). Supported values for interval: `1m`-`60m` (also `1h`). You can optionally specify dimensions and grouping functions. Supported grouping functions: `grouping()`, `groupBy()`. For details about Monitoring Query Language (MQL), see [Monitoring Query Language (MQL) Reference]. For available dimensions, review the metric definition for the supported service. See [Supported Services].
 
 Example of threshold alarm:
@@ -834,7 +855,7 @@ Example: `true`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'destinations': {'module': 'monitoring', 'class': 'list[string]'}, 'suppression': {'module': 'monitoring', 'class': 'Suppression'}, 'freeform-tags': {'module': 'monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'monitoring', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'monitoring', 'class': 'Alarm'})
 @cli_util.wrap_exceptions
-def update_alarm(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, alarm_id, display_name, compartment_id, metric_compartment_id, metric_compartment_id_in_subtree, namespace, query, resolution, pending_duration, severity, body, destinations, repeat_notification_duration, suppression, is_enabled, freeform_tags, defined_tags, if_match):
+def update_alarm(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, alarm_id, display_name, compartment_id, metric_compartment_id, metric_compartment_id_in_subtree, namespace, resource_group, query, resolution, pending_duration, severity, body, destinations, repeat_notification_duration, suppression, is_enabled, freeform_tags, defined_tags, if_match):
 
     if isinstance(alarm_id, six.string_types) and len(alarm_id.strip()) == 0:
         raise click.UsageError('Parameter --alarm-id cannot be whitespace or empty string')
@@ -864,6 +885,9 @@ def update_alarm(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_i
 
     if namespace is not None:
         details['namespace'] = namespace
+
+    if resource_group is not None:
+        details['resourceGroup'] = resource_group
 
     if query is not None:
         details['query'] = query

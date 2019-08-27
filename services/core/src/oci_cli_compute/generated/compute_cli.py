@@ -25,6 +25,12 @@ def compute_root_group():
     pass
 
 
+@click.command(cli_util.override('dedicated_vm_host_group.command_name', 'dedicated-vm-host'), cls=CommandGroupWithAlias, help="""A dedicated virtual machine (VM) host that enables you to host multiple virtual machine instances on a dedicated host that is not shared with other tenancies.""")
+@cli_util.help_option_group
+def dedicated_vm_host_group():
+    pass
+
+
 @click.command(cli_util.override('image_group.command_name', 'image'), cls=CommandGroupWithAlias, help="""A boot disk image for launching an instance. For more information, see [Overview of the Compute Service].
 
 To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].
@@ -75,6 +81,12 @@ def app_catalog_listing_resource_version_group():
     pass
 
 
+@click.command(cli_util.override('dedicated_vm_host_instance_group.command_name', 'dedicated-vm-host-instance'), cls=CommandGroupWithAlias, help="""Condensed instance data when listing instances on a dedicated VM host.""")
+@cli_util.help_option_group
+def dedicated_vm_host_instance_group():
+    pass
+
+
 @click.command(cli_util.override('app_catalog_listing_group.command_name', 'app-catalog-listing'), cls=CommandGroupWithAlias, help="""Listing details.""")
 @cli_util.help_option_group
 def app_catalog_listing_group():
@@ -100,6 +112,12 @@ def boot_volume_attachment_group():
 For more information about console access, see [Accessing the Console].""")
 @cli_util.help_option_group
 def instance_console_connection_group():
+    pass
+
+
+@click.command(cli_util.override('dedicated_vm_host_instance_shape_group.command_name', 'dedicated-vm-host-instance-shape'), cls=CommandGroupWithAlias, help="""The shape used to launch instances associated with the dedicated VM host.""")
+@cli_util.help_option_group
+def dedicated_vm_host_instance_shape_group():
     pass
 
 
@@ -129,6 +147,12 @@ def boot_volume_group():
     pass
 
 
+@click.command(cli_util.override('dedicated_vm_host_shape_group.command_name', 'dedicated-vm-host-shape'), cls=CommandGroupWithAlias, help="""The shape used to launch the dedicated virtual machine (VM) host.""")
+@cli_util.help_option_group
+def dedicated_vm_host_shape_group():
+    pass
+
+
 @click.command(cli_util.override('app_catalog_listing_resource_version_agreements_group.command_name', 'app-catalog-listing-resource-version-agreements'), cls=CommandGroupWithAlias, help="""Agreements for a listing resource version.""")
 @cli_util.help_option_group
 def app_catalog_listing_resource_version_agreements_group():
@@ -150,19 +174,23 @@ def console_history_group():
 
 
 core_service_cli.core_service_group.add_command(compute_root_group)
+compute_root_group.add_command(dedicated_vm_host_group)
 compute_root_group.add_command(image_group)
 compute_root_group.add_command(instance_group)
 compute_root_group.add_command(shape_group)
 compute_root_group.add_command(vnic_attachment_group)
 compute_root_group.add_command(volume_attachment_group)
 compute_root_group.add_command(app_catalog_listing_resource_version_group)
+compute_root_group.add_command(dedicated_vm_host_instance_group)
 compute_root_group.add_command(app_catalog_listing_group)
 compute_root_group.add_command(app_catalog_subscription_group)
 compute_root_group.add_command(boot_volume_attachment_group)
 compute_root_group.add_command(instance_console_connection_group)
+compute_root_group.add_command(dedicated_vm_host_instance_shape_group)
 compute_root_group.add_command(volume_group)
 compute_root_group.add_command(instance_credentials_group)
 compute_root_group.add_command(boot_volume_group)
+compute_root_group.add_command(dedicated_vm_host_shape_group)
 compute_root_group.add_command(app_catalog_listing_resource_version_agreements_group)
 compute_root_group.add_command(device_group)
 compute_root_group.add_command(console_history_group)
@@ -668,6 +696,37 @@ def capture_console_history(ctx, from_json, wait_for_state, max_wait_seconds, wa
     cli_util.render_response(result, ctx)
 
 
+@dedicated_vm_host_group.command(name=cli_util.override('change_dedicated_vm_host_compartment.command_name', 'change-compartment'), help=u"""Moves a dedicated vm host from one compartment to another""")
+@cli_util.option('--dedicated-vm-host-id', required=True, help=u"""The OCID of the dedicated VM host.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_dedicated_vm_host_compartment(ctx, from_json, dedicated_vm_host_id, compartment_id, if_match):
+
+    if isinstance(dedicated_vm_host_id, six.string_types) and len(dedicated_vm_host_id.strip()) == 0:
+        raise click.UsageError('Parameter --dedicated-vm-host-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    details = {}
+    details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('compute', ctx)
+    result = client.change_dedicated_vm_host_compartment(
+        dedicated_vm_host_id=dedicated_vm_host_id,
+        change_dedicated_vm_host_compartment_details=details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @image_group.command(name=cli_util.override('change_image_compartment.command_name', 'change-compartment'), help=u"""Moves an image into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].""")
 @cli_util.option('--image-id', required=True, help=u"""The [OCID] of the image.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the image to.""")
@@ -777,6 +836,86 @@ def create_app_catalog_subscription(ctx, from_json, compartment_id, listing_id, 
         create_app_catalog_subscription_details=details,
         **kwargs
     )
+    cli_util.render_response(result, ctx)
+
+
+@dedicated_vm_host_group.command(name=cli_util.override('create_dedicated_vm_host.command_name', 'create'), help=u"""Creates a new dedicated virtual machine (VM) host in the specified compartment and the specified availability domain.""")
+@cli_util.option('--availability-domain', required=True, help=u"""The availability domain of the dedicated VM host.
+
+Example: `Uocm:PHX-AD-1`""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--dedicated-vm-host-shape', required=True, help=u"""The shape of the dedicated VM host. The shape determines the number of CPUs and other resources available for VMs.""")
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
+
+Example: `My dedicated VM host`""")
+@cli_util.option('--fault-domain', help=u"""The fault domain for the dedicated VM host's assigned instances. For more information, see Fault Domains. If you do not specify the fault domain, the system selects one for you. To change the fault domain for a dedicated VM host, delete it and create a new dedicated VM host in the preferred fault domain.
+
+To get a list of fault domains, use the ListFaultDomains operation in the Identity and Access Management Service API.
+
+Example: `FAULT-DOMAIN-1`""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'DedicatedVmHost'})
+@cli_util.wrap_exceptions
+def create_dedicated_vm_host(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, dedicated_vm_host_shape, defined_tags, display_name, fault_domain, freeform_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    details = {}
+    details['availabilityDomain'] = availability_domain
+    details['compartmentId'] = compartment_id
+    details['dedicatedVmHostShape'] = dedicated_vm_host_shape
+
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if display_name is not None:
+        details['displayName'] = display_name
+
+    if fault_domain is not None:
+        details['faultDomain'] = fault_domain
+
+    if freeform_tags is not None:
+        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    client = cli_util.build_client('compute', ctx)
+    result = client.create_dedicated_vm_host(
+        create_dedicated_vm_host_details=details,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_dedicated_vm_host') and callable(getattr(client, 'get_dedicated_vm_host')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_dedicated_vm_host(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -1205,6 +1344,68 @@ def delete_console_history(ctx, from_json, wait_for_state, max_wait_seconds, wai
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 oci.wait_until(client, client.get_console_history(instance_console_history_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except oci.exceptions.ServiceError as e:
+                # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
+                # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
+                # will result in an exception that reflects a HTTP 404. In this case, we can exit with success (rather than raising
+                # the exception) since this would have been the behaviour in the waiter anyway (as for delete we provide the argument
+                # succeed_on_not_found=True to the waiter).
+                #
+                # Any non-404 should still result in the exception being thrown.
+                if e.status == 404:
+                    pass
+                else:
+                    raise
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@dedicated_vm_host_group.command(name=cli_util.override('delete_dedicated_vm_host.command_name', 'delete'), help=u"""Deletes the specified dedicated virtual machine (VM) host.
+
+If any VM instances are assigned to the dedicated VM host, it will not be deleted and the service will return a 409 response code.""")
+@cli_util.option('--dedicated-vm-host-id', required=True, help=u"""The OCID of the dedicated VM host.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_dedicated_vm_host(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, dedicated_vm_host_id):
+
+    if isinstance(dedicated_vm_host_id, six.string_types) and len(dedicated_vm_host_id.strip()) == 0:
+        raise click.UsageError('Parameter --dedicated-vm-host-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('compute', ctx)
+    result = client.delete_dedicated_vm_host(
+        dedicated_vm_host_id=dedicated_vm_host_id,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_dedicated_vm_host') and callable(getattr(client, 'get_dedicated_vm_host')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                oci.wait_until(client, client.get_dedicated_vm_host(dedicated_vm_host_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
             except oci.exceptions.ServiceError as e:
                 # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
                 # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
@@ -1881,6 +2082,28 @@ def get_console_history_content(ctx, from_json, file, instance_console_history_i
     file.write(result.data)
 
 
+@dedicated_vm_host_group.command(name=cli_util.override('get_dedicated_vm_host.command_name', 'get'), help=u"""Gets information about the specified dedicated virtual machine (VM) host.""")
+@cli_util.option('--dedicated-vm-host-id', required=True, help=u"""The OCID of the dedicated VM host.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'DedicatedVmHost'})
+@cli_util.wrap_exceptions
+def get_dedicated_vm_host(ctx, from_json, dedicated_vm_host_id):
+
+    if isinstance(dedicated_vm_host_id, six.string_types) and len(dedicated_vm_host_id.strip()) == 0:
+        raise click.UsageError('Parameter --dedicated-vm-host-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('compute', ctx)
+    result = client.get_dedicated_vm_host(
+        dedicated_vm_host_id=dedicated_vm_host_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @image_group.command(name=cli_util.override('get_image.command_name', 'get'), help=u"""Gets the specified image.""")
 @cli_util.option('--image-id', required=True, help=u"""The [OCID] of the image.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2091,6 +2314,7 @@ Example: `Uocm:PHX-AD-1`""")
 
 You can enumerate all available shapes by calling [ListShapes].""")
 @cli_util.option('--create-vnic-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Details for the primary VNIC, which is automatically created and attached when the instance is launched.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--dedicated-vm-host-id', help=u"""The OCID of dedicated VM host.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2166,7 +2390,7 @@ A metadata service runs on every launched instance. The service is an HTTP endpo
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def launch_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, shape, create_vnic_details, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, hostname_label, image_id, ipxe_script_file, metadata, agent_config, source_details, subnet_id, is_pv_encryption_in_transit_enabled):
+def launch_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, shape, create_vnic_details, dedicated_vm_host_id, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, hostname_label, image_id, ipxe_script_file, metadata, agent_config, source_details, subnet_id, is_pv_encryption_in_transit_enabled):
 
     kwargs = {}
 
@@ -2177,6 +2401,9 @@ def launch_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 
     if create_vnic_details is not None:
         details['createVnicDetails'] = cli_util.parse_json_parameter("create_vnic_details", create_vnic_details)
+
+    if dedicated_vm_host_id is not None:
+        details['dedicatedVmHostId'] = dedicated_vm_host_id
 
     if defined_tags is not None:
         details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
@@ -2269,6 +2496,7 @@ Example: `Uocm:PHX-AD-1`""")
 You can enumerate all available shapes by calling [ListShapes].""")
 @cli_util.option('--source-details-image-id', required=True, help=u"""The OCID of the image used to boot the instance.""")
 @cli_util.option('--create-vnic-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Details for the primary VNIC, which is automatically created and attached when the instance is launched.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--dedicated-vm-host-id', help=u"""The OCID of dedicated VM host.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2344,7 +2572,7 @@ A metadata service runs on every launched instance. The service is an HTTP endpo
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def launch_instance_instance_source_via_image_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, shape, source_details_image_id, create_vnic_details, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, hostname_label, image_id, ipxe_script_file, metadata, agent_config, subnet_id, is_pv_encryption_in_transit_enabled, source_details_boot_volume_size_in_gbs):
+def launch_instance_instance_source_via_image_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, shape, source_details_image_id, create_vnic_details, dedicated_vm_host_id, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, hostname_label, image_id, ipxe_script_file, metadata, agent_config, subnet_id, is_pv_encryption_in_transit_enabled, source_details_boot_volume_size_in_gbs):
 
     kwargs = {}
 
@@ -2357,6 +2585,9 @@ def launch_instance_instance_source_via_image_details(ctx, from_json, wait_for_s
 
     if create_vnic_details is not None:
         details['createVnicDetails'] = cli_util.parse_json_parameter("create_vnic_details", create_vnic_details)
+
+    if dedicated_vm_host_id is not None:
+        details['dedicatedVmHostId'] = dedicated_vm_host_id
 
     if defined_tags is not None:
         details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
@@ -2451,6 +2682,7 @@ Example: `Uocm:PHX-AD-1`""")
 You can enumerate all available shapes by calling [ListShapes].""")
 @cli_util.option('--source-details-boot-volume-id', required=True, help=u"""The OCID of the boot volume used to boot the instance.""")
 @cli_util.option('--create-vnic-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Details for the primary VNIC, which is automatically created and attached when the instance is launched.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--dedicated-vm-host-id', help=u"""The OCID of dedicated VM host.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2525,7 +2757,7 @@ A metadata service runs on every launched instance. The service is an HTTP endpo
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def launch_instance_instance_source_via_boot_volume_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, shape, source_details_boot_volume_id, create_vnic_details, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, hostname_label, image_id, ipxe_script_file, metadata, agent_config, subnet_id, is_pv_encryption_in_transit_enabled):
+def launch_instance_instance_source_via_boot_volume_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, shape, source_details_boot_volume_id, create_vnic_details, dedicated_vm_host_id, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, hostname_label, image_id, ipxe_script_file, metadata, agent_config, subnet_id, is_pv_encryption_in_transit_enabled):
 
     kwargs = {}
 
@@ -2538,6 +2770,9 @@ def launch_instance_instance_source_via_boot_volume_details(ctx, from_json, wait
 
     if create_vnic_details is not None:
         details['createVnicDetails'] = cli_util.parse_json_parameter("create_vnic_details", create_vnic_details)
+
+    if dedicated_vm_host_id is not None:
+        details['dedicatedVmHostId'] = dedicated_vm_host_id
 
     if defined_tags is not None:
         details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
@@ -2904,6 +3139,270 @@ def list_console_histories(ctx, from_json, all_pages, page_size, compartment_id,
         )
     else:
         result = client.list_console_histories(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@dedicated_vm_host_instance_shape_group.command(name=cli_util.override('list_dedicated_vm_host_instance_shapes.command_name', 'list'), help=u"""Lists the shapes that can be used to launch a virtual machine (VM) instance on a dedicated VM host within the specified compartment. You can filter the list by compatibility with a specific dedicated VM host shape.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--availability-domain', help=u"""The name of the availability domain.
+
+Example: `Uocm:PHX-AD-1`""")
+@cli_util.option('--dedicated-vm-host-shape', help=u"""Dedicated VM host shape name""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
+
+Example: `50`""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[DedicatedVmHostInstanceShapeSummary]'})
+@cli_util.wrap_exceptions
+def list_dedicated_vm_host_instance_shapes(ctx, from_json, all_pages, page_size, compartment_id, availability_domain, dedicated_vm_host_shape, limit, page):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if availability_domain is not None:
+        kwargs['availability_domain'] = availability_domain
+    if dedicated_vm_host_shape is not None:
+        kwargs['dedicated_vm_host_shape'] = dedicated_vm_host_shape
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('compute', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_dedicated_vm_host_instance_shapes,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_dedicated_vm_host_instance_shapes,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_dedicated_vm_host_instance_shapes(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@dedicated_vm_host_instance_group.command(name=cli_util.override('list_dedicated_vm_host_instances.command_name', 'list'), help=u"""Returns the list of instances on the dedicated virtual machine (VM) hosts that match the specified criteria.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--dedicated-vm-host-id', required=True, help=u"""The OCID of the dedicated VM host.""")
+@cli_util.option('--availability-domain', help=u"""The name of the availability domain.
+
+Example: `Uocm:PHX-AD-1`""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
+
+Example: `50`""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.
+
+**Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by availability domain if the scope of the resource type is within a single availability domain. If you call one of these \"List\" operations without specifying an availability domain, the resources are grouped by availability domain, then sorted.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The DISPLAYNAME sort order is case sensitive.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[DedicatedVmHostInstanceSummary]'})
+@cli_util.wrap_exceptions
+def list_dedicated_vm_host_instances(ctx, from_json, all_pages, page_size, compartment_id, dedicated_vm_host_id, availability_domain, limit, page, sort_by, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+    if sort_by and not availability_domain and not all_pages:
+        raise click.UsageError('You must provide an --availability-domain when doing a --sort-by, unless you specify the --all parameter')
+
+    if isinstance(dedicated_vm_host_id, six.string_types) and len(dedicated_vm_host_id.strip()) == 0:
+        raise click.UsageError('Parameter --dedicated-vm-host-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if availability_domain is not None:
+        kwargs['availability_domain'] = availability_domain
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('compute', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_dedicated_vm_host_instances,
+            compartment_id=compartment_id,
+            dedicated_vm_host_id=dedicated_vm_host_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_dedicated_vm_host_instances,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            dedicated_vm_host_id=dedicated_vm_host_id,
+            **kwargs
+        )
+    else:
+        result = client.list_dedicated_vm_host_instances(
+            compartment_id=compartment_id,
+            dedicated_vm_host_id=dedicated_vm_host_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@dedicated_vm_host_shape_group.command(name=cli_util.override('list_dedicated_vm_host_shapes.command_name', 'list'), help=u"""Lists the shapes that can be used to launch a dedicated virtual machine (VM) host within the specified compartment.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--availability-domain', help=u"""The name of the availability domain.
+
+Example: `Uocm:PHX-AD-1`""")
+@cli_util.option('--instance-shape-name', help=u"""Instance shape name""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
+
+Example: `50`""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[DedicatedVmHostShapeSummary]'})
+@cli_util.wrap_exceptions
+def list_dedicated_vm_host_shapes(ctx, from_json, all_pages, page_size, compartment_id, availability_domain, instance_shape_name, limit, page):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if availability_domain is not None:
+        kwargs['availability_domain'] = availability_domain
+    if instance_shape_name is not None:
+        kwargs['instance_shape_name'] = instance_shape_name
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('compute', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_dedicated_vm_host_shapes,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_dedicated_vm_host_shapes,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_dedicated_vm_host_shapes(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@dedicated_vm_host_group.command(name=cli_util.override('list_dedicated_vm_hosts.command_name', 'list'), help=u"""Returns the list of dedicated virtual machine (VM) hosts that match the specified criteria from the specified compartment.
+
+You can limit the list by specifying a dedicated VM host display name. The list will include all the identically-named dedicated VM hosts in the compartment.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--availability-domain', help=u"""The name of the availability domain.
+
+Example: `Uocm:PHX-AD-1`""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to only return resources that match the given lifecycle state.""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
+@cli_util.option('--instance-shape-name', help=u"""Instance shape name""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
+
+Example: `50`""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.
+
+**Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by availability domain if the scope of the resource type is within a single availability domain. If you call one of these \"List\" operations without specifying an availability domain, the resources are grouped by availability domain, then sorted.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The DISPLAYNAME sort order is case sensitive.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[DedicatedVmHostSummary]'})
+@cli_util.wrap_exceptions
+def list_dedicated_vm_hosts(ctx, from_json, all_pages, page_size, compartment_id, availability_domain, lifecycle_state, display_name, instance_shape_name, limit, page, sort_by, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+    if sort_by and not availability_domain and not all_pages:
+        raise click.UsageError('You must provide an --availability-domain when doing a --sort-by, unless you specify the --all parameter')
+
+    kwargs = {}
+    if availability_domain is not None:
+        kwargs['availability_domain'] = availability_domain
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if instance_shape_name is not None:
+        kwargs['instance_shape_name'] = instance_shape_name
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('compute', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_dedicated_vm_hosts,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_dedicated_vm_hosts,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_dedicated_vm_hosts(
             compartment_id=compartment_id,
             **kwargs
         )
@@ -3487,6 +3986,83 @@ def update_console_history(ctx, from_json, force, wait_for_state, max_wait_secon
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 result = oci.wait_until(client, client.get_console_history(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@dedicated_vm_host_group.command(name=cli_util.override('update_dedicated_vm_host.command_name', 'update'), help=u"""Updates the displayName, freeformTags, and definedTags attributes for the specified dedicated virtual machine (VM) host. If an attribute value is not included, it will not be updated.""")
+@cli_util.option('--dedicated-vm-host-id', required=True, help=u"""The OCID of the dedicated VM host.""")
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
+
+Example: `My dedicated VM host`""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'DedicatedVmHost'})
+@cli_util.wrap_exceptions
+def update_dedicated_vm_host(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, dedicated_vm_host_id, defined_tags, display_name, freeform_tags, if_match):
+
+    if isinstance(dedicated_vm_host_id, six.string_types) and len(dedicated_vm_host_id.strip()) == 0:
+        raise click.UsageError('Parameter --dedicated-vm-host-id cannot be whitespace or empty string')
+    if not force:
+        if defined_tags or freeform_tags:
+            if not click.confirm("WARNING: Updates to defined-tags and freeform-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    details = {}
+
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if display_name is not None:
+        details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    client = cli_util.build_client('compute', ctx)
+    result = client.update_dedicated_vm_host(
+        dedicated_vm_host_id=dedicated_vm_host_id,
+        update_dedicated_vm_host_details=details,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_dedicated_vm_host') and callable(getattr(client, 'get_dedicated_vm_host')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_dedicated_vm_host(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except oci.exceptions.MaximumWaitTimeExceeded as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)

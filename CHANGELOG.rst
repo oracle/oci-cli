@@ -6,6 +6,22 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.6.2 - 2019-08-27
+-------------------
+Added
+~~~~~
+* Support for Dedicated Virtual Machine Host feature as a part of the Compute Service.
+
+  * ``oci compute dedicated-vm-host``
+  * ``oci compute dedicated-vm-host-instance``
+
+* Support for using resource groups in Monitoring Service.
+
+  * ``oci monitoring alarm create --resource-group [text]``
+  * ``oci monitoring alarm update --resource-group [text]``
+  * ``oci monitoring metric list --resource-group [text]``
+  * ``oci monitoring metric-data summarize-metrics-data --resource-group [text]``
+
 2.6.1 - 2019-08-20
 -------------------
 Added
@@ -78,6 +94,10 @@ Added
 
   * ``oci db system launch --auto-backup-enabled and --recovery-window-in-days``
 
+Fixed
+~~~~~~~
+* os bulk-delete did not print long object names that ended with slash
+
 2.6.0 - 2019-08-13
 -------------------
 Added
@@ -95,8 +115,6 @@ Fixed
 * Help text for certain commands was displaying required parameters as optional
 
 * Links to GitHub examples are being updated in the changelog itself.
-
-* os bulk-delete did not print long object names that ended with slash
 
 Updated
 ~~~~~~~

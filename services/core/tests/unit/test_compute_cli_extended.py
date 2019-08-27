@@ -56,3 +56,17 @@ class TestCompute(unittest.TestCase):
         result = util.invoke_command(['compute', 'instance', 'change-compartment', '--instance-id', 'dummy',
                                       '--compartment-id', 'dummy', '--wait-for-state', 'ACCEPTED'])
         assert 'ServiceError' in result.output
+
+    def test_dedicated_vm_host_commands(self):
+        result = util.invoke_command(['compute'])
+        assert 'dedicated-vm-host' in result.output
+        result = util.invoke_command(['compute', 'dedicated-vm-host'])
+
+        assert 'host-shape' in result.output
+        assert 'instance-shape' in result.output
+
+        result = util.invoke_command(['compute', 'dedicated-vm-host', 'host-shape', 'list'])
+        assert 'Error: Missing option(s)' in result.output
+
+        result = util.invoke_command(['compute', 'dedicated-vm-host', 'instance-shape', 'list'])
+        assert 'Error: Missing option(s)' in result.output
