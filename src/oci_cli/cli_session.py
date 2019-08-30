@@ -183,10 +183,9 @@ def refresh(ctx):
 
     if response.status_code == 200:
         refreshed_token = json.loads(response.content.decode('UTF-8'))['token']
-
         with open(expanded_security_token_location, 'w') as security_token_file:
             security_token_file.write(refreshed_token)
-
+        cli_setup.apply_user_only_access_permissions(expanded_security_token_location)
         click.echo("Successfully refreshed token", file=sys.stderr)
     elif response.status_code == 401:
         click.echo("Your session is no longer valid and cannot be refreshed. Please use 'oci session authenticate' to create a new session.", file=sys.stderr)

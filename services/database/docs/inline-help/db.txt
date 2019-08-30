@@ -1756,7 +1756,7 @@ Options:
   --source-id TEXT                The [OCID] of the source Autonomous Database
                                   that you will clone to create a new Autonomous
                                   Database. [required]
-  --clone-type [FULL|METADATA]    The clone type. [required]
+  --clone-type [FULL|METADATA]    The Autonomous Database clone type. [required]
   --db-workload [OLTP|DW]         The autonomous database workload type. OLTP
                                   indicates an Autonomous Transaction Processing
                                   database and DW indicates an Autonomous Data

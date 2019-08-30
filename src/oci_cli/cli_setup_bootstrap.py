@@ -222,6 +222,7 @@ def persist_user_session(user_session, persist_token=False, bootstrap=False):
         token_location = os.path.join(session_auth_location, 'token')
         with open(token_location, 'w') as security_token_file:
             security_token_file.write(user_session.token)
+        cli_setup.apply_user_only_access_permissions(token_location)
 
     # remove conflicting profile entry if exists
     cli_setup.remove_profile_from_config(config_location, profile_name)

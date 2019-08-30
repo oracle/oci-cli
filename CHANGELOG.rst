@@ -6,6 +6,20 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.6.3 - 2019-09-03
+-------------------
+Added
+~~~~~
+* Support for Cluster Networks as part of the Compute Management Service
+
+  * ``oci compute-management cluster-network``
+
+* Made session token file permissions restricted to the file owner only.
+
+Fixed
+~~~~~
+* CVE-2017-18342 - In PyYAML before 4.1, the yaml.load() API could execute arbitrary code. In other words, yaml.safe_load is not used.
+
 2.6.2 - 2019-08-27
 -------------------
 Added

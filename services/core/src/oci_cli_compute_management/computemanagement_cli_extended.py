@@ -64,3 +64,8 @@ def get_lb_attachment(ctx, **kwargs):
     kwargs['instance_pool_load_balancer_attachment_id'] = kwargs['lb_attachment_id']
     del kwargs['lb_attachment_id']
     ctx.invoke(computemanagement_cli.get_instance_pool_load_balancer_attachment, **kwargs)
+
+
+# from: oci compute-management cluster-network list-cluster-network-instances
+# to:   oci compute-management cluster-network list-instances
+cli_util.rename_command(computemanagement_cli.cluster_network_group, computemanagement_cli.list_cluster_network_instances, "list-instances")

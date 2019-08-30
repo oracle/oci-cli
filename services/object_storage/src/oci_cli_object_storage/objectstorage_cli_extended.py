@@ -7,6 +7,7 @@ import os
 import os.path
 import stat
 import sys
+import services.object_storage.src.oci_cli_object_storage.object_storage_transfer_manager  # noqa: F401,E402
 from oci import exceptions
 from oci.object_storage.transfer import constants
 from oci_cli.cli_util import render, render_response, parse_json_parameter, help_option, help_option_group, build_client, wrap_exceptions, filter_object_headers, get_param
@@ -23,6 +24,47 @@ from oci_cli.custom_types import BulkPutOperationOutput, BulkGetOperationOutput,
 from services.object_storage.src.oci_cli_object_storage.generated import objectstorage_cli
 from oci_cli import cli_util
 from mimetypes import guess_type
+import oci_cli.cli_root as cli_root
+import oci_cli.final_command_processor as final_command_processor
+from oci_cli import cli_exceptions
+
+
+# For namespace parameter within object storage commands, if not explicitly provided we make a SDK API call to
+# get the parameter. This removes the requirement for the parameter to be a required parameter.
+# Is this an object storage command? Check if the first level command is 'os' [oci os]
+def cli_util_func(ctx, param_name):
+    if param_name in ['namespace-name', 'namespace']:
+        client = build_client('object_storage', ctx)
+        try:
+            namespace = client.get_namespace().data
+        except Exception as e:
+            raise cli_exceptions.RequiredValueNotAvailableInternallyOrUserInputError(
+                'Unable to retrieve namespace internally. '
+                'Please provide the namespace using the option "--{}".'.format(param_name))
+        return namespace
+
+
+# Since almost all object storage commands require the namespace parameter and it can be obtained via an SDK
+# API call, this function goes through all the object storage commands and makes the namespace parameter as
+# Optional. It also updates the help text for the parameter
+def remove_namespace_required_objectstorage():
+    if not cli_root.cli.commands.get('os', None):
+        return
+    commands = cli_util.collect_commands(cli_root.cli.commands.get('os'))
+    for command in commands:
+        for param in command.params:
+            if param.name in ['namespace_name', 'namespace', 'ns']:
+                param.required = False
+                if param.help.endswith(' [required]'):
+                    # Remove ' [required]'
+                    param.help = ' '.join(param.help.split(' ')[:-1])
+                    # Add help text
+                    param.help = param.help + " If not provided, this parameter will be obtained " \
+                                              "internally using a call to 'oci os ns get'"
+
+
+cli_util.SERVICE_FUNCTIONS_TO_EXECUTE['os'] = cli_util_func
+final_command_processor.SERVICE_FUNCTIONS_TO_EXECUTE.append(remove_namespace_required_objectstorage)
 
 OBJECT_LIST_PAGE_SIZE = 100
 OBJECT_LIST_PAGE_SIZE_BULK_OPERATIONS = 1000
