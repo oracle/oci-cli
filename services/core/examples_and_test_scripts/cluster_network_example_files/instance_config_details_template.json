@@ -1,0 +1,16 @@
+{
+  "instanceType": "compute",
+  "launchDetails": {
+    "compartmentId": "__COMPARTMENT_ID__",
+    "shape": "BM.HPC2.36",
+    "sourceDetails":
+      {
+        "imageId": "__IMAGE_ID__",
+        "sourceType": "image",
+        "bootVolumeSizeInGBs": 75
+      },
+    "createVnicDetails": {
+      "assignPublicIp": true
+    }
+  }
+}

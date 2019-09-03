@@ -6,10 +6,63 @@ import click
 import six
 import sys
 from services.identity.src.oci_cli_identity.generated import identity_cli
-from oci_cli import cli_util
 from oci_cli import cli_exceptions
 from oci_cli import custom_types
 from oci_cli import json_skeleton_utils
+from oci_cli import cli_util
+from oci_cli.cli_util import get_tenancy_from_config
+import oci_cli.cli_root as cli_root
+import oci_cli.final_command_processor as final_command_processor
+
+
+def get_iam_commands_that_use_tenancy_defaults():
+    iam_tenancy_defaults = {
+        'availability-domain': ['list'],
+        'compartment': ['list'],
+        'dynamic-group': ['create', 'list'],
+        'group': ['add-user', 'create', 'list', 'list-users', 'remove-user'],
+        'user': ['create', 'list', 'list-groups'],
+        'region-subscription': ['list']
+    }
+    return iam_tenancy_defaults
+
+
+# Many iam commands accept the compartment-id or tenany-id as a parameter.
+# In most cases, except policy, we can use the tenancy from the config file as a default for the tenancy-id or
+# root compartment-id.
+def cli_util_func(ctx, param_name):
+    iam_tenancy_defaults = get_iam_commands_that_use_tenancy_defaults()
+    if ctx.parent.command.name in iam_tenancy_defaults.keys():
+        if ctx.command.name in iam_tenancy_defaults[ctx.parent.command.name]:
+            if param_name in ['compartment-id', 'tenancy-id']:
+                value = get_tenancy_from_config(ctx)
+                return value
+
+
+# Many iam commands accept the compartment-id or tenany-id as a parameter.
+# In most cases, except policy, we can use the tenancy from the config file as a default for the tenancy-id or
+# root compartment-id.
+def set_iam_default_tenancy_help():
+    iam_tenancy_defaults = get_iam_commands_that_use_tenancy_defaults()
+
+    iam_command = cli_root.cli.commands.get('iam')
+    for _, entitycommand in six.iteritems(iam_command.commands):
+        if entitycommand.name in iam_tenancy_defaults.keys():
+            for _, subcommand in six.iteritems(entitycommand.commands):
+                for param in subcommand.params:
+                    if subcommand.name in iam_tenancy_defaults[entitycommand.name]:
+                        if param.name == 'compartment_id' or param.name == 'tenancy_id':
+                            if param.help.endswith(' [required]'):
+                                # Remove ' [required]'
+                                param.help = ' '.join(param.help.split(' ')[:-1])
+                                # Add help text
+                                param.help = param.help + \
+                                    " If not provided, this parameter will use the " + \
+                                    "tenancy from the config file."
+
+
+cli_util.SERVICE_FUNCTIONS_TO_EXECUTE['iam'] = cli_util_func
+final_command_processor.SERVICE_FUNCTIONS_TO_EXECUTE.append(set_iam_default_tenancy_help)
 
 
 identity_cli.iam_root_group.commands.pop(identity_cli.idp_group_mapping_group.name)

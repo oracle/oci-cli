@@ -71,6 +71,8 @@ SERVICES_REQUIRING_ENDPOINTS = []
 # See further comments in cli_root.
 SUBCOMMAND_TO_SERVICE_INIT_MODULE = {}
 
+SERVICE_FUNCTIONS_TO_EXECUTE = {}
+
 GENERIC_JSON_FORMAT_HELP = """This must be provided in JSON format. See API reference for additional help."""
 
 PARAM_LOOKUP_HEIRARCHY_TOP_LEVEL = ''
@@ -284,6 +286,7 @@ def create_config_and_signer_based_on_click_context(ctx):
         expanded_security_token_location = os.path.expanduser(security_token_location)
         if not os.path.exists(expanded_security_token_location):
             sys.exit("ERROR: File specified by 'security_token_file' does not exist: {}".format(expanded_security_token_location))
+        FilePermissionChecker.warn_on_invalid_file_permissions(expanded_security_token_location)
 
         with open(expanded_security_token_location, 'r') as security_token_file:
             token = security_token_file.read()
@@ -1200,34 +1203,16 @@ def coalesce_provided_and_default_value(ctx, param_name, original_value, is_requ
     if value_from_defaults_file is not None:
         return value_from_defaults_file
 
-    # Many iam commands accept the compartment-id or tenany-id as a parameter.
-    # In most cases, except policy, we can use the tenancy from the config file as a default for the tenancy-id or
-    # root compartment-id.
+    # Services such as object storage and identity register special code to execute.
     prev_command = get_previous_command(ctx)
-    if prev_command == 'iam':
-        iam_tenancy_defaults = get_iam_commands_that_use_tenancy_defaults()
-        if ctx.parent.command.name in iam_tenancy_defaults.keys():
-            if ctx.command.name in iam_tenancy_defaults[ctx.parent.command.name]:
-                if param_name in ['compartment-id', 'tenancy-id']:
-                    value = get_tenancy_from_config(ctx)
-                    return value
-
-    # For namespace parameter within object storage commands, if not explicitly provided we make a SDK API call to
-    # get the parameter. This removes the requirement for the parameter to be a required parameter.
-    # Is this an object storage command? Check if the first level command is 'os' [oci os]
-    if prev_command == 'os' and param_name in ['namespace-name', 'namespace']:
-        client = build_client('object_storage', ctx)
-        try:
-            namespace = client.get_namespace().data
-        except Exception as e:
-            raise cli_exceptions.RequiredValueNotAvailableInternallyOrUserInputError(
-                'Unable to retrieve namespace internally. '
-                'Please provide the namespace using the option "--{}".'.format(param_name))
-        return namespace
+    if prev_command in SERVICE_FUNCTIONS_TO_EXECUTE:
+        f = SERVICE_FUNCTIONS_TO_EXECUTE[prev_command]
+        value = f(ctx, param_name)
+        if value:
+            return value
 
     if is_required:
         raise cli_exceptions.RequiredValueNotInDefaultOrUserInputError('Missing option "--{}".'.format(param_name))
-
     return None
 
 
@@ -1832,18 +1817,6 @@ def retrieve_attribute_for_sort(target_obj, attribute_name, **kwargs):
         return datetime.datetime.min
     else:
         return ''
-
-
-def get_iam_commands_that_use_tenancy_defaults():
-    iam_tenancy_defaults = {
-        'availability-domain': ['list'],
-        'compartment': ['list'],
-        'dynamic-group': ['create', 'list'],
-        'group': ['add-user', 'create', 'list', 'list-users', 'remove-user'],
-        'user': ['create', 'list', 'list-groups'],
-        'region-subscription': ['list']
-    }
-    return iam_tenancy_defaults
 
 
 def get_tenancy_from_config(ctx):
