@@ -26,6 +26,8 @@ STORAGE="1"
 LICENSE_TYPE="LICENSE_INCLUDED"
 AUTO_SCALE=true
 PREVIEW=true
+FREETIER=true
+FREE_DB_NAME=freedb
 
 
 ##############################################################################AutonomousDataWarehouse##############################################################################
@@ -87,6 +89,12 @@ CREATE_ATP=$(oci db autonomous-database create -c $COMPARTMENT_ID --db-name $DB_
                     --data-storage-size-in-tbs $STORAGE --display-name $DISPLAY_NAME1 --license-model $LICENSE_TYPE \
                     --wait-for-state AVAILABLE)
 
+echo 'Create Free Autonomous Transaction Processing...'
+CREATE_FREE_ATP=$(oci db autonomous-database create -c $COMPARTMENT_ID --db-name $FREE_DB_NAME --admin-password $PASSWORD1 --cpu-core-count $CPU \
+                    --data-storage-size-in-tbs $STORAGE --display-name $DISPLAY_NAME1 --license-model $LICENSE_TYPE \
+                    --wait-for-state AVAILABLE --is-free-tier $FREETIER )
+
+
 echo 'Create Autonomous Transaction Processing Preview...'
 CREATE_ATP_PREVIEW=$(oci db autonomous-database create -c $COMPARTMENT_ID --db-name $DB_NAME2 --admin-password $PASSWORD1 --cpu-core-count $CPU \
                     --data-storage-size-in-tbs $STORAGE --display-name $DISPLAY_NAME1 --license-model $LICENSE_TYPE --is-preview-version-with-service-terms-accepted $PREVIEW \
@@ -97,6 +105,9 @@ ADB_ID_PREVIEW=$(jq -r '.data.id' <<< "$CREATE_ATP_PREVIEW")
 
 echo "Created Autonomous Transaction Processing with OCID:"
 echo $CREATE_ATP
+
+echo "Created Free Autonomous Transaction Processing with OCID:"
+echo $CREATE_FREE_ATP
 
 echo "Created Autonomous Transaction Processing Preview with OCID:"
 echo $CREATE_ATP_PREVIEW

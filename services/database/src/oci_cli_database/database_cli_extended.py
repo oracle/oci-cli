@@ -162,11 +162,14 @@ def launch_db_system_backup_extended(ctx, **kwargs):
 @cli_util.option('--db-version', required=True, help="""A valid Oracle database version. To get a list of supported versions, use the command 'oci db version list'.""")
 @cli_util.option('--auto-backup-enabled', type=click.BOOL, help="""If set to true, schedules backups automatically. Default is false.""")
 @cli_util.option('--recovery-window-in-days', type=click.IntRange(1, 60), help="""The number of days between the current and the earliest point of recoverability covered by automatic backups (1 to 60).""")
+@cli_util.option('--auto-backup-window', required=False, help="""Specifying a two hour slot when the backup should kick in eg:- SLOT_ONE,SLOT_TWO. Default is anytime""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'DatabaseSummary'})
 @cli_util.wrap_exceptions
 def create_database(ctx, **kwargs):
     create_db_home_with_system_details = oci.database.models.CreateDbHomeWithDbSystemIdDetails()
+
+    db_backup_config = oci.database.models.DbBackupConfig()
 
     create_database_details = oci.database.models.CreateDatabaseDetails()
     if 'admin_password' in kwargs and kwargs['admin_password']:
@@ -187,13 +190,17 @@ def create_database(ctx, **kwargs):
     if 'pdb_name' in kwargs and kwargs['pdb_name']:
         create_database_details.pdb_name = kwargs['pdb_name']
 
+    if 'auto-backup-window' in kwargs and kwargs['auto-backup-window'] and kwargs['auto_backup_enabled'] is not None:
+        db_backup_config.auto_backup_enabled = kwargs['auto_backup_enabled']
+        db_backup_config.auto_backup_window = kwargs['auto-backup-window']
+        del kwargs['auto-backup-window']
+
     if kwargs['auto_backup_enabled'] is not None or kwargs['recovery_window_in_days'] is not None:
-        db_backup_config = oci.database.models.DbBackupConfig()
         if kwargs['auto_backup_enabled'] is not None:
             db_backup_config.auto_backup_enabled = kwargs['auto_backup_enabled']
         if kwargs['recovery_window_in_days'] is not None:
             db_backup_config.recoveryWindowInDays = kwargs['recovery_window_in_days']
-        create_database_details.db_backup_config = db_backup_config
+    create_database_details.db_backup_config = db_backup_config
     del kwargs['auto_backup_enabled']
     del kwargs['recovery_window_in_days']
     create_db_home_with_system_details.database = create_database_details
@@ -283,12 +290,17 @@ def create_database_from_backup(ctx, **kwargs):
 @database_cli.database_group.command(name='update', help="""Update a Database based on the request parameters you provide.""")
 @cli_util.option('--auto-backup-enabled', type=click.BOOL, help="""If set to true, schedules backups automatically. Default is false.""")
 @cli_util.option('--recovery-window-in-days', type=click.IntRange(1, 60), help="""The number of days between the current and the earliest point of recoverability covered by automatic backups (1 to 60).""")
+@cli_util.option('--auto-backup-window', required=False, help="""Specifying a two hour slot when the backup should kick in eg:- SLOT_ONE,SLOT_TWO. Default is anytime""")
+@cli_util.option('--auto-backup-window', required=False, help="""Specifying a two hour slot when the backup should kick in eg:- SLOT_ONE,SLOT_TWO. Default is anytime""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}}, output_type={'module': 'database', 'class': 'Database'})
 @cli_util.wrap_exceptions
 def update_database_extended(ctx, **kwargs):
     if kwargs['auto_backup_enabled'] is not None or kwargs['recovery_window_in_days'] is not None:
         db_backup_config = {}
+        if 'auto_backup_window' in kwargs and kwargs['auto_backup_window'] and kwargs['auto_backup_enabled'] is not None:
+            db_backup_config['autoBackupEnabled'] = kwargs['auto_backup_enabled']
+            db_backup_config['autoBackupWindow'] = kwargs['auto_backup_window']
         if kwargs['auto_backup_enabled'] is not None:
             db_backup_config['autoBackupEnabled'] = kwargs['auto_backup_enabled']
         if kwargs['recovery_window_in_days'] is not None:
@@ -297,6 +309,7 @@ def update_database_extended(ctx, **kwargs):
 
     del kwargs['auto_backup_enabled']
     del kwargs['recovery_window_in_days']
+    del kwargs['auto_backup_window']
 
     ctx.invoke(database_cli.update_database, **kwargs)
 

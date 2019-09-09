@@ -34,6 +34,15 @@ from oci_cli import cli_exceptions
 # Is this an object storage command? Check if the first level command is 'os' [oci os]
 def cli_util_func(ctx, param_name):
     if param_name in ['namespace-name', 'namespace']:
+        cert_bundle = None
+        if 'cert_bundle' in ctx.obj:
+            cert_bundle = ctx.obj['cert_bundle']
+        if not cert_bundle and 'default_values_from_file' in ctx.obj:
+            default_values_from_file = ctx.obj['default_values_from_file']
+            if 'cert_bundle' in default_values_from_file:
+                ctx.obj['cert_bundle'] = default_values_from_file['cert_bundle']
+            elif 'cert-bundle' in default_values_from_file:
+                ctx.obj['cert_bundle'] = default_values_from_file['cert-bundle']
         client = build_client('object_storage', ctx)
         try:
             namespace = client.get_namespace().data
@@ -196,7 +205,6 @@ def object_list(ctx, from_json, namespace, bucket_name, prefix, start, end, limi
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
     elif not all_pages and limit is None:
         limit = 100
-
     client = build_client('object_storage', ctx)
 
     args = {

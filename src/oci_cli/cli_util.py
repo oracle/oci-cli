@@ -746,7 +746,7 @@ def parse_json_parameter(parameter_name, parameter_value, default=None, camelize
         else:
             return json.loads(json_to_parse)
     except ValueError:
-        sys.exit('Parameter {!r} must be in JSON format.\nFor help with formatting JSON input see our documentation here: https://docs.cloud.oracle.com/Content/API/SDKDocs/cli.htm#complexinput'.format(parameter_name))
+        sys.exit('Parameter {!r} must be in JSON format.\nFor help with formatting JSON input see our documentation here: https://docs.cloud.oracle.com/iaas/Content/API/SDKDocs/cliusing.htm#ManagingCLIInputandOutput'.format(parameter_name))
 
 
 # Takes a dictionary representing a JSON object and converts keys into their camelized form. This will do a deep conversion - for example if a value in the dictionary is a dictionary itself

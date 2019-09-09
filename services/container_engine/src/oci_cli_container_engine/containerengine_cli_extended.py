@@ -6,13 +6,77 @@ from services.container_engine.src.oci_cli_container_engine.generated import con
 from oci_cli import json_skeleton_utils
 from oci_cli import custom_types  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
+from oci._vendor.requests import Request
 import click
 import six
 import os
 import yaml
+import base64
+from datetime import datetime, timedelta
 
 DEFAULT_KUBECONFIG_LOCATION = os.path.join('~', '.kube', 'config')
-cli_util.rename_command(containerengine_cli.work_request_log_entry_group, containerengine_cli.list_work_request_logs, "list")
+cli_util.rename_command(containerengine_cli.work_request_log_entry_group, containerengine_cli.list_work_request_logs,
+                        "list")
+
+
+@containerengine_cli.cluster_group.command(name=cli_util.override('generate_token.command_name', 'generate-token'),
+                                           help=u"""Generate an ExecCredential based token for Kubernetes SDK/CLI authentication.""")
+@cli_util.option('--cluster-id', required=True, help=u"""The OCID of the cluster.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def generate_token(ctx, from_json, cluster_id):
+    if isinstance(cluster_id, six.string_types) and len(cluster_id.strip()) == 0:
+        raise click.UsageError('Parameter --cluster-id cannot be whitespace or empty string')
+
+    client = cli_util.build_client('container_engine', ctx)
+    signer = client.base_client.signer
+
+    url = "https://containerengine.%s.oraclecloud.com/cluster_request/%s" % (ctx.obj['config']['region'], cluster_id)
+
+    # Create the presigned request that we need to sign.
+    # The output of this signed request will be used to build the token.
+    request = signer.do_request_sign(Request(
+        "GET",
+        url,
+    ).prepare())
+
+    # Now that we have the signed request we need to turn it into
+    # the base64 encoded token that OKE will authenticate.
+    token_request = Request(
+        "GET",
+        url,
+        params={
+            "authorization": request.headers["authorization"],
+            "date": request.headers["date"],
+        }
+    ).prepare()
+
+    # Generate the ExecCredential that the Kubernetes exec plugin provide requires.
+    # https://kubernetes.io/docs/reference/access-authn-authz/authentication/#input-and-output-formats
+
+    token = base64.urlsafe_b64encode(token_request.url.encode('utf-8')).decode('utf-8')
+    # Get now+4 minutes in RFC3339 format.
+    # This informs Kubernetes SDK/CLIs that it's time to refresh the token
+    # before the token is actually expired.
+    expiration_timestamp = (datetime.utcnow() + timedelta(minutes=4)).isoformat('T') + "Z"
+
+    exec_credential = """
+{
+    "apiVersion": "client.authentication.k8s.io/v1beta1",
+    "kind": "ExecCredential",
+    "status": {
+        "token": "%s",
+        "expirationTimestamp": "%s"
+    }
+}
+    """ % (token, expiration_timestamp)
+    click.echo(exec_credential)
+
+
+containerengine_cli.cluster_group.add_command(generate_token)
 
 
 @cli_util.copy_params_from_generated_command(containerengine_cli.create_cluster, params_to_exclude=['options'],
@@ -29,12 +93,13 @@ cli_util.rename_command(containerengine_cli.work_request_log_entry_group, contai
  in the cluster, expressed as a single, contiguous IPv4 CIDR block. For example, 10.244.0.0/16.""")
 @cli_util.option('--services-cidr', help="""The available group of network addresses that can be exposed as Kubernetes\
  services (ClusterIPs), expressed as a single, contiguous IPv4 CIDR block. For example, 10.96.0.0/16.""")
-@json_skeleton_utils.get_cli_json_input_option({'service-lb-subnet-ids': {'module': 'container_engine', 'class': 'list[string]'}})
+@json_skeleton_utils.get_cli_json_input_option(
+    {'service-lb-subnet-ids': {'module': 'container_engine', 'class': 'list[string]'}})
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'service-lb-subnet-ids': {'module': 'container_engine', 'class': 'list[string]'}})
+@json_skeleton_utils.json_skeleton_generation_handler(
+    input_params_to_complex_types={'service-lb-subnet-ids': {'module': 'container_engine', 'class': 'list[string]'}})
 @cli_util.wrap_exceptions
 def create_cluster(ctx, **kwargs):
-
     kwargs['options'] = {}
     if 'service_lb_subnet_ids' in kwargs and kwargs['service_lb_subnet_ids'] is not None:
         kwargs['options'] = {'serviceLbSubnetIds': cli_util.parse_json_parameter("service_lb_subnet_ids",
@@ -68,6 +133,72 @@ def create_cluster(ctx, **kwargs):
     ctx.invoke(containerengine_cli.create_cluster, **kwargs)
 
 
+@cli_util.copy_params_from_generated_command(containerengine_cli.create_node_pool,
+                                             params_to_exclude=['node_config_details'], copy_from_json=False)
+@containerengine_cli.node_pool_group.command(name=cli_util.override('create_node_pool.command_name', 'create'),
+                                             help="""Create a new node pool.""")
+@cli_util.option('--size', type=click.INT, help="""The number of nodes spread across placement configurations.""")
+@cli_util.option('--placement-configs', type=custom_types.CLI_COMPLEX_TYPE,
+                 help="""The placement configurations that determine where the nodes will be placed.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option(
+    {'node-metadata': {'module': 'container_engine', 'class': 'dict(str, string)'},
+     'initial-node-labels': {'module': 'container_engine', 'class': 'list[KeyValue]'},
+     'subnet-ids': {'module': 'container_engine', 'class': 'list[string]'},
+     'placement-configs': {'module': 'container_engine', 'class': 'list[NodePoolPlacementConfigDetails]'}})
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(
+    input_params_to_complex_types={'node-metadata': {'module': 'container_engine', 'class': 'dict(str, string)'},
+                                   'initial-node-labels': {'module': 'container_engine', 'class': 'list[KeyValue]'},
+                                   'subnet-ids': {'module': 'container_engine', 'class': 'list[string]'},
+                                   'placement-configs': {'module': 'container_engine',
+                                                         'class': 'list[NodePoolPlacementConfigDetails]'}})
+@cli_util.wrap_exceptions
+def create_node_pool(ctx, **kwargs):
+    kwargs['node_config_details'] = {}
+    if 'size' in kwargs and kwargs['size'] is not None:
+        kwargs['node_config_details']['size'] = kwargs['size']
+    kwargs.pop('size', None)
+
+    if 'placement_configs' in kwargs and kwargs['placement_configs'] is not None:
+        kwargs['node_config_details']['placementConfigs'] = cli_util.parse_json_parameter("placement_configs",
+                                                                                          kwargs['placement_configs'])
+    kwargs.pop('placement_configs', None)
+
+    ctx.invoke(containerengine_cli.create_node_pool, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(containerengine_cli.update_node_pool,
+                                             params_to_exclude=['node_config_details'], copy_from_json=False)
+@containerengine_cli.node_pool_group.command(name=cli_util.override('update_node_pool.command_name', 'update'),
+                                             help="""Update a node pool.""")
+@cli_util.option('--size', type=click.INT, help="""The number of nodes spread across placement configurations.""")
+@cli_util.option('--placement-configs', type=custom_types.CLI_COMPLEX_TYPE,
+                 help="""The placement configurations that determine where the nodes will be placed.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option(
+    {'initial-node-labels': {'module': 'container_engine', 'class': 'list[KeyValue]'},
+     'subnet-ids': {'module': 'container_engine', 'class': 'list[string]'},
+     'placement-configs': {'module': 'container_engine', 'class': 'list[NodePoolPlacementConfigDetails]'}})
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(
+    input_params_to_complex_types={'initial-node-labels': {'module': 'container_engine', 'class': 'list[KeyValue]'},
+                                   'subnet-ids': {'module': 'container_engine', 'class': 'list[string]'},
+                                   'placement-configs': {'module': 'container_engine',
+                                                         'class': 'list[NodePoolPlacementConfigDetails]'}})
+@cli_util.wrap_exceptions
+def update_node_pool(ctx, **kwargs):
+    kwargs['node_config_details'] = {}
+    if 'size' in kwargs and kwargs['size'] is not None:
+        kwargs['node_config_details']['size'] = kwargs['size']
+    kwargs.pop('size', None)
+
+    if 'placement_configs' in kwargs and kwargs['placement_configs'] is not None:
+        kwargs['node_config_details']['placementConfigs'] = cli_util.parse_json_parameter("placement_configs",
+                                                                                          kwargs['placement_configs'])
+    kwargs.pop('placement_configs', None)
+
+    ctx.invoke(containerengine_cli.update_node_pool, **kwargs)
+
+
 # create-kubeconfig command is overridden here to provide the following functionality:
 # 1. Running the CLI command ‘oci ce cluster create-kubeconfig --cluster-id <CLUSTER-ID>’
 # for obtaining kubeconfig always ‘merges’ the new kubeconfig information with the current kubeconfig in formation at
@@ -90,7 +221,6 @@ def create_cluster(ctx, **kwargs):
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
 def create_kubeconfig(ctx, from_json, file, cluster_id, token_version, expiration, overwrite):
-
     if isinstance(cluster_id, six.string_types) and len(cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --cluster-id cannot be whitespace or empty string')
 
@@ -136,7 +266,6 @@ def create_kubeconfig(ctx, from_json, file, cluster_id, token_version, expiratio
 
 
 def _merge_kubeconfig(new_kubeconfig, file):
-
     # This is only called when the file exists so no need to check for IOError on file open/read.
     with open(file, 'rb+') as f:
         # If the file is empty, just write the new config and return

@@ -1,4 +1,5 @@
-# coding: utf-8
+#!/bin/bash
 # Copyright (c) 2016, 2019, Oracle and/or its affiliates. All rights reserved.
 
-__version__ = '2.6.4'
+export BULK_BUCKET="dex-6477"
+export SLASH_BUCKET="kern_test"

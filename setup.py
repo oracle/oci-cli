@@ -29,7 +29,7 @@ with open_relative("README.rst") as f:
     readme = f.read()
 
 requires = [
-    'oci==2.3.3',
+    'oci==2.4.0',
     'arrow==0.10.0',
     'certifi',
     'click==6.7',
@@ -77,7 +77,7 @@ for package in packages:
 
 setup(
     name='oci-cli',
-    url='https://docs.cloud.oracle.com/Content/API/SDKDocs/cli.htm',
+    url='https://docs.cloud.oracle.com/iaas/Content/API/Concepts/cliconcepts.htm',
     version=version,
     author='Oracle',
     author_email='joe.levy@oracle.com',

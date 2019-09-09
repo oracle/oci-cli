@@ -112,7 +112,7 @@ def bootstrap_oci_cli(ctx):
 
 
 def create_user_session(region=''):
-    if region is '':
+    if region == '':
         region = cli_setup.prompt_for_region()
 
     # try to set up http server so we can fail early if the required port is in use

@@ -6,6 +6,45 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.6.4 - 2019-09-10
+-------------------
+Added
+~~~~~
+* Support for CreateKubeconfig token version 2.0.0.
+
+  * ``oci ce cluster generate-token``
+
+* Support creating and updating node pool using regional subnets.
+
+  * ``oci ce node-pool create --size --placement-configs``
+  * ``oci ce node-pool update --size --placement-configs``
+
+* Support for using KMS to encrypt Kubernetes secret.
+
+  * ``oci ce cluster create --kms-key-id``
+
+* Support for user to specify a two hour window when the auto-backup would kick in. Default is anytime. Example values are SLOT_ONE, SLOT_TWO.
+
+  * ``oci db database create --auto-backup-window``
+  * ``oci db database update --auto-backup-window``
+
+* Support for specifying ``nsgIds`` parameter for ``LaunchAutonomousDbSystemDetails`` and ``UpdateAutonomousDbSystemDetails``
+
+  * ``oci db autonomous-exadata-infrastructure launch --nsg-ids``
+  * ``oci db autonomous-exadata-infrastructure update --nsg-ids``
+
+* Support for Oracle Content and Experience service.
+ 
+  * ``oci oce``
+
+* New read-only `system-tags` parameter for Load Balancer object.
+
+Fixed
+~~~~~
+* Outdated doc link. (`Pull Request <https://github.com/oracle/oci-cli/pull/186/files>`__)
+
+* Downloads that fail when ``oci os object --bulk-download`` when object names ended with a '/'.
+
 2.6.3 - 2019-09-03
 -------------------
 Added

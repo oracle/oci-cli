@@ -42,10 +42,12 @@ class GetObjectTask(WorkPoolTask):
 
     def do_work_hook(self):
         get_object_response = _make_retrying_get_call(self.object_storage_client, **self.kwargs)
-
-        with open(self.kwargs['full_file_path'], "wb") as file:
-            for chunk in get_object_response.data.raw.stream(OBJECT_GET_CHUNK_SIZE, decode_content=False):
-                file.write(chunk)
+        try:
+            with open(self.kwargs['full_file_path'], "wb") as file:
+                for chunk in get_object_response.data.raw.stream(OBJECT_GET_CHUNK_SIZE, decode_content=False):
+                    file.write(chunk)
+        except IsADirectoryError:
+            pass
 
 
 # A task which coordinates getting an object in multiple parts (using ranged GetObject calls), combining them and then sending them
