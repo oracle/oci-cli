@@ -38,6 +38,7 @@ Commands:
   create             Create a new cluster.
   create-kubeconfig  Create the Kubeconfig YAML for a cluster.
   delete             Delete a cluster.
+  generate-token     Generate an ExecCredential based token for...
   get                Get the details of a cluster.
   list               List all the cluster objects in a...
   update             Update the details of a cluster.
@@ -57,6 +58,9 @@ Options:
                                   which to create the cluster. [required]
   --kubernetes-version TEXT       The version of Kubernetes to install into the
                                   cluster masters. [required]
+  --kms-key-id TEXT               The OCID of the KMS Key to be used as the
+                                  master encryption key for Kubernetes Secret
+                                  encryption.
   --wait-for-state [ACCEPTED|IN_PROGRESS|FAILED|SUCCEEDED|CANCELING|CANCELED]
                                   This operation asynchronously creates,
                                   modifies or deletes a resource and uses a work
@@ -145,9 +149,11 @@ Usage: oci ce cluster create-kubeconfig [OPTIONS]
 
 Options:
   --cluster-id TEXT     The OCID of the cluster. [required]
-  --token-version TEXT  The version of the kubeconfig token.
+  --token-version TEXT  The version of the kubeconfig token. Supported values
+                        1.0.0 and 2.0.0
   --expiration INTEGER  The desired expiration, in seconds, to use for the
-                        kubeconfig token.
+                        kubeconfig token. Important Note, expiration field is
+                        only honored for token version 1.0.0
   --file PATH           The name of the file that will be updated with response
                         data, or '-' to write to STDOUT. [default:
                         ~/.kube/config]
@@ -244,6 +250,37 @@ Options:
                                   s
   -?, -h, --help                  For detailed help on any of these individual
                                   commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci ce cluster generate-token --help
+Usage: oci ce cluster generate-token [OPTIONS]
+
+  Generate an ExecCredential based token for Kubernetes SDK/CLI
+  authentication.
+
+Options:
+  --cluster-id TEXT  The OCID of the cluster. [required]
+  --from-json TEXT   Provide input to this command as a JSON document from a
+                     file using the file://path-to/file syntax.
+                     
+                     The --generate-
+                     full-command-json-input option can be used to generate a
+                     sample json file to be used with this command option. The
+                     key names are pre-populated and match the command option
+                     names (converted to camelCase format, e.g. compartment-id
+                     --> compartmentId), while the values of the keys need to be
+                     populated by the user before using the sample file as an
+                     input to this command. For any command option that accepts
+                     multiple values, the value of the key can be a JSON array.
+                     Options can still be provided on the command line. If an
+                     option exists in both the JSON document and the command
+                     line then the command line specified value will be used.
+                     For examples on usage of this option, please see our "using
+                     CLI with advanced JSON options" link: https://docs.cloud.or
+                     acle.com/iaas/Content/API/SDKDocs/cliusing.htm#AdvancedJSON
+                     Options
+  -?, -h, --help     For detailed help on any of these individual commands,
+                     enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci ce cluster get --help
@@ -465,7 +502,7 @@ Commands:
   delete  Delete a node pool.
   get     Get the details of a node pool.
   list    List all the node pools in a compartment, and...
-  update  Update the details of a node pool.
+  update  Update a node pool.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci ce node-pool create --help
@@ -486,23 +523,6 @@ Options:
                                   the node pool. [required]
   --node-shape TEXT               The name of the node shape of the nodes in the
                                   node pool. [required]
-  --subnet-ids COMPLEX TYPE       The OCIDs of the subnets in which to place
-                                  nodes for this node pool.
-                                  This is a complex
-                                  type whose value must be valid JSON. The value
-                                  can be provided as a string on the command
-                                  line or passed in as a file using
-                                  the
-                                  file://path/to/file syntax.
-                                  
-                                  The --generate-
-                                  param-json-input option can be used to
-                                  generate an example of the JSON which must be
-                                  provided. We recommend storing this example
-                                  in
-                                  a file, modifying it as needed and then
-                                  passing it back in via the file:// syntax.
-                                  [required]
   --node-metadata COMPLEX TYPE    A list of key/value pairs to add to each
                                   underlying OCI instance in the node pool.
                                   This
@@ -543,7 +563,32 @@ Options:
                                   passing it back in via the file:// syntax.
   --ssh-public-key TEXT           The SSH public key to add to each node in the
                                   node pool.
-  --quantity-per-subnet INTEGER   The number of nodes to create in each subnet.
+  --quantity-per-subnet INTEGER   Optional, default to 1. The number of nodes to
+                                  create in each subnet specified in subnetIds
+                                  property. When used, subnetIds is required.
+                                  This property is deprecated, use
+                                  nodeConfigDetails instead.
+  --subnet-ids COMPLEX TYPE       The OCIDs of the subnets in which to place
+                                  nodes for this node pool. When used,
+                                  quantityPerSubnet can be provided. This
+                                  property is deprecated, use nodeConfigDetails.
+                                  Exactly one of the subnetIds or
+                                  nodeConfigDetails properties must be
+                                  specified.
+                                  This is a complex type whose value
+                                  must be valid JSON. The value can be provided
+                                  as a string on the command line or passed in
+                                  as a file using
+                                  the file://path/to/file
+                                  syntax.
+                                  
+                                  The --generate-param-json-input
+                                  option can be used to generate an example of
+                                  the JSON which must be provided. We recommend
+                                  storing this example
+                                  in a file, modifying it
+                                  as needed and then passing it back in via the
+                                  file:// syntax.
   --wait-for-state [ACCEPTED|IN_PROGRESS|FAILED|SUCCEEDED|CANCELING|CANCELED]
                                   This operation asynchronously creates,
                                   modifies or deletes a resource and uses a work
@@ -562,6 +607,25 @@ Options:
                                   whether the work request to see if it has
                                   reached the state defined by --wait-for-state.
                                   Defaults to 30 seconds.
+  --size INTEGER                  The number of nodes spread across placement
+                                  configurations.
+  --placement-configs COMPLEX TYPE
+                                  The placement configurations that determine
+                                  where the nodes will be placed.
+                                  This is a
+                                  complex type whose value must be valid JSON.
+                                  The value can be provided as a string on the
+                                  command line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
   --from-json TEXT                Provide input to this command as a JSON
                                   document from a file using the file://path-
                                   to/file syntax.
@@ -751,7 +815,7 @@ Options:
 $ oci ce node-pool update --help
 Usage: oci ce node-pool update [OPTIONS]
 
-  Update the details of a node pool.
+  Update a node pool.
 
 Options:
   --node-pool-id TEXT             The OCID of the node pool. [required]
@@ -759,7 +823,6 @@ Options:
                                   confidential information.
   --kubernetes-version TEXT       The version of Kubernetes to which the nodes
                                   in the node pool should be upgraded.
-  --quantity-per-subnet INTEGER   The number of nodes to ensure in each subnet.
   --initial-node-labels COMPLEX TYPE
                                   A list of key/value pairs to add to nodes
                                   after they join the Kubernetes cluster.
@@ -784,8 +847,23 @@ Options:
                                   in
                                   a file, modifying it as needed and then
                                   passing it back in via the file:// syntax.
+  --quantity-per-subnet INTEGER   The number of nodes to have in each subnet
+                                  specified in the subnetIds property. This
+                                  property is deprecated, use nodeConfigDetails
+                                  instead. If the current value of
+                                  quantityPerSubnet is greater than 0, you can
+                                  only use quantityPerSubnet to scale the node
+                                  pool. If the current value of
+                                  quantityPerSubnet is equal to 0 and the
+                                  current value of size in nodeConfigDetails is
+                                  greater than 0, before you can use
+                                  quantityPerSubnet, you must first scale the
+                                  node pool to 0 nodes using nodeConfigDetails.
   --subnet-ids COMPLEX TYPE       The OCIDs of the subnets in which to place
-                                  nodes for this node pool.
+                                  nodes for this node pool. This property is
+                                  deprecated, use nodeConfigDetails instead.
+                                  Only one of the subnetIds or nodeConfigDetails
+                                  properties can be specified.
                                   This is a complex
                                   type whose value must be valid JSON. The value
                                   can be provided as a string on the command
@@ -827,6 +905,25 @@ Options:
                                   whether the work request to see if it has
                                   reached the state defined by --wait-for-state.
                                   Defaults to 30 seconds.
+  --size INTEGER                  The number of nodes spread across placement
+                                  configurations.
+  --placement-configs COMPLEX TYPE
+                                  The placement configurations that determine
+                                  where the nodes will be placed.
+                                  This is a
+                                  complex type whose value must be valid JSON.
+                                  The value can be provided as a string on the
+                                  command line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
   --from-json TEXT                Provide input to this command as a JSON
                                   document from a file using the file://path-
                                   to/file syntax.

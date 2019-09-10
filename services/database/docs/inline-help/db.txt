@@ -155,11 +155,8 @@ Options:
   --defined-tags COMPLEX TYPE     Defined tags for this resource. Each key is
                                   predefined and scoped to a namespace. For more
                                   information, see [Resource Tags].
-                                  
-                                  Example:
-                                  `{"Operations": {"CostCenter": "42"}}`
-                                  This is
-                                  a complex type whose value must be valid JSON.
+                                  This is a
+                                  complex type whose value must be valid JSON.
                                   The value can be provided as a string on the
                                   command line or passed in as a file using
                                   the
@@ -508,11 +505,8 @@ Options:
   --defined-tags COMPLEX TYPE     Defined tags for this resource. Each key is
                                   predefined and scoped to a namespace. For more
                                   information, see [Resource Tags].
-                                  
-                                  Example:
-                                  `{"Operations": {"CostCenter": "42"}}`
-                                  This is
-                                  a complex type whose value must be valid JSON.
+                                  This is a
+                                  complex type whose value must be valid JSON.
                                   The value can be provided as a string on the
                                   command line or passed in as a file using
                                   the
@@ -672,11 +666,8 @@ Options:
   --defined-tags COMPLEX TYPE     Defined tags for this resource. Each key is
                                   predefined and scoped to a namespace. For more
                                   information, see [Resource Tags].
-                                  
-                                  Example:
-                                  `{"Operations": {"CostCenter": "42"}}`
-                                  This is
-                                  a complex type whose value must be valid JSON.
+                                  This is a
+                                  complex type whose value must be valid JSON.
                                   The value can be provided as a string on the
                                   command line or passed in as a file using
                                   the
@@ -1258,11 +1249,8 @@ Options:
   --defined-tags COMPLEX TYPE     Defined tags for this resource. Each key is
                                   predefined and scoped to a namespace. For more
                                   information, see [Resource Tags].
-                                  
-                                  Example:
-                                  `{"Operations": {"CostCenter": "42"}}`
-                                  This is
-                                  a complex type whose value must be valid JSON.
+                                  This is a
+                                  complex type whose value must be valid JSON.
                                   The value can be provided as a string on the
                                   command line or passed in as a file using
                                   the
@@ -1614,15 +1602,23 @@ Options:
                                   indicates an Autonomous Transaction Processing
                                   database and DW indicates an Autonomous Data
                                   Warehouse. The default is OLTP.
+  --is-free-tier BOOLEAN          Indicates if this is an Always Free resource.
+                                  The default value is false. Note that Always
+                                  Free Autonomous Databases have 1 CPU and 20GB
+                                  memory. For Always Free databases, memory and
+                                  CPU cannot be scaled.
   --display-name TEXT             The user-friendly name for the Autonomous
                                   Database. The name does not have to be unique.
   --license-model [LICENSE_INCLUDED|BRING_YOUR_OWN_LICENSE]
                                   The Oracle license model that applies to the
-                                  Oracle Autonomous Database. The default is
-                                  BRING_YOUR_OWN_LICENSE. Note that when
-                                  provisioning an Autonomous Database using the
-                                  [dedicated deployment] option, this attribute
-                                  must be null.
+                                  Oracle Autonomous Database. The default for
+                                  Autonomous Database using the [shared
+                                  deployment] is BRING_YOUR_OWN_LICENSE. Note
+                                  that when provisioning an Autonomous Database
+                                  using the [dedicated deployment] option, this
+                                  attribute must be null because the attribute
+                                  is already set on Autonomous Exadata
+                                  Infrastructure level.
   --is-preview-version-with-service-terms-accepted BOOLEAN
                                   If set to true, indicates that an Autonomous
                                   Database preview version is being provisioned,
@@ -1664,11 +1660,8 @@ Options:
   --defined-tags COMPLEX TYPE     Defined tags for this resource. Each key is
                                   predefined and scoped to a namespace. For more
                                   information, see [Resource Tags].
-                                  
-                                  Example:
-                                  `{"Operations": {"CostCenter": "42"}}`
-                                  This is
-                                  a complex type whose value must be valid JSON.
+                                  This is a
+                                  complex type whose value must be valid JSON.
                                   The value can be provided as a string on the
                                   command line or passed in as a file using
                                   the
@@ -1761,15 +1754,23 @@ Options:
                                   indicates an Autonomous Transaction Processing
                                   database and DW indicates an Autonomous Data
                                   Warehouse. The default is OLTP.
+  --is-free-tier BOOLEAN          Indicates if this is an Always Free resource.
+                                  The default value is false. Note that Always
+                                  Free Autonomous Databases have 1 CPU and 20GB
+                                  memory. For Always Free databases, memory and
+                                  CPU cannot be scaled.
   --display-name TEXT             The user-friendly name for the Autonomous
                                   Database. The name does not have to be unique.
   --license-model [LICENSE_INCLUDED|BRING_YOUR_OWN_LICENSE]
                                   The Oracle license model that applies to the
-                                  Oracle Autonomous Database. The default is
-                                  BRING_YOUR_OWN_LICENSE. Note that when
-                                  provisioning an Autonomous Database using the
-                                  [dedicated deployment] option, this attribute
-                                  must be null.
+                                  Oracle Autonomous Database. The default for
+                                  Autonomous Database using the [shared
+                                  deployment] is BRING_YOUR_OWN_LICENSE. Note
+                                  that when provisioning an Autonomous Database
+                                  using the [dedicated deployment] option, this
+                                  attribute must be null because the attribute
+                                  is already set on Autonomous Exadata
+                                  Infrastructure level.
   --is-preview-version-with-service-terms-accepted BOOLEAN
                                   If set to true, indicates that an Autonomous
                                   Database preview version is being provisioned,
@@ -1811,11 +1812,8 @@ Options:
   --defined-tags COMPLEX TYPE     Defined tags for this resource. Each key is
                                   predefined and scoped to a namespace. For more
                                   information, see [Resource Tags].
-                                  
-                                  Example:
-                                  `{"Operations": {"CostCenter": "42"}}`
-                                  This is
-                                  a complex type whose value must be valid JSON.
+                                  This is a
+                                  complex type whose value must be valid JSON.
                                   The value can be provided as a string on the
                                   command line or passed in as a file using
                                   the
@@ -2051,6 +2049,12 @@ Options:
   --db-workload [OLTP|DW]         A filter to return only autonomous database
                                   resources that match the specified workload
                                   type.
+  --is-free-tier BOOLEAN          Filter on the value of the resource's
+                                  'isFreeTier' property. A value of `true`
+                                  returns only Always Free resources. A value of
+                                  `false` excludes Always Free resources from
+                                  the returned results. Omitting this parameter
+                                  returns both Always Free and paid resources.
   --display-name TEXT             A filter to return only resources that match
                                   the entire display name given. The match is
                                   not case sensitive.
@@ -2361,6 +2365,11 @@ Options:
                                   that will be attached to the database.
   --display-name TEXT             The user-friendly name for the Autonomous
                                   Database. The name does not have to be unique.
+  --is-free-tier BOOLEAN          Indicates if this is an Always Free resource.
+                                  The default value is false. Note that Always
+                                  Free Autonomous Databases have 1 CPU and 20GB
+                                  memory. For Always Free databases, memory and
+                                  CPU cannot be scaled.
   --admin-password TEXT           The password must be between 12 and 30
                                   characters long, and must contain at least 1
                                   uppercase, 1 lowercase, and 1 numeric
@@ -2399,11 +2408,8 @@ Options:
   --defined-tags COMPLEX TYPE     Defined tags for this resource. Each key is
                                   predefined and scoped to a namespace. For more
                                   information, see [Resource Tags].
-                                  
-                                  Example:
-                                  `{"Operations": {"CostCenter": "42"}}`
-                                  This is
-                                  a complex type whose value must be valid JSON.
+                                  This is a
+                                  complex type whose value must be valid JSON.
                                   The value can be provided as a string on the
                                   command line or passed in as a file using
                                   the
@@ -2417,12 +2423,15 @@ Options:
                                   a file, modifying it as needed and then
                                   passing it back in via the file:// syntax.
   --license-model [LICENSE_INCLUDED|BRING_YOUR_OWN_LICENSE]
-                                  The new Oracle license model that applies to
-                                  the Oracle Autonomous Transaction Processing
-                                  database. Note that when updating an
-                                  Autonomous Database that uses the [dedicated
-                                  deployment] option, this attribute must be
-                                  null.
+                                  The Oracle license model that applies to the
+                                  Oracle Autonomous Database. The default for
+                                  Autonomous Database using the [shared
+                                  deployment] is BRING_YOUR_OWN_LICENSE. Note
+                                  that when provisioning an Autonomous Database
+                                  using the [dedicated deployment] option, this
+                                  attribute must be null because the attribute
+                                  is already set on Autonomous Exadata
+                                  Infrastructure level.
   --whitelisted-ips COMPLEX TYPE  The client IP access control list (ACL). This
                                   feature is available for [serverless
                                   deployments] only. Only clients connecting
@@ -2890,6 +2899,26 @@ Options:
   --display-name TEXT             The user-friendly name for the Autonomous
                                   Exadata Infrastructure. It does not have to be
                                   unique.
+  --nsg-ids COMPLEX TYPE          A list of the [OCIDs] of the network security
+                                  groups (NSGs) that this DB system belongs to.
+                                  Setting this to an empty array after the list
+                                  is created removes the resource from all NSGs.
+                                  For more information about NSGs, see [Security
+                                  Rules].
+                                  This is a complex type whose value
+                                  must be valid JSON. The value can be provided
+                                  as a string on the command line or passed in
+                                  as a file using
+                                  the file://path/to/file
+                                  syntax.
+                                  
+                                  The --generate-param-json-input
+                                  option can be used to generate an example of
+                                  the JSON which must be provided. We recommend
+                                  storing this example
+                                  in a file, modifying it
+                                  as needed and then passing it back in via the
+                                  file:// syntax.
   --domain TEXT                   A domain name used for the Autonomous Exadata
                                   Infrastructure. If the Oracle-provided
                                   Internet and VCN Resolver is enabled for the
@@ -2939,11 +2968,8 @@ Options:
   --defined-tags COMPLEX TYPE     Defined tags for this resource. Each key is
                                   predefined and scoped to a namespace. For more
                                   information, see [Resource Tags].
-                                  
-                                  Example:
-                                  `{"Operations": {"CostCenter": "42"}}`
-                                  This is
-                                  a complex type whose value must be valid JSON.
+                                  This is a
+                                  complex type whose value must be valid JSON.
                                   The value can be provided as a string on the
                                   command line or passed in as a file using
                                   the
@@ -3165,6 +3191,26 @@ Options:
                                   in a file, modifying it as needed and
                                   then passing it back in via the file://
                                   syntax.
+  --nsg-ids COMPLEX TYPE          A list of the [OCIDs] of the network security
+                                  groups (NSGs) that this DB system belongs to.
+                                  Setting this to an empty array after the list
+                                  is created removes the resource from all NSGs.
+                                  For more information about NSGs, see [Security
+                                  Rules].
+                                  This is a complex type whose value
+                                  must be valid JSON. The value can be provided
+                                  as a string on the command line or passed in
+                                  as a file using
+                                  the file://path/to/file
+                                  syntax.
+                                  
+                                  The --generate-param-json-input
+                                  option can be used to generate an example of
+                                  the JSON which must be provided. We recommend
+                                  storing this example
+                                  in a file, modifying it
+                                  as needed and then passing it back in via the
+                                  file:// syntax.
   --freeform-tags COMPLEX TYPE    Free-form tags for this resource. Each tag is
                                   a simple key-value pair with no predefined
                                   name, type, or namespace. For more
@@ -3189,11 +3235,8 @@ Options:
   --defined-tags COMPLEX TYPE     Defined tags for this resource. Each key is
                                   predefined and scoped to a namespace. For more
                                   information, see [Resource Tags].
-                                  
-                                  Example:
-                                  `{"Operations": {"CostCenter": "42"}}`
-                                  This is
-                                  a complex type whose value must be valid JSON.
+                                  This is a
+                                  complex type whose value must be valid JSON.
                                   The value can be provided as a string on the
                                   command line or passed in as a file using
                                   the
@@ -4131,7 +4174,7 @@ Usage: oci db database create [OPTIONS]
   Creates a new database in the given DB System.
 
 Options:
-  --db-system-id TEXT             The [OCID] of the DB system.
+  --db-system-id TEXT             The [OCID] of the DB system. [required]
   --source [NONE|DB_BACKUP]       The source of database: NONE for creating a
                                   new database. DB_BACKUP for creating a new
                                   database by restoring from a database backup.
@@ -4213,6 +4256,9 @@ Options:
                                   The number of days between the current and the
                                   earliest point of recoverability covered by
                                   automatic backups (1 to 60).
+  --auto-backup-window TEXT       Specifying a two hour slot when the backup
+                                  should kick in eg:- SLOT_ONE,SLOT_TWO. Default
+                                  is anytime
   --from-json TEXT                Provide input to this command as a JSON
                                   document from a file using the file://path-
                                   to/file syntax.
@@ -4249,7 +4295,7 @@ Usage: oci db database create-from-backup [OPTIONS]
   Creates a new database in the given DB System from a backup.
 
 Options:
-  --db-system-id TEXT             The [OCID] of the DB system.
+  --db-system-id TEXT             The [OCID] of the DB system. [required]
   --wait-for-state [PROVISIONING|AVAILABLE|UPDATING|TERMINATING|TERMINATED|FAILED]
                                   This operation creates, modifies or deletes a
                                   resource that has a defined lifecycle state.
@@ -4635,11 +4681,8 @@ Options:
   --defined-tags COMPLEX TYPE     Defined tags for this resource. Each key is
                                   predefined and scoped to a namespace. For more
                                   information, see [Resource Tags].
-                                  
-                                  Example:
-                                  `{"Operations": {"CostCenter": "42"}}`
-                                  This is
-                                  a complex type whose value must be valid JSON.
+                                  This is a
+                                  complex type whose value must be valid JSON.
                                   The value can be provided as a string on the
                                   command line or passed in as a file using
                                   the
@@ -4683,6 +4726,12 @@ Options:
                                   The number of days between the current and the
                                   earliest point of recoverability covered by
                                   automatic backups (1 to 60).
+  --auto-backup-window TEXT       Specifying a two hour slot when the backup
+                                  should kick in eg:- SLOT_ONE,SLOT_TWO. Default
+                                  is anytime
+  --auto-backup-window TEXT       Specifying a two hour slot when the backup
+                                  should kick in eg:- SLOT_ONE,SLOT_TWO. Default
+                                  is anytime
   --from-json TEXT                Provide input to this command as a JSON
                                   document from a file using the file://path-
                                   to/file syntax.
@@ -6235,11 +6284,8 @@ Options:
   --defined-tags COMPLEX TYPE     Defined tags for this resource. Each key is
                                   predefined and scoped to a namespace. For more
                                   information, see [Resource Tags].
-                                  
-                                  Example:
-                                  `{"Operations": {"CostCenter": "42"}}`
-                                  This is
-                                  a complex type whose value must be valid JSON.
+                                  This is a
+                                  complex type whose value must be valid JSON.
                                   The value can be provided as a string on the
                                   command line or passed in as a file using
                                   the
@@ -6623,11 +6669,8 @@ Options:
   --defined-tags COMPLEX TYPE     Defined tags for this resource. Each key is
                                   predefined and scoped to a namespace. For more
                                   information, see [Resource Tags].
-                                  
-                                  Example:
-                                  `{"Operations": {"CostCenter": "42"}}`
-                                  This is
-                                  a complex type whose value must be valid JSON.
+                                  This is a
+                                  complex type whose value must be valid JSON.
                                   The value can be provided as a string on the
                                   command line or passed in as a file using
                                   the
@@ -6938,11 +6981,8 @@ Options:
   --defined-tags COMPLEX TYPE     Defined tags for this resource. Each key is
                                   predefined and scoped to a namespace. For more
                                   information, see [Resource Tags].
-                                  
-                                  Example:
-                                  `{"Operations": {"CostCenter": "42"}}`
-                                  This is
-                                  a complex type whose value must be valid JSON.
+                                  This is a
+                                  complex type whose value must be valid JSON.
                                   The value can be provided as a string on the
                                   command line or passed in as a file using
                                   the

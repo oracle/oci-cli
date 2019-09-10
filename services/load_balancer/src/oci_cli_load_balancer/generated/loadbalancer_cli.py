@@ -244,6 +244,8 @@ Example: `example_backend_set`""")
 Example: `3`""")
 @cli_util.option('--backup', type=click.BOOL, help=u"""Whether the load balancer should treat this server as a backup unit. If `true`, the load balancer forwards no ingress traffic to this backend server unless all other backend servers not marked as \"backup\" fail the health check policy.
 
+**Note:** You cannot add a backend server marked as `backup` to a backend set that uses the IP Hash policy.
+
 Example: `false`""")
 @cli_util.option('--drain', type=click.BOOL, help=u"""Whether the load balancer should drain this server. Servers marked \"drain\" receive no new incoming traffic.
 
@@ -678,7 +680,17 @@ This option is a JSON dictionary of type dict(str, HostnameDetails).  For docume
 @cli_util.option('--backend-sets', type=custom_types.CLI_COMPLEX_TYPE, help=u"""
 
 This option is a JSON dictionary of type dict(str, BackendSetDetails).  For documentation on BackendSetDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/loadbalancer/20170115/datatypes/BackendSetDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--network-security-group-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The array of NSG [OCIDs] to be used by this Load Balancer.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--network-security-group-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of NSG [OCIDs] associated with this load balancer.
+
+During the load balancer's creation, the service adds the new load balancer to the specified NSGs.
+
+The benefits of using NSGs with the load balancer include:
+
+*  NSGs define network security rules to govern ingress and egress traffic for the load balancer.
+
+*  The network security rules of other resources can reference the NSGs associated with the load balancer    to ensure access.
+
+Example: `[\"ocid1.nsg.oc1.phx.unique_ID\"]`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--certificates', type=custom_types.CLI_COMPLEX_TYPE, help=u"""
 
 This option is a JSON dictionary of type dict(str, CertificateDetails).  For documentation on CertificateDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/loadbalancer/20170115/datatypes/CertificateDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2167,6 +2179,8 @@ def list_work_requests(ctx, from_json, all_pages, page_size, load_balancer_id, l
 Example: `3`""")
 @cli_util.option('--backup', required=True, type=click.BOOL, help=u"""Whether the load balancer should treat this server as a backup unit. If `true`, the load balancer forwards no ingress traffic to this backend server unless all other backend servers not marked as \"backup\" fail the health check policy.
 
+**Note:** You cannot add a backend server marked as `backup` to a backend set that uses the IP Hash policy.
+
 Example: `false`""")
 @cli_util.option('--drain', required=True, type=click.BOOL, help=u"""Whether the load balancer should drain this server. Servers marked \"drain\" receive no new incoming traffic.
 
@@ -2335,7 +2349,7 @@ Example: `8080`""")
 @cli_util.option('--return-code', required=True, type=click.INT, help=u"""The status code a healthy backend server should return.
 
 Example: `200`""")
-@cli_util.option('--retries', required=True, type=click.INT, help=u"""The number of retries to attempt before a backend server is considered \"unhealthy\".
+@cli_util.option('--retries', required=True, type=click.INT, help=u"""The number of retries to attempt before a backend server is considered \"unhealthy\". This number also applies when recovering a server to the \"healthy\" state.
 
 Example: `3`""")
 @cli_util.option('--timeout-in-millis', required=True, type=click.INT, help=u"""The maximum time, in milliseconds, to wait for a reply to a health check. A health check is successful only if a reply returns within this timeout period.
@@ -2656,9 +2670,17 @@ def update_load_balancer(ctx, from_json, force, wait_for_state, max_wait_seconds
     cli_util.render_response(result, ctx)
 
 
-@network_security_groups_group.command(name=cli_util.override('update_network_security_groups.command_name', 'update'), help=u"""Updates the network security groups to be used by a load balancer.""")
-@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer on which update the NSGs.""")
-@cli_util.option('--network-security-group-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The array of NSG [OCIDs] to be used by this Load Balancer.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@network_security_groups_group.command(name=cli_util.override('update_network_security_groups.command_name', 'update'), help=u"""Updates the network security groups associated with the specified load balancer.""")
+@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer to update the NSGs for.""")
+@cli_util.option('--network-security-group-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of NSG [OCIDs] associated with the load balancer.
+
+During the load balancer's creation, the service adds the new load balancer to the specified NSGs.
+
+The benefits of associating the load balancer with NSGs include:
+
+*  NSGs define network security rules to govern ingress and egress traffic for the load balancer.
+
+*  The network security rules of other resources can reference the NSGs associated with the load balancer    to ensure access.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")

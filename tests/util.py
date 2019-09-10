@@ -136,24 +136,29 @@ def init_availability_domain_variables():
     global first_ad, second_ad
     with test_config_container.create_vcr().use_cassette('initialize_availability_domains.yml'):
         if first_ad is None or second_ad is None:
-            response = invoke_command(['iam', 'availability-domain', 'list', '--compartment-id', TENANT_ID])
-            availability_domains = json.loads(response.output)['data']
+            first_ad, second_ad = retrieve_availability_domains()
 
-            if len(availability_domains) == 1:
-                first_ad = availability_domains[0]['name']
-                second_ad = availability_domains[0]['name']
-            elif len(availability_domains) == 2:
-                first_ad = availability_domains[0]['name']
-                second_ad = availability_domains[1]['name']
-            else:
-                # We need consistency in the vended availability domains if we're mocking, so don't randomize
-                if test_config_container.using_vcr_with_mock_responses():
-                    first_ad = availability_domains[0]['name']
-                    second_ad = availability_domains[1]['name']
-                else:
-                    chosen_domains = random.sample(availability_domains, 2)
-                    first_ad = chosen_domains[0]['name']
-                    second_ad = chosen_domains[1]['name']
+
+def retrieve_availability_domains():
+    response = invoke_command(['iam', 'availability-domain', 'list', '--compartment-id', TENANT_ID])
+    availability_domains = json.loads(response.output)['data']
+
+    if len(availability_domains) == 1:
+        first_availability_domain = availability_domains[0]['name']
+        second_availability_domain = availability_domains[0]['name']
+    elif len(availability_domains) == 2:
+        first_availability_domain = availability_domains[0]['name']
+        second_availability_domain = availability_domains[1]['name']
+    else:
+        # We need consistency in the vended availability domains if we're mocking, so don't randomize
+        if test_config_container.using_vcr_with_mock_responses():
+            first_availability_domain = availability_domains[0]['name']
+            second_availability_domain = availability_domains[1]['name']
+        else:
+            chosen_domains = random.sample(availability_domains, 2)
+            first_availability_domain = chosen_domains[0]['name']
+            second_availability_domain = chosen_domains[1]['name']
+    return first_availability_domain, second_availability_domain
 
 
 # long running tests are marked with @util.long_running
@@ -322,7 +327,7 @@ def invoke_command(command, ** args):
 def invoke_command_with_overrides(command, profile_override, ** args):
     num_tries = 0
 
-    if profile_override is not '':
+    if profile_override != '':
         command = ['--profile', profile_override] + command
 
     while num_tries < NUM_INVOKE_COMMAND_RETRIES:

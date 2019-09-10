@@ -14,6 +14,7 @@ import oci_cli
 from tests import util
 from tests import test_config_container
 from mimetypes import guess_type
+import random
 
 CASSETTE_LIBRARY_DIR = 'services/object_storage/tests/cassettes'
 CONTENT_INPUT_FILE = 'tests/resources/content_input.txt'
@@ -89,9 +90,9 @@ def test_verify_namespace_name_param():
 
 
 @util.skip_while_rerecording
-def test_run_all_operations(runner, config_file, config_profile, debug, test_id):
+def test_run_all_operations(runner, config_file, config_profile, debug):
     """Successfully calls every operation with required arguments only."""
-    bucket_name = 'cli_temp_bucket_' + test_id + ('_debug' if debug else '_no_debug')
+    bucket_name = 'cli_temp_bucket_' + str(random.randint(0, 1000000)) + ('_debug' if debug else '_no_debug')
     object_name = 'a'
 
     # ns get
@@ -181,8 +182,8 @@ def test_run_all_operations(runner, config_file, config_profile, debug, test_id)
 
 
 @util.skip_while_rerecording
-def test_archive_bucket(runner, config_file, config_profile, test_id):
-    bucket_name = 'cli_temp_archive_bucket_' + test_id + '_no_debug'
+def test_archive_bucket(runner, config_file, config_profile):
+    bucket_name = 'cli_temp_archive_bucket_' + str(random.randint(0, 1000000)) + '_no_debug'
     object_name = 'a'
 
     # bucket create archive

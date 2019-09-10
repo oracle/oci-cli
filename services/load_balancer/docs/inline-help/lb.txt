@@ -87,7 +87,12 @@ Options:
                                   servers not marked as "backup" fail the health
                                   check policy.
                                   
-                                  Example: `false`
+                                  **Note:** You cannot add a
+                                  backend server marked as `backup` to a backend
+                                  set that uses the IP Hash policy.
+                                  
+                                  Example:
+                                  `false`
   --drain BOOLEAN                 Whether the load balancer should drain this
                                   server. Servers marked "drain" receive no new
                                   incoming traffic.
@@ -327,7 +332,12 @@ Options:
                                   servers not marked as "backup" fail the health
                                   check policy.
                                   
-                                  Example: `false` [required]
+                                  **Note:** You cannot add a
+                                  backend server marked as `backup` to a backend
+                                  set that uses the IP Hash policy.
+                                  
+                                  Example:
+                                  `false` [required]
   --drain BOOLEAN                 Whether the load balancer should drain this
                                   server. Servers marked "drain" receive no new
                                   incoming traffic.
@@ -1365,8 +1375,12 @@ Options:
                                   
                                   Example: `200` [required]
   --retries INTEGER               The number of retries to attempt before a
-                                  backend server is considered "unhealthy".
-                                  Example: `3` [required]
+                                  backend server is considered "unhealthy". This
+                                  number also applies when recovering a server
+                                  to the "healthy" state.
+                                  
+                                  Example: `3`
+                                  [required]
   --timeout-in-millis INTEGER     The maximum time, in milliseconds, to wait for
                                   a reply to a health check. A health check is
                                   successful only if a reply returns within this
@@ -2925,17 +2939,18 @@ Options:
                   <command> --help.
 
 Commands:
-  update  Updates the network security groups to be...
+  update  Updates the network security groups...
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci lb nsg update --help
 Usage: oci lb nsg update [OPTIONS]
 
-  Updates the network security groups to be used by a load balancer.
+  Updates the network security groups associated with the specified load
+  balancer.
 
 Options:
-  --load-balancer-id TEXT         The [OCID] of the load balancer on which
-                                  update the NSGs. [required]
+  --load-balancer-id TEXT         The [OCID] of the load balancer to update the
+                                  NSGs for. [required]
   --force                         Perform update without prompting for
                                   confirmation.
   --wait-for-state [ACCEPTED|IN_PROGRESS|FAILED|SUCCEEDED]

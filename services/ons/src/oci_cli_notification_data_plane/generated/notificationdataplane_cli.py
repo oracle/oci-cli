@@ -22,13 +22,13 @@ def notification_data_plane_root_group():
     pass
 
 
-@click.command(cli_util.override('subscription_group.command_name', 'subscription'), cls=CommandGroupWithAlias, help="""The subscription's configuration.""")
+@click.command(cli_util.override('subscription_group.command_name', 'subscription'), cls=CommandGroupWithAlias, help="""The subscription's configuration. For general information about subscriptions, see [Notifications Overview].""")
 @cli_util.help_option_group
 def subscription_group():
     pass
 
 
-@click.command(cli_util.override('notification_topic_group.command_name', 'notification-topic'), cls=CommandGroupWithAlias, help="""The properties that define a topic.""")
+@click.command(cli_util.override('notification_topic_group.command_name', 'notification-topic'), cls=CommandGroupWithAlias, help="""The properties that define a topic. For general information about topics, see [Notifications Overview].""")
 @cli_util.help_option_group
 def notification_topic_group():
     pass
@@ -72,14 +72,18 @@ def change_subscription_compartment(ctx, from_json, subscription_id, compartment
     cli_util.render_response(result, ctx)
 
 
-@subscription_group.command(name=cli_util.override('create_subscription.command_name', 'create'), help=u"""Creates a subscription for the specified topic.
+@subscription_group.command(name=cli_util.override('create_subscription.command_name', 'create'), help=u"""Creates a subscription for the specified topic and sends a subscription confirmation URL to the endpoint. The subscription remains in \"Pending\" status until it has been confirmed. For information about confirming subscriptions, see [To confirm a subscription].
 
 Transactions Per Minute (TPM) per-tenancy limit for this operation: 60.""")
 @cli_util.option('--topic-id', required=True, help=u"""The [OCID] of the topic for the subscription.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment for the subscription.""")
-@cli_util.option('--protocol', required=True, help=u"""The protocol to use for delivering messages. Valid values: EMAIL, HTTPS.""")
-@cli_util.option('--endpoint', required=True, help=u"""The endpoint of the subscription. Valid values depend on the protocol. For EMAIL, only an email address is valid. For HTTPS, only a PagerDuty URL is valid. A URL cannot exceed 512 characters. Avoid entering confidential information.""")
-@cli_util.option('--metadata', help=u"""Metadata for the subscription. Avoid entering confidential information.""")
+@cli_util.option('--protocol', required=True, help=u"""The protocol used for the subscription.
+
+For information about subscription protocols, see [To create a subscription].""")
+@cli_util.option('--endpoint', required=True, help=u"""A locator that corresponds to the subscription protocol. For example, an email address for a subscription that uses the `EMAIL` protocol, or a URL for a subscription that uses an HTTP-based protocol. HTTP-based protocols use URL endpoints that begin with \"http:\" or \"https:\". A URL cannot exceed 512 characters. Avoid entering confidential information.
+
+For protocol-specific endpoint formats and steps to get or create endpoints, see [To create a subscription].""")
+@cli_util.option('--metadata', help=u"""Metadata for the subscription.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -214,7 +218,9 @@ def delete_subscription(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 Transactions Per Minute (TPM) per-tenancy limit for this operation: 60.""")
 @cli_util.option('--id', required=True, help=u"""The [OCID] of the subscription to get the confirmation details for.""")
 @cli_util.option('--token', required=True, help=u"""The subscription confirmation token.""")
-@cli_util.option('--protocol', required=True, help=u"""The subscription protocol. Valid values: EMAIL, HTTPS.""")
+@cli_util.option('--protocol', required=True, help=u"""The protocol used for the subscription.
+
+For information about subscription protocols, see [To create a subscription].""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -266,7 +272,9 @@ def get_subscription(ctx, from_json, subscription_id):
 Transactions Per Minute (TPM) per-tenancy limit for this operation: 60.""")
 @cli_util.option('--id', required=True, help=u"""The [OCID] of the subscription to unsubscribe from.""")
 @cli_util.option('--token', required=True, help=u"""The subscription confirmation token.""")
-@cli_util.option('--protocol', required=True, help=u"""The subscription protocol. Valid values: EMAIL, HTTPS.""")
+@cli_util.option('--protocol', required=True, help=u"""The protocol used for the subscription.
+
+For information about subscription protocols, see [To create a subscription].""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -346,11 +354,11 @@ def list_subscriptions(ctx, from_json, all_pages, page_size, compartment_id, top
 
 Message size limit per request: 64KB.
 
-Message delivery rate limit per endpoint: 60 messages per minute for HTTPS (PagerDuty) protocol, 10 messages per minute for Email protocol.
+Message delivery rate limit per endpoint: 60 messages per minute for HTTP-based protocols, 10 messages per minute for the `EMAIL` protocol. HTTP-based protocols use URL endpoints that begin with \"http:\" or \"https:\".
 
 Transactions Per Minute (TPM) per-tenancy limit for this operation: 60 per topic.
 
-For more information about publishing messages, see [Publishing Messages].""")
+For more information about publishing messages, see [Publishing Messages]. For steps to request a limit increase, see [Requesting a Service Limit Increase].""")
 @cli_util.option('--topic-id', required=True, help=u"""The [OCID] of the topic.""")
 @cli_util.option('--body', required=True, help=u"""The body of the message to be published. For `messageType` of JSON, a default key-value pair is required. Example: `{\"default\": \"Alarm breached\", \"Email\": \"Alarm breached: <url>\"}.` Avoid entering confidential information.""")
 @cli_util.option('--title', help=u"""The title of the message to be published. Avoid entering confidential information.""")

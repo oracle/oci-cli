@@ -320,7 +320,7 @@ def update_policy(ctx, from_json, policy_id, description, statements, version_da
     cli_util.render_response(result, ctx)
 
 
-@cli_util.copy_params_from_generated_command(identity_cli.update_tag, params_to_exclude=['is_retired'])
+@cli_util.copy_params_from_generated_command(identity_cli.update_tag, params_to_exclude=['is_retired', 'validator'])
 @identity_cli.tag_group.command(name=cli_util.override('update_tag.command_name', 'update'), help="""Updates the the specified tag""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'identity', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'identity', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'identity', 'class': 'Tag'})

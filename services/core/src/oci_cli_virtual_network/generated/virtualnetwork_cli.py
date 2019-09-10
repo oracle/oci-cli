@@ -8158,9 +8158,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--route-table-id', help=u"""The OCID of the route table the service gateway will use.
-
-For information about why you would associate a route table with a service gateway, see [Transit Routing: Private Access to Oracle Services].""")
+@cli_util.option('--route-table-id', help=u"""The OCID of the route table the service gateway will use. For information about why you would associate a route table with a service gateway, see [Transit Routing: Private Access to Oracle Services].""")
 @cli_util.option('--services', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of all the `Service` objects you want enabled on this service gateway. Sending an empty list means you want to disable all services. Omitting this parameter entirely keeps the existing list of services intact.
 
 You can also enable or disable a particular `Service` by using [AttachServiceId] or [DetachServiceId].

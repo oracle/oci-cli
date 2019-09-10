@@ -22,7 +22,7 @@ def notification_control_plane_root_group():
     pass
 
 
-@click.command(cli_util.override('notification_topic_group.command_name', 'notification-topic'), cls=CommandGroupWithAlias, help="""The properties that define a topic.""")
+@click.command(cli_util.override('notification_topic_group.command_name', 'notification-topic'), cls=CommandGroupWithAlias, help="""The properties that define a topic. For general information about topics, see [Notifications Overview].""")
 @cli_util.help_option_group
 def notification_topic_group():
     pass

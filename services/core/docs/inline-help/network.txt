@@ -9937,9 +9937,7 @@ Options:
                                   a file, modifying it as needed and then
                                   passing it back in via the file:// syntax.
   --route-table-id TEXT           The OCID of the route table the service
-                                  gateway will use.
-                                  
-                                  For information about why
+                                  gateway will use. For information about why
                                   you would associate a route table with a
                                   service gateway, see [Transit Routing: Private
                                   Access to Oracle Services].
