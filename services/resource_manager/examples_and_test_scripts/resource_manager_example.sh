@@ -12,7 +12,8 @@
 #     * Creating a plan job
 #     * Getting job logs
 #     * Creating an apply job
-#     * Getting job terraform state
+#     * Getting a terraform state produced by a job
+#     * Importing a terraform state
 #     * Creating a destroy job
 #     * Deleting stack
 #
@@ -41,37 +42,28 @@ fi
 echo "Created stack id: ${CREATED_STACK_ID}"
 
 echo "Creating Plan Job"
-CREATED_PLAN_JOB_ID=$(oci resource-manager job create --stack-id $CREATED_STACK_ID --operation PLAN --wait-for-state SUCCEEDED --query 'data.id' --raw-output)
+CREATED_PLAN_JOB_ID=$(oci resource-manager job create-plan-job --stack-id $CREATED_STACK_ID --wait-for-state SUCCEEDED --query 'data.id' --raw-output)
 echo "Created Plan Job Id: ${CREATED_PLAN_JOB_ID}"
 
 echo "Getting Job Logs"
 echo $(oci resource-manager job get-job-logs --job-id $CREATED_PLAN_JOB_ID) > $PLAN_JOB_LOGS_FILE
 echo "Saved Job Logs to $PLAN_JOB_LOGS_FILE"
 
-# wait for stack to be unlocked
-sleep 15
-
 echo "Creating Apply Job"
-JSON_FILE=$(mktemp)
-cat > ${JSON_FILE} << EOF
-    { "planJobId": "$CREATED_PLAN_JOB_ID" }
-EOF
-CREATED_APPLY_JOB_ID=$(oci resource-manager job create --stack-id $CREATED_STACK_ID --operation APPLY --apply-job-plan-resolution file://${JSON_FILE} --wait-for-state SUCCEEDED --query 'data.id' --raw-output)
+CREATED_APPLY_JOB_ID=$(oci resource-manager job create-apply-job --stack-id $CREATED_STACK_ID --execution-plan-strategy FROM_PLAN_JOB_ID --execution-plan-job-id "$CREATED_PLAN_JOB_ID" --wait-for-state SUCCEEDED --query 'data.id' --raw-output)
 echo "Created Apply Job Id: ${CREATED_APPLY_JOB_ID}"
 
 echo "Getting Job Terraform state"
 oci resource-manager job get-job-tf-state --job-id $CREATED_APPLY_JOB_ID --file $JOB_TF_STATE
-echo "Saved Job Logs to $JOB_TF_STATE"
+echo "Saved Job TF State to $JOB_TF_STATE"
 
-# wait for stack to be unlocked
-sleep 15
+echo "Creating Import Tf State Job"
+CREATED_IMPORT_JOB_ID=$(oci resource-manager job create-import-tf-state-job --stack-id $CREATED_STACK_ID --tf-state-file "$JOB_TF_STATE" --wait-for-state SUCCEEDED --query 'data.id' --raw-output)
+echo "Created Import Tf State Job Id: ${CREATED_IMPORT_JOB_ID}"
 
 echo "Creating Destroy Job"
-CREATED_DESTROY_JOB_ID=$(oci resource-manager job create --stack-id $CREATED_STACK_ID --operation DESTROY --apply-job-plan-resolution '{"isAutoApproved":"true"}' --wait-for-state SUCCEEDED --query 'data.id' --raw-output)
+CREATED_DESTROY_JOB_ID=$(oci resource-manager job create-destroy-job --stack-id $CREATED_STACK_ID --execution-plan-strategy=AUTO_APPROVED --wait-for-state SUCCEEDED --query 'data.id' --raw-output)
 echo "Created Destroy Job Id: ${CREATED_DESTROY_JOB_ID}"
-
-# wait for stack to be unlocked
-sleep 15
 
 echo "Deleting Stack"
 oci resource-manager stack delete --stack-id $CREATED_STACK_ID --force

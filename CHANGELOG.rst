@@ -6,6 +6,60 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.6.5 - 2019-09-17
+-------------------
+Added
+~~~~~~
+* Support for backup destination(nfs, zdlra) as a part of database backup service for its create, read, update and delete operations.
+
+  * ``oci db backup-destination create-nfs-details``
+  * ``oci db backup-destination get``
+  * ``oci db backup-destination update``
+  * ``oci db backup-destination delete``
+
+* Support for backup destination in create and update database.
+
+  * ``oci db database create --backup-destination``
+  * ``oci db database create --backup-destination``
+
+* Support for managing Exadata Infrastructure resources at Customer Cloud.
+
+  * ``oci db exadata-infrastructure``
+
+* Supports for managing VM Cluster Network resources at Customer Cloud.
+
+  * ``oci db vm-cluster-network``
+
+* Support for managing VM Cluster resources at Customer Cloud.
+
+  * ``oci db vm-cluster``
+
+* Support for getting a list of supported GI versions for VM Cluster.
+
+  * ``oci db gi-version``
+
+* Support for creating new databases on VM Cluster.
+
+  * ``oci db database create``
+
+* Support for listing databases within a VM Cluster instead of a Db System.
+
+  * ``oci db database list --vm-cluster-id``
+
+* Support for getting a list of database nodes in the specified VM Cluster.
+
+  * ``oci db node list --vm-cluster-id``
+
+* Support for ``create-import-tf-state-job`` command in Resource Manager.
+
+* Separated ``resource-manager job create`` into operation-specific commands.
+
+  * ``oci resource-manager job create-plan-job``
+  * ``oci resource-manager job create-apply-job``
+  * ``oci resource-manager job create-destroy-job``
+  * ``oci resource-manager job create-import-tf-state-job``
+  * ``oci resource-manager job resource-manager job create`` is now deprecated.
+
 2.6.4 - 2019-09-10
 -------------------
 Added

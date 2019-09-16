@@ -37,6 +37,7 @@ def database_test_backup_operations(runner, config_file, config_profile, db_syst
 
 
 @util.long_running
+@pytest.mark.skip("DEXREQ-698")
 def test_backup_operations(runner, config_file, config_profile, db_systems_test_backup_operations, database_test_backup_operations):
     # create backup
     print("Creating backup..")
@@ -129,7 +130,9 @@ def test_backup_operations(runner, config_file, config_profile, db_systems_test_
 
     result = invoke(runner, config_file, config_profile, params)
     util.validate_response(result)
+    print(json.loads(result.output)['data'])
     subnet = json.loads(result.output)['data']['subnet-id']
+    availbility_domain = json.loads(result.output)['data']['availability-domain']
 
     print("Launching new Dbsystem from backup with renamed database ")
     # Launch dbsystem
@@ -140,7 +143,7 @@ def test_backup_operations(runner, config_file, config_profile, db_systems_test_
         '--subnet-id', subnet,
         '--hostname', util.random_name('cli-test-hostname', insert_underscore=False),
         '--db-name', 'renameDb',
-        '--availability-domain', util.retrieve_availability_domains()[0],
+        '--availability-domain', availbility_domain,
         '--shape', DB_SYSTEM_SHAPE,
         '--display-name', util.random_name('CliDbSysDisplayName', insert_underscore=False),
         '--initial-data-storage-size-in-gb', '256',

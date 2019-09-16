@@ -36,6 +36,11 @@ database_cli.autonomous_database_group.commands.pop(database_cli.create_autonomo
 cli_util.rename_command(database_cli.autonomous_database_group, database_cli.create_autonomous_database_create_autonomous_database_clone_details, "create-from-clone")
 cli_util.rename_command(database_cli.autonomous_database_group, database_cli.create_autonomous_database_create_autonomous_database_details, "create")
 
+cli_util.rename_command(database_cli.backup_destination_group, database_cli.create_backup_destination_create_nfs_backup_destination_details, "create-nfs-details")
+cli_util.rename_command(database_cli.backup_destination_group, database_cli.create_backup_destination_create_recovery_appliance_backup_destination_details, "create-recovery-appliance-details")
+database_cli.backup_destination_group.commands.pop(database_cli.create_backup_destination.name)
+database_cli.db_root_group.commands.pop(database_cli.backup_destination_summary_group.name)
+
 
 @cli_util.copy_params_from_generated_command(database_cli.launch_db_system_launch_db_system_details, params_to_exclude=['db_home', 'ssh_public_keys'])
 @database_cli.db_system_group.command(name='launch', help=database_cli.launch_db_system_launch_db_system_details.help)
@@ -154,6 +159,8 @@ def launch_db_system_backup_extended(ctx, **kwargs):
 @cli_util.copy_params_from_generated_command(database_cli.create_db_home, params_to_exclude=['database', 'display_name', 'db_version'])
 @database_cli.database_group.command(name='create', help="""Creates a new database in the given DB System.""")
 @cli_util.option('--admin-password', required=True, help="""A strong password for SYS, SYSTEM, and PDB Admin. The password must be at least nine characters and contain at least two uppercase, two lowercase, two numbers, and two special characters. The special characters must be _, #, or -.""")
+@cli_util.option('--db-system-id', required=False, help="""The Db System Id to create this database under. Either --db-system-id or --vm-cluster-id must be specified, but if both are passed, --vm-cluster-id will be ignored.""")
+@cli_util.option('--vm-cluster-id', required=False, help="""The Vm Cluster Id to create this database under. Either --db-system-id or --vm-cluster-id must be specified, but if both are passed, --vm-cluster-id will be ignored.""")
 @cli_util.option('--character-set', help="""The character set for the database. The default is AL32UTF8. Allowed values are: AL32UTF8, AR8ADOS710, AR8ADOS720, AR8APTEC715, AR8ARABICMACS, AR8ASMO8X, AR8ISO8859P6, AR8MSWIN1256, AR8MUSSAD768, AR8NAFITHA711, AR8NAFITHA721, AR8SAKHR706, AR8SAKHR707, AZ8ISO8859P9E, BG8MSWIN, BG8PC437S, BLT8CP921, BLT8ISO8859P13, BLT8MSWIN1257, BLT8PC775, BN8BSCII, CDN8PC863, CEL8ISO8859P14, CL8ISO8859P5, CL8ISOIR111, CL8KOI8R, CL8KOI8U, CL8MACCYRILLICS, CL8MSWIN1251, EE8ISO8859P2, EE8MACCES, EE8MACCROATIANS, EE8MSWIN1250, EE8PC852, EL8DEC, EL8ISO8859P7, EL8MACGREEKS, EL8MSWIN1253, EL8PC437S, EL8PC851, EL8PC869, ET8MSWIN923, HU8ABMOD, HU8CWI2, IN8ISCII, IS8PC861, IW8ISO8859P8, IW8MACHEBREWS, IW8MSWIN1255, IW8PC1507, JA16EUC, JA16EUCTILDE, JA16SJIS, JA16SJISTILDE, JA16VMS, KO16KSC5601, KO16KSCCS, KO16MSWIN949, LA8ISO6937, LA8PASSPORT, LT8MSWIN921, LT8PC772, LT8PC774, LV8PC1117, LV8PC8LR, LV8RST104090, N8PC865, NE8ISO8859P10, NEE8ISO8859P4, RU8BESTA, RU8PC855, RU8PC866, SE8ISO8859P3, TH8MACTHAIS, TH8TISASCII, TR8DEC, TR8MACTURKISHS, TR8MSWIN1254, TR8PC857, US7ASCII, US8PC437, UTF8, VN8MSWIN1258, VN8VN3, WE8DEC, WE8DG, WE8ISO8859P1, WE8ISO8859P15, WE8ISO8859P9, WE8MACROMAN8S, WE8MSWIN1252, WE8NCR4970, WE8NEXTSTEP, WE8PC850, WE8PC858, WE8PC860, WE8ROMAN8, ZHS16CGB231280, ZHS16GBK, ZHT16BIG5, ZHT16CCDC, ZHT16DBT, ZHT16HKSCS, ZHT16MSWIN950, ZHT32EUC, ZHT32SOPS, ZHT32TRIS.""")
 @cli_util.option('--db-name', required=True, help="""The database name. It must begin with an alphabetic character and can contain a maximum of eight alphanumeric characters. Special characters are not permitted.""")
 @cli_util.option('--db-workload', type=custom_types.CliCaseInsensitiveChoice(["OLTP", "DSS"]), help="""Database workload type. Allowed values are: OLTP, DSS""")
@@ -163,11 +170,21 @@ def launch_db_system_backup_extended(ctx, **kwargs):
 @cli_util.option('--auto-backup-enabled', type=click.BOOL, help="""If set to true, schedules backups automatically. Default is false.""")
 @cli_util.option('--recovery-window-in-days', type=click.IntRange(1, 60), help="""The number of days between the current and the earliest point of recoverability covered by automatic backups (1 to 60).""")
 @cli_util.option('--auto-backup-window', required=False, help="""Specifying a two hour slot when the backup should kick in eg:- SLOT_ONE,SLOT_TWO. Default is anytime""")
+@cli_util.option('--backup-destination', required=False, type=custom_types.CLI_COMPLEX_TYPE, help="""backup destination list""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'DatabaseSummary'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'backup-destination': {'module': 'database', 'class': 'list[BackupDestinationDetails]'}}, output_type={'module': 'database', 'class': 'DatabaseSummary'})
 @cli_util.wrap_exceptions
 def create_database(ctx, **kwargs):
-    create_db_home_with_system_details = oci.database.models.CreateDbHomeWithDbSystemIdDetails()
+    if 'db_system_id' in kwargs and kwargs['db_system_id']:
+        create_db_home_details = oci.database.models.CreateDbHomeWithDbSystemIdDetails()
+        create_db_home_details.db_system_id = kwargs['db_system_id']
+    else:
+        if 'vm_cluster_id' in kwargs and kwargs['vm_cluster_id']:
+            create_db_home_details = oci.database.models.CreateDbHomeWithVmClusterIdDetails()
+            create_db_home_details.vm_cluster_id = kwargs['vm_cluster_id']
+        else:
+            click.echo(message="Missing a required parameter. Either --db-system-id or --vm-cluster-id must be specified.", file=sys.stderr)
+            sys.exit(1)
 
     db_backup_config = oci.database.models.DbBackupConfig()
 
@@ -183,6 +200,9 @@ def create_database(ctx, **kwargs):
 
     if 'db_workload' in kwargs and kwargs['db_workload']:
         create_database_details.db_workload = kwargs['db_workload']
+
+    if 'backup_destination' in kwargs and kwargs['backup_destination']:
+        db_backup_config.backup_destination_details = cli_util.parse_json_parameter("backup_destination_details", kwargs['backup_destination'])
 
     if 'ncharacter_set' in kwargs and kwargs['ncharacter_set']:
         create_database_details.ncharacter_set = kwargs['ncharacter_set']
@@ -203,17 +223,15 @@ def create_database(ctx, **kwargs):
     create_database_details.db_backup_config = db_backup_config
     del kwargs['auto_backup_enabled']
     del kwargs['recovery_window_in_days']
-    create_db_home_with_system_details.database = create_database_details
+    del kwargs['backup_destination']
 
-    if 'db_system_id' in kwargs and kwargs['db_system_id']:
-        create_db_home_with_system_details.db_system_id = kwargs['db_system_id']
-
+    create_db_home_details.database = create_database_details
     if 'db_version' in kwargs and kwargs['db_version']:
-        create_db_home_with_system_details.db_version = kwargs['db_version']
+        create_db_home_details.db_version = kwargs['db_version']
 
     client = cli_util.build_client('database', ctx)
 
-    result = client.create_db_home(create_db_home_with_system_details)
+    result = client.create_db_home(create_db_home_details)
 
     db_home_id = result.data.id
     compartment_id = result.data.compartment_id
@@ -235,6 +253,7 @@ def create_database(ctx, **kwargs):
 
 @cli_util.copy_params_from_generated_command(database_cli.create_db_home, params_to_exclude=['database', 'display_name', 'db_version', 'source'])
 @database_cli.database_group.command(name='create-from-backup', help="""Creates a new database in the given DB System from a backup.""")
+@cli_util.option('--db-system-id', required=False, help="""The Db System Id to restore this database under.""")
 @cli_util.option('--admin-password', required=True, help="""A strong password for SYS, SYSTEM, and PDB Admin. The password must be at least nine characters and contain at least two uppercase, two lowercase, two numbers, and two special characters. The special characters must be _, #, or -.""")
 @cli_util.option('--backup-id', required=True, help="""The backup OCID.""")
 @cli_util.option('--backup-tde-password', required=True, help="""The password to open the TDE wallet.""")
@@ -291,9 +310,9 @@ def create_database_from_backup(ctx, **kwargs):
 @cli_util.option('--auto-backup-enabled', type=click.BOOL, help="""If set to true, schedules backups automatically. Default is false.""")
 @cli_util.option('--recovery-window-in-days', type=click.IntRange(1, 60), help="""The number of days between the current and the earliest point of recoverability covered by automatic backups (1 to 60).""")
 @cli_util.option('--auto-backup-window', required=False, help="""Specifying a two hour slot when the backup should kick in eg:- SLOT_ONE,SLOT_TWO. Default is anytime""")
-@cli_util.option('--auto-backup-window', required=False, help="""Specifying a two hour slot when the backup should kick in eg:- SLOT_ONE,SLOT_TWO. Default is anytime""")
+@cli_util.option('--backup-destination', required=False, type=custom_types.CLI_COMPLEX_TYPE, help="""backup destination list""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}}, output_type={'module': 'database', 'class': 'Database'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'backup-destination': {'module': 'database', 'class': 'list[BackupDestinationDetails]'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}}, output_type={'module': 'database', 'class': 'Database'})
 @cli_util.wrap_exceptions
 def update_database_extended(ctx, **kwargs):
     if kwargs['auto_backup_enabled'] is not None or kwargs['recovery_window_in_days'] is not None:
@@ -305,6 +324,9 @@ def update_database_extended(ctx, **kwargs):
             db_backup_config['autoBackupEnabled'] = kwargs['auto_backup_enabled']
         if kwargs['recovery_window_in_days'] is not None:
             db_backup_config['recoveryWindowInDays'] = kwargs['recovery_window_in_days']
+        if 'backup_destination' in kwargs and kwargs['backup_destination']:
+            db_backup_config['backupDestinationDetails'] = cli_util.parse_json_parameter("backup_destination_details", kwargs['backup_destination'])
+        del kwargs['backup_destination']
         kwargs['db_backup_config'] = json.dumps(db_backup_config)
 
     del kwargs['auto_backup_enabled']
@@ -379,15 +401,24 @@ def delete_database(ctx, **kwargs):
 @cli_util.copy_params_from_generated_command(database_cli.list_db_homes, params_to_exclude=['db_home_id', 'page', 'all_pages', 'page_size'])
 @database_cli.database_group.command(name='list', help="""Lists all databases in a given DB System.""")
 @click.pass_context
+@cli_util.option('--db-system-id', help="""The OCID of the db system to list within.""")
+@cli_util.option('--vm-cluster-id', help="""The OCID of the vm cluster to list within.""")
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'list[DatabaseSummary]'})
 @cli_util.wrap_exceptions
 def list_databases(ctx, **kwargs):
     client = cli_util.build_client('database', ctx)
 
-    response = client.get_db_system(kwargs['db_system_id'])
-    compartment_id = response.data.compartment_id
+    if kwargs['db_system_id'] is not None and kwargs['compartment_id'] is None:
+        response = client.get_db_system(kwargs['db_system_id'])
+        compartment_id = response.data.compartment_id
+    else:
+        if kwargs['compartment_id'] is None:
+            click.echo(message="Could not determine compartment_id from db_system_id and wasn't provided by caller.", file=sys.stderr)
+            sys.exit(1)
+        else:
+            compartment_id = kwargs['compartment_id']
 
-    list_db_home_kw_args = {'db_system_id': kwargs['db_system_id']}
+    list_db_home_kw_args = {'db_system_id': kwargs['db_system_id'], 'vm_cluster_id': kwargs['vm_cluster_id']}
     response = client.list_db_homes(compartment_id, **list_db_home_kw_args)
     db_homes = response.data
     while response.has_next_page:

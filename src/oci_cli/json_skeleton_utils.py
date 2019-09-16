@@ -155,8 +155,11 @@ def generate_input_dict_for_skeleton(ctx, targeted_complex_param=None):
     input_params_to_complex_types = ctx.obj['input_params_to_complex_types']
 
     input_as_dict = {}
+    inv_alias = {}
     already_processed_params = set()
     options = ctx.command.params  # This is an array of click.Option objects
+    if 'parameter_aliases' in ctx.obj:
+        inv_alias = {v[0]: k for k, v in ctx.obj['parameter_aliases'].items()}  # Inverse of the parameter aliases in rc
 
     # First we go through all the options and for the "simple" ones (i.e. those which are some sort of primitive type)
     # we add them to our dictionary. We also mark what params get processed so that we can remove any redundant elements
@@ -168,6 +171,11 @@ def generate_input_dict_for_skeleton(ctx, targeted_complex_param=None):
         for opt_name in opts:
             if opt_name.find('--') == 0:
                 leading_dashes_removed = opt_name[2:]
+
+                # We don't want to include custom aliases in the JSON output.
+                # Skip all aliases that were listed in the oci_cli_rc file.
+                if opt_name in inv_alias:
+                    continue
 
                 # We don't need to include the help flag in the JSON, or the options which are used to signal
                 # to generate JSON or pass in the command's input as JSON
