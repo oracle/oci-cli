@@ -33,22 +33,29 @@ Usage: oci resource-manager job [OPTIONS] COMMAND [ARGS]...
   then executes the configuration's instructions. - **Destroy job**. To clean
   up the infrastructure controlled by the stack, you run a destroy job. A
   destroy job does not delete the stack or associated job resources, but
-  instead releases the resources managed by the stack.
+  instead releases the resources managed by the stack. - **Import_TF_State
+  job**. An import Terraform state job takes a Terraform state file and sets
+  it as the current state of the stack. This is used to migrate local
+  Terraform environments to Resource Manager.
 
 Options:
   -?, -h, --help  For detailed help on any of these individual commands, enter
                   <command> --help.
 
 Commands:
-  cancel                Indicates the intention to cancel the...
-  create                Creates a job.
-  get                   Returns the specified job along with the job...
-  get-job-logs          Returns log entries for the specified job in...
-  get-job-logs-content  Returns raw log file for the specified job in...
-  get-job-tf-config     Returns the Terraform configuration file for...
-  get-job-tf-state      Returns the Terraform state for the specified...
-  list                  Returns a list of jobs in a stack or...
-  update                Updates the specified job.
+  cancel                      Indicates the intention to cancel the...
+  create                      Creates a job.
+  create-apply-job            Creates a job.
+  create-destroy-job          Creates a job.
+  create-import-tf-state-job  Creates a job.
+  create-plan-job             Creates a job.
+  get                         Returns the specified job along with the job...
+  get-job-logs                Returns log entries for the specified job in...
+  get-job-logs-content        Returns raw log file for the specified job in...
+  get-job-tf-config           Returns the Terraform configuration file for...
+  get-job-tf-state            Returns the Terraform state for the specified...
+  list                        Returns a list of jobs in a stack or...
+  update                      Updates the specified job.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci resource-manager job cancel --help
@@ -122,12 +129,13 @@ Usage: oci resource-manager job create [OPTIONS]
 Options:
   --stack-id TEXT                 OCID of the stack that is associated with the
                                   current job. [required]
-  --operation TEXT                Terraform-specific operation to execute.
-                                  [required]
   --display-name TEXT             Description of the job.
-  --apply-job-plan-resolution COMPLEX TYPE
-                                  This is a complex type whose value must be
-                                  valid JSON. The value can be provided as a
+  --operation TEXT                Terraform-specific operation to execute.
+  --job-operation-details COMPLEX TYPE
+                                  Job details that are specific to the operation
+                                  type.
+                                  This is a complex type whose value must
+                                  be valid JSON. The value can be provided as a
                                   string on the command line or passed in as a
                                   file using
                                   the file://path/to/file syntax.
@@ -138,6 +146,404 @@ Options:
                                   in a file, modifying it as needed and
                                   then passing it back in via the file://
                                   syntax.
+  --apply-job-plan-resolution COMPLEX TYPE
+                                  Deprecated. Use the property
+                                  `executionPlanStrategy` in
+                                  `jobOperationDetails` instead.
+                                  This is a
+                                  complex type whose value must be valid JSON.
+                                  The value can be provided as a string on the
+                                  command line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+  --freeform-tags COMPLEX TYPE    Free-form tags associated with this resource.
+                                  Each tag is a key-value pair with no
+                                  predefined name, type, or namespace. For more
+                                  information, see [Resource Tags]. Example:
+                                  `{"Department": "Finance"}`
+                                  This is a complex
+                                  type whose value must be valid JSON. The value
+                                  can be provided as a string on the command
+                                  line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+  --defined-tags COMPLEX TYPE     Defined tags for this resource. Each key is
+                                  predefined and scoped to a namespace. For more
+                                  information, see [Resource Tags]. Example:
+                                  `{"Operations": {"CostCenter": "42"}}`
+                                  This is
+                                  a complex type whose value must be valid JSON.
+                                  The value can be provided as a string on the
+                                  command line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+  --wait-for-state [ACCEPTED|IN_PROGRESS|FAILED|SUCCEEDED|CANCELING|CANCELED]
+                                  This operation creates, modifies or deletes a
+                                  resource that has a defined lifecycle state.
+                                  Specify this option to perform the action and
+                                  then wait until the resource reaches a given
+                                  lifecycle state. If timeout is reached, a
+                                  return code of 2 is returned. For any other
+                                  error, a return code of 1 is returned.
+  --max-wait-seconds INTEGER      The maximum time to wait for the resource to
+                                  reach the lifecycle state defined by --wait-
+                                  for-state. Defaults to 1200 seconds.
+  --wait-interval-seconds INTEGER
+                                  Check every --wait-interval-seconds to see
+                                  whether the resource to see if it has reached
+                                  the lifecycle state defined by --wait-for-
+                                  state. Defaults to 30 seconds.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file using the file://path-
+                                  to/file syntax.
+                                  
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci resource-manager job create-apply-job --help
+Usage: oci resource-manager job create-apply-job [OPTIONS]
+
+  Creates a job.
+
+Options:
+  --stack-id TEXT                 OCID of the stack that is associated with the
+                                  current job. [required]
+  --display-name TEXT             Description of the job.
+  --freeform-tags COMPLEX TYPE    Free-form tags associated with this resource.
+                                  Each tag is a key-value pair with no
+                                  predefined name, type, or namespace. For more
+                                  information, see [Resource Tags]. Example:
+                                  `{"Department": "Finance"}`
+                                  This is a complex
+                                  type whose value must be valid JSON. The value
+                                  can be provided as a string on the command
+                                  line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+  --defined-tags COMPLEX TYPE     Defined tags for this resource. Each key is
+                                  predefined and scoped to a namespace. For more
+                                  information, see [Resource Tags]. Example:
+                                  `{"Operations": {"CostCenter": "42"}}`
+                                  This is
+                                  a complex type whose value must be valid JSON.
+                                  The value can be provided as a string on the
+                                  command line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+  --wait-for-state [ACCEPTED|IN_PROGRESS|FAILED|SUCCEEDED|CANCELING|CANCELED]
+                                  This operation creates, modifies or deletes a
+                                  resource that has a defined lifecycle state.
+                                  Specify this option to perform the action and
+                                  then wait until the resource reaches a given
+                                  lifecycle state. If timeout is reached, a
+                                  return code of 2 is returned. For any other
+                                  error, a return code of 1 is returned.
+  --max-wait-seconds INTEGER      The maximum time to wait for the resource to
+                                  reach the lifecycle state defined by --wait-
+                                  for-state. Defaults to 1200 seconds.
+  --wait-interval-seconds INTEGER
+                                  Check every --wait-interval-seconds to see
+                                  whether the resource to see if it has reached
+                                  the lifecycle state defined by --wait-for-
+                                  state. Defaults to 30 seconds.
+  --execution-plan-job-id TEXT    Specifies the source of the execution plan to
+                                  apply. Use `AUTO_APPROVED` to run the job
+                                  without an execution plan.
+  --execution-plan-strategy TEXT  The OCID of a plan job, for use when
+                                  specifying `FROM_PLAN_JOB_ID` as the
+                                  `executionPlanStrategy`. [required]
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file using the file://path-
+                                  to/file syntax.
+                                  
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci resource-manager job create-destroy-job --help
+Usage: oci resource-manager job create-destroy-job [OPTIONS]
+
+  Creates a job.
+
+Options:
+  --stack-id TEXT                 OCID of the stack that is associated with the
+                                  current job. [required]
+  --display-name TEXT             Description of the job.
+  --freeform-tags COMPLEX TYPE    Free-form tags associated with this resource.
+                                  Each tag is a key-value pair with no
+                                  predefined name, type, or namespace. For more
+                                  information, see [Resource Tags]. Example:
+                                  `{"Department": "Finance"}`
+                                  This is a complex
+                                  type whose value must be valid JSON. The value
+                                  can be provided as a string on the command
+                                  line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+  --defined-tags COMPLEX TYPE     Defined tags for this resource. Each key is
+                                  predefined and scoped to a namespace. For more
+                                  information, see [Resource Tags]. Example:
+                                  `{"Operations": {"CostCenter": "42"}}`
+                                  This is
+                                  a complex type whose value must be valid JSON.
+                                  The value can be provided as a string on the
+                                  command line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+  --wait-for-state [ACCEPTED|IN_PROGRESS|FAILED|SUCCEEDED|CANCELING|CANCELED]
+                                  This operation creates, modifies or deletes a
+                                  resource that has a defined lifecycle state.
+                                  Specify this option to perform the action and
+                                  then wait until the resource reaches a given
+                                  lifecycle state. If timeout is reached, a
+                                  return code of 2 is returned. For any other
+                                  error, a return code of 1 is returned.
+  --max-wait-seconds INTEGER      The maximum time to wait for the resource to
+                                  reach the lifecycle state defined by --wait-
+                                  for-state. Defaults to 1200 seconds.
+  --wait-interval-seconds INTEGER
+                                  Check every --wait-interval-seconds to see
+                                  whether the resource to see if it has reached
+                                  the lifecycle state defined by --wait-for-
+                                  state. Defaults to 30 seconds.
+  --execution-plan-strategy TEXT  Specifies the source of the execution plan to
+                                  apply. Currently, only `AUTO_APPROVED` is
+                                  allowed, which indicates that the job will be
+                                  run without an execution plan. [required]
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file using the file://path-
+                                  to/file syntax.
+                                  
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci resource-manager job create-import-tf-state-job --help
+Usage: oci resource-manager job create-import-tf-state-job [OPTIONS]
+
+  Creates a job.
+
+Options:
+  --stack-id TEXT                 OCID of the stack that is associated with the
+                                  current job. [required]
+  --display-name TEXT             Description of the job.
+  --freeform-tags COMPLEX TYPE    Free-form tags associated with this resource.
+                                  Each tag is a key-value pair with no
+                                  predefined name, type, or namespace. For more
+                                  information, see [Resource Tags]. Example:
+                                  `{"Department": "Finance"}`
+                                  This is a complex
+                                  type whose value must be valid JSON. The value
+                                  can be provided as a string on the command
+                                  line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+  --defined-tags COMPLEX TYPE     Defined tags for this resource. Each key is
+                                  predefined and scoped to a namespace. For more
+                                  information, see [Resource Tags]. Example:
+                                  `{"Operations": {"CostCenter": "42"}}`
+                                  This is
+                                  a complex type whose value must be valid JSON.
+                                  The value can be provided as a string on the
+                                  command line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+  --wait-for-state [ACCEPTED|IN_PROGRESS|FAILED|SUCCEEDED|CANCELING|CANCELED]
+                                  This operation creates, modifies or deletes a
+                                  resource that has a defined lifecycle state.
+                                  Specify this option to perform the action and
+                                  then wait until the resource reaches a given
+                                  lifecycle state. If timeout is reached, a
+                                  return code of 2 is returned. For any other
+                                  error, a return code of 1 is returned.
+  --max-wait-seconds INTEGER      The maximum time to wait for the resource to
+                                  reach the lifecycle state defined by --wait-
+                                  for-state. Defaults to 1200 seconds.
+  --wait-interval-seconds INTEGER
+                                  Check every --wait-interval-seconds to see
+                                  whether the resource to see if it has reached
+                                  the lifecycle state defined by --wait-for-
+                                  state. Defaults to 30 seconds.
+  --tf-state-file TEXT            Job details that are specific to import
+                                  Terraform state operations. [required]
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file using the file://path-
+                                  to/file syntax.
+                                  
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci resource-manager job create-plan-job --help
+Usage: oci resource-manager job create-plan-job [OPTIONS]
+
+  Creates a job.
+
+Options:
+  --stack-id TEXT                 OCID of the stack that is associated with the
+                                  current job. [required]
+  --display-name TEXT             Description of the job.
   --freeform-tags COMPLEX TYPE    Free-form tags associated with this resource.
                                   Each tag is a key-value pair with no
                                   predefined name, type, or namespace. For more

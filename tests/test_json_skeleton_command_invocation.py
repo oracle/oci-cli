@@ -369,6 +369,15 @@ def test_generate_example_json_create_update_policy():
     assert expected_json == json.loads(update_result.output)
 
 
+def test_generate_full_command_json_rc_alias():
+    availability_domain_result = invoke(['db', 'system', 'launch', '--generate-full-command-json-input'])
+
+    expected_json = 'string'
+
+    parsed_result = json.loads(availability_domain_result.output)
+    assert expected_json == parsed_result['availabilityDomain']
+
+
 def invoke(commands, debug=False, ** args):
     if debug is True:
         commands = ['--debug'] + commands

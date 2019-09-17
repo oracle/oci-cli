@@ -26,6 +26,12 @@ def create_base64encoded_zip(config_source):
             return base64.b64encode(zip_file.read()).decode('utf-8')
 
 
+def create_base64encoded_tf_state(tf_state):
+    if os.path.isfile(tf_state):
+        with open(tf_state, mode='rb') as tf_state_file:
+            return base64.b64encode(tf_state_file.read()).decode('utf-8')
+
+
 @cli_util.copy_params_from_generated_command(resourcemanager_cli.create_stack, params_to_exclude=['config_source'])
 @resourcemanager_cli.stack_group.command(name=cli_util.override('create_stack.command_name', 'create'), help="""Creates a Stack""")
 @cli_util.option('--config-source', required=True, help="""A Terraform configuration .zip file.""")
@@ -94,3 +100,114 @@ def update_stack_extended(ctx, config_source, working_directory, **kwargs):
 
     json_skeleton_utils.remove_json_skeleton_params_from_dict(kwargs)
     ctx.invoke(resourcemanager_cli.update_stack, **kwargs)
+
+
+# Overriding polymorphic sub commands of create job to shorten the names of the commands and remove redundant parameters
+# For final design adn full review see:
+# https://jira.oci.oraclecorp.com/browse/DEX-6309?focusedCommentId=1406256&page=com.atlassian.jira.plugin.system.issuetabpanels%3Acomment-tabpanel#comment-1406256
+
+# Plan operation
+# Removes create_job_create_plan_job_operation_details from CLI
+resourcemanager_cli.job_group.commands.pop(resourcemanager_cli.create_job_create_plan_job_operation_details.name)
+
+
+# params_to_exclude will remove unwanted params
+@cli_util.copy_params_from_generated_command(resourcemanager_cli.create_job_create_plan_job_operation_details, params_to_exclude=['operation', 'apply_job_plan_resolution'])
+# Create a new command with name 'create-plan-job'
+@resourcemanager_cli.job_group.command(name='create-plan-job', help=resourcemanager_cli.create_job_create_plan_job_operation_details.help)
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'resource_manager', 'class': 'Job'})
+@cli_util.wrap_exceptions
+def create_plan_job(ctx, **kwargs):
+    # invoke generated command.
+    ctx.invoke(resourcemanager_cli.create_job_create_plan_job_operation_details, **kwargs)
+
+
+# Apply operation
+# Removes create_job_create_apply_job_operation_details from CLI
+resourcemanager_cli.job_group.commands.pop(resourcemanager_cli.create_job_create_apply_job_operation_details.name)
+
+
+# params_to_exclude will remove unwanted params
+@cli_util.copy_params_from_generated_command(resourcemanager_cli.create_job_create_apply_job_operation_details, params_to_exclude=['job_operation_details_execution_plan_strategy', 'job_operation_details_execution_plan_job_id', 'operation', 'apply_job_plan_resolution'])
+# Create a new command with name 'create-apply-job'
+@resourcemanager_cli.job_group.command(name='create-apply-job', help=resourcemanager_cli.create_job_create_apply_job_operation_details.help)
+# New/Renamed options
+@cli_util.option('--execution-plan-job-id', help=u"""Specifies the source of the execution plan to apply. Use `AUTO_APPROVED` to run the job without an execution plan.""")
+@cli_util.option('--execution-plan-strategy', required=True, help=u"""The OCID of a plan job, for use when specifying `FROM_PLAN_JOB_ID` as the `executionPlanStrategy`.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'resource_manager', 'class': 'Job'})
+@cli_util.wrap_exceptions
+def create_apply_job(ctx, **kwargs):
+    # Extract the renamed options and construct original options.
+    if 'execution_plan_strategy' in kwargs:
+        kwargs['job_operation_details_execution_plan_strategy'] = kwargs['execution_plan_strategy']
+        del kwargs['execution_plan_strategy']
+    if 'execution_plan_job_id' in kwargs:
+        kwargs['job_operation_details_execution_plan_job_id'] = kwargs['execution_plan_job_id']
+        del kwargs['execution_plan_job_id']
+
+    # invoke generated command.
+    ctx.invoke(resourcemanager_cli.create_job_create_apply_job_operation_details, **kwargs)
+
+
+# Destroy operation
+# Removes create_job_create_destroy_job_operation_details from CLI
+resourcemanager_cli.job_group.commands.pop(resourcemanager_cli.create_job_create_destroy_job_operation_details.name)
+
+
+# params_to_exclude will remove unwanted params
+@cli_util.copy_params_from_generated_command(resourcemanager_cli.create_job_create_destroy_job_operation_details, params_to_exclude=['job_operation_details_execution_plan_strategy', 'operation', 'apply_job_plan_resolution'])
+# Create a new command with name 'create-destroy-job'
+@resourcemanager_cli.job_group.command(name='create-destroy-job', help=resourcemanager_cli.create_job_create_destroy_job_operation_details.help)
+# New/Renamed options
+@cli_util.option('--execution-plan-strategy', required=True, help=u"""Specifies the source of the execution plan to apply. Currently, only `AUTO_APPROVED` is allowed, which indicates that the job will be run without an execution plan.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'resource_manager', 'class': 'Job'})
+@cli_util.wrap_exceptions
+def create_destroy_job(ctx, **kwargs):
+    # Extract the renamed options and construct original options.
+    if 'execution_plan_strategy' in kwargs:
+        kwargs['job_operation_details_execution_plan_strategy'] = kwargs['execution_plan_strategy']
+        del kwargs['execution_plan_strategy']
+
+    # invoke generated command.
+    ctx.invoke(resourcemanager_cli.create_job_create_destroy_job_operation_details, **kwargs)
+
+
+# Import TF State operation
+# Removes create_job_create_import_tf_state_job_operation_details from CLI
+resourcemanager_cli.job_group.commands.pop(resourcemanager_cli.create_job_create_import_tf_state_job_operation_details.name)
+
+
+# params_to_exclude will remove unwanted params
+@cli_util.copy_params_from_generated_command(resourcemanager_cli.create_job_create_import_tf_state_job_operation_details, params_to_exclude=['job_operation_details_tf_state_base64_encoded', 'operation', 'apply_job_plan_resolution'])
+# Create a new command with name 'create-import-tf-state-job'
+@resourcemanager_cli.job_group.command(name='create-import-tf-state-job', help=resourcemanager_cli.create_job_create_import_tf_state_job_operation_details.help)
+# New/Renamed options
+@cli_util.option('--tf-state-file', required=True, help=u"""Job details that are specific to import Terraform state operations.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'resource_manager', 'class': 'Job'})
+@cli_util.wrap_exceptions
+def create_import_tf_state_job(ctx, **kwargs):
+    # Extract the renamed options and construct original options.
+    if 'tf_state_file' in kwargs:
+        state_to_import = os.path.expandvars(os.path.expanduser(kwargs['tf_state_file']))
+        if not os.path.exists(state_to_import):
+            click.echo('tf state file does not exist', file=sys.stderr)
+            ctx.abort()
+
+        if not (os.path.isfile(state_to_import)):
+            click.echo('tf state must be a file.', file=sys.stderr)
+            ctx.abort()
+
+        send_value = create_base64encoded_tf_state(state_to_import)
+        if not send_value:
+            click.echo('Internal error: Unable to generate encoded tf state', file=sys.stderr)
+            ctx.abort()
+
+        kwargs['job_operation_details_tf_state_base64_encoded'] = send_value
+        del kwargs['tf_state_file']
+
+    # invoke generated command.
+    ctx.invoke(resourcemanager_cli.create_job_create_import_tf_state_job_operation_details, **kwargs)

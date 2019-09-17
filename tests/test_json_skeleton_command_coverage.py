@@ -92,6 +92,7 @@ IGNORE_EXTENDED_TESTS_COMMANDS = [
     ['dts', 'physical-appliance', 'initialize-authentication'],
     ['dts', 'physical-appliance', 'unlock'],
     ['dts', 'job', 'verify-upload-user-credentials'],
+    ['resource-manager', 'job', 'create-import-tf-state-job'],
     ['waas', 'waas-policy', 'list'],
     ['waas', 'certificate', 'list']
 ]

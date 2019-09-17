@@ -36,7 +36,7 @@ def test_database_operations(runner, config_file, config_profile, db_systems_tes
     # create database
     params = [
         'database', 'create',
-        '--db-system-id', db_systems_test_database_operations[0],
+        '--vm-cluster-id', db_systems_test_database_operations[0],
         '--db-version', DB_VERSION,
         '--admin-password', ADMIN_PASSWORD,
         '--recovery-window-in-days', DB_RECOVERY_WINDOW,

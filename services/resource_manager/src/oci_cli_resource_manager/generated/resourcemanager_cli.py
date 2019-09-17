@@ -44,7 +44,7 @@ def work_request_group():
     pass
 
 
-@click.command(cli_util.override('job_group.command_name', 'job'), cls=CommandGroupWithAlias, help="""Jobs perform the actions that are defined in your configuration. There are three job types - **Plan job**. A plan job takes your Terraform configuration, parses it, and creates an execution plan. - **Apply job**. The apply job takes your execution plan, applies it to the associated stack, then executes the configuration's instructions. - **Destroy job**. To clean up the infrastructure controlled by the stack, you run a destroy job. A destroy job does not delete the stack or associated job resources, but instead releases the resources managed by the stack.""")
+@click.command(cli_util.override('job_group.command_name', 'job'), cls=CommandGroupWithAlias, help="""Jobs perform the actions that are defined in your configuration. There are three job types - **Plan job**. A plan job takes your Terraform configuration, parses it, and creates an execution plan. - **Apply job**. The apply job takes your execution plan, applies it to the associated stack, then executes the configuration's instructions. - **Destroy job**. To clean up the infrastructure controlled by the stack, you run a destroy job. A destroy job does not delete the stack or associated job resources, but instead releases the resources managed by the stack. - **Import_TF_State job**. An import Terraform state job takes a Terraform state file and sets it as the current state of the stack. This is used to migrate local Terraform environments to Resource Manager.""")
 @cli_util.help_option_group
 def job_group():
     pass
@@ -178,9 +178,82 @@ def change_stack_compartment(ctx, from_json, wait_for_state, max_wait_seconds, w
 
 @job_group.command(name=cli_util.override('create_job.command_name', 'create'), help=u"""Creates a job.""")
 @cli_util.option('--stack-id', required=True, help=u"""OCID of the stack that is associated with the current job.""")
-@cli_util.option('--operation', required=True, help=u"""Terraform-specific operation to execute.""")
 @cli_util.option('--display-name', help=u"""Description of the job.""")
-@cli_util.option('--apply-job-plan-resolution', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--operation', help=u"""Terraform-specific operation to execute.""")
+@cli_util.option('--job-operation-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Job details that are specific to the operation type.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--apply-job-plan-resolution', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Deprecated. Use the property `executionPlanStrategy` in `jobOperationDetails` instead.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags associated with this resource. Each tag is a key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'job-operation-details': {'module': 'resource_manager', 'class': 'CreateJobOperationDetails'}, 'apply-job-plan-resolution': {'module': 'resource_manager', 'class': 'ApplyJobPlanResolution'}, 'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'job-operation-details': {'module': 'resource_manager', 'class': 'CreateJobOperationDetails'}, 'apply-job-plan-resolution': {'module': 'resource_manager', 'class': 'ApplyJobPlanResolution'}, 'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'resource_manager', 'class': 'Job'})
+@cli_util.wrap_exceptions
+def create_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, stack_id, display_name, operation, job_operation_details, apply_job_plan_resolution, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    details = {}
+    details['stackId'] = stack_id
+
+    if display_name is not None:
+        details['displayName'] = display_name
+
+    if operation is not None:
+        details['operation'] = operation
+
+    if job_operation_details is not None:
+        details['jobOperationDetails'] = cli_util.parse_json_parameter("job_operation_details", job_operation_details)
+
+    if apply_job_plan_resolution is not None:
+        details['applyJobPlanResolution'] = cli_util.parse_json_parameter("apply_job_plan_resolution", apply_job_plan_resolution)
+
+    if freeform_tags is not None:
+        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('resource_manager', ctx)
+    result = client.create_job(
+        create_job_details=details,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_job') and callable(getattr(client, 'get_job')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_job(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@job_group.command(name=cli_util.override('create_job_create_import_tf_state_job_operation_details.command_name', 'create-job-create-import-tf-state-job-operation-details'), help=u"""Creates a job.""")
+@cli_util.option('--stack-id', required=True, help=u"""OCID of the stack that is associated with the current job.""")
+@cli_util.option('--job-operation-details-tf-state-base64-encoded', required=True, help=u"""Base64-encoded state file""")
+@cli_util.option('--display-name', help=u"""Description of the job.""")
+@cli_util.option('--operation', help=u"""Terraform-specific operation to execute.""")
+@cli_util.option('--apply-job-plan-resolution', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Deprecated. Use the property `executionPlanStrategy` in `jobOperationDetails` instead.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags associated with this resource. Each tag is a key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -191,17 +264,21 @@ def change_stack_compartment(ctx, from_json, wait_for_state, max_wait_seconds, w
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'apply-job-plan-resolution': {'module': 'resource_manager', 'class': 'ApplyJobPlanResolution'}, 'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'resource_manager', 'class': 'Job'})
 @cli_util.wrap_exceptions
-def create_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, stack_id, operation, display_name, apply_job_plan_resolution, freeform_tags, defined_tags):
+def create_job_create_import_tf_state_job_operation_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, stack_id, job_operation_details_tf_state_base64_encoded, display_name, operation, apply_job_plan_resolution, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     details = {}
+    details['jobOperationDetails'] = {}
     details['stackId'] = stack_id
-    details['operation'] = operation
+    details['jobOperationDetails']['tfStateBase64Encoded'] = job_operation_details_tf_state_base64_encoded
 
     if display_name is not None:
         details['displayName'] = display_name
+
+    if operation is not None:
+        details['operation'] = operation
 
     if apply_job_plan_resolution is not None:
         details['applyJobPlanResolution'] = cli_util.parse_json_parameter("apply_job_plan_resolution", apply_job_plan_resolution)
@@ -211,6 +288,231 @@ def create_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
 
     if defined_tags is not None:
         details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    details['jobOperationDetails']['operation'] = 'IMPORT_TF_STATE'
+
+    client = cli_util.build_client('resource_manager', ctx)
+    result = client.create_job(
+        create_job_details=details,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_job') and callable(getattr(client, 'get_job')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_job(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@job_group.command(name=cli_util.override('create_job_create_apply_job_operation_details.command_name', 'create-job-create-apply-job-operation-details'), help=u"""Creates a job.""")
+@cli_util.option('--stack-id', required=True, help=u"""OCID of the stack that is associated with the current job.""")
+@cli_util.option('--display-name', help=u"""Description of the job.""")
+@cli_util.option('--operation', help=u"""Terraform-specific operation to execute.""")
+@cli_util.option('--apply-job-plan-resolution', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Deprecated. Use the property `executionPlanStrategy` in `jobOperationDetails` instead.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags associated with this resource. Each tag is a key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--job-operation-details-execution-plan-strategy', help=u"""Specifies the source of the execution plan to apply. Use `AUTO_APPROVED` to run the job without an execution plan.""")
+@cli_util.option('--job-operation-details-execution-plan-job-id', help=u"""The OCID of a plan job, for use when specifying `FROM_PLAN_JOB_ID` as the `executionPlanStrategy`.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'apply-job-plan-resolution': {'module': 'resource_manager', 'class': 'ApplyJobPlanResolution'}, 'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'apply-job-plan-resolution': {'module': 'resource_manager', 'class': 'ApplyJobPlanResolution'}, 'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'resource_manager', 'class': 'Job'})
+@cli_util.wrap_exceptions
+def create_job_create_apply_job_operation_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, stack_id, display_name, operation, apply_job_plan_resolution, freeform_tags, defined_tags, job_operation_details_execution_plan_strategy, job_operation_details_execution_plan_job_id):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    details = {}
+    details['jobOperationDetails'] = {}
+    details['stackId'] = stack_id
+
+    if display_name is not None:
+        details['displayName'] = display_name
+
+    if operation is not None:
+        details['operation'] = operation
+
+    if apply_job_plan_resolution is not None:
+        details['applyJobPlanResolution'] = cli_util.parse_json_parameter("apply_job_plan_resolution", apply_job_plan_resolution)
+
+    if freeform_tags is not None:
+        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if job_operation_details_execution_plan_strategy is not None:
+        details['jobOperationDetails']['executionPlanStrategy'] = job_operation_details_execution_plan_strategy
+
+    if job_operation_details_execution_plan_job_id is not None:
+        details['jobOperationDetails']['executionPlanJobId'] = job_operation_details_execution_plan_job_id
+
+    details['jobOperationDetails']['operation'] = 'APPLY'
+
+    client = cli_util.build_client('resource_manager', ctx)
+    result = client.create_job(
+        create_job_details=details,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_job') and callable(getattr(client, 'get_job')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_job(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@job_group.command(name=cli_util.override('create_job_create_plan_job_operation_details.command_name', 'create-job-create-plan-job-operation-details'), help=u"""Creates a job.""")
+@cli_util.option('--stack-id', required=True, help=u"""OCID of the stack that is associated with the current job.""")
+@cli_util.option('--display-name', help=u"""Description of the job.""")
+@cli_util.option('--operation', help=u"""Terraform-specific operation to execute.""")
+@cli_util.option('--apply-job-plan-resolution', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Deprecated. Use the property `executionPlanStrategy` in `jobOperationDetails` instead.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags associated with this resource. Each tag is a key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'apply-job-plan-resolution': {'module': 'resource_manager', 'class': 'ApplyJobPlanResolution'}, 'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'apply-job-plan-resolution': {'module': 'resource_manager', 'class': 'ApplyJobPlanResolution'}, 'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'resource_manager', 'class': 'Job'})
+@cli_util.wrap_exceptions
+def create_job_create_plan_job_operation_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, stack_id, display_name, operation, apply_job_plan_resolution, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    details = {}
+    details['jobOperationDetails'] = {}
+    details['stackId'] = stack_id
+
+    if display_name is not None:
+        details['displayName'] = display_name
+
+    if operation is not None:
+        details['operation'] = operation
+
+    if apply_job_plan_resolution is not None:
+        details['applyJobPlanResolution'] = cli_util.parse_json_parameter("apply_job_plan_resolution", apply_job_plan_resolution)
+
+    if freeform_tags is not None:
+        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    details['jobOperationDetails']['operation'] = 'PLAN'
+
+    client = cli_util.build_client('resource_manager', ctx)
+    result = client.create_job(
+        create_job_details=details,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_job') and callable(getattr(client, 'get_job')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_job(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@job_group.command(name=cli_util.override('create_job_create_destroy_job_operation_details.command_name', 'create-job-create-destroy-job-operation-details'), help=u"""Creates a job.""")
+@cli_util.option('--stack-id', required=True, help=u"""OCID of the stack that is associated with the current job.""")
+@cli_util.option('--job-operation-details-execution-plan-strategy', required=True, help=u"""Specifies the source of the execution plan to apply. Currently, only `AUTO_APPROVED` is allowed, which indicates that the job will be run without an execution plan.""")
+@cli_util.option('--display-name', help=u"""Description of the job.""")
+@cli_util.option('--operation', help=u"""Terraform-specific operation to execute.""")
+@cli_util.option('--apply-job-plan-resolution', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Deprecated. Use the property `executionPlanStrategy` in `jobOperationDetails` instead.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags associated with this resource. Each tag is a key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'apply-job-plan-resolution': {'module': 'resource_manager', 'class': 'ApplyJobPlanResolution'}, 'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'apply-job-plan-resolution': {'module': 'resource_manager', 'class': 'ApplyJobPlanResolution'}, 'freeform-tags': {'module': 'resource_manager', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'resource_manager', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'resource_manager', 'class': 'Job'})
+@cli_util.wrap_exceptions
+def create_job_create_destroy_job_operation_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, stack_id, job_operation_details_execution_plan_strategy, display_name, operation, apply_job_plan_resolution, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    details = {}
+    details['jobOperationDetails'] = {}
+    details['stackId'] = stack_id
+    details['jobOperationDetails']['executionPlanStrategy'] = job_operation_details_execution_plan_strategy
+
+    if display_name is not None:
+        details['displayName'] = display_name
+
+    if operation is not None:
+        details['operation'] = operation
+
+    if apply_job_plan_resolution is not None:
+        details['applyJobPlanResolution'] = cli_util.parse_json_parameter("apply_job_plan_resolution", apply_job_plan_resolution)
+
+    if freeform_tags is not None:
+        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    details['jobOperationDetails']['operation'] = 'DESTROY'
 
     client = cli_util.build_client('resource_manager', ctx)
     result = client.create_job(

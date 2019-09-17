@@ -26,10 +26,13 @@ Commands:
   autonomous-exadata-infrastructure-shape
                                   The shape of the Autonomous Exadata...
   backup                          A database backup.
+  backup-destination              Backup destination details.
   data-guard-association          The properties that define a Data Guard...
   database                        An Oracle database on a bare metal or
                                   virtual...
+  exadata-infrastructure          ExadataInfrastructure
   external-backup-job             Provides all the details that apply to an...
+  gi-version                      The Oracle Grid Infrastructure (GI) version.
   maintenance-run                 Details of a Maintenance Run.
   node                            A server where Oracle Database software is...
   patch                           A Patch for a DB system or DB Home.
@@ -37,6 +40,8 @@ Commands:
   system                          The Database Service supports several types...
   system-shape                    The shape of the DB system.
   version                         The Oracle Database software version.
+  vm-cluster                      Details of the VM cluster.
+  vm-cluster-network              The VM cluster network.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci db autonomous-container-database --help
@@ -3587,6 +3592,517 @@ Options:
                              commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
+$ oci db backup-destination --help
+Usage: oci db backup-destination [OPTIONS] COMMAND [ARGS]...
+
+  Backup destination details.
+
+Options:
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
+
+Commands:
+  change-compartment              Move the backup destination and its
+                                  dependent...
+  create-nfs-details              Creates a backup destination.
+  create-recovery-appliance-details
+                                  Creates a backup destination.
+  delete                          Deletes a backup destination.
+  get                             Gets information about the specified backup...
+  update                          If no database is associated with the
+                                  backup...
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci db backup-destination change-compartment --help
+Usage: oci db backup-destination change-compartment [OPTIONS]
+
+  Move the backup destination and its dependent resources to the specified
+  compartment. For more information about moving backup destinations, see
+  [Moving Database Resources to a Different Compartment].
+
+Options:
+  -c, --compartment-id TEXT     The [OCID] of the compartment to move the
+                                resource to. [required]
+  --backup-destination-id TEXT  The [OCID] of the backup destination. [required]
+  --if-match TEXT               For optimistic concurrency control. In the PUT
+                                or DELETE call for a resource, set the `if-
+                                match` parameter to the value of the etag from a
+                                previous GET or POST response for that resource.
+                                The resource will be updated or deleted only if
+                                the etag you provide matches the resource's
+                                current etag value.
+  --from-json TEXT              Provide input to this command as a JSON document
+                                from a file using the file://path-to/file
+                                syntax.
+                                
+                                The --generate-full-command-json-input
+                                option can be used to generate a sample json
+                                file to be used with this command option. The
+                                key names are pre-populated and match the
+                                command option names (converted to camelCase
+                                format, e.g. compartment-id --> compartmentId),
+                                while the values of the keys need to be
+                                populated by the user before using the sample
+                                file as an input to this command. For any
+                                command option that accepts multiple values, the
+                                value of the key can be a JSON array.
+                                
+                                Options
+                                can still be provided on the command line. If an
+                                option exists in both the JSON document and the
+                                command line then the command line specified
+                                value will be used.
+                                
+                                For examples on usage of
+                                this option, please see our "using CLI with
+                                advanced JSON options" link: https://docs.cloud.
+                                oracle.com/iaas/Content/API/SDKDocs/cliusing.htm
+                                #AdvancedJSONOptions
+  -?, -h, --help                For detailed help on any of these individual
+                                commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci db backup-destination create-nfs-details --help
+Usage: oci db backup-destination create-nfs-details [OPTIONS]
+
+  Creates a backup destination.
+
+Options:
+  --display-name TEXT             The user-provided name of the backup
+                                  destination. [required]
+  -c, --compartment-id TEXT       The [OCID] of the compartment. [required]
+  --local-mount-point-path TEXT   The local directory path on each VM cluster
+                                  node where the NFS server location is mounted.
+                                  The local directory path and the NFS server
+                                  location must each be the same across all of
+                                  the VM cluster nodes. Ensure that the NFS
+                                  mount is maintained continuously on all of the
+                                  VM cluster nodes. [required]
+  --freeform-tags COMPLEX TYPE    Free-form tags for this resource. Each tag is
+                                  a simple key-value pair with no predefined
+                                  name, type, or namespace. For more
+                                  information, see [Resource Tags].
+                                  
+                                  Example:
+                                  `{"Department": "Finance"}`
+                                  This is a complex
+                                  type whose value must be valid JSON. The value
+                                  can be provided as a string on the command
+                                  line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+  --defined-tags COMPLEX TYPE     Defined tags for this resource. Each key is
+                                  predefined and scoped to a namespace. For more
+                                  information, see [Resource Tags].
+                                  This is a
+                                  complex type whose value must be valid JSON.
+                                  The value can be provided as a string on the
+                                  command line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+  --wait-for-state [ACTIVE|FAILED|DELETED]
+                                  This operation creates, modifies or deletes a
+                                  resource that has a defined lifecycle state.
+                                  Specify this option to perform the action and
+                                  then wait until the resource reaches a given
+                                  lifecycle state. If timeout is reached, a
+                                  return code of 2 is returned. For any other
+                                  error, a return code of 1 is returned.
+  --max-wait-seconds INTEGER      The maximum time to wait for the resource to
+                                  reach the lifecycle state defined by --wait-
+                                  for-state. Defaults to 1200 seconds.
+  --wait-interval-seconds INTEGER
+                                  Check every --wait-interval-seconds to see
+                                  whether the resource to see if it has reached
+                                  the lifecycle state defined by --wait-for-
+                                  state. Defaults to 30 seconds.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file using the file://path-
+                                  to/file syntax.
+                                  
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci db backup-destination create-recovery-appliance-details --help
+Usage: oci db backup-destination create-recovery-appliance-details 
+           [OPTIONS]
+
+  Creates a backup destination.
+
+Options:
+  --display-name TEXT             The user-provided name of the backup
+                                  destination. [required]
+  -c, --compartment-id TEXT       The [OCID] of the compartment. [required]
+  --connection-string TEXT        The connection string for connecting to the
+                                  Recovery Appliance. [required]
+  --vpc-users COMPLEX TYPE        The Virtual Private Catalog (VPC) users that
+                                  are used to access the Recovery Appliance.
+                                  This is a complex type whose value must be
+                                  valid JSON. The value can be provided as a
+                                  string on the command line or passed in as a
+                                  file using
+                                  the file://path/to/file syntax.
+                                  The --generate-param-json-input option can be
+                                  used to generate an example of the JSON which
+                                  must be provided. We recommend storing this
+                                  example
+                                  in a file, modifying it as needed and
+                                  then passing it back in via the file://
+                                  syntax.
+                                   [required]
+  --freeform-tags COMPLEX TYPE    Free-form tags for this resource. Each tag is
+                                  a simple key-value pair with no predefined
+                                  name, type, or namespace. For more
+                                  information, see [Resource Tags].
+                                  
+                                  Example:
+                                  `{"Department": "Finance"}`
+                                  This is a complex
+                                  type whose value must be valid JSON. The value
+                                  can be provided as a string on the command
+                                  line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+  --defined-tags COMPLEX TYPE     Defined tags for this resource. Each key is
+                                  predefined and scoped to a namespace. For more
+                                  information, see [Resource Tags].
+                                  This is a
+                                  complex type whose value must be valid JSON.
+                                  The value can be provided as a string on the
+                                  command line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+  --wait-for-state [ACTIVE|FAILED|DELETED]
+                                  This operation creates, modifies or deletes a
+                                  resource that has a defined lifecycle state.
+                                  Specify this option to perform the action and
+                                  then wait until the resource reaches a given
+                                  lifecycle state. If timeout is reached, a
+                                  return code of 2 is returned. For any other
+                                  error, a return code of 1 is returned.
+  --max-wait-seconds INTEGER      The maximum time to wait for the resource to
+                                  reach the lifecycle state defined by --wait-
+                                  for-state. Defaults to 1200 seconds.
+  --wait-interval-seconds INTEGER
+                                  Check every --wait-interval-seconds to see
+                                  whether the resource to see if it has reached
+                                  the lifecycle state defined by --wait-for-
+                                  state. Defaults to 30 seconds.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file using the file://path-
+                                  to/file syntax.
+                                  
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci db backup-destination delete --help
+Usage: oci db backup-destination delete [OPTIONS]
+
+  Deletes a backup destination.
+
+Options:
+  --backup-destination-id TEXT    The [OCID] of the backup destination.
+                                  [required]
+  --if-match TEXT                 For optimistic concurrency control. In the PUT
+                                  or DELETE call for a resource, set the `if-
+                                  match` parameter to the value of the etag from
+                                  a previous GET or POST response for that
+                                  resource.  The resource will be updated or
+                                  deleted only if the etag you provide matches
+                                  the resource's current etag value.
+  --force                         Perform deletion without prompting for
+                                  confirmation.
+  --wait-for-state [ACTIVE|FAILED|DELETED]
+                                  This operation creates, modifies or deletes a
+                                  resource that has a defined lifecycle state.
+                                  Specify this option to perform the action and
+                                  then wait until the resource reaches a given
+                                  lifecycle state. If timeout is reached, a
+                                  return code of 2 is returned. For any other
+                                  error, a return code of 1 is returned.
+  --max-wait-seconds INTEGER      The maximum time to wait for the resource to
+                                  reach the lifecycle state defined by --wait-
+                                  for-state. Defaults to 1200 seconds.
+  --wait-interval-seconds INTEGER
+                                  Check every --wait-interval-seconds to see
+                                  whether the resource to see if it has reached
+                                  the lifecycle state defined by --wait-for-
+                                  state. Defaults to 30 seconds.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file using the file://path-
+                                  to/file syntax.
+                                  
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci db backup-destination get --help
+Usage: oci db backup-destination get [OPTIONS]
+
+  Gets information about the specified backup destination.
+
+Options:
+  --backup-destination-id TEXT  The [OCID] of the backup destination. [required]
+  --from-json TEXT              Provide input to this command as a JSON document
+                                from a file using the file://path-to/file
+                                syntax.
+                                
+                                The --generate-full-command-json-input
+                                option can be used to generate a sample json
+                                file to be used with this command option. The
+                                key names are pre-populated and match the
+                                command option names (converted to camelCase
+                                format, e.g. compartment-id --> compartmentId),
+                                while the values of the keys need to be
+                                populated by the user before using the sample
+                                file as an input to this command. For any
+                                command option that accepts multiple values, the
+                                value of the key can be a JSON array.
+                                
+                                Options
+                                can still be provided on the command line. If an
+                                option exists in both the JSON document and the
+                                command line then the command line specified
+                                value will be used.
+                                
+                                For examples on usage of
+                                this option, please see our "using CLI with
+                                advanced JSON options" link: https://docs.cloud.
+                                oracle.com/iaas/Content/API/SDKDocs/cliusing.htm
+                                #AdvancedJSONOptions
+  -?, -h, --help                For detailed help on any of these individual
+                                commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci db backup-destination update --help
+Usage: oci db backup-destination update [OPTIONS]
+
+  If no database is associated with the backup destination: - For a
+  RECOVERY_APPLIANCE backup destination, updates the connection string and/or
+  the list of VPC users. - For an NFS backup destination, updates the NFS
+  location.
+
+Options:
+  --backup-destination-id TEXT    The [OCID] of the backup destination.
+                                  [required]
+  --vpc-users COMPLEX TYPE        For a RECOVERY_APPLIANCE backup destination,
+                                  the Virtual Private Catalog (VPC) users that
+                                  are used to access the Recovery Appliance.
+                                  This is a complex type whose value must be
+                                  valid JSON. The value can be provided as a
+                                  string on the command line or passed in as a
+                                  file using
+                                  the file://path/to/file syntax.
+                                  The --generate-param-json-input option can be
+                                  used to generate an example of the JSON which
+                                  must be provided. We recommend storing this
+                                  example
+                                  in a file, modifying it as needed and
+                                  then passing it back in via the file://
+                                  syntax.
+  --connection-string TEXT        For a RECOVERY_APPLIANCE backup destination,
+                                  the connection string for connecting to the
+                                  Recovery Appliance.
+  --local-mount-point-path TEXT   The local directory path on each VM cluster
+                                  node where the NFS server location is mounted.
+                                  The local directory path and the NFS server
+                                  location must each be the same across all of
+                                  the VM cluster nodes. Ensure that the NFS
+                                  mount is maintained continuously on all of the
+                                  VM cluster nodes.
+  --freeform-tags COMPLEX TYPE    Free-form tags for this resource. Each tag is
+                                  a simple key-value pair with no predefined
+                                  name, type, or namespace. For more
+                                  information, see [Resource Tags].
+                                  
+                                  Example:
+                                  `{"Department": "Finance"}`
+                                  This is a complex
+                                  type whose value must be valid JSON. The value
+                                  can be provided as a string on the command
+                                  line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+  --defined-tags COMPLEX TYPE     Defined tags for this resource. Each key is
+                                  predefined and scoped to a namespace. For more
+                                  information, see [Resource Tags].
+                                  This is a
+                                  complex type whose value must be valid JSON.
+                                  The value can be provided as a string on the
+                                  command line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+  --if-match TEXT                 For optimistic concurrency control. In the PUT
+                                  or DELETE call for a resource, set the `if-
+                                  match` parameter to the value of the etag from
+                                  a previous GET or POST response for that
+                                  resource.  The resource will be updated or
+                                  deleted only if the etag you provide matches
+                                  the resource's current etag value.
+  --force                         Perform update without prompting for
+                                  confirmation.
+  --wait-for-state [ACTIVE|FAILED|DELETED]
+                                  This operation creates, modifies or deletes a
+                                  resource that has a defined lifecycle state.
+                                  Specify this option to perform the action and
+                                  then wait until the resource reaches a given
+                                  lifecycle state. If timeout is reached, a
+                                  return code of 2 is returned. For any other
+                                  error, a return code of 1 is returned.
+  --max-wait-seconds INTEGER      The maximum time to wait for the resource to
+                                  reach the lifecycle state defined by --wait-
+                                  for-state. Defaults to 1200 seconds.
+  --wait-interval-seconds INTEGER
+                                  Check every --wait-interval-seconds to see
+                                  whether the resource to see if it has reached
+                                  the lifecycle state defined by --wait-for-
+                                  state. Defaults to 30 seconds.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file using the file://path-
+                                  to/file syntax.
+                                  
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
 $ oci db data-guard-association --help
 Usage: oci db data-guard-association [OPTIONS] COMMAND [ARGS]...
 
@@ -4174,8 +4690,8 @@ Usage: oci db database create [OPTIONS]
   Creates a new database in the given DB System.
 
 Options:
-  --db-system-id TEXT             The [OCID] of the DB system. [required]
-  --source [NONE|DB_BACKUP]       The source of database: NONE for creating a
+  --source [NONE|DB_BACKUP|VM_CLUSTER_NEW|VM_CLUSTER_BACKUP]
+                                  The source of database: NONE for creating a
                                   new database. DB_BACKUP for creating a new
                                   database by restoring from a database backup.
   --wait-for-state [PROVISIONING|AVAILABLE|UPDATING|TERMINATING|TERMINATED|FAILED]
@@ -4200,6 +4716,14 @@ Options:
                                   two lowercase, two numbers, and two special
                                   characters. The special characters must be _,
                                   #, or -. [required]
+  --db-system-id TEXT             The Db System Id to create this database
+                                  under. Either --db-system-id or --vm-cluster-
+                                  id must be specified, but if both are passed,
+                                  --vm-cluster-id will be ignored.
+  --vm-cluster-id TEXT            The Vm Cluster Id to create this database
+                                  under. Either --db-system-id or --vm-cluster-
+                                  id must be specified, but if both are passed,
+                                  --vm-cluster-id will be ignored.
   --character-set TEXT            The character set for the database. The
                                   default is AL32UTF8. Allowed values are:
                                   AL32UTF8, AR8ADOS710, AR8ADOS720, AR8APTEC715,
@@ -4259,6 +4783,8 @@ Options:
   --auto-backup-window TEXT       Specifying a two hour slot when the backup
                                   should kick in eg:- SLOT_ONE,SLOT_TWO. Default
                                   is anytime
+  --backup-destination COMPLEX TYPE
+                                  backup destination list
   --from-json TEXT                Provide input to this command as a JSON
                                   document from a file using the file://path-
                                   to/file syntax.
@@ -4295,7 +4821,6 @@ Usage: oci db database create-from-backup [OPTIONS]
   Creates a new database in the given DB System from a backup.
 
 Options:
-  --db-system-id TEXT             The [OCID] of the DB system. [required]
   --wait-for-state [PROVISIONING|AVAILABLE|UPDATING|TERMINATING|TERMINATED|FAILED]
                                   This operation creates, modifies or deletes a
                                   resource that has a defined lifecycle state.
@@ -4312,6 +4837,8 @@ Options:
                                   whether the resource to see if it has reached
                                   the lifecycle state defined by --wait-for-
                                   state. Defaults to 30 seconds.
+  --db-system-id TEXT             The Db System Id to restore this database
+                                  under.
   --admin-password TEXT           A strong password for SYS, SYSTEM, and PDB
                                   Admin. The password must be at least nine
                                   characters and contain at least two uppercase,
@@ -4433,6 +4960,7 @@ Usage: oci db database list [OPTIONS]
 Options:
   -c, --compartment-id TEXT       The compartment [OCID]. [required]
   --db-system-id TEXT             The [OCID] of the DB system.
+  --vm-cluster-id TEXT            The [OCID] of the VM cluster.
   --limit INTEGER                 The maximum number of items to return per
                                   page.
   --sort-by [TIMECREATED|DISPLAYNAME]
@@ -4449,6 +4977,8 @@ Options:
   --display-name TEXT             A filter to return only resources that match
                                   the entire display name given. The match is
                                   not case sensitive.
+  --db-system-id TEXT             The OCID of the db system to list within.
+  --vm-cluster-id TEXT            The OCID of the vm cluster to list within.
   --from-json TEXT                Provide input to this command as a JSON
                                   document from a file using the file://path-
                                   to/file syntax.
@@ -4729,9 +5259,772 @@ Options:
   --auto-backup-window TEXT       Specifying a two hour slot when the backup
                                   should kick in eg:- SLOT_ONE,SLOT_TWO. Default
                                   is anytime
-  --auto-backup-window TEXT       Specifying a two hour slot when the backup
-                                  should kick in eg:- SLOT_ONE,SLOT_TWO. Default
-                                  is anytime
+  --backup-destination COMPLEX TYPE
+                                  backup destination list
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file using the file://path-
+                                  to/file syntax.
+                                  
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci db exadata-infrastructure --help
+Usage: oci db exadata-infrastructure [OPTIONS] COMMAND [ARGS]...
+
+  ExadataInfrastructure
+
+Options:
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
+
+Commands:
+  activate                        Activates the specified Exadata...
+  change-compartment              To move an Exadata infrastructure and its...
+  create                          Create Exadata infrastructure.
+  delete                          Deletes the Exadata infrastructure.
+  download-exadata-infrastructure-config-file
+                                  Downloads the configuration file for the...
+  generate-recommended-vm-cluster-network
+                                  Generates a recommended VM cluster network...
+  get                             Gets information about the specified
+                                  Exadata...
+  list                            Gets a list of the Exadata infrastructure
+                                  in...
+  update                          Updates the Exadata infrastructure.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci db exadata-infrastructure activate --help
+Usage: oci db exadata-infrastructure activate [OPTIONS]
+
+  Activates the specified Exadata infrastructure.
+
+Options:
+  --exadata-infrastructure-id TEXT
+                                  The Exadata infrastructure [OCID]. [required]
+  --activation-file TEXT          The activation zip file. [required]
+  --wait-for-state [CREATING|REQUIRES_ACTIVATION|ACTIVATING|ACTIVE|ACTIVATION_FAILED|FAILED|UPDATING|DELETING|DELETED|OFFLINE]
+                                  This operation creates, modifies or deletes a
+                                  resource that has a defined lifecycle state.
+                                  Specify this option to perform the action and
+                                  then wait until the resource reaches a given
+                                  lifecycle state. If timeout is reached, a
+                                  return code of 2 is returned. For any other
+                                  error, a return code of 1 is returned.
+  --max-wait-seconds INTEGER      The maximum time to wait for the resource to
+                                  reach the lifecycle state defined by --wait-
+                                  for-state. Defaults to 1200 seconds.
+  --wait-interval-seconds INTEGER
+                                  Check every --wait-interval-seconds to see
+                                  whether the resource to see if it has reached
+                                  the lifecycle state defined by --wait-for-
+                                  state. Defaults to 30 seconds.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file using the file://path-
+                                  to/file syntax.
+                                  
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci db exadata-infrastructure change-compartment --help
+Usage: oci db exadata-infrastructure change-compartment [OPTIONS]
+
+  To move an Exadata infrastructure and its dependent resources to another
+  compartment, use the [ChangeExadataInfrastructureCompartment] operation.
+
+Options:
+  -c, --compartment-id TEXT       The [OCID] of the compartment to move the
+                                  resource to. [required]
+  --exadata-infrastructure-id TEXT
+                                  The Exadata infrastructure [OCID]. [required]
+  --if-match TEXT                 For optimistic concurrency control. In the PUT
+                                  or DELETE call for a resource, set the `if-
+                                  match` parameter to the value of the etag from
+                                  a previous GET or POST response for that
+                                  resource.  The resource will be updated or
+                                  deleted only if the etag you provide matches
+                                  the resource's current etag value.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file using the file://path-
+                                  to/file syntax.
+                                  
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci db exadata-infrastructure create --help
+Usage: oci db exadata-infrastructure create [OPTIONS]
+
+  Create Exadata infrastructure.
+
+Options:
+  -c, --compartment-id TEXT       The [OCID] of the compartment. [required]
+  --display-name TEXT             The user-friendly name for the Exadata
+                                  infrastructure. The name does not need to be
+                                  unique. [required]
+  --shape TEXT                    The shape of the Exadata infrastructure. The
+                                  shape determines the amount of CPU, storage,
+                                  and memory resources allocated to the
+                                  instance. [required]
+  --time-zone TEXT                The time zone of the Exadata infrastructure.
+                                  For details, see [Exadata Infrastructure Time
+                                  Zones]. [required]
+  --cloud-control-plane-server1 TEXT
+                                  The IP address for the first control plane
+                                  server. [required]
+  --cloud-control-plane-server2 TEXT
+                                  The IP address for the second control plane
+                                  server. [required]
+  --netmask TEXT                  The netmask for the control plane network.
+                                  [required]
+  --gateway TEXT                  The gateway for the control plane network.
+                                  [required]
+  --admin-network-cidr TEXT       The CIDR block for the Exadata administration
+                                  network. [required]
+  --infini-band-network-cidr TEXT
+                                  The CIDR block for the Exadata InfiniBand
+                                  interconnect. [required]
+  --corporate-proxy TEXT          The corporate network proxy for access to the
+                                  control plane network. [required]
+  --dns-server COMPLEX TYPE       The list of DNS server IP addresses. Maximum
+                                  of 3 allowed.
+                                  This is a complex type whose
+                                  value must be valid JSON. The value can be
+                                  provided as a string on the command line or
+                                  passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+                                  [required]
+  --ntp-server COMPLEX TYPE       The list of NTP server IP addresses. Maximum
+                                  of 3 allowed.
+                                  This is a complex type whose
+                                  value must be valid JSON. The value can be
+                                  provided as a string on the command line or
+                                  passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+                                  [required]
+  --freeform-tags COMPLEX TYPE    Free-form tags for this resource. Each tag is
+                                  a simple key-value pair with no predefined
+                                  name, type, or namespace. For more
+                                  information, see [Resource Tags].
+                                  
+                                  Example:
+                                  `{"Department": "Finance"}`
+                                  This is a complex
+                                  type whose value must be valid JSON. The value
+                                  can be provided as a string on the command
+                                  line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+  --defined-tags COMPLEX TYPE     Defined tags for this resource. Each key is
+                                  predefined and scoped to a namespace. For more
+                                  information, see [Resource Tags].
+                                  This is a
+                                  complex type whose value must be valid JSON.
+                                  The value can be provided as a string on the
+                                  command line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+  --wait-for-state [CREATING|REQUIRES_ACTIVATION|ACTIVATING|ACTIVE|ACTIVATION_FAILED|FAILED|UPDATING|DELETING|DELETED|OFFLINE]
+                                  This operation creates, modifies or deletes a
+                                  resource that has a defined lifecycle state.
+                                  Specify this option to perform the action and
+                                  then wait until the resource reaches a given
+                                  lifecycle state. If timeout is reached, a
+                                  return code of 2 is returned. For any other
+                                  error, a return code of 1 is returned.
+  --max-wait-seconds INTEGER      The maximum time to wait for the resource to
+                                  reach the lifecycle state defined by --wait-
+                                  for-state. Defaults to 1200 seconds.
+  --wait-interval-seconds INTEGER
+                                  Check every --wait-interval-seconds to see
+                                  whether the resource to see if it has reached
+                                  the lifecycle state defined by --wait-for-
+                                  state. Defaults to 30 seconds.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file using the file://path-
+                                  to/file syntax.
+                                  
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci db exadata-infrastructure delete --help
+Usage: oci db exadata-infrastructure delete [OPTIONS]
+
+  Deletes the Exadata infrastructure.
+
+Options:
+  --exadata-infrastructure-id TEXT
+                                  The Exadata infrastructure [OCID]. [required]
+  --if-match TEXT                 For optimistic concurrency control. In the PUT
+                                  or DELETE call for a resource, set the `if-
+                                  match` parameter to the value of the etag from
+                                  a previous GET or POST response for that
+                                  resource.  The resource will be updated or
+                                  deleted only if the etag you provide matches
+                                  the resource's current etag value.
+  --force                         Perform deletion without prompting for
+                                  confirmation.
+  --wait-for-state [CREATING|REQUIRES_ACTIVATION|ACTIVATING|ACTIVE|ACTIVATION_FAILED|FAILED|UPDATING|DELETING|DELETED|OFFLINE]
+                                  This operation creates, modifies or deletes a
+                                  resource that has a defined lifecycle state.
+                                  Specify this option to perform the action and
+                                  then wait until the resource reaches a given
+                                  lifecycle state. If timeout is reached, a
+                                  return code of 2 is returned. For any other
+                                  error, a return code of 1 is returned.
+  --max-wait-seconds INTEGER      The maximum time to wait for the resource to
+                                  reach the lifecycle state defined by --wait-
+                                  for-state. Defaults to 1200 seconds.
+  --wait-interval-seconds INTEGER
+                                  Check every --wait-interval-seconds to see
+                                  whether the resource to see if it has reached
+                                  the lifecycle state defined by --wait-for-
+                                  state. Defaults to 30 seconds.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file using the file://path-
+                                  to/file syntax.
+                                  
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci db exadata-infrastructure download-exadata-infrastructure-config-file --help
+Usage: oci db exadata-infrastructure download-exadata-infrastructure-config-file 
+           [OPTIONS]
+
+  Downloads the configuration file for the specified Exadata infrastructure.
+
+Options:
+  --exadata-infrastructure-id TEXT
+                                  The Exadata infrastructure [OCID]. [required]
+  --file FILENAME                 The name of the file that will receive the
+                                  response data, or '-' to write to STDOUT.
+                                  [required]
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file using the file://path-
+                                  to/file syntax.
+                                  
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci db exadata-infrastructure generate-recommended-vm-cluster-network --help
+Usage: oci db exadata-infrastructure generate-recommended-vm-cluster-network 
+           [OPTIONS]
+
+  Generates a recommended VM cluster network configuration.
+
+Options:
+  --exadata-infrastructure-id TEXT
+                                  The Exadata infrastructure [OCID]. [required]
+  -c, --compartment-id TEXT       The [OCID] of the compartment. [required]
+  --display-name TEXT             The user-friendly name for the VM cluster
+                                  network. The name does not need to be unique.
+                                  [required]
+  --networks COMPLEX TYPE         List of parameters for generation of the
+                                  client and backup networks.
+                                  This is a complex
+                                  type whose value must be valid JSON. The value
+                                  can be provided as a string on the command
+                                  line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+                                  [required]
+  --dns COMPLEX TYPE              The list of DNS server IP addresses. Maximum
+                                  of 3 allowed.
+                                  This is a complex type whose
+                                  value must be valid JSON. The value can be
+                                  provided as a string on the command line or
+                                  passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+  --ntp COMPLEX TYPE              The list of NTP server IP addresses. Maximum
+                                  of 3 allowed.
+                                  This is a complex type whose
+                                  value must be valid JSON. The value can be
+                                  provided as a string on the command line or
+                                  passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+  --freeform-tags COMPLEX TYPE    Free-form tags for this resource. Each tag is
+                                  a simple key-value pair with no predefined
+                                  name, type, or namespace. For more
+                                  information, see [Resource Tags].
+                                  
+                                  Example:
+                                  `{"Department": "Finance"}`
+                                  This is a complex
+                                  type whose value must be valid JSON. The value
+                                  can be provided as a string on the command
+                                  line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+  --defined-tags COMPLEX TYPE     Defined tags for this resource. Each key is
+                                  predefined and scoped to a namespace. For more
+                                  information, see [Resource Tags].
+                                  This is a
+                                  complex type whose value must be valid JSON.
+                                  The value can be provided as a string on the
+                                  command line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file using the file://path-
+                                  to/file syntax.
+                                  
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci db exadata-infrastructure get --help
+Usage: oci db exadata-infrastructure get [OPTIONS]
+
+  Gets information about the specified Exadata infrastructure.
+
+Options:
+  --exadata-infrastructure-id TEXT
+                                  The Exadata infrastructure [OCID]. [required]
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file using the file://path-
+                                  to/file syntax.
+                                  
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci db exadata-infrastructure list --help
+Usage: oci db exadata-infrastructure list [OPTIONS]
+
+  Gets a list of the Exadata infrastructure in the specified compartment.
+
+Options:
+  -c, --compartment-id TEXT       The compartment [OCID]. [required]
+  --limit INTEGER                 The maximum number of items to return per
+                                  page.
+  --page TEXT                     The pagination token to continue listing from.
+  --sort-by [TIMECREATED|DISPLAYNAME]
+                                  The field to sort by.  You can provide one
+                                  sort order (`sortOrder`).  Default order for
+                                  TIMECREATED is descending.  Default order for
+                                  DISPLAYNAME is ascending. The DISPLAYNAME sort
+                                  order is case sensitive.
+  --sort-order [ASC|DESC]         The sort order to use, either ascending
+                                  (`ASC`) or descending (`DESC`).
+  --lifecycle-state [CREATING|REQUIRES_ACTIVATION|ACTIVATING|ACTIVE|ACTIVATION_FAILED|FAILED|UPDATING|DELETING|DELETED|OFFLINE]
+                                  A filter to return only resources that match
+                                  the given lifecycle state exactly.
+  --display-name TEXT             A filter to return only resources that match
+                                  the entire display name given. The match is
+                                  not case sensitive.
+  --all                           Fetches all pages of results. If you provide
+                                  this option, then you cannot provide the
+                                  --limit option.
+  --page-size INTEGER             When fetching results, the number of results
+                                  to fetch per call. Only valid when used with
+                                  --all or --limit, and ignored otherwise.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file using the file://path-
+                                  to/file syntax.
+                                  
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci db exadata-infrastructure update --help
+Usage: oci db exadata-infrastructure update [OPTIONS]
+
+  Updates the Exadata infrastructure.
+
+Options:
+  --exadata-infrastructure-id TEXT
+                                  The Exadata infrastructure [OCID]. [required]
+  --cloud-control-plane-server1 TEXT
+                                  The IP address for the first control plane
+                                  server.
+  --cloud-control-plane-server2 TEXT
+                                  The IP address for the second control plane
+                                  server.
+  --netmask TEXT                  The netmask for the control plane network.
+  --gateway TEXT                  The gateway for the control plane network.
+  --admin-network-cidr TEXT       The CIDR block for the Exadata administration
+                                  network.
+  --infini-band-network-cidr TEXT
+                                  The CIDR block for the Exadata InfiniBand
+                                  interconnect.
+  --corporate-proxy TEXT          The corporate network proxy for access to the
+                                  control plane network.
+  --dns-server COMPLEX TYPE       The list of DNS server IP addresses. Maximum
+                                  of 3 allowed.
+                                  This is a complex type whose
+                                  value must be valid JSON. The value can be
+                                  provided as a string on the command line or
+                                  passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+  --ntp-server COMPLEX TYPE       The list of NTP server IP addresses. Maximum
+                                  of 3 allowed.
+                                  This is a complex type whose
+                                  value must be valid JSON. The value can be
+                                  provided as a string on the command line or
+                                  passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+  --time-zone TEXT                The time zone of the Exadata infrastructure.
+                                  For details, see [Exadata Infrastructure Time
+                                  Zones].
+  --freeform-tags COMPLEX TYPE    Free-form tags for this resource. Each tag is
+                                  a simple key-value pair with no predefined
+                                  name, type, or namespace. For more
+                                  information, see [Resource Tags].
+                                  
+                                  Example:
+                                  `{"Department": "Finance"}`
+                                  This is a complex
+                                  type whose value must be valid JSON. The value
+                                  can be provided as a string on the command
+                                  line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+  --defined-tags COMPLEX TYPE     Defined tags for this resource. Each key is
+                                  predefined and scoped to a namespace. For more
+                                  information, see [Resource Tags].
+                                  This is a
+                                  complex type whose value must be valid JSON.
+                                  The value can be provided as a string on the
+                                  command line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+  --if-match TEXT                 For optimistic concurrency control. In the PUT
+                                  or DELETE call for a resource, set the `if-
+                                  match` parameter to the value of the etag from
+                                  a previous GET or POST response for that
+                                  resource.  The resource will be updated or
+                                  deleted only if the etag you provide matches
+                                  the resource's current etag value.
+  --force                         Perform update without prompting for
+                                  confirmation.
+  --wait-for-state [CREATING|REQUIRES_ACTIVATION|ACTIVATING|ACTIVE|ACTIVATION_FAILED|FAILED|UPDATING|DELETING|DELETED|OFFLINE]
+                                  This operation creates, modifies or deletes a
+                                  resource that has a defined lifecycle state.
+                                  Specify this option to perform the action and
+                                  then wait until the resource reaches a given
+                                  lifecycle state. If timeout is reached, a
+                                  return code of 2 is returned. For any other
+                                  error, a return code of 1 is returned.
+  --max-wait-seconds INTEGER      The maximum time to wait for the resource to
+                                  reach the lifecycle state defined by --wait-
+                                  for-state. Defaults to 1200 seconds.
+  --wait-interval-seconds INTEGER
+                                  Check every --wait-interval-seconds to see
+                                  whether the resource to see if it has reached
+                                  the lifecycle state defined by --wait-for-
+                                  state. Defaults to 30 seconds.
   --from-json TEXT                Provide input to this command as a JSON
                                   document from a file using the file://path-
                                   to/file syntax.
@@ -4956,6 +6249,69 @@ Options:
                     s
   -?, -h, --help    For detailed help on any of these individual commands, enter
                     <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci db gi-version --help
+Usage: oci db gi-version [OPTIONS] COMMAND [ARGS]...
+
+  The Oracle Grid Infrastructure (GI) version.
+
+  To use any of the API operations, you must be authorized in an IAM policy.
+  If you're not authorized, talk to an administrator. If you're an
+  administrator who needs to write policies to give users access, see [Getting
+  Started with Policies].
+
+Options:
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
+
+Commands:
+  list  Gets a list of supported GI versions for VM...
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci db gi-version list --help
+Usage: oci db gi-version list [OPTIONS]
+
+  Gets a list of supported GI versions for VM Cluster.
+
+Options:
+  -c, --compartment-id TEXT  The compartment [OCID]. [required]
+  --limit INTEGER            The maximum number of items to return per page.
+  --page TEXT                The pagination token to continue listing from.
+  --sort-order [ASC|DESC]    The sort order to use, either ascending (`ASC`) or
+                             descending (`DESC`).
+  --shape TEXT               If provided, filters the results for the given
+                             shape.
+  --all                      Fetches all pages of results. If you provide this
+                             option, then you cannot provide the --limit option.
+  --page-size INTEGER        When fetching results, the number of results to
+                             fetch per call. Only valid when used with --all or
+                             --limit, and ignored otherwise.
+  --from-json TEXT           Provide input to this command as a JSON document
+                             from a file using the file://path-to/file syntax.
+                             The --generate-full-command-json-input option can
+                             be used to generate a sample json file to be used
+                             with this command option. The key names are pre-
+                             populated and match the command option names
+                             (converted to camelCase format, e.g. compartment-id
+                             --> compartmentId), while the values of the keys
+                             need to be populated by the user before using the
+                             sample file as an input to this command. For any
+                             command option that accepts multiple values, the
+                             value of the key can be a JSON array.
+                             
+                             Options can
+                             still be provided on the command line. If an option
+                             exists in both the JSON document and the command
+                             line then the command line specified value will be
+                             used.
+                             
+                             For examples on usage of this option, please
+                             see our "using CLI with advanced JSON options"
+                             link: https://docs.cloud.oracle.com/iaas/Content/AP
+                             I/SDKDocs/cliusing.htm#AdvancedJSONOptions
+  -?, -h, --help             For detailed help on any of these individual
+                             commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci db maintenance-run --help
@@ -5198,6 +6554,7 @@ Usage: oci db node list [OPTIONS]
 Options:
   -c, --compartment-id TEXT       The compartment [OCID]. [required]
   --db-system-id TEXT             The [OCID] of the DB system.
+  --vm-cluster-id TEXT            The [OCID] of the VM cluster.
   --limit INTEGER                 The maximum number of items to return per
                                   page.
   --page TEXT                     The pagination token to continue listing from.
@@ -7216,8 +8573,8 @@ Usage: oci db system-shape list [OPTIONS]
   metal) shapes.
 
 Options:
-  --availability-domain TEXT  The name of the Availability Domain. [required]
   -c, --compartment-id TEXT   The compartment [OCID]. [required]
+  --availability-domain TEXT  The name of the Availability Domain.
   --limit INTEGER             The maximum number of items to return per page.
   --page TEXT                 The pagination token to continue listing from.
   --all                       Fetches all pages of results. If you provide this
@@ -7317,4 +8674,1078 @@ Options:
                              I/SDKDocs/cliusing.htm#AdvancedJSONOptions
   -?, -h, --help             For detailed help on any of these individual
                              commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci db vm-cluster --help
+Usage: oci db vm-cluster [OPTIONS] COMMAND [ARGS]...
+
+  Details of the VM cluster.
+
+Options:
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
+
+Commands:
+  change-compartment  To move a VM cluster and its dependent...
+  create              Creates a VM cluster.
+  delete              Deletes the specified VM cluster.
+  get                 Gets information about the specified VM...
+  list                Gets a list of the VM clusters in the...
+  update              Updates the specified VM cluster.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci db vm-cluster change-compartment --help
+Usage: oci db vm-cluster change-compartment [OPTIONS]
+
+  To move a VM cluster and its dependent resources to another compartment, use
+  the [ChangeVmClusterCompartment] operation.
+
+Options:
+  -c, --compartment-id TEXT  The [OCID] of the compartment to move the VM
+                             cluster to. [required]
+  --vm-cluster-id TEXT       The VM cluster [OCID]. [required]
+  --if-match TEXT            For optimistic concurrency control. In the PUT or
+                             DELETE call for a resource, set the `if-match`
+                             parameter to the value of the etag from a previous
+                             GET or POST response for that resource.  The
+                             resource will be updated or deleted only if the
+                             etag you provide matches the resource's current
+                             etag value.
+  --from-json TEXT           Provide input to this command as a JSON document
+                             from a file using the file://path-to/file syntax.
+                             The --generate-full-command-json-input option can
+                             be used to generate a sample json file to be used
+                             with this command option. The key names are pre-
+                             populated and match the command option names
+                             (converted to camelCase format, e.g. compartment-id
+                             --> compartmentId), while the values of the keys
+                             need to be populated by the user before using the
+                             sample file as an input to this command. For any
+                             command option that accepts multiple values, the
+                             value of the key can be a JSON array.
+                             
+                             Options can
+                             still be provided on the command line. If an option
+                             exists in both the JSON document and the command
+                             line then the command line specified value will be
+                             used.
+                             
+                             For examples on usage of this option, please
+                             see our "using CLI with advanced JSON options"
+                             link: https://docs.cloud.oracle.com/iaas/Content/AP
+                             I/SDKDocs/cliusing.htm#AdvancedJSONOptions
+  -?, -h, --help             For detailed help on any of these individual
+                             commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci db vm-cluster create --help
+Usage: oci db vm-cluster create [OPTIONS]
+
+  Creates a VM cluster.
+
+Options:
+  -c, --compartment-id TEXT       The [OCID] of the compartment. [required]
+  --display-name TEXT             The user-friendly name for the VM cluster. The
+                                  name does not need to be unique. [required]
+  --exadata-infrastructure-id TEXT
+                                  The [OCID] of the Exadata infrastructure.
+                                  [required]
+  --cpu-core-count INTEGER        The number of CPU cores to enable for the VM
+                                  cluster. [required]
+  --ssh-public-keys COMPLEX TYPE  The public key portion of one or more key
+                                  pairs used for SSH access to the VM cluster.
+                                  This is a complex type whose value must be
+                                  valid JSON. The value can be provided as a
+                                  string on the command line or passed in as a
+                                  file using
+                                  the file://path/to/file syntax.
+                                  The --generate-param-json-input option can be
+                                  used to generate an example of the JSON which
+                                  must be provided. We recommend storing this
+                                  example
+                                  in a file, modifying it as needed and
+                                  then passing it back in via the file://
+                                  syntax.
+                                   [required]
+  --vm-cluster-network-id TEXT    The [OCID] of the VM cluster network.
+                                  [required]
+  --gi-version TEXT               The Oracle Grid Infrastructure software
+                                  version for the VM cluster. [required]
+  --license-model [LICENSE_INCLUDED|BRING_YOUR_OWN_LICENSE]
+                                  The Oracle license model that applies to the
+                                  VM cluster. The default is
+                                  BRING_YOUR_OWN_LICENSE.
+  --is-sparse-diskgroup-enabled BOOLEAN
+                                  If true, the sparse disk group is configured
+                                  for the VM cluster. If false, the sparse disk
+                                  group is not created.
+  --is-local-backup-enabled BOOLEAN
+                                  If true, database backup on local Exadata
+                                  storage is configured for the VM cluster. If
+                                  false, database backup on local Exadata
+                                  storage is not available in the VM cluster.
+  --time-zone TEXT                The time zone to use for the VM cluster. For
+                                  details, see [DB System Time Zones].
+  --freeform-tags COMPLEX TYPE    Free-form tags for this resource. Each tag is
+                                  a simple key-value pair with no predefined
+                                  name, type, or namespace. For more
+                                  information, see [Resource Tags].
+                                  
+                                  Example:
+                                  `{"Department": "Finance"}`
+                                  This is a complex
+                                  type whose value must be valid JSON. The value
+                                  can be provided as a string on the command
+                                  line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+  --defined-tags COMPLEX TYPE     Defined tags for this resource. Each key is
+                                  predefined and scoped to a namespace. For more
+                                  information, see [Resource Tags].
+                                  This is a
+                                  complex type whose value must be valid JSON.
+                                  The value can be provided as a string on the
+                                  command line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+  --wait-for-state [PROVISIONING|AVAILABLE|UPDATING|TERMINATING|TERMINATED|FAILED]
+                                  This operation creates, modifies or deletes a
+                                  resource that has a defined lifecycle state.
+                                  Specify this option to perform the action and
+                                  then wait until the resource reaches a given
+                                  lifecycle state. If timeout is reached, a
+                                  return code of 2 is returned. For any other
+                                  error, a return code of 1 is returned.
+  --max-wait-seconds INTEGER      The maximum time to wait for the resource to
+                                  reach the lifecycle state defined by --wait-
+                                  for-state. Defaults to 1200 seconds.
+  --wait-interval-seconds INTEGER
+                                  Check every --wait-interval-seconds to see
+                                  whether the resource to see if it has reached
+                                  the lifecycle state defined by --wait-for-
+                                  state. Defaults to 30 seconds.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file using the file://path-
+                                  to/file syntax.
+                                  
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci db vm-cluster delete --help
+Usage: oci db vm-cluster delete [OPTIONS]
+
+  Deletes the specified VM cluster.
+
+Options:
+  --vm-cluster-id TEXT            The VM cluster [OCID]. [required]
+  --if-match TEXT                 For optimistic concurrency control. In the PUT
+                                  or DELETE call for a resource, set the `if-
+                                  match` parameter to the value of the etag from
+                                  a previous GET or POST response for that
+                                  resource.  The resource will be updated or
+                                  deleted only if the etag you provide matches
+                                  the resource's current etag value.
+  --force                         Perform deletion without prompting for
+                                  confirmation.
+  --wait-for-state [PROVISIONING|AVAILABLE|UPDATING|TERMINATING|TERMINATED|FAILED]
+                                  This operation creates, modifies or deletes a
+                                  resource that has a defined lifecycle state.
+                                  Specify this option to perform the action and
+                                  then wait until the resource reaches a given
+                                  lifecycle state. If timeout is reached, a
+                                  return code of 2 is returned. For any other
+                                  error, a return code of 1 is returned.
+  --max-wait-seconds INTEGER      The maximum time to wait for the resource to
+                                  reach the lifecycle state defined by --wait-
+                                  for-state. Defaults to 1200 seconds.
+  --wait-interval-seconds INTEGER
+                                  Check every --wait-interval-seconds to see
+                                  whether the resource to see if it has reached
+                                  the lifecycle state defined by --wait-for-
+                                  state. Defaults to 30 seconds.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file using the file://path-
+                                  to/file syntax.
+                                  
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci db vm-cluster get --help
+Usage: oci db vm-cluster get [OPTIONS]
+
+  Gets information about the specified VM cluster.
+
+Options:
+  --vm-cluster-id TEXT  The VM cluster [OCID]. [required]
+  --from-json TEXT      Provide input to this command as a JSON document from a
+                        file using the file://path-to/file syntax.
+                        
+                        The
+                        --generate-full-command-json-input option can be used to
+                        generate a sample json file to be used with this command
+                        option. The key names are pre-populated and match the
+                        command option names (converted to camelCase format,
+                        e.g. compartment-id --> compartmentId), while the values
+                        of the keys need to be populated by the user before
+                        using the sample file as an input to this command. For
+                        any command option that accepts multiple values, the
+                        value of the key can be a JSON array.
+                        
+                        Options can still
+                        be provided on the command line. If an option exists in
+                        both the JSON document and the command line then the
+                        command line specified value will be used.
+                        
+                        For examples
+                        on usage of this option, please see our "using CLI with
+                        advanced JSON options" link: https://docs.cloud.oracle.c
+                        om/iaas/Content/API/SDKDocs/cliusing.htm#AdvancedJSONOpt
+                        ions
+  -?, -h, --help        For detailed help on any of these individual commands,
+                        enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci db vm-cluster list --help
+Usage: oci db vm-cluster list [OPTIONS]
+
+  Gets a list of the VM clusters in the specified compartment.
+
+Options:
+  -c, --compartment-id TEXT       The compartment [OCID]. [required]
+  --exadata-infrastructure-id TEXT
+                                  If provided, filters the results for the given
+                                  Exadata Infrastructure.
+  --limit INTEGER                 The maximum number of items to return per
+                                  page.
+  --page TEXT                     The pagination token to continue listing from.
+  --sort-by [TIMECREATED|DISPLAYNAME]
+                                  The field to sort by.  You can provide one
+                                  sort order (`sortOrder`).  Default order for
+                                  TIMECREATED is descending.  Default order for
+                                  DISPLAYNAME is ascending. The DISPLAYNAME sort
+                                  order is case sensitive.
+  --sort-order [ASC|DESC]         The sort order to use, either ascending
+                                  (`ASC`) or descending (`DESC`).
+  --lifecycle-state [PROVISIONING|AVAILABLE|UPDATING|TERMINATING|TERMINATED|FAILED]
+                                  A filter to return only resources that match
+                                  the given lifecycle state exactly.
+  --display-name TEXT             A filter to return only resources that match
+                                  the entire display name given. The match is
+                                  not case sensitive.
+  --all                           Fetches all pages of results. If you provide
+                                  this option, then you cannot provide the
+                                  --limit option.
+  --page-size INTEGER             When fetching results, the number of results
+                                  to fetch per call. Only valid when used with
+                                  --all or --limit, and ignored otherwise.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file using the file://path-
+                                  to/file syntax.
+                                  
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci db vm-cluster update --help
+Usage: oci db vm-cluster update [OPTIONS]
+
+  Updates the specified VM cluster.
+
+Options:
+  --vm-cluster-id TEXT            The VM cluster [OCID]. [required]
+  --cpu-core-count INTEGER        The number of CPU cores to enable for the VM
+                                  cluster.
+  --license-model [LICENSE_INCLUDED|BRING_YOUR_OWN_LICENSE]
+                                  The Oracle license model that applies to the
+                                  VM cluster. The default is
+                                  BRING_YOUR_OWN_LICENSE.
+  --ssh-public-keys COMPLEX TYPE  The public key portion of one or more key
+                                  pairs used for SSH access to the VM cluster.
+                                  This is a complex type whose value must be
+                                  valid JSON. The value can be provided as a
+                                  string on the command line or passed in as a
+                                  file using
+                                  the file://path/to/file syntax.
+                                  The --generate-param-json-input option can be
+                                  used to generate an example of the JSON which
+                                  must be provided. We recommend storing this
+                                  example
+                                  in a file, modifying it as needed and
+                                  then passing it back in via the file://
+                                  syntax.
+  --freeform-tags COMPLEX TYPE    Free-form tags for this resource. Each tag is
+                                  a simple key-value pair with no predefined
+                                  name, type, or namespace. For more
+                                  information, see [Resource Tags].
+                                  
+                                  Example:
+                                  `{"Department": "Finance"}`
+                                  This is a complex
+                                  type whose value must be valid JSON. The value
+                                  can be provided as a string on the command
+                                  line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+  --defined-tags COMPLEX TYPE     Defined tags for this resource. Each key is
+                                  predefined and scoped to a namespace. For more
+                                  information, see [Resource Tags].
+                                  This is a
+                                  complex type whose value must be valid JSON.
+                                  The value can be provided as a string on the
+                                  command line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+  --if-match TEXT                 For optimistic concurrency control. In the PUT
+                                  or DELETE call for a resource, set the `if-
+                                  match` parameter to the value of the etag from
+                                  a previous GET or POST response for that
+                                  resource.  The resource will be updated or
+                                  deleted only if the etag you provide matches
+                                  the resource's current etag value.
+  --force                         Perform update without prompting for
+                                  confirmation.
+  --wait-for-state [PROVISIONING|AVAILABLE|UPDATING|TERMINATING|TERMINATED|FAILED]
+                                  This operation creates, modifies or deletes a
+                                  resource that has a defined lifecycle state.
+                                  Specify this option to perform the action and
+                                  then wait until the resource reaches a given
+                                  lifecycle state. If timeout is reached, a
+                                  return code of 2 is returned. For any other
+                                  error, a return code of 1 is returned.
+  --max-wait-seconds INTEGER      The maximum time to wait for the resource to
+                                  reach the lifecycle state defined by --wait-
+                                  for-state. Defaults to 1200 seconds.
+  --wait-interval-seconds INTEGER
+                                  Check every --wait-interval-seconds to see
+                                  whether the resource to see if it has reached
+                                  the lifecycle state defined by --wait-for-
+                                  state. Defaults to 30 seconds.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file using the file://path-
+                                  to/file syntax.
+                                  
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci db vm-cluster-network --help
+Usage: oci db vm-cluster-network [OPTIONS] COMMAND [ARGS]...
+
+  The VM cluster network.
+
+Options:
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
+
+Commands:
+  create                          Creates the VM cluster network.
+  delete                          Deletes the specified VM cluster network.
+  download-vm-cluster-network-config-file
+                                  Downloads the configuration file for the...
+  get                             Gets information about the specified VM...
+  list                            Gets a list of the VM cluster networks in
+                                  the...
+  update                          Updates the specified VM cluster network.
+  validate                        Validates the specified VM cluster network.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci db vm-cluster-network create --help
+Usage: oci db vm-cluster-network create [OPTIONS]
+
+  Creates the VM cluster network.
+
+Options:
+  --exadata-infrastructure-id TEXT
+                                  The Exadata infrastructure [OCID]. [required]
+  -c, --compartment-id TEXT       The [OCID] of the compartment. [required]
+  --display-name TEXT             The user-friendly name for the VM cluster
+                                  network. The name does not need to be unique.
+                                  [required]
+  --scans COMPLEX TYPE            The SCAN details.
+                                  This is a complex type whose
+                                  value must be valid JSON. The value can be
+                                  provided as a string on the command line or
+                                  passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+                                  [required]
+  --vm-networks COMPLEX TYPE      Details of the client and backup networks.
+                                  This is a complex type whose value must be
+                                  valid JSON. The value can be provided as a
+                                  string on the command line or passed in as a
+                                  file using
+                                  the file://path/to/file syntax.
+                                  The --generate-param-json-input option can be
+                                  used to generate an example of the JSON which
+                                  must be provided. We recommend storing this
+                                  example
+                                  in a file, modifying it as needed and
+                                  then passing it back in via the file://
+                                  syntax.
+                                   [required]
+  --dns COMPLEX TYPE              The list of DNS server IP addresses. Maximum
+                                  of 3 allowed.
+                                  This is a complex type whose
+                                  value must be valid JSON. The value can be
+                                  provided as a string on the command line or
+                                  passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+  --ntp COMPLEX TYPE              The list of NTP server IP addresses. Maximum
+                                  of 3 allowed.
+                                  This is a complex type whose
+                                  value must be valid JSON. The value can be
+                                  provided as a string on the command line or
+                                  passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+  --freeform-tags COMPLEX TYPE    Free-form tags for this resource. Each tag is
+                                  a simple key-value pair with no predefined
+                                  name, type, or namespace. For more
+                                  information, see [Resource Tags].
+                                  
+                                  Example:
+                                  `{"Department": "Finance"}`
+                                  This is a complex
+                                  type whose value must be valid JSON. The value
+                                  can be provided as a string on the command
+                                  line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+  --defined-tags COMPLEX TYPE     Defined tags for this resource. Each key is
+                                  predefined and scoped to a namespace. For more
+                                  information, see [Resource Tags].
+                                  This is a
+                                  complex type whose value must be valid JSON.
+                                  The value can be provided as a string on the
+                                  command line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+  --wait-for-state [CREATING|REQUIRES_VALIDATION|VALIDATING|VALIDATED|VALIDATION_FAILED|UPDATING|ALLOCATED|TERMINATING|TERMINATED|FAILED]
+                                  This operation creates, modifies or deletes a
+                                  resource that has a defined lifecycle state.
+                                  Specify this option to perform the action and
+                                  then wait until the resource reaches a given
+                                  lifecycle state. If timeout is reached, a
+                                  return code of 2 is returned. For any other
+                                  error, a return code of 1 is returned.
+  --max-wait-seconds INTEGER      The maximum time to wait for the resource to
+                                  reach the lifecycle state defined by --wait-
+                                  for-state. Defaults to 1200 seconds.
+  --wait-interval-seconds INTEGER
+                                  Check every --wait-interval-seconds to see
+                                  whether the resource to see if it has reached
+                                  the lifecycle state defined by --wait-for-
+                                  state. Defaults to 30 seconds.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file using the file://path-
+                                  to/file syntax.
+                                  
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci db vm-cluster-network delete --help
+Usage: oci db vm-cluster-network delete [OPTIONS]
+
+  Deletes the specified VM cluster network.
+
+Options:
+  --exadata-infrastructure-id TEXT
+                                  The Exadata infrastructure [OCID]. [required]
+  --vm-cluster-network-id TEXT    The VM cluster network [OCID]. [required]
+  --if-match TEXT                 For optimistic concurrency control. In the PUT
+                                  or DELETE call for a resource, set the `if-
+                                  match` parameter to the value of the etag from
+                                  a previous GET or POST response for that
+                                  resource.  The resource will be updated or
+                                  deleted only if the etag you provide matches
+                                  the resource's current etag value.
+  --force                         Perform deletion without prompting for
+                                  confirmation.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file using the file://path-
+                                  to/file syntax.
+                                  
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci db vm-cluster-network download-vm-cluster-network-config-file --help
+Usage: oci db vm-cluster-network download-vm-cluster-network-config-file 
+           [OPTIONS]
+
+  Downloads the configuration file for the specified VM Cluster Network.
+
+Options:
+  --exadata-infrastructure-id TEXT
+                                  The Exadata infrastructure [OCID]. [required]
+  --vm-cluster-network-id TEXT    The VM cluster network [OCID]. [required]
+  --file FILENAME                 The name of the file that will receive the
+                                  response data, or '-' to write to STDOUT.
+                                  [required]
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file using the file://path-
+                                  to/file syntax.
+                                  
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci db vm-cluster-network get --help
+Usage: oci db vm-cluster-network get [OPTIONS]
+
+  Gets information about the specified VM cluster network.
+
+Options:
+  --exadata-infrastructure-id TEXT
+                                  The Exadata infrastructure [OCID]. [required]
+  --vm-cluster-network-id TEXT    The VM cluster network [OCID]. [required]
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file using the file://path-
+                                  to/file syntax.
+                                  
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci db vm-cluster-network list --help
+Usage: oci db vm-cluster-network list [OPTIONS]
+
+  Gets a list of the VM cluster networks in the specified compartment.
+
+Options:
+  --exadata-infrastructure-id TEXT
+                                  The Exadata infrastructure [OCID]. [required]
+  -c, --compartment-id TEXT       The compartment [OCID]. [required]
+  --limit INTEGER                 The maximum number of items to return per
+                                  page.
+  --page TEXT                     The pagination token to continue listing from.
+  --sort-by [TIMECREATED|DISPLAYNAME]
+                                  The field to sort by.  You can provide one
+                                  sort order (`sortOrder`).  Default order for
+                                  TIMECREATED is descending.  Default order for
+                                  DISPLAYNAME is ascending. The DISPLAYNAME sort
+                                  order is case sensitive.
+  --sort-order [ASC|DESC]         The sort order to use, either ascending
+                                  (`ASC`) or descending (`DESC`).
+  --lifecycle-state [CREATING|REQUIRES_VALIDATION|VALIDATING|VALIDATED|VALIDATION_FAILED|UPDATING|ALLOCATED|TERMINATING|TERMINATED|FAILED]
+                                  A filter to return only resources that match
+                                  the given lifecycle state exactly.
+  --display-name TEXT             A filter to return only resources that match
+                                  the entire display name given. The match is
+                                  not case sensitive.
+  --all                           Fetches all pages of results. If you provide
+                                  this option, then you cannot provide the
+                                  --limit option.
+  --page-size INTEGER             When fetching results, the number of results
+                                  to fetch per call. Only valid when used with
+                                  --all or --limit, and ignored otherwise.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file using the file://path-
+                                  to/file syntax.
+                                  
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci db vm-cluster-network update --help
+Usage: oci db vm-cluster-network update [OPTIONS]
+
+  Updates the specified VM cluster network.
+
+Options:
+  --exadata-infrastructure-id TEXT
+                                  The Exadata infrastructure [OCID]. [required]
+  --vm-cluster-network-id TEXT    The VM cluster network [OCID]. [required]
+  --scans COMPLEX TYPE            The SCAN details.
+                                  
+                                  This option is a JSON list
+                                  with items of type ScanDetails.  For
+                                  documentation on ScanDetails please see our
+                                  API reference: https://docs.cloud.oracle.com/a
+                                  pi/#/en/database/20160918/datatypes/ScanDetail
+                                  s.
+                                  This is a complex type whose value must be
+                                  valid JSON. The value can be provided as a
+                                  string on the command line or passed in as a
+                                  file using
+                                  the file://path/to/file syntax.
+                                  The --generate-param-json-input option can be
+                                  used to generate an example of the JSON which
+                                  must be provided. We recommend storing this
+                                  example
+                                  in a file, modifying it as needed and
+                                  then passing it back in via the file://
+                                  syntax.
+  --dns COMPLEX TYPE              The list of DNS server IP addresses. Maximum
+                                  of 3 allowed.
+                                  This is a complex type whose
+                                  value must be valid JSON. The value can be
+                                  provided as a string on the command line or
+                                  passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+  --ntp COMPLEX TYPE              The list of NTP server IP addresses. Maximum
+                                  of 3 allowed.
+                                  This is a complex type whose
+                                  value must be valid JSON. The value can be
+                                  provided as a string on the command line or
+                                  passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+  --vm-networks COMPLEX TYPE      Details of the client and backup networks.
+                                  This option is a JSON list with items of type
+                                  VmNetworkDetails.  For documentation on
+                                  VmNetworkDetails please see our API reference:
+                                  https://docs.cloud.oracle.com/api/#/en/databas
+                                  e/20160918/datatypes/VmNetworkDetails.
+                                  This is
+                                  a complex type whose value must be valid JSON.
+                                  The value can be provided as a string on the
+                                  command line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+  --freeform-tags COMPLEX TYPE    Free-form tags for this resource. Each tag is
+                                  a simple key-value pair with no predefined
+                                  name, type, or namespace. For more
+                                  information, see [Resource Tags].
+                                  
+                                  Example:
+                                  `{"Department": "Finance"}`
+                                  This is a complex
+                                  type whose value must be valid JSON. The value
+                                  can be provided as a string on the command
+                                  line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+  --defined-tags COMPLEX TYPE     Defined tags for this resource. Each key is
+                                  predefined and scoped to a namespace. For more
+                                  information, see [Resource Tags].
+                                  This is a
+                                  complex type whose value must be valid JSON.
+                                  The value can be provided as a string on the
+                                  command line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+  --if-match TEXT                 For optimistic concurrency control. In the PUT
+                                  or DELETE call for a resource, set the `if-
+                                  match` parameter to the value of the etag from
+                                  a previous GET or POST response for that
+                                  resource.  The resource will be updated or
+                                  deleted only if the etag you provide matches
+                                  the resource's current etag value.
+  --force                         Perform update without prompting for
+                                  confirmation.
+  --wait-for-state [CREATING|REQUIRES_VALIDATION|VALIDATING|VALIDATED|VALIDATION_FAILED|UPDATING|ALLOCATED|TERMINATING|TERMINATED|FAILED]
+                                  This operation creates, modifies or deletes a
+                                  resource that has a defined lifecycle state.
+                                  Specify this option to perform the action and
+                                  then wait until the resource reaches a given
+                                  lifecycle state. If timeout is reached, a
+                                  return code of 2 is returned. For any other
+                                  error, a return code of 1 is returned.
+  --max-wait-seconds INTEGER      The maximum time to wait for the resource to
+                                  reach the lifecycle state defined by --wait-
+                                  for-state. Defaults to 1200 seconds.
+  --wait-interval-seconds INTEGER
+                                  Check every --wait-interval-seconds to see
+                                  whether the resource to see if it has reached
+                                  the lifecycle state defined by --wait-for-
+                                  state. Defaults to 30 seconds.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file using the file://path-
+                                  to/file syntax.
+                                  
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci db vm-cluster-network validate --help
+Usage: oci db vm-cluster-network validate [OPTIONS]
+
+  Validates the specified VM cluster network.
+
+Options:
+  --exadata-infrastructure-id TEXT
+                                  The Exadata infrastructure [OCID]. [required]
+  --vm-cluster-network-id TEXT    The VM cluster network [OCID]. [required]
+  --wait-for-state [CREATING|REQUIRES_VALIDATION|VALIDATING|VALIDATED|VALIDATION_FAILED|UPDATING|ALLOCATED|TERMINATING|TERMINATED|FAILED]
+                                  This operation creates, modifies or deletes a
+                                  resource that has a defined lifecycle state.
+                                  Specify this option to perform the action and
+                                  then wait until the resource reaches a given
+                                  lifecycle state. If timeout is reached, a
+                                  return code of 2 is returned. For any other
+                                  error, a return code of 1 is returned.
+  --max-wait-seconds INTEGER      The maximum time to wait for the resource to
+                                  reach the lifecycle state defined by --wait-
+                                  for-state. Defaults to 1200 seconds.
+  --wait-interval-seconds INTEGER
+                                  Check every --wait-interval-seconds to see
+                                  whether the resource to see if it has reached
+                                  the lifecycle state defined by --wait-for-
+                                  state. Defaults to 30 seconds.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file using the file://path-
+                                  to/file syntax.
+                                  
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
 

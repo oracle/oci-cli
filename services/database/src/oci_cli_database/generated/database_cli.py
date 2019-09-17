@@ -20,12 +20,6 @@ def db_root_group():
     pass
 
 
-@click.command(cli_util.override('autonomous_data_warehouse_backup_group.command_name', 'autonomous-data-warehouse-backup'), cls=CommandGroupWithAlias, help="""**Deprecated.** See [AutonomousDatabaseBackup Reference] for reference information about Autonomous Data Warehouse backups.""")
-@cli_util.help_option_group
-def autonomous_data_warehouse_backup_group():
-    pass
-
-
 @click.command(cli_util.override('autonomous_data_warehouse_group.command_name', 'autonomous-data-warehouse'), cls=CommandGroupWithAlias, help="""**Deprecated.** See [AutonomousDatabase] for reference information about Autonomous Databases with the warehouse workload type.""")
 @cli_util.help_option_group
 def autonomous_data_warehouse_group():
@@ -35,24 +29,6 @@ def autonomous_data_warehouse_group():
 @click.command(cli_util.override('backup_group.command_name', 'backup'), cls=CommandGroupWithAlias, help="""""")
 @cli_util.help_option_group
 def backup_group():
-    pass
-
-
-@click.command(cli_util.override('maintenance_run_group.command_name', 'maintenance-run'), cls=CommandGroupWithAlias, help="""Details of a Maintenance Run.""")
-@cli_util.help_option_group
-def maintenance_run_group():
-    pass
-
-
-@click.command(cli_util.override('db_system_group.command_name', 'db-system'), cls=CommandGroupWithAlias, help="""""")
-@cli_util.help_option_group
-def db_system_group():
-    pass
-
-
-@click.command(cli_util.override('autonomous_database_group.command_name', 'autonomous-database'), cls=CommandGroupWithAlias, help="""An Oracle Autonomous Database.""")
-@cli_util.help_option_group
-def autonomous_database_group():
     pass
 
 
@@ -68,23 +44,15 @@ def patch_group():
     pass
 
 
-@click.command(cli_util.override('db_version_group.command_name', 'db-version'), cls=CommandGroupWithAlias, help="""The Oracle Database software version.
-
-To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
+@click.command(cli_util.override('exadata_infrastructure_group.command_name', 'exadata-infrastructure'), cls=CommandGroupWithAlias, help="""ExadataInfrastructure""")
 @cli_util.help_option_group
-def db_version_group():
+def exadata_infrastructure_group():
     pass
 
 
 @click.command(cli_util.override('database_group.command_name', 'database'), cls=CommandGroupWithAlias, help="""""")
 @cli_util.help_option_group
 def database_group():
-    pass
-
-
-@click.command(cli_util.override('patch_history_entry_group.command_name', 'patch-history-entry'), cls=CommandGroupWithAlias, help="""""")
-@cli_util.help_option_group
-def patch_history_entry_group():
     pass
 
 
@@ -112,12 +80,6 @@ def db_home_group():
     pass
 
 
-@click.command(cli_util.override('autonomous_db_preview_version_group.command_name', 'autonomous-db-preview-version'), cls=CommandGroupWithAlias, help="""The Autonomous Database preview version. Note that preview version software is only available for [serverless deployments].""")
-@cli_util.help_option_group
-def autonomous_db_preview_version_group():
-    pass
-
-
 @click.command(cli_util.override('autonomous_exadata_infrastructure_shape_group.command_name', 'autonomous-exadata-infrastructure-shape'), cls=CommandGroupWithAlias, help="""The shape of the Autonomous Exadata Infrastructure. The shape determines resources to allocate to the Autonomous Exadata Infrastructure (CPU cores, memory and storage).
 
 To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
@@ -126,9 +88,11 @@ def autonomous_exadata_infrastructure_shape_group():
     pass
 
 
-@click.command(cli_util.override('db_node_group.command_name', 'db-node'), cls=CommandGroupWithAlias, help="""""")
+@click.command(cli_util.override('gi_version_group.command_name', 'gi-version'), cls=CommandGroupWithAlias, help="""The Oracle Grid Infrastructure (GI) version.
+
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
 @cli_util.help_option_group
-def db_node_group():
+def gi_version_group():
     pass
 
 
@@ -144,26 +108,159 @@ def autonomous_exadata_infrastructure_group():
     pass
 
 
-db_root_group.add_command(autonomous_data_warehouse_backup_group)
+@click.command(cli_util.override('autonomous_data_warehouse_backup_group.command_name', 'autonomous-data-warehouse-backup'), cls=CommandGroupWithAlias, help="""**Deprecated.** See [AutonomousDatabaseBackup Reference] for reference information about Autonomous Data Warehouse backups.""")
+@cli_util.help_option_group
+def autonomous_data_warehouse_backup_group():
+    pass
+
+
+@click.command(cli_util.override('backup_destination_group.command_name', 'backup-destination'), cls=CommandGroupWithAlias, help="""Backup destination details.""")
+@cli_util.help_option_group
+def backup_destination_group():
+    pass
+
+
+@click.command(cli_util.override('maintenance_run_group.command_name', 'maintenance-run'), cls=CommandGroupWithAlias, help="""Details of a Maintenance Run.""")
+@cli_util.help_option_group
+def maintenance_run_group():
+    pass
+
+
+@click.command(cli_util.override('db_system_group.command_name', 'db-system'), cls=CommandGroupWithAlias, help="""""")
+@cli_util.help_option_group
+def db_system_group():
+    pass
+
+
+@click.command(cli_util.override('autonomous_database_group.command_name', 'autonomous-database'), cls=CommandGroupWithAlias, help="""An Oracle Autonomous Database.""")
+@cli_util.help_option_group
+def autonomous_database_group():
+    pass
+
+
+@click.command(cli_util.override('db_version_group.command_name', 'db-version'), cls=CommandGroupWithAlias, help="""The Oracle Database software version.
+
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
+@cli_util.help_option_group
+def db_version_group():
+    pass
+
+
+@click.command(cli_util.override('patch_history_entry_group.command_name', 'patch-history-entry'), cls=CommandGroupWithAlias, help="""""")
+@cli_util.help_option_group
+def patch_history_entry_group():
+    pass
+
+
+@click.command(cli_util.override('vm_cluster_network_group.command_name', 'vm-cluster-network'), cls=CommandGroupWithAlias, help="""The VM cluster network.""")
+@cli_util.help_option_group
+def vm_cluster_network_group():
+    pass
+
+
+@click.command(cli_util.override('autonomous_db_preview_version_group.command_name', 'autonomous-db-preview-version'), cls=CommandGroupWithAlias, help="""The Autonomous Database preview version. Note that preview version software is only available for [serverless deployments].""")
+@cli_util.help_option_group
+def autonomous_db_preview_version_group():
+    pass
+
+
+@click.command(cli_util.override('vm_cluster_group.command_name', 'vm-cluster'), cls=CommandGroupWithAlias, help="""Details of the VM cluster.""")
+@cli_util.help_option_group
+def vm_cluster_group():
+    pass
+
+
+@click.command(cli_util.override('backup_destination_summary_group.command_name', 'backup-destination-summary'), cls=CommandGroupWithAlias, help="""Backup destination details, including the list of databases using the backup destination.""")
+@cli_util.help_option_group
+def backup_destination_summary_group():
+    pass
+
+
+@click.command(cli_util.override('db_node_group.command_name', 'db-node'), cls=CommandGroupWithAlias, help="""""")
+@cli_util.help_option_group
+def db_node_group():
+    pass
+
+
 db_root_group.add_command(autonomous_data_warehouse_group)
 db_root_group.add_command(backup_group)
-db_root_group.add_command(maintenance_run_group)
-db_root_group.add_command(db_system_group)
-db_root_group.add_command(autonomous_database_group)
 db_root_group.add_command(autonomous_container_database_group)
 db_root_group.add_command(patch_group)
-db_root_group.add_command(db_version_group)
+db_root_group.add_command(exadata_infrastructure_group)
 db_root_group.add_command(database_group)
-db_root_group.add_command(patch_history_entry_group)
 db_root_group.add_command(db_system_shape_group)
 db_root_group.add_command(data_guard_association_group)
 db_root_group.add_command(autonomous_database_backup_group)
 db_root_group.add_command(db_home_group)
-db_root_group.add_command(autonomous_db_preview_version_group)
 db_root_group.add_command(autonomous_exadata_infrastructure_shape_group)
-db_root_group.add_command(db_node_group)
+db_root_group.add_command(gi_version_group)
 db_root_group.add_command(external_backup_job_group)
 db_root_group.add_command(autonomous_exadata_infrastructure_group)
+db_root_group.add_command(autonomous_data_warehouse_backup_group)
+db_root_group.add_command(backup_destination_group)
+db_root_group.add_command(maintenance_run_group)
+db_root_group.add_command(db_system_group)
+db_root_group.add_command(autonomous_database_group)
+db_root_group.add_command(db_version_group)
+db_root_group.add_command(patch_history_entry_group)
+db_root_group.add_command(vm_cluster_network_group)
+db_root_group.add_command(autonomous_db_preview_version_group)
+db_root_group.add_command(vm_cluster_group)
+db_root_group.add_command(backup_destination_summary_group)
+db_root_group.add_command(db_node_group)
+
+
+@exadata_infrastructure_group.command(name=cli_util.override('activate_exadata_infrastructure.command_name', 'activate'), help=u"""Activates the specified Exadata infrastructure.""")
+@cli_util.option('--exadata-infrastructure-id', required=True, help=u"""The Exadata infrastructure [OCID].""")
+@cli_util.option('--activation-file', required=True, help=u"""The activation zip file.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "REQUIRES_ACTIVATION", "ACTIVATING", "ACTIVE", "ACTIVATION_FAILED", "FAILED", "UPDATING", "DELETING", "DELETED", "OFFLINE"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'ExadataInfrastructure'})
+@cli_util.wrap_exceptions
+def activate_exadata_infrastructure(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, exadata_infrastructure_id, activation_file):
+
+    if isinstance(exadata_infrastructure_id, six.string_types) and len(exadata_infrastructure_id.strip()) == 0:
+        raise click.UsageError('Parameter --exadata-infrastructure-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    details = {}
+    details['activationFile'] = activation_file
+
+    client = cli_util.build_client('database', ctx)
+    result = client.activate_exadata_infrastructure(
+        exadata_infrastructure_id=exadata_infrastructure_id,
+        activate_exadata_infrastructure_details=details,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_exadata_infrastructure') and callable(getattr(client, 'get_exadata_infrastructure')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_exadata_infrastructure(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
 
 
 @autonomous_container_database_group.command(name=cli_util.override('change_autonomous_container_database_compartment.command_name', 'change-compartment'), help=u"""Move the Autonomous Container Database and its dependent resources to the specified compartment. For more information about moving Autonomous Container Databases, see [Moving Database Resources to a Different Compartment].""")
@@ -259,6 +356,37 @@ def change_autonomous_exadata_infrastructure_compartment(ctx, from_json, compart
     cli_util.render_response(result, ctx)
 
 
+@backup_destination_group.command(name=cli_util.override('change_backup_destination_compartment.command_name', 'change-compartment'), help=u"""Move the backup destination and its dependent resources to the specified compartment. For more information about moving backup destinations, see [Moving Database Resources to a Different Compartment].""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the resource to.""")
+@cli_util.option('--backup-destination-id', required=True, help=u"""The [OCID] of the backup destination.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_backup_destination_compartment(ctx, from_json, compartment_id, backup_destination_id, if_match):
+
+    if isinstance(backup_destination_id, six.string_types) and len(backup_destination_id.strip()) == 0:
+        raise click.UsageError('Parameter --backup-destination-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    details = {}
+    details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('database', ctx)
+    result = client.change_backup_destination_compartment(
+        backup_destination_id=backup_destination_id,
+        change_compartment_details=details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @db_system_group.command(name=cli_util.override('change_db_system_compartment.command_name', 'change-compartment'), help=u"""Move the DB system and its dependent resources to the specified compartment. For more information about moving DB systems, see [Moving Database Resources to a Different Compartment].""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the resource to.""")
 @cli_util.option('--db-system-id', required=True, help=u"""The DB system [OCID].""")
@@ -285,6 +413,68 @@ def change_db_system_compartment(ctx, from_json, compartment_id, db_system_id, i
     result = client.change_db_system_compartment(
         db_system_id=db_system_id,
         change_compartment_details=details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@exadata_infrastructure_group.command(name=cli_util.override('change_exadata_infrastructure_compartment.command_name', 'change-compartment'), help=u"""To move an Exadata infrastructure and its dependent resources to another compartment, use the [ChangeExadataInfrastructureCompartment] operation.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the resource to.""")
+@cli_util.option('--exadata-infrastructure-id', required=True, help=u"""The Exadata infrastructure [OCID].""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_exadata_infrastructure_compartment(ctx, from_json, compartment_id, exadata_infrastructure_id, if_match):
+
+    if isinstance(exadata_infrastructure_id, six.string_types) and len(exadata_infrastructure_id.strip()) == 0:
+        raise click.UsageError('Parameter --exadata-infrastructure-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    details = {}
+    details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('database', ctx)
+    result = client.change_exadata_infrastructure_compartment(
+        exadata_infrastructure_id=exadata_infrastructure_id,
+        change_exadata_infrastructure_compartment_details=details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@vm_cluster_group.command(name=cli_util.override('change_vm_cluster_compartment.command_name', 'change-compartment'), help=u"""To move a VM cluster and its dependent resources to another compartment, use the [ChangeVmClusterCompartment] operation.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the VM cluster to.""")
+@cli_util.option('--vm-cluster-id', required=True, help=u"""The VM cluster [OCID].""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_vm_cluster_compartment(ctx, from_json, compartment_id, vm_cluster_id, if_match):
+
+    if isinstance(vm_cluster_id, six.string_types) and len(vm_cluster_id.strip()) == 0:
+        raise click.UsageError('Parameter --vm-cluster-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    details = {}
+    details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('database', ctx)
+    result = client.change_vm_cluster_compartment(
+        vm_cluster_id=vm_cluster_id,
+        change_vm_cluster_compartment_details=details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -944,6 +1134,198 @@ def create_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
     cli_util.render_response(result, ctx)
 
 
+@backup_destination_group.command(name=cli_util.override('create_backup_destination.command_name', 'create'), help=u"""Creates a backup destination.""")
+@cli_util.option('--display-name', required=True, help=u"""The user-provided name of the backup destination.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["NFS", "RECOVERY_APPLIANCE"]), help=u"""Type of the backup destination.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "FAILED", "DELETED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'BackupDestination'})
+@cli_util.wrap_exceptions
+def create_backup_destination(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, type, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    details = {}
+    details['displayName'] = display_name
+    details['compartmentId'] = compartment_id
+    details['type'] = type
+
+    if freeform_tags is not None:
+        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('database', ctx)
+    result = client.create_backup_destination(
+        create_backup_destination_details=details,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_backup_destination') and callable(getattr(client, 'get_backup_destination')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_backup_destination(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@backup_destination_group.command(name=cli_util.override('create_backup_destination_create_nfs_backup_destination_details.command_name', 'create-backup-destination-create-nfs-backup-destination-details'), help=u"""Creates a backup destination.""")
+@cli_util.option('--display-name', required=True, help=u"""The user-provided name of the backup destination.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--local-mount-point-path', required=True, help=u"""The local directory path on each VM cluster node where the NFS server location is mounted. The local directory path and the NFS server location must each be the same across all of the VM cluster nodes. Ensure that the NFS mount is maintained continuously on all of the VM cluster nodes.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "FAILED", "DELETED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'BackupDestination'})
+@cli_util.wrap_exceptions
+def create_backup_destination_create_nfs_backup_destination_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, local_mount_point_path, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    details = {}
+    details['displayName'] = display_name
+    details['compartmentId'] = compartment_id
+    details['localMountPointPath'] = local_mount_point_path
+
+    if freeform_tags is not None:
+        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    details['type'] = 'NFS'
+
+    client = cli_util.build_client('database', ctx)
+    result = client.create_backup_destination(
+        create_backup_destination_details=details,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_backup_destination') and callable(getattr(client, 'get_backup_destination')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_backup_destination(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@backup_destination_group.command(name=cli_util.override('create_backup_destination_create_recovery_appliance_backup_destination_details.command_name', 'create-backup-destination-create-recovery-appliance-backup-destination-details'), help=u"""Creates a backup destination.""")
+@cli_util.option('--display-name', required=True, help=u"""The user-provided name of the backup destination.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--connection-string', required=True, help=u"""The connection string for connecting to the Recovery Appliance.""")
+@cli_util.option('--vpc-users', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The Virtual Private Catalog (VPC) users that are used to access the Recovery Appliance.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "FAILED", "DELETED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'vpc-users': {'module': 'database', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'vpc-users': {'module': 'database', 'class': 'list[string]'}}, output_type={'module': 'database', 'class': 'BackupDestination'})
+@cli_util.wrap_exceptions
+def create_backup_destination_create_recovery_appliance_backup_destination_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, connection_string, vpc_users, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    details = {}
+    details['displayName'] = display_name
+    details['compartmentId'] = compartment_id
+    details['connectionString'] = connection_string
+    details['vpcUsers'] = cli_util.parse_json_parameter("vpc_users", vpc_users)
+
+    if freeform_tags is not None:
+        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    details['type'] = 'RECOVERY_APPLIANCE'
+
+    client = cli_util.build_client('database', ctx)
+    result = client.create_backup_destination(
+        create_backup_destination_details=details,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_backup_destination') and callable(getattr(client, 'get_backup_destination')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_backup_destination(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @data_guard_association_group.command(name=cli_util.override('create_data_guard_association.command_name', 'create'), help=u"""Creates a new Data Guard association.  A Data Guard association represents the replication relationship between the specified database and a peer database. For more information, see [Using Oracle Data Guard].
 
 All Oracle Cloud Infrastructure resources, including Data Guard associations, get an Oracle-assigned, unique ID called an Oracle Cloud Identifier (OCID). When you create a resource, you can find its OCID in the response. You can also retrieve a resource's OCID by using a List API operation on that resource type, or by viewing the resource in the Console. For more information, see [Resource Identifiers].""")
@@ -1215,9 +1597,8 @@ def create_data_guard_association_create_data_guard_association_to_existing_db_s
 
 
 @db_home_group.command(name=cli_util.override('create_db_home.command_name', 'create'), help=u"""Creates a new database home in the specified DB system based on the request parameters you provide.""")
-@cli_util.option('--db-system-id', required=True, help=u"""The [OCID] of the DB system.""")
 @cli_util.option('--display-name', help=u"""The user-provided name of the database home.""")
-@cli_util.option('--source', type=custom_types.CliCaseInsensitiveChoice(["NONE", "DB_BACKUP"]), help=u"""The source of database: NONE for creating a new database. DB_BACKUP for creating a new database by restoring from a database backup.""")
+@cli_util.option('--source', type=custom_types.CliCaseInsensitiveChoice(["NONE", "DB_BACKUP", "VM_CLUSTER_NEW", "VM_CLUSTER_BACKUP"]), help=u"""The source of database: NONE for creating a new database. DB_BACKUP for creating a new database by restoring from a database backup.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -1226,12 +1607,11 @@ def create_data_guard_association_create_data_guard_association_to_existing_db_s
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'DbHome'})
 @cli_util.wrap_exceptions
-def create_db_home(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_system_id, display_name, source):
+def create_db_home(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, source):
 
     kwargs = {}
 
     details = {}
-    details['dbSystemId'] = db_system_id
 
     if display_name is not None:
         details['displayName'] = display_name
@@ -1324,6 +1704,61 @@ def create_db_home_create_db_home_with_db_system_id_from_backup_details(ctx, fro
     cli_util.render_response(result, ctx)
 
 
+@db_home_group.command(name=cli_util.override('create_db_home_create_db_home_with_vm_cluster_id_from_backup_details.command_name', 'create-db-home-create-db-home-with-vm-cluster-id-from-backup-details'), help=u"""Creates a new database home in the specified DB system based on the request parameters you provide.""")
+@cli_util.option('--vm-cluster-id', required=True, help=u"""The [OCID] of the VM cluster.""")
+@cli_util.option('--database', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help=u"""The user-provided name of the database home.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'database': {'module': 'database', 'class': 'CreateDatabaseFromBackupDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database': {'module': 'database', 'class': 'CreateDatabaseFromBackupDetails'}}, output_type={'module': 'database', 'class': 'DbHome'})
+@cli_util.wrap_exceptions
+def create_db_home_create_db_home_with_vm_cluster_id_from_backup_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, vm_cluster_id, database, display_name):
+
+    kwargs = {}
+
+    details = {}
+    details['vmClusterId'] = vm_cluster_id
+    details['database'] = cli_util.parse_json_parameter("database", database)
+
+    if display_name is not None:
+        details['displayName'] = display_name
+
+    details['source'] = 'VM_CLUSTER_BACKUP'
+
+    client = cli_util.build_client('database', ctx)
+    result = client.create_db_home(
+        create_db_home_with_db_system_id_details=details,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_db_home') and callable(getattr(client, 'get_db_home')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_db_home(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @db_home_group.command(name=cli_util.override('create_db_home_create_db_home_with_db_system_id_details.command_name', 'create-db-home-create-db-home-with-db-system-id-details'), help=u"""Creates a new database home in the specified DB system based on the request parameters you provide.""")
 @cli_util.option('--db-system-id', required=True, help=u"""The [OCID] of the DB system.""")
 @cli_util.option('--db-version', required=True, help=u"""A valid Oracle Database version. To get a list of supported versions, use the [ListDbVersions] operation.""")
@@ -1367,6 +1802,145 @@ def create_db_home_create_db_home_with_db_system_id_details(ctx, from_json, wait
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 result = oci.wait_until(client, client.get_db_home(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@db_home_group.command(name=cli_util.override('create_db_home_create_db_home_with_vm_cluster_id_details.command_name', 'create-db-home-create-db-home-with-vm-cluster-id-details'), help=u"""Creates a new database home in the specified DB system based on the request parameters you provide.""")
+@cli_util.option('--vm-cluster-id', required=True, help=u"""The [OCID] of the VM cluster.""")
+@cli_util.option('--db-version', required=True, help=u"""A valid Oracle Database version. To get a list of supported versions, use the [ListDbVersions] operation.""")
+@cli_util.option('--database', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help=u"""The user-provided name of the database home.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'database': {'module': 'database', 'class': 'CreateDatabaseDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database': {'module': 'database', 'class': 'CreateDatabaseDetails'}}, output_type={'module': 'database', 'class': 'DbHome'})
+@cli_util.wrap_exceptions
+def create_db_home_create_db_home_with_vm_cluster_id_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, vm_cluster_id, db_version, database, display_name):
+
+    kwargs = {}
+
+    details = {}
+    details['vmClusterId'] = vm_cluster_id
+    details['dbVersion'] = db_version
+    details['database'] = cli_util.parse_json_parameter("database", database)
+
+    if display_name is not None:
+        details['displayName'] = display_name
+
+    details['source'] = 'VM_CLUSTER_NEW'
+
+    client = cli_util.build_client('database', ctx)
+    result = client.create_db_home(
+        create_db_home_with_db_system_id_details=details,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_db_home') and callable(getattr(client, 'get_db_home')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_db_home(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@exadata_infrastructure_group.command(name=cli_util.override('create_exadata_infrastructure.command_name', 'create'), help=u"""Create Exadata infrastructure.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--display-name', required=True, help=u"""The user-friendly name for the Exadata infrastructure. The name does not need to be unique.""")
+@cli_util.option('--shape', required=True, help=u"""The shape of the Exadata infrastructure. The shape determines the amount of CPU, storage, and memory resources allocated to the instance.""")
+@cli_util.option('--time-zone', required=True, help=u"""The time zone of the Exadata infrastructure. For details, see [Exadata Infrastructure Time Zones].""")
+@cli_util.option('--cloud-control-plane-server1', required=True, help=u"""The IP address for the first control plane server.""")
+@cli_util.option('--cloud-control-plane-server2', required=True, help=u"""The IP address for the second control plane server.""")
+@cli_util.option('--netmask', required=True, help=u"""The netmask for the control plane network.""")
+@cli_util.option('--gateway', required=True, help=u"""The gateway for the control plane network.""")
+@cli_util.option('--admin-network-cidr', required=True, help=u"""The CIDR block for the Exadata administration network.""")
+@cli_util.option('--infini-band-network-cidr', required=True, help=u"""The CIDR block for the Exadata InfiniBand interconnect.""")
+@cli_util.option('--corporate-proxy', required=True, help=u"""The corporate network proxy for access to the control plane network.""")
+@cli_util.option('--dns-server', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of DNS server IP addresses. Maximum of 3 allowed.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--ntp-server', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of NTP server IP addresses. Maximum of 3 allowed.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "REQUIRES_ACTIVATION", "ACTIVATING", "ACTIVE", "ACTIVATION_FAILED", "FAILED", "UPDATING", "DELETING", "DELETED", "OFFLINE"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'dns-server': {'module': 'database', 'class': 'list[string]'}, 'ntp-server': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'dns-server': {'module': 'database', 'class': 'list[string]'}, 'ntp-server': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'ExadataInfrastructure'})
+@cli_util.wrap_exceptions
+def create_exadata_infrastructure(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, shape, time_zone, cloud_control_plane_server1, cloud_control_plane_server2, netmask, gateway, admin_network_cidr, infini_band_network_cidr, corporate_proxy, dns_server, ntp_server, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    details = {}
+    details['compartmentId'] = compartment_id
+    details['displayName'] = display_name
+    details['shape'] = shape
+    details['timeZone'] = time_zone
+    details['cloudControlPlaneServer1'] = cloud_control_plane_server1
+    details['cloudControlPlaneServer2'] = cloud_control_plane_server2
+    details['netmask'] = netmask
+    details['gateway'] = gateway
+    details['adminNetworkCIDR'] = admin_network_cidr
+    details['infiniBandNetworkCIDR'] = infini_band_network_cidr
+    details['corporateProxy'] = corporate_proxy
+    details['dnsServer'] = cli_util.parse_json_parameter("dns_server", dns_server)
+    details['ntpServer'] = cli_util.parse_json_parameter("ntp_server", ntp_server)
+
+    if freeform_tags is not None:
+        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('database', ctx)
+    result = client.create_exadata_infrastructure(
+        create_exadata_infrastructure_details=details,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_exadata_infrastructure') and callable(getattr(client, 'get_exadata_infrastructure')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_exadata_infrastructure(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except oci.exceptions.MaximumWaitTimeExceeded as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -1428,6 +2002,169 @@ def create_external_backup_job(ctx, from_json, availability_domain, compartment_
         create_external_backup_job_details=details,
         **kwargs
     )
+    cli_util.render_response(result, ctx)
+
+
+@vm_cluster_group.command(name=cli_util.override('create_vm_cluster.command_name', 'create'), help=u"""Creates a VM cluster.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--display-name', required=True, help=u"""The user-friendly name for the VM cluster. The name does not need to be unique.""")
+@cli_util.option('--exadata-infrastructure-id', required=True, help=u"""The [OCID] of the Exadata infrastructure.""")
+@cli_util.option('--cpu-core-count', required=True, type=click.INT, help=u"""The number of CPU cores to enable for the VM cluster.""")
+@cli_util.option('--ssh-public-keys', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The public key portion of one or more key pairs used for SSH access to the VM cluster.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--vm-cluster-network-id', required=True, help=u"""The [OCID] of the VM cluster network.""")
+@cli_util.option('--gi-version', required=True, help=u"""The Oracle Grid Infrastructure software version for the VM cluster.""")
+@cli_util.option('--license-model', type=custom_types.CliCaseInsensitiveChoice(["LICENSE_INCLUDED", "BRING_YOUR_OWN_LICENSE"]), help=u"""The Oracle license model that applies to the VM cluster. The default is BRING_YOUR_OWN_LICENSE.""")
+@cli_util.option('--is-sparse-diskgroup-enabled', type=click.BOOL, help=u"""If true, the sparse disk group is configured for the VM cluster. If false, the sparse disk group is not created.""")
+@cli_util.option('--is-local-backup-enabled', type=click.BOOL, help=u"""If true, database backup on local Exadata storage is configured for the VM cluster. If false, database backup on local Exadata storage is not available in the VM cluster.""")
+@cli_util.option('--time-zone', help=u"""The time zone to use for the VM cluster. For details, see [DB System Time Zones].""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'ssh-public-keys': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'ssh-public-keys': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'VmCluster'})
+@cli_util.wrap_exceptions
+def create_vm_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, exadata_infrastructure_id, cpu_core_count, ssh_public_keys, vm_cluster_network_id, gi_version, license_model, is_sparse_diskgroup_enabled, is_local_backup_enabled, time_zone, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    details = {}
+    details['compartmentId'] = compartment_id
+    details['displayName'] = display_name
+    details['exadataInfrastructureId'] = exadata_infrastructure_id
+    details['cpuCoreCount'] = cpu_core_count
+    details['sshPublicKeys'] = cli_util.parse_json_parameter("ssh_public_keys", ssh_public_keys)
+    details['vmClusterNetworkId'] = vm_cluster_network_id
+    details['giVersion'] = gi_version
+
+    if license_model is not None:
+        details['licenseModel'] = license_model
+
+    if is_sparse_diskgroup_enabled is not None:
+        details['isSparseDiskgroupEnabled'] = is_sparse_diskgroup_enabled
+
+    if is_local_backup_enabled is not None:
+        details['isLocalBackupEnabled'] = is_local_backup_enabled
+
+    if time_zone is not None:
+        details['timeZone'] = time_zone
+
+    if freeform_tags is not None:
+        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('database', ctx)
+    result = client.create_vm_cluster(
+        create_vm_cluster_details=details,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_vm_cluster') and callable(getattr(client, 'get_vm_cluster')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_vm_cluster(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@vm_cluster_network_group.command(name=cli_util.override('create_vm_cluster_network.command_name', 'create'), help=u"""Creates the VM cluster network.""")
+@cli_util.option('--exadata-infrastructure-id', required=True, help=u"""The Exadata infrastructure [OCID].""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--display-name', required=True, help=u"""The user-friendly name for the VM cluster network. The name does not need to be unique.""")
+@cli_util.option('--scans', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The SCAN details.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--vm-networks', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Details of the client and backup networks.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--dns', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of DNS server IP addresses. Maximum of 3 allowed.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--ntp', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of NTP server IP addresses. Maximum of 3 allowed.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "REQUIRES_VALIDATION", "VALIDATING", "VALIDATED", "VALIDATION_FAILED", "UPDATING", "ALLOCATED", "TERMINATING", "TERMINATED", "FAILED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'scans': {'module': 'database', 'class': 'list[ScanDetails]'}, 'dns': {'module': 'database', 'class': 'list[string]'}, 'ntp': {'module': 'database', 'class': 'list[string]'}, 'vm-networks': {'module': 'database', 'class': 'list[VmNetworkDetails]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'scans': {'module': 'database', 'class': 'list[ScanDetails]'}, 'dns': {'module': 'database', 'class': 'list[string]'}, 'ntp': {'module': 'database', 'class': 'list[string]'}, 'vm-networks': {'module': 'database', 'class': 'list[VmNetworkDetails]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'VmClusterNetwork'})
+@cli_util.wrap_exceptions
+def create_vm_cluster_network(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, exadata_infrastructure_id, compartment_id, display_name, scans, vm_networks, dns, ntp, freeform_tags, defined_tags):
+
+    if isinstance(exadata_infrastructure_id, six.string_types) and len(exadata_infrastructure_id.strip()) == 0:
+        raise click.UsageError('Parameter --exadata-infrastructure-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    details = {}
+    details['compartmentId'] = compartment_id
+    details['displayName'] = display_name
+    details['scans'] = cli_util.parse_json_parameter("scans", scans)
+    details['vmNetworks'] = cli_util.parse_json_parameter("vm_networks", vm_networks)
+
+    if dns is not None:
+        details['dns'] = cli_util.parse_json_parameter("dns", dns)
+
+    if ntp is not None:
+        details['ntp'] = cli_util.parse_json_parameter("ntp", ntp)
+
+    if freeform_tags is not None:
+        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('database', ctx)
+    result = client.create_vm_cluster_network(
+        exadata_infrastructure_id=exadata_infrastructure_id,
+        vm_cluster_network_details=details,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_vm_cluster_network') and callable(getattr(client, 'get_vm_cluster_network')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_vm_cluster_network(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -1671,6 +2408,69 @@ def delete_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
     cli_util.render_response(result, ctx)
 
 
+@backup_destination_group.command(name=cli_util.override('delete_backup_destination.command_name', 'delete'), help=u"""Deletes a backup destination.""")
+@cli_util.option('--backup-destination-id', required=True, help=u"""The [OCID] of the backup destination.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "FAILED", "DELETED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_backup_destination(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, backup_destination_id, if_match):
+
+    if isinstance(backup_destination_id, six.string_types) and len(backup_destination_id.strip()) == 0:
+        raise click.UsageError('Parameter --backup-destination-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database', ctx)
+    result = client.delete_backup_destination(
+        backup_destination_id=backup_destination_id,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_backup_destination') and callable(getattr(client, 'get_backup_destination')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                oci.wait_until(client, client.get_backup_destination(backup_destination_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except oci.exceptions.ServiceError as e:
+                # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
+                # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
+                # will result in an exception that reflects a HTTP 404. In this case, we can exit with success (rather than raising
+                # the exception) since this would have been the behaviour in the waiter anyway (as for delete we provide the argument
+                # succeed_on_not_found=True to the waiter).
+                #
+                # Any non-404 should still result in the exception being thrown.
+                if e.status == 404:
+                    pass
+                else:
+                    raise
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @db_home_group.command(name=cli_util.override('delete_db_home.command_name', 'delete'), help=u"""Deletes a DB Home. The DB Home and its database data are local to the DB system and will be lost when it is deleted. Oracle recommends that you back up any data in the DB system prior to deleting it.""")
 @cli_util.option('--db-home-id', required=True, help=u"""The database home [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -1734,6 +2534,258 @@ def delete_db_home(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
         else:
             click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
+
+
+@exadata_infrastructure_group.command(name=cli_util.override('delete_exadata_infrastructure.command_name', 'delete'), help=u"""Deletes the Exadata infrastructure.""")
+@cli_util.option('--exadata-infrastructure-id', required=True, help=u"""The Exadata infrastructure [OCID].""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "REQUIRES_ACTIVATION", "ACTIVATING", "ACTIVE", "ACTIVATION_FAILED", "FAILED", "UPDATING", "DELETING", "DELETED", "OFFLINE"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_exadata_infrastructure(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, exadata_infrastructure_id, if_match):
+
+    if isinstance(exadata_infrastructure_id, six.string_types) and len(exadata_infrastructure_id.strip()) == 0:
+        raise click.UsageError('Parameter --exadata-infrastructure-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database', ctx)
+    result = client.delete_exadata_infrastructure(
+        exadata_infrastructure_id=exadata_infrastructure_id,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_exadata_infrastructure') and callable(getattr(client, 'get_exadata_infrastructure')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                oci.wait_until(client, client.get_exadata_infrastructure(exadata_infrastructure_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except oci.exceptions.ServiceError as e:
+                # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
+                # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
+                # will result in an exception that reflects a HTTP 404. In this case, we can exit with success (rather than raising
+                # the exception) since this would have been the behaviour in the waiter anyway (as for delete we provide the argument
+                # succeed_on_not_found=True to the waiter).
+                #
+                # Any non-404 should still result in the exception being thrown.
+                if e.status == 404:
+                    pass
+                else:
+                    raise
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@vm_cluster_group.command(name=cli_util.override('delete_vm_cluster.command_name', 'delete'), help=u"""Deletes the specified VM cluster.""")
+@cli_util.option('--vm-cluster-id', required=True, help=u"""The VM cluster [OCID].""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_vm_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, vm_cluster_id, if_match):
+
+    if isinstance(vm_cluster_id, six.string_types) and len(vm_cluster_id.strip()) == 0:
+        raise click.UsageError('Parameter --vm-cluster-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database', ctx)
+    result = client.delete_vm_cluster(
+        vm_cluster_id=vm_cluster_id,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_vm_cluster') and callable(getattr(client, 'get_vm_cluster')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                oci.wait_until(client, client.get_vm_cluster(vm_cluster_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except oci.exceptions.ServiceError as e:
+                # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
+                # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
+                # will result in an exception that reflects a HTTP 404. In this case, we can exit with success (rather than raising
+                # the exception) since this would have been the behaviour in the waiter anyway (as for delete we provide the argument
+                # succeed_on_not_found=True to the waiter).
+                #
+                # Any non-404 should still result in the exception being thrown.
+                if e.status == 404:
+                    pass
+                else:
+                    raise
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@vm_cluster_network_group.command(name=cli_util.override('delete_vm_cluster_network.command_name', 'delete'), help=u"""Deletes the specified VM cluster network.""")
+@cli_util.option('--exadata-infrastructure-id', required=True, help=u"""The Exadata infrastructure [OCID].""")
+@cli_util.option('--vm-cluster-network-id', required=True, help=u"""The VM cluster network [OCID].""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_vm_cluster_network(ctx, from_json, exadata_infrastructure_id, vm_cluster_network_id, if_match):
+
+    if isinstance(exadata_infrastructure_id, six.string_types) and len(exadata_infrastructure_id.strip()) == 0:
+        raise click.UsageError('Parameter --exadata-infrastructure-id cannot be whitespace or empty string')
+
+    if isinstance(vm_cluster_network_id, six.string_types) and len(vm_cluster_network_id.strip()) == 0:
+        raise click.UsageError('Parameter --vm-cluster-network-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database', ctx)
+    result = client.delete_vm_cluster_network(
+        exadata_infrastructure_id=exadata_infrastructure_id,
+        vm_cluster_network_id=vm_cluster_network_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@exadata_infrastructure_group.command(name=cli_util.override('download_exadata_infrastructure_config_file.command_name', 'download-exadata-infrastructure-config-file'), help=u"""Downloads the configuration file for the specified Exadata infrastructure.""")
+@cli_util.option('--exadata-infrastructure-id', required=True, help=u"""The Exadata infrastructure [OCID].""")
+@cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def download_exadata_infrastructure_config_file(ctx, from_json, file, exadata_infrastructure_id):
+
+    if isinstance(exadata_infrastructure_id, six.string_types) and len(exadata_infrastructure_id.strip()) == 0:
+        raise click.UsageError('Parameter --exadata-infrastructure-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database', ctx)
+    result = client.download_exadata_infrastructure_config_file(
+        exadata_infrastructure_id=exadata_infrastructure_id,
+        **kwargs
+    )
+
+    # If outputting to stdout we don't want to print a progress bar because it will get mixed up with the output
+    # Also we need a non-zero Content-Length in order to display a meaningful progress bar
+    bar = None
+    if hasattr(file, 'name') and file.name != '<stdout>' and 'Content-Length' in result.headers:
+        content_length = int(result.headers['Content-Length'])
+        if content_length > 0:
+            bar = click.progressbar(length=content_length, label='Downloading file')
+
+    try:
+        if bar:
+            bar.__enter__()
+
+        # TODO: Make the download size a configurable option
+        # use decode_content=True to automatically unzip service responses (this should be overridden for object storage)
+        for chunk in result.data.raw.stream(cli_constants.MEBIBYTE, decode_content=True):
+            if bar:
+                bar.update(len(chunk))
+            file.write(chunk)
+    finally:
+        if bar:
+            bar.render_finish()
+        file.close()
+
+
+@vm_cluster_network_group.command(name=cli_util.override('download_vm_cluster_network_config_file.command_name', 'download-vm-cluster-network-config-file'), help=u"""Downloads the configuration file for the specified VM Cluster Network.""")
+@cli_util.option('--exadata-infrastructure-id', required=True, help=u"""The Exadata infrastructure [OCID].""")
+@cli_util.option('--vm-cluster-network-id', required=True, help=u"""The VM cluster network [OCID].""")
+@cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def download_vm_cluster_network_config_file(ctx, from_json, file, exadata_infrastructure_id, vm_cluster_network_id):
+
+    if isinstance(exadata_infrastructure_id, six.string_types) and len(exadata_infrastructure_id.strip()) == 0:
+        raise click.UsageError('Parameter --exadata-infrastructure-id cannot be whitespace or empty string')
+
+    if isinstance(vm_cluster_network_id, six.string_types) and len(vm_cluster_network_id.strip()) == 0:
+        raise click.UsageError('Parameter --vm-cluster-network-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database', ctx)
+    result = client.download_vm_cluster_network_config_file(
+        exadata_infrastructure_id=exadata_infrastructure_id,
+        vm_cluster_network_id=vm_cluster_network_id,
+        **kwargs
+    )
+
+    # If outputting to stdout we don't want to print a progress bar because it will get mixed up with the output
+    # Also we need a non-zero Content-Length in order to display a meaningful progress bar
+    bar = None
+    if hasattr(file, 'name') and file.name != '<stdout>' and 'Content-Length' in result.headers:
+        content_length = int(result.headers['Content-Length'])
+        if content_length > 0:
+            bar = click.progressbar(length=content_length, label='Downloading file')
+
+    try:
+        if bar:
+            bar.__enter__()
+
+        # TODO: Make the download size a configurable option
+        # use decode_content=True to automatically unzip service responses (this should be overridden for object storage)
+        for chunk in result.data.raw.stream(cli_constants.MEBIBYTE, decode_content=True):
+            if bar:
+                bar.update(len(chunk))
+            file.write(chunk)
+    finally:
+        if bar:
+            bar.render_finish()
+        file.close()
 
 
 @data_guard_association_group.command(name=cli_util.override('failover_data_guard_association.command_name', 'failover'), help=u"""Performs a failover to transition the standby database identified by the `databaseId` parameter into the specified Data Guard association's primary role after the existing primary database fails or becomes unreachable.
@@ -1900,6 +2952,56 @@ def generate_autonomous_database_wallet(ctx, from_json, file, autonomous_databas
         file.close()
 
 
+@exadata_infrastructure_group.command(name=cli_util.override('generate_recommended_vm_cluster_network.command_name', 'generate-recommended-vm-cluster-network'), help=u"""Generates a recommended VM cluster network configuration.""")
+@cli_util.option('--exadata-infrastructure-id', required=True, help=u"""The Exadata infrastructure [OCID].""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--display-name', required=True, help=u"""The user-friendly name for the VM cluster network. The name does not need to be unique.""")
+@cli_util.option('--networks', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of parameters for generation of the client and backup networks.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--dns', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of DNS server IP addresses. Maximum of 3 allowed.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--ntp', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of NTP server IP addresses. Maximum of 3 allowed.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'networks': {'module': 'database', 'class': 'list[InfoForNetworkGenDetails]'}, 'dns': {'module': 'database', 'class': 'list[string]'}, 'ntp': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'networks': {'module': 'database', 'class': 'list[InfoForNetworkGenDetails]'}, 'dns': {'module': 'database', 'class': 'list[string]'}, 'ntp': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'VmClusterNetworkDetails'})
+@cli_util.wrap_exceptions
+def generate_recommended_vm_cluster_network(ctx, from_json, exadata_infrastructure_id, compartment_id, display_name, networks, dns, ntp, freeform_tags, defined_tags):
+
+    if isinstance(exadata_infrastructure_id, six.string_types) and len(exadata_infrastructure_id.strip()) == 0:
+        raise click.UsageError('Parameter --exadata-infrastructure-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    details = {}
+    details['compartmentId'] = compartment_id
+    details['displayName'] = display_name
+    details['networks'] = cli_util.parse_json_parameter("networks", networks)
+
+    if dns is not None:
+        details['dns'] = cli_util.parse_json_parameter("dns", dns)
+
+    if ntp is not None:
+        details['ntp'] = cli_util.parse_json_parameter("ntp", ntp)
+
+    if freeform_tags is not None:
+        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('database', ctx)
+    result = client.generate_recommended_vm_cluster_network(
+        exadata_infrastructure_id=exadata_infrastructure_id,
+        generate_recommended_network_details=details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @autonomous_container_database_group.command(name=cli_util.override('get_autonomous_container_database.command_name', 'get'), help=u"""Gets information about the specified Autonomous Container Database.""")
 @cli_util.option('--autonomous-container-database-id', required=True, help=u"""The Autonomous Container Database [OCID].""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2044,6 +3146,28 @@ def get_backup(ctx, from_json, backup_id):
     client = cli_util.build_client('database', ctx)
     result = client.get_backup(
         backup_id=backup_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@backup_destination_group.command(name=cli_util.override('get_backup_destination.command_name', 'get'), help=u"""Gets information about the specified backup destination.""")
+@cli_util.option('--backup-destination-id', required=True, help=u"""The [OCID] of the backup destination.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'BackupDestination'})
+@cli_util.wrap_exceptions
+def get_backup_destination(ctx, from_json, backup_destination_id):
+
+    if isinstance(backup_destination_id, six.string_types) and len(backup_destination_id.strip()) == 0:
+        raise click.UsageError('Parameter --backup-destination-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database', ctx)
+    result = client.get_backup_destination(
+        backup_destination_id=backup_destination_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -2263,6 +3387,28 @@ def get_db_system_patch_history_entry(ctx, from_json, db_system_id, patch_histor
     cli_util.render_response(result, ctx)
 
 
+@exadata_infrastructure_group.command(name=cli_util.override('get_exadata_infrastructure.command_name', 'get'), help=u"""Gets information about the specified Exadata infrastructure.""")
+@cli_util.option('--exadata-infrastructure-id', required=True, help=u"""The Exadata infrastructure [OCID].""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'ExadataInfrastructure'})
+@cli_util.wrap_exceptions
+def get_exadata_infrastructure(ctx, from_json, exadata_infrastructure_id):
+
+    if isinstance(exadata_infrastructure_id, six.string_types) and len(exadata_infrastructure_id.strip()) == 0:
+        raise click.UsageError('Parameter --exadata-infrastructure-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database', ctx)
+    result = client.get_exadata_infrastructure(
+        exadata_infrastructure_id=exadata_infrastructure_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @db_system_group.command(name=cli_util.override('get_exadata_iorm_config.command_name', 'get-exadata-iorm-config'), help=u"""Gets `IORM` Setting for the requested Exadata DB System. The default IORM Settings is pre-created in all the Exadata DB System.""")
 @cli_util.option('--db-system-id', required=True, help=u"""The DB system [OCID].""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2324,6 +3470,55 @@ def get_maintenance_run(ctx, from_json, maintenance_run_id):
     client = cli_util.build_client('database', ctx)
     result = client.get_maintenance_run(
         maintenance_run_id=maintenance_run_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@vm_cluster_group.command(name=cli_util.override('get_vm_cluster.command_name', 'get'), help=u"""Gets information about the specified VM cluster.""")
+@cli_util.option('--vm-cluster-id', required=True, help=u"""The VM cluster [OCID].""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'VmCluster'})
+@cli_util.wrap_exceptions
+def get_vm_cluster(ctx, from_json, vm_cluster_id):
+
+    if isinstance(vm_cluster_id, six.string_types) and len(vm_cluster_id.strip()) == 0:
+        raise click.UsageError('Parameter --vm-cluster-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database', ctx)
+    result = client.get_vm_cluster(
+        vm_cluster_id=vm_cluster_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@vm_cluster_network_group.command(name=cli_util.override('get_vm_cluster_network.command_name', 'get'), help=u"""Gets information about the specified VM cluster network.""")
+@cli_util.option('--exadata-infrastructure-id', required=True, help=u"""The Exadata infrastructure [OCID].""")
+@cli_util.option('--vm-cluster-network-id', required=True, help=u"""The VM cluster network [OCID].""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'VmClusterNetwork'})
+@cli_util.wrap_exceptions
+def get_vm_cluster_network(ctx, from_json, exadata_infrastructure_id, vm_cluster_network_id):
+
+    if isinstance(exadata_infrastructure_id, six.string_types) and len(exadata_infrastructure_id.strip()) == 0:
+        raise click.UsageError('Parameter --exadata-infrastructure-id cannot be whitespace or empty string')
+
+    if isinstance(vm_cluster_network_id, six.string_types) and len(vm_cluster_network_id.strip()) == 0:
+        raise click.UsageError('Parameter --vm-cluster-network-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database', ctx)
+    result = client.get_vm_cluster_network(
+        exadata_infrastructure_id=exadata_infrastructure_id,
+        vm_cluster_network_id=vm_cluster_network_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -3379,6 +4574,57 @@ def list_autonomous_exadata_infrastructures(ctx, from_json, all_pages, page_size
     cli_util.render_response(result, ctx)
 
 
+@backup_destination_summary_group.command(name=cli_util.override('list_backup_destination.command_name', 'list-backup-destination'), help=u"""Gets a list of backup destinations in the specified compartment.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
+@cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
+@cli_util.option('--type', help=u"""A filter to return only resources that match the given type of the Backup Destination.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'list[BackupDestinationSummary]'})
+@cli_util.wrap_exceptions
+def list_backup_destination(ctx, from_json, all_pages, page_size, compartment_id, limit, page, type):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if type is not None:
+        kwargs['type'] = type
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_backup_destination,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_backup_destination,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_backup_destination(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
 @backup_group.command(name=cli_util.override('list_backups.command_name', 'list'), help=u"""Gets a list of backups based on the databaseId or compartmentId specified. Either one of the query parameters must be provided.""")
 @cli_util.option('--database-id', help=u"""The [OCID] of the database.""")
 @cli_util.option('--compartment-id', help=u"""The compartment [OCID].""")
@@ -3644,6 +4890,7 @@ def list_db_home_patches(ctx, from_json, all_pages, page_size, db_home_id, limit
 @db_home_group.command(name=cli_util.override('list_db_homes.command_name', 'list'), help=u"""Gets a list of database homes in the specified DB system and compartment. A database home is a directory where Oracle Database software is installed.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
 @cli_util.option('--db-system-id', help=u"""The [OCID] of the DB system.""")
+@cli_util.option('--vm-cluster-id', help=u"""The [OCID] of the VM cluster.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by.  You can provide one sort order (`sortOrder`).  Default order for TIMECREATED is descending.  Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.""")
@@ -3657,7 +4904,7 @@ def list_db_home_patches(ctx, from_json, all_pages, page_size, db_home_id, limit
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'list[DbHomeSummary]'})
 @cli_util.wrap_exceptions
-def list_db_homes(ctx, from_json, all_pages, page_size, compartment_id, db_system_id, limit, page, sort_by, sort_order, lifecycle_state, display_name):
+def list_db_homes(ctx, from_json, all_pages, page_size, compartment_id, db_system_id, vm_cluster_id, limit, page, sort_by, sort_order, lifecycle_state, display_name):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -3665,6 +4912,8 @@ def list_db_homes(ctx, from_json, all_pages, page_size, compartment_id, db_syste
     kwargs = {}
     if db_system_id is not None:
         kwargs['db_system_id'] = db_system_id
+    if vm_cluster_id is not None:
+        kwargs['vm_cluster_id'] = vm_cluster_id
     if limit is not None:
         kwargs['limit'] = limit
     if page is not None:
@@ -3706,6 +4955,7 @@ def list_db_homes(ctx, from_json, all_pages, page_size, compartment_id, db_syste
 @db_node_group.command(name=cli_util.override('list_db_nodes.command_name', 'list'), help=u"""Gets a list of database nodes in the specified DB system and compartment. A database node is a server running database software.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
 @cli_util.option('--db-system-id', help=u"""The [OCID] of the DB system.""")
+@cli_util.option('--vm-cluster-id', help=u"""The [OCID] of the VM cluster.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED"]), help=u"""Sort by TIMECREATED.  Default order for TIMECREATED is descending.""")
@@ -3718,7 +4968,7 @@ def list_db_homes(ctx, from_json, all_pages, page_size, compartment_id, db_syste
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'list[DbNodeSummary]'})
 @cli_util.wrap_exceptions
-def list_db_nodes(ctx, from_json, all_pages, page_size, compartment_id, db_system_id, limit, page, sort_by, sort_order, lifecycle_state):
+def list_db_nodes(ctx, from_json, all_pages, page_size, compartment_id, db_system_id, vm_cluster_id, limit, page, sort_by, sort_order, lifecycle_state):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -3726,6 +4976,8 @@ def list_db_nodes(ctx, from_json, all_pages, page_size, compartment_id, db_syste
     kwargs = {}
     if db_system_id is not None:
         kwargs['db_system_id'] = db_system_id
+    if vm_cluster_id is not None:
+        kwargs['vm_cluster_id'] = vm_cluster_id
     if limit is not None:
         kwargs['limit'] = limit
     if page is not None:
@@ -3863,8 +5115,8 @@ def list_db_system_patches(ctx, from_json, all_pages, page_size, db_system_id, l
 
 
 @db_system_shape_group.command(name=cli_util.override('list_db_system_shapes.command_name', 'list'), help=u"""Gets a list of the shapes that can be used to launch a new DB system. The shape determines resources to allocate to the DB system - CPU cores and memory for VM shapes; CPU cores, memory and storage for non-VM (or bare metal) shapes.""")
-@cli_util.option('--availability-domain', required=True, help=u"""The name of the Availability Domain.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
+@cli_util.option('--availability-domain', help=u"""The name of the Availability Domain.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -3874,12 +5126,14 @@ def list_db_system_patches(ctx, from_json, all_pages, page_size, db_system_id, l
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'list[DbSystemShapeSummary]'})
 @cli_util.wrap_exceptions
-def list_db_system_shapes(ctx, from_json, all_pages, page_size, availability_domain, compartment_id, limit, page):
+def list_db_system_shapes(ctx, from_json, all_pages, page_size, compartment_id, availability_domain, limit, page):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
     kwargs = {}
+    if availability_domain is not None:
+        kwargs['availability_domain'] = availability_domain
     if limit is not None:
         kwargs['limit'] = limit
     if page is not None:
@@ -3891,7 +5145,6 @@ def list_db_system_shapes(ctx, from_json, all_pages, page_size, availability_dom
 
         result = cli_util.list_call_get_all_results(
             client.list_db_system_shapes,
-            availability_domain=availability_domain,
             compartment_id=compartment_id,
             **kwargs
         )
@@ -3900,13 +5153,11 @@ def list_db_system_shapes(ctx, from_json, all_pages, page_size, availability_dom
             client.list_db_system_shapes,
             limit,
             page_size,
-            availability_domain=availability_domain,
             compartment_id=compartment_id,
             **kwargs
         )
     else:
         result = client.list_db_system_shapes(
-            availability_domain=availability_domain,
             compartment_id=compartment_id,
             **kwargs
         )
@@ -4035,6 +5286,119 @@ def list_db_versions(ctx, from_json, all_pages, page_size, compartment_id, limit
     cli_util.render_response(result, ctx)
 
 
+@exadata_infrastructure_group.command(name=cli_util.override('list_exadata_infrastructures.command_name', 'list'), help=u"""Gets a list of the Exadata infrastructure in the specified compartment.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
+@cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by.  You can provide one sort order (`sortOrder`).  Default order for TIMECREATED is descending.  Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "REQUIRES_ACTIVATION", "ACTIVATING", "ACTIVE", "ACTIVATION_FAILED", "FAILED", "UPDATING", "DELETING", "DELETED", "OFFLINE"]), help=u"""A filter to return only resources that match the given lifecycle state exactly.""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given. The match is not case sensitive.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'list[ExadataInfrastructureSummary]'})
+@cli_util.wrap_exceptions
+def list_exadata_infrastructures(ctx, from_json, all_pages, page_size, compartment_id, limit, page, sort_by, sort_order, lifecycle_state, display_name):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_exadata_infrastructures,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_exadata_infrastructures,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_exadata_infrastructures(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@gi_version_group.command(name=cli_util.override('list_gi_versions.command_name', 'list'), help=u"""Gets a list of supported GI versions for VM Cluster.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
+@cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
+@cli_util.option('--shape', help=u"""If provided, filters the results for the given shape.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'list[GiVersionSummary]'})
+@cli_util.wrap_exceptions
+def list_gi_versions(ctx, from_json, all_pages, page_size, compartment_id, limit, page, sort_order, shape):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if shape is not None:
+        kwargs['shape'] = shape
+    client = cli_util.build_client('database', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_gi_versions,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_gi_versions,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_gi_versions(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
 @maintenance_run_group.command(name=cli_util.override('list_maintenance_runs.command_name', 'list'), help=u"""Gets a list of the Maintenance Runs in the specified compartment.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
 @cli_util.option('--target-resource-id', help=u"""The target resource ID.""")
@@ -4101,6 +5465,136 @@ def list_maintenance_runs(ctx, from_json, all_pages, page_size, compartment_id, 
         )
     else:
         result = client.list_maintenance_runs(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@vm_cluster_network_group.command(name=cli_util.override('list_vm_cluster_networks.command_name', 'list'), help=u"""Gets a list of the VM cluster networks in the specified compartment.""")
+@cli_util.option('--exadata-infrastructure-id', required=True, help=u"""The Exadata infrastructure [OCID].""")
+@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
+@cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by.  You can provide one sort order (`sortOrder`).  Default order for TIMECREATED is descending.  Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "REQUIRES_VALIDATION", "VALIDATING", "VALIDATED", "VALIDATION_FAILED", "UPDATING", "ALLOCATED", "TERMINATING", "TERMINATED", "FAILED"]), help=u"""A filter to return only resources that match the given lifecycle state exactly.""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given. The match is not case sensitive.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'list[VmClusterNetworkSummary]'})
+@cli_util.wrap_exceptions
+def list_vm_cluster_networks(ctx, from_json, all_pages, page_size, exadata_infrastructure_id, compartment_id, limit, page, sort_by, sort_order, lifecycle_state, display_name):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(exadata_infrastructure_id, six.string_types) and len(exadata_infrastructure_id.strip()) == 0:
+        raise click.UsageError('Parameter --exadata-infrastructure-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_vm_cluster_networks,
+            exadata_infrastructure_id=exadata_infrastructure_id,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_vm_cluster_networks,
+            limit,
+            page_size,
+            exadata_infrastructure_id=exadata_infrastructure_id,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_vm_cluster_networks(
+            exadata_infrastructure_id=exadata_infrastructure_id,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@vm_cluster_group.command(name=cli_util.override('list_vm_clusters.command_name', 'list'), help=u"""Gets a list of the VM clusters in the specified compartment.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
+@cli_util.option('--exadata-infrastructure-id', help=u"""If provided, filters the results for the given Exadata Infrastructure.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
+@cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by.  You can provide one sort order (`sortOrder`).  Default order for TIMECREATED is descending.  Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED"]), help=u"""A filter to return only resources that match the given lifecycle state exactly.""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given. The match is not case sensitive.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'list[VmClusterSummary]'})
+@cli_util.wrap_exceptions
+def list_vm_clusters(ctx, from_json, all_pages, page_size, compartment_id, exadata_infrastructure_id, limit, page, sort_by, sort_order, lifecycle_state, display_name):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if exadata_infrastructure_id is not None:
+        kwargs['exadata_infrastructure_id'] = exadata_infrastructure_id
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_vm_clusters,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_vm_clusters,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_vm_clusters(
             compartment_id=compartment_id,
             **kwargs
         )
@@ -5194,6 +6688,87 @@ def update_autonomous_exadata_infrastructure(ctx, from_json, force, wait_for_sta
     cli_util.render_response(result, ctx)
 
 
+@backup_destination_group.command(name=cli_util.override('update_backup_destination.command_name', 'update'), help=u"""If no database is associated with the backup destination: - For a RECOVERY_APPLIANCE backup destination, updates the connection string and/or the list of VPC users. - For an NFS backup destination, updates the NFS location.""")
+@cli_util.option('--backup-destination-id', required=True, help=u"""The [OCID] of the backup destination.""")
+@cli_util.option('--vpc-users', type=custom_types.CLI_COMPLEX_TYPE, help=u"""For a RECOVERY_APPLIANCE backup destination, the Virtual Private Catalog (VPC) users that are used to access the Recovery Appliance.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--connection-string', help=u"""For a RECOVERY_APPLIANCE backup destination, the connection string for connecting to the Recovery Appliance.""")
+@cli_util.option('--local-mount-point-path', help=u"""The local directory path on each VM cluster node where the NFS server location is mounted. The local directory path and the NFS server location must each be the same across all of the VM cluster nodes. Ensure that the NFS mount is maintained continuously on all of the VM cluster nodes.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "FAILED", "DELETED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'vpc-users': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'vpc-users': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'BackupDestination'})
+@cli_util.wrap_exceptions
+def update_backup_destination(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, backup_destination_id, vpc_users, connection_string, local_mount_point_path, freeform_tags, defined_tags, if_match):
+
+    if isinstance(backup_destination_id, six.string_types) and len(backup_destination_id.strip()) == 0:
+        raise click.UsageError('Parameter --backup-destination-id cannot be whitespace or empty string')
+    if not force:
+        if vpc_users or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to vpc-users and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    details = {}
+
+    if vpc_users is not None:
+        details['vpcUsers'] = cli_util.parse_json_parameter("vpc_users", vpc_users)
+
+    if connection_string is not None:
+        details['connectionString'] = connection_string
+
+    if local_mount_point_path is not None:
+        details['localMountPointPath'] = local_mount_point_path
+
+    if freeform_tags is not None:
+        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('database', ctx)
+    result = client.update_backup_destination(
+        backup_destination_id=backup_destination_id,
+        update_backup_destination_details=details,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_backup_destination') and callable(getattr(client, 'get_backup_destination')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_backup_destination(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @database_group.command(name=cli_util.override('update_database.command_name', 'update'), help=u"""Update a Database based on the request parameters you provide.""")
 @cli_util.option('--database-id', required=True, help=u"""The database [OCID].""")
 @cli_util.option('--db-backup-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -5420,6 +6995,115 @@ def update_db_system(ctx, from_json, force, wait_for_state, max_wait_seconds, wa
     cli_util.render_response(result, ctx)
 
 
+@exadata_infrastructure_group.command(name=cli_util.override('update_exadata_infrastructure.command_name', 'update'), help=u"""Updates the Exadata infrastructure.""")
+@cli_util.option('--exadata-infrastructure-id', required=True, help=u"""The Exadata infrastructure [OCID].""")
+@cli_util.option('--cloud-control-plane-server1', help=u"""The IP address for the first control plane server.""")
+@cli_util.option('--cloud-control-plane-server2', help=u"""The IP address for the second control plane server.""")
+@cli_util.option('--netmask', help=u"""The netmask for the control plane network.""")
+@cli_util.option('--gateway', help=u"""The gateway for the control plane network.""")
+@cli_util.option('--admin-network-cidr', help=u"""The CIDR block for the Exadata administration network.""")
+@cli_util.option('--infini-band-network-cidr', help=u"""The CIDR block for the Exadata InfiniBand interconnect.""")
+@cli_util.option('--corporate-proxy', help=u"""The corporate network proxy for access to the control plane network.""")
+@cli_util.option('--dns-server', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of DNS server IP addresses. Maximum of 3 allowed.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--ntp-server', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of NTP server IP addresses. Maximum of 3 allowed.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--time-zone', help=u"""The time zone of the Exadata infrastructure. For details, see [Exadata Infrastructure Time Zones].""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "REQUIRES_ACTIVATION", "ACTIVATING", "ACTIVE", "ACTIVATION_FAILED", "FAILED", "UPDATING", "DELETING", "DELETED", "OFFLINE"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'dns-server': {'module': 'database', 'class': 'list[string]'}, 'ntp-server': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'dns-server': {'module': 'database', 'class': 'list[string]'}, 'ntp-server': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'ExadataInfrastructure'})
+@cli_util.wrap_exceptions
+def update_exadata_infrastructure(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, exadata_infrastructure_id, cloud_control_plane_server1, cloud_control_plane_server2, netmask, gateway, admin_network_cidr, infini_band_network_cidr, corporate_proxy, dns_server, ntp_server, time_zone, freeform_tags, defined_tags, if_match):
+
+    if isinstance(exadata_infrastructure_id, six.string_types) and len(exadata_infrastructure_id.strip()) == 0:
+        raise click.UsageError('Parameter --exadata-infrastructure-id cannot be whitespace or empty string')
+    if not force:
+        if dns_server or ntp_server or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to dns-server and ntp-server and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    details = {}
+
+    if cloud_control_plane_server1 is not None:
+        details['cloudControlPlaneServer1'] = cloud_control_plane_server1
+
+    if cloud_control_plane_server2 is not None:
+        details['cloudControlPlaneServer2'] = cloud_control_plane_server2
+
+    if netmask is not None:
+        details['netmask'] = netmask
+
+    if gateway is not None:
+        details['gateway'] = gateway
+
+    if admin_network_cidr is not None:
+        details['adminNetworkCIDR'] = admin_network_cidr
+
+    if infini_band_network_cidr is not None:
+        details['infiniBandNetworkCIDR'] = infini_band_network_cidr
+
+    if corporate_proxy is not None:
+        details['corporateProxy'] = corporate_proxy
+
+    if dns_server is not None:
+        details['dnsServer'] = cli_util.parse_json_parameter("dns_server", dns_server)
+
+    if ntp_server is not None:
+        details['ntpServer'] = cli_util.parse_json_parameter("ntp_server", ntp_server)
+
+    if time_zone is not None:
+        details['timeZone'] = time_zone
+
+    if freeform_tags is not None:
+        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('database', ctx)
+    result = client.update_exadata_infrastructure(
+        exadata_infrastructure_id=exadata_infrastructure_id,
+        update_exadata_infrastructure_details=details,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_exadata_infrastructure') and callable(getattr(client, 'get_exadata_infrastructure')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_exadata_infrastructure(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @db_system_group.command(name=cli_util.override('update_exadata_iorm_config.command_name', 'update-exadata-iorm-config'), help=u"""Update `IORM` Settings for the requested Exadata DB System.""")
 @cli_util.option('--db-system-id', required=True, help=u"""The DB system [OCID].""")
 @cli_util.option('--objective', type=custom_types.CliCaseInsensitiveChoice(["LOW_LATENCY", "HIGH_THROUGHPUT", "BALANCED", "AUTO", "BASIC"]), help=u"""Value for the IORM objective Default is \"Auto\"""")
@@ -5532,6 +7216,233 @@ def update_maintenance_run(ctx, from_json, wait_for_state, max_wait_seconds, wai
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 result = oci.wait_until(client, client.get_maintenance_run(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@vm_cluster_group.command(name=cli_util.override('update_vm_cluster.command_name', 'update'), help=u"""Updates the specified VM cluster.""")
+@cli_util.option('--vm-cluster-id', required=True, help=u"""The VM cluster [OCID].""")
+@cli_util.option('--cpu-core-count', type=click.INT, help=u"""The number of CPU cores to enable for the VM cluster.""")
+@cli_util.option('--license-model', type=custom_types.CliCaseInsensitiveChoice(["LICENSE_INCLUDED", "BRING_YOUR_OWN_LICENSE"]), help=u"""The Oracle license model that applies to the VM cluster. The default is BRING_YOUR_OWN_LICENSE.""")
+@cli_util.option('--ssh-public-keys', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The public key portion of one or more key pairs used for SSH access to the VM cluster.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'ssh-public-keys': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'ssh-public-keys': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'VmCluster'})
+@cli_util.wrap_exceptions
+def update_vm_cluster(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, vm_cluster_id, cpu_core_count, license_model, ssh_public_keys, freeform_tags, defined_tags, if_match):
+
+    if isinstance(vm_cluster_id, six.string_types) and len(vm_cluster_id.strip()) == 0:
+        raise click.UsageError('Parameter --vm-cluster-id cannot be whitespace or empty string')
+    if not force:
+        if ssh_public_keys or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to ssh-public-keys and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    details = {}
+
+    if cpu_core_count is not None:
+        details['cpuCoreCount'] = cpu_core_count
+
+    if license_model is not None:
+        details['licenseModel'] = license_model
+
+    if ssh_public_keys is not None:
+        details['sshPublicKeys'] = cli_util.parse_json_parameter("ssh_public_keys", ssh_public_keys)
+
+    if freeform_tags is not None:
+        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('database', ctx)
+    result = client.update_vm_cluster(
+        vm_cluster_id=vm_cluster_id,
+        update_vm_cluster_details=details,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_vm_cluster') and callable(getattr(client, 'get_vm_cluster')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_vm_cluster(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@vm_cluster_network_group.command(name=cli_util.override('update_vm_cluster_network.command_name', 'update'), help=u"""Updates the specified VM cluster network.""")
+@cli_util.option('--exadata-infrastructure-id', required=True, help=u"""The Exadata infrastructure [OCID].""")
+@cli_util.option('--vm-cluster-network-id', required=True, help=u"""The VM cluster network [OCID].""")
+@cli_util.option('--scans', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The SCAN details.
+
+This option is a JSON list with items of type ScanDetails.  For documentation on ScanDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/database/20160918/datatypes/ScanDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--dns', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of DNS server IP addresses. Maximum of 3 allowed.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--ntp', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of NTP server IP addresses. Maximum of 3 allowed.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--vm-networks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Details of the client and backup networks.
+
+This option is a JSON list with items of type VmNetworkDetails.  For documentation on VmNetworkDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/database/20160918/datatypes/VmNetworkDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "REQUIRES_VALIDATION", "VALIDATING", "VALIDATED", "VALIDATION_FAILED", "UPDATING", "ALLOCATED", "TERMINATING", "TERMINATED", "FAILED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'scans': {'module': 'database', 'class': 'list[ScanDetails]'}, 'dns': {'module': 'database', 'class': 'list[string]'}, 'ntp': {'module': 'database', 'class': 'list[string]'}, 'vm-networks': {'module': 'database', 'class': 'list[VmNetworkDetails]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'scans': {'module': 'database', 'class': 'list[ScanDetails]'}, 'dns': {'module': 'database', 'class': 'list[string]'}, 'ntp': {'module': 'database', 'class': 'list[string]'}, 'vm-networks': {'module': 'database', 'class': 'list[VmNetworkDetails]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'VmClusterNetwork'})
+@cli_util.wrap_exceptions
+def update_vm_cluster_network(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, exadata_infrastructure_id, vm_cluster_network_id, scans, dns, ntp, vm_networks, freeform_tags, defined_tags, if_match):
+
+    if isinstance(exadata_infrastructure_id, six.string_types) and len(exadata_infrastructure_id.strip()) == 0:
+        raise click.UsageError('Parameter --exadata-infrastructure-id cannot be whitespace or empty string')
+
+    if isinstance(vm_cluster_network_id, six.string_types) and len(vm_cluster_network_id.strip()) == 0:
+        raise click.UsageError('Parameter --vm-cluster-network-id cannot be whitespace or empty string')
+    if not force:
+        if scans or dns or ntp or vm_networks or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to scans and dns and ntp and vm-networks and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    details = {}
+
+    if scans is not None:
+        details['scans'] = cli_util.parse_json_parameter("scans", scans)
+
+    if dns is not None:
+        details['dns'] = cli_util.parse_json_parameter("dns", dns)
+
+    if ntp is not None:
+        details['ntp'] = cli_util.parse_json_parameter("ntp", ntp)
+
+    if vm_networks is not None:
+        details['vmNetworks'] = cli_util.parse_json_parameter("vm_networks", vm_networks)
+
+    if freeform_tags is not None:
+        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('database', ctx)
+    result = client.update_vm_cluster_network(
+        exadata_infrastructure_id=exadata_infrastructure_id,
+        vm_cluster_network_id=vm_cluster_network_id,
+        update_vm_cluster_network_details=details,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_vm_cluster_network') and callable(getattr(client, 'get_vm_cluster_network')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_vm_cluster_network(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@vm_cluster_network_group.command(name=cli_util.override('validate_vm_cluster_network.command_name', 'validate'), help=u"""Validates the specified VM cluster network.""")
+@cli_util.option('--exadata-infrastructure-id', required=True, help=u"""The Exadata infrastructure [OCID].""")
+@cli_util.option('--vm-cluster-network-id', required=True, help=u"""The VM cluster network [OCID].""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "REQUIRES_VALIDATION", "VALIDATING", "VALIDATED", "VALIDATION_FAILED", "UPDATING", "ALLOCATED", "TERMINATING", "TERMINATED", "FAILED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'VmClusterNetwork'})
+@cli_util.wrap_exceptions
+def validate_vm_cluster_network(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, exadata_infrastructure_id, vm_cluster_network_id):
+
+    if isinstance(exadata_infrastructure_id, six.string_types) and len(exadata_infrastructure_id.strip()) == 0:
+        raise click.UsageError('Parameter --exadata-infrastructure-id cannot be whitespace or empty string')
+
+    if isinstance(vm_cluster_network_id, six.string_types) and len(vm_cluster_network_id.strip()) == 0:
+        raise click.UsageError('Parameter --vm-cluster-network-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database', ctx)
+    result = client.validate_vm_cluster_network(
+        exadata_infrastructure_id=exadata_infrastructure_id,
+        vm_cluster_network_id=vm_cluster_network_id,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_vm_cluster_network') and callable(getattr(client, 'get_vm_cluster_network')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_vm_cluster_network(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except oci.exceptions.MaximumWaitTimeExceeded as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)

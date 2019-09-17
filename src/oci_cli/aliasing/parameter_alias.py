@@ -1,9 +1,9 @@
 # coding: utf-8
 # Copyright (c) 2016, 2019, Oracle and/or its affiliates. All rights reserved.
 
+from copy import deepcopy
 import click
 import six
-
 
 ALIASES = {}
 
@@ -16,6 +16,7 @@ def get_aliases_for_long_parameter(long_param_name):
 
 
 def shim_in_aliases(command_group):
+    remove_redundant_aliases()
     collision_errors = set()
     for cmd_name, cmd_obj in six.iteritems(command_group.commands):
         if isinstance(cmd_obj, click.Group):
@@ -57,3 +58,14 @@ def does_option_name_already_exist(original_opts, param_name, aliases):
                 return (a, param, opts)
 
     return None
+
+
+# Remove aliases that are the same as the parameter.
+def remove_redundant_aliases():
+    global ALIASES
+    new_aliases = deepcopy(ALIASES)
+    for param, aliases in ALIASES.items():
+        if param in aliases:
+            new_aliases[param] = list(filter(lambda alias: alias != param, aliases))
+    ALIASES = new_aliases
+    return
