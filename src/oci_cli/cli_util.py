@@ -27,6 +27,8 @@ import logging
 from .formatting import render_config_errors
 from terminaltables import AsciiTable
 from timeit import default_timer as timer
+import hashlib
+import codecs
 
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives.asymmetric import rsa
@@ -1880,6 +1882,32 @@ def to_jwk(key_obj):
         'kid': 'Ignored'  # field expected but value is not in the publickey entry for SOUP
     }
     return json.dumps(obj)
+
+
+def verify_checksum(filename, no_multipart, ma):
+    try:
+        with open(filename, 'rb') as f:
+            if no_multipart:
+                multipart_hash = hashlib.md5(f.read()).hexdigest()
+            else:
+                hash_list = [codecs.decode(codecs.encode(base64.b64decode(part['opc_md5']), 'hex').strip(), 'hex') for part in ma.manifest['parts']]
+                multipart_hash = hashlib.md5(b''.join(hash_list)).hexdigest()
+    except IOError:
+        print('Cannot open file to generate hash')
+        sys.exit(1)
+    except Exception as e:
+        print('Encountered exception when generating hash' + e)
+        sys.exit(1)
+    multipart_hash = codecs.encode(codecs.decode(multipart_hash, 'hex'), 'base64').decode().strip()
+    if not no_multipart:
+        multipart_hash += '-' + str(len(hash_list))
+    return multipart_hash
+
+
+def get_checksum_message(response_headers, checksum):
+    server_hash = response_headers['opc-content-md5' if 'opc-content-md5' in response_headers else 'opc-multipart-md5']
+    match_string = "matches" if checksum == server_hash else "does not match"
+    return "md5 checksum %s [Local: %s]" % (match_string, checksum), checksum == server_hash
 
 
 class CommandExample:

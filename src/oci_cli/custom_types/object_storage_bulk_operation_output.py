@@ -35,7 +35,18 @@ class BulkPutOperationOutput(BulkObjectStorageOperationOutput):
         self._skipped = []
 
     def add_uploaded(self, uploaded_object, **kwargs):
-        self._uploaded[uploaded_object] = cli_util.filter_object_headers(kwargs.get('work_pool_task_result').headers, self.OBJECT_PUT_DISPLAY_HEADERS)
+        result, checksum = kwargs.get('work_pool_task_result')
+        filtered_headers = cli_util.filter_object_headers(result.headers, self.OBJECT_PUT_DISPLAY_HEADERS)
+        if checksum:
+            message, match = cli_util.get_checksum_message(result.headers, checksum)
+            if match:
+                self._uploaded[uploaded_object] = filtered_headers
+                self._uploaded[uploaded_object]['verify-md5-checksum'] = message
+            else:
+                self._failures[uploaded_object] = filtered_headers
+                self._failures[uploaded_object]['verify-md5-checksum'] = message
+        else:
+            self._uploaded[uploaded_object] = filtered_headers
 
     def add_skipped(self, skipped):
         self._skipped.append(skipped)

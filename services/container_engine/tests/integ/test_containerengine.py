@@ -407,12 +407,6 @@ def test_create_kubeconfig_2(runner, config_file, config_profile, oce_cluster, r
         assert(len(kubeconfig['clusters']) == len(kubeconfig2['clusters']))
         assert(len(kubeconfig['contexts']) == len(kubeconfig2['contexts']))
         assert(len(kubeconfig['users']) == len(kubeconfig2['users']))
-        # Check the token value has changed within the users for one of the clusters
-        token_changed_count = 0
-        for idx, _ in enumerate(kubeconfig['users']):
-            if kubeconfig['users'][idx]['user']['token'] != kubeconfig2['users'][idx]['user']['token']:
-                token_changed_count += 1
-        assert(token_changed_count == 1)
 
 
 # INPUT:

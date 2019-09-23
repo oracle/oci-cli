@@ -110,6 +110,15 @@ def test_multipart_put_object(runner, config_file, config_profile, temp_bucket, 
     assert checksum_md5(content_input_file) == checksum_md5(CONTENT_OUTPUT_FILE)
     assert os.stat(content_input_file).st_size == os.stat(CONTENT_OUTPUT_FILE).st_size
 
+    # object put (large file so multipart is used)
+    result = invoke(runner, config_file, config_profile, ['object', 'put', '-ns', util.NAMESPACE, '-bn', temp_bucket,
+                                                          '--name', object_name, '--file', content_input_file,
+                                                          '--part-size', str(DEFAULT_TEST_PART_SIZE),
+                                                          '--force',
+                                                          '--verify-checksum'])
+    validate_response(result, json_response_expected=False)
+    assert "md5 checksum matches" in result.output
+
     # object delete
     result = invoke(runner, config_file, config_profile,
                     ['object', 'delete', '-ns', util.NAMESPACE, '-bn', temp_bucket, '--name', object_name], input='y')

@@ -3,6 +3,7 @@
 
 from .pooled_multipart_object_assembler import PooledMultipartObjectAssembler
 from .work_pool_task import WorkPoolTask
+from oci_cli import cli_util
 
 
 # A task which prepares a multipart upload by:
@@ -12,7 +13,7 @@ from .work_pool_task import WorkPoolTask
 #   - Sending the upload tasks to the main request pool
 #   - Committing the multipart upload when done
 class MultipartUploadProcessorTask(WorkPoolTask):
-    def __init__(self, object_storage_client, namespace_name, bucket_name, object_name, file_path, callbacks_container, object_storage_request_pool, part_size, **multipart_kwargs):
+    def __init__(self, object_storage_client, namespace_name, bucket_name, object_name, file_path, callbacks_container, object_storage_request_pool, part_size, verify_checksum, **multipart_kwargs):
         super(MultipartUploadProcessorTask, self).__init__(callbacks_container=callbacks_container)
 
         self.object_storage_client = object_storage_client
@@ -23,6 +24,7 @@ class MultipartUploadProcessorTask(WorkPoolTask):
         self.multipart_kwargs = multipart_kwargs.copy()
         self.part_size = part_size
         self.object_storage_request_pool = object_storage_request_pool
+        self.verify_checksum = verify_checksum
 
         if 'multipart_part_completion_callback' in self.multipart_kwargs:
             self.multipart_part_completion_callback = self.multipart_kwargs['multipart_part_completion_callback']
@@ -45,4 +47,5 @@ class MultipartUploadProcessorTask(WorkPoolTask):
             ma.upload()
         response = ma.commit()
 
-        return response
+        multipart_hash = cli_util.verify_checksum(self.file_path, no_multipart=False, ma=ma) if self.verify_checksum else None
+        return response, multipart_hash

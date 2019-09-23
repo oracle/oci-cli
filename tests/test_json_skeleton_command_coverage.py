@@ -171,40 +171,34 @@ def test_run_all_commands(runner, config_file, config_profile, tmpdir):
         if cmd not in IGNORE_EXTENDED_TESTS_COMMANDS:
             full_command = list(cmd)
             try:
-                if cmd not in COMMANDS_WITH_NO_PARAMS:
-                    result = util.invoke_command(full_command + ['--generate-full-command-json-input'])
-                    try:
-                        assert result.exit_code == 0
-                    except AssertionError as ae:
-                        print("--generate-full-command-json-input failure for: {}".format(full_command))
-                        print(ae)
-                        print(result.output)
-                        failed_commands.append(cmd)
-                        continue
-                    json_input = process_json_input(result.output, tmpdir)
-                    json_input = json.dumps(json_input)
-                    full_command.extend(['--from-json', json_input])
+                result = util.invoke_command(full_command + ['--generate-full-command-json-input'])
+                try:
+                    assert result.exit_code == 0
+                except AssertionError as ae:
+                    print("--generate-full-command-json-input failure for: {}".format(full_command))
+                    print(ae)
+                    print(result.output)
+                    failed_commands.append(cmd)
+                    continue
+                json_input = process_json_input(result.output, tmpdir)
+                json_input = json.dumps(json_input)
+                full_command.extend(['--from-json', json_input])
 
+                result = invoke(runner, config_file, 'ADMIN', full_command)
+
+                if 'Error: Missing option --endpoint.' in result.output:
+                    # some services require --endpoint to be passed.
+                    full_command.extend(['--endpoint', 'https://region.domain.com'])
                     result = invoke(runner, config_file, 'ADMIN', full_command)
 
-                    if 'Error: Missing option --endpoint.' in result.output:
-                        # some services require --endpoint to be passed.
-                        full_command.extend(['--endpoint', 'https://region.domain.com'])
-                        result = invoke(runner, config_file, 'ADMIN', full_command)
-
-                    if result.exit_code != 0 and 'CannotOverwriteExistingCassetteException' not in result.output:
-                        failed_commands.append(cmd)
-                        print(cmd)
-                        print(result.output)
-                else:
-                    result = invoke(runner, config_file, 'ADMIN', full_command)
-                    if result.exit_code != 0 and 'CannotOverwriteExistingCassetteException' not in result.output:
-                        failed_commands.append(cmd)
-                        print(cmd)
-                        print(result.output)
+                if result.exit_code != 0 and 'CannotOverwriteExistingCassetteException' not in result.output:
+                    failed_commands.append(cmd)
+                    print(cmd)
+                    print(result.output)
 
             except Exception:
                 failed_commands.append(cmd)
+                print(cmd)
 
     assert len(failed_commands) == 0, 'The following commands failed to run: {}'.format(failed_commands)
 

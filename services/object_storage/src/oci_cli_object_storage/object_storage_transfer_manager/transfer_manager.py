@@ -42,9 +42,9 @@ class TransferManager():
         else:
             raise RuntimeError('Unknown endpoint protocol. Expected HTTP or HTTPS')
 
-    def upload_object(self, callbacks_container, namespace_name, bucket_name, object_name, file_path, file_size, **kwargs):
+    def upload_object(self, callbacks_container, namespace_name, bucket_name, object_name, file_path, file_size, verify_checksum, **kwargs):
         if not self._config.use_multipart_uploads:
-            upload_task = SimpleSingleUploadTask(self._client, namespace_name, bucket_name, object_name, file_path, callbacks_container)
+            upload_task = SimpleSingleUploadTask(self._client, namespace_name, bucket_name, object_name, file_path, callbacks_container, verify_checksum)
             return self._object_storage_request_pool.submit(upload_task)
 
         part_size = self._config.multipart_part_size
@@ -56,12 +56,12 @@ class TransferManager():
             if 'multipart_part_completion_callback' in kwargs:
                 kwargs.pop('multipart_part_completion_callback')
 
-            upload_task = SimpleSingleUploadTask(self._client, namespace_name, bucket_name, object_name, file_path, callbacks_container, **kwargs)
+            upload_task = SimpleSingleUploadTask(self._client, namespace_name, bucket_name, object_name, file_path, callbacks_container, verify_checksum, **kwargs)
             return self._object_storage_request_pool.submit(upload_task)
         else:
             multipart_upload_processor_task = MultipartUploadProcessorTask(
                 self._client, namespace_name, bucket_name, object_name, file_path, callbacks_container,
-                self._object_storage_multipart_request_pool, part_size,
+                self._object_storage_multipart_request_pool, part_size, verify_checksum,
                 **kwargs
             )
             return self._multipart_upload_processor_pool.submit(multipart_upload_processor_task)

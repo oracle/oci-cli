@@ -185,28 +185,28 @@ Options:
                                   windows for the alarm. Supported value: `1m`
   --pending-duration TEXT         The period of time that the condition defined
                                   in the alarm must persist before the alarm
-                                  state changes from "OK" to "FIRING" or vice
-                                  versa. For example, a value of 5 minutes means
-                                  that the alarm must persist in breaching the
-                                  condition for five minutes before the alarm
-                                  updates its state to "FIRING"; likewise, the
-                                  alarm must persist in not breaching the
-                                  condition for five minutes before the alarm
-                                  updates its state to "OK."
+                                  state changes from "OK" to "FIRING". For
+                                  example, a value of 5 minutes means that the
+                                  alarm must persist in breaching the condition
+                                  for five minutes before the alarm updates its
+                                  state to "FIRING".
                                   
-                                  The duration is
-                                  specified as a string in ISO 8601 format
-                                  (`PT10M` for ten minutes or `PT1H` for one
-                                  hour). Minimum: PT1M. Maximum: PT1H. Default:
-                                  PT1M.
+                                  The duration is specified
+                                  as a string in ISO 8601 format (`PT10M` for
+                                  ten minutes or `PT1H` for one hour). Minimum:
+                                  PT1M. Maximum: PT1H. Default: PT1M.
                                   
-                                  Under the default value of PT1M, the
-                                  first evaluation that breaches the alarm
-                                  updates the state to "FIRING" and the first
-                                  evaluation that does not breach the alarm
-                                  updates the state to "OK".
+                                  Under the
+                                  default value of PT1M, the first evaluation
+                                  that breaches the alarm updates the state to
+                                  "FIRING".
                                   
-                                  Example: `PT5M`
+                                  The alarm updates its status to
+                                  "OK" when the breaching condition has been
+                                  clear for the most recent minute.
+                                  
+                                  Example:
+                                  `PT5M`
   --body TEXT                     The human-readable content of the notification
                                   delivered. Oracle recommends providing
                                   guidance to operators for resolving the alarm
@@ -313,21 +313,20 @@ Options:
                                   
                                   Example of threshold alarm:
                                   -----
-                                  
-                                      CpuUtilization[1m]{availabilityDoma
-                                  in="cumS:PHX-AD-1"}.groupBy(availabilityDomain
-                                  ).percentile(0.9) > 85
-                                  
-                                    -----
-                                  
-                                  Example of
-                                  absence alarm:
+                                  CpuUtilization[1m]{availabilityDomain="cumS
+                                  :PHX-AD-1"}.groupBy(availabilityDomain).percen
+                                  tile(0.9) > 85
                                   
                                     -----
                                   
-                                      CpuUtilization[1m
-                                  ]{availabilityDomain="cumS:PHX-AD-1"}.absent()
-                                  ----- [required]
+                                  Example of absence
+                                  alarm:
+                                  
+                                    -----
+                                  CpuUtilization[1m]{availabilityDomain="cumS
+                                  :PHX-AD-1"}.absent()
+                                  
+                                    ----- [required]
   --from-json TEXT                Provide input to this command as a JSON
                                   document from a file using the file://path-
                                   to/file syntax.
@@ -364,7 +363,10 @@ Usage: oci monitoring alarm delete [OPTIONS]
   Deletes the specified alarm. For important limits information, see [Limits
   on Monitoring].
 
-  Transactions Per Second (TPS) per-tenancy limit for this operation: 1.
+  This call is subject to a Monitoring limit that applies to the total number
+  of requests across all alarm operations. Monitoring might throttle this call
+  to reject an otherwise valid request when the total rate of alarm operations
+  exceeds 10 requests, or transactions, per second (TPS) for a given tenancy.
 
 Options:
   --alarm-id TEXT                 The [OCID] of an alarm. [required]
@@ -429,7 +431,10 @@ Usage: oci monitoring alarm get [OPTIONS]
   Gets the specified alarm. For important limits information, see [Limits on
   Monitoring].
 
-  Transactions Per Second (TPS) per-tenancy limit for this operation: 1.
+  This call is subject to a Monitoring limit that applies to the total number
+  of requests across all alarm operations. Monitoring might throttle this call
+  to reject an otherwise valid request when the total rate of alarm operations
+  exceeds 10 requests, or transactions, per second (TPS) for a given tenancy.
 
 Options:
   --alarm-id TEXT   The [OCID] of an alarm. [required]
@@ -464,7 +469,10 @@ Usage: oci monitoring alarm list [OPTIONS]
   Lists the alarms for the specified compartment. For important limits
   information, see [Limits on Monitoring].
 
-  Transactions Per Second (TPS) per-tenancy limit for this operation: 1.
+  This call is subject to a Monitoring limit that applies to the total number
+  of requests across all alarm operations. Monitoring might throttle this call
+  to reject an otherwise valid request when the total rate of alarm operations
+  exceeds 10 requests, or transactions, per second (TPS) for a given tenancy.
 
 Options:
   -c, --compartment-id TEXT       The [OCID] of the compartment containing the
@@ -608,28 +616,28 @@ Options:
                                   windows for the alarm. Supported value: `1m`
   --pending-duration TEXT         The period of time that the condition defined
                                   in the alarm must persist before the alarm
-                                  state changes from "OK" to "FIRING" or vice
-                                  versa. For example, a value of 5 minutes means
-                                  that the alarm must persist in breaching the
-                                  condition for five minutes before the alarm
-                                  updates its state to "FIRING"; likewise, the
-                                  alarm must persist in not breaching the
-                                  condition for five minutes before the alarm
-                                  updates its state to "OK."
+                                  state changes from "OK" to "FIRING". For
+                                  example, a value of 5 minutes means that the
+                                  alarm must persist in breaching the condition
+                                  for five minutes before the alarm updates its
+                                  state to "FIRING".
                                   
-                                  The duration is
-                                  specified as a string in ISO 8601 format
-                                  (`PT10M` for ten minutes or `PT1H` for one
-                                  hour). Minimum: PT1M. Maximum: PT1H. Default:
-                                  PT1M.
+                                  The duration is specified
+                                  as a string in ISO 8601 format (`PT10M` for
+                                  ten minutes or `PT1H` for one hour). Minimum:
+                                  PT1M. Maximum: PT1H. Default: PT1M.
                                   
-                                  Under the default value of PT1M, the
-                                  first evaluation that breaches the alarm
-                                  updates the state to "FIRING" and the first
-                                  evaluation that does not breach the alarm
-                                  updates the state to "OK".
+                                  Under the
+                                  default value of PT1M, the first evaluation
+                                  that breaches the alarm updates the state to
+                                  "FIRING".
                                   
-                                  Example: `PT5M`
+                                  The alarm updates its status to
+                                  "OK" when the breaching condition has been
+                                  clear for the most recent minute.
+                                  
+                                  Example:
+                                  `PT5M`
   --severity TEXT                 The perceived severity of the alarm with
                                   regard to the affected system.
                                   
@@ -776,21 +784,20 @@ Options:
                                   
                                   Example of threshold alarm:
                                   -----
-                                  
-                                      CpuUtilization[1m]{availabilityDoma
-                                  in="cumS:PHX-AD-1"}.groupBy(availabilityDomain
-                                  ).percentile(0.9) > 85
-                                  
-                                    -----
-                                  
-                                  Example of
-                                  absence alarm:
+                                  CpuUtilization[1m]{availabilityDomain="cumS
+                                  :PHX-AD-1"}.groupBy(availabilityDomain).percen
+                                  tile(0.9) > 85
                                   
                                     -----
                                   
-                                      CpuUtilization[1m
-                                  ]{availabilityDomain="cumS:PHX-AD-1"}.absent()
-                                  -----
+                                  Example of absence
+                                  alarm:
+                                  
+                                    -----
+                                  CpuUtilization[1m]{availabilityDomain="cumS
+                                  :PHX-AD-1"}.absent()
+                                  
+                                    -----
   --from-json TEXT                Provide input to this command as a JSON
                                   document from a file using the file://path-
                                   to/file syntax.
@@ -841,7 +848,10 @@ Usage: oci monitoring alarm-history-collection get-alarm-history
   Get the history of the specified alarm. For important limits information,
   see [Limits on Monitoring].
 
-  Transactions Per Second (TPS) per-tenancy limit for this operation: 1.
+  This call is subject to a Monitoring limit that applies to the total number
+  of requests across all alarm operations. Monitoring might throttle this call
+  to reject an otherwise valid request when the total rate of alarm operations
+  exceeds 10 requests, or transactions, per second (TPS) for a given tenancy.
 
 Options:
   --alarm-id TEXT                 The [OCID] of an alarm. [required]
@@ -1077,7 +1087,10 @@ Usage: oci monitoring alarm-status list-alarms-status [OPTIONS]
   List the status of each alarm in the specified compartment. For important
   limits information, see [Limits on Monitoring].
 
-  Transactions Per Second (TPS) per-tenancy limit for this operation: 1.
+  This call is subject to a Monitoring limit that applies to the total number
+  of requests across all alarm operations. Monitoring might throttle this call
+  to reject an otherwise valid request when the total rate of alarm operations
+  exceeds 10 requests, or transactions, per second (TPS) for a given tenancy.
 
 Options:
   -c, --compartment-id TEXT       The [OCID] of the compartment containing the
@@ -1185,7 +1198,7 @@ Usage: oci monitoring metric list [OPTIONS]
   Compartment OCID required. For information about metrics, see [Metrics
   Overview]. For important limits information, see [Limits on Monitoring].
 
-  Transactions Per Second (TPS) per-tenancy limit for this operation: 1.
+  Transactions Per Second (TPS) per-tenancy limit for this operation: 10.
 
 Options:
   -c, --compartment-id TEXT       The [OCID] of the compartment containing the
@@ -1725,7 +1738,10 @@ Usage: oci monitoring suppression remove [OPTIONS]
   Removes any existing suppression for the specified alarm. For important
   limits information, see [Limits on Monitoring].
 
-  Transactions Per Second (TPS) per-tenancy limit for this operation: 1.
+  This call is subject to a Monitoring limit that applies to the total number
+  of requests across all alarm operations. Monitoring might throttle this call
+  to reject an otherwise valid request when the total rate of alarm operations
+  exceeds 10 requests, or transactions, per second (TPS) for a given tenancy.
 
 Options:
   --alarm-id TEXT   The [OCID] of an alarm. [required]

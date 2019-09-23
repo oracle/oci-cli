@@ -16,11 +16,9 @@ Options:
                   <command> --help.
 
 Commands:
-  job                     Jobs perform the actions that are defined in...
-  stack                   The stack object.
-  work-request            The status of a work request.
-  work-request-error      An error encountered while executing a work...
-  work-request-log-entry  A log message from the execution of a work...
+  job           Jobs perform the actions that are defined in...
+  stack         The stack object.
+  work-request  The status of a work request.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci resource-manager job --help
@@ -1143,13 +1141,14 @@ Options:
                   <command> --help.
 
 Commands:
-  change-compartment   Moves a Stack and it's associated Jobs into a...
-  create               Creates a Stack
-  delete               Deletes the specified stack object.
-  get                  Gets a stack using the stack ID.
-  get-stack-tf-config  Returns the Terraform configuration file in...
-  list                 Returns a list of stacks.
-  update               Update the Stack object
+  change-compartment       Moves a Stack and it's associated Jobs into a...
+  create                   Creates a Stack
+  delete                   Deletes the specified stack object.
+  get                      Gets a stack using the stack ID.
+  get-stack-tf-config      Returns the Terraform configuration file in...
+  list                     Returns a list of stacks.
+  list-terraform-versions  Returns a list of supported Terraform...
+  update                   Update the Stack object
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci resource-manager stack change-compartment --help
@@ -1246,6 +1245,7 @@ Options:
                                   in
                                   a file, modifying it as needed and then
                                   passing it back in via the file:// syntax.
+  --terraform-version TEXT        The stack's Terraform version
   --freeform-tags COMPLEX TYPE    Free-form tags associated with this resource.
                                   Each tag is a simple key-value pair with no
                                   predefined name, type, or namespace. For more
@@ -1534,6 +1534,41 @@ Options:
                                   commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
+$ oci resource-manager stack list-terraform-versions --help
+Usage: oci resource-manager stack list-terraform-versions [OPTIONS]
+
+  Returns a list of supported Terraform versions in a compartment.
+
+Options:
+  -c, --compartment-id TEXT  The compartment OCID on which to filter.
+  --all                      Fetches all pages of results.
+  --from-json TEXT           Provide input to this command as a JSON document
+                             from a file using the file://path-to/file syntax.
+                             The --generate-full-command-json-input option can
+                             be used to generate a sample json file to be used
+                             with this command option. The key names are pre-
+                             populated and match the command option names
+                             (converted to camelCase format, e.g. compartment-id
+                             --> compartmentId), while the values of the keys
+                             need to be populated by the user before using the
+                             sample file as an input to this command. For any
+                             command option that accepts multiple values, the
+                             value of the key can be a JSON array.
+                             
+                             Options can
+                             still be provided on the command line. If an option
+                             exists in both the JSON document and the command
+                             line then the command line specified value will be
+                             used.
+                             
+                             For examples on usage of this option, please
+                             see our "using CLI with advanced JSON options"
+                             link: https://docs.cloud.oracle.com/iaas/Content/AP
+                             I/SDKDocs/cliusing.htm#AdvancedJSONOptions
+  -?, -h, --help             For detailed help on any of these individual
+                             commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
 $ oci resource-manager stack update --help
 Usage: oci resource-manager stack update [OPTIONS]
 
@@ -1563,6 +1598,7 @@ Options:
                                   in
                                   a file, modifying it as needed and then
                                   passing it back in via the file:// syntax.
+  --terraform-version TEXT        The Terraform version of the stack.
   --freeform-tags COMPLEX TYPE    Free-form tags associated with this resource.
                                   Each tag is a simple key-value pair with no
                                   predefined name, type, or namespace. For more
@@ -1669,8 +1705,9 @@ Options:
                   <command> --help.
 
 Commands:
-  get   Return the given work request.
-  list  Lists the work requests in a given...
+  get                       Return the given work request.
+  list                      Lists the work requests in a given...
+  list-work-request-errors  Return a (paginated) list of errors for a...
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci resource-manager work-request get --help
@@ -1752,84 +1789,11 @@ Options:
                              commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
-$ oci resource-manager work-request-error --help
-Usage: oci resource-manager work-request-error [OPTIONS] COMMAND [ARGS]...
-
-  An error encountered while executing a work request.
-
-Options:
-  -?, -h, --help  For detailed help on any of these individual commands, enter
-                  <command> --help.
-
-Commands:
-  list  Return a (paginated) list of errors for a...
-
-++++++++++++++++++++++++++++++++++++++++++++++
-$ oci resource-manager work-request-error list --help
-Usage: oci resource-manager work-request-error list [OPTIONS]
+$ oci resource-manager work-request list-work-request-errors --help
+Usage: oci resource-manager work-request list-work-request-errors 
+           [OPTIONS]
 
   Return a (paginated) list of errors for a given work request.
-
-Options:
-  --work-request-id TEXT     The OCID of the work request. [required]
-  -c, --compartment-id TEXT  The compartment OCID on which to filter.
-  --limit INTEGER            The number of items returned in a paginated `List`
-                             call. For information about pagination, see [List
-                             Pagination].
-  --page TEXT                The value of the `opc-next-page` response header
-                             from the preceding `List` call. For information
-                             about pagination, see [List Pagination].
-  --sort-order [ASC|DESC]    The sort order, either `ASC` (ascending) or `DESC`
-                             (descending).
-  --all                      Fetches all pages of results. If you provide this
-                             option, then you cannot provide the --limit option.
-  --page-size INTEGER        When fetching results, the number of results to
-                             fetch per call. Only valid when used with --all or
-                             --limit, and ignored otherwise.
-  --from-json TEXT           Provide input to this command as a JSON document
-                             from a file using the file://path-to/file syntax.
-                             The --generate-full-command-json-input option can
-                             be used to generate a sample json file to be used
-                             with this command option. The key names are pre-
-                             populated and match the command option names
-                             (converted to camelCase format, e.g. compartment-id
-                             --> compartmentId), while the values of the keys
-                             need to be populated by the user before using the
-                             sample file as an input to this command. For any
-                             command option that accepts multiple values, the
-                             value of the key can be a JSON array.
-                             
-                             Options can
-                             still be provided on the command line. If an option
-                             exists in both the JSON document and the command
-                             line then the command line specified value will be
-                             used.
-                             
-                             For examples on usage of this option, please
-                             see our "using CLI with advanced JSON options"
-                             link: https://docs.cloud.oracle.com/iaas/Content/AP
-                             I/SDKDocs/cliusing.htm#AdvancedJSONOptions
-  -?, -h, --help             For detailed help on any of these individual
-                             commands, enter <command> --help.
-
-++++++++++++++++++++++++++++++++++++++++++++++
-$ oci resource-manager work-request-log-entry --help
-Usage: oci resource-manager work-request-log-entry [OPTIONS] COMMAND [ARGS]...
-
-  A log message from the execution of a work request.
-
-Options:
-  -?, -h, --help  For detailed help on any of these individual commands, enter
-                  <command> --help.
-
-Commands:
-  list  Return a (paginated) list of logs for a given...
-
-++++++++++++++++++++++++++++++++++++++++++++++
-$ oci resource-manager work-request-log-entry list --help
-Usage: oci resource-manager work-request-log-entry list [OPTIONS]
-
-  Return a (paginated) list of logs for a given work request.
 
 Options:
   --work-request-id TEXT     The OCID of the work request. [required]

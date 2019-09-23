@@ -12,6 +12,7 @@ import click
 import errno
 import oci._vendor.jwt as jwt
 import oci
+import oci.regions as regions
 import os
 import sys
 import uuid
@@ -30,8 +31,7 @@ except ImportError:
 
 BOOTSTRAP_SERVICE_PORT = 8181
 BOOTSTRAP_PROCESS_CANCELED_MESSAGE = 'Bootstrap process canceled.'
-CONSOLE_AUTH_URL_FORMAT = "https://login.{region}.oraclecloud.com/v1/oauth2/authorize"
-CONSOLE_AUTH_GOV_URL_FORMAT = "https://login.{region}.oraclegovcloud.com/v1/oauth2/authorize"
+CONSOLE_AUTH_URL_FORMAT = "https://login.{region}.{realm}/v1/oauth2/authorize"
 
 
 @cli_setup.setup_group.command('bootstrap', help="""
@@ -152,10 +152,15 @@ def create_user_session(region=''):
         'redirect_uri': 'http://localhost:{}'.format(BOOTSTRAP_SERVICE_PORT)
     }
 
-    if "-gov-" in region:
-        console_url = CONSOLE_AUTH_GOV_URL_FORMAT.format(region=region)
+    if region in regions.REGIONS_SHORT_NAMES:
+        region = regions.REGIONS_SHORT_NAMES[region]
+
+    if regions.is_region(region):
+        console_url = CONSOLE_AUTH_URL_FORMAT.format(region=region,
+                                                     realm=regions.REALMS[regions.REGION_REALMS[region]])
     else:
-        console_url = CONSOLE_AUTH_URL_FORMAT.format(region=region)
+        click.echo('Error: {} is not a valid region. Valid regions are \n{}'.format(region, regions.REGIONS))
+        sys.exit(1)
 
     query_string = urlencode(query)
     url = "{console_auth_url}?{query_string}".format(

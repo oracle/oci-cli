@@ -128,6 +128,8 @@ get_param(objectstorage_cli.update_bucket, 'namespace_name').opts.extend(['--nam
 get_param(objectstorage_cli.update_bucket, 'bucket_name').opts.extend(['--name', '-bn'])
 get_param(objectstorage_cli.copy_object, 'namespace_name').opts.extend(['--namespace', '-ns'])
 get_param(objectstorage_cli.copy_object, 'bucket_name').opts.extend(['-bn'])
+get_param(objectstorage_cli.reencrypt_bucket, 'namespace_name').opts.extend(['--namespace', '-ns'])
+get_param(objectstorage_cli.reencrypt_bucket, 'bucket_name').opts.extend(['-bn'])
 
 objectstorage_cli.object_group.commands.pop(objectstorage_cli.abort_multipart_upload.name)
 objectstorage_cli.object_group.commands.pop(objectstorage_cli.copy_object.name)
@@ -299,12 +301,13 @@ def object_list(ctx, from_json, namespace, bucket_name, prefix, start, end, limi
                  help='If the object will be uploaded in multiple parts, this option disables those parts from being uploaded in parallel.')
 @cli_util.option('--parallel-upload-count', type=click.INT, default=None,
                  help='If the object will be uploaded in multiple parts, this option allows you to specify the maximum number of parts that can be uploaded in parallel. This option cannot be used with --disable-parallel-uploads or --no-multipart. Defaults to 3.')
+@cli_util.option('--verify-checksum', is_flag=True, help='Verify the checksum of the uploaded object with the local file.')
 @json_skeleton_utils.get_cli_json_input_option({'metadata': {'module': 'object_storage', 'class': 'dict(str, str)'}})
 @help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'metadata': {'module': 'object_storage', 'class': 'dict(str, str)'}}, output_type={'module': 'object_storage', 'class': 'ObjectSummary'})
 @wrap_exceptions
-def object_put(ctx, from_json, namespace, bucket_name, name, file, if_match, content_md5, metadata, content_type, content_language, content_encoding, force, no_overwrite, no_multipart, part_size, disable_parallel_uploads, parallel_upload_count):
+def object_put(ctx, from_json, namespace, bucket_name, name, file, if_match, content_md5, metadata, content_type, content_language, content_encoding, force, no_overwrite, no_multipart, part_size, disable_parallel_uploads, parallel_upload_count, verify_checksum):
     """
     Creates a new object or overwrites an existing one.
 
@@ -389,6 +392,8 @@ def object_put(ctx, from_json, namespace, bucket_name, name, file, if_match, con
     total_size = os.fstat(file.fileno()).st_size
     size_qualifies_for_multipart = UploadManager._use_multipart(total_size, part_size) if part_size else UploadManager._use_multipart(total_size)
 
+    ma = None
+
     if not hasattr(file, 'name') or file.name == '<stdin>':
         if no_multipart:
             raise click.UsageError('The --no-multipart flag is not valid when taking input from STDIN.')
@@ -470,6 +475,13 @@ def object_put(ctx, from_json, namespace, bucket_name, name, file, if_match, con
 
     display_headers = filter_object_headers(response.headers, OBJECT_PUT_DISPLAY_HEADERS)
     render(None, display_headers, ctx, display_all_headers=True)
+    is_not_multipart = not size_qualifies_for_multipart or no_multipart
+
+    if verify_checksum:
+        multipart_hash = cli_util.verify_checksum(file.name, is_not_multipart, ma)
+        message, match = cli_util.get_checksum_message(response.headers, multipart_hash)
+        click.echo(message, file=sys.stderr)
+        exit(0 if match else 1)
 
 
 @objectstorage_cli.object_group.command(name='bulk-upload')
@@ -493,6 +505,7 @@ Specifying this flag will also allow for faster uploads as the CLI will not init
                  help='[DEPRECATED] This option is no longer used. If a file in the directory will be uploaded in multiple parts, this option disables those parts from being uploaded in parallel. This applies to all files being uploaded in multiple parts')
 @cli_util.option('--parallel-upload-count', type=click.INT, default=10, show_default=True,
                  help='The number of parallel operations to perform. Decreasing this value will make bulk uploads less resource intensive but they may take longer. Increasing this value may improve bulk upload times, but the upload process will consume more system resources and network bandwidth.')
+@cli_util.option('--verify-checksum', is_flag=True, help='Verify the checksum of the uploaded object with the local file.')
 @cli_util.option('--include', multiple=True, help="""Only upload files which match the provided pattern. Patterns are taken relative to the CURRENT directory. This option can be provided mulitple times to match on mulitple patterns. Supported pattern symbols are:
 \b
 {}
@@ -506,7 +519,7 @@ Specifying this flag will also allow for faster uploads as the CLI will not init
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'metadata': {'module': 'object_storage', 'class': 'dict(str, str)'}})
 @wrap_exceptions
-def object_bulk_put(ctx, from_json, namespace, bucket_name, src_dir, object_prefix, metadata, content_type, content_language, content_encoding, overwrite, no_overwrite, no_multipart, part_size, disable_parallel_uploads, parallel_upload_count, include, exclude):
+def object_bulk_put(ctx, from_json, namespace, bucket_name, src_dir, object_prefix, metadata, content_type, content_language, content_encoding, overwrite, no_overwrite, no_multipart, part_size, disable_parallel_uploads, parallel_upload_count, verify_checksum, include, exclude):
     """
     Uploads all files in a given directory and all subdirectories.
 
@@ -683,6 +696,7 @@ def object_bulk_put(ctx, from_json, namespace, bucket_name, src_dir, object_pref
 
                 error_callback_kwargs = {'failed_item': object_name}
                 success_callback_kwargs = {'uploaded_object': object_name}
+
                 add_to_uploaded_objects_callback = WorkPoolTaskSuccessCallback(output.add_uploaded, **success_callback_kwargs)
                 add_to_upload_failures_callback = WorkPoolTaskErrorCallback(output.add_failure, **error_callback_kwargs)
 
@@ -696,7 +710,7 @@ def object_bulk_put(ctx, from_json, namespace, bucket_name, src_dir, object_pref
                 if not ctx.obj['debug']:
                     base_kwargs['multipart_part_completion_callback'] = BulkOperationMultipartUploadProgressBar(reusable_progress_bar, file_size, _get_progress_bar_label(None, object_name, 'Uploading part for')).update
 
-                transfer_manager.upload_object(callbacks_container, namespace, bucket_name, object_name, full_file_path, file_size, **base_kwargs)
+                transfer_manager.upload_object(callbacks_container, namespace, bucket_name, object_name, full_file_path, file_size, verify_checksum, **base_kwargs)
 
                 # These can vary per request, so remove them if they exist so we have a blank slate for the next iteration
                 base_kwargs.pop('if_none_match', None)

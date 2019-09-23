@@ -280,6 +280,7 @@ def copy_object(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 @cli_util.option('--metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Arbitrary string, up to 4KB, of keys and values for user-defined metadata.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--public-access-type', type=custom_types.CliCaseInsensitiveChoice(["NoPublicAccess", "ObjectRead", "ObjectReadWithoutList"]), help=u"""The type of public access enabled on this bucket. A bucket is set to `NoPublicAccess` by default, which only allows an authenticated caller to access the bucket and its contents. When `ObjectRead` is enabled on the bucket, public access is allowed for the `GetObject`, `HeadObject`, and `ListObjects` operations. When `ObjectReadWithoutList` is enabled on the bucket, public access is allowed for the `GetObject` and `HeadObject` operations.""")
 @cli_util.option('--storage-tier', type=custom_types.CliCaseInsensitiveChoice(["Standard", "Archive"]), help=u"""The type of storage tier of this bucket. A bucket is set to 'Standard' tier by default, which means the bucket will be put in the standard storage tier. When 'Archive' tier type is set explicitly, the bucket is put in the Archive Storage tier. The 'storageTier' property is immutable after bucket is created.""")
+@cli_util.option('--object-events-enabled', type=click.BOOL, help=u"""A property that determines whether events will be generated for operations on objects in this bucket. This is false by default.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--kms-key-id', help=u"""The OCID of a KMS key id used to call KMS to generate the data key or decrypt the encrypted data key.""")
@@ -288,7 +289,7 @@ def copy_object(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'metadata': {'module': 'object_storage', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'object_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'object_storage', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'object_storage', 'class': 'Bucket'})
 @cli_util.wrap_exceptions
-def create_bucket(ctx, from_json, namespace_name, name, compartment_id, metadata, public_access_type, storage_tier, freeform_tags, defined_tags, kms_key_id):
+def create_bucket(ctx, from_json, namespace_name, name, compartment_id, metadata, public_access_type, storage_tier, object_events_enabled, freeform_tags, defined_tags, kms_key_id):
 
     if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
@@ -308,6 +309,9 @@ def create_bucket(ctx, from_json, namespace_name, name, compartment_id, metadata
 
     if storage_tier is not None:
         details['storageTier'] = storage_tier
+
+    if object_events_enabled is not None:
+        details['objectEventsEnabled'] = object_events_enabled
 
     if freeform_tags is not None:
         details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -423,7 +427,7 @@ def create_preauthenticated_request(ctx, from_json, namespace_name, bucket_name,
     cli_util.render_response(result, ctx)
 
 
-@bucket_group.command(name=cli_util.override('delete_bucket.command_name', 'delete'), help=u"""Deletes a bucket if the bucket is already empty. If the bucket is not empty, use [DeleteObject] first. You also cannot delete a bucket that has a pre-authenticated request associated with that bucket.""")
+@bucket_group.command(name=cli_util.override('delete_bucket.command_name', 'delete'), help=u"""Deletes a bucket if the bucket is already empty. If the bucket is not empty, use [DeleteObject] first. In addition, you cannot delete a bucket that has a multipart upload in progress or a pre-authenticated request associated with that bucket.""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
 @cli_util.option('--bucket-name', required=True, help=u"""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")
 @cli_util.option('--if-match', help=u"""The entity tag (ETag) to match. For creating and committing a multipart upload to an object, this is the entity tag of the target object. For uploading a part, this is the entity tag of the target part.""")
@@ -614,7 +618,7 @@ def get_namespace(ctx, from_json, compartment_id):
 
 @namespace_group.command(name=cli_util.override('get_namespace_metadata.command_name', 'get-namespace-metadata'), help=u"""Gets the metadata for the Object Storage namespace, which contains defaultS3CompartmentId and defaultSwiftCompartmentId.
 
-Any user with the NAMESPACE_READ permission will be able to see the current metadata. If you are not authorized, talk to an administrator. If you are an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
+Any user with the OBJECTSTORAGE_NAMESPACE_READ permission will be able to see the current metadata. If you are not authorized, talk to an administrator. If you are an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -1413,6 +1417,60 @@ def put_object_lifecycle_policy(ctx, from_json, force, namespace_name, bucket_na
     cli_util.render_response(result, ctx)
 
 
+@bucket_group.command(name=cli_util.override('reencrypt_bucket.command_name', 'reencrypt'), help=u"""Reencrypts the data encryption key of the bucket and objects in the bucket. This is an asynchronous call, the system will start a work request task to reencrypt the data encryption key of the objects and chunks in the bucket. Only the objects created before the time the API call will be reencrypted. The call can take long time depending on how many objects in the bucket and how big the objects are. This API will return a work request id, so the user can use this id to retrieve the status of the work request task.
+
+A user can update kmsKeyId of the bucket, and then call this API, so the data encryption key of the bucket and objects in the bucket will be reencryped by the new kmsKeyId. Note that the system doesn't maintain what ksmKeyId is used to encrypt the object, the user has to maintain the mapping if they want.""")
+@cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
+@cli_util.option('--bucket-name', required=True, help=u"""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "COMPLETED", "CANCELING", "CANCELED"]), help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def reencrypt_bucket(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, namespace_name, bucket_name):
+
+    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+        raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
+
+    if isinstance(bucket_name, six.string_types) and len(bucket_name.strip()) == 0:
+        raise click.UsageError('Parameter --bucket-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_client_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('object_storage', ctx)
+    result = client.reencrypt_bucket(
+        namespace_name=namespace_name,
+        bucket_name=bucket_name,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @object_group.command(name=cli_util.override('rename_object.command_name', 'rename'), help=u"""Rename an object in the given Object Storage namespace.""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
 @cli_util.option('--bucket-name', required=True, help=u"""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")
@@ -1497,12 +1555,15 @@ def restore_objects(ctx, from_json, namespace_name, bucket_name, object_name, ho
     cli_util.render_response(result, ctx)
 
 
-@bucket_group.command(name=cli_util.override('update_bucket.command_name', 'update'), help=u"""Performs a partial or full update of a bucket's user-defined metadata.""")
+@bucket_group.command(name=cli_util.override('update_bucket.command_name', 'update'), help=u"""Performs a partial or full update of a bucket's user-defined metadata.
+
+Use UpdateBucket to move a bucket from one compartment to another within the same tenancy. Supply the compartmentID of the compartment that you want to move the bucket to. For more information about moving resources between compartments, see [Moving Resources to a Different Compartment].""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
 @cli_util.option('--bucket-name', required=True, help=u"""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")
-@cli_util.option('--compartment-id', help=u"""The compartmentId for the compartment to which the bucket is targeted to move to.""")
+@cli_util.option('--compartment-id', help=u"""The compartmentId for the compartment to move the bucket to.""")
 @cli_util.option('--metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Arbitrary string, up to 4KB, of keys and values for user-defined metadata.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--public-access-type', type=custom_types.CliCaseInsensitiveChoice(["NoPublicAccess", "ObjectRead", "ObjectReadWithoutList"]), help=u"""The type of public access enabled on this bucket. A bucket is set to `NoPublicAccess` by default, which only allows an authenticated caller to access the bucket and its contents. When `ObjectRead` is enabled on the bucket, public access is allowed for the `GetObject`, `HeadObject`, and `ListObjects` operations. When `ObjectReadWithoutList` is enabled on the bucket, public access is allowed for the `GetObject` and `HeadObject` operations.""")
+@cli_util.option('--object-events-enabled', type=click.BOOL, help=u"""A property that determines whether events will be generated for operations on objects in this bucket. This is false by default.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--kms-key-id', help=u"""A KMS key OCID that will be associated with the given bucket. If it is empty the Update operation will actually remove the KMS key, if there is one, from the given bucket. Note that the old kms key should still be enbaled in KMS otherwise all the objects in the bucket encrypted with the old KMS key will no longer be accessible.""")
@@ -1512,7 +1573,7 @@ def restore_objects(ctx, from_json, namespace_name, bucket_name, object_name, ho
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'metadata': {'module': 'object_storage', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'object_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'object_storage', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'object_storage', 'class': 'Bucket'})
 @cli_util.wrap_exceptions
-def update_bucket(ctx, from_json, namespace_name, bucket_name, compartment_id, metadata, public_access_type, freeform_tags, defined_tags, kms_key_id, if_match):
+def update_bucket(ctx, from_json, namespace_name, bucket_name, compartment_id, metadata, public_access_type, object_events_enabled, freeform_tags, defined_tags, kms_key_id, if_match):
 
     if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
@@ -1539,6 +1600,9 @@ def update_bucket(ctx, from_json, namespace_name, bucket_name, compartment_id, m
     if public_access_type is not None:
         details['publicAccessType'] = public_access_type
 
+    if object_events_enabled is not None:
+        details['objectEventsEnabled'] = object_events_enabled
+
     if freeform_tags is not None:
         details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
@@ -1560,7 +1624,7 @@ def update_bucket(ctx, from_json, namespace_name, bucket_name, compartment_id, m
 
 @namespace_group.command(name=cli_util.override('update_namespace_metadata.command_name', 'update-namespace-metadata'), help=u"""By default, buckets created using the Amazon S3 Compatibility API or the Swift API are created in the root compartment of the Oracle Cloud Infrastructure tenancy.
 
-You can change the default Swift/Amazon S3 compartmentId designation to a different compartmentId. All subsequent bucket creations will use the new default compartment, but no previously created buckets will be modified. A user must have NAMESPACE_UPDATE permission to make changes to the default compartments for Amazon S3 and Swift.""")
+You can change the default Swift/Amazon S3 compartmentId designation to a different compartmentId. All subsequent bucket creations will use the new default compartment, but no previously created buckets will be modified. A user must have OBJECTSTORAGE_NAMESPACE_UPDATE permission to make changes to the default compartments for Amazon S3 and Swift.""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
 @cli_util.option('--default-s3-compartment-id', help=u"""The updated compartment id for use by an S3 client, if this field is set.""")
 @cli_util.option('--default-swift-compartment-id', help=u"""The updated compartment id for use by a Swift client, if this field is set.""")
