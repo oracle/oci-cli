@@ -164,6 +164,15 @@ def test_run_all_operations(runner, config_file, config_profile, debug):
     result = invoke(runner, config_file, config_profile, ['object', 'delete', '-ns', util.NAMESPACE, '-bn', bucket_name, '--name', object_name], input='y', debug=debug)
     validate_response(result, json_response_expected=False, includes_debug_data=debug)
 
+    # object put with verify-checksum
+    result = invoke(runner, config_file, config_profile, ['object', 'put', '-ns', util.NAMESPACE, '-bn', bucket_name, '--name', object_name, '--file', CONTENT_INPUT_FILE, '--verify-checksum'], debug=debug)
+    validate_response(result, includes_debug_data=debug, json_response_expected=False)
+    assert "md5 checksum matches" in result.output
+
+    # object delete
+    result = invoke(runner, config_file, config_profile, ['object', 'delete', '-ns', util.NAMESPACE, '-bn', bucket_name, '--name', object_name], input='y', debug=debug)
+    validate_response(result, json_response_expected=False, includes_debug_data=debug)
+
     # object put with default file
     result = invoke(runner, config_file, config_profile, ['object', 'put', '-ns', util.NAMESPACE, '-bn', bucket_name, '--name', object_name + '_from_defaults_file', '--defaults-file', 'tests/resources/default_files/specific_command_default'], debug=debug)
     validate_response(result, includes_debug_data=debug)
@@ -418,6 +427,16 @@ def test_object_put_confirmation_prompt(runner, config_file, config_profile, con
     # Test if-match with prompt accept.
     result = invoke(runner, config_file, config_profile, put_required_args + ['--if-match', etag], input='y')
     validate_response(result, json_response_expected=False)
+    json_head = json.loads(invoke(runner, config_file, config_profile, head_required_args).output)
+    new_etag = json_head['etag']
+    assert etag != new_etag
+    assert content_input_file_size == int(json_head['content-length'])
+    etag = new_etag
+
+    # Test force with verify-checksum
+    result = invoke(runner, config_file, config_profile, put_required_args + ['--force', '--verify-checksum'], strip_multipart_stderr_output=False)
+    validate_response(result, json_response_expected=False)
+    assert "md5 checksum matches" in result.output
     json_head = json.loads(invoke(runner, config_file, config_profile, head_required_args).output)
     new_etag = json_head['etag']
     assert etag != new_etag

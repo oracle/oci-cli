@@ -4,7 +4,11 @@
 import mock
 import unittest
 from services.object_storage.src.oci_cli_object_storage.objectstorage_cli_extended import time_delta
-# from services.object_storage.src.oci_cli_object_storage.objectstorage_cli_extended import _get_progress_bar_label
+from services.object_storage.src.oci_cli_object_storage.objectstorage_cli_extended import _get_progress_bar_label
+from tests import util
+import tempfile
+import shutil
+import os
 
 
 class TestObjectStorage(unittest.TestCase):
@@ -25,6 +29,20 @@ class TestObjectStorage(unittest.TestCase):
         str_long = '0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456' \
                    '789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF'
         str_normal = 'filename'
-        # assert _get_progress_bar_label('', str_long_slash, 'Deleted') == 'Deleted item'
-        # assert _get_progress_bar_label('', str_long, 'Deleted') == 'Deleted item'
-        # assert _get_progress_bar_label('', str_normal, 'Deleted') == 'Deleted filename'
+        assert _get_progress_bar_label('', str_long_slash, 'Deleted') == 'Deleted item'
+        assert _get_progress_bar_label('', str_long, 'Deleted') == 'Deleted item'
+        assert _get_progress_bar_label('', str_normal, 'Deleted') == 'Deleted filename'
+
+    def test_verify_checksum(self):
+        td = tempfile.mkdtemp()
+        tf = tempfile.NamedTemporaryFile(dir=td, delete=False)
+        tmp_file_name = tf.name
+        tf.close()
+        result = util.invoke_command(['os', 'object', 'put', '--bucket-name', 'test', '--file', tmp_file_name, '--verify-checksum', '--force'])
+        assert "ServiceError" in result.output
+        assert "BucketNotFound" in result.output
+        result = util.invoke_command(['os', 'object', 'bulk-upload', '--bucket-name', 'test', '--src-dir', td, '--verify-checksum'])
+        assert "ServiceError" in result.output
+        assert "BucketNotFound" in result.output
+        os.unlink(tmp_file_name)
+        shutil.rmtree(td)

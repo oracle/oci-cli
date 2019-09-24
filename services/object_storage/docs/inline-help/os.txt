@@ -42,11 +42,12 @@ Options:
                   <command> --help.
 
 Commands:
-  create  Creates a bucket in the given namespace with...
-  delete  Deletes a bucket if the bucket is already...
-  get     Gets the current representation of the given...
-  list    Gets a list of all BucketSummary items in a...
-  update  Performs a partial or full update of a...
+  create     Creates a bucket in the given namespace with...
+  delete     Deletes a bucket if the bucket is already...
+  get        Gets the current representation of the given...
+  list       Gets a list of all BucketSummary items in a...
+  reencrypt  Reencrypts the data encryption key of the...
+  update     Performs a partial or full update of a...
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci os bucket create --help
@@ -105,6 +106,10 @@ Options:
                                   type is set explicitly, the bucket is put in
                                   the Archive Storage tier. The 'storageTier'
                                   property is immutable after bucket is created.
+  --object-events-enabled BOOLEAN
+                                  A property that determines whether events will
+                                  be generated for operations on objects in this
+                                  bucket. This is false by default.
   --freeform-tags COMPLEX TYPE    Free-form tags for this resource. Each tag is
                                   a simple key-value pair with no predefined
                                   name, type, or namespace. For more
@@ -179,8 +184,9 @@ $ oci os bucket delete --help
 Usage: oci os bucket delete [OPTIONS]
 
   Deletes a bucket if the bucket is already empty. If the bucket is not empty,
-  use [DeleteObject] first. You also cannot delete a bucket that has a pre-
-  authenticated request associated with that bucket.
+  use [DeleteObject] first. In addition, you cannot delete a bucket that has a
+  multipart upload in progress or a pre-authenticated request associated with
+  that bucket.
 
 Options:
   -ns, --namespace-name, --namespace TEXT
@@ -361,10 +367,89 @@ Options:
                                   commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
+$ oci os bucket reencrypt --help
+Usage: oci os bucket reencrypt [OPTIONS]
+
+  Reencrypts the data encryption key of the bucket and objects in the bucket.
+  This is an asynchronous call, the system will start a work request task to
+  reencrypt the data encryption key of the objects and chunks in the bucket.
+  Only the objects created before the time the API call will be reencrypted.
+  The call can take long time depending on how many objects in the bucket and
+  how big the objects are. This API will return a work request id, so the user
+  can use this id to retrieve the status of the work request task.
+
+  A user can update kmsKeyId of the bucket, and then call this API, so the
+  data encryption key of the bucket and objects in the bucket will be
+  reencryped by the new kmsKeyId. Note that the system doesn't maintain what
+  ksmKeyId is used to encrypt the object, the user has to maintain the mapping
+  if they want.
+
+Options:
+  -ns, --namespace-name, --namespace TEXT
+                                  The Object Storage namespace used for the
+                                  request. If not provided, this parameter will
+                                  be obtained internally using a call to 'oci os
+                                  ns get'
+  -bn, --bucket-name TEXT         The name of the bucket. Avoid entering
+                                  confidential information. Example: `my-new-
+                                  bucket1` [required]
+  --wait-for-state [ACCEPTED|IN_PROGRESS|FAILED|COMPLETED|CANCELING|CANCELED]
+                                  This operation asynchronously creates,
+                                  modifies or deletes a resource and uses a work
+                                  request to track the progress of the
+                                  operation. Specify this option to perform the
+                                  action and then wait until the work request
+                                  reaches a certain state. If timeout is
+                                  reached, a return code of 2 is returned. For
+                                  any other error, a return code of 1 is
+                                  returned.
+  --max-wait-seconds INTEGER      The maximum time to wait for the work request
+                                  to reach the state defined by --wait-for-
+                                  state. Defaults to 1200 seconds.
+  --wait-interval-seconds INTEGER
+                                  Check every --wait-interval-seconds to see
+                                  whether the work request to see if it has
+                                  reached the state defined by --wait-for-state.
+                                  Defaults to 30 seconds.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file using the file://path-
+                                  to/file syntax.
+                                  
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
 $ oci os bucket update --help
 Usage: oci os bucket update [OPTIONS]
 
   Performs a partial or full update of a bucket's user-defined metadata.
+
+  Use UpdateBucket to move a bucket from one compartment to another within the
+  same tenancy. Supply the compartmentID of the compartment that you want to
+  move the bucket to. For more information about moving resources between
+  compartments, see [Moving Resources to a Different Compartment].
 
 Options:
   -ns, --namespace-name, --namespace TEXT
@@ -376,8 +461,8 @@ Options:
                                   The name of the bucket. Avoid entering
                                   confidential information. Example: `my-new-
                                   bucket1` [required]
-  -c, --compartment-id TEXT       The compartmentId for the compartment to which
-                                  the bucket is targeted to move to.
+  -c, --compartment-id TEXT       The compartmentId for the compartment to move
+                                  the bucket to.
   --metadata COMPLEX TYPE         Arbitrary string, up to 4KB, of keys and
                                   values for user-defined metadata.
                                   This is a
@@ -405,6 +490,10 @@ Options:
                                   When `ObjectReadWithoutList` is enabled on the
                                   bucket, public access is allowed for the
                                   `GetObject` and `HeadObject` operations.
+  --object-events-enabled BOOLEAN
+                                  A property that determines whether events will
+                                  be generated for operations on objects in this
+                                  bucket. This is false by default.
   --freeform-tags COMPLEX TYPE    Free-form tags for this resource. Each tag is
                                   a simple key-value pair with no predefined
                                   name, type, or namespace. For more
@@ -676,10 +765,10 @@ Usage: oci os ns get-metadata [OPTIONS]
   Gets the metadata for the Object Storage namespace, which contains
   defaultS3CompartmentId and defaultSwiftCompartmentId.
 
-  Any user with the NAMESPACE_READ permission will be able to see the current
-  metadata. If you are not authorized, talk to an administrator. If you are an
-  administrator who needs to write policies to give users access, see [Getting
-  Started with Policies].
+  Any user with the OBJECTSTORAGE_NAMESPACE_READ permission will be able to
+  see the current metadata. If you are not authorized, talk to an
+  administrator. If you are an administrator who needs to write policies to
+  give users access, see [Getting Started with Policies].
 
 Options:
   -ns, --namespace-name, --namespace TEXT
@@ -727,8 +816,8 @@ Usage: oci os ns update-metadata [OPTIONS]
   You can change the default Swift/Amazon S3 compartmentId designation to a
   different compartmentId. All subsequent bucket creations will use the new
   default compartment, but no previously created buckets will be modified. A
-  user must have NAMESPACE_UPDATE permission to make changes to the default
-  compartments for Amazon S3 and Swift.
+  user must have OBJECTSTORAGE_NAMESPACE_UPDATE permission to make changes to
+  the default compartments for Amazon S3 and Swift.
 
 Options:
   -ns, --namespace-name, --namespace TEXT
@@ -1202,6 +1291,8 @@ Options:
                                   upload times, but the upload process will
                                   consume more system resources and network
                                   bandwidth. [default: 10]
+  --verify-checksum               Verify the checksum of the uploaded object
+                                  with the local file.
   --include TEXT                  Only upload files which match the provided
                                   pattern. Patterns are taken relative to the
                                   CURRENT directory. This option can be provided
@@ -1693,6 +1784,8 @@ Options:
                                   in parallel. This option cannot be used with
                                   --disable-parallel-uploads or --no-multipart.
                                   Defaults to 3.
+  --verify-checksum               Verify the checksum of the uploaded object
+                                  with the local file.
   --from-json TEXT                Provide input to this command as a JSON
                                   document from a file using the file://path-
                                   to/file syntax.

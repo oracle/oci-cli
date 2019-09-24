@@ -370,6 +370,16 @@ def test_bulk_put_default_options():
     for object_name in object_name_set:
         assert object_name in parsed_result['uploaded-objects']
 
+    result = invoke(['os', 'object', 'bulk-upload', '--namespace', util.NAMESPACE, '--bucket-name', bulk_put_bucket_name, '--src-dir', root_bulk_put_folder, '--overwrite', '--verify-checksum'])
+
+    # No failures or skips and we uploaded everything
+    parsed_result = parse_json_response_from_mixed_output(result.output)
+    assert parsed_result['skipped-objects'] == []
+    assert parsed_result['upload-failures'] == {}
+    assert len(parsed_result['uploaded-objects']) == get_count_of_files_in_folder_and_subfolders(root_bulk_put_folder)
+    for uploaded_object_name in parsed_result['uploaded-objects']:
+        assert "md5 checksum matches" in parsed_result['uploaded-objects'][uploaded_object_name]['verify-md5-checksum']
+
     shutil.rmtree(download_folder)
 
 
@@ -383,6 +393,20 @@ def test_bulk_put_auto_content_type():
     assert parsed_result['skipped-objects'] == []
     assert parsed_result['upload-failures'] == {}
     assert len(parsed_result['uploaded-objects']) == get_count_of_files_in_folder_and_subfolders(root_bulk_put_folder)
+
+    result = invoke([
+        'os', 'object', 'bulk-upload',
+        '--namespace', util.NAMESPACE,
+        '--bucket-name', bulk_put_bucket_name,
+        '--src-dir', root_bulk_put_folder,
+        '--content-type', 'auto', '--overwrite', '--verify-checksum'
+    ])
+    parsed_result = parse_json_response_from_mixed_output(result.output)
+    assert parsed_result['skipped-objects'] == []
+    assert parsed_result['upload-failures'] == {}
+    assert len(parsed_result['uploaded-objects']) == get_count_of_files_in_folder_and_subfolders(root_bulk_put_folder)
+    for uploaded_object_name in parsed_result['uploaded-objects']:
+        assert "md5 checksum matches" in parsed_result['uploaded-objects'][uploaded_object_name]['verify-md5-checksum']
 
     # Pull everything down and verify that the files match (everything in source appears in destination and they are equal)
     download_folder = 'tests/temp/verify_files_{}'.format(bulk_put_bucket_name)
@@ -441,6 +465,20 @@ def test_bulk_put_with_multipart_params(object_storage_client):
     assert parsed_result['upload-failures'] == {}
     assert len(parsed_result['uploaded-objects']) == get_count_of_files_in_folder_and_subfolders(root_bulk_put_folder)
 
+    result = invoke([
+        'os', 'object', 'bulk-upload',
+        '--namespace', util.NAMESPACE,
+        '--bucket-name', create_bucket_request.name,
+        '--src-dir', root_bulk_put_folder,
+        '--no-multipart', '--overwrite', '--verify-checksum'
+    ])
+    parsed_result = parse_json_response_from_mixed_output(result.output)
+    assert parsed_result['skipped-objects'] == []
+    assert parsed_result['upload-failures'] == {}
+    assert len(parsed_result['uploaded-objects']) == get_count_of_files_in_folder_and_subfolders(root_bulk_put_folder)
+    for uploaded_object_name in parsed_result['uploaded-objects']:
+        assert "md5 checksum matches" in parsed_result['uploaded-objects'][uploaded_object_name]['verify-md5-checksum']
+
     delete_bucket_and_all_items(object_storage_client, create_bucket_request.name)
 
 
@@ -453,6 +491,20 @@ def test_bulk_put_with_prefix():
     assert parsed_result['skipped-objects'] == []
     assert parsed_result['upload-failures'] == {}
     assert len(parsed_result['uploaded-objects']) == get_count_of_files_in_folder_and_subfolders(root_bulk_put_folder)
+
+    result = invoke([
+        'os', 'object', 'bulk-upload',
+        '--namespace', util.NAMESPACE,
+        '--bucket-name', bulk_put_bucket_name,
+        '--src-dir', root_bulk_put_folder,
+        '--object-prefix', 'bulk_put_prefix_test/', '--overwrite', '--verify-checksum'
+    ])
+    parsed_result = parse_json_response_from_mixed_output(result.output)
+    assert parsed_result['skipped-objects'] == []
+    assert parsed_result['upload-failures'] == {}
+    assert len(parsed_result['uploaded-objects']) == get_count_of_files_in_folder_and_subfolders(root_bulk_put_folder)
+    for uploaded_object_name in parsed_result['uploaded-objects']:
+        assert "md5 checksum matches" in parsed_result['uploaded-objects'][uploaded_object_name]['verify-md5-checksum']
 
     download_folder = 'tests/temp/verify_files_bulk_put_prefix_{}'.format(bulk_put_bucket_name)
     invoke(['os', 'object', 'bulk-download', '--namespace', util.NAMESPACE, '--bucket-name', bulk_put_bucket_name, '--download-dir', download_folder, '--prefix', 'bulk_put_prefix_test/'])

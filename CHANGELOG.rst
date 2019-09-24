@@ -6,6 +6,39 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.6.6 - 2019-09-24
+-------------------
+Added
+~~~~~
+* ``--verify-checksum`` option for the following commands: ``oci os object put`` and ``oci os object bulk-upload``. This option will print a message indicating whether the checksum for the uploaded file matches the local file. Sample message: 'md5 checksum matches [Local: AikPDj8xbhaUNKeS956p1A==]'
+
+* Support for re-encrypting a bucket.
+
+  * ``oci os bucket reencrypt --namespace-name --bucket-name``
+
+* Support for enabling/disabling bucket level events.
+
+  * ``oci os bucket create --object-events-enabled``
+  * ``oci os bucket update --object-events-enabled``
+
+* Improve Autonomous Database to change the whitelist ips feature.
+
+  * ``oci db autonomous-database update --whitelisted-ips``
+
+* Support for Autonomous Database to create with the whitelist ips feature.
+
+  * ``oci db autonomous-database create --whitelisted-ips``
+
+Changed
+~~~~~~~
+* Default CreateKubeconfig so it uses token version 2.0.0
+
+  * ``oci ce cluster create-kubeconfig``
+
+Fixed
+~~~~~
+* ``oci session authenticate`` was not correctly redirecting to the correct URL for government regions
+
 2.6.5 - 2019-09-17
 -------------------
 Added

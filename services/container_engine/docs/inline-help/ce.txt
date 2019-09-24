@@ -148,44 +148,48 @@ Usage: oci ce cluster create-kubeconfig [OPTIONS]
   Create the Kubeconfig YAML for a cluster.
 
 Options:
-  --cluster-id TEXT     The OCID of the cluster. [required]
-  --token-version TEXT  The version of the kubeconfig token. Supported values
-                        1.0.0 and 2.0.0
-  --expiration INTEGER  The desired expiration, in seconds, to use for the
-                        kubeconfig token. Important Note, expiration field is
-                        only honored for token version 1.0.0
-  --file PATH           The name of the file that will be updated with response
-                        data, or '-' to write to STDOUT. [default:
-                        ~/.kube/config]
-  --overwrite           Overwrites the contents of kubeconfig file specified
-                        using --file option or kubeconfig file at default
-                        location if --file is not used.
-  --from-json TEXT      Provide input to this command as a JSON document from a
-                        file using the file://path-to/file syntax.
-                        
-                        The
-                        --generate-full-command-json-input option can be used to
-                        generate a sample json file to be used with this command
-                        option. The key names are pre-populated and match the
-                        command option names (converted to camelCase format,
-                        e.g. compartment-id --> compartmentId), while the values
-                        of the keys need to be populated by the user before
-                        using the sample file as an input to this command. For
-                        any command option that accepts multiple values, the
-                        value of the key can be a JSON array.
-                        
-                        Options can still
-                        be provided on the command line. If an option exists in
-                        both the JSON document and the command line then the
-                        command line specified value will be used.
-                        
-                        For examples
-                        on usage of this option, please see our "using CLI with
-                        advanced JSON options" link: https://docs.cloud.oracle.c
-                        om/iaas/Content/API/SDKDocs/cliusing.htm#AdvancedJSONOpt
-                        ions
-  -?, -h, --help        For detailed help on any of these individual commands,
-                        enter <command> --help.
+  --cluster-id TEXT              The OCID of the cluster. [required]
+  --expiration INTEGER           The desired expiration, in seconds, to use for
+                                 the kubeconfig token. Important Note,
+                                 expiration field is only honored for token
+                                 version 1.0.0
+  --file PATH                    The name of the file that will be updated with
+                                 response data, or '-' to write to STDOUT.
+                                 [default: ~/.kube/config]
+  --token-version [1.0.0|2.0.0]  The version of the kubeconfig token. Supported
+                                 values 1.0.0 and 2.0.0
+  --overwrite                    Overwrites the contents of kubeconfig file
+                                 specified using --file option or kubeconfig
+                                 file at default location if --file is not used.
+  --from-json TEXT               Provide input to this command as a JSON
+                                 document from a file using the file://path-
+                                 to/file syntax.
+                                 
+                                 The --generate-full-command-
+                                 json-input option can be used to generate a
+                                 sample json file to be used with this command
+                                 option. The key names are pre-populated and
+                                 match the command option names (converted to
+                                 camelCase format, e.g. compartment-id -->
+                                 compartmentId), while the values of the keys
+                                 need to be populated by the user before using
+                                 the sample file as an input to this command.
+                                 For any command option that accepts multiple
+                                 values, the value of the key can be a JSON
+                                 array.
+                                 
+                                 Options can still be provided on the
+                                 command line. If an option exists in both the
+                                 JSON document and the command line then the
+                                 command line specified value will be used.
+                                 
+                                 For
+                                 examples on usage of this option, please see
+                                 our "using CLI with advanced JSON options"
+                                 link: https://docs.cloud.oracle.com/iaas/Conten
+                                 t/API/SDKDocs/cliusing.htm#AdvancedJSONOptions
+  -?, -h, --help                 For detailed help on any of these individual
+                                 commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci ce cluster delete --help

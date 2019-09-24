@@ -118,7 +118,7 @@ def change_alarm_compartment(ctx, from_json, alarm_id, compartment_id, if_match)
 
 @alarm_group.command(name=cli_util.override('create_alarm.command_name', 'create'), help=u"""Creates a new alarm in the specified compartment. For important limits information, see [Limits on Monitoring].
 
-Transactions Per Second (TPS) per-tenancy limit for this operation: 1.""")
+This call is subject to a Monitoring limit that applies to the total number of requests across all alarm operations. Monitoring might throttle this call to reject an otherwise valid request when the total rate of alarm operations exceeds 10 requests, or transactions, per second (TPS) for a given tenancy.""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name for the alarm. It does not have to be unique, and it's changeable. Avoid entering confidential information.
 
 This name is sent as the title for notifications related to this alarm.
@@ -160,11 +160,13 @@ Example: `true`""")
 
 Example: `frontend-fleet`""")
 @cli_util.option('--resolution', help=u"""The time between calculated aggregation windows for the alarm. Supported value: `1m`""")
-@cli_util.option('--pending-duration', help=u"""The period of time that the condition defined in the alarm must persist before the alarm state changes from \"OK\" to \"FIRING\" or vice versa. For example, a value of 5 minutes means that the alarm must persist in breaching the condition for five minutes before the alarm updates its state to \"FIRING\"; likewise, the alarm must persist in not breaching the condition for five minutes before the alarm updates its state to \"OK.\"
+@cli_util.option('--pending-duration', help=u"""The period of time that the condition defined in the alarm must persist before the alarm state changes from \"OK\" to \"FIRING\". For example, a value of 5 minutes means that the alarm must persist in breaching the condition for five minutes before the alarm updates its state to \"FIRING\".
 
 The duration is specified as a string in ISO 8601 format (`PT10M` for ten minutes or `PT1H` for one hour). Minimum: PT1M. Maximum: PT1H. Default: PT1M.
 
-Under the default value of PT1M, the first evaluation that breaches the alarm updates the state to \"FIRING\" and the first evaluation that does not breach the alarm updates the state to \"OK\".
+Under the default value of PT1M, the first evaluation that breaches the alarm updates the state to \"FIRING\".
+
+The alarm updates its status to \"OK\" when the breaching condition has been clear for the most recent minute.
 
 Example: `PT5M`""")
 @cli_util.option('--body', help=u"""The human-readable content of the notification delivered. Oracle recommends providing guidance to operators for resolving the alarm condition. Consider adding links to standard runbook practices. Avoid entering confidential information.
@@ -260,7 +262,7 @@ def create_alarm(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 
 @alarm_group.command(name=cli_util.override('delete_alarm.command_name', 'delete'), help=u"""Deletes the specified alarm. For important limits information, see [Limits on Monitoring].
 
-Transactions Per Second (TPS) per-tenancy limit for this operation: 1.""")
+This call is subject to a Monitoring limit that applies to the total number of requests across all alarm operations. Monitoring might throttle this call to reject an otherwise valid request when the total rate of alarm operations exceeds 10 requests, or transactions, per second (TPS) for a given tenancy.""")
 @cli_util.option('--alarm-id', required=True, help=u"""The [OCID] of an alarm.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -325,7 +327,7 @@ def delete_alarm(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 
 @alarm_group.command(name=cli_util.override('get_alarm.command_name', 'get'), help=u"""Gets the specified alarm. For important limits information, see [Limits on Monitoring].
 
-Transactions Per Second (TPS) per-tenancy limit for this operation: 1.""")
+This call is subject to a Monitoring limit that applies to the total number of requests across all alarm operations. Monitoring might throttle this call to reject an otherwise valid request when the total rate of alarm operations exceeds 10 requests, or transactions, per second (TPS) for a given tenancy.""")
 @cli_util.option('--alarm-id', required=True, help=u"""The [OCID] of an alarm.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -349,7 +351,7 @@ def get_alarm(ctx, from_json, alarm_id):
 
 @alarm_history_collection_group.command(name=cli_util.override('get_alarm_history.command_name', 'get-alarm-history'), help=u"""Get the history of the specified alarm. For important limits information, see [Limits on Monitoring].
 
-Transactions Per Second (TPS) per-tenancy limit for this operation: 1.""")
+This call is subject to a Monitoring limit that applies to the total number of requests across all alarm operations. Monitoring might throttle this call to reject an otherwise valid request when the total rate of alarm operations exceeds 10 requests, or transactions, per second (TPS) for a given tenancy.""")
 @cli_util.option('--alarm-id', required=True, help=u"""The [OCID] of an alarm.""")
 @cli_util.option('--alarm-historytype', type=custom_types.CliCaseInsensitiveChoice(["STATE_HISTORY", "STATE_TRANSITION_HISTORY"]), help=u"""The type of history entries to retrieve. State history (STATE_HISTORY) or state transition history (STATE_TRANSITION_HISTORY). If not specified, entries of both types are retrieved.
 
@@ -398,7 +400,7 @@ def get_alarm_history(ctx, from_json, alarm_id, alarm_historytype, page, limit, 
 
 @alarm_group.command(name=cli_util.override('list_alarms.command_name', 'list'), help=u"""Lists the alarms for the specified compartment. For important limits information, see [Limits on Monitoring].
 
-Transactions Per Second (TPS) per-tenancy limit for this operation: 1.""")
+This call is subject to a Monitoring limit that applies to the total number of requests across all alarm operations. Monitoring might throttle this call to reject an otherwise valid request when the total rate of alarm operations exceeds 10 requests, or transactions, per second (TPS) for a given tenancy.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the resources monitored by the metric that you are searching for. Use tenancyId to search in the root compartment.
 
 Example: `ocid1.compartment.oc1..exampleuniqueID`""")
@@ -473,7 +475,7 @@ def list_alarms(ctx, from_json, all_pages, page_size, compartment_id, page, limi
 
 @alarm_status_group.command(name=cli_util.override('list_alarms_status.command_name', 'list-alarms-status'), help=u"""List the status of each alarm in the specified compartment. For important limits information, see [Limits on Monitoring].
 
-Transactions Per Second (TPS) per-tenancy limit for this operation: 1.""")
+This call is subject to a Monitoring limit that applies to the total number of requests across all alarm operations. Monitoring might throttle this call to reject an otherwise valid request when the total rate of alarm operations exceeds 10 requests, or transactions, per second (TPS) for a given tenancy.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the resources monitored by the metric that you are searching for. Use tenancyId to search in the root compartment.
 
 Example: `ocid1.compartment.oc1..exampleuniqueID`""")
@@ -545,7 +547,7 @@ def list_alarms_status(ctx, from_json, all_pages, page_size, compartment_id, com
 
 @metric_group.command(name=cli_util.override('list_metrics.command_name', 'list'), help=u"""Returns metric definitions that match the criteria specified in the request. Compartment OCID required. For information about metrics, see [Metrics Overview]. For important limits information, see [Limits on Monitoring].
 
-Transactions Per Second (TPS) per-tenancy limit for this operation: 1.""")
+Transactions Per Second (TPS) per-tenancy limit for this operation: 10.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the resources monitored by the metric that you are searching for. Use tenancyId to search in the root compartment.
 
 Example: `ocid1.compartment.oc1..exampleuniqueID`""")
@@ -691,7 +693,7 @@ def post_metric_data(ctx, from_json, metric_data, batch_atomicity):
 
 @suppression_group.command(name=cli_util.override('remove_alarm_suppression.command_name', 'remove'), help=u"""Removes any existing suppression for the specified alarm. For important limits information, see [Limits on Monitoring].
 
-Transactions Per Second (TPS) per-tenancy limit for this operation: 1.""")
+This call is subject to a Monitoring limit that applies to the total number of requests across all alarm operations. Monitoring might throttle this call to reject an otherwise valid request when the total rate of alarm operations exceeds 10 requests, or transactions, per second (TPS) for a given tenancy.""")
 @cli_util.option('--alarm-id', required=True, help=u"""The [OCID] of an alarm.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -784,7 +786,7 @@ def summarize_metrics_data(ctx, from_json, compartment_id, namespace, query, res
 
 @alarm_group.command(name=cli_util.override('update_alarm.command_name', 'update'), help=u"""Updates the specified alarm. For important limits information, see [Limits on Monitoring].
 
-Transactions Per Second (TPS) per-tenancy limit for this operation: 1.""")
+This call is subject to a Monitoring limit that applies to the total number of requests across all alarm operations. Monitoring might throttle this call to reject an otherwise valid request when the total rate of alarm operations exceeds 10 requests, or transactions, per second (TPS) for a given tenancy.""")
 @cli_util.option('--alarm-id', required=True, help=u"""The [OCID] of an alarm.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name for the alarm. It does not have to be unique, and it's changeable. Avoid entering confidential information.
 
@@ -820,11 +822,13 @@ Example of absence alarm:
 
   -----""")
 @cli_util.option('--resolution', help=u"""The time between calculated aggregation windows for the alarm. Supported value: `1m`""")
-@cli_util.option('--pending-duration', help=u"""The period of time that the condition defined in the alarm must persist before the alarm state changes from \"OK\" to \"FIRING\" or vice versa. For example, a value of 5 minutes means that the alarm must persist in breaching the condition for five minutes before the alarm updates its state to \"FIRING\"; likewise, the alarm must persist in not breaching the condition for five minutes before the alarm updates its state to \"OK.\"
+@cli_util.option('--pending-duration', help=u"""The period of time that the condition defined in the alarm must persist before the alarm state changes from \"OK\" to \"FIRING\". For example, a value of 5 minutes means that the alarm must persist in breaching the condition for five minutes before the alarm updates its state to \"FIRING\".
 
 The duration is specified as a string in ISO 8601 format (`PT10M` for ten minutes or `PT1H` for one hour). Minimum: PT1M. Maximum: PT1H. Default: PT1M.
 
-Under the default value of PT1M, the first evaluation that breaches the alarm updates the state to \"FIRING\" and the first evaluation that does not breach the alarm updates the state to \"OK\".
+Under the default value of PT1M, the first evaluation that breaches the alarm updates the state to \"FIRING\".
+
+The alarm updates its status to \"OK\" when the breaching condition has been clear for the most recent minute.
 
 Example: `PT5M`""")
 @cli_util.option('--severity', help=u"""The perceived severity of the alarm with regard to the affected system.
