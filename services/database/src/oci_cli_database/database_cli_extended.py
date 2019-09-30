@@ -42,7 +42,7 @@ database_cli.backup_destination_group.commands.pop(database_cli.create_backup_de
 database_cli.db_root_group.commands.pop(database_cli.backup_destination_summary_group.name)
 
 
-@cli_util.copy_params_from_generated_command(database_cli.launch_db_system_launch_db_system_details, params_to_exclude=['db_home', 'ssh_public_keys'])
+@cli_util.copy_params_from_generated_command(database_cli.launch_db_system_launch_db_system_details, params_to_exclude=['db_home', 'db_system_options', 'ssh_public_keys'])
 @database_cli.db_system_group.command(name='launch', help=database_cli.launch_db_system_launch_db_system_details.help)
 @cli_util.option('--admin-password', required=True, help="""A strong password for SYS, SYSTEM, and PDB Admin. The password must be at least nine characters and contain at least two uppercase, two lowercase, two numbers, and two special characters. The special characters must be _, #, or -.""")
 @cli_util.option('--character-set', help="""The character set for the database. The default is AL32UTF8. Allowed values are: AL32UTF8, AR8ADOS710, AR8ADOS720, AR8APTEC715, AR8ARABICMACS, AR8ASMO8X, AR8ISO8859P6, AR8MSWIN1256, AR8MUSSAD768, AR8NAFITHA711, AR8NAFITHA721, AR8SAKHR706, AR8SAKHR707, AZ8ISO8859P9E, BG8MSWIN, BG8PC437S, BLT8CP921, BLT8ISO8859P13, BLT8MSWIN1257, BLT8PC775, BN8BSCII, CDN8PC863, CEL8ISO8859P14, CL8ISO8859P5, CL8ISOIR111, CL8KOI8R, CL8KOI8U, CL8MACCYRILLICS, CL8MSWIN1251, EE8ISO8859P2, EE8MACCES, EE8MACCROATIANS, EE8MSWIN1250, EE8PC852, EL8DEC, EL8ISO8859P7, EL8MACGREEKS, EL8MSWIN1253, EL8PC437S, EL8PC851, EL8PC869, ET8MSWIN923, HU8ABMOD, HU8CWI2, IN8ISCII, IS8PC861, IW8ISO8859P8, IW8MACHEBREWS, IW8MSWIN1255, IW8PC1507, JA16EUC, JA16EUCTILDE, JA16SJIS, JA16SJISTILDE, JA16VMS, KO16KSC5601, KO16KSCCS, KO16MSWIN949, LA8ISO6937, LA8PASSPORT, LT8MSWIN921, LT8PC772, LT8PC774, LV8PC1117, LV8PC8LR, LV8RST104090, N8PC865, NE8ISO8859P10, NEE8ISO8859P4, RU8BESTA, RU8PC855, RU8PC866, SE8ISO8859P3, TH8MACTHAIS, TH8TISASCII, TR8DEC, TR8MACTURKISHS, TR8MSWIN1254, TR8PC857, US7ASCII, US8PC437, UTF8, VN8MSWIN1258, VN8VN3, WE8DEC, WE8DG, WE8ISO8859P1, WE8ISO8859P15, WE8ISO8859P9, WE8MACROMAN8S, WE8MSWIN1252, WE8NCR4970, WE8NEXTSTEP, WE8PC850, WE8PC858, WE8PC860, WE8ROMAN8, ZHS16CGB231280, ZHS16GBK, ZHT16BIG5, ZHT16CCDC, ZHT16DBT, ZHT16HKSCS, ZHT16MSWIN950, ZHT32EUC, ZHT32SOPS, ZHT32TRIS.""")
@@ -51,14 +51,17 @@ database_cli.db_root_group.commands.pop(database_cli.backup_destination_summary_
 @cli_util.option('--db-workload', help="""Database workload type. Allowed values are: OLTP, DSS""")
 @cli_util.option('--ncharacter-set', help="""National character set for the database. The default is AL16UTF16. Allowed values are: AL16UTF16 or UTF8.""")
 @cli_util.option('--pdb-name', help="""Pluggable database name. It must begin with an alphabetic character and can contain a maximum of eight alphanumeric characters. Special characters are not permitted. Pluggable database should not be same as database name.""")
-@cli_util.option('--ssh-authorized-keys-file', required=True, type=click.File('r'), help="""A file containing one or more public SSH keys to use for SSH access to the DB System. Use a newline character to separate multiple keys. The length of the combined keys cannot exceed 10,000 characters.""")
 @cli_util.option('--auto-backup-enabled', type=click.BOOL, help="""If set to true, schedules backups automatically. Default is false.""")
 @cli_util.option('--recovery-window-in-days', type=click.IntRange(1, 60), help="""The number of days between the current and the earliest point of recoverability covered by automatic backups (1 to 60).""")
+@cli_util.option('--ssh-authorized-keys-file', required=True, type=click.File('r'), help="""A file containing one or more public SSH keys to use for SSH access to the DB System. Use a newline character to separate multiple keys. The length of the combined keys cannot exceed 10,000 characters.""")
+@cli_util.option('--storage-management', type=custom_types.CliCaseInsensitiveChoice(["LVM", "ASM"]), help="""Option for storage management for the database system. Allowed values are: LVM, ASM.""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'fault-domains': {'module': 'database', 'class': 'list[string]'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'backup-network-nsg-ids': {'module': 'database', 'class': 'list[string]'}}, output_type={'module': 'database', 'class': 'DbSystem'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'fault-domains': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'backup-network-nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'DbSystem'})
 @cli_util.wrap_exceptions
 def launch_db_system_extended(ctx, **kwargs):
     create_db_home_details = {}
+    create_db_system_options = {}
+
     if 'db_version' in kwargs and kwargs['db_version']:
         create_db_home_details['dbVersion'] = kwargs['db_version']
 
@@ -96,6 +99,12 @@ def launch_db_system_extended(ctx, **kwargs):
         content = [line.rstrip('\n') for line in kwargs['ssh_authorized_keys_file']]
         kwargs['ssh_public_keys'] = json.dumps(content)
 
+    if 'storage_management' in kwargs and kwargs['storage_management']:
+        create_db_system_options['storage_management'] = kwargs['storage_management']
+
+    if create_db_system_options:
+        kwargs['db_system_options'] = json.dumps(create_db_system_options)
+
     # remove all of the kwargs that launch_db_system wont recognize
     del kwargs['admin_password']
     del kwargs['character_set']
@@ -107,23 +116,26 @@ def launch_db_system_extended(ctx, **kwargs):
     del kwargs['ssh_authorized_keys_file']
     del kwargs['auto_backup_enabled']
     del kwargs['recovery_window_in_days']
+    del kwargs['storage_management']
 
     ctx.invoke(database_cli.launch_db_system_launch_db_system_details, **kwargs)
 
 
-@cli_util.copy_params_from_generated_command(database_cli.launch_db_system_launch_db_system_from_backup_details, params_to_exclude=['db_home', 'ssh_public_keys'])
+@cli_util.copy_params_from_generated_command(database_cli.launch_db_system_launch_db_system_from_backup_details, params_to_exclude=['db_home', 'db_system_options', 'ssh_public_keys'])
 @database_cli.db_system_group.command(name='launch-from-backup', help=database_cli.launch_db_system_launch_db_system_from_backup_details.help)
 @cli_util.option('--admin-password', required=True, help="""A strong password for SYS, SYSTEM, and PDB Admin. The password must be at least nine characters and contain at least two uppercase, two lowercase, two numbers, and two special characters. The special characters must be _, #, or -.""")
 @cli_util.option('--backup-id', required=True, help="""The backup OCID.""")
 @cli_util.option('--backup-tde-password', required=True, help="""The password to open the TDE wallet.""")
-@cli_util.option('--ssh-authorized-keys-file', required=True, type=click.File('r'), help="""A file containing one or more public SSH keys to use for SSH access to the DB System. Use a newline character to separate multiple keys. The length of the combined keys cannot exceed 10,000 characters.""")
 @cli_util.option('--db-name', required=False, help="""The display name of the database to be created from the backup. It must begin with an alphabetic character and can contain a maximum of eight alphanumeric characters. Special characters are not permitted.""")
+@cli_util.option('--ssh-authorized-keys-file', required=True, type=click.File('r'), help="""A file containing one or more public SSH keys to use for SSH access to the DB System. Use a newline character to separate multiple keys. The length of the combined keys cannot exceed 10,000 characters.""")
+@cli_util.option('--storage-management', type=custom_types.CliCaseInsensitiveChoice(["LVM", "ASM"]), help="""Option for storage management for the database system. Allowed values are: LVM, ASM.""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'fault-domains': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'backup-network-nsg-ids': {'module': 'database', 'class': 'list[string]'}}, output_type={'module': 'database', 'class': 'DbSystem'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'fault-domains': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'backup-network-nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'DbSystem'})
 @cli_util.wrap_exceptions
 def launch_db_system_backup_extended(ctx, **kwargs):
 
     create_database_details = {}
+    create_db_system_options = {}
 
     if 'admin_password' in kwargs and kwargs['admin_password']:
         create_database_details['adminPassword'] = kwargs['admin_password']
@@ -146,12 +158,19 @@ def launch_db_system_backup_extended(ctx, **kwargs):
         content = [line.rstrip('\n') for line in kwargs['ssh_authorized_keys_file']]
         kwargs['ssh_public_keys'] = json.dumps(content)
 
+    if 'storage_management' in kwargs and kwargs['storage_management']:
+        create_db_system_options['storage_management'] = kwargs['storage_management']
+
+    if create_db_system_options:
+        kwargs['db_system_options'] = json.dumps(create_db_system_options)
+
     # remove all of the kwargs that launch_db_system wont recognize
     del kwargs['admin_password']
     del kwargs['backup_id']
     del kwargs['backup_tde_password']
     del kwargs['ssh_authorized_keys_file']
     del kwargs['db_name']
+    del kwargs['storage_management']
 
     ctx.invoke(database_cli.launch_db_system_launch_db_system_from_backup_details, **kwargs)
 

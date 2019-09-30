@@ -7,6 +7,7 @@ from oci_cli import json_skeleton_utils
 from oci_cli import custom_types  # noqa: F401
 from oci_cli import cli_constants  # noqa: F401
 from oci._vendor.requests import Request
+from oci.auth.signers import InstancePrincipalsDelegationTokenSigner
 import click
 import six
 import os
@@ -45,13 +46,19 @@ def generate_token(ctx, from_json, cluster_id):
 
     # Now that we have the signed request we need to turn it into
     # the base64 encoded token that OKE will authenticate.
+
+    header_params = {
+        "authorization": request.headers["authorization"],
+        "date": request.headers["date"],
+    }
+
+    if isinstance(signer, InstancePrincipalsDelegationTokenSigner):
+        header_params['opc-obo-token'] = signer.delegation_token
+
     token_request = Request(
         "GET",
         url,
-        params={
-            "authorization": request.headers["authorization"],
-            "date": request.headers["date"],
-        }
+        params=header_params,
     ).prepare()
 
     # Generate the ExecCredential that the Kubernetes exec plugin provide requires.

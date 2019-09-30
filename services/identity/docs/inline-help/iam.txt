@@ -13,27 +13,30 @@ Options:
                   <command> --help.
 
 Commands:
-  auth-token               An `AuthToken` is an Oracle-generated token...
-  authentication-policy    Authentication policy, currently set for the...
-  availability-domain      One or more isolated, fault-tolerant Oracle...
-  compartment              A collection of related resources.
-  customer-secret-key      A `CustomerSecretKey` is an Oracle-provided...
-  dynamic-group            A dynamic group defines a matching rule.
-  fault-domain             A Fault Domain is a logical grouping of...
-  group                    A collection of users who all need the same...
-  identity-provider-group  A group created in an identity provider that...
-  mfa-totp-device          Users can enable multi-factor authentication...
-  policy                   A document that specifies the type of access...
-  region                   A localized geographic area, such as Phoenix,...
-  region-subscription      An object that represents your tenancy's...
-  scim-client-credentials  The OAuth2 client credentials.
-  smtp-credential          Simple Mail Transfer Protocol (SMTP)...
-  tag                      A tag definition that belongs to a specific...
-  tag-default              Tag defaults let you specify a default tag...
-  tag-namespace            A managed container for defined tags.
-  ui-password-information  Information about the UIPassword, which is a...
-  user                     An individual employee or system that needs...
-  work-request             The asynchronous API request does not take...
+  auth-token                  An `AuthToken` is an Oracle-generated token...
+  authentication-policy       Authentication policy, currently set for the...
+  availability-domain         One or more isolated, fault-tolerant Oracle...
+  compartment                 A collection of related resources.
+  customer-secret-key         A `CustomerSecretKey` is an Oracle-provided...
+  dynamic-group               A dynamic group defines a matching rule.
+  fault-domain                A Fault Domain is a logical grouping of...
+  group                       A collection of users who all need the same...
+  identity-provider-group     A group created in an identity provider that...
+  mfa-totp-device             Users can enable multi-factor authentication...
+  policy                      A document that specifies the type of access...
+  region                      A localized geographic area, such as Phoenix,...
+  region-subscription         An object that represents your tenancy's...
+  scim-client-credentials     The OAuth2 client credentials.
+  smtp-credential             Simple Mail Transfer Protocol (SMTP)...
+  tag                         A tag definition that belongs to a specific...
+  tag-default                 Tag defaults let you specify a default tag...
+  tag-namespace               A managed container for defined tags.
+  tagging-work-request        The asynchronous API request does not take...
+  tagging-work-request-error  The error entity.
+  tagging-work-request-log    The log entity.
+  ui-password-information     Information about the UIPassword, which is a...
+  user                        An individual employee or system that needs...
+  work-request                The asynchronous API request does not take...
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci iam auth-token --help
@@ -427,6 +430,9 @@ Usage: oci iam compartment [OPTIONS] COMMAND [ARGS]...
   administrator who needs to write policies to give users access, see [Getting
   Started with Policies].
 
+  **Warning:** Oracle recommends that you avoid using any confidential
+  information when you supply string values using the API.
+
 Options:
   -?, -h, --help  For detailed help on any of these individual commands, enter
                   <command> --help.
@@ -436,7 +442,7 @@ Commands:
   delete  Deletes the specified compartment.
   get     Gets the specified compartment's information.
   list    Lists the compartments in a specified...
-  move    Move the compartment tree to a different...
+  move    Move the compartment to a different parent...
   update  Updates the specified compartment's...
 
 ++++++++++++++++++++++++++++++++++++++++++++++
@@ -516,9 +522,14 @@ Options:
                                   resource that has a defined lifecycle state.
                                   Specify this option to perform the action and
                                   then wait until the resource reaches a given
-                                  lifecycle state. If timeout is reached, a
-                                  return code of 2 is returned. For any other
-                                  error, a return code of 1 is returned.
+                                  lifecycle state. Multiple states can be
+                                  specified, returning on the first state. For
+                                  example, --wait-for-state SUCCEEDED --wait-
+                                  for-state FAILED would return on whichever
+                                  lifecycle state is reached first. If timeout
+                                  is reached, a return code of 2 is returned.
+                                  For any other error, a return code of 1 is
+                                  returned.
   --max-wait-seconds INTEGER      The maximum time to wait for the resource to
                                   reach the lifecycle state defined by --wait-
                                   for-state. Defaults to 1200 seconds.
@@ -579,10 +590,14 @@ Options:
                                   request to track the progress of the
                                   operation. Specify this option to perform the
                                   action and then wait until the work request
-                                  reaches a certain state. If timeout is
-                                  reached, a return code of 2 is returned. For
-                                  any other error, a return code of 1 is
-                                  returned.
+                                  reaches a certain state. Multiple states can
+                                  be specified, returning on the first state.
+                                  For example, --wait-for-state SUCCEEDED
+                                  --wait-for-state FAILED would return on
+                                  whichever lifecycle state is reached first. If
+                                  timeout is reached, a return code of 2 is
+                                  returned. For any other error, a return code
+                                  of 1 is returned.
   --max-wait-seconds INTEGER      The maximum time to wait for the work request
                                   to reach the state defined by --wait-for-
                                   state. Defaults to 1200 seconds.
@@ -756,13 +771,21 @@ Options:
 $ oci iam compartment move --help
 Usage: oci iam compartment move [OPTIONS]
 
-  Move the compartment tree to a different parent compartment.
+  Move the compartment to a different parent compartment in the same tenancy.
+  When you move a compartment, all its contents (subcompartments and
+  resources) are moved with it. Note that the `CompartmentId` that you specify
+  in the path is the compartment that you want to move.
+
+  **IMPORTANT**: After you move a compartment to a new parent compartment, the
+  access policies of the new parent take effect and the policies of the
+  previous parent no longer apply. Ensure that you are aware of the
+  implications for the compartment contents before you move it. For more
+  information, see [Moving a Compartment].
 
 Options:
   -c, --compartment-id TEXT       The OCID of the compartment. [required]
-  --target-compartment-id TEXT    The [OCID] of the parent compartment into
-                                  which the compartment should be moved.
-                                  [required]
+  --target-compartment-id TEXT    The [OCID] of the destination compartment into
+                                  which to move the compartment. [required]
   --if-match TEXT                 For optimistic concurrency control. In the PUT
                                   or DELETE call for a resource, set the `if-
                                   match` parameter to the value of the etag from
@@ -776,10 +799,14 @@ Options:
                                   request to track the progress of the
                                   operation. Specify this option to perform the
                                   action and then wait until the work request
-                                  reaches a certain state. If timeout is
-                                  reached, a return code of 2 is returned. For
-                                  any other error, a return code of 1 is
-                                  returned.
+                                  reaches a certain state. Multiple states can
+                                  be specified, returning on the first state.
+                                  For example, --wait-for-state SUCCEEDED
+                                  --wait-for-state FAILED would return on
+                                  whichever lifecycle state is reached first. If
+                                  timeout is reached, a return code of 2 is
+                                  returned. For any other error, a return code
+                                  of 1 is returned.
   --max-wait-seconds INTEGER      The maximum time to wait for the work request
                                   to reach the state defined by --wait-for-
                                   state. Defaults to 1200 seconds.
@@ -884,9 +911,14 @@ Options:
                                   resource that has a defined lifecycle state.
                                   Specify this option to perform the action and
                                   then wait until the resource reaches a given
-                                  lifecycle state. If timeout is reached, a
-                                  return code of 2 is returned. For any other
-                                  error, a return code of 1 is returned.
+                                  lifecycle state. Multiple states can be
+                                  specified, returning on the first state. For
+                                  example, --wait-for-state SUCCEEDED --wait-
+                                  for-state FAILED would return on whichever
+                                  lifecycle state is reached first. If timeout
+                                  is reached, a return code of 2 is returned.
+                                  For any other error, a return code of 1 is
+                                  returned.
   --max-wait-seconds INTEGER      The maximum time to wait for the resource to
                                   reach the lifecycle state defined by --wait-
                                   for-state. Defaults to 1200 seconds.
@@ -1146,6 +1178,9 @@ Usage: oci iam dynamic-group [OPTIONS] COMMAND [ARGS]...
   membership of an instance certificate to a dynamic group is determined
   during runtime. For more information, see [Managing Dynamic Groups].
 
+  **Warning:** Oracle recommends that you avoid using any confidential
+  information when you supply string values using the API.
+
 Options:
   -?, -h, --help  For detailed help on any of these individual commands, enter
                   <command> --help.
@@ -1241,9 +1276,14 @@ Options:
                                   resource that has a defined lifecycle state.
                                   Specify this option to perform the action and
                                   then wait until the resource reaches a given
-                                  lifecycle state. If timeout is reached, a
-                                  return code of 2 is returned. For any other
-                                  error, a return code of 1 is returned.
+                                  lifecycle state. Multiple states can be
+                                  specified, returning on the first state. For
+                                  example, --wait-for-state SUCCEEDED --wait-
+                                  for-state FAILED would return on whichever
+                                  lifecycle state is reached first. If timeout
+                                  is reached, a return code of 2 is returned.
+                                  For any other error, a return code of 1 is
+                                  returned.
   --max-wait-seconds INTEGER      The maximum time to wait for the resource to
                                   reach the lifecycle state defined by --wait-
                                   for-state. Defaults to 1200 seconds.
@@ -1303,9 +1343,14 @@ Options:
                                   resource that has a defined lifecycle state.
                                   Specify this option to perform the action and
                                   then wait until the resource reaches a given
-                                  lifecycle state. If timeout is reached, a
-                                  return code of 2 is returned. For any other
-                                  error, a return code of 1 is returned.
+                                  lifecycle state. Multiple states can be
+                                  specified, returning on the first state. For
+                                  example, --wait-for-state SUCCEEDED --wait-
+                                  for-state FAILED would return on whichever
+                                  lifecycle state is reached first. If timeout
+                                  is reached, a return code of 2 is returned.
+                                  For any other error, a return code of 1 is
+                                  returned.
   --max-wait-seconds INTEGER      The maximum time to wait for the resource to
                                   reach the lifecycle state defined by --wait-
                                   for-state. Defaults to 1200 seconds.
@@ -1494,9 +1539,14 @@ Options:
                                   resource that has a defined lifecycle state.
                                   Specify this option to perform the action and
                                   then wait until the resource reaches a given
-                                  lifecycle state. If timeout is reached, a
-                                  return code of 2 is returned. For any other
-                                  error, a return code of 1 is returned.
+                                  lifecycle state. Multiple states can be
+                                  specified, returning on the first state. For
+                                  example, --wait-for-state SUCCEEDED --wait-
+                                  for-state FAILED would return on whichever
+                                  lifecycle state is reached first. If timeout
+                                  is reached, a return code of 2 is returned.
+                                  For any other error, a return code of 1 is
+                                  returned.
   --max-wait-seconds INTEGER      The maximum time to wait for the resource to
                                   reach the lifecycle state defined by --wait-
                                   for-state. Defaults to 1200 seconds.
@@ -1610,6 +1660,9 @@ Usage: oci iam group [OPTIONS] COMMAND [ARGS]...
   If you're not authorized, talk to an administrator. If you're an
   administrator who needs to write policies to give users access, see [Getting
   Started with Policies].
+
+  **Warning:** Oracle recommends that you avoid using any confidential
+  information when you supply string values using the API.
 
 Options:
   -?, -h, --help  For detailed help on any of these individual commands, enter
@@ -1740,9 +1793,14 @@ Options:
                                   resource that has a defined lifecycle state.
                                   Specify this option to perform the action and
                                   then wait until the resource reaches a given
-                                  lifecycle state. If timeout is reached, a
-                                  return code of 2 is returned. For any other
-                                  error, a return code of 1 is returned.
+                                  lifecycle state. Multiple states can be
+                                  specified, returning on the first state. For
+                                  example, --wait-for-state SUCCEEDED --wait-
+                                  for-state FAILED would return on whichever
+                                  lifecycle state is reached first. If timeout
+                                  is reached, a return code of 2 is returned.
+                                  For any other error, a return code of 1 is
+                                  returned.
   --max-wait-seconds INTEGER      The maximum time to wait for the resource to
                                   reach the lifecycle state defined by --wait-
                                   for-state. Defaults to 1200 seconds.
@@ -1802,9 +1860,14 @@ Options:
                                   resource that has a defined lifecycle state.
                                   Specify this option to perform the action and
                                   then wait until the resource reaches a given
-                                  lifecycle state. If timeout is reached, a
-                                  return code of 2 is returned. For any other
-                                  error, a return code of 1 is returned.
+                                  lifecycle state. Multiple states can be
+                                  specified, returning on the first state. For
+                                  example, --wait-for-state SUCCEEDED --wait-
+                                  for-state FAILED would return on whichever
+                                  lifecycle state is reached first. If timeout
+                                  is reached, a return code of 2 is returned.
+                                  For any other error, a return code of 1 is
+                                  returned.
   --max-wait-seconds INTEGER      The maximum time to wait for the resource to
                                   reach the lifecycle state defined by --wait-
                                   for-state. Defaults to 1200 seconds.
@@ -2076,9 +2139,14 @@ Options:
                                   resource that has a defined lifecycle state.
                                   Specify this option to perform the action and
                                   then wait until the resource reaches a given
-                                  lifecycle state. If timeout is reached, a
-                                  return code of 2 is returned. For any other
-                                  error, a return code of 1 is returned.
+                                  lifecycle state. Multiple states can be
+                                  specified, returning on the first state. For
+                                  example, --wait-for-state SUCCEEDED --wait-
+                                  for-state FAILED would return on whichever
+                                  lifecycle state is reached first. If timeout
+                                  is reached, a return code of 2 is returned.
+                                  For any other error, a return code of 1 is
+                                  returned.
   --max-wait-seconds INTEGER      The maximum time to wait for the resource to
                                   reach the lifecycle state defined by --wait-
                                   for-state. Defaults to 1200 seconds.
@@ -2257,9 +2325,14 @@ Options:
                                   resource that has a defined lifecycle state.
                                   Specify this option to perform the action and
                                   then wait until the resource reaches a given
-                                  lifecycle state. If timeout is reached, a
-                                  return code of 2 is returned. For any other
-                                  error, a return code of 1 is returned.
+                                  lifecycle state. Multiple states can be
+                                  specified, returning on the first state. For
+                                  example, --wait-for-state SUCCEEDED --wait-
+                                  for-state FAILED would return on whichever
+                                  lifecycle state is reached first. If timeout
+                                  is reached, a return code of 2 is returned.
+                                  For any other error, a return code of 1 is
+                                  returned.
   --max-wait-seconds INTEGER      The maximum time to wait for the resource to
                                   reach the lifecycle state defined by --wait-
                                   for-state. Defaults to 1200 seconds.
@@ -2362,9 +2435,14 @@ Options:
                                   resource that has a defined lifecycle state.
                                   Specify this option to perform the action and
                                   then wait until the resource reaches a given
-                                  lifecycle state. If timeout is reached, a
-                                  return code of 2 is returned. For any other
-                                  error, a return code of 1 is returned.
+                                  lifecycle state. Multiple states can be
+                                  specified, returning on the first state. For
+                                  example, --wait-for-state SUCCEEDED --wait-
+                                  for-state FAILED would return on whichever
+                                  lifecycle state is reached first. If timeout
+                                  is reached, a return code of 2 is returned.
+                                  For any other error, a return code of 1 is
+                                  returned.
   --max-wait-seconds INTEGER      The maximum time to wait for the resource to
                                   reach the lifecycle state defined by --wait-
                                   for-state. Defaults to 1200 seconds.
@@ -2522,6 +2600,9 @@ Usage: oci iam policy [OPTIONS] COMMAND [ARGS]...
 
   To use any of the API operations, you must be authorized in an IAM policy.
   If you're not authorized, talk to an administrator.
+
+  **Warning:** Oracle recommends that you avoid using any confidential
+  information when you supply string values using the API.
 
 Options:
   -?, -h, --help  For detailed help on any of these individual commands, enter
@@ -2714,9 +2795,14 @@ Options:
                                   resource that has a defined lifecycle state.
                                   Specify this option to perform the action and
                                   then wait until the resource reaches a given
-                                  lifecycle state. If timeout is reached, a
-                                  return code of 2 is returned. For any other
-                                  error, a return code of 1 is returned.
+                                  lifecycle state. Multiple states can be
+                                  specified, returning on the first state. For
+                                  example, --wait-for-state SUCCEEDED --wait-
+                                  for-state FAILED would return on whichever
+                                  lifecycle state is reached first. If timeout
+                                  is reached, a return code of 2 is returned.
+                                  For any other error, a return code of 1 is
+                                  returned.
   --max-wait-seconds INTEGER      The maximum time to wait for the resource to
                                   reach the lifecycle state defined by --wait-
                                   for-state. Defaults to 1200 seconds.
@@ -2777,9 +2863,14 @@ Options:
                                   resource that has a defined lifecycle state.
                                   Specify this option to perform the action and
                                   then wait until the resource reaches a given
-                                  lifecycle state. If timeout is reached, a
-                                  return code of 2 is returned. For any other
-                                  error, a return code of 1 is returned.
+                                  lifecycle state. Multiple states can be
+                                  specified, returning on the first state. For
+                                  example, --wait-for-state SUCCEEDED --wait-
+                                  for-state FAILED would return on whichever
+                                  lifecycle state is reached first. If timeout
+                                  is reached, a return code of 2 is returned.
+                                  For any other error, a return code of 1 is
+                                  returned.
   --max-wait-seconds INTEGER      The maximum time to wait for the resource to
                                   reach the lifecycle state defined by --wait-
                                   for-state. Defaults to 1200 seconds.
@@ -3083,9 +3174,10 @@ Options:
   --region-key TEXT  The regions's key.
                      
                      Allowed values are: - `PHX` - `IAD` -
-                     `FRA` - `LHR`
+                     `FRA` - `LHR` - `YYZ` - `NRT` - `ICN`
                      
-                     Example: `PHX` [required]
+                     Example: `PHX`
+                     [required]
   --tenancy-id TEXT  The OCID of the tenancy. [required]
   --from-json TEXT   Provide input to this command as a JSON document from a
                      file using the file://path-to/file syntax.
@@ -3387,13 +3479,16 @@ Usage: oci iam tag [OPTIONS] COMMAND [ARGS]...
   must be set up in your tenancy before you can apply them to resources. For
   more information, see [Managing Tags and Tag Namespaces].
 
+  **Warning:** Oracle recommends that you avoid using any confidential
+  information when you supply string values using the API.
+
 Options:
   -?, -h, --help  For detailed help on any of these individual commands, enter
                   <command> --help.
 
 Commands:
   create              Create new tag in a given tagNamespace
-  delete              Deletes the the specified tag definition.
+  delete              Deletes the specified tag definition.
   get                 Gets the specified tags information
   list                List tags in a given tagNamespace
   list-cost-tracking  Lists all the tags enabled for cost-tracking...
@@ -3420,12 +3515,19 @@ Usage: oci iam tag create [OPTIONS]
   You must also specify a *description* for the tag. It does not have to be
   unique, and you can change it with [UpdateTag].
 
+  If no 'validator' is set on this tag definition, then any (valid) value can
+  be set for this definedTag.
+
+  If a 'validator' is set on this tag definition, then the only valid values
+  that can be set for this definedTag those that pass the additional
+  validation imposed by the set 'validator'.
+
 Options:
   --tag-namespace-id TEXT         The OCID of the tag namespace. [required]
   --name TEXT                     The name you assign to the tag during
-                                  creation. The name must be unique within the
-                                  tag namespace and cannot be changed.
-                                  [required]
+                                  creation. This is the tag key definition. The
+                                  name must be unique within the tag namespace
+                                  and cannot be changed. [required]
   --description TEXT              The description you assign to the tag during
                                   creation. [required]
   --freeform-tags COMPLEX TYPE    Free-form tags for this resource. Each tag is
@@ -3467,14 +3569,43 @@ Options:
                                   passing it back in via the file:// syntax.
   --is-cost-tracking BOOLEAN      Indicates whether the tag is enabled for cost
                                   tracking.
+  --validator COMPLEX TYPE        Additional validation rule for values
+                                  specified for the tag definition.
+                                  
+                                  If no
+                                  validator is defined for a tag definition,
+                                  then any (valid) value will be accepted.
+                                  
+                                  The
+                                  default value for `validator` is an empty map
+                                  (no additional validation).
+                                  This is a complex
+                                  type whose value must be valid JSON. The value
+                                  can be provided as a string on the command
+                                  line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
   --wait-for-state [ACTIVE|INACTIVE|DELETING|DELETED]
                                   This operation creates, modifies or deletes a
                                   resource that has a defined lifecycle state.
                                   Specify this option to perform the action and
                                   then wait until the resource reaches a given
-                                  lifecycle state. If timeout is reached, a
-                                  return code of 2 is returned. For any other
-                                  error, a return code of 1 is returned.
+                                  lifecycle state. Multiple states can be
+                                  specified, returning on the first state. For
+                                  example, --wait-for-state SUCCEEDED --wait-
+                                  for-state FAILED would return on whichever
+                                  lifecycle state is reached first. If timeout
+                                  is reached, a return code of 2 is returned.
+                                  For any other error, a return code of 1 is
+                                  returned.
   --max-wait-seconds INTEGER      The maximum time to wait for the resource to
                                   reach the lifecycle state defined by --wait-
                                   for-state. Defaults to 1200 seconds.
@@ -3516,7 +3647,22 @@ Options:
 $ oci iam tag delete --help
 Usage: oci iam tag delete [OPTIONS]
 
-  Deletes the the specified tag definition.
+  Deletes the specified tag definition. This operation triggers a process that
+  removes the tag from all resources in your tenancy.
+
+  These things happen immediately:     * If the tag was a cost-tracking tag,
+  it no longer counts against your 10 cost-tracking   tags limit, whether you
+  first disabled it or not.   * If the tag was used with dynamic groups, none
+  of the rules that contain the tag will   be evaluated against the tag.
+
+  Once you start the delete operation, the state of the tag changes to
+  DELETING and tag removal from resources begins. This can take up to 48 hours
+  depending on the number of resources that were tagged as well as the regions
+  in which those resources reside. When all tags have been removed, the state
+  changes to DELETED. You cannot restore a deleted tag. Once the deleted tag
+  changes its state to DELETED, you can use the same tag name again.
+
+  To delete a tag, you must first retire it. Use [UpdateTag] to retire a tag.
 
 Options:
   --tag-namespace-id TEXT         The OCID of the tag namespace. [required]
@@ -3536,10 +3682,14 @@ Options:
                                   request to track the progress of the
                                   operation. Specify this option to perform the
                                   action and then wait until the work request
-                                  reaches a certain state. If timeout is
-                                  reached, a return code of 2 is returned. For
-                                  any other error, a return code of 1 is
-                                  returned.
+                                  reaches a certain state. Multiple states can
+                                  be specified, returning on the first state.
+                                  For example, --wait-for-state SUCCEEDED
+                                  --wait-for-state FAILED would return on
+                                  whichever lifecycle state is reached first. If
+                                  timeout is reached, a return code of 2 is
+                                  returned. For any other error, a return code
+                                  of 1 is returned.
   --max-wait-seconds INTEGER      The maximum time to wait for the work request
                                   to reach the state defined by --wait-for-
                                   state. Defaults to 1200 seconds.
@@ -3852,9 +4002,14 @@ Options:
                                   resource that has a defined lifecycle state.
                                   Specify this option to perform the action and
                                   then wait until the resource reaches a given
-                                  lifecycle state. If timeout is reached, a
-                                  return code of 2 is returned. For any other
-                                  error, a return code of 1 is returned.
+                                  lifecycle state. Multiple states can be
+                                  specified, returning on the first state. For
+                                  example, --wait-for-state SUCCEEDED --wait-
+                                  for-state FAILED would return on whichever
+                                  lifecycle state is reached first. If timeout
+                                  is reached, a return code of 2 is returned.
+                                  For any other error, a return code of 1 is
+                                  returned.
   --max-wait-seconds INTEGER      The maximum time to wait for the resource to
                                   reach the lifecycle state defined by --wait-
                                   for-state. Defaults to 1200 seconds.
@@ -3915,11 +4070,56 @@ Options:
                   <command> --help.
 
 Commands:
-  create  Creates a new tag default in the specified...
-  delete  Deletes the the specified tag default.
-  get     Retrieves the specified tag default.
-  list    Lists the tag defaults for tag definitions in...
-  update  Updates the specified tag default.
+  assemble-effective-tag-set  Assembles tag defaults in the specified...
+  create                      Creates a new tag default in the specified...
+  delete                      Deletes the the specified tag default.
+  get                         Retrieves the specified tag default.
+  list                        Lists the tag defaults for tag definitions in...
+  update                      Updates the specified tag default.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci iam tag-default assemble-effective-tag-set --help
+Usage: oci iam tag-default assemble-effective-tag-set [OPTIONS]
+
+  Assembles tag defaults in the specified compartment and any parent
+  compartments to determine the tags to apply. Tag defaults from parent
+  compartments do not override tag defaults referencing the same tag in a
+  compartment lower down the hierarchy. This set of tag defaults includes all
+  tag defaults from the current compartment back to the root compartment.
+
+Options:
+  -c, --compartment-id TEXT   The OCID of the compartment (remember that the
+                              tenancy is simply the root compartment).
+                              [required]
+  --lifecycle-state [ACTIVE]  A filter to only return resources that match the
+                              given lifecycle state.  The state value is case-
+                              insensitive.
+  --from-json TEXT            Provide input to this command as a JSON document
+                              from a file using the file://path-to/file syntax.
+                              The --generate-full-command-json-input option can
+                              be used to generate a sample json file to be used
+                              with this command option. The key names are pre-
+                              populated and match the command option names
+                              (converted to camelCase format, e.g. compartment-
+                              id --> compartmentId), while the values of the
+                              keys need to be populated by the user before using
+                              the sample file as an input to this command. For
+                              any command option that accepts multiple values,
+                              the value of the key can be a JSON array.
+                              
+                              Options
+                              can still be provided on the command line. If an
+                              option exists in both the JSON document and the
+                              command line then the command line specified value
+                              will be used.
+                              
+                              For examples on usage of this
+                              option, please see our "using CLI with advanced
+                              JSON options" link: https://docs.cloud.oracle.com/
+                              iaas/Content/API/SDKDocs/cliusing.htm#AdvancedJSON
+                              Options
+  -?, -h, --help              For detailed help on any of these individual
+                              commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci iam tag-default create --help
@@ -3927,6 +4127,14 @@ Usage: oci iam tag-default create [OPTIONS]
 
   Creates a new tag default in the specified compartment for the specified tag
   definition.
+
+  If you specify that a value is required, a value is set during resource
+  creation (either by the user creating the resource or another tag defualt).
+  If no value is set, resource creation is blocked.
+
+  * If the `isRequired` flag is set to "true", the value is set during
+  resource creation. * If the `isRequired` flag is set to "false", the value
+  you enter is set during resource creation.
 
 Options:
   -c, --compartment-id TEXT       The OCID of the compartment. The tag default
@@ -3938,13 +4146,31 @@ Options:
   --value TEXT                    The default value for the tag definition. This
                                   will be applied to all new resources created
                                   in the compartment. [required]
+  --is-required BOOLEAN           If you specify that a value is required, a
+                                  value is set during resource creation (either
+                                  by the user creating the resource or another
+                                  tag defualt). If no value is set, resource
+                                  creation is blocked.
+                                  
+                                  * If the `isRequired`
+                                  flag is set to "true", the value is set during
+                                  resource creation. * If the `isRequired` flag
+                                  is set to "false", the value you enter is set
+                                  during resource creation.
+                                  
+                                  Example: `false`
   --wait-for-state [ACTIVE]       This operation creates, modifies or deletes a
                                   resource that has a defined lifecycle state.
                                   Specify this option to perform the action and
                                   then wait until the resource reaches a given
-                                  lifecycle state. If timeout is reached, a
-                                  return code of 2 is returned. For any other
-                                  error, a return code of 1 is returned.
+                                  lifecycle state. Multiple states can be
+                                  specified, returning on the first state. For
+                                  example, --wait-for-state SUCCEEDED --wait-
+                                  for-state FAILED would return on whichever
+                                  lifecycle state is reached first. If timeout
+                                  is reached, a return code of 2 is returned.
+                                  For any other error, a return code of 1 is
+                                  returned.
   --max-wait-seconds INTEGER      The maximum time to wait for the resource to
                                   reach the lifecycle state defined by --wait-
                                   for-state. Defaults to 1200 seconds.
@@ -4003,9 +4229,14 @@ Options:
                                   resource that has a defined lifecycle state.
                                   Specify this option to perform the action and
                                   then wait until the resource reaches a given
-                                  lifecycle state. If timeout is reached, a
-                                  return code of 2 is returned. For any other
-                                  error, a return code of 1 is returned.
+                                  lifecycle state. Multiple states can be
+                                  specified, returning on the first state. For
+                                  example, --wait-for-state SUCCEEDED --wait-
+                                  for-state FAILED would return on whichever
+                                  lifecycle state is reached first. If timeout
+                                  is reached, a return code of 2 is returned.
+                                  For any other error, a return code of 1 is
+                                  returned.
   --max-wait-seconds INTEGER      The maximum time to wait for the resource to
                                   reach the lifecycle state defined by --wait-
                                   for-state. Defaults to 1200 seconds.
@@ -4132,14 +4363,33 @@ Options:
 $ oci iam tag-default update --help
 Usage: oci iam tag-default update [OPTIONS]
 
-  Updates the specified tag default. You can update the following field:
-  `value`.
+  Updates the specified tag default. If you specify that a value is required,
+  a value is set during resource creation (either by the user creating the
+  resource or another tag defualt). If no value is set, resource creation is
+  blocked.
+
+  * If the `isRequired` flag is set to "true", the value is set during
+  resource creation. * If the `isRequired` flag is set to "false", the value
+  you enter is set during resource creation.
 
 Options:
   --tag-default-id TEXT           The OCID of the tag default. [required]
   --value TEXT                    The default value for the tag definition. This
                                   will be applied to all resources created in
                                   the Compartment. [required]
+  --is-required BOOLEAN           If you specify that a value is required, a
+                                  value is set during resource creation (either
+                                  by the user creating the resource or another
+                                  tag defualt). If no value is set, resource
+                                  creation is blocked.
+                                  
+                                  * If the `isRequired`
+                                  flag is set to "true", the value is set during
+                                  resource creation. * If the `isRequired` flag
+                                  is set to "false", the value you enter is set
+                                  during resource creation.
+                                  
+                                  Example: `false`
   --if-match TEXT                 For optimistic concurrency control. In the PUT
                                   or DELETE call for a resource, set the `if-
                                   match` parameter to the value of the etag from
@@ -4151,9 +4401,14 @@ Options:
                                   resource that has a defined lifecycle state.
                                   Specify this option to perform the action and
                                   then wait until the resource reaches a given
-                                  lifecycle state. If timeout is reached, a
-                                  return code of 2 is returned. For any other
-                                  error, a return code of 1 is returned.
+                                  lifecycle state. Multiple states can be
+                                  specified, returning on the first state. For
+                                  example, --wait-for-state SUCCEEDED --wait-
+                                  for-state FAILED would return on whichever
+                                  lifecycle state is reached first. If timeout
+                                  is reached, a return code of 2 is returned.
+                                  For any other error, a return code of 1 is
+                                  returned.
   --max-wait-seconds INTEGER      The maximum time to wait for the resource to
                                   reach the lifecycle state defined by --wait-
                                   for-state. Defaults to 1200 seconds.
@@ -4196,8 +4451,10 @@ $ oci iam tag-namespace --help
 Usage: oci iam tag-namespace [OPTIONS] COMMAND [ARGS]...
 
   A managed container for defined tags. A tag namespace is unique in a
-  tenancy. A tag namespace can't be deleted. For more information, see
-  [Managing Tags and Tag Namespaces].
+  tenancy. For more information, see [Managing Tags and Tag Namespaces].
+
+  **Warning:** Oracle recommends that you avoid using any confidential
+  information when you supply string values using the API.
 
 Options:
   -?, -h, --help  For detailed help on any of these individual commands, enter
@@ -4206,7 +4463,7 @@ Options:
 Commands:
   change-compartment  Moves the specified tag namespace to the...
   create              Create new tagNamespace in a compartment
-  delete              Delete the specified tag namespace.
+  delete              Deletes the specified tag namespace.
   get                 Get a tagNamespaces information
   list                List the tagNamespaces in a compartment
   reactivate          Reactivate namespace (only)
@@ -4277,9 +4534,6 @@ Usage: oci iam tag-namespace create [OPTIONS]
   You must also specify a *description* for the namespace. It does not have to
   be unique, and you can change it with [UpdateTagNamespace].
 
-  Tag namespaces cannot be deleted, but they can be retired. See [Retiring Key
-  Definitions and Namespace Definitions] for more information.
-
 Options:
   -c, --compartment-id TEXT       The OCID of the tenancy containing the tag
                                   namespace. [required]
@@ -4331,9 +4585,14 @@ Options:
                                   resource that has a defined lifecycle state.
                                   Specify this option to perform the action and
                                   then wait until the resource reaches a given
-                                  lifecycle state. If timeout is reached, a
-                                  return code of 2 is returned. For any other
-                                  error, a return code of 1 is returned.
+                                  lifecycle state. Multiple states can be
+                                  specified, returning on the first state. For
+                                  example, --wait-for-state SUCCEEDED --wait-
+                                  for-state FAILED would return on whichever
+                                  lifecycle state is reached first. If timeout
+                                  is reached, a return code of 2 is returned.
+                                  For any other error, a return code of 1 is
+                                  returned.
   --max-wait-seconds INTEGER      The maximum time to wait for the resource to
                                   reach the lifecycle state defined by --wait-
                                   for-state. Defaults to 1200 seconds.
@@ -4375,9 +4634,10 @@ Options:
 $ oci iam tag-namespace delete --help
 Usage: oci iam tag-namespace delete [OPTIONS]
 
-  Delete the specified tag namespace. Only an empty tagnamespace can be
-  deleted. If the tag namespace you are trying to delete is not empty, please
-  remove tag definitions from it first.
+  Deletes the specified tag namespace. Only an empty tag namespace can be
+  deleted. To delete a tag namespace, first delete all its tag definitions.
+
+  Use [DeleteTag] to delete a tag definition.
 
 Options:
   --tag-namespace-id TEXT         The OCID of the tag namespace. [required]
@@ -4395,9 +4655,14 @@ Options:
                                   resource that has a defined lifecycle state.
                                   Specify this option to perform the action and
                                   then wait until the resource reaches a given
-                                  lifecycle state. If timeout is reached, a
-                                  return code of 2 is returned. For any other
-                                  error, a return code of 1 is returned.
+                                  lifecycle state. Multiple states can be
+                                  specified, returning on the first state. For
+                                  example, --wait-for-state SUCCEEDED --wait-
+                                  for-state FAILED would return on whichever
+                                  lifecycle state is reached first. If timeout
+                                  is reached, a return code of 2 is returned.
+                                  For any other error, a return code of 1 is
+                                  returned.
   --max-wait-seconds INTEGER      The maximum time to wait for the resource to
                                   reach the lifecycle state defined by --wait-
                                   for-state. Defaults to 1200 seconds.
@@ -4662,9 +4927,14 @@ Options:
                                   resource that has a defined lifecycle state.
                                   Specify this option to perform the action and
                                   then wait until the resource reaches a given
-                                  lifecycle state. If timeout is reached, a
-                                  return code of 2 is returned. For any other
-                                  error, a return code of 1 is returned.
+                                  lifecycle state. Multiple states can be
+                                  specified, returning on the first state. For
+                                  example, --wait-for-state SUCCEEDED --wait-
+                                  for-state FAILED would return on whichever
+                                  lifecycle state is reached first. If timeout
+                                  is reached, a return code of 2 is returned.
+                                  For any other error, a return code of 1 is
+                                  returned.
   --max-wait-seconds INTEGER      The maximum time to wait for the resource to
                                   reach the lifecycle state defined by --wait-
                                   for-state. Defaults to 1200 seconds.
@@ -4701,6 +4971,216 @@ Options:
                                   s
   -?, -h, --help                  For detailed help on any of these individual
                                   commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci iam tagging-work-request --help
+Usage: oci iam tagging-work-request [OPTIONS] COMMAND [ARGS]...
+
+  The asynchronous API request does not take effect immediately. This request
+  spawns an asynchronous workflow to fulfill the request. WorkRequest objects
+  provide visibility for in-progress workflows.
+
+Options:
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
+
+Commands:
+  get   Gets details on a specified work request.
+  list  Lists the tagging work requests in...
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci iam tagging-work-request get --help
+Usage: oci iam tagging-work-request get [OPTIONS]
+
+  Gets details on a specified work request. The workRequestID is returned in
+  the opc-workrequest-id header for any asynchronous operation in the Identity
+  and Access Management service.
+
+Options:
+  --work-request-id TEXT  The OCID of the work request. [required]
+  --from-json TEXT        Provide input to this command as a JSON document from
+                          a file using the file://path-to/file syntax.
+                          
+                          The
+                          --generate-full-command-json-input option can be used
+                          to generate a sample json file to be used with this
+                          command option. The key names are pre-populated and
+                          match the command option names (converted to camelCase
+                          format, e.g. compartment-id --> compartmentId), while
+                          the values of the keys need to be populated by the
+                          user before using the sample file as an input to this
+                          command. For any command option that accepts multiple
+                          values, the value of the key can be a JSON array.
+                          Options can still be provided on the command line. If
+                          an option exists in both the JSON document and the
+                          command line then the command line specified value
+                          will be used.
+                          
+                          For examples on usage of this option,
+                          please see our "using CLI with advanced JSON options"
+                          link: https://docs.cloud.oracle.com/iaas/Content/API/S
+                          DKDocs/cliusing.htm#AdvancedJSONOptions
+  -?, -h, --help          For detailed help on any of these individual commands,
+                          enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci iam tagging-work-request list --help
+Usage: oci iam tagging-work-request list [OPTIONS]
+
+  Lists the tagging work requests in compartment.
+
+Options:
+  -c, --compartment-id TEXT   The OCID of the compartment (remember that the
+                              tenancy is simply the root compartment).
+                              [required]
+  --page TEXT                 The value of the `opc-next-page` response header
+                              from the previous "List" call.
+  --limit INTEGER             The maximum number of items to return in a
+                              paginated "List" call.
+  --resource-identifier TEXT  The identifier of the resource the work request
+                              affects.
+  --all                       Fetches all pages of results. If you provide this
+                              option, then you cannot provide the --limit
+                              option.
+  --page-size INTEGER         When fetching results, the number of results to
+                              fetch per call. Only valid when used with --all or
+                              --limit, and ignored otherwise.
+  --from-json TEXT            Provide input to this command as a JSON document
+                              from a file using the file://path-to/file syntax.
+                              The --generate-full-command-json-input option can
+                              be used to generate a sample json file to be used
+                              with this command option. The key names are pre-
+                              populated and match the command option names
+                              (converted to camelCase format, e.g. compartment-
+                              id --> compartmentId), while the values of the
+                              keys need to be populated by the user before using
+                              the sample file as an input to this command. For
+                              any command option that accepts multiple values,
+                              the value of the key can be a JSON array.
+                              
+                              Options
+                              can still be provided on the command line. If an
+                              option exists in both the JSON document and the
+                              command line then the command line specified value
+                              will be used.
+                              
+                              For examples on usage of this
+                              option, please see our "using CLI with advanced
+                              JSON options" link: https://docs.cloud.oracle.com/
+                              iaas/Content/API/SDKDocs/cliusing.htm#AdvancedJSON
+                              Options
+  -?, -h, --help              For detailed help on any of these individual
+                              commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci iam tagging-work-request-error --help
+Usage: oci iam tagging-work-request-error [OPTIONS] COMMAND [ARGS]...
+
+  The error entity.
+
+Options:
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
+
+Commands:
+  list  Gets the errors for a work request.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci iam tagging-work-request-error list --help
+Usage: oci iam tagging-work-request-error list [OPTIONS]
+
+  Gets the errors for a work request.
+
+Options:
+  --work-request-id TEXT  The OCID of the work request. [required]
+  --page TEXT             The value of the `opc-next-page` response header from
+                          the previous "List" call.
+  --limit INTEGER         The maximum number of items to return in a paginated
+                          "List" call.
+  --all                   Fetches all pages of results. If you provide this
+                          option, then you cannot provide the --limit option.
+  --page-size INTEGER     When fetching results, the number of results to fetch
+                          per call. Only valid when used with --all or --limit,
+                          and ignored otherwise.
+  --from-json TEXT        Provide input to this command as a JSON document from
+                          a file using the file://path-to/file syntax.
+                          
+                          The
+                          --generate-full-command-json-input option can be used
+                          to generate a sample json file to be used with this
+                          command option. The key names are pre-populated and
+                          match the command option names (converted to camelCase
+                          format, e.g. compartment-id --> compartmentId), while
+                          the values of the keys need to be populated by the
+                          user before using the sample file as an input to this
+                          command. For any command option that accepts multiple
+                          values, the value of the key can be a JSON array.
+                          Options can still be provided on the command line. If
+                          an option exists in both the JSON document and the
+                          command line then the command line specified value
+                          will be used.
+                          
+                          For examples on usage of this option,
+                          please see our "using CLI with advanced JSON options"
+                          link: https://docs.cloud.oracle.com/iaas/Content/API/S
+                          DKDocs/cliusing.htm#AdvancedJSONOptions
+  -?, -h, --help          For detailed help on any of these individual commands,
+                          enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci iam tagging-work-request-log --help
+Usage: oci iam tagging-work-request-log [OPTIONS] COMMAND [ARGS]...
+
+  The log entity.
+
+Options:
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
+
+Commands:
+  list  Gets the logs for a work request.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci iam tagging-work-request-log list --help
+Usage: oci iam tagging-work-request-log list [OPTIONS]
+
+  Gets the logs for a work request.
+
+Options:
+  --work-request-id TEXT  The OCID of the work request. [required]
+  --page TEXT             The value of the `opc-next-page` response header from
+                          the previous "List" call.
+  --limit INTEGER         The maximum number of items to return in a paginated
+                          "List" call.
+  --all                   Fetches all pages of results. If you provide this
+                          option, then you cannot provide the --limit option.
+  --page-size INTEGER     When fetching results, the number of results to fetch
+                          per call. Only valid when used with --all or --limit,
+                          and ignored otherwise.
+  --from-json TEXT        Provide input to this command as a JSON document from
+                          a file using the file://path-to/file syntax.
+                          
+                          The
+                          --generate-full-command-json-input option can be used
+                          to generate a sample json file to be used with this
+                          command option. The key names are pre-populated and
+                          match the command option names (converted to camelCase
+                          format, e.g. compartment-id --> compartmentId), while
+                          the values of the keys need to be populated by the
+                          user before using the sample file as an input to this
+                          command. For any command option that accepts multiple
+                          values, the value of the key can be a JSON array.
+                          Options can still be provided on the command line. If
+                          an option exists in both the JSON document and the
+                          command line then the command line specified value
+                          will be used.
+                          
+                          For examples on usage of this option,
+                          please see our "using CLI with advanced JSON options"
+                          link: https://docs.cloud.oracle.com/iaas/Content/API/S
+                          DKDocs/cliusing.htm#AdvancedJSONOptions
+  -?, -h, --help          For detailed help on any of these individual commands,
+                          enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci iam ui-password-information --help
@@ -4776,6 +5256,9 @@ Usage: oci iam user [OPTIONS] COMMAND [ARGS]...
   If you're not authorized, talk to an administrator. If you're an
   administrator who needs to write policies to give users access, see [Getting
   Started with Policies].
+
+  **Warning:** Oracle recommends that you avoid using any confidential
+  information when you supply string values using the API.
 
 Options:
   -?, -h, --help  For detailed help on any of these individual commands, enter
@@ -5060,9 +5543,14 @@ Options:
                                   resource that has a defined lifecycle state.
                                   Specify this option to perform the action and
                                   then wait until the resource reaches a given
-                                  lifecycle state. If timeout is reached, a
-                                  return code of 2 is returned. For any other
-                                  error, a return code of 1 is returned.
+                                  lifecycle state. Multiple states can be
+                                  specified, returning on the first state. For
+                                  example, --wait-for-state SUCCEEDED --wait-
+                                  for-state FAILED would return on whichever
+                                  lifecycle state is reached first. If timeout
+                                  is reached, a return code of 2 is returned.
+                                  For any other error, a return code of 1 is
+                                  returned.
   --max-wait-seconds INTEGER      The maximum time to wait for the resource to
                                   reach the lifecycle state defined by --wait-
                                   for-state. Defaults to 1200 seconds.
@@ -5122,9 +5610,14 @@ Options:
                                   resource that has a defined lifecycle state.
                                   Specify this option to perform the action and
                                   then wait until the resource reaches a given
-                                  lifecycle state. If timeout is reached, a
-                                  return code of 2 is returned. For any other
-                                  error, a return code of 1 is returned.
+                                  lifecycle state. Multiple states can be
+                                  specified, returning on the first state. For
+                                  example, --wait-for-state SUCCEEDED --wait-
+                                  for-state FAILED would return on whichever
+                                  lifecycle state is reached first. If timeout
+                                  is reached, a return code of 2 is returned.
+                                  For any other error, a return code of 1 is
+                                  returned.
   --max-wait-seconds INTEGER      The maximum time to wait for the resource to
                                   reach the lifecycle state defined by --wait-
                                   for-state. Defaults to 1200 seconds.
@@ -5622,9 +6115,14 @@ Options:
                                   resource that has a defined lifecycle state.
                                   Specify this option to perform the action and
                                   then wait until the resource reaches a given
-                                  lifecycle state. If timeout is reached, a
-                                  return code of 2 is returned. For any other
-                                  error, a return code of 1 is returned.
+                                  lifecycle state. Multiple states can be
+                                  specified, returning on the first state. For
+                                  example, --wait-for-state SUCCEEDED --wait-
+                                  for-state FAILED would return on whichever
+                                  lifecycle state is reached first. If timeout
+                                  is reached, a return code of 2 is returned.
+                                  For any other error, a return code of 1 is
+                                  returned.
   --max-wait-seconds INTEGER      The maximum time to wait for the resource to
                                   reach the lifecycle state defined by --wait-
                                   for-state. Defaults to 1200 seconds.
@@ -5693,9 +6191,14 @@ Options:
                                   resource that has a defined lifecycle state.
                                   Specify this option to perform the action and
                                   then wait until the resource reaches a given
-                                  lifecycle state. If timeout is reached, a
-                                  return code of 2 is returned. For any other
-                                  error, a return code of 1 is returned.
+                                  lifecycle state. Multiple states can be
+                                  specified, returning on the first state. For
+                                  example, --wait-for-state SUCCEEDED --wait-
+                                  for-state FAILED would return on whichever
+                                  lifecycle state is reached first. If timeout
+                                  is reached, a return code of 2 is returned.
+                                  For any other error, a return code of 1 is
+                                  returned.
   --max-wait-seconds INTEGER      The maximum time to wait for the resource to
                                   reach the lifecycle state defined by --wait-
                                   for-state. Defaults to 1200 seconds.
@@ -5756,9 +6259,14 @@ Options:
                                   resource that has a defined lifecycle state.
                                   Specify this option to perform the action and
                                   then wait until the resource reaches a given
-                                  lifecycle state. If timeout is reached, a
-                                  return code of 2 is returned. For any other
-                                  error, a return code of 1 is returned.
+                                  lifecycle state. Multiple states can be
+                                  specified, returning on the first state. For
+                                  example, --wait-for-state SUCCEEDED --wait-
+                                  for-state FAILED would return on whichever
+                                  lifecycle state is reached first. If timeout
+                                  is reached, a return code of 2 is returned.
+                                  For any other error, a return code of 1 is
+                                  returned.
   --max-wait-seconds INTEGER      The maximum time to wait for the resource to
                                   reach the lifecycle state defined by --wait-
                                   for-state. Defaults to 1200 seconds.

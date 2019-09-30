@@ -6,6 +6,39 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.6.7 - 2019-10-01
+-------------------
+Added
+~~~~~
+* Support for tag definition validators in the Tag object used by get, list, create, and update tag. Currently the only tag validator is the Enum validator.
+* Improvement to provisioning time for launching VMDB instance in DBaaS.
+
+  * ``oci db system launch --storage-management``
+  * ``oci db system launch-from-backup --storage-managament``
+* Support for migrating zones from Dyn Managed DNS to OCI Public DNS.
+
+  * ``oci dns zone migrate-from-dynect``
+* Support for resource principal authorization type, ``--auth resource_principal``.
+* New field added to Tag Default object ``isRequired`` to designate that a value must be provided for the tag upon resource creation. 
+* New API ``assembleEffectiveTagSet`` added to conveniently get all tags that must be applied to a resource in a given compartment.
+* Add new API to list work requests for tagging, as well as APIs to list logs and errors for those work requests.
+
+  * ``oci iam tagging-work-request get``
+  * ``oci iam tagging-work-request list``
+  * ``oci iam tagging-work-request-error list``
+  * ``oci iam tagging-work-request-log list``
+* Support for change of compartments for DRG in the Networking Service
+
+  * ``oci network drg change-compartment --compartment-id, --drg-id``
+* Support for Oracle Linux 8.
+
+* Support for multiple ``--wait-for-state`` parameters. You can specify multiple ``--wait-for-state`` parameters for any supporting command and it will return on the first seen state. For example, ``--wait-for-state AVAILABLE --wait-for-state FAILED`` will return on whichever lifecycle state is observed first.
+
+Changed
+~~~~~~~
+* Updates the API endpoint URL for Oracle Functions to be of the form ``*.oci.oraclecorp.com``.
+
+
 2.6.6 - 2019-09-24
 -------------------
 Added

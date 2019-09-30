@@ -32,6 +32,7 @@ IGNORED_COMMANDS = [
     # for these commands.
     ['cims', 'incident', 'create'],
     ['cims', 'incident', 'update'],
+    # DTS commands
     ['dts', 'nfs-dataset', 'activate'],
     ['dts', 'nfs-dataset', 'create'],
     ['dts', 'nfs-dataset', 'deactivate'],

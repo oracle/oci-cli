@@ -228,6 +228,64 @@ def override(key, default):
     return OVERRIDES.get(key, default)
 
 
+def get_instance_principal_signer(ctx, client_config, delegation_token_auth):
+    signer = None
+    try:
+        signer_kwargs = {}
+        if ctx.obj['cert_bundle']:
+            signer_kwargs['federation_client_cert_bundle_verify'] = ctx.obj['cert_bundle']
+        if ctx.obj['region']:
+            # If we don't set this then constructed clients will try and pluck the region from the instance principals signer, which may
+            # conflict with the caller intent (since they *DID* explicitly pass a region)
+            client_config['region'] = ctx.obj['region']
+        if delegation_token_auth:
+            delegation_token = None
+            delegation_token_location = client_config.get('delegation_token_file')
+            if delegation_token_location is None:
+                raise ValueError('ERROR: Please specify the location of the delegation_token_file in the config.')
+            expanded_delegation_token_location = os.path.expanduser(delegation_token_location)
+            if not os.path.exists(expanded_delegation_token_location):
+                raise IOError("ERROR: delegation_token_file not found at " + expanded_delegation_token_location)
+            with open(expanded_delegation_token_location, 'r') as delegation_token_file:
+                delegation_token = delegation_token_file.read().strip()
+            signer_kwargs['delegation_token'] = delegation_token
+            if delegation_token is None:
+                raise ValueError('ERROR: delegation_token was not provided.')
+            signer = oci.auth.signers.InstancePrincipalsDelegationTokenSigner(**signer_kwargs)
+        else:
+            # Normal instance principals
+            signer = oci.auth.signers.InstancePrincipalsSecurityTokenSigner(**signer_kwargs)
+    except (ValueError, IOError) as ex:
+        sys.exit(ex)
+    except Exception as e:
+        sys.exit("ERROR: Failed retrieving certificates from localhost. Instance principal auth is only possible from OCI compute instances. \nException: {}".format(str(e)))
+    return signer
+
+
+def get_session_token_signer(client_config):
+    signer = None
+    security_token_location = client_config.get('security_token_file')
+    if not security_token_location:
+        sys.exit("ERROR: Config value for 'security_token_file' must be specified when using --auth {}".format(cli_constants.OCI_CLI_AUTH_SESSION_TOKEN))
+
+    expanded_security_token_location = os.path.expanduser(security_token_location)
+    if not os.path.exists(expanded_security_token_location):
+        sys.exit("ERROR: File specified by 'security_token_file' does not exist: {}".format(expanded_security_token_location))
+    FilePermissionChecker.warn_on_invalid_file_permissions(expanded_security_token_location)
+
+    with open(expanded_security_token_location, 'r') as security_token_file:
+        token = security_token_file.read()
+
+    try:
+        private_key = oci.signer.load_private_key_from_file(client_config.get('key_file'), client_config.get('pass_phrase'))
+    except exceptions.MissingPrivateKeyPassphrase:
+        client_config['pass_phrase'] = prompt_for_passphrase()
+        signer = oci.Signer.from_config(client_config)
+
+    signer = oci.auth.signers.SecurityTokenSigner(token, private_key)
+    return signer
+
+
 def create_config_and_signer_based_on_click_context(ctx):
     # If not set by the user as part of the command, then set it to a default.
     # This value is used later by some commands.
@@ -235,13 +293,13 @@ def create_config_and_signer_based_on_click_context(ctx):
         ctx.obj['request_id'] = str(uuid.uuid4()).replace('-', '').upper()
 
     instance_principal_auth = 'auth' in ctx.obj and ctx.obj['auth'] == cli_constants.OCI_CLI_AUTH_INSTANCE_PRINCIPAL
+    resource_principal_auth = 'auth' in ctx.obj and ctx.obj['auth'] == cli_constants.OCI_CLI_AUTH_RESOURCE_PRINCIPAL
     session_token_auth = 'auth' in ctx.obj and ctx.obj['auth'] == cli_constants.OCI_CLI_AUTH_SESSION_TOKEN
     delegation_token_auth = 'auth' in ctx.obj and ctx.obj['auth'] == cli_constants.OCI_CLI_AUTH_INSTANCE_OBO_USER
 
     signer = None
     kwargs = {}
     client_config = {}
-
     try:
         client_config = build_config(ctx.obj)
     except exceptions.ConfigFileNotFound as e:
@@ -250,57 +308,23 @@ def create_config_and_signer_based_on_click_context(ctx):
             sys.exit("ERROR: " + str(e))
 
     if instance_principal_auth or delegation_token_auth:
-        try:
-            signer_kwargs = {}
-            if ctx.obj['cert_bundle']:
-                signer_kwargs['federation_client_cert_bundle_verify'] = ctx.obj['cert_bundle']
-            if ctx.obj['region']:
-                # If we don't set this then constructed clients will try and pluck the region from the instance principals signer, which may
-                # conflict with the caller intent (since they *DID* explicitly pass a region)
-                client_config['region'] = ctx.obj['region']
-            if delegation_token_auth:
-                delegation_token = None
-                delegation_token_location = client_config.get('delegation_token_file')
-                if delegation_token_location is None:
-                    raise ValueError('ERROR: Please specify the location of the delegation_token_file in the config.')
-                expanded_delegation_token_location = os.path.expanduser(delegation_token_location)
-                if not os.path.exists(expanded_delegation_token_location):
-                    raise IOError("ERROR: delegation_token_file not found at " + expanded_delegation_token_location)
-                with open(expanded_delegation_token_location, 'r') as delegation_token_file:
-                    delegation_token = delegation_token_file.read().strip()
-                signer_kwargs['delegation_token'] = delegation_token
-                if delegation_token is None:
-                    raise ValueError('ERROR: delegation_token was not provided.')
-                signer = oci.auth.signers.InstancePrincipalsDelegationTokenSigner(**signer_kwargs)
-            else:
-                # Normal instance principals
-                signer = oci.auth.signers.InstancePrincipalsSecurityTokenSigner(**signer_kwargs)
-        except (ValueError, IOError) as ex:
-            sys.exit(ex)
-        except Exception as e:
-            sys.exit("ERROR: Failed retrieving certificates from localhost. Instance principal auth is only possible from OCI compute instances. \nException: {}".format(str(e)))
-        kwargs['signer'] = signer
+        signer = get_instance_principal_signer(ctx, client_config, delegation_token_auth)
     elif session_token_auth:
-        security_token_location = client_config.get('security_token_file')
-        if not security_token_location:
-            sys.exit("ERROR: Config value for 'security_token_file' must be specified when using --auth {}".format(cli_constants.OCI_CLI_AUTH_SESSION_TOKEN))
-
-        expanded_security_token_location = os.path.expanduser(security_token_location)
-        if not os.path.exists(expanded_security_token_location):
-            sys.exit("ERROR: File specified by 'security_token_file' does not exist: {}".format(expanded_security_token_location))
-        FilePermissionChecker.warn_on_invalid_file_permissions(expanded_security_token_location)
-
-        with open(expanded_security_token_location, 'r') as security_token_file:
-            token = security_token_file.read()
-
-        try:
-            private_key = oci.signer.load_private_key_from_file(client_config.get('key_file'), client_config.get('pass_phrase'))
-        except exceptions.MissingPrivateKeyPassphrase:
-            client_config['pass_phrase'] = prompt_for_passphrase()
-            signer = oci.Signer.from_config(client_config)
-
-        signer = oci.auth.signers.SecurityTokenSigner(token, private_key)
-        kwargs['signer'] = signer
+        signer = get_session_token_signer(client_config)
+    elif resource_principal_auth:
+        # The following environment variables are expected to be set for this to work.
+        #
+        # OCI_RESOURCE_PRINCIPAL_VERSION="2.2"
+        # OCI_RESOURCE_PRINCIPAL_RPST
+        # OCI_RESOURCE_PRINCIPAL_PRIVATE_PEM
+        # OCI_RESOURCE_PRINCIPAL_PRIVATE_PEM_PASSPHRASE
+        # OCI_RESOURCE_PRINCIPAL_REGION
+        #
+        # OCI_RESOURCE_PRINCIPAL_VERSION="1.1"
+        # OCI_RESOURCE_PRINCIPAL_RPT_ENDPOINT
+        # OCI_RESOURCE_PRINCIPAL_RPST_ENDPOINT
+        signer = oci.auth.signers.resource_principals_signer.get_resource_principals_signer()
+    kwargs['signer'] = signer
 
     try:
         config.validate_config(client_config, **kwargs)

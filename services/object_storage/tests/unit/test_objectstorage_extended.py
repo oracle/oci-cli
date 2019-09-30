@@ -5,6 +5,7 @@ import mock
 import unittest
 from services.object_storage.src.oci_cli_object_storage.objectstorage_cli_extended import time_delta
 from services.object_storage.src.oci_cli_object_storage.objectstorage_cli_extended import _get_progress_bar_label
+import oci_cli
 from tests import util
 import tempfile
 import shutil
@@ -46,3 +47,18 @@ class TestObjectStorage(unittest.TestCase):
         assert "BucketNotFound" in result.output
         os.unlink(tmp_file_name)
         shutil.rmtree(td)
+
+    def test_verify_namespace_name_param(self):
+        """ Checks whether all object storage commands have the namespace-name parameter """
+        commands = oci_cli.cli_util.collect_commands(oci_cli.cli_root.cli.commands.get('os'))
+        for command in commands:
+            for param in command.params:
+                if any(p in param.opts for p in ['-ns', '--namespace', '--namespace-name']):
+                    print(command.parent.name, command.name, param.opts)
+                    assert '-ns' in param.opts
+                    assert '--namespace' in param.opts
+                    assert '--namespace-name' in param.opts
+                if any(p in param.opts for p in ['-bn', '--bucket-name']):
+                    print(command.parent.name, command.name, param.opts)
+                    assert '-bn' in param.opts
+                    assert '--bucket-name' in param.opts

@@ -911,7 +911,7 @@ def _do_listener_waiters(runner, load_balancer_id, backend_set_name, config_file
 
 def _validate_work_request_result(result, load_balancer_id):
     util.validate_response(result, json_response_expected=False)
-    assert 'Action completed. Waiting until the work request has entered state: SUCCEEDED' in result.output
+    assert 'Action completed. Waiting until the work request has entered state:' in result.output
 
     work_request = util.get_json_from_mixed_string(result.output)
     assert work_request['data']['load-balancer-id'] == load_balancer_id

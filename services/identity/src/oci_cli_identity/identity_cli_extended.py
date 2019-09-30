@@ -82,6 +82,10 @@ identity_cli.tag_group.commands.pop(identity_cli.update_tag.name)
 identity_cli.tag_namespace_group.commands.pop(identity_cli.update_tag_namespace.name)
 
 identity_cli.api_key_group.commands.pop(identity_cli.upload_api_key.name)
+identity_cli.tag_group.commands.pop(identity_cli.create_tag_default_tag_definition_validator.name)
+identity_cli.tag_group.commands.pop(identity_cli.create_tag_enum_tag_definition_validator.name)
+identity_cli.tag_group.commands.pop(identity_cli.update_tag_default_tag_definition_validator.name)
+identity_cli.tag_group.commands.pop(identity_cli.update_tag_enum_tag_definition_validator.name)
 
 cli_util.get_param(identity_cli.create_policy, 'version_date').type = click.STRING
 
