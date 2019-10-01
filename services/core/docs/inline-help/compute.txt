@@ -15,7 +15,7 @@ Options:
 Commands:
   boot-volume-attachment       Represents an attachment between a boot...
   console-history              An instance's serial console data.
-  dedicated-vm-host            A dedicated virtual machine (VM) host that...
+  dedicated-vm-host            A dedicated virtual machine host that enables...
   dedicated-vm-host-instance   Condensed instance data when listing...
   device                       Device Path corresponding to the block...
   image                        A boot disk image for launching an instance.
@@ -62,9 +62,14 @@ Options:
                                   resource that has a defined lifecycle state.
                                   Specify this option to perform the action and
                                   then wait until the resource reaches a given
-                                  lifecycle state. If timeout is reached, a
-                                  return code of 2 is returned. For any other
-                                  error, a return code of 1 is returned.
+                                  lifecycle state. Multiple states can be
+                                  specified, returning on the first state. For
+                                  example, --wait-for-state SUCCEEDED --wait-
+                                  for-state FAILED would return on whichever
+                                  lifecycle state is reached first. If timeout
+                                  is reached, a return code of 2 is returned.
+                                  For any other error, a return code of 1 is
+                                  returned.
   --max-wait-seconds INTEGER      The maximum time to wait for the resource to
                                   reach the lifecycle state defined by --wait-
                                   for-state. Defaults to 1200 seconds.
@@ -130,9 +135,14 @@ Options:
                                   resource that has a defined lifecycle state.
                                   Specify this option to perform the action and
                                   then wait until the resource reaches a given
-                                  lifecycle state. If timeout is reached, a
-                                  return code of 2 is returned. For any other
-                                  error, a return code of 1 is returned.
+                                  lifecycle state. Multiple states can be
+                                  specified, returning on the first state. For
+                                  example, --wait-for-state SUCCEEDED --wait-
+                                  for-state FAILED would return on whichever
+                                  lifecycle state is reached first. If timeout
+                                  is reached, a return code of 2 is returned.
+                                  For any other error, a return code of 1 is
+                                  returned.
   --max-wait-seconds INTEGER      The maximum time to wait for the resource to
                                   reach the lifecycle state defined by --wait-
                                   for-state. Defaults to 1200 seconds.
@@ -363,9 +373,14 @@ Options:
                                   resource that has a defined lifecycle state.
                                   Specify this option to perform the action and
                                   then wait until the resource reaches a given
-                                  lifecycle state. If timeout is reached, a
-                                  return code of 2 is returned. For any other
-                                  error, a return code of 1 is returned.
+                                  lifecycle state. Multiple states can be
+                                  specified, returning on the first state. For
+                                  example, --wait-for-state SUCCEEDED --wait-
+                                  for-state FAILED would return on whichever
+                                  lifecycle state is reached first. If timeout
+                                  is reached, a return code of 2 is returned.
+                                  For any other error, a return code of 1 is
+                                  returned.
   --max-wait-seconds INTEGER      The maximum time to wait for the resource to
                                   reach the lifecycle state defined by --wait-
                                   for-state. Defaults to 1200 seconds.
@@ -426,9 +441,14 @@ Options:
                                   resource that has a defined lifecycle state.
                                   Specify this option to perform the action and
                                   then wait until the resource reaches a given
-                                  lifecycle state. If timeout is reached, a
-                                  return code of 2 is returned. For any other
-                                  error, a return code of 1 is returned.
+                                  lifecycle state. Multiple states can be
+                                  specified, returning on the first state. For
+                                  example, --wait-for-state SUCCEEDED --wait-
+                                  for-state FAILED would return on whichever
+                                  lifecycle state is reached first. If timeout
+                                  is reached, a return code of 2 is returned.
+                                  For any other error, a return code of 1 is
+                                  returned.
   --max-wait-seconds INTEGER      The maximum time to wait for the resource to
                                   reach the lifecycle state defined by --wait-
                                   for-state. Defaults to 1200 seconds.
@@ -701,9 +721,14 @@ Options:
                                   resource that has a defined lifecycle state.
                                   Specify this option to perform the action and
                                   then wait until the resource reaches a given
-                                  lifecycle state. If timeout is reached, a
-                                  return code of 2 is returned. For any other
-                                  error, a return code of 1 is returned.
+                                  lifecycle state. Multiple states can be
+                                  specified, returning on the first state. For
+                                  example, --wait-for-state SUCCEEDED --wait-
+                                  for-state FAILED would return on whichever
+                                  lifecycle state is reached first. If timeout
+                                  is reached, a return code of 2 is returned.
+                                  For any other error, a return code of 1 is
+                                  returned.
   --max-wait-seconds INTEGER      The maximum time to wait for the resource to
                                   reach the lifecycle state defined by --wait-
                                   for-state. Defaults to 1200 seconds.
@@ -745,17 +770,16 @@ Options:
 $ oci compute dedicated-vm-host --help
 Usage: oci compute dedicated-vm-host [OPTIONS] COMMAND [ARGS]...
 
-  A dedicated virtual machine (VM) host that enables you to host multiple
-  virtual machine instances on a dedicated host that is not shared with other
-  tenancies.
+  A dedicated virtual machine host that enables you to host multiple VM
+  instances on a dedicated host that is not shared with other tenancies.
 
 Options:
   -?, -h, --help  For detailed help on any of these individual commands, enter
                   <command> --help.
 
 Commands:
-  change-compartment  Moves a dedicated vm host from one...
-  create              Creates a new dedicated virtual machine (VM)...
+  change-compartment  Moves a dedicated virtual machine host from...
+  create              Creates a new dedicated virtual machine host...
   delete              Deletes the specified dedicated virtual...
   get                 Gets information about the specified...
   host-shape          The shape used to launch the dedicated...
@@ -767,12 +791,12 @@ Commands:
 $ oci compute dedicated-vm-host change-compartment --help
 Usage: oci compute dedicated-vm-host change-compartment [OPTIONS]
 
-  Moves a dedicated vm host from one compartment to another
+  Moves a dedicated virtual machine host from one compartment to another.
 
 Options:
   --dedicated-vm-host-id TEXT  The OCID of the dedicated VM host. [required]
-  -c, --compartment-id TEXT    The [OCID] of the compartment into which the
-                               resource should be moved. [required]
+  -c, --compartment-id TEXT    The [OCID] of the compartment to move the
+                               dedicated virtual machine host to. [required]
   --if-match TEXT              For optimistic concurrency control. In the PUT or
                                DELETE call for a resource, set the `if-match`
                                parameter to the value of the etag from a
@@ -811,18 +835,24 @@ Options:
 $ oci compute dedicated-vm-host create --help
 Usage: oci compute dedicated-vm-host create [OPTIONS]
 
-  Creates a new dedicated virtual machine (VM) host in the specified
-  compartment and the specified availability domain.
+  Creates a new dedicated virtual machine host in the specified compartment
+  and the specified availability domain. Dedicated virtual machine hosts
+  enable you to run your Compute virtual machine (VM) instances on dedicated
+  servers that are a single tenant and not shared with other customers. For
+  more information, see [Dedicated Virtual Machine Hosts].
 
 Options:
-  --availability-domain TEXT      The availability domain of the dedicated VM
-                                  host.
+  --availability-domain TEXT      The availability domain of the dedicated
+                                  virtual machine host.
                                   
-                                  Example: `Uocm:PHX-AD-1` [required]
+                                  Example: `Uocm:PHX-
+                                  AD-1` [required]
   -c, --compartment-id TEXT       The OCID of the compartment. [required]
-  --dedicated-vm-host-shape TEXT  The shape of the dedicated VM host. The shape
-                                  determines the number of CPUs and other
-                                  resources available for VMs. [required]
+  --dedicated-vm-host-shape TEXT  The dedicated virtual machine host shape. The
+                                  shape determines the number of CPUs and other
+                                  resources available for VM instances launched
+                                  on the dedicated virtual machine host.
+                                  [required]
   --defined-tags COMPLEX TYPE     Defined tags for this resource. Each key is
                                   predefined and scoped to a namespace. For more
                                   information, see [Resource Tags].
@@ -849,18 +879,17 @@ Options:
                                   
                                   Example: `My
                                   dedicated VM host`
-  --fault-domain TEXT             The fault domain for the dedicated VM host's
-                                  assigned instances. For more information, see
-                                  Fault Domains. If you do not specify the fault
-                                  domain, the system selects one for you. To
-                                  change the fault domain for a dedicated VM
-                                  host, delete it and create a new dedicated VM
-                                  host in the preferred fault domain.
-                                  
-                                  To get a
-                                  list of fault domains, use the
-                                  ListFaultDomains operation in the Identity and
-                                  Access Management Service API.
+  --fault-domain TEXT             The fault domain for the dedicated virtual
+                                  machine host's assigned instances. For more
+                                  information, see [Fault Domains]. If you do
+                                  not specify the fault domain, the system
+                                  selects one for you. To change the fault
+                                  domain for a dedicated virtual machine host,
+                                  delete it and create a new dedicated virtual
+                                  machine host in the preferred fault domain.
+                                  To get a list of fault domains, use the
+                                  `ListFaultDomains` operation in the [Identity
+                                  and Access Management Service API].
                                   
                                   Example:
                                   `FAULT-DOMAIN-1`
@@ -890,9 +919,14 @@ Options:
                                   resource that has a defined lifecycle state.
                                   Specify this option to perform the action and
                                   then wait until the resource reaches a given
-                                  lifecycle state. If timeout is reached, a
-                                  return code of 2 is returned. For any other
-                                  error, a return code of 1 is returned.
+                                  lifecycle state. Multiple states can be
+                                  specified, returning on the first state. For
+                                  example, --wait-for-state SUCCEEDED --wait-
+                                  for-state FAILED would return on whichever
+                                  lifecycle state is reached first. If timeout
+                                  is reached, a return code of 2 is returned.
+                                  For any other error, a return code of 1 is
+                                  returned.
   --max-wait-seconds INTEGER      The maximum time to wait for the resource to
                                   reach the lifecycle state defined by --wait-
                                   for-state. Defaults to 1200 seconds.
@@ -934,10 +968,10 @@ Options:
 $ oci compute dedicated-vm-host delete --help
 Usage: oci compute dedicated-vm-host delete [OPTIONS]
 
-  Deletes the specified dedicated virtual machine (VM) host.
+  Deletes the specified dedicated virtual machine host.
 
-  If any VM instances are assigned to the dedicated VM host, it will not be
-  deleted and the service will return a 409 response code.
+  If any VM instances are assigned to the dedicated virtual machine host, the
+  delete operation will fail and the service will return a 409 response code.
 
 Options:
   --dedicated-vm-host-id TEXT     The OCID of the dedicated VM host. [required]
@@ -948,9 +982,14 @@ Options:
                                   resource that has a defined lifecycle state.
                                   Specify this option to perform the action and
                                   then wait until the resource reaches a given
-                                  lifecycle state. If timeout is reached, a
-                                  return code of 2 is returned. For any other
-                                  error, a return code of 1 is returned.
+                                  lifecycle state. Multiple states can be
+                                  specified, returning on the first state. For
+                                  example, --wait-for-state SUCCEEDED --wait-
+                                  for-state FAILED would return on whichever
+                                  lifecycle state is reached first. If timeout
+                                  is reached, a return code of 2 is returned.
+                                  For any other error, a return code of 1 is
+                                  returned.
   --max-wait-seconds INTEGER      The maximum time to wait for the resource to
                                   reach the lifecycle state defined by --wait-
                                   for-state. Defaults to 1200 seconds.
@@ -992,7 +1031,7 @@ Options:
 $ oci compute dedicated-vm-host get --help
 Usage: oci compute dedicated-vm-host get [OPTIONS]
 
-  Gets information about the specified dedicated virtual machine (VM) host.
+  Gets information about the specified dedicated virtual machine host.
 
 Options:
   --dedicated-vm-host-id TEXT  The OCID of the dedicated VM host. [required]
@@ -1040,8 +1079,8 @@ Commands:
 $ oci compute dedicated-vm-host host-shape list --help
 Usage: oci compute dedicated-vm-host host-shape list [OPTIONS]
 
-  Lists the shapes that can be used to launch a dedicated virtual machine (VM)
-  host within the specified compartment.
+  Lists the shapes that can be used to launch a dedicated virtual machine host
+  within the specified compartment.
 
 Options:
   -c, --compartment-id TEXT   The [OCID] of the compartment. [required]
@@ -1049,7 +1088,7 @@ Options:
                               
                               Example:
                               `Uocm:PHX-AD-1`
-  --instance-shape-name TEXT  Instance shape name
+  --instance-shape-name TEXT  The name for the instance's shape.
   --limit INTEGER             For list pagination. The maximum number of results
                               per page, or items to return in a paginated "List"
                               call. For important details about how pagination
@@ -1110,9 +1149,10 @@ Commands:
 $ oci compute dedicated-vm-host instance-shape list --help
 Usage: oci compute dedicated-vm-host instance-shape list [OPTIONS]
 
-  Lists the shapes that can be used to launch a virtual machine (VM) instance
-  on a dedicated VM host within the specified compartment. You can filter the
-  list by compatibility with a specific dedicated VM host shape.
+  Lists the shapes that can be used to launch a virtual machine instance on a
+  dedicated virtual machine host within the specified compartment. You can
+  filter the list by compatibility with a specific dedicated virtual machine
+  host shape.
 
 Options:
   -c, --compartment-id TEXT       The [OCID] of the compartment. [required]
@@ -1171,12 +1211,12 @@ Options:
 $ oci compute dedicated-vm-host list --help
 Usage: oci compute dedicated-vm-host list [OPTIONS]
 
-  Returns the list of dedicated virtual machine (VM) hosts that match the
-  specified criteria from the specified compartment.
+  Returns the list of dedicated virtual machine hosts that match the specified
+  criteria in the specified compartment.
 
-  You can limit the list by specifying a dedicated VM host display name. The
-  list will include all the identically-named dedicated VM hosts in the
-  compartment.
+  You can limit the list by specifying a dedicated virtual machine host
+  display name. The list will include all the identically-named dedicated
+  virtual machine hosts in the compartment.
 
 Options:
   -c, --compartment-id TEXT       The [OCID] of the compartment. [required]
@@ -1189,7 +1229,7 @@ Options:
                                   the given lifecycle state.
   --display-name TEXT             A filter to return only resources that match
                                   the given display name exactly.
-  --instance-shape-name TEXT      Instance shape name
+  --instance-shape-name TEXT      The name for the instance's shape.
   --limit INTEGER                 For list pagination. The maximum number of
                                   results per page, or items to return in a
                                   paginated "List" call. For important details
@@ -1260,7 +1300,7 @@ $ oci compute dedicated-vm-host update --help
 Usage: oci compute dedicated-vm-host update [OPTIONS]
 
   Updates the displayName, freeformTags, and definedTags attributes for the
-  specified dedicated virtual machine (VM) host. If an attribute value is not
+  specified dedicated virtual machine host. If an attribute value is not
   included, it will not be updated.
 
 Options:
@@ -1326,9 +1366,14 @@ Options:
                                   resource that has a defined lifecycle state.
                                   Specify this option to perform the action and
                                   then wait until the resource reaches a given
-                                  lifecycle state. If timeout is reached, a
-                                  return code of 2 is returned. For any other
-                                  error, a return code of 1 is returned.
+                                  lifecycle state. Multiple states can be
+                                  specified, returning on the first state. For
+                                  example, --wait-for-state SUCCEEDED --wait-
+                                  for-state FAILED would return on whichever
+                                  lifecycle state is reached first. If timeout
+                                  is reached, a return code of 2 is returned.
+                                  For any other error, a return code of 1 is
+                                  returned.
   --max-wait-seconds INTEGER      The maximum time to wait for the resource to
                                   reach the lifecycle state defined by --wait-
                                   for-state. Defaults to 1200 seconds.
@@ -1383,8 +1428,8 @@ Commands:
 $ oci compute dedicated-vm-host-instance list --help
 Usage: oci compute dedicated-vm-host-instance list [OPTIONS]
 
-  Returns the list of instances on the dedicated virtual machine (VM) hosts
-  that match the specified criteria.
+  Returns the list of instances on the dedicated virtual machine hosts that
+  match the specified criteria.
 
 Options:
   -c, --compartment-id TEXT       The [OCID] of the compartment. [required]
@@ -1763,9 +1808,14 @@ Options:
                                   resource that has a defined lifecycle state.
                                   Specify this option to perform the action and
                                   then wait until the resource reaches a given
-                                  lifecycle state. If timeout is reached, a
-                                  return code of 2 is returned. For any other
-                                  error, a return code of 1 is returned.
+                                  lifecycle state. Multiple states can be
+                                  specified, returning on the first state. For
+                                  example, --wait-for-state SUCCEEDED --wait-
+                                  for-state FAILED would return on whichever
+                                  lifecycle state is reached first. If timeout
+                                  is reached, a return code of 2 is returned.
+                                  For any other error, a return code of 1 is
+                                  returned.
   --max-wait-seconds INTEGER      The maximum time to wait for the resource to
                                   reach the lifecycle state defined by --wait-
                                   for-state. Defaults to 1200 seconds.
@@ -1825,9 +1875,14 @@ Options:
                                   resource that has a defined lifecycle state.
                                   Specify this option to perform the action and
                                   then wait until the resource reaches a given
-                                  lifecycle state. If timeout is reached, a
-                                  return code of 2 is returned. For any other
-                                  error, a return code of 1 is returned.
+                                  lifecycle state. Multiple states can be
+                                  specified, returning on the first state. For
+                                  example, --wait-for-state SUCCEEDED --wait-
+                                  for-state FAILED would return on whichever
+                                  lifecycle state is reached first. If timeout
+                                  is reached, a return code of 2 is returned.
+                                  For any other error, a return code of 1 is
+                                  returned.
   --max-wait-seconds INTEGER      The maximum time to wait for the resource to
                                   reach the lifecycle state defined by --wait-
                                   for-state. Defaults to 1200 seconds.
@@ -2463,9 +2518,14 @@ Options:
                                   resource that has a defined lifecycle state.
                                   Specify this option to perform the action and
                                   then wait until the resource reaches a given
-                                  lifecycle state. If timeout is reached, a
-                                  return code of 2 is returned. For any other
-                                  error, a return code of 1 is returned.
+                                  lifecycle state. Multiple states can be
+                                  specified, returning on the first state. For
+                                  example, --wait-for-state SUCCEEDED --wait-
+                                  for-state FAILED would return on whichever
+                                  lifecycle state is reached first. If timeout
+                                  is reached, a return code of 2 is returned.
+                                  For any other error, a return code of 1 is
+                                  returned.
   --max-wait-seconds INTEGER      The maximum time to wait for the resource to
                                   reach the lifecycle state defined by --wait-
                                   for-state. Defaults to 1200 seconds.
@@ -2574,9 +2634,14 @@ Options:
                                   resource that has a defined lifecycle state.
                                   Specify this option to perform the action and
                                   then wait until the resource reaches a given
-                                  lifecycle state. If timeout is reached, a
-                                  return code of 2 is returned. For any other
-                                  error, a return code of 1 is returned.
+                                  lifecycle state. Multiple states can be
+                                  specified, returning on the first state. For
+                                  example, --wait-for-state SUCCEEDED --wait-
+                                  for-state FAILED would return on whichever
+                                  lifecycle state is reached first. If timeout
+                                  is reached, a return code of 2 is returned.
+                                  For any other error, a return code of 1 is
+                                  returned.
   --max-wait-seconds INTEGER      The maximum time to wait for the resource to
                                   reach the lifecycle state defined by --wait-
                                   for-state. Defaults to 1200 seconds.
@@ -3202,9 +3267,14 @@ Options:
                                   resource that has a defined lifecycle state.
                                   Specify this option to perform the action and
                                   then wait until the resource reaches a given
-                                  lifecycle state. If timeout is reached, a
-                                  return code of 2 is returned. For any other
-                                  error, a return code of 1 is returned.
+                                  lifecycle state. Multiple states can be
+                                  specified, returning on the first state. For
+                                  example, --wait-for-state SUCCEEDED --wait-
+                                  for-state FAILED would return on whichever
+                                  lifecycle state is reached first. If timeout
+                                  is reached, a return code of 2 is returned.
+                                  For any other error, a return code of 1 is
+                                  returned.
   --max-wait-seconds INTEGER      The maximum time to wait for the resource to
                                   reach the lifecycle state defined by --wait-
                                   for-state. Defaults to 1200 seconds.
@@ -3487,9 +3557,14 @@ Options:
                                   resource that has a defined lifecycle state.
                                   Specify this option to perform the action and
                                   then wait until the resource reaches a given
-                                  lifecycle state. If timeout is reached, a
-                                  return code of 2 is returned. For any other
-                                  error, a return code of 1 is returned.
+                                  lifecycle state. Multiple states can be
+                                  specified, returning on the first state. For
+                                  example, --wait-for-state SUCCEEDED --wait-
+                                  for-state FAILED would return on whichever
+                                  lifecycle state is reached first. If timeout
+                                  is reached, a return code of 2 is returned.
+                                  For any other error, a return code of 1 is
+                                  returned.
   --max-wait-seconds INTEGER      The maximum time to wait for the resource to
                                   reach the lifecycle state defined by --wait-
                                   for-state. Defaults to 1200 seconds.
@@ -3680,9 +3755,14 @@ Options:
                                   resource that has a defined lifecycle state.
                                   Specify this option to perform the action and
                                   then wait until the resource reaches a given
-                                  lifecycle state. If timeout is reached, a
-                                  return code of 2 is returned. For any other
-                                  error, a return code of 1 is returned.
+                                  lifecycle state. Multiple states can be
+                                  specified, returning on the first state. For
+                                  example, --wait-for-state SUCCEEDED --wait-
+                                  for-state FAILED would return on whichever
+                                  lifecycle state is reached first. If timeout
+                                  is reached, a return code of 2 is returned.
+                                  For any other error, a return code of 1 is
+                                  returned.
   --max-wait-seconds INTEGER      The maximum time to wait for the resource to
                                   reach the lifecycle state defined by --wait-
                                   for-state. Defaults to 1200 seconds.
@@ -3809,9 +3889,14 @@ Options:
                                   resource that has a defined lifecycle state.
                                   Specify this option to perform the action and
                                   then wait until the resource reaches a given
-                                  lifecycle state. If timeout is reached, a
-                                  return code of 2 is returned. For any other
-                                  error, a return code of 1 is returned.
+                                  lifecycle state. Multiple states can be
+                                  specified, returning on the first state. For
+                                  example, --wait-for-state SUCCEEDED --wait-
+                                  for-state FAILED would return on whichever
+                                  lifecycle state is reached first. If timeout
+                                  is reached, a return code of 2 is returned.
+                                  For any other error, a return code of 1 is
+                                  returned.
   --max-wait-seconds INTEGER      The maximum time to wait for the resource to
                                   reach the lifecycle state defined by --wait-
                                   for-state. Defaults to 1200 seconds.
@@ -3876,9 +3961,14 @@ Options:
                                   resource that has a defined lifecycle state.
                                   Specify this option to perform the action and
                                   then wait until the resource reaches a given
-                                  lifecycle state. If timeout is reached, a
-                                  return code of 2 is returned. For any other
-                                  error, a return code of 1 is returned.
+                                  lifecycle state. Multiple states can be
+                                  specified, returning on the first state. For
+                                  example, --wait-for-state SUCCEEDED --wait-
+                                  for-state FAILED would return on whichever
+                                  lifecycle state is reached first. If timeout
+                                  is reached, a return code of 2 is returned.
+                                  For any other error, a return code of 1 is
+                                  returned.
   --max-wait-seconds INTEGER      The maximum time to wait for the resource to
                                   reach the lifecycle state defined by --wait-
                                   for-state. Defaults to 1200 seconds.
@@ -4812,9 +4902,14 @@ Options:
                                   resource that has a defined lifecycle state.
                                   Specify this option to perform the action and
                                   then wait until the resource reaches a given
-                                  lifecycle state. If timeout is reached, a
-                                  return code of 2 is returned. For any other
-                                  error, a return code of 1 is returned.
+                                  lifecycle state. Multiple states can be
+                                  specified, returning on the first state. For
+                                  example, --wait-for-state SUCCEEDED --wait-
+                                  for-state FAILED would return on whichever
+                                  lifecycle state is reached first. If timeout
+                                  is reached, a return code of 2 is returned.
+                                  For any other error, a return code of 1 is
+                                  returned.
   --max-wait-seconds INTEGER      The maximum time to wait for the resource to
                                   reach the lifecycle state defined by --wait-
                                   for-state. Defaults to 1200 seconds.
@@ -4874,9 +4969,14 @@ Options:
                                   resource that has a defined lifecycle state.
                                   Specify this option to perform the action and
                                   then wait until the resource reaches a given
-                                  lifecycle state. If timeout is reached, a
-                                  return code of 2 is returned. For any other
-                                  error, a return code of 1 is returned.
+                                  lifecycle state. Multiple states can be
+                                  specified, returning on the first state. For
+                                  example, --wait-for-state SUCCEEDED --wait-
+                                  for-state FAILED would return on whichever
+                                  lifecycle state is reached first. If timeout
+                                  is reached, a return code of 2 is returned.
+                                  For any other error, a return code of 1 is
+                                  returned.
   --max-wait-seconds INTEGER      The maximum time to wait for the resource to
                                   reach the lifecycle state defined by --wait-
                                   for-state. Defaults to 1200 seconds.
@@ -4939,9 +5039,14 @@ Options:
                                   resource that has a defined lifecycle state.
                                   Specify this option to perform the action and
                                   then wait until the resource reaches a given
-                                  lifecycle state. If timeout is reached, a
-                                  return code of 2 is returned. For any other
-                                  error, a return code of 1 is returned.
+                                  lifecycle state. Multiple states can be
+                                  specified, returning on the first state. For
+                                  example, --wait-for-state SUCCEEDED --wait-
+                                  for-state FAILED would return on whichever
+                                  lifecycle state is reached first. If timeout
+                                  is reached, a return code of 2 is returned.
+                                  For any other error, a return code of 1 is
+                                  returned.
   --max-wait-seconds INTEGER      The maximum time to wait for the resource to
                                   reach the lifecycle state defined by --wait-
                                   for-state. Defaults to 1200 seconds.
@@ -5005,9 +5110,14 @@ Options:
                                   resource that has a defined lifecycle state.
                                   Specify this option to perform the action and
                                   then wait until the resource reaches a given
-                                  lifecycle state. If timeout is reached, a
-                                  return code of 2 is returned. For any other
-                                  error, a return code of 1 is returned.
+                                  lifecycle state. Multiple states can be
+                                  specified, returning on the first state. For
+                                  example, --wait-for-state SUCCEEDED --wait-
+                                  for-state FAILED would return on whichever
+                                  lifecycle state is reached first. If timeout
+                                  is reached, a return code of 2 is returned.
+                                  For any other error, a return code of 1 is
+                                  returned.
   --max-wait-seconds INTEGER      The maximum time to wait for the resource to
                                   reach the lifecycle state defined by --wait-
                                   for-state. Defaults to 1200 seconds.

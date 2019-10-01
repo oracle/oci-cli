@@ -7,6 +7,7 @@ from oci_cli.cli_util import option
 from oci_cli.aliasing import CommandGroupWithAlias
 from services.dns.src.oci_cli_dns.generated import dns_cli
 from oci_cli import json_skeleton_utils
+from oci_cli import custom_types
 import click
 
 
@@ -35,15 +36,34 @@ def zone():
 
 
 # specify that compartment_id is required for create zone
-@cli_util.copy_params_from_generated_command(dns_cli.create_zone, params_to_exclude=['compartment_id'])
-@dns_cli.zone_group.command(name=cli_util.override('create_zone.command_name', 'create'), help="""Creates a new zone in the specified compartment. The `compartmentId` query parameter is required if the `Content-Type` header for the request is `text/dns`.""")
+@cli_util.copy_params_from_generated_command(dns_cli.create_zone_create_zone_details, params_to_exclude=['compartment_id', 'zone_type'])
+@dns_cli.zone_group.command(name=cli_util.override('create_zone_create_zone_details.command_name', 'create'), help=dns_cli.create_zone_create_zone_details.help)
 @option('--compartment-id', required=True, help="""The OCID of the compartment the resource belongs to.""")
+@option('--zone-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["PRIMARY", "SECONDARY"]), help=u"""The type of the zone. Must be either `PRIMARY` or `SECONDARY`.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'dns', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'dns', 'class': 'dict(str, dict(str, object))'}, 'external-masters': {'module': 'dns', 'class': 'list[ExternalMaster]'}}, output_type={'module': 'dns', 'class': 'Zone'})
 @cli_util.wrap_exceptions
 def create_zone(ctx, **kwargs):
-    ctx.invoke(dns_cli.create_zone, **kwargs)
+    ctx.invoke(dns_cli.create_zone_create_zone_details, **kwargs)
 
+
+# specify that compartment_id and dynect-migration-details are required for migrate zone
+@cli_util.copy_params_from_generated_command(dns_cli.create_zone_create_migrated_dynect_zone_details, params_to_exclude=['compartment_id', 'dynect_migration_details'])
+@dns_cli.zone_group.command(name=cli_util.override('create_zone_create_migrated_dynect_zone_details.command_name', 'migrate-from-dynect'), help="""Migrates a zone from DynECT into a specific compartment in OCI.""")
+@option('--compartment-id', required=True, help="""The OCID of the compartment the resource belongs to.""")
+@option('--dynect-migration-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'dns', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'dns', 'class': 'dict(str, dict(str, object))'}, 'dynect-migration-details': {'module': 'dns', 'class': 'DynectMigrationDetails'}}, output_type={'module': 'dns', 'class': 'Zone'})
+@cli_util.wrap_exceptions
+def migrate_zone_from_dynect(ctx, **kwargs):
+    ctx.invoke(dns_cli.create_zone_create_migrated_dynect_zone_details, **kwargs)
+
+
+dns_cli.zone_group.commands.pop(dns_cli.create_zone.name)
+dns_cli.zone_group.commands.pop(dns_cli.create_zone_create_migrated_dynect_zone_details.name)
+dns_cli.zone_group.commands.pop(dns_cli.create_zone_create_zone_details.name)
+dns_cli.zone_group.add_command(create_zone)
+dns_cli.zone_group.add_command(migrate_zone_from_dynect)
 
 dns_cli.dns_root_group.commands.pop(dns_cli.rr_set_group.name)
 dns_cli.dns_root_group.commands.pop(dns_cli.record_collection_group.name)

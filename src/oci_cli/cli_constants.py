@@ -14,6 +14,7 @@ CLI_RC_GENERIC_SETTINGS_USE_CLICK_HELP = 'use_click_help'
 
 OCI_CLI_AUTH_ENV_VAR = 'OCI_CLI_AUTH'
 OCI_CLI_AUTH_INSTANCE_PRINCIPAL = 'instance_principal'
+OCI_CLI_AUTH_RESOURCE_PRINCIPAL = 'resource_principal'
 OCI_CLI_AUTH_INSTANCE_OBO_USER = 'instance_obo_user'
 OCI_CLI_AUTH_API_KEY = 'api_key'
 OCI_CLI_AUTH_SESSION_TOKEN = 'security_token'
