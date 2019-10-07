@@ -14,25 +14,25 @@ from oci_cli.aliasing import CommandGroupWithAlias
 from services.key_management.src.oci_cli_key_management.generated import kms_service_cli
 
 
-@click.command(cli_util.override('kms_crypto_root_group.command_name', 'kms-crypto'), cls=CommandGroupWithAlias, help=cli_util.override('kms_crypto_root_group.help', """API for managing and performing operations with keys and vaults."""), short_help=cli_util.override('kms_crypto_root_group.short_help', """Key Management Service API"""))
+@click.command(cli_util.override('kms_crypto.kms_crypto_root_group.command_name', 'kms-crypto'), cls=CommandGroupWithAlias, help=cli_util.override('kms_crypto.kms_crypto_root_group.help', """API for managing and performing operations with keys and vaults."""), short_help=cli_util.override('kms_crypto.kms_crypto_root_group.short_help', """Key Management Service API"""))
 @cli_util.help_option_group
 def kms_crypto_root_group():
     pass
 
 
-@click.command(cli_util.override('decrypted_data_group.command_name', 'decrypted-data'), cls=CommandGroupWithAlias, help="""""")
+@click.command(cli_util.override('kms_crypto.decrypted_data_group.command_name', 'decrypted-data'), cls=CommandGroupWithAlias, help="""""")
 @cli_util.help_option_group
 def decrypted_data_group():
     pass
 
 
-@click.command(cli_util.override('generated_key_group.command_name', 'generated-key'), cls=CommandGroupWithAlias, help="""""")
+@click.command(cli_util.override('kms_crypto.generated_key_group.command_name', 'generated-key'), cls=CommandGroupWithAlias, help="""""")
 @cli_util.help_option_group
 def generated_key_group():
     pass
 
 
-@click.command(cli_util.override('encrypted_data_group.command_name', 'encrypted-data'), cls=CommandGroupWithAlias, help="""""")
+@click.command(cli_util.override('kms_crypto.encrypted_data_group.command_name', 'encrypted-data'), cls=CommandGroupWithAlias, help="""""")
 @cli_util.help_option_group
 def encrypted_data_group():
     pass
@@ -44,7 +44,7 @@ kms_crypto_root_group.add_command(generated_key_group)
 kms_crypto_root_group.add_command(encrypted_data_group)
 
 
-@decrypted_data_group.command(name=cli_util.override('decrypt.command_name', 'decrypt'), help=u"""Decrypts data using the given DecryptDataDetails resource.
+@decrypted_data_group.command(name=cli_util.override('kms_crypto.decrypt.command_name', 'decrypt'), help=u"""Decrypts data using the given DecryptDataDetails resource.
 
 The top level --endpoint parameter must be supplied for this operation.""")
 @cli_util.option('--ciphertext', required=True, help=u"""The encrypted data to decrypt.""")
@@ -79,7 +79,7 @@ def decrypt(ctx, from_json, ciphertext, key_id, associated_data, logging_context
     cli_util.render_response(result, ctx)
 
 
-@encrypted_data_group.command(name=cli_util.override('encrypt.command_name', 'encrypt'), help=u"""Encrypts data using the given EncryptDataDetails resource. Plaintext included in the example request is a base64-encoded value of a UTF-8 string.
+@encrypted_data_group.command(name=cli_util.override('kms_crypto.encrypt.command_name', 'encrypt'), help=u"""Encrypts data using the given EncryptDataDetails resource. Plaintext included in the example request is a base64-encoded value of a UTF-8 string.
 
 The top level --endpoint parameter must be supplied for this operation.""")
 @cli_util.option('--key-id', required=True, help=u"""The OCID of the key to encrypt with.""")
@@ -114,7 +114,7 @@ def encrypt(ctx, from_json, key_id, plaintext, associated_data, logging_context)
     cli_util.render_response(result, ctx)
 
 
-@generated_key_group.command(name=cli_util.override('generate_data_encryption_key.command_name', 'generate-data-encryption-key'), help=u"""Generates a key that you can use to encrypt or decrypt data.
+@generated_key_group.command(name=cli_util.override('kms_crypto.generate_data_encryption_key.command_name', 'generate-data-encryption-key'), help=u"""Generates a key that you can use to encrypt or decrypt data.
 
 The top level --endpoint parameter must be supplied for this operation.""")
 @cli_util.option('--include-plaintext-key', required=True, type=click.BOOL, help=u"""If true, the generated key is also returned unencrypted.""")

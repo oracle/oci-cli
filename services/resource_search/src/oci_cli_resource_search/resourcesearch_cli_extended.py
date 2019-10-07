@@ -6,9 +6,9 @@ from oci_cli import cli_util
 from oci_cli import json_skeleton_utils
 import click
 
-cli_util.rename_command(resourcesearch_cli.search_root_group, resourcesearch_cli.resource_summary_collection_group, "resource")
-cli_util.rename_command(resourcesearch_cli.resource_summary_collection_group, resourcesearch_cli.search_resources_free_text_search_details, "free-text-search")
-cli_util.rename_command(resourcesearch_cli.resource_summary_collection_group, resourcesearch_cli.search_resources_structured_search_details, "structured-search")
+cli_util.rename_command(resourcesearch_cli, resourcesearch_cli.search_root_group, resourcesearch_cli.resource_summary_collection_group, "resource")
+cli_util.rename_command(resourcesearch_cli, resourcesearch_cli.resource_summary_collection_group, resourcesearch_cli.search_resources_free_text_search_details, "free-text-search")
+cli_util.rename_command(resourcesearch_cli, resourcesearch_cli.resource_summary_collection_group, resourcesearch_cli.search_resources_structured_search_details, "structured-search")
 
 resourcesearch_cli.resource_summary_collection_group.commands.pop(resourcesearch_cli.search_resources.name)
 resourcesearch_cli.resource_summary_collection_group.commands.pop(resourcesearch_cli.search_resources_structured_search_details.name)

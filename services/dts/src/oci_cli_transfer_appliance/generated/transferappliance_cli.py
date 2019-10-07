@@ -14,31 +14,31 @@ from oci_cli.aliasing import CommandGroupWithAlias
 from services.dts.src.oci_cli_dts.generated import dts_service_cli
 
 
-@click.command(cli_util.override('transfer_appliance_root_group.command_name', 'transfer-appliance'), cls=CommandGroupWithAlias, help=cli_util.override('transfer_appliance_root_group.help', """A description of the DTS API"""), short_help=cli_util.override('transfer_appliance_root_group.short_help', """DTS API"""))
+@click.command(cli_util.override('transfer_appliance.transfer_appliance_root_group.command_name', 'transfer-appliance'), cls=CommandGroupWithAlias, help=cli_util.override('transfer_appliance.transfer_appliance_root_group.help', """Data Transfer Service API Specification"""), short_help=cli_util.override('transfer_appliance.transfer_appliance_root_group.short_help', """Data Transfer Service API"""))
 @cli_util.help_option_group
 def transfer_appliance_root_group():
     pass
 
 
-@click.command(cli_util.override('transfer_appliance_certificate_group.command_name', 'transfer-appliance-certificate'), cls=CommandGroupWithAlias, help="""""")
+@click.command(cli_util.override('transfer_appliance.transfer_appliance_certificate_group.command_name', 'transfer-appliance-certificate'), cls=CommandGroupWithAlias, help="""""")
 @cli_util.help_option_group
 def transfer_appliance_certificate_group():
     pass
 
 
-@click.command(cli_util.override('transfer_appliance_group.command_name', 'transfer-appliance'), cls=CommandGroupWithAlias, help="""""")
+@click.command(cli_util.override('transfer_appliance.transfer_appliance_group.command_name', 'transfer-appliance'), cls=CommandGroupWithAlias, help="""""")
 @cli_util.help_option_group
 def transfer_appliance_group():
     pass
 
 
-@click.command(cli_util.override('transfer_appliance_public_key_group.command_name', 'transfer-appliance-public-key'), cls=CommandGroupWithAlias, help="""""")
+@click.command(cli_util.override('transfer_appliance.transfer_appliance_public_key_group.command_name', 'transfer-appliance-public-key'), cls=CommandGroupWithAlias, help="""""")
 @cli_util.help_option_group
 def transfer_appliance_public_key_group():
     pass
 
 
-@click.command(cli_util.override('transfer_appliance_encryption_passphrase_group.command_name', 'transfer-appliance-encryption-passphrase'), cls=CommandGroupWithAlias, help="""""")
+@click.command(cli_util.override('transfer_appliance.transfer_appliance_encryption_passphrase_group.command_name', 'transfer-appliance-encryption-passphrase'), cls=CommandGroupWithAlias, help="""""")
 @cli_util.help_option_group
 def transfer_appliance_encryption_passphrase_group():
     pass
@@ -51,10 +51,10 @@ transfer_appliance_root_group.add_command(transfer_appliance_public_key_group)
 transfer_appliance_root_group.add_command(transfer_appliance_encryption_passphrase_group)
 
 
-@transfer_appliance_group.command(name=cli_util.override('create_transfer_appliance.command_name', 'create'), help=u"""Create a new Transfer Appliance""")
+@transfer_appliance_group.command(name=cli_util.override('transfer_appliance.create_transfer_appliance.command_name', 'create'), help=u"""Create a new Transfer Appliance""")
 @cli_util.option('--id', required=True, help=u"""ID of the Transfer Job""")
 @cli_util.option('--customer-shipping-address', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["REQUESTED", "ORACLE_PREPARING", "SHIPPING", "DELIVERED", "PREPARING", "RETURN_SHIPPED", "RETURN_SHIPPED_CANCELLED", "ORACLE_RECEIVED", "ORACLE_RECEIVED_CANCELLED", "PROCESSING", "COMPLETE", "CUSTOMER_NEVER_RECEIVED", "ORACLE_NEVER_RECEIVED", "CUSTOMER_LOST", "CANCELLED", "DELETED", "REJECTED", "ERROR"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["REQUESTED", "ORACLE_PREPARING", "SHIPPING", "DELIVERED", "PREPARING", "FINALIZED", "RETURN_DELAYED", "RETURN_SHIPPED", "RETURN_SHIPPED_CANCELLED", "ORACLE_RECEIVED", "ORACLE_RECEIVED_CANCELLED", "PROCESSING", "COMPLETE", "CUSTOMER_NEVER_RECEIVED", "ORACLE_NEVER_RECEIVED", "CUSTOMER_LOST", "CANCELLED", "DELETED", "REJECTED", "ERROR"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'customer-shipping-address': {'module': 'dts', 'class': 'ShippingAddress'}})
@@ -105,7 +105,7 @@ def create_transfer_appliance(ctx, from_json, wait_for_state, max_wait_seconds, 
     cli_util.render_response(result, ctx)
 
 
-@transfer_appliance_public_key_group.command(name=cli_util.override('create_transfer_appliance_admin_credentials.command_name', 'create-transfer-appliance-admin-credentials'), help=u"""Creates an X.509 certificate from a public key""")
+@transfer_appliance_public_key_group.command(name=cli_util.override('transfer_appliance.create_transfer_appliance_admin_credentials.command_name', 'create-transfer-appliance-admin-credentials'), help=u"""Creates an X.509 certificate from a public key""")
 @cli_util.option('--id', required=True, help=u"""ID of the Transfer Job""")
 @cli_util.option('--transfer-appliance-label', required=True, help=u"""Label of the Transfer Appliance""")
 @cli_util.option('--public-key', help=u"""""")
@@ -139,7 +139,7 @@ def create_transfer_appliance_admin_credentials(ctx, from_json, id, transfer_app
     cli_util.render_response(result, ctx)
 
 
-@transfer_appliance_group.command(name=cli_util.override('delete_transfer_appliance.command_name', 'delete'), help=u"""deletes a transfer Appliance""")
+@transfer_appliance_group.command(name=cli_util.override('transfer_appliance.delete_transfer_appliance.command_name', 'delete'), help=u"""deletes a transfer Appliance""")
 @cli_util.option('--id', required=True, help=u"""ID of the Transfer Job""")
 @cli_util.option('--transfer-appliance-label', required=True, help=u"""Label of the Transfer Appliance""")
 @cli_util.confirm_delete_option
@@ -166,7 +166,7 @@ def delete_transfer_appliance(ctx, from_json, id, transfer_appliance_label):
     cli_util.render_response(result, ctx)
 
 
-@transfer_appliance_group.command(name=cli_util.override('get_transfer_appliance.command_name', 'get'), help=u"""Describes a transfer appliance in detail""")
+@transfer_appliance_group.command(name=cli_util.override('transfer_appliance.get_transfer_appliance.command_name', 'get'), help=u"""Describes a transfer appliance in detail""")
 @cli_util.option('--id', required=True, help=u"""ID of the Transfer Job""")
 @cli_util.option('--transfer-appliance-label', required=True, help=u"""Label of the Transfer Appliance""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -192,7 +192,7 @@ def get_transfer_appliance(ctx, from_json, id, transfer_appliance_label):
     cli_util.render_response(result, ctx)
 
 
-@transfer_appliance_certificate_group.command(name=cli_util.override('get_transfer_appliance_certificate_authority_certificate.command_name', 'get-transfer-appliance-certificate-authority-certificate'), help=u"""Gets the x.509 certificate for the Transfer Appliance's dedicated Certificate Authority (CA)""")
+@transfer_appliance_certificate_group.command(name=cli_util.override('transfer_appliance.get_transfer_appliance_certificate_authority_certificate.command_name', 'get-transfer-appliance-certificate-authority-certificate'), help=u"""Gets the x.509 certificate for the Transfer Appliance's dedicated Certificate Authority (CA)""")
 @cli_util.option('--id', required=True, help=u"""ID of the Transfer Job""")
 @cli_util.option('--transfer-appliance-label', required=True, help=u"""Label of the Transfer Appliance""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -218,7 +218,7 @@ def get_transfer_appliance_certificate_authority_certificate(ctx, from_json, id,
     cli_util.render_response(result, ctx)
 
 
-@transfer_appliance_encryption_passphrase_group.command(name=cli_util.override('get_transfer_appliance_encryption_passphrase.command_name', 'get'), help=u"""Describes a transfer appliance encryptionPassphrase in detail""")
+@transfer_appliance_encryption_passphrase_group.command(name=cli_util.override('transfer_appliance.get_transfer_appliance_encryption_passphrase.command_name', 'get'), help=u"""Describes a transfer appliance encryptionPassphrase in detail""")
 @cli_util.option('--id', required=True, help=u"""ID of the Transfer Job""")
 @cli_util.option('--transfer-appliance-label', required=True, help=u"""Label of the Transfer Appliance""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -244,9 +244,9 @@ def get_transfer_appliance_encryption_passphrase(ctx, from_json, id, transfer_ap
     cli_util.render_response(result, ctx)
 
 
-@transfer_appliance_group.command(name=cli_util.override('list_transfer_appliances.command_name', 'list'), help=u"""Lists Transfer Appliances associated with a transferJob""")
+@transfer_appliance_group.command(name=cli_util.override('transfer_appliance.list_transfer_appliances.command_name', 'list'), help=u"""Lists Transfer Appliances associated with a transferJob""")
 @cli_util.option('--id', required=True, help=u"""ID of the Transfer Job""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["REQUESTED", "ORACLE_PREPARING", "SHIPPING", "DELIVERED", "PREPARING", "RETURN_SHIPPED", "RETURN_SHIPPED_CANCELLED", "ORACLE_RECEIVED", "ORACLE_RECEIVED_CANCELLED", "PROCESSING", "COMPLETE", "CUSTOMER_NEVER_RECEIVED", "ORACLE_NEVER_RECEIVED", "CUSTOMER_LOST", "CANCELLED", "DELETED", "REJECTED", "ERROR"]), help=u"""filtering by lifecycleState""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["REQUESTED", "ORACLE_PREPARING", "SHIPPING", "DELIVERED", "PREPARING", "FINALIZED", "RETURN_DELAYED", "RETURN_SHIPPED", "RETURN_SHIPPED_CANCELLED", "ORACLE_RECEIVED", "ORACLE_RECEIVED_CANCELLED", "PROCESSING", "COMPLETE", "CUSTOMER_NEVER_RECEIVED", "ORACLE_NEVER_RECEIVED", "CUSTOMER_LOST", "CANCELLED", "DELETED", "REJECTED", "ERROR"]), help=u"""filtering by lifecycleState""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -269,14 +269,14 @@ def list_transfer_appliances(ctx, from_json, all_pages, id, lifecycle_state):
     cli_util.render_response(result, ctx)
 
 
-@transfer_appliance_group.command(name=cli_util.override('update_transfer_appliance.command_name', 'update'), help=u"""Updates a Transfer Appliance""")
+@transfer_appliance_group.command(name=cli_util.override('transfer_appliance.update_transfer_appliance.command_name', 'update'), help=u"""Updates a Transfer Appliance""")
 @cli_util.option('--id', required=True, help=u"""ID of the Transfer Job""")
 @cli_util.option('--transfer-appliance-label', required=True, help=u"""Label of the Transfer Appliance""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["PREPARING", "DELETED", "CUSTOMER_NEVER_RECEIVED", "CANCELLED"]), help=u"""""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["PREPARING", "FINALIZED", "DELETED", "CUSTOMER_NEVER_RECEIVED", "CANCELLED"]), help=u"""""")
 @cli_util.option('--customer-shipping-address', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""The entity tag to match. Optional, if set, the update will be successful only if the object's tag matches the tag specified in the request.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["REQUESTED", "ORACLE_PREPARING", "SHIPPING", "DELIVERED", "PREPARING", "RETURN_SHIPPED", "RETURN_SHIPPED_CANCELLED", "ORACLE_RECEIVED", "ORACLE_RECEIVED_CANCELLED", "PROCESSING", "COMPLETE", "CUSTOMER_NEVER_RECEIVED", "ORACLE_NEVER_RECEIVED", "CUSTOMER_LOST", "CANCELLED", "DELETED", "REJECTED", "ERROR"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["REQUESTED", "ORACLE_PREPARING", "SHIPPING", "DELIVERED", "PREPARING", "FINALIZED", "RETURN_DELAYED", "RETURN_SHIPPED", "RETURN_SHIPPED_CANCELLED", "ORACLE_RECEIVED", "ORACLE_RECEIVED_CANCELLED", "PROCESSING", "COMPLETE", "CUSTOMER_NEVER_RECEIVED", "ORACLE_NEVER_RECEIVED", "CUSTOMER_LOST", "CANCELLED", "DELETED", "REJECTED", "ERROR"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'customer-shipping-address': {'module': 'dts', 'class': 'ShippingAddress'}})

@@ -14,25 +14,25 @@ from oci_cli.aliasing import CommandGroupWithAlias
 from services.streaming.src.oci_cli_streaming.generated import streaming_service_cli
 
 
-@click.command(cli_util.override('stream_root_group.command_name', 'stream'), cls=CommandGroupWithAlias, help=cli_util.override('stream_root_group.help', """The API for the Streaming Service."""), short_help=cli_util.override('stream_root_group.short_help', """Streaming Service API"""))
+@click.command(cli_util.override('stream.stream_root_group.command_name', 'stream'), cls=CommandGroupWithAlias, help=cli_util.override('stream.stream_root_group.help', """The API for the Streaming Service."""), short_help=cli_util.override('stream.stream_root_group.short_help', """Streaming Service API"""))
 @cli_util.help_option_group
 def stream_root_group():
     pass
 
 
-@click.command(cli_util.override('cursor_group.command_name', 'cursor'), cls=CommandGroupWithAlias, help="""A cursor that indicates the position in the stream from which you want to begin consuming messages and which is required by the [GetMessages] operation.""")
+@click.command(cli_util.override('stream.cursor_group.command_name', 'cursor'), cls=CommandGroupWithAlias, help="""A cursor that indicates the position in the stream from which you want to begin consuming messages and which is required by the [GetMessages] operation.""")
 @cli_util.help_option_group
 def cursor_group():
     pass
 
 
-@click.command(cli_util.override('message_group.command_name', 'message'), cls=CommandGroupWithAlias, help="""A message in a stream.""")
+@click.command(cli_util.override('stream.message_group.command_name', 'message'), cls=CommandGroupWithAlias, help="""A message in a stream.""")
 @cli_util.help_option_group
 def message_group():
     pass
 
 
-@click.command(cli_util.override('group_group.command_name', 'group'), cls=CommandGroupWithAlias, help="""Represents the current state of a consumer group, including partition reservations and committed offsets.""")
+@click.command(cli_util.override('stream.group_group.command_name', 'group'), cls=CommandGroupWithAlias, help="""Represents the current state of a consumer group, including partition reservations and committed offsets.""")
 @cli_util.help_option_group
 def group_group():
     pass
@@ -44,7 +44,7 @@ stream_root_group.add_command(message_group)
 stream_root_group.add_command(group_group)
 
 
-@group_group.command(name=cli_util.override('consumer_commit.command_name', 'consumer-commit'), help=u"""Provides a mechanism to manually commit offsets, if not using commit-on-get consumer semantics. This commits offsets assicated with the provided cursor, extends the timeout on each of the affected partitions, and returns an updated cursor.
+@group_group.command(name=cli_util.override('stream.consumer_commit.command_name', 'consumer-commit'), help=u"""Provides a mechanism to manually commit offsets, if not using commit-on-get consumer semantics. This commits offsets assicated with the provided cursor, extends the timeout on each of the affected partitions, and returns an updated cursor.
 
 The top level --endpoint parameter must be supplied for this operation.""")
 @cli_util.option('--stream-id', required=True, help=u"""The OCID of the stream for which the group is committing offsets.""")
@@ -70,7 +70,7 @@ def consumer_commit(ctx, from_json, stream_id, cursor):
     cli_util.render_response(result, ctx)
 
 
-@group_group.command(name=cli_util.override('consumer_heartbeat.command_name', 'consumer-heartbeat'), help=u"""Allows long-running processes to extend the timeout on partitions reserved by a consumer instance.
+@group_group.command(name=cli_util.override('stream.consumer_heartbeat.command_name', 'consumer-heartbeat'), help=u"""Allows long-running processes to extend the timeout on partitions reserved by a consumer instance.
 
 The top level --endpoint parameter must be supplied for this operation.""")
 @cli_util.option('--stream-id', required=True, help=u"""The OCID of the stream for which the group is committing offsets.""")
@@ -96,7 +96,7 @@ def consumer_heartbeat(ctx, from_json, stream_id, cursor):
     cli_util.render_response(result, ctx)
 
 
-@cursor_group.command(name=cli_util.override('create_cursor.command_name', 'create'), help=u"""Creates a cursor. Cursors are used to consume a stream, starting from a specific point in the partition and going forward from there. You can create a cursor based on an offset, a time, the trim horizon, or the most recent message in the stream. As the oldest message inside the retention period boundary, using the trim horizon effectively lets you consume all messages in the stream. A cursor based on the most recent message allows consumption of only messages that are added to the stream after you create the cursor. Cursors expire five minutes after you receive them from the service.
+@cursor_group.command(name=cli_util.override('stream.create_cursor.command_name', 'create'), help=u"""Creates a cursor. Cursors are used to consume a stream, starting from a specific point in the partition and going forward from there. You can create a cursor based on an offset, a time, the trim horizon, or the most recent message in the stream. As the oldest message inside the retention period boundary, using the trim horizon effectively lets you consume all messages in the stream. A cursor based on the most recent message allows consumption of only messages that are added to the stream after you create the cursor. Cursors expire five minutes after you receive them from the service.
 
 The top level --endpoint parameter must be supplied for this operation.""")
 @cli_util.option('--stream-id', required=True, help=u"""The OCID of the stream to create a cursor for.""")
@@ -138,7 +138,7 @@ def create_cursor(ctx, from_json, stream_id, partition, type, offset, time):
     cli_util.render_response(result, ctx)
 
 
-@cursor_group.command(name=cli_util.override('create_group_cursor.command_name', 'create-group'), help=u"""Creates a group-cursor.
+@cursor_group.command(name=cli_util.override('stream.create_group_cursor.command_name', 'create-group'), help=u"""Creates a group-cursor.
 
 The top level --endpoint parameter must be supplied for this operation.""")
 @cli_util.option('--stream-id', required=True, help=u"""The OCID of the stream to create a cursor for.""")
@@ -186,7 +186,7 @@ def create_group_cursor(ctx, from_json, stream_id, type, group_name, time, insta
     cli_util.render_response(result, ctx)
 
 
-@group_group.command(name=cli_util.override('get_group.command_name', 'get'), help=u"""Returns the current state of a consumer group.
+@group_group.command(name=cli_util.override('stream.get_group.command_name', 'get'), help=u"""Returns the current state of a consumer group.
 
 The top level --endpoint parameter must be supplied for this operation.""")
 @cli_util.option('--stream-id', required=True, help=u"""The OCID of the stream, on which the group is operating.""")
@@ -215,7 +215,7 @@ def get_group(ctx, from_json, stream_id, group_name):
     cli_util.render_response(result, ctx)
 
 
-@message_group.command(name=cli_util.override('get_messages.command_name', 'get'), help=u"""Returns messages from the specified stream using the specified cursor as the starting point for consumption. By default, the number of messages returned is undefined, but the service returns as many as possible. To get messages, you must first obtain a cursor using the [CreateCursor] operation. In the response, retrieve the value of the 'opc-next-cursor' header to pass as a parameter to get the next batch of messages in the stream.
+@message_group.command(name=cli_util.override('stream.get_messages.command_name', 'get'), help=u"""Returns messages from the specified stream using the specified cursor as the starting point for consumption. By default, the number of messages returned is undefined, but the service returns as many as possible. To get messages, you must first obtain a cursor using the [CreateCursor] operation. In the response, retrieve the value of the 'opc-next-cursor' header to pass as a parameter to get the next batch of messages in the stream.
 
 The top level --endpoint parameter must be supplied for this operation.""")
 @cli_util.option('--stream-id', required=True, help=u"""The OCID of the stream to get messages from.""")
@@ -244,7 +244,7 @@ def get_messages(ctx, from_json, stream_id, cursor, limit):
     cli_util.render_response(result, ctx)
 
 
-@message_group.command(name=cli_util.override('put_messages.command_name', 'put'), help=u"""Emits messages to a stream. There's no limit to the number of messages in a request, but the total size of a message or request must be 1 MiB or less. The service calculates the partition ID from the message key and stores messages that share a key on the same partition. If a message does not contain a key or if the key is null, the service generates a message key for you. The partition ID cannot be passed as a parameter.
+@message_group.command(name=cli_util.override('stream.put_messages.command_name', 'put'), help=u"""Emits messages to a stream. There's no limit to the number of messages in a request, but the total size of a message or request must be 1 MiB or less. The service calculates the partition ID from the message key and stores messages that share a key on the same partition. If a message does not contain a key or if the key is null, the service generates a message key for you. The partition ID cannot be passed as a parameter.
 
 The top level --endpoint parameter must be supplied for this operation.""")
 @cli_util.option('--stream-id', required=True, help=u"""The OCID of the stream where you want to put messages.""")
@@ -274,7 +274,7 @@ def put_messages(ctx, from_json, stream_id, messages):
     cli_util.render_response(result, ctx)
 
 
-@group_group.command(name=cli_util.override('update_group.command_name', 'update'), help=u"""Forcefully changes the current location of a group as a whole; reseting processing location of all consumers to a particular location in the stream.
+@group_group.command(name=cli_util.override('stream.update_group.command_name', 'update'), help=u"""Forcefully changes the current location of a group as a whole; reseting processing location of all consumers to a particular location in the stream.
 
 The top level --endpoint parameter must be supplied for this operation.""")
 @cli_util.option('--stream-id', required=True, help=u"""The OCID of the stream, on which the group is operating.""")

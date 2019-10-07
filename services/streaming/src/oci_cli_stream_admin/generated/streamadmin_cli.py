@@ -14,19 +14,19 @@ from oci_cli.aliasing import CommandGroupWithAlias
 from services.streaming.src.oci_cli_streaming.generated import streaming_service_cli
 
 
-@click.command(cli_util.override('stream_admin_root_group.command_name', 'stream-admin'), cls=CommandGroupWithAlias, help=cli_util.override('stream_admin_root_group.help', """The API for the Streaming Service."""), short_help=cli_util.override('stream_admin_root_group.short_help', """Streaming Service API"""))
+@click.command(cli_util.override('stream_admin.stream_admin_root_group.command_name', 'stream-admin'), cls=CommandGroupWithAlias, help=cli_util.override('stream_admin.stream_admin_root_group.help', """The API for the Streaming Service."""), short_help=cli_util.override('stream_admin.stream_admin_root_group.short_help', """Streaming Service API"""))
 @cli_util.help_option_group
 def stream_admin_root_group():
     pass
 
 
-@click.command(cli_util.override('archiver_group.command_name', 'archiver'), cls=CommandGroupWithAlias, help="""Represents the current state of the stream archiver.""")
+@click.command(cli_util.override('stream_admin.archiver_group.command_name', 'archiver'), cls=CommandGroupWithAlias, help="""Represents the current state of the stream archiver.""")
 @cli_util.help_option_group
 def archiver_group():
     pass
 
 
-@click.command(cli_util.override('stream_group.command_name', 'stream'), cls=CommandGroupWithAlias, help="""Detailed representation of a stream, including all its partitions.""")
+@click.command(cli_util.override('stream_admin.stream_group.command_name', 'stream'), cls=CommandGroupWithAlias, help="""Detailed representation of a stream, including all its partitions.""")
 @cli_util.help_option_group
 def stream_group():
     pass
@@ -37,7 +37,7 @@ stream_admin_root_group.add_command(archiver_group)
 stream_admin_root_group.add_command(stream_group)
 
 
-@stream_group.command(name=cli_util.override('change_stream_compartment.command_name', 'change-compartment'), help=u"""Moves a resource into a different compartment. When provided, If-Match is checked against ETag values of the resource.""")
+@stream_group.command(name=cli_util.override('stream_admin.change_stream_compartment.command_name', 'change-compartment'), help=u"""Moves a resource into a different compartment. When provided, If-Match is checked against ETag values of the resource.""")
 @cli_util.option('--stream-id', required=True, help=u"""The OCID of the stream to change compatment for.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -68,7 +68,7 @@ def change_stream_compartment(ctx, from_json, stream_id, compartment_id, if_matc
     cli_util.render_response(result, ctx)
 
 
-@archiver_group.command(name=cli_util.override('create_archiver.command_name', 'create'), help=u"""Starts the provisioning of a new stream archiver. To track the progress of the provisioning, you can periodically call [GetArchiver]. In the response, the `lifecycleState` parameter of the [Stream] object tells you its current state.""")
+@archiver_group.command(name=cli_util.override('stream_admin.create_archiver.command_name', 'create'), help=u"""Starts the provisioning of a new stream archiver. To track the progress of the provisioning, you can periodically call [GetArchiver]. In the response, the `lifecycleState` parameter of the [Stream] object tells you its current state.""")
 @cli_util.option('--stream-id', required=True, help=u"""The OCID of the stream.""")
 @cli_util.option('--bucket-name', required=True, help=u"""The name of the bucket.""")
 @cli_util.option('--use-existing-bucket', required=True, type=click.BOOL, help=u"""The flag to create a new bucket or use existing one.""")
@@ -129,7 +129,7 @@ def create_archiver(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
     cli_util.render_response(result, ctx)
 
 
-@stream_group.command(name=cli_util.override('create_stream.command_name', 'create'), help=u"""Starts the provisioning of a new stream. To track the progress of the provisioning, you can periodically call [GetStream]. In the response, the `lifecycleState` parameter of the [Stream] object tells you its current state.""")
+@stream_group.command(name=cli_util.override('stream_admin.create_stream.command_name', 'create'), help=u"""Starts the provisioning of a new stream. To track the progress of the provisioning, you can periodically call [GetStream]. In the response, the `lifecycleState` parameter of the [Stream] object tells you its current state.""")
 @cli_util.option('--name', required=True, help=u"""The name of the stream. Avoid entering confidential information.
 
 Example: `TelemetryEvents`""")
@@ -199,7 +199,7 @@ def create_stream(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
     cli_util.render_response(result, ctx)
 
 
-@stream_group.command(name=cli_util.override('delete_stream.command_name', 'delete'), help=u"""Deletes a stream and its content. Stream contents are deleted immediately. The service retains records of the stream itself for 90 days after deletion. The `lifecycleState` parameter of the `Stream` object changes to `DELETING` and the stream becomes inaccessible for read or write operations. To verify that a stream has been deleted, make a [GetStream] request. If the call returns the stream's lifecycle state as `DELETED`, then the stream has been deleted. If the call returns a \"404 Not Found\" error, that means all records of the stream have been deleted.""")
+@stream_group.command(name=cli_util.override('stream_admin.delete_stream.command_name', 'delete'), help=u"""Deletes a stream and its content. Stream contents are deleted immediately. The service retains records of the stream itself for 90 days after deletion. The `lifecycleState` parameter of the `Stream` object changes to `DELETING` and the stream becomes inaccessible for read or write operations. To verify that a stream has been deleted, make a [GetStream] request. If the call returns the stream's lifecycle state as `DELETED`, then the stream has been deleted. If the call returns a \"404 Not Found\" error, that means all records of the stream have been deleted.""")
 @cli_util.option('--stream-id', required=True, help=u"""The OCID of the stream to delete.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -262,7 +262,7 @@ def delete_stream(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
     cli_util.render_response(result, ctx)
 
 
-@archiver_group.command(name=cli_util.override('get_archiver.command_name', 'get'), help=u"""Returns the current state of the stream archiver.""")
+@archiver_group.command(name=cli_util.override('stream_admin.get_archiver.command_name', 'get'), help=u"""Returns the current state of the stream archiver.""")
 @cli_util.option('--stream-id', required=True, help=u"""The OCID of the stream.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -284,7 +284,7 @@ def get_archiver(ctx, from_json, stream_id):
     cli_util.render_response(result, ctx)
 
 
-@stream_group.command(name=cli_util.override('get_stream.command_name', 'get'), help=u"""Gets detailed information about a stream, including the number of partitions.""")
+@stream_group.command(name=cli_util.override('stream_admin.get_stream.command_name', 'get'), help=u"""Gets detailed information about a stream, including the number of partitions.""")
 @cli_util.option('--stream-id', required=True, help=u"""The OCID of the stream to retrieve.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -306,7 +306,7 @@ def get_stream(ctx, from_json, stream_id):
     cli_util.render_response(result, ctx)
 
 
-@stream_group.command(name=cli_util.override('list_streams.command_name', 'list'), help=u"""Lists the streams.""")
+@stream_group.command(name=cli_util.override('stream_admin.list_streams.command_name', 'list'), help=u"""Lists the streams.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
 @cli_util.option('--id', help=u"""A filter to return only resources that match the given ID exactly.""")
 @cli_util.option('--name', help=u"""A filter to return only resources that match the given name exactly.""")
@@ -369,7 +369,7 @@ def list_streams(ctx, from_json, all_pages, page_size, compartment_id, id, name,
     cli_util.render_response(result, ctx)
 
 
-@archiver_group.command(name=cli_util.override('start_archiver.command_name', 'start'), help=u"""Start the archiver for the specified stream.""")
+@archiver_group.command(name=cli_util.override('stream_admin.start_archiver.command_name', 'start'), help=u"""Start the archiver for the specified stream.""")
 @cli_util.option('--stream-id', required=True, help=u"""The OCID of the stream.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "STOPPED", "STARTING", "RUNNING", "STOPPING", "UPDATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -419,7 +419,7 @@ def start_archiver(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
     cli_util.render_response(result, ctx)
 
 
-@archiver_group.command(name=cli_util.override('stop_archiver.command_name', 'stop'), help=u"""Stop the archiver for the specified stream.""")
+@archiver_group.command(name=cli_util.override('stream_admin.stop_archiver.command_name', 'stop'), help=u"""Stop the archiver for the specified stream.""")
 @cli_util.option('--stream-id', required=True, help=u"""The OCID of the stream.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "STOPPED", "STARTING", "RUNNING", "STOPPING", "UPDATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -469,7 +469,7 @@ def stop_archiver(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
     cli_util.render_response(result, ctx)
 
 
-@archiver_group.command(name=cli_util.override('update_archiver.command_name', 'update'), help=u"""Update the stream archiver parameters.""")
+@archiver_group.command(name=cli_util.override('stream_admin.update_archiver.command_name', 'update'), help=u"""Update the stream archiver parameters.""")
 @cli_util.option('--stream-id', required=True, help=u"""The OCID of the stream.""")
 @cli_util.option('--bucket-name', help=u"""The name of the bucket.""")
 @cli_util.option('--use-existing-bucket', type=click.BOOL, help=u"""The flag to create a new bucket or use existing one.""")
@@ -543,7 +543,7 @@ def update_archiver(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
     cli_util.render_response(result, ctx)
 
 
-@stream_group.command(name=cli_util.override('update_stream.command_name', 'update'), help=u"""Updates the tags applied to the stream.""")
+@stream_group.command(name=cli_util.override('stream_admin.update_stream.command_name', 'update'), help=u"""Updates the tags applied to the stream.""")
 @cli_util.option('--stream-id', required=True, help=u"""The OCID of the stream to update.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair that is applied with no predefined name, type, or namespace. Exists for cross-compatibility only. For more information, see [Resource Tags].
 

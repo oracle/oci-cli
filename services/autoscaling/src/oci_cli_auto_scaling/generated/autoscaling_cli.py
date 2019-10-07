@@ -14,21 +14,21 @@ from oci_cli import custom_types  # noqa: F401
 from oci_cli.aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('autoscaling_root_group.command_name', 'autoscaling'), cls=CommandGroupWithAlias, help=cli_util.override('autoscaling_root_group.help', """APIs for dynamically scaling Compute resources to meet application requirements.
+@cli.command(cli_util.override('autoscaling.autoscaling_root_group.command_name', 'autoscaling'), cls=CommandGroupWithAlias, help=cli_util.override('autoscaling.autoscaling_root_group.help', """APIs for dynamically scaling Compute resources to meet application requirements.
 For information about the Compute service, see [Overview of the Compute Service](/Content/Compute/Concepts/computeoverview.htm).
-"""), short_help=cli_util.override('autoscaling_root_group.short_help', """Autoscaling API"""))
+"""), short_help=cli_util.override('autoscaling.autoscaling_root_group.short_help', """Autoscaling API"""))
 @cli_util.help_option_group
 def autoscaling_root_group():
     pass
 
 
-@click.command(cli_util.override('auto_scaling_configuration_group.command_name', 'auto-scaling-configuration'), cls=CommandGroupWithAlias, help="""An autoscaling configuration allows you to dynamically scale the resources in a Compute instance pool. For more information, see [Autoscaling].""")
+@click.command(cli_util.override('autoscaling.auto_scaling_configuration_group.command_name', 'auto-scaling-configuration'), cls=CommandGroupWithAlias, help="""An autoscaling configuration allows you to dynamically scale the resources in a Compute instance pool. For more information, see [Autoscaling].""")
 @cli_util.help_option_group
 def auto_scaling_configuration_group():
     pass
 
 
-@click.command(cli_util.override('auto_scaling_policy_group.command_name', 'auto-scaling-policy'), cls=CommandGroupWithAlias, help="""Autoscaling policies define the criteria that trigger autoscaling actions and the actions to take.
+@click.command(cli_util.override('autoscaling.auto_scaling_policy_group.command_name', 'auto-scaling-policy'), cls=CommandGroupWithAlias, help="""Autoscaling policies define the criteria that trigger autoscaling actions and the actions to take.
 
 An autoscaling policy is part of an autoscaling configuration. For more information, see [Autoscaling].""")
 @cli_util.help_option_group
@@ -40,7 +40,7 @@ autoscaling_root_group.add_command(auto_scaling_configuration_group)
 autoscaling_root_group.add_command(auto_scaling_policy_group)
 
 
-@auto_scaling_configuration_group.command(name=cli_util.override('change_auto_scaling_configuration_compartment.command_name', 'change-compartment'), help=u"""Moves an autoscaling configuration into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].
+@auto_scaling_configuration_group.command(name=cli_util.override('autoscaling.change_auto_scaling_configuration_compartment.command_name', 'change-compartment'), help=u"""Moves an autoscaling configuration into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].
 
 When you move an autoscaling configuration to a different compartment, associated resources such as instance pools are not moved.""")
 @cli_util.option('--auto-scaling-configuration-id', required=True, help=u"""The [OCID] of the autoscaling configuration.""")
@@ -73,7 +73,7 @@ def change_auto_scaling_configuration_compartment(ctx, from_json, auto_scaling_c
     cli_util.render_response(result, ctx)
 
 
-@auto_scaling_configuration_group.command(name=cli_util.override('create_auto_scaling_configuration.command_name', 'create'), help=u"""Creates an autoscaling configuration.""")
+@auto_scaling_configuration_group.command(name=cli_util.override('autoscaling.create_auto_scaling_configuration.command_name', 'create'), help=u"""Creates an autoscaling configuration.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the autoscaling configuration.""")
 @cli_util.option('--policies', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--resource', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -124,7 +124,7 @@ def create_auto_scaling_configuration(ctx, from_json, compartment_id, policies, 
     cli_util.render_response(result, ctx)
 
 
-@auto_scaling_configuration_group.command(name=cli_util.override('create_auto_scaling_configuration_instance_pool_resource.command_name', 'create-auto-scaling-configuration-instance-pool-resource'), help=u"""Creates an autoscaling configuration.""")
+@auto_scaling_configuration_group.command(name=cli_util.override('autoscaling.create_auto_scaling_configuration_instance_pool_resource.command_name', 'create-auto-scaling-configuration-instance-pool-resource'), help=u"""Creates an autoscaling configuration.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the autoscaling configuration.""")
 @cli_util.option('--policies', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--resource-id', required=True, help=u"""The [OCID] of the resource that is managed by the autoscaling configuration.""")
@@ -178,7 +178,7 @@ def create_auto_scaling_configuration_instance_pool_resource(ctx, from_json, com
     cli_util.render_response(result, ctx)
 
 
-@auto_scaling_policy_group.command(name=cli_util.override('create_auto_scaling_policy.command_name', 'create'), help=u"""Creates an autoscaling policy for the specified autoscaling configuration.""")
+@auto_scaling_policy_group.command(name=cli_util.override('autoscaling.create_auto_scaling_policy.command_name', 'create'), help=u"""Creates an autoscaling policy for the specified autoscaling configuration.""")
 @cli_util.option('--auto-scaling-configuration-id', required=True, help=u"""The [OCID] of the autoscaling configuration.""")
 @cli_util.option('--capacity', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The capacity requirements of the autoscaling policy.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--policy-type', required=True, help=u"""The type of autoscaling policy.""")
@@ -212,7 +212,7 @@ def create_auto_scaling_policy(ctx, from_json, auto_scaling_configuration_id, ca
     cli_util.render_response(result, ctx)
 
 
-@auto_scaling_policy_group.command(name=cli_util.override('create_auto_scaling_policy_create_threshold_policy_details.command_name', 'create-auto-scaling-policy-create-threshold-policy-details'), help=u"""Creates an autoscaling policy for the specified autoscaling configuration.""")
+@auto_scaling_policy_group.command(name=cli_util.override('autoscaling.create_auto_scaling_policy_create_threshold_policy_details.command_name', 'create-auto-scaling-policy-create-threshold-policy-details'), help=u"""Creates an autoscaling policy for the specified autoscaling configuration.""")
 @cli_util.option('--auto-scaling-configuration-id', required=True, help=u"""The [OCID] of the autoscaling configuration.""")
 @cli_util.option('--capacity', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The capacity requirements of the autoscaling policy.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--rules', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -248,7 +248,7 @@ def create_auto_scaling_policy_create_threshold_policy_details(ctx, from_json, a
     cli_util.render_response(result, ctx)
 
 
-@auto_scaling_configuration_group.command(name=cli_util.override('delete_auto_scaling_configuration.command_name', 'delete'), help=u"""Deletes an autoscaling configuration.""")
+@auto_scaling_configuration_group.command(name=cli_util.override('autoscaling.delete_auto_scaling_configuration.command_name', 'delete'), help=u"""Deletes an autoscaling configuration.""")
 @cli_util.option('--auto-scaling-configuration-id', required=True, help=u"""The [OCID] of the autoscaling configuration.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -274,7 +274,7 @@ def delete_auto_scaling_configuration(ctx, from_json, auto_scaling_configuration
     cli_util.render_response(result, ctx)
 
 
-@auto_scaling_policy_group.command(name=cli_util.override('delete_auto_scaling_policy.command_name', 'delete'), help=u"""Deletes an autoscaling policy for the specified autoscaling configuration.""")
+@auto_scaling_policy_group.command(name=cli_util.override('autoscaling.delete_auto_scaling_policy.command_name', 'delete'), help=u"""Deletes an autoscaling policy for the specified autoscaling configuration.""")
 @cli_util.option('--auto-scaling-configuration-id', required=True, help=u"""The [OCID] of the autoscaling configuration.""")
 @cli_util.option('--auto-scaling-policy-id', required=True, help=u"""The ID of the autoscaling policy.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -305,7 +305,7 @@ def delete_auto_scaling_policy(ctx, from_json, auto_scaling_configuration_id, au
     cli_util.render_response(result, ctx)
 
 
-@auto_scaling_configuration_group.command(name=cli_util.override('get_auto_scaling_configuration.command_name', 'get'), help=u"""Gets information about the specified autoscaling configuration.""")
+@auto_scaling_configuration_group.command(name=cli_util.override('autoscaling.get_auto_scaling_configuration.command_name', 'get'), help=u"""Gets information about the specified autoscaling configuration.""")
 @cli_util.option('--auto-scaling-configuration-id', required=True, help=u"""The [OCID] of the autoscaling configuration.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -327,7 +327,7 @@ def get_auto_scaling_configuration(ctx, from_json, auto_scaling_configuration_id
     cli_util.render_response(result, ctx)
 
 
-@auto_scaling_policy_group.command(name=cli_util.override('get_auto_scaling_policy.command_name', 'get'), help=u"""Gets information about the specified autoscaling policy in the specified autoscaling configuration.""")
+@auto_scaling_policy_group.command(name=cli_util.override('autoscaling.get_auto_scaling_policy.command_name', 'get'), help=u"""Gets information about the specified autoscaling policy in the specified autoscaling configuration.""")
 @cli_util.option('--auto-scaling-configuration-id', required=True, help=u"""The [OCID] of the autoscaling configuration.""")
 @cli_util.option('--auto-scaling-policy-id', required=True, help=u"""The ID of the autoscaling policy.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -354,7 +354,7 @@ def get_auto_scaling_policy(ctx, from_json, auto_scaling_configuration_id, auto_
     cli_util.render_response(result, ctx)
 
 
-@auto_scaling_configuration_group.command(name=cli_util.override('list_auto_scaling_configurations.command_name', 'list'), help=u"""Lists autoscaling configurations in the specifed compartment.""")
+@auto_scaling_configuration_group.command(name=cli_util.override('autoscaling.list_auto_scaling_configurations.command_name', 'list'), help=u"""Lists autoscaling configurations in the specifed compartment.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the resources monitored by the metric that you are searching for. Use tenancyId to search in the root compartment.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
@@ -411,7 +411,7 @@ def list_auto_scaling_configurations(ctx, from_json, all_pages, page_size, compa
     cli_util.render_response(result, ctx)
 
 
-@auto_scaling_policy_group.command(name=cli_util.override('list_auto_scaling_policies.command_name', 'list'), help=u"""Lists the autoscaling policies in the specified autoscaling configuration.""")
+@auto_scaling_policy_group.command(name=cli_util.override('autoscaling.list_auto_scaling_policies.command_name', 'list'), help=u"""Lists the autoscaling policies in the specified autoscaling configuration.""")
 @cli_util.option('--auto-scaling-configuration-id', required=True, help=u"""The [OCID] of the autoscaling configuration.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
@@ -471,7 +471,7 @@ def list_auto_scaling_policies(ctx, from_json, all_pages, page_size, auto_scalin
     cli_util.render_response(result, ctx)
 
 
-@auto_scaling_configuration_group.command(name=cli_util.override('update_auto_scaling_configuration.command_name', 'update'), help=u"""Updates certain fields on the specified autoscaling configuration, such as the name, the cooldown period, and whether the autoscaling configuration is enabled.""")
+@auto_scaling_configuration_group.command(name=cli_util.override('autoscaling.update_auto_scaling_configuration.command_name', 'update'), help=u"""Updates certain fields on the specified autoscaling configuration, such as the name, the cooldown period, and whether the autoscaling configuration is enabled.""")
 @cli_util.option('--auto-scaling-configuration-id', required=True, help=u"""The [OCID] of the autoscaling configuration.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
@@ -529,7 +529,7 @@ def update_auto_scaling_configuration(ctx, from_json, force, auto_scaling_config
     cli_util.render_response(result, ctx)
 
 
-@auto_scaling_policy_group.command(name=cli_util.override('update_auto_scaling_policy.command_name', 'update'), help=u"""Updates an autoscaling policy in the specified autoscaling configuration.""")
+@auto_scaling_policy_group.command(name=cli_util.override('autoscaling.update_auto_scaling_policy.command_name', 'update'), help=u"""Updates an autoscaling policy in the specified autoscaling configuration.""")
 @cli_util.option('--auto-scaling-configuration-id', required=True, help=u"""The [OCID] of the autoscaling configuration.""")
 @cli_util.option('--auto-scaling-policy-id', required=True, help=u"""The ID of the autoscaling policy.""")
 @cli_util.option('--policy-type', required=True, help=u"""Indicates the type of autoscaling policy.""")
@@ -578,7 +578,7 @@ def update_auto_scaling_policy(ctx, from_json, force, auto_scaling_configuration
     cli_util.render_response(result, ctx)
 
 
-@auto_scaling_policy_group.command(name=cli_util.override('update_auto_scaling_policy_update_threshold_policy_details.command_name', 'update-auto-scaling-policy-update-threshold-policy-details'), help=u"""Updates an autoscaling policy in the specified autoscaling configuration.""")
+@auto_scaling_policy_group.command(name=cli_util.override('autoscaling.update_auto_scaling_policy_update_threshold_policy_details.command_name', 'update-auto-scaling-policy-update-threshold-policy-details'), help=u"""Updates an autoscaling policy in the specified autoscaling configuration.""")
 @cli_util.option('--auto-scaling-configuration-id', required=True, help=u"""The [OCID] of the autoscaling configuration.""")
 @cli_util.option('--auto-scaling-policy-id', required=True, help=u"""The ID of the autoscaling policy.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")

@@ -16,7 +16,7 @@ import base64
 from datetime import datetime, timedelta
 
 DEFAULT_KUBECONFIG_LOCATION = os.path.join('~', '.kube', 'config')
-cli_util.rename_command(containerengine_cli.work_request_log_entry_group, containerengine_cli.list_work_request_logs,
+cli_util.rename_command(containerengine_cli, containerengine_cli.work_request_log_entry_group, containerengine_cli.list_work_request_logs,
                         "list")
 
 

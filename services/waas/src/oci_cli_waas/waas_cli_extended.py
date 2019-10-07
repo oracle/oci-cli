@@ -37,4 +37,4 @@ def update_waas_policy_custom_protection_rules_extended(ctx, **kwargs):
 # oci waas waas-policy custom-protection-rule list --waas-policy-id, --action, --all-pages, --mod-security-rule-id
 waas_cli.waas_root_group.commands.pop(waas_cli.waas_policy_custom_protection_rule_group.name)
 waas_cli.waas_policy_group.add_command(waas_cli.waas_policy_custom_protection_rule_group)
-cli_util.rename_command(waas_cli.waas_policy_group, waas_cli.waas_policy_custom_protection_rule_group, "custom-protection-rule")
+cli_util.rename_command(waas_cli, waas_cli.waas_policy_group, waas_cli.waas_policy_custom_protection_rule_group, "custom-protection-rule")

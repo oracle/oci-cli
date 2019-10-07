@@ -2197,8 +2197,155 @@ Options:
                   <command> --help.
 
 Commands:
-  get   Gets information for the specified volume...
-  list  Lists all volume backup policies available to...
+  create  Creates a new backup policy for the caller.
+  delete  Deletes the specified scheduled backup...
+  get     Gets information for the specified volume...
+  list    Lists all volume backup policies available to...
+  update  Updates a volume backup policy.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci bv volume-backup-policy create --help
+Usage: oci bv volume-backup-policy create [OPTIONS]
+
+  Creates a new backup policy for the caller.
+
+Options:
+  -c, --compartment-id TEXT     The OCID of the compartment that contains the
+                                backup policy. [required]
+  --display-name TEXT           A user-friendly name for the volume backup
+                                policy. Does not have to be unique and it's
+                                changeable. Avoid entering confidential
+                                information.
+  --schedules COMPLEX TYPE      The collection of schedules that this policy
+                                will apply.
+                                
+                                This option is a JSON list with
+                                items of type VolumeBackupSchedule.  For
+                                documentation on VolumeBackupSchedule please see
+                                our API reference: https://docs.cloud.oracle.com
+                                /api/#/en/iaas/20160918/datatypes/VolumeBackupSc
+                                hedule.
+                                This is a complex type whose value must
+                                be valid JSON. The value can be provided as a
+                                string on the command line or passed in as a
+                                file using
+                                the file://path/to/file syntax.
+                                
+                                The
+                                --generate-param-json-input option can be used
+                                to generate an example of the JSON which must be
+                                provided. We recommend storing this example
+                                in a
+                                file, modifying it as needed and then passing it
+                                back in via the file:// syntax.
+  --defined-tags COMPLEX TYPE   Defined tags for this resource. Each key is
+                                predefined and scoped to a namespace. For more
+                                information, see [Resource Tags].
+                                
+                                Example:
+                                `{"Operations": {"CostCenter": "42"}}`
+                                This is a
+                                complex type whose value must be valid JSON. The
+                                value can be provided as a string on the command
+                                line or passed in as a file using
+                                the
+                                file://path/to/file syntax.
+                                
+                                The --generate-
+                                param-json-input option can be used to generate
+                                an example of the JSON which must be provided.
+                                We recommend storing this example
+                                in a file,
+                                modifying it as needed and then passing it back
+                                in via the file:// syntax.
+  --freeform-tags COMPLEX TYPE  Free-form tags for this resource. Each tag is a
+                                simple key-value pair with no predefined name,
+                                type, or namespace. For more information, see
+                                [Resource Tags].
+                                
+                                Example: `{"Department":
+                                "Finance"}`
+                                This is a complex type whose value
+                                must be valid JSON. The value can be provided as
+                                a string on the command line or passed in as a
+                                file using
+                                the file://path/to/file syntax.
+                                
+                                The
+                                --generate-param-json-input option can be used
+                                to generate an example of the JSON which must be
+                                provided. We recommend storing this example
+                                in a
+                                file, modifying it as needed and then passing it
+                                back in via the file:// syntax.
+  --from-json TEXT              Provide input to this command as a JSON document
+                                from a file using the file://path-to/file
+                                syntax.
+                                
+                                The --generate-full-command-json-input
+                                option can be used to generate a sample json
+                                file to be used with this command option. The
+                                key names are pre-populated and match the
+                                command option names (converted to camelCase
+                                format, e.g. compartment-id --> compartmentId),
+                                while the values of the keys need to be
+                                populated by the user before using the sample
+                                file as an input to this command. For any
+                                command option that accepts multiple values, the
+                                value of the key can be a JSON array.
+                                
+                                Options
+                                can still be provided on the command line. If an
+                                option exists in both the JSON document and the
+                                command line then the command line specified
+                                value will be used.
+                                
+                                For examples on usage of
+                                this option, please see our "using CLI with
+                                advanced JSON options" link: https://docs.cloud.
+                                oracle.com/iaas/Content/API/SDKDocs/cliusing.htm
+                                #AdvancedJSONOptions
+  -?, -h, --help                For detailed help on any of these individual
+                                commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci bv volume-backup-policy delete --help
+Usage: oci bv volume-backup-policy delete [OPTIONS]
+
+  Deletes the specified scheduled backup policy.
+
+Options:
+  --policy-id TEXT  The OCID of the volume backup policy. [required]
+  --if-match TEXT   For optimistic concurrency control. In the PUT or DELETE
+                    call for a resource, set the `if-match` parameter to the
+                    value of the etag from a previous GET or POST response for
+                    that resource.  The resource will be updated or deleted only
+                    if the etag you provide matches the resource's current etag
+                    value.
+  --force           Perform deletion without prompting for confirmation.
+  --from-json TEXT  Provide input to this command as a JSON document from a file
+                    using the file://path-to/file syntax.
+                    
+                    The --generate-full-
+                    command-json-input option can be used to generate a sample
+                    json file to be used with this command option. The key names
+                    are pre-populated and match the command option names
+                    (converted to camelCase format, e.g. compartment-id -->
+                    compartmentId), while the values of the keys need to be
+                    populated by the user before using the sample file as an
+                    input to this command. For any command option that accepts
+                    multiple values, the value of the key can be a JSON array.
+                    Options can still be provided on the command line. If an
+                    option exists in both the JSON document and the command line
+                    then the command line specified value will be used.
+                    
+                    For
+                    examples on usage of this option, please see our "using CLI
+                    with advanced JSON options" link: https://docs.cloud.oracle.
+                    com/iaas/Content/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                    s
+  -?, -h, --help    For detailed help on any of these individual commands, enter
+                    <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci bv volume-backup-policy get --help
@@ -2239,46 +2386,162 @@ Usage: oci bv volume-backup-policy list [OPTIONS]
   Lists all volume backup policies available to the caller.
 
 Options:
-  --limit INTEGER      For list pagination. The maximum number of results per
-                       page, or items to return in a paginated "List" call. For
-                       important details about how pagination works, see [List
-                       Pagination].
-                       
-                       Example: `50`
-  --page TEXT          For list pagination. The value of the `opc-next-page`
-                       response header from the previous "List" call. For
-                       important details about how pagination works, see [List
-                       Pagination].
-  --all                Fetches all pages of results. If you provide this option,
-                       then you cannot provide the --limit option.
-  --page-size INTEGER  When fetching results, the number of results to fetch per
-                       call. Only valid when used with --all or --limit, and
-                       ignored otherwise.
-  --from-json TEXT     Provide input to this command as a JSON document from a
-                       file using the file://path-to/file syntax.
-                       
-                       The
-                       --generate-full-command-json-input option can be used to
-                       generate a sample json file to be used with this command
-                       option. The key names are pre-populated and match the
-                       command option names (converted to camelCase format, e.g.
-                       compartment-id --> compartmentId), while the values of
-                       the keys need to be populated by the user before using
-                       the sample file as an input to this command. For any
-                       command option that accepts multiple values, the value of
-                       the key can be a JSON array.
-                       
-                       Options can still be
-                       provided on the command line. If an option exists in both
-                       the JSON document and the command line then the command
-                       line specified value will be used.
-                       
-                       For examples on usage
-                       of this option, please see our "using CLI with advanced
-                       JSON options" link: https://docs.cloud.oracle.com/iaas/Co
-                       ntent/API/SDKDocs/cliusing.htm#AdvancedJSONOptions
-  -?, -h, --help       For detailed help on any of these individual commands,
-                       enter <command> --help.
+  --limit INTEGER            For list pagination. The maximum number of results
+                             per page, or items to return in a paginated "List"
+                             call. For important details about how pagination
+                             works, see [List Pagination].
+                             
+                             Example: `50`
+  --page TEXT                For list pagination. The value of the `opc-next-
+                             page` response header from the previous "List"
+                             call. For important details about how pagination
+                             works, see [List Pagination].
+  -c, --compartment-id TEXT  The OCID of the compartment to list. If no
+                             compartment is specified, list the predefined
+                             (Gold, Silver, Bronze) backup policies.
+  --all                      Fetches all pages of results. If you provide this
+                             option, then you cannot provide the --limit option.
+  --page-size INTEGER        When fetching results, the number of results to
+                             fetch per call. Only valid when used with --all or
+                             --limit, and ignored otherwise.
+  --from-json TEXT           Provide input to this command as a JSON document
+                             from a file using the file://path-to/file syntax.
+                             The --generate-full-command-json-input option can
+                             be used to generate a sample json file to be used
+                             with this command option. The key names are pre-
+                             populated and match the command option names
+                             (converted to camelCase format, e.g. compartment-id
+                             --> compartmentId), while the values of the keys
+                             need to be populated by the user before using the
+                             sample file as an input to this command. For any
+                             command option that accepts multiple values, the
+                             value of the key can be a JSON array.
+                             
+                             Options can
+                             still be provided on the command line. If an option
+                             exists in both the JSON document and the command
+                             line then the command line specified value will be
+                             used.
+                             
+                             For examples on usage of this option, please
+                             see our "using CLI with advanced JSON options"
+                             link: https://docs.cloud.oracle.com/iaas/Content/AP
+                             I/SDKDocs/cliusing.htm#AdvancedJSONOptions
+  -?, -h, --help             For detailed help on any of these individual
+                             commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci bv volume-backup-policy update --help
+Usage: oci bv volume-backup-policy update [OPTIONS]
+
+  Updates a volume backup policy. Avoid entering confidential information.
+
+Options:
+  --policy-id TEXT              The OCID of the volume backup policy. [required]
+  --display-name TEXT           A user-friendly name for the volume backup
+                                policy. Does not have to be unique and it's
+                                changeable. Avoid entering confidential
+                                information.
+  --schedules COMPLEX TYPE      The collection of schedules that this policy
+                                will apply.
+                                
+                                This option is a JSON list with
+                                items of type VolumeBackupSchedule.  For
+                                documentation on VolumeBackupSchedule please see
+                                our API reference: https://docs.cloud.oracle.com
+                                /api/#/en/iaas/20160918/datatypes/VolumeBackupSc
+                                hedule.
+                                This is a complex type whose value must
+                                be valid JSON. The value can be provided as a
+                                string on the command line or passed in as a
+                                file using
+                                the file://path/to/file syntax.
+                                
+                                The
+                                --generate-param-json-input option can be used
+                                to generate an example of the JSON which must be
+                                provided. We recommend storing this example
+                                in a
+                                file, modifying it as needed and then passing it
+                                back in via the file:// syntax.
+  --defined-tags COMPLEX TYPE   Defined tags for this resource. Each key is
+                                predefined and scoped to a namespace. For more
+                                information, see [Resource Tags].
+                                
+                                Example:
+                                `{"Operations": {"CostCenter": "42"}}`
+                                This is a
+                                complex type whose value must be valid JSON. The
+                                value can be provided as a string on the command
+                                line or passed in as a file using
+                                the
+                                file://path/to/file syntax.
+                                
+                                The --generate-
+                                param-json-input option can be used to generate
+                                an example of the JSON which must be provided.
+                                We recommend storing this example
+                                in a file,
+                                modifying it as needed and then passing it back
+                                in via the file:// syntax.
+  --freeform-tags COMPLEX TYPE  Free-form tags for this resource. Each tag is a
+                                simple key-value pair with no predefined name,
+                                type, or namespace. For more information, see
+                                [Resource Tags].
+                                
+                                Example: `{"Department":
+                                "Finance"}`
+                                This is a complex type whose value
+                                must be valid JSON. The value can be provided as
+                                a string on the command line or passed in as a
+                                file using
+                                the file://path/to/file syntax.
+                                
+                                The
+                                --generate-param-json-input option can be used
+                                to generate an example of the JSON which must be
+                                provided. We recommend storing this example
+                                in a
+                                file, modifying it as needed and then passing it
+                                back in via the file:// syntax.
+  --if-match TEXT               For optimistic concurrency control. In the PUT
+                                or DELETE call for a resource, set the `if-
+                                match` parameter to the value of the etag from a
+                                previous GET or POST response for that resource.
+                                The resource will be updated or deleted only if
+                                the etag you provide matches the resource's
+                                current etag value.
+  --force                       Perform update without prompting for
+                                confirmation.
+  --from-json TEXT              Provide input to this command as a JSON document
+                                from a file using the file://path-to/file
+                                syntax.
+                                
+                                The --generate-full-command-json-input
+                                option can be used to generate a sample json
+                                file to be used with this command option. The
+                                key names are pre-populated and match the
+                                command option names (converted to camelCase
+                                format, e.g. compartment-id --> compartmentId),
+                                while the values of the keys need to be
+                                populated by the user before using the sample
+                                file as an input to this command. For any
+                                command option that accepts multiple values, the
+                                value of the key can be a JSON array.
+                                
+                                Options
+                                can still be provided on the command line. If an
+                                option exists in both the JSON document and the
+                                command line then the command line specified
+                                value will be used.
+                                
+                                For examples on usage of
+                                this option, please see our "using CLI with
+                                advanced JSON options" link: https://docs.cloud.
+                                oracle.com/iaas/Content/API/SDKDocs/cliusing.htm
+                                #AdvancedJSONOptions
+  -?, -h, --help                For detailed help on any of these individual
+                                commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci bv volume-backup-policy-assignment --help

@@ -175,9 +175,13 @@ Options:
   --token TEXT      The subscription confirmation token. [required]
   --protocol TEXT   The protocol used for the subscription.
                     
-                    For information
-                    about subscription protocols, see [To create a
-                    subscription]. [required]
+                    Allowed values:   *
+                    `CUSTOM_HTTPS`   * `EMAIL`   * `HTTPS` (deprecated; for
+                    PagerDuty endpoints, use `PAGERDUTY`)   * `PAGERDUTY`   *
+                    `SLACK`
+                    
+                    For information about subscription protocols, see
+                    [To create a subscription]. [required]
   --from-json TEXT  Provide input to this command as a JSON document from a file
                     using the file://path-to/file syntax.
                     
@@ -219,10 +223,14 @@ Options:
   -c, --compartment-id TEXT       The [OCID] of the compartment for the
                                   subscription. [required]
   --protocol TEXT                 The protocol used for the subscription.
+                                  Allowed values:   * `CUSTOM_HTTPS`   * `EMAIL`
+                                  * `HTTPS` (deprecated; for PagerDuty
+                                  endpoints, use `PAGERDUTY`)   * `PAGERDUTY`
+                                  * `SLACK`
                                   
-                                  For
-                                  information about subscription protocols, see
-                                  [To create a subscription]. [required]
+                                  For information about subscription
+                                  protocols, see [To create a subscription].
+                                  [required]
   --metadata TEXT                 Metadata for the subscription.
   --freeform-tags COMPLEX TYPE    Free-form tags for this resource. Each tag is
                                   a simple key-value pair with no predefined
@@ -527,9 +535,13 @@ Options:
   --token TEXT      The subscription confirmation token. [required]
   --protocol TEXT   The protocol used for the subscription.
                     
-                    For information
-                    about subscription protocols, see [To create a
-                    subscription]. [required]
+                    Allowed values:   *
+                    `CUSTOM_HTTPS`   * `EMAIL`   * `HTTPS` (deprecated; for
+                    PagerDuty endpoints, use `PAGERDUTY`)   * `PAGERDUTY`   *
+                    `SLACK`
+                    
+                    For information about subscription protocols, see
+                    [To create a subscription]. [required]
   --from-json TEXT  Provide input to this command as a JSON document from a file
                     using the file://path-to/file syntax.
                     

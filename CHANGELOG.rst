@@ -6,6 +6,36 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.6.8 - 2019-10-08
+-------------------
+Added
+~~~~~
+* Support for Health Checks API regional behavior changed to support OCI Monitoring integration and DNS Traffic Management dependencies (``oci health-checks``)
+
+  * ``oci health-checks ping-monitor list --home-region``
+  * ``oci health-checks http-monitor list --home-region``
+
+* Support for create/update/delete/list new custom scheduled backup policies. Customers will be able to determine the frequency of the backup, time of day, type of backup and time to retain the backup. Policies will be assigned to volumes the same as the current predefined policies.
+
+  * ``oci bv volume-backup-policy create``
+  * ``oci bv volume-backup-policy update``
+  * ``oci bv volume-backup-policy delete``
+
+* Support for specifying network type when launching VM instances by introducing launch-options option in the compute service
+
+  * ``oci compute instance launch --launch-options``
+
+* Adding entitlements request and show capabilities to Data Transfer Service (``oci dts``)
+
+* CLI options for DTS Appliance Request and Update have been updated to conform with old CLI version (``oci dts appliance request`` and ``oci dts appliance update-shipping-address``)
+
+
+Fixed
+~~~~~
+* Object storage bulk upload verify checksum now works when in FIPS mode.
+
+  * ``oci os object bulk-upload --verify-checksum``
+
 2.6.7 - 2019-10-01
 -------------------
 Added

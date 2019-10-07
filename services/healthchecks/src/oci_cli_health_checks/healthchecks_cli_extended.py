@@ -4,4 +4,4 @@
 from services.healthchecks.src.oci_cli_health_checks.generated import healthchecks_cli
 from oci_cli import cli_util
 
-cli_util.rename_command(healthchecks_cli.health_checks_root_group, healthchecks_cli.health_checks_vantage_point_group, "vantage-point")
+cli_util.rename_command(healthchecks_cli, healthchecks_cli.health_checks_root_group, healthchecks_cli.health_checks_vantage_point_group, "vantage-point")

@@ -14,31 +14,31 @@ from oci_cli import custom_types  # noqa: F401
 from oci_cli.aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('iam_root_group.command_name', 'iam'), cls=CommandGroupWithAlias, help=cli_util.override('iam_root_group.help', """APIs for managing users, groups, compartments, and policies."""), short_help=cli_util.override('iam_root_group.short_help', """Identity and Access Management Service API"""))
+@cli.command(cli_util.override('iam.iam_root_group.command_name', 'iam'), cls=CommandGroupWithAlias, help=cli_util.override('iam.iam_root_group.help', """APIs for managing users, groups, compartments, and policies."""), short_help=cli_util.override('iam.iam_root_group.short_help', """Identity and Access Management Service API"""))
 @cli_util.help_option_group
 def iam_root_group():
     pass
 
 
-@click.command(cli_util.override('fault_domain_group.command_name', 'fault-domain'), cls=CommandGroupWithAlias, help="""A Fault Domain is a logical grouping of hardware and infrastructure within an Availability Domain that can become unavailable in its entirety either due to hardware failure such as Top-of-rack (TOR) switch failure or due to planned software maintenance such as security updates that reboot your instances.""")
+@click.command(cli_util.override('iam.fault_domain_group.command_name', 'fault-domain'), cls=CommandGroupWithAlias, help="""A Fault Domain is a logical grouping of hardware and infrastructure within an Availability Domain that can become unavailable in its entirety either due to hardware failure such as Top-of-rack (TOR) switch failure or due to planned software maintenance such as security updates that reboot your instances.""")
 @cli_util.help_option_group
 def fault_domain_group():
     pass
 
 
-@click.command(cli_util.override('work_request_group.command_name', 'work-request'), cls=CommandGroupWithAlias, help="""The asynchronous API request does not take effect immediately. This request spawns an asynchronous workflow to fulfill the request. WorkRequest objects provide visibility for in-progress workflows.""")
+@click.command(cli_util.override('iam.work_request_group.command_name', 'work-request'), cls=CommandGroupWithAlias, help="""The asynchronous API request does not take effect immediately. This request spawns an asynchronous workflow to fulfill the request. WorkRequest objects provide visibility for in-progress workflows.""")
 @cli_util.help_option_group
 def work_request_group():
     pass
 
 
-@click.command(cli_util.override('tagging_work_request_log_group.command_name', 'tagging-work-request-log'), cls=CommandGroupWithAlias, help="""The log entity.""")
+@click.command(cli_util.override('iam.tagging_work_request_log_group.command_name', 'tagging-work-request-log'), cls=CommandGroupWithAlias, help="""The log entity.""")
 @cli_util.help_option_group
 def tagging_work_request_log_group():
     pass
 
 
-@click.command(cli_util.override('compartment_group.command_name', 'compartment'), cls=CommandGroupWithAlias, help="""A collection of related resources. Compartments are a fundamental component of Oracle Cloud Infrastructure for organizing and isolating your cloud resources. You use them to clearly separate resources for the purposes of measuring usage and billing, access (through the use of IAM Service policies), and isolation (separating the resources for one project or business unit from another). A common approach is to create a compartment for each major part of your organization. For more information, see [Overview of the IAM Service] and also [Setting Up Your Tenancy].
+@click.command(cli_util.override('iam.compartment_group.command_name', 'compartment'), cls=CommandGroupWithAlias, help="""A collection of related resources. Compartments are a fundamental component of Oracle Cloud Infrastructure for organizing and isolating your cloud resources. You use them to clearly separate resources for the purposes of measuring usage and billing, access (through the use of IAM Service policies), and isolation (separating the resources for one project or business unit from another). A common approach is to create a compartment for each major part of your organization. For more information, see [Overview of the IAM Service] and also [Setting Up Your Tenancy].
 
 To place a resource in a compartment, simply specify the compartment ID in the \"Create\" request object when initially creating the resource. For example, to launch an instance into a particular compartment, specify that compartment's OCID in the `LaunchInstance` request. You can't move an existing resource from one compartment to another.
 
@@ -50,13 +50,13 @@ def compartment_group():
     pass
 
 
-@click.command(cli_util.override('authentication_policy_group.command_name', 'authentication-policy'), cls=CommandGroupWithAlias, help="""Authentication policy, currently set for the given compartment""")
+@click.command(cli_util.override('iam.authentication_policy_group.command_name', 'authentication-policy'), cls=CommandGroupWithAlias, help="""Authentication policy, currently set for the given compartment""")
 @cli_util.help_option_group
 def authentication_policy_group():
     pass
 
 
-@click.command(cli_util.override('smtp_credential_group.command_name', 'smtp-credential'), cls=CommandGroupWithAlias, help="""Simple Mail Transfer Protocol (SMTP) credentials are needed to send email through Email Delivery. The SMTP credentials are used for SMTP authentication with the service. The credentials never expire. A user can have up to 2 SMTP credentials at a time.
+@click.command(cli_util.override('iam.smtp_credential_group.command_name', 'smtp-credential'), cls=CommandGroupWithAlias, help="""Simple Mail Transfer Protocol (SMTP) credentials are needed to send email through Email Delivery. The SMTP credentials are used for SMTP authentication with the service. The credentials never expire. A user can have up to 2 SMTP credentials at a time.
 
 **Note:** The credential set is always an Oracle-generated SMTP user name and password pair; you cannot designate the SMTP user name or the SMTP password.
 
@@ -66,13 +66,13 @@ def smtp_credential_group():
     pass
 
 
-@click.command(cli_util.override('scim_client_credentials_group.command_name', 'scim-client-credentials'), cls=CommandGroupWithAlias, help="""The OAuth2 client credentials.""")
+@click.command(cli_util.override('iam.scim_client_credentials_group.command_name', 'scim-client-credentials'), cls=CommandGroupWithAlias, help="""The OAuth2 client credentials.""")
 @cli_util.help_option_group
 def scim_client_credentials_group():
     pass
 
 
-@click.command(cli_util.override('tag_group.command_name', 'tag'), cls=CommandGroupWithAlias, help="""A tag definition that belongs to a specific tag namespace.  \"Defined tags\" must be set up in your tenancy before you can apply them to resources. For more information, see [Managing Tags and Tag Namespaces].
+@click.command(cli_util.override('iam.tag_group.command_name', 'tag'), cls=CommandGroupWithAlias, help="""A tag definition that belongs to a specific tag namespace.  \"Defined tags\" must be set up in your tenancy before you can apply them to resources. For more information, see [Managing Tags and Tag Namespaces].
 
 **Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
 @cli_util.help_option_group
@@ -80,7 +80,7 @@ def tag_group():
     pass
 
 
-@click.command(cli_util.override('group_group.command_name', 'group'), cls=CommandGroupWithAlias, help="""A collection of users who all need the same type of access to a particular set of resources or compartment. For conceptual information about groups and other IAM Service components, see [Overview of the IAM Service].
+@click.command(cli_util.override('iam.group_group.command_name', 'group'), cls=CommandGroupWithAlias, help="""A collection of users who all need the same type of access to a particular set of resources or compartment. For conceptual information about groups and other IAM Service components, see [Overview of the IAM Service].
 
 If you're federating with an identity provider (IdP), you need to create mappings between the groups defined in the IdP and groups you define in the IAM service. For more information, see [Identity Providers and Federation]. Also see [IdentityProvider] and [IdpGroupMapping].
 
@@ -92,7 +92,7 @@ def group_group():
     pass
 
 
-@click.command(cli_util.override('policy_group.command_name', 'policy'), cls=CommandGroupWithAlias, help="""A document that specifies the type of access a group has to the resources in a compartment. For information about policies and other IAM Service components, see [Overview of the IAM Service]. If you're new to policies, see [Getting Started with Policies].
+@click.command(cli_util.override('iam.policy_group.command_name', 'policy'), cls=CommandGroupWithAlias, help="""A document that specifies the type of access a group has to the resources in a compartment. For information about policies and other IAM Service components, see [Overview of the IAM Service]. If you're new to policies, see [Getting Started with Policies].
 
 The word \"policy\" is used by people in different ways:
 
@@ -106,7 +106,7 @@ def policy_group():
     pass
 
 
-@click.command(cli_util.override('tag_namespace_group.command_name', 'tag-namespace'), cls=CommandGroupWithAlias, help="""A managed container for defined tags. A tag namespace is unique in a tenancy. For more information, see [Managing Tags and Tag Namespaces].
+@click.command(cli_util.override('iam.tag_namespace_group.command_name', 'tag-namespace'), cls=CommandGroupWithAlias, help="""A managed container for defined tags. A tag namespace is unique in a tenancy. For more information, see [Managing Tags and Tag Namespaces].
 
 **Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
 @cli_util.help_option_group
@@ -114,13 +114,13 @@ def tag_namespace_group():
     pass
 
 
-@click.command(cli_util.override('availability_domain_group.command_name', 'availability-domain'), cls=CommandGroupWithAlias, help="""One or more isolated, fault-tolerant Oracle data centers that host cloud resources such as instances, volumes, and subnets. A region contains several Availability Domains. For more information, see [Regions and Availability Domains].""")
+@click.command(cli_util.override('iam.availability_domain_group.command_name', 'availability-domain'), cls=CommandGroupWithAlias, help="""One or more isolated, fault-tolerant Oracle data centers that host cloud resources such as instances, volumes, and subnets. A region contains several Availability Domains. For more information, see [Regions and Availability Domains].""")
 @cli_util.help_option_group
 def availability_domain_group():
     pass
 
 
-@click.command(cli_util.override('customer_secret_key_group.command_name', 'customer-secret-key'), cls=CommandGroupWithAlias, help="""A `CustomerSecretKey` is an Oracle-provided key for using the Object Storage Service's [Amazon S3 compatible API]. A user can have up to two secret keys at a time.
+@click.command(cli_util.override('iam.customer_secret_key_group.command_name', 'customer-secret-key'), cls=CommandGroupWithAlias, help="""A `CustomerSecretKey` is an Oracle-provided key for using the Object Storage Service's [Amazon S3 compatible API]. A user can have up to two secret keys at a time.
 
 **Note:** The secret key is always an Oracle-generated string; you can't change it to a string of your choice.
 
@@ -130,7 +130,7 @@ def customer_secret_key_group():
     pass
 
 
-@click.command(cli_util.override('idp_group_mapping_group.command_name', 'idp-group-mapping'), cls=CommandGroupWithAlias, help="""A mapping between a single group defined by the identity provider (IdP) you're federating with and a single IAM Service [group] in Oracle Cloud Infrastructure. For more information about group mappings and what they're for, see [Identity Providers and Federation].
+@click.command(cli_util.override('iam.idp_group_mapping_group.command_name', 'idp-group-mapping'), cls=CommandGroupWithAlias, help="""A mapping between a single group defined by the identity provider (IdP) you're federating with and a single IAM Service [group] in Oracle Cloud Infrastructure. For more information about group mappings and what they're for, see [Identity Providers and Federation].
 
 A given IdP group can be mapped to zero, one, or multiple IAM Service groups, and vice versa. But each `IdPGroupMapping` object is between only a single IdP group and IAM Service group. Each `IdPGroupMapping` object has its own OCID.
 
@@ -140,7 +140,7 @@ def idp_group_mapping_group():
     pass
 
 
-@click.command(cli_util.override('tenancy_group.command_name', 'tenancy'), cls=CommandGroupWithAlias, help="""The root compartment that contains all of your organization's compartments and other Oracle Cloud Infrastructure cloud resources. When you sign up for Oracle Cloud Infrastructure, Oracle creates a tenancy for your company, which is a secure and isolated partition where you can create, organize, and administer your cloud resources.
+@click.command(cli_util.override('iam.tenancy_group.command_name', 'tenancy'), cls=CommandGroupWithAlias, help="""The root compartment that contains all of your organization's compartments and other Oracle Cloud Infrastructure cloud resources. When you sign up for Oracle Cloud Infrastructure, Oracle creates a tenancy for your company, which is a secure and isolated partition where you can create, organize, and administer your cloud resources.
 
 To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
 @cli_util.help_option_group
@@ -148,19 +148,19 @@ def tenancy_group():
     pass
 
 
-@click.command(cli_util.override('user_group_membership_group.command_name', 'user-group-membership'), cls=CommandGroupWithAlias, help="""An object that represents the membership of a user in a group. When you add a user to a group, the result is a `UserGroupMembership` with its own OCID. To remove a user from a group, you delete the `UserGroupMembership` object.""")
+@click.command(cli_util.override('iam.user_group_membership_group.command_name', 'user-group-membership'), cls=CommandGroupWithAlias, help="""An object that represents the membership of a user in a group. When you add a user to a group, the result is a `UserGroupMembership` with its own OCID. To remove a user from a group, you delete the `UserGroupMembership` object.""")
 @cli_util.help_option_group
 def user_group_membership_group():
     pass
 
 
-@click.command(cli_util.override('mfa_totp_device_group.command_name', 'mfa-totp-device'), cls=CommandGroupWithAlias, help="""Users can enable multi-factor authentication (MFA) for their own user accounts. After MFA is enabled, the user is prompted for a time-based one-time password (TOTP) to authenticate before they can sign in to the Console. To enable multi-factor authentication, the user must register a mobile device with a TOTP authenticator app installed. The registration process creates the `MfaTotpDevice` object. The registration process requires interaction with the Console and cannot be completed programmatically. For more information, see [Managing Multi-Factor Authentication].""")
+@click.command(cli_util.override('iam.mfa_totp_device_group.command_name', 'mfa-totp-device'), cls=CommandGroupWithAlias, help="""Users can enable multi-factor authentication (MFA) for their own user accounts. After MFA is enabled, the user is prompted for a time-based one-time password (TOTP) to authenticate before they can sign in to the Console. To enable multi-factor authentication, the user must register a mobile device with a TOTP authenticator app installed. The registration process creates the `MfaTotpDevice` object. The registration process requires interaction with the Console and cannot be completed programmatically. For more information, see [Managing Multi-Factor Authentication].""")
 @cli_util.help_option_group
 def mfa_totp_device_group():
     pass
 
 
-@click.command(cli_util.override('ui_password_information_group.command_name', 'ui-password-information'), cls=CommandGroupWithAlias, help="""Information about the UIPassword, which is a text password that enables a user to sign in to the Console, the user interface for interacting with Oracle Cloud Infrastructure.
+@click.command(cli_util.override('iam.ui_password_information_group.command_name', 'ui-password-information'), cls=CommandGroupWithAlias, help="""Information about the UIPassword, which is a text password that enables a user to sign in to the Console, the user interface for interacting with Oracle Cloud Infrastructure.
 
 For more information about user credentials, see [User Credentials].""")
 @cli_util.help_option_group
@@ -168,7 +168,7 @@ def ui_password_information_group():
     pass
 
 
-@click.command(cli_util.override('identity_provider_group.command_name', 'identity-provider'), cls=CommandGroupWithAlias, help="""The resulting base object when you add an identity provider to your tenancy. A [Saml2IdentityProvider] is a specific type of `IdentityProvider` that supports the SAML 2.0 protocol. Each `IdentityProvider` object has its own OCID. For more information, see [Identity Providers and Federation].
+@click.command(cli_util.override('iam.identity_provider_group.command_name', 'identity-provider'), cls=CommandGroupWithAlias, help="""The resulting base object when you add an identity provider to your tenancy. A [Saml2IdentityProvider] is a specific type of `IdentityProvider` that supports the SAML 2.0 protocol. Each `IdentityProvider` object has its own OCID. For more information, see [Identity Providers and Federation].
 
 To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].
 
@@ -178,13 +178,13 @@ def identity_provider_group():
     pass
 
 
-@click.command(cli_util.override('identity_provider_group_group.command_name', 'identity-provider-group'), cls=CommandGroupWithAlias, help="""A group created in an identity provider that can be mapped to a group in OCI""")
+@click.command(cli_util.override('iam.identity_provider_group_group.command_name', 'identity-provider-group'), cls=CommandGroupWithAlias, help="""A group created in an identity provider that can be mapped to a group in OCI""")
 @cli_util.help_option_group
 def identity_provider_group_group():
     pass
 
 
-@click.command(cli_util.override('ui_password_group.command_name', 'ui-password'), cls=CommandGroupWithAlias, help="""A text password that enables a user to sign in to the Console, the user interface for interacting with Oracle Cloud Infrastructure.
+@click.command(cli_util.override('iam.ui_password_group.command_name', 'ui-password'), cls=CommandGroupWithAlias, help="""A text password that enables a user to sign in to the Console, the user interface for interacting with Oracle Cloud Infrastructure.
 
 For more information about user credentials, see [User Credentials].""")
 @cli_util.help_option_group
@@ -192,7 +192,7 @@ def ui_password_group():
     pass
 
 
-@click.command(cli_util.override('api_key_group.command_name', 'api-key'), cls=CommandGroupWithAlias, help="""A PEM-format RSA credential for securing requests to the Oracle Cloud Infrastructure REST API. Also known as an *API signing key*. Specifically, this is the public key from the key pair. The private key remains with the user calling the API. For information about generating a key pair in the required PEM format, see [Required Keys and OCIDs].
+@click.command(cli_util.override('iam.api_key_group.command_name', 'api-key'), cls=CommandGroupWithAlias, help="""A PEM-format RSA credential for securing requests to the Oracle Cloud Infrastructure REST API. Also known as an *API signing key*. Specifically, this is the public key from the key pair. The private key remains with the user calling the API. For information about generating a key pair in the required PEM format, see [Required Keys and OCIDs].
 
 **Important:** This is **not** the SSH key for accessing compute instances.
 
@@ -204,13 +204,13 @@ def api_key_group():
     pass
 
 
-@click.command(cli_util.override('tagging_work_request_error_group.command_name', 'tagging-work-request-error'), cls=CommandGroupWithAlias, help="""The error entity.""")
+@click.command(cli_util.override('iam.tagging_work_request_error_group.command_name', 'tagging-work-request-error'), cls=CommandGroupWithAlias, help="""The error entity.""")
 @cli_util.help_option_group
 def tagging_work_request_error_group():
     pass
 
 
-@click.command(cli_util.override('region_subscription_group.command_name', 'region-subscription'), cls=CommandGroupWithAlias, help="""An object that represents your tenancy's access to a particular region (i.e., a subscription), the status of that access, and whether that region is the home region. For more information, see [Managing Regions].
+@click.command(cli_util.override('iam.region_subscription_group.command_name', 'region-subscription'), cls=CommandGroupWithAlias, help="""An object that represents your tenancy's access to a particular region (i.e., a subscription), the status of that access, and whether that region is the home region. For more information, see [Managing Regions].
 
 To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
 @cli_util.help_option_group
@@ -218,13 +218,13 @@ def region_subscription_group():
     pass
 
 
-@click.command(cli_util.override('tagging_work_request_group.command_name', 'tagging-work-request'), cls=CommandGroupWithAlias, help="""The asynchronous API request does not take effect immediately. This request spawns an asynchronous workflow to fulfill the request. WorkRequest objects provide visibility for in-progress workflows.""")
+@click.command(cli_util.override('iam.tagging_work_request_group.command_name', 'tagging-work-request'), cls=CommandGroupWithAlias, help="""The asynchronous API request does not take effect immediately. This request spawns an asynchronous workflow to fulfill the request. WorkRequest objects provide visibility for in-progress workflows.""")
 @cli_util.help_option_group
 def tagging_work_request_group():
     pass
 
 
-@click.command(cli_util.override('dynamic_group_group.command_name', 'dynamic-group'), cls=CommandGroupWithAlias, help="""A dynamic group defines a matching rule. Every bare metal or virtual machine instance is deployed with an instance certificate. The certificate contains metadata about the instance. This includes the instance OCID and the compartment OCID, along with a few other optional properties. When an API call is made using this instance certificate as the authenticator, the certificate can be matched to one or multiple dynamic groups. The instance can then get access to the API based on the permissions granted in policies written for the dynamic groups.
+@click.command(cli_util.override('iam.dynamic_group_group.command_name', 'dynamic-group'), cls=CommandGroupWithAlias, help="""A dynamic group defines a matching rule. Every bare metal or virtual machine instance is deployed with an instance certificate. The certificate contains metadata about the instance. This includes the instance OCID and the compartment OCID, along with a few other optional properties. When an API call is made using this instance certificate as the authenticator, the certificate can be matched to one or multiple dynamic groups. The instance can then get access to the API based on the permissions granted in policies written for the dynamic groups.
 
 This works like regular user/group membership. But in that case, the membership is a static relationship, whereas in a dynamic group, the membership of an instance certificate to a dynamic group is determined during runtime. For more information, see [Managing Dynamic Groups].
 
@@ -234,7 +234,7 @@ def dynamic_group_group():
     pass
 
 
-@click.command(cli_util.override('region_group.command_name', 'region'), cls=CommandGroupWithAlias, help="""A localized geographic area, such as Phoenix, AZ. Oracle Cloud Infrastructure is hosted in regions and Availability Domains. A region is composed of several Availability Domains. An Availability Domain is one or more data centers located within a region. For more information, see [Regions and Availability Domains].
+@click.command(cli_util.override('iam.region_group.command_name', 'region'), cls=CommandGroupWithAlias, help="""A localized geographic area, such as Phoenix, AZ. Oracle Cloud Infrastructure is hosted in regions and Availability Domains. A region is composed of several Availability Domains. An Availability Domain is one or more data centers located within a region. For more information, see [Regions and Availability Domains].
 
 To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
 @cli_util.help_option_group
@@ -242,7 +242,7 @@ def region_group():
     pass
 
 
-@click.command(cli_util.override('auth_token_group.command_name', 'auth-token'), cls=CommandGroupWithAlias, help="""An `AuthToken` is an Oracle-generated token string that you can use to authenticate with third-party APIs that do not support Oracle Cloud Infrastructure's signature-based authentication. For example, use an `AuthToken` to authenticate with a Swift client with the Object Storage Service.
+@click.command(cli_util.override('iam.auth_token_group.command_name', 'auth-token'), cls=CommandGroupWithAlias, help="""An `AuthToken` is an Oracle-generated token string that you can use to authenticate with third-party APIs that do not support Oracle Cloud Infrastructure's signature-based authentication. For example, use an `AuthToken` to authenticate with a Swift client with the Object Storage Service.
 
 The auth token is associated with the user's Console login. Auth tokens never expire. A user can have up to two auth tokens at a time.
 
@@ -254,7 +254,7 @@ def auth_token_group():
     pass
 
 
-@click.command(cli_util.override('swift_password_group.command_name', 'swift-password'), cls=CommandGroupWithAlias, help="""**Deprecated. Use [AuthToken] instead.**
+@click.command(cli_util.override('iam.swift_password_group.command_name', 'swift-password'), cls=CommandGroupWithAlias, help="""**Deprecated. Use [AuthToken] instead.**
 
 Swift is the OpenStack object storage service. A `SwiftPassword` is an Oracle-provided password for using a Swift client with the Object Storage Service. This password is associated with the user's Console login. Swift passwords never expire. A user can have up to two Swift passwords at a time.
 
@@ -266,7 +266,7 @@ def swift_password_group():
     pass
 
 
-@click.command(cli_util.override('tag_default_group.command_name', 'tag-default'), cls=CommandGroupWithAlias, help="""Tag defaults let you specify a default tag (tagnamespace.tag=\"value\") to apply to all resource types in a specified compartment. The tag default is applied at the time the resource is created. Resources that exist in the compartment before you create the tag default are not tagged. The `TagDefault` object specifies the tag and compartment details.
+@click.command(cli_util.override('iam.tag_default_group.command_name', 'tag-default'), cls=CommandGroupWithAlias, help="""Tag defaults let you specify a default tag (tagnamespace.tag=\"value\") to apply to all resource types in a specified compartment. The tag default is applied at the time the resource is created. Resources that exist in the compartment before you create the tag default are not tagged. The `TagDefault` object specifies the tag and compartment details.
 
 Tag defaults are inherited by child compartments. This means that if you set a tag default on the root compartment for a tenancy, all resources that are created in the tenancy are tagged. For more information about using tag defaults, see [Managing Tag Defaults].
 
@@ -276,7 +276,7 @@ def tag_default_group():
     pass
 
 
-@click.command(cli_util.override('user_group.command_name', 'user'), cls=CommandGroupWithAlias, help="""An individual employee or system that needs to manage or use your company's Oracle Cloud Infrastructure resources. Users might need to launch instances, manage remote disks, work with your cloud network, etc. Users have one or more IAM Service credentials ([ApiKey], [UIPassword], [SwiftPassword] and [AuthToken]). For more information, see [User Credentials]). End users of your application are not typically IAM Service users. For conceptual information about users and other IAM Service components, see [Overview of the IAM Service].
+@click.command(cli_util.override('iam.user_group.command_name', 'user'), cls=CommandGroupWithAlias, help="""An individual employee or system that needs to manage or use your company's Oracle Cloud Infrastructure resources. Users might need to launch instances, manage remote disks, work with your cloud network, etc. Users have one or more IAM Service credentials ([ApiKey], [UIPassword], [SwiftPassword] and [AuthToken]). For more information, see [User Credentials]). End users of your application are not typically IAM Service users. For conceptual information about users and other IAM Service components, see [Overview of the IAM Service].
 
 These users are created directly within the Oracle Cloud Infrastructure system, via the IAM service. They are different from *federated users*, who authenticate themselves to the Oracle Cloud Infrastructure Console via an identity provider. For more information, see [Identity Providers and Federation].
 
@@ -321,7 +321,7 @@ iam_root_group.add_command(tag_default_group)
 iam_root_group.add_command(user_group)
 
 
-@mfa_totp_device_group.command(name=cli_util.override('activate_mfa_totp_device.command_name', 'activate'), help=u"""Activates the specified MFA TOTP device for the user. Activation requires manual interaction with the Console.""")
+@mfa_totp_device_group.command(name=cli_util.override('iam.activate_mfa_totp_device.command_name', 'activate'), help=u"""Activates the specified MFA TOTP device for the user. Activation requires manual interaction with the Console.""")
 @cli_util.option('--user-id', required=True, help=u"""The OCID of the user.""")
 @cli_util.option('--mfa-totp-device-id', required=True, help=u"""The OCID of the MFA TOTP device.""")
 @cli_util.option('--totp-token', help=u"""The Totp token for MFA.""")
@@ -358,7 +358,7 @@ def activate_mfa_totp_device(ctx, from_json, user_id, mfa_totp_device_id, totp_t
     cli_util.render_response(result, ctx)
 
 
-@user_group_membership_group.command(name=cli_util.override('add_user_to_group.command_name', 'add'), help=u"""Adds the specified user to the specified group and returns a `UserGroupMembership` object with its own OCID.
+@user_group_membership_group.command(name=cli_util.override('iam.add_user_to_group.command_name', 'add'), help=u"""Adds the specified user to the specified group and returns a `UserGroupMembership` object with its own OCID.
 
 After you send your request, the new object's `lifecycleState` will temporarily be CREATING. Before using the object, first make sure its `lifecycleState` has changed to ACTIVE.""")
 @cli_util.option('--user-id', required=True, help=u"""The OCID of the user.""")
@@ -409,7 +409,7 @@ def add_user_to_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
     cli_util.render_response(result, ctx)
 
 
-@tag_default_group.command(name=cli_util.override('assemble_effective_tag_set.command_name', 'assemble-effective-tag-set'), help=u"""Assembles tag defaults in the specified compartment and any parent compartments to determine the tags to apply. Tag defaults from parent compartments do not override tag defaults referencing the same tag in a compartment lower down the hierarchy. This set of tag defaults includes all tag defaults from the current compartment back to the root compartment.""")
+@tag_default_group.command(name=cli_util.override('iam.assemble_effective_tag_set.command_name', 'assemble-effective-tag-set'), help=u"""Assembles tag defaults in the specified compartment and any parent compartments to determine the tags to apply. Tag defaults from parent compartments do not override tag defaults referencing the same tag in a compartment lower down the hierarchy. This set of tag defaults includes all tag defaults from the current compartment back to the root compartment.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment (remember that the tenancy is simply the root compartment).""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE"]), help=u"""A filter to only return resources that match the given lifecycle state.  The state value is case-insensitive.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -430,7 +430,7 @@ def assemble_effective_tag_set(ctx, from_json, compartment_id, lifecycle_state):
     cli_util.render_response(result, ctx)
 
 
-@tag_namespace_group.command(name=cli_util.override('change_tag_namespace_compartment.command_name', 'change-compartment'), help=u"""Moves the specified tag namespace to the specified compartment within the same tenancy.
+@tag_namespace_group.command(name=cli_util.override('iam.change_tag_namespace_compartment.command_name', 'change-compartment'), help=u"""Moves the specified tag namespace to the specified compartment within the same tenancy.
 
 To move the tag namespace, you must have the manage tag-namespaces permission on both compartments. For more information about IAM policies, see [Details for IAM].
 
@@ -461,7 +461,7 @@ def change_tag_namespace_compartment(ctx, from_json, tag_namespace_id, compartme
     cli_util.render_response(result, ctx)
 
 
-@auth_token_group.command(name=cli_util.override('create_auth_token.command_name', 'create'), help=u"""Creates a new auth token for the specified user. For information about what auth tokens are for, see [Managing User Credentials].
+@auth_token_group.command(name=cli_util.override('iam.create_auth_token.command_name', 'create'), help=u"""Creates a new auth token for the specified user. For information about what auth tokens are for, see [Managing User Credentials].
 
 You must specify a *description* for the auth token (although it can be an empty string). It does not have to be unique, and you can change it anytime with [UpdateAuthToken].
 
@@ -492,7 +492,7 @@ def create_auth_token(ctx, from_json, description, user_id):
     cli_util.render_response(result, ctx)
 
 
-@compartment_group.command(name=cli_util.override('create_compartment.command_name', 'create'), help=u"""Creates a new compartment in the specified compartment.
+@compartment_group.command(name=cli_util.override('iam.create_compartment.command_name', 'create'), help=u"""Creates a new compartment in the specified compartment.
 
 **Important:** Compartments cannot be deleted.
 
@@ -561,7 +561,7 @@ def create_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     cli_util.render_response(result, ctx)
 
 
-@customer_secret_key_group.command(name=cli_util.override('create_customer_secret_key.command_name', 'create'), help=u"""Creates a new secret key for the specified user. Secret keys are used for authentication with the Object Storage Service's Amazon S3 compatible API. For information, see [Managing User Credentials].
+@customer_secret_key_group.command(name=cli_util.override('iam.create_customer_secret_key.command_name', 'create'), help=u"""Creates a new secret key for the specified user. Secret keys are used for authentication with the Object Storage Service's Amazon S3 compatible API. For information, see [Managing User Credentials].
 
 You must specify a *description* for the secret key (although it can be an empty string). It does not have to be unique, and you can change it anytime with [UpdateCustomerSecretKey].
 
@@ -592,7 +592,7 @@ def create_customer_secret_key(ctx, from_json, display_name, user_id):
     cli_util.render_response(result, ctx)
 
 
-@dynamic_group_group.command(name=cli_util.override('create_dynamic_group.command_name', 'create'), help=u"""Creates a new dynamic group in your tenancy.
+@dynamic_group_group.command(name=cli_util.override('iam.create_dynamic_group.command_name', 'create'), help=u"""Creates a new dynamic group in your tenancy.
 
 You must specify your tenancy's OCID as the compartment ID in the request object (remember that the tenancy is simply the root compartment). Notice that IAM resources (users, groups, compartments, and some policies) reside within the tenancy itself, unlike cloud resources such as compute instances, which typically reside within compartments inside the tenancy. For information about OCIDs, see [Resource Identifiers].
 
@@ -661,7 +661,7 @@ def create_dynamic_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_
     cli_util.render_response(result, ctx)
 
 
-@group_group.command(name=cli_util.override('create_group.command_name', 'create'), help=u"""Creates a new group in your tenancy.
+@group_group.command(name=cli_util.override('iam.create_group.command_name', 'create'), help=u"""Creates a new group in your tenancy.
 
 You must specify your tenancy's OCID as the compartment ID in the request object (remember that the tenancy is simply the root compartment). Notice that IAM resources (users, groups, compartments, and some policies) reside within the tenancy itself, unlike cloud resources such as compute instances, which typically reside within compartments inside the tenancy. For information about OCIDs, see [Resource Identifiers].
 
@@ -730,7 +730,7 @@ def create_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
     cli_util.render_response(result, ctx)
 
 
-@identity_provider_group.command(name=cli_util.override('create_identity_provider.command_name', 'create'), help=u"""Creates a new identity provider in your tenancy. For more information, see [Identity Providers and Federation].
+@identity_provider_group.command(name=cli_util.override('iam.create_identity_provider.command_name', 'create'), help=u"""Creates a new identity provider in your tenancy. For more information, see [Identity Providers and Federation].
 
 You must specify your tenancy's OCID as the compartment ID in the request object. Remember that the tenancy is simply the root compartment. For information about OCIDs, see [Resource Identifiers].
 
@@ -805,7 +805,7 @@ def create_identity_provider(ctx, from_json, wait_for_state, max_wait_seconds, w
     cli_util.render_response(result, ctx)
 
 
-@identity_provider_group.command(name=cli_util.override('create_identity_provider_create_saml2_identity_provider_details.command_name', 'create-identity-provider-create-saml2-identity-provider-details'), help=u"""Creates a new identity provider in your tenancy. For more information, see [Identity Providers and Federation].
+@identity_provider_group.command(name=cli_util.override('iam.create_identity_provider_create_saml2_identity_provider_details.command_name', 'create-identity-provider-create-saml2-identity-provider-details'), help=u"""Creates a new identity provider in your tenancy. For more information, see [Identity Providers and Federation].
 
 You must specify your tenancy's OCID as the compartment ID in the request object. Remember that the tenancy is simply the root compartment. For information about OCIDs, see [Resource Identifiers].
 
@@ -886,7 +886,7 @@ def create_identity_provider_create_saml2_identity_provider_details(ctx, from_js
     cli_util.render_response(result, ctx)
 
 
-@idp_group_mapping_group.command(name=cli_util.override('create_idp_group_mapping.command_name', 'create'), help=u"""Creates a single mapping between an IdP group and an IAM Service [group].""")
+@idp_group_mapping_group.command(name=cli_util.override('iam.create_idp_group_mapping.command_name', 'create'), help=u"""Creates a single mapping between an IdP group and an IAM Service [group].""")
 @cli_util.option('--idp-group-name', required=True, help=u"""The name of the IdP group you want to map.""")
 @cli_util.option('--group-id', required=True, help=u"""The OCID of the IAM Service [group] you want to map to the IdP group.""")
 @cli_util.option('--identity-provider-id', required=True, help=u"""The OCID of the identity provider.""")
@@ -940,7 +940,7 @@ def create_idp_group_mapping(ctx, from_json, wait_for_state, max_wait_seconds, w
     cli_util.render_response(result, ctx)
 
 
-@mfa_totp_device_group.command(name=cli_util.override('create_mfa_totp_device.command_name', 'create'), help=u"""Creates a new MFA TOTP device for the user. A user can have one MFA TOTP device.""")
+@mfa_totp_device_group.command(name=cli_util.override('iam.create_mfa_totp_device.command_name', 'create'), help=u"""Creates a new MFA TOTP device for the user. A user can have one MFA TOTP device.""")
 @cli_util.option('--user-id', required=True, help=u"""The OCID of the user.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -986,7 +986,7 @@ def create_mfa_totp_device(ctx, from_json, wait_for_state, max_wait_seconds, wai
     cli_util.render_response(result, ctx)
 
 
-@ui_password_group.command(name=cli_util.override('create_or_reset_ui_password.command_name', 'create-or-reset'), help=u"""Creates a new Console one-time password for the specified user. For more information about user credentials, see [User Credentials].
+@ui_password_group.command(name=cli_util.override('iam.create_or_reset_ui_password.command_name', 'create-or-reset'), help=u"""Creates a new Console one-time password for the specified user. For more information about user credentials, see [User Credentials].
 
 Use this operation after creating a new user, or if a user forgets their password. The new one-time password is returned to you in the response, and you must securely deliver it to the user. They'll be prompted to change this password the next time they sign in to the Console. If they don't change it within 7 days, the password will expire and you'll need to create a new one-time password for the user.
 
@@ -1011,7 +1011,7 @@ def create_or_reset_ui_password(ctx, from_json, user_id):
     cli_util.render_response(result, ctx)
 
 
-@policy_group.command(name=cli_util.override('create_policy.command_name', 'create'), help=u"""Creates a new policy in the specified compartment (either the tenancy or another of your compartments). If you're new to policies, see [Getting Started with Policies].
+@policy_group.command(name=cli_util.override('iam.create_policy.command_name', 'create'), help=u"""Creates a new policy in the specified compartment (either the tenancy or another of your compartments). If you're new to policies, see [Getting Started with Policies].
 
 You must specify a *name* for the policy, which must be unique across all policies in your tenancy and cannot be changed.
 
@@ -1086,7 +1086,7 @@ def create_policy(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
     cli_util.render_response(result, ctx)
 
 
-@region_subscription_group.command(name=cli_util.override('create_region_subscription.command_name', 'create'), help=u"""Creates a subscription to a region for a tenancy.""")
+@region_subscription_group.command(name=cli_util.override('iam.create_region_subscription.command_name', 'create'), help=u"""Creates a subscription to a region for a tenancy.""")
 @cli_util.option('--region-key', required=True, help=u"""The regions's key.
 
 Allowed values are: - `PHX` - `IAD` - `FRA` - `LHR` - `YYZ` - `NRT` - `ICN`
@@ -1117,7 +1117,7 @@ def create_region_subscription(ctx, from_json, region_key, tenancy_id):
     cli_util.render_response(result, ctx)
 
 
-@smtp_credential_group.command(name=cli_util.override('create_smtp_credential.command_name', 'create'), help=u"""Creates a new SMTP credential for the specified user. An SMTP credential has an SMTP user name and an SMTP password. You must specify a *description* for the SMTP credential (although it can be an empty string). It does not have to be unique, and you can change it anytime with [UpdateSmtpCredential].""")
+@smtp_credential_group.command(name=cli_util.override('iam.create_smtp_credential.command_name', 'create'), help=u"""Creates a new SMTP credential for the specified user. An SMTP credential has an SMTP user name and an SMTP password. You must specify a *description* for the SMTP credential (although it can be an empty string). It does not have to be unique, and you can change it anytime with [UpdateSmtpCredential].""")
 @cli_util.option('--description', required=True, help=u"""The description you assign to the SMTP credentials during creation. Does not have to be unique, and it's changeable.""")
 @cli_util.option('--user-id', required=True, help=u"""The OCID of the user.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1144,7 +1144,7 @@ def create_smtp_credential(ctx, from_json, description, user_id):
     cli_util.render_response(result, ctx)
 
 
-@swift_password_group.command(name=cli_util.override('create_swift_password.command_name', 'create'), help=u"""**Deprecated. Use [CreateAuthToken] instead.**
+@swift_password_group.command(name=cli_util.override('iam.create_swift_password.command_name', 'create'), help=u"""**Deprecated. Use [CreateAuthToken] instead.**
 
 Creates a new Swift password for the specified user. For information about what Swift passwords are for, see [Managing User Credentials].
 
@@ -1177,7 +1177,7 @@ def create_swift_password(ctx, from_json, description, user_id):
     cli_util.render_response(result, ctx)
 
 
-@tag_group.command(name=cli_util.override('create_tag.command_name', 'create'), help=u"""Creates a new tag in the specified tag namespace.
+@tag_group.command(name=cli_util.override('iam.create_tag.command_name', 'create'), help=u"""Creates a new tag in the specified tag namespace.
 
 You must specify either the OCID or the name of the tag namespace that will contain this tag definition.
 
@@ -1199,7 +1199,7 @@ If a 'validator' is set on this tag definition, then the only valid values that 
 If no validator is defined for a tag definition, then any (valid) value will be accepted.
 
 The default value for `validator` is an empty map (no additional validation).""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE", "DELETING", "DELETED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'identity', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'identity', 'class': 'dict(str, dict(str, object))'}, 'validator': {'module': 'identity', 'class': 'BaseTagDefinitionValidator'}})
@@ -1261,7 +1261,7 @@ def create_tag(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
     cli_util.render_response(result, ctx)
 
 
-@tag_group.command(name=cli_util.override('create_tag_default_tag_definition_validator.command_name', 'create-tag-default-tag-definition-validator'), help=u"""Creates a new tag in the specified tag namespace.
+@tag_group.command(name=cli_util.override('iam.create_tag_default_tag_definition_validator.command_name', 'create-tag-default-tag-definition-validator'), help=u"""Creates a new tag in the specified tag namespace.
 
 You must specify either the OCID or the name of the tag namespace that will contain this tag definition.
 
@@ -1340,7 +1340,7 @@ def create_tag_default_tag_definition_validator(ctx, from_json, wait_for_state, 
     cli_util.render_response(result, ctx)
 
 
-@tag_group.command(name=cli_util.override('create_tag_enum_tag_definition_validator.command_name', 'create-tag-enum-tag-definition-validator'), help=u"""Creates a new tag in the specified tag namespace.
+@tag_group.command(name=cli_util.override('iam.create_tag_enum_tag_definition_validator.command_name', 'create-tag-enum-tag-definition-validator'), help=u"""Creates a new tag in the specified tag namespace.
 
 You must specify either the OCID or the name of the tag namespace that will contain this tag definition.
 
@@ -1358,7 +1358,7 @@ If a 'validator' is set on this tag definition, then the only valid values that 
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-cost-tracking', type=click.BOOL, help=u"""Indicates whether the tag is enabled for cost tracking.""")
 @cli_util.option('--validator-values', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of allowed values for a definedTag value.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE", "DELETING", "DELETED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'identity', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'identity', 'class': 'dict(str, dict(str, object))'}, 'validator-values': {'module': 'identity', 'class': 'list[string]'}})
@@ -1423,7 +1423,7 @@ def create_tag_enum_tag_definition_validator(ctx, from_json, wait_for_state, max
     cli_util.render_response(result, ctx)
 
 
-@tag_default_group.command(name=cli_util.override('create_tag_default.command_name', 'create'), help=u"""Creates a new tag default in the specified compartment for the specified tag definition.
+@tag_default_group.command(name=cli_util.override('iam.create_tag_default.command_name', 'create'), help=u"""Creates a new tag default in the specified compartment for the specified tag definition.
 
 If you specify that a value is required, a value is set during resource creation (either by the user creating the resource or another tag defualt). If no value is set, resource creation is blocked.
 
@@ -1487,7 +1487,7 @@ def create_tag_default(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     cli_util.render_response(result, ctx)
 
 
-@tag_namespace_group.command(name=cli_util.override('create_tag_namespace.command_name', 'create'), help=u"""Creates a new tag namespace in the specified compartment.
+@tag_namespace_group.command(name=cli_util.override('iam.create_tag_namespace.command_name', 'create'), help=u"""Creates a new tag namespace in the specified compartment.
 
 You must specify the compartment ID in the request object (remember that the tenancy is simply the root compartment).
 
@@ -1552,7 +1552,7 @@ def create_tag_namespace(ctx, from_json, wait_for_state, max_wait_seconds, wait_
     cli_util.render_response(result, ctx)
 
 
-@user_group.command(name=cli_util.override('create_user.command_name', 'create'), help=u"""Creates a new user in your tenancy. For conceptual information about users, your tenancy, and other IAM Service components, see [Overview of the IAM Service].
+@user_group.command(name=cli_util.override('iam.create_user.command_name', 'create'), help=u"""Creates a new user in your tenancy. For conceptual information about users, your tenancy, and other IAM Service components, see [Overview of the IAM Service].
 
 You must specify your tenancy's OCID as the compartment ID in the request object (remember that the tenancy is simply the root compartment). Notice that IAM resources (users, groups, compartments, and some policies) reside within the tenancy itself, unlike cloud resources such as compute instances, which typically reside within compartments inside the tenancy. For information about OCIDs, see [Resource Identifiers].
 
@@ -1627,7 +1627,7 @@ def create_user(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
     cli_util.render_response(result, ctx)
 
 
-@api_key_group.command(name=cli_util.override('delete_api_key.command_name', 'delete'), help=u"""Deletes the specified API signing key for the specified user.
+@api_key_group.command(name=cli_util.override('iam.delete_api_key.command_name', 'delete'), help=u"""Deletes the specified API signing key for the specified user.
 
 Every user has permission to use this operation to delete a key for *their own user ID*. An administrator in your organization does not need to write a policy to give users this ability. To compare, administrators who have permission to the tenancy can use this operation to delete a key for any user, including themselves.""")
 @cli_util.option('--user-id', required=True, help=u"""The OCID of the user.""")
@@ -1659,7 +1659,7 @@ def delete_api_key(ctx, from_json, user_id, fingerprint, if_match):
     cli_util.render_response(result, ctx)
 
 
-@auth_token_group.command(name=cli_util.override('delete_auth_token.command_name', 'delete'), help=u"""Deletes the specified auth token for the specified user.""")
+@auth_token_group.command(name=cli_util.override('iam.delete_auth_token.command_name', 'delete'), help=u"""Deletes the specified auth token for the specified user.""")
 @cli_util.option('--user-id', required=True, help=u"""The OCID of the user.""")
 @cli_util.option('--auth-token-id', required=True, help=u"""The OCID of the auth token.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -1689,7 +1689,7 @@ def delete_auth_token(ctx, from_json, user_id, auth_token_id, if_match):
     cli_util.render_response(result, ctx)
 
 
-@compartment_group.command(name=cli_util.override('delete_compartment.command_name', 'delete'), help=u"""Deletes the specified compartment. The compartment must be empty.""")
+@compartment_group.command(name=cli_util.override('iam.delete_compartment.command_name', 'delete'), help=u"""Deletes the specified compartment. The compartment must be empty.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -1739,7 +1739,7 @@ def delete_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     cli_util.render_response(result, ctx)
 
 
-@customer_secret_key_group.command(name=cli_util.override('delete_customer_secret_key.command_name', 'delete'), help=u"""Deletes the specified secret key for the specified user.""")
+@customer_secret_key_group.command(name=cli_util.override('iam.delete_customer_secret_key.command_name', 'delete'), help=u"""Deletes the specified secret key for the specified user.""")
 @cli_util.option('--user-id', required=True, help=u"""The OCID of the user.""")
 @cli_util.option('--customer-secret-key-id', required=True, help=u"""The OCID of the secret key.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -1769,7 +1769,7 @@ def delete_customer_secret_key(ctx, from_json, user_id, customer_secret_key_id, 
     cli_util.render_response(result, ctx)
 
 
-@dynamic_group_group.command(name=cli_util.override('delete_dynamic_group.command_name', 'delete'), help=u"""Deletes the specified dynamic group.""")
+@dynamic_group_group.command(name=cli_util.override('iam.delete_dynamic_group.command_name', 'delete'), help=u"""Deletes the specified dynamic group.""")
 @cli_util.option('--dynamic-group-id', required=True, help=u"""The OCID of the dynamic group.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -1831,7 +1831,7 @@ def delete_dynamic_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_
     cli_util.render_response(result, ctx)
 
 
-@group_group.command(name=cli_util.override('delete_group.command_name', 'delete'), help=u"""Deletes the specified group. The group must be empty.""")
+@group_group.command(name=cli_util.override('iam.delete_group.command_name', 'delete'), help=u"""Deletes the specified group. The group must be empty.""")
 @cli_util.option('--group-id', required=True, help=u"""The OCID of the group.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -1893,7 +1893,7 @@ def delete_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
     cli_util.render_response(result, ctx)
 
 
-@identity_provider_group.command(name=cli_util.override('delete_identity_provider.command_name', 'delete'), help=u"""Deletes the specified identity provider. The identity provider must not have any group mappings (see [IdpGroupMapping]).""")
+@identity_provider_group.command(name=cli_util.override('iam.delete_identity_provider.command_name', 'delete'), help=u"""Deletes the specified identity provider. The identity provider must not have any group mappings (see [IdpGroupMapping]).""")
 @cli_util.option('--identity-provider-id', required=True, help=u"""The OCID of the identity provider.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -1955,7 +1955,7 @@ def delete_identity_provider(ctx, from_json, wait_for_state, max_wait_seconds, w
     cli_util.render_response(result, ctx)
 
 
-@idp_group_mapping_group.command(name=cli_util.override('delete_idp_group_mapping.command_name', 'delete'), help=u"""Deletes the specified group mapping.""")
+@idp_group_mapping_group.command(name=cli_util.override('iam.delete_idp_group_mapping.command_name', 'delete'), help=u"""Deletes the specified group mapping.""")
 @cli_util.option('--identity-provider-id', required=True, help=u"""The OCID of the identity provider.""")
 @cli_util.option('--mapping-id', required=True, help=u"""The OCID of the group mapping.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -1985,7 +1985,7 @@ def delete_idp_group_mapping(ctx, from_json, identity_provider_id, mapping_id, i
     cli_util.render_response(result, ctx)
 
 
-@mfa_totp_device_group.command(name=cli_util.override('delete_mfa_totp_device.command_name', 'delete'), help=u"""Deletes the specified MFA TOTP device for the specified user.""")
+@mfa_totp_device_group.command(name=cli_util.override('iam.delete_mfa_totp_device.command_name', 'delete'), help=u"""Deletes the specified MFA TOTP device for the specified user.""")
 @cli_util.option('--user-id', required=True, help=u"""The OCID of the user.""")
 @cli_util.option('--mfa-totp-device-id', required=True, help=u"""The OCID of the MFA TOTP device.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -2015,7 +2015,7 @@ def delete_mfa_totp_device(ctx, from_json, user_id, mfa_totp_device_id, if_match
     cli_util.render_response(result, ctx)
 
 
-@policy_group.command(name=cli_util.override('delete_policy.command_name', 'delete'), help=u"""Deletes the specified policy. The deletion takes effect typically within 10 seconds.""")
+@policy_group.command(name=cli_util.override('iam.delete_policy.command_name', 'delete'), help=u"""Deletes the specified policy. The deletion takes effect typically within 10 seconds.""")
 @cli_util.option('--policy-id', required=True, help=u"""The OCID of the policy.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -2077,7 +2077,7 @@ def delete_policy(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
     cli_util.render_response(result, ctx)
 
 
-@smtp_credential_group.command(name=cli_util.override('delete_smtp_credential.command_name', 'delete'), help=u"""Deletes the specified SMTP credential for the specified user.""")
+@smtp_credential_group.command(name=cli_util.override('iam.delete_smtp_credential.command_name', 'delete'), help=u"""Deletes the specified SMTP credential for the specified user.""")
 @cli_util.option('--user-id', required=True, help=u"""The OCID of the user.""")
 @cli_util.option('--smtp-credential-id', required=True, help=u"""The OCID of the SMTP credential.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -2107,7 +2107,7 @@ def delete_smtp_credential(ctx, from_json, user_id, smtp_credential_id, if_match
     cli_util.render_response(result, ctx)
 
 
-@swift_password_group.command(name=cli_util.override('delete_swift_password.command_name', 'delete'), help=u"""**Deprecated. Use [DeleteAuthToken] instead.**
+@swift_password_group.command(name=cli_util.override('iam.delete_swift_password.command_name', 'delete'), help=u"""**Deprecated. Use [DeleteAuthToken] instead.**
 
 Deletes the specified Swift password for the specified user.""")
 @cli_util.option('--user-id', required=True, help=u"""The OCID of the user.""")
@@ -2139,7 +2139,7 @@ def delete_swift_password(ctx, from_json, user_id, swift_password_id, if_match):
     cli_util.render_response(result, ctx)
 
 
-@tag_group.command(name=cli_util.override('delete_tag.command_name', 'delete'), help=u"""Deletes the specified tag definition. This operation triggers a process that removes the tag from all resources in your tenancy.
+@tag_group.command(name=cli_util.override('iam.delete_tag.command_name', 'delete'), help=u"""Deletes the specified tag definition. This operation triggers a process that removes the tag from all resources in your tenancy.
 
 These things happen immediately: \u00A0   * If the tag was a cost-tracking tag, it no longer counts against your 10 cost-tracking   tags limit, whether you first disabled it or not.   * If the tag was used with dynamic groups, none of the rules that contain the tag will   be evaluated against the tag.
 
@@ -2200,7 +2200,7 @@ def delete_tag(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
     cli_util.render_response(result, ctx)
 
 
-@tag_default_group.command(name=cli_util.override('delete_tag_default.command_name', 'delete'), help=u"""Deletes the the specified tag default.""")
+@tag_default_group.command(name=cli_util.override('iam.delete_tag_default.command_name', 'delete'), help=u"""Deletes the the specified tag default.""")
 @cli_util.option('--tag-default-id', required=True, help=u"""The OCID of the tag default.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -2263,7 +2263,7 @@ def delete_tag_default(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     cli_util.render_response(result, ctx)
 
 
-@tag_namespace_group.command(name=cli_util.override('delete_tag_namespace.command_name', 'delete'), help=u"""Deletes the specified tag namespace. Only an empty tag namespace can be deleted. To delete a tag namespace, first delete all its tag definitions.
+@tag_namespace_group.command(name=cli_util.override('iam.delete_tag_namespace.command_name', 'delete'), help=u"""Deletes the specified tag namespace. Only an empty tag namespace can be deleted. To delete a tag namespace, first delete all its tag definitions.
 
 Use [DeleteTag] to delete a tag definition.""")
 @cli_util.option('--tag-namespace-id', required=True, help=u"""The OCID of the tag namespace.""")
@@ -2328,7 +2328,7 @@ def delete_tag_namespace(ctx, from_json, wait_for_state, max_wait_seconds, wait_
     cli_util.render_response(result, ctx)
 
 
-@user_group.command(name=cli_util.override('delete_user.command_name', 'delete'), help=u"""Deletes the specified user. The user must not be in any groups.""")
+@user_group.command(name=cli_util.override('iam.delete_user.command_name', 'delete'), help=u"""Deletes the specified user. The user must not be in any groups.""")
 @cli_util.option('--user-id', required=True, help=u"""The OCID of the user.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -2390,7 +2390,7 @@ def delete_user(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
     cli_util.render_response(result, ctx)
 
 
-@mfa_totp_device_group.command(name=cli_util.override('generate_totp_seed.command_name', 'generate-totp-seed'), help=u"""Generate seed for the MFA TOTP device.""")
+@mfa_totp_device_group.command(name=cli_util.override('iam.generate_totp_seed.command_name', 'generate-totp-seed'), help=u"""Generate seed for the MFA TOTP device.""")
 @cli_util.option('--user-id', required=True, help=u"""The OCID of the user.""")
 @cli_util.option('--mfa-totp-device-id', required=True, help=u"""The OCID of the MFA TOTP device.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -2444,7 +2444,7 @@ def generate_totp_seed(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     cli_util.render_response(result, ctx)
 
 
-@authentication_policy_group.command(name=cli_util.override('get_authentication_policy.command_name', 'get'), help=u"""Gets the authentication policy for the given tenancy. You must specify your tenant\u2019s OCID as the value for the compartment ID (remember that the tenancy is simply the root compartment).""")
+@authentication_policy_group.command(name=cli_util.override('iam.get_authentication_policy.command_name', 'get'), help=u"""Gets the authentication policy for the given tenancy. You must specify your tenant\u2019s OCID as the value for the compartment ID (remember that the tenancy is simply the root compartment).""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -2465,7 +2465,7 @@ def get_authentication_policy(ctx, from_json, compartment_id):
     cli_util.render_response(result, ctx)
 
 
-@compartment_group.command(name=cli_util.override('get_compartment.command_name', 'get'), help=u"""Gets the specified compartment's information.
+@compartment_group.command(name=cli_util.override('iam.get_compartment.command_name', 'get'), help=u"""Gets the specified compartment's information.
 
 This operation does not return a list of all the resources inside the compartment. There is no single API operation that does that. Compartments can contain multiple types of resources (instances, block storage volumes, etc.). To find out what's in a compartment, you must call the \"List\" operation for each resource type and specify the compartment's OCID as a query parameter in the request. For example, call the [ListInstances] operation in the Cloud Compute Service or the [ListVolumes] operation in Cloud Block Storage.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
@@ -2488,7 +2488,7 @@ def get_compartment(ctx, from_json, compartment_id):
     cli_util.render_response(result, ctx)
 
 
-@dynamic_group_group.command(name=cli_util.override('get_dynamic_group.command_name', 'get'), help=u"""Gets the specified dynamic group's information.""")
+@dynamic_group_group.command(name=cli_util.override('iam.get_dynamic_group.command_name', 'get'), help=u"""Gets the specified dynamic group's information.""")
 @cli_util.option('--dynamic-group-id', required=True, help=u"""The OCID of the dynamic group.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -2509,7 +2509,7 @@ def get_dynamic_group(ctx, from_json, dynamic_group_id):
     cli_util.render_response(result, ctx)
 
 
-@group_group.command(name=cli_util.override('get_group.command_name', 'get'), help=u"""Gets the specified group's information.
+@group_group.command(name=cli_util.override('iam.get_group.command_name', 'get'), help=u"""Gets the specified group's information.
 
 This operation does not return a list of all the users in the group. To do that, use [ListUserGroupMemberships] and provide the group's OCID as a query parameter in the request.""")
 @cli_util.option('--group-id', required=True, help=u"""The OCID of the group.""")
@@ -2532,7 +2532,7 @@ def get_group(ctx, from_json, group_id):
     cli_util.render_response(result, ctx)
 
 
-@identity_provider_group.command(name=cli_util.override('get_identity_provider.command_name', 'get'), help=u"""Gets the specified identity provider's information.""")
+@identity_provider_group.command(name=cli_util.override('iam.get_identity_provider.command_name', 'get'), help=u"""Gets the specified identity provider's information.""")
 @cli_util.option('--identity-provider-id', required=True, help=u"""The OCID of the identity provider.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -2553,7 +2553,7 @@ def get_identity_provider(ctx, from_json, identity_provider_id):
     cli_util.render_response(result, ctx)
 
 
-@idp_group_mapping_group.command(name=cli_util.override('get_idp_group_mapping.command_name', 'get'), help=u"""Gets the specified group mapping.""")
+@idp_group_mapping_group.command(name=cli_util.override('iam.get_idp_group_mapping.command_name', 'get'), help=u"""Gets the specified group mapping.""")
 @cli_util.option('--identity-provider-id', required=True, help=u"""The OCID of the identity provider.""")
 @cli_util.option('--mapping-id', required=True, help=u"""The OCID of the group mapping.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2579,7 +2579,7 @@ def get_idp_group_mapping(ctx, from_json, identity_provider_id, mapping_id):
     cli_util.render_response(result, ctx)
 
 
-@mfa_totp_device_group.command(name=cli_util.override('get_mfa_totp_device.command_name', 'get'), help=u"""Get the specified MFA TOTP device for the specified user.""")
+@mfa_totp_device_group.command(name=cli_util.override('iam.get_mfa_totp_device.command_name', 'get'), help=u"""Get the specified MFA TOTP device for the specified user.""")
 @cli_util.option('--user-id', required=True, help=u"""The OCID of the user.""")
 @cli_util.option('--mfa-totp-device-id', required=True, help=u"""The OCID of the MFA TOTP device.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2605,7 +2605,7 @@ def get_mfa_totp_device(ctx, from_json, user_id, mfa_totp_device_id):
     cli_util.render_response(result, ctx)
 
 
-@policy_group.command(name=cli_util.override('get_policy.command_name', 'get'), help=u"""Gets the specified policy's information.""")
+@policy_group.command(name=cli_util.override('iam.get_policy.command_name', 'get'), help=u"""Gets the specified policy's information.""")
 @cli_util.option('--policy-id', required=True, help=u"""The OCID of the policy.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -2626,7 +2626,7 @@ def get_policy(ctx, from_json, policy_id):
     cli_util.render_response(result, ctx)
 
 
-@tag_group.command(name=cli_util.override('get_tag.command_name', 'get'), help=u"""Gets the specified tag's information.""")
+@tag_group.command(name=cli_util.override('iam.get_tag.command_name', 'get'), help=u"""Gets the specified tag's information.""")
 @cli_util.option('--tag-namespace-id', required=True, help=u"""The OCID of the tag namespace.""")
 @cli_util.option('--tag-name', required=True, help=u"""The name of the tag.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2652,7 +2652,7 @@ def get_tag(ctx, from_json, tag_namespace_id, tag_name):
     cli_util.render_response(result, ctx)
 
 
-@tag_default_group.command(name=cli_util.override('get_tag_default.command_name', 'get'), help=u"""Retrieves the specified tag default.""")
+@tag_default_group.command(name=cli_util.override('iam.get_tag_default.command_name', 'get'), help=u"""Retrieves the specified tag default.""")
 @cli_util.option('--tag-default-id', required=True, help=u"""The OCID of the tag default.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -2673,7 +2673,7 @@ def get_tag_default(ctx, from_json, tag_default_id):
     cli_util.render_response(result, ctx)
 
 
-@tag_namespace_group.command(name=cli_util.override('get_tag_namespace.command_name', 'get'), help=u"""Gets the specified tag namespace's information.""")
+@tag_namespace_group.command(name=cli_util.override('iam.get_tag_namespace.command_name', 'get'), help=u"""Gets the specified tag namespace's information.""")
 @cli_util.option('--tag-namespace-id', required=True, help=u"""The OCID of the tag namespace.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -2694,7 +2694,7 @@ def get_tag_namespace(ctx, from_json, tag_namespace_id):
     cli_util.render_response(result, ctx)
 
 
-@tagging_work_request_group.command(name=cli_util.override('get_tagging_work_request.command_name', 'get'), help=u"""Gets details on a specified work request. The workRequestID is returned in the opc-workrequest-id header for any asynchronous operation in the Identity and Access Management service.""")
+@tagging_work_request_group.command(name=cli_util.override('iam.get_tagging_work_request.command_name', 'get'), help=u"""Gets details on a specified work request. The workRequestID is returned in the opc-workrequest-id header for any asynchronous operation in the Identity and Access Management service.""")
 @cli_util.option('--work-request-id', required=True, help=u"""The OCID of the work request.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -2715,7 +2715,7 @@ def get_tagging_work_request(ctx, from_json, work_request_id):
     cli_util.render_response(result, ctx)
 
 
-@tenancy_group.command(name=cli_util.override('get_tenancy.command_name', 'get'), help=u"""Get the specified tenancy's information.""")
+@tenancy_group.command(name=cli_util.override('iam.get_tenancy.command_name', 'get'), help=u"""Get the specified tenancy's information.""")
 @cli_util.option('--tenancy-id', required=True, help=u"""The OCID of the tenancy.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -2736,7 +2736,7 @@ def get_tenancy(ctx, from_json, tenancy_id):
     cli_util.render_response(result, ctx)
 
 
-@user_group.command(name=cli_util.override('get_user.command_name', 'get'), help=u"""Gets the specified user's information.""")
+@user_group.command(name=cli_util.override('iam.get_user.command_name', 'get'), help=u"""Gets the specified user's information.""")
 @cli_util.option('--user-id', required=True, help=u"""The OCID of the user.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -2757,7 +2757,7 @@ def get_user(ctx, from_json, user_id):
     cli_util.render_response(result, ctx)
 
 
-@user_group_membership_group.command(name=cli_util.override('get_user_group_membership.command_name', 'get'), help=u"""Gets the specified UserGroupMembership's information.""")
+@user_group_membership_group.command(name=cli_util.override('iam.get_user_group_membership.command_name', 'get'), help=u"""Gets the specified UserGroupMembership's information.""")
 @cli_util.option('--user-group-membership-id', required=True, help=u"""The OCID of the userGroupMembership.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -2778,7 +2778,7 @@ def get_user_group_membership(ctx, from_json, user_group_membership_id):
     cli_util.render_response(result, ctx)
 
 
-@ui_password_information_group.command(name=cli_util.override('get_user_ui_password_information.command_name', 'get-user'), help=u"""Gets the specified user's console password information. The returned object contains the user's OCID, but not the password itself. The actual password is returned only when created or reset.""")
+@ui_password_information_group.command(name=cli_util.override('iam.get_user_ui_password_information.command_name', 'get-user'), help=u"""Gets the specified user's console password information. The returned object contains the user's OCID, but not the password itself. The actual password is returned only when created or reset.""")
 @cli_util.option('--user-id', required=True, help=u"""The OCID of the user.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -2799,7 +2799,7 @@ def get_user_ui_password_information(ctx, from_json, user_id):
     cli_util.render_response(result, ctx)
 
 
-@work_request_group.command(name=cli_util.override('get_work_request.command_name', 'get'), help=u"""Gets details on a specified work request. The workRequestID is returned in the opc-workrequest-id header for any asynchronous operation in the Identity and Access Management service.""")
+@work_request_group.command(name=cli_util.override('iam.get_work_request.command_name', 'get'), help=u"""Gets details on a specified work request. The workRequestID is returned in the opc-workrequest-id header for any asynchronous operation in the Identity and Access Management service.""")
 @cli_util.option('--work-request-id', required=True, help=u"""The OCID of the work request.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -2820,7 +2820,7 @@ def get_work_request(ctx, from_json, work_request_id):
     cli_util.render_response(result, ctx)
 
 
-@api_key_group.command(name=cli_util.override('list_api_keys.command_name', 'list'), help=u"""Lists the API signing keys for the specified user. A user can have a maximum of three keys.
+@api_key_group.command(name=cli_util.override('iam.list_api_keys.command_name', 'list'), help=u"""Lists the API signing keys for the specified user. A user can have a maximum of three keys.
 
 Every user has permission to use this API call for *their own user ID*.  An administrator in your organization does not need to write a policy to give users this ability.""")
 @cli_util.option('--user-id', required=True, help=u"""The OCID of the user.""")
@@ -2844,7 +2844,7 @@ def list_api_keys(ctx, from_json, all_pages, user_id):
     cli_util.render_response(result, ctx)
 
 
-@auth_token_group.command(name=cli_util.override('list_auth_tokens.command_name', 'list'), help=u"""Lists the auth tokens for the specified user. The returned object contains the token's OCID, but not the token itself. The actual token is returned only upon creation.""")
+@auth_token_group.command(name=cli_util.override('iam.list_auth_tokens.command_name', 'list'), help=u"""Lists the auth tokens for the specified user. The returned object contains the token's OCID, but not the token itself. The actual token is returned only upon creation.""")
 @cli_util.option('--user-id', required=True, help=u"""The OCID of the user.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2866,7 +2866,7 @@ def list_auth_tokens(ctx, from_json, all_pages, user_id):
     cli_util.render_response(result, ctx)
 
 
-@availability_domain_group.command(name=cli_util.override('list_availability_domains.command_name', 'list'), help=u"""Lists the availability domains in your tenancy. Specify the OCID of either the tenancy or another of your compartments as the value for the compartment ID (remember that the tenancy is simply the root compartment). See [Where to Get the Tenancy's OCID and User's OCID]. Note that the order of the results returned can change if availability domains are added or removed; therefore, do not create a dependency on the list order.""")
+@availability_domain_group.command(name=cli_util.override('iam.list_availability_domains.command_name', 'list'), help=u"""Lists the availability domains in your tenancy. Specify the OCID of either the tenancy or another of your compartments as the value for the compartment ID (remember that the tenancy is simply the root compartment). See [Where to Get the Tenancy's OCID and User's OCID]. Note that the order of the results returned can change if availability domains are added or removed; therefore, do not create a dependency on the list order.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment (remember that the tenancy is simply the root compartment).""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2885,7 +2885,7 @@ def list_availability_domains(ctx, from_json, all_pages, compartment_id):
     cli_util.render_response(result, ctx)
 
 
-@compartment_group.command(name=cli_util.override('list_compartments.command_name', 'list'), help=u"""Lists the compartments in a specified compartment. The members of the list returned depends on the values set for several parameters.
+@compartment_group.command(name=cli_util.override('iam.list_compartments.command_name', 'list'), help=u"""Lists the compartments in a specified compartment. The members of the list returned depends on the values set for several parameters.
 
 With the exception of the tenancy (root compartment), the ListCompartments operation returns only the first-level child compartments in the parent compartment specified in `compartmentId`. The list does not include any subcompartments of the child compartments (grandchildren).
 
@@ -2948,7 +2948,7 @@ def list_compartments(ctx, from_json, all_pages, page_size, compartment_id, page
     cli_util.render_response(result, ctx)
 
 
-@tag_group.command(name=cli_util.override('list_cost_tracking_tags.command_name', 'list-cost-tracking'), help=u"""Lists all the tags enabled for cost-tracking in the specified tenancy. For information about cost-tracking tags, see [Using Cost-tracking Tags].""")
+@tag_group.command(name=cli_util.override('iam.list_cost_tracking_tags.command_name', 'list-cost-tracking'), help=u"""Lists all the tags enabled for cost-tracking in the specified tenancy. For information about cost-tracking tags, see [Using Cost-tracking Tags].""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment (remember that the tenancy is simply the root compartment).""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call.""")
@@ -2995,7 +2995,7 @@ def list_cost_tracking_tags(ctx, from_json, all_pages, page_size, compartment_id
     cli_util.render_response(result, ctx)
 
 
-@customer_secret_key_group.command(name=cli_util.override('list_customer_secret_keys.command_name', 'list'), help=u"""Lists the secret keys for the specified user. The returned object contains the secret key's OCID, but not the secret key itself. The actual secret key is returned only upon creation.""")
+@customer_secret_key_group.command(name=cli_util.override('iam.list_customer_secret_keys.command_name', 'list'), help=u"""Lists the secret keys for the specified user. The returned object contains the secret key's OCID, but not the secret key itself. The actual secret key is returned only upon creation.""")
 @cli_util.option('--user-id', required=True, help=u"""The OCID of the user.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -3017,7 +3017,7 @@ def list_customer_secret_keys(ctx, from_json, all_pages, user_id):
     cli_util.render_response(result, ctx)
 
 
-@dynamic_group_group.command(name=cli_util.override('list_dynamic_groups.command_name', 'list'), help=u"""Lists the dynamic groups in your tenancy. You must specify your tenancy's OCID as the value for the compartment ID (remember that the tenancy is simply the root compartment). See [Where to Get the Tenancy's OCID and User's OCID].""")
+@dynamic_group_group.command(name=cli_util.override('iam.list_dynamic_groups.command_name', 'list'), help=u"""Lists the dynamic groups in your tenancy. You must specify your tenancy's OCID as the value for the compartment ID (remember that the tenancy is simply the root compartment). See [Where to Get the Tenancy's OCID and User's OCID].""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment (remember that the tenancy is simply the root compartment).""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call.""")
@@ -3064,7 +3064,7 @@ def list_dynamic_groups(ctx, from_json, all_pages, page_size, compartment_id, pa
     cli_util.render_response(result, ctx)
 
 
-@fault_domain_group.command(name=cli_util.override('list_fault_domains.command_name', 'list'), help=u"""Lists the Fault Domains in your tenancy. Specify the OCID of either the tenancy or another of your compartments as the value for the compartment ID (remember that the tenancy is simply the root compartment). See [Where to Get the Tenancy's OCID and User's OCID].""")
+@fault_domain_group.command(name=cli_util.override('iam.list_fault_domains.command_name', 'list'), help=u"""Lists the Fault Domains in your tenancy. Specify the OCID of either the tenancy or another of your compartments as the value for the compartment ID (remember that the tenancy is simply the root compartment). See [Where to Get the Tenancy's OCID and User's OCID].""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment (remember that the tenancy is simply the root compartment).""")
 @cli_util.option('--availability-domain', required=True, help=u"""The name of the availibilityDomain.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
@@ -3085,7 +3085,7 @@ def list_fault_domains(ctx, from_json, all_pages, compartment_id, availability_d
     cli_util.render_response(result, ctx)
 
 
-@group_group.command(name=cli_util.override('list_groups.command_name', 'list'), help=u"""Lists the groups in your tenancy. You must specify your tenancy's OCID as the value for the compartment ID (remember that the tenancy is simply the root compartment). See [Where to Get the Tenancy's OCID and User's OCID].""")
+@group_group.command(name=cli_util.override('iam.list_groups.command_name', 'list'), help=u"""Lists the groups in your tenancy. You must specify your tenancy's OCID as the value for the compartment ID (remember that the tenancy is simply the root compartment). See [Where to Get the Tenancy's OCID and User's OCID].""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment (remember that the tenancy is simply the root compartment).""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call.""")
@@ -3132,7 +3132,7 @@ def list_groups(ctx, from_json, all_pages, page_size, compartment_id, page, limi
     cli_util.render_response(result, ctx)
 
 
-@identity_provider_group_group.command(name=cli_util.override('list_identity_provider_groups.command_name', 'list'), help=u"""Lists the identity provider groups.""")
+@identity_provider_group_group.command(name=cli_util.override('iam.list_identity_provider_groups.command_name', 'list'), help=u"""Lists the identity provider groups.""")
 @cli_util.option('--identity-provider-id', required=True, help=u"""The OCID of the identity provider.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call.""")
@@ -3182,7 +3182,7 @@ def list_identity_provider_groups(ctx, from_json, all_pages, page_size, identity
     cli_util.render_response(result, ctx)
 
 
-@identity_provider_group.command(name=cli_util.override('list_identity_providers.command_name', 'list'), help=u"""Lists all the identity providers in your tenancy. You must specify the identity provider type (e.g., `SAML2` for identity providers using the SAML2.0 protocol). You must specify your tenancy's OCID as the value for the compartment ID (remember that the tenancy is simply the root compartment). See [Where to Get the Tenancy's OCID and User's OCID].""")
+@identity_provider_group.command(name=cli_util.override('iam.list_identity_providers.command_name', 'list'), help=u"""Lists all the identity providers in your tenancy. You must specify the identity provider type (e.g., `SAML2` for identity providers using the SAML2.0 protocol). You must specify your tenancy's OCID as the value for the compartment ID (remember that the tenancy is simply the root compartment). See [Where to Get the Tenancy's OCID and User's OCID].""")
 @cli_util.option('--protocol', required=True, help=u"""The protocol used for federation. Allowed values are: SAML2""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment (remember that the tenancy is simply the root compartment).""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
@@ -3233,7 +3233,7 @@ def list_identity_providers(ctx, from_json, all_pages, page_size, protocol, comp
     cli_util.render_response(result, ctx)
 
 
-@idp_group_mapping_group.command(name=cli_util.override('list_idp_group_mappings.command_name', 'list'), help=u"""Lists the group mappings for the specified identity provider.""")
+@idp_group_mapping_group.command(name=cli_util.override('iam.list_idp_group_mappings.command_name', 'list'), help=u"""Lists the group mappings for the specified identity provider.""")
 @cli_util.option('--identity-provider-id', required=True, help=u"""The OCID of the identity provider.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call.""")
@@ -3283,7 +3283,7 @@ def list_idp_group_mappings(ctx, from_json, all_pages, page_size, identity_provi
     cli_util.render_response(result, ctx)
 
 
-@mfa_totp_device_group.command(name=cli_util.override('list_mfa_totp_devices.command_name', 'list'), help=u"""Lists the MFA TOTP devices for the specified user. The returned object contains the device's OCID, but not the seed. The seed is returned only upon creation or when the IAM service regenerates the MFA seed for the device.""")
+@mfa_totp_device_group.command(name=cli_util.override('iam.list_mfa_totp_devices.command_name', 'list'), help=u"""Lists the MFA TOTP devices for the specified user. The returned object contains the device's OCID, but not the seed. The seed is returned only upon creation or when the IAM service regenerates the MFA seed for the device.""")
 @cli_util.option('--user-id', required=True, help=u"""The OCID of the user.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call.""")
@@ -3341,7 +3341,7 @@ def list_mfa_totp_devices(ctx, from_json, all_pages, page_size, user_id, page, l
     cli_util.render_response(result, ctx)
 
 
-@policy_group.command(name=cli_util.override('list_policies.command_name', 'list'), help=u"""Lists the policies in the specified compartment (either the tenancy or another of your compartments). See [Where to Get the Tenancy's OCID and User's OCID].
+@policy_group.command(name=cli_util.override('iam.list_policies.command_name', 'list'), help=u"""Lists the policies in the specified compartment (either the tenancy or another of your compartments). See [Where to Get the Tenancy's OCID and User's OCID].
 
 To determine which policies apply to a particular group or compartment, you must view the individual statements inside all your policies. There isn't a way to automatically obtain that information via the API.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment (remember that the tenancy is simply the root compartment).""")
@@ -3390,7 +3390,7 @@ def list_policies(ctx, from_json, all_pages, page_size, compartment_id, page, li
     cli_util.render_response(result, ctx)
 
 
-@region_subscription_group.command(name=cli_util.override('list_region_subscriptions.command_name', 'list'), help=u"""Lists the region subscriptions for the specified tenancy.""")
+@region_subscription_group.command(name=cli_util.override('iam.list_region_subscriptions.command_name', 'list'), help=u"""Lists the region subscriptions for the specified tenancy.""")
 @cli_util.option('--tenancy-id', required=True, help=u"""The OCID of the tenancy.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -3412,7 +3412,7 @@ def list_region_subscriptions(ctx, from_json, all_pages, tenancy_id):
     cli_util.render_response(result, ctx)
 
 
-@region_group.command(name=cli_util.override('list_regions.command_name', 'list'), help=u"""Lists all the regions offered by Oracle Cloud Infrastructure.""")
+@region_group.command(name=cli_util.override('iam.list_regions.command_name', 'list'), help=u"""Lists all the regions offered by Oracle Cloud Infrastructure.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -3429,7 +3429,7 @@ def list_regions(ctx, from_json, all_pages, ):
     cli_util.render_response(result, ctx)
 
 
-@smtp_credential_group.command(name=cli_util.override('list_smtp_credentials.command_name', 'list'), help=u"""Lists the SMTP credentials for the specified user. The returned object contains the credential's OCID, the SMTP user name but not the SMTP password. The SMTP password is returned only upon creation.""")
+@smtp_credential_group.command(name=cli_util.override('iam.list_smtp_credentials.command_name', 'list'), help=u"""Lists the SMTP credentials for the specified user. The returned object contains the credential's OCID, the SMTP user name but not the SMTP password. The SMTP password is returned only upon creation.""")
 @cli_util.option('--user-id', required=True, help=u"""The OCID of the user.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -3451,7 +3451,7 @@ def list_smtp_credentials(ctx, from_json, all_pages, user_id):
     cli_util.render_response(result, ctx)
 
 
-@swift_password_group.command(name=cli_util.override('list_swift_passwords.command_name', 'list'), help=u"""**Deprecated. Use [ListAuthTokens] instead.**
+@swift_password_group.command(name=cli_util.override('iam.list_swift_passwords.command_name', 'list'), help=u"""**Deprecated. Use [ListAuthTokens] instead.**
 
 Lists the Swift passwords for the specified user. The returned object contains the password's OCID, but not the password itself. The actual password is returned only upon creation.""")
 @cli_util.option('--user-id', required=True, help=u"""The OCID of the user.""")
@@ -3475,7 +3475,7 @@ def list_swift_passwords(ctx, from_json, all_pages, user_id):
     cli_util.render_response(result, ctx)
 
 
-@tag_default_group.command(name=cli_util.override('list_tag_defaults.command_name', 'list'), help=u"""Lists the tag defaults for tag definitions in the specified compartment.""")
+@tag_default_group.command(name=cli_util.override('iam.list_tag_defaults.command_name', 'list'), help=u"""Lists the tag defaults for tag definitions in the specified compartment.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call.""")
 @cli_util.option('--id', help=u"""A filter to only return resources that match the specified OCID exactly.""")
@@ -3530,7 +3530,7 @@ def list_tag_defaults(ctx, from_json, all_pages, page_size, page, limit, id, com
     cli_util.render_response(result, ctx)
 
 
-@tag_namespace_group.command(name=cli_util.override('list_tag_namespaces.command_name', 'list'), help=u"""Lists the tag namespaces in the specified compartment.""")
+@tag_namespace_group.command(name=cli_util.override('iam.list_tag_namespaces.command_name', 'list'), help=u"""Lists the tag namespaces in the specified compartment.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment (remember that the tenancy is simply the root compartment).""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call.""")
@@ -3583,7 +3583,7 @@ def list_tag_namespaces(ctx, from_json, all_pages, page_size, compartment_id, pa
     cli_util.render_response(result, ctx)
 
 
-@tagging_work_request_error_group.command(name=cli_util.override('list_tagging_work_request_errors.command_name', 'list'), help=u"""Gets the errors for a work request.""")
+@tagging_work_request_error_group.command(name=cli_util.override('iam.list_tagging_work_request_errors.command_name', 'list'), help=u"""Gets the errors for a work request.""")
 @cli_util.option('--work-request-id', required=True, help=u"""The OCID of the work request.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call.""")
@@ -3633,7 +3633,7 @@ def list_tagging_work_request_errors(ctx, from_json, all_pages, page_size, work_
     cli_util.render_response(result, ctx)
 
 
-@tagging_work_request_log_group.command(name=cli_util.override('list_tagging_work_request_logs.command_name', 'list'), help=u"""Gets the logs for a work request.""")
+@tagging_work_request_log_group.command(name=cli_util.override('iam.list_tagging_work_request_logs.command_name', 'list'), help=u"""Gets the logs for a work request.""")
 @cli_util.option('--work-request-id', required=True, help=u"""The OCID of the work request.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call.""")
@@ -3683,7 +3683,7 @@ def list_tagging_work_request_logs(ctx, from_json, all_pages, page_size, work_re
     cli_util.render_response(result, ctx)
 
 
-@tagging_work_request_group.command(name=cli_util.override('list_tagging_work_requests.command_name', 'list'), help=u"""Lists the tagging work requests in compartment.""")
+@tagging_work_request_group.command(name=cli_util.override('iam.list_tagging_work_requests.command_name', 'list'), help=u"""Lists the tagging work requests in compartment.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment (remember that the tenancy is simply the root compartment).""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call.""")
@@ -3733,7 +3733,7 @@ def list_tagging_work_requests(ctx, from_json, all_pages, page_size, compartment
     cli_util.render_response(result, ctx)
 
 
-@tag_group.command(name=cli_util.override('list_tags.command_name', 'list'), help=u"""Lists the tag definitions in the specified tag namespace.""")
+@tag_group.command(name=cli_util.override('iam.list_tags.command_name', 'list'), help=u"""Lists the tag definitions in the specified tag namespace.""")
 @cli_util.option('--tag-namespace-id', required=True, help=u"""The OCID of the tag namespace.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call.""")
@@ -3786,7 +3786,7 @@ def list_tags(ctx, from_json, all_pages, page_size, tag_namespace_id, page, limi
     cli_util.render_response(result, ctx)
 
 
-@user_group_membership_group.command(name=cli_util.override('list_user_group_memberships.command_name', 'list'), help=u"""Lists the `UserGroupMembership` objects in your tenancy. You must specify your tenancy's OCID as the value for the compartment ID (see [Where to Get the Tenancy's OCID and User's OCID]). You must also then filter the list in one of these ways:
+@user_group_membership_group.command(name=cli_util.override('iam.list_user_group_memberships.command_name', 'list'), help=u"""Lists the `UserGroupMembership` objects in your tenancy. You must specify your tenancy's OCID as the value for the compartment ID (see [Where to Get the Tenancy's OCID and User's OCID]). You must also then filter the list in one of these ways:
 
 - You can limit the results to just the memberships for a given user by specifying a `userId`. - Similarly, you can limit the results to just the memberships for a given group by specifying a `groupId`. - You can set both the `userId` and `groupId` to determine if the specified user is in the specified group. If the answer is no, the response is an empty list. - Although`userId` and `groupId` are not indvidually required, you must set one of them.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment (remember that the tenancy is simply the root compartment).""")
@@ -3841,7 +3841,7 @@ def list_user_group_memberships(ctx, from_json, all_pages, page_size, compartmen
     cli_util.render_response(result, ctx)
 
 
-@user_group.command(name=cli_util.override('list_users.command_name', 'list'), help=u"""Lists the users in your tenancy. You must specify your tenancy's OCID as the value for the compartment ID (remember that the tenancy is simply the root compartment). See [Where to Get the Tenancy's OCID and User's OCID].""")
+@user_group.command(name=cli_util.override('iam.list_users.command_name', 'list'), help=u"""Lists the users in your tenancy. You must specify your tenancy's OCID as the value for the compartment ID (remember that the tenancy is simply the root compartment). See [Where to Get the Tenancy's OCID and User's OCID].""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment (remember that the tenancy is simply the root compartment).""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call.""")
@@ -3894,7 +3894,7 @@ def list_users(ctx, from_json, all_pages, page_size, compartment_id, page, limit
     cli_util.render_response(result, ctx)
 
 
-@work_request_group.command(name=cli_util.override('list_work_requests.command_name', 'list'), help=u"""Lists the work requests in compartment.""")
+@work_request_group.command(name=cli_util.override('iam.list_work_requests.command_name', 'list'), help=u"""Lists the work requests in compartment.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment (remember that the tenancy is simply the root compartment).""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call.""")
@@ -3944,7 +3944,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, pag
     cli_util.render_response(result, ctx)
 
 
-@compartment_group.command(name=cli_util.override('move_compartment.command_name', 'move'), help=u"""Move the compartment to a different parent compartment in the same tenancy. When you move a compartment, all its contents (subcompartments and resources) are moved with it. Note that the `CompartmentId` that you specify in the path is the compartment that you want to move.
+@compartment_group.command(name=cli_util.override('iam.move_compartment.command_name', 'move'), help=u"""Move the compartment to a different parent compartment in the same tenancy. When you move a compartment, all its contents (subcompartments and resources) are moved with it. Note that the `CompartmentId` that you specify in the path is the compartment that you want to move.
 
 **IMPORTANT**: After you move a compartment to a new parent compartment, the access policies of the new parent take effect and the policies of the previous parent no longer apply. Ensure that you are aware of the implications for the compartment contents before you move it. For more information, see [Moving a Compartment].""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
@@ -4002,7 +4002,7 @@ def move_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
     cli_util.render_response(result, ctx)
 
 
-@user_group_membership_group.command(name=cli_util.override('remove_user_from_group.command_name', 'remove'), help=u"""Removes a user from a group by deleting the corresponding `UserGroupMembership`.""")
+@user_group_membership_group.command(name=cli_util.override('iam.remove_user_from_group.command_name', 'remove'), help=u"""Removes a user from a group by deleting the corresponding `UserGroupMembership`.""")
 @cli_util.option('--user-group-membership-id', required=True, help=u"""The OCID of the userGroupMembership.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -4027,7 +4027,7 @@ def remove_user_from_group(ctx, from_json, user_group_membership_id, if_match):
     cli_util.render_response(result, ctx)
 
 
-@scim_client_credentials_group.command(name=cli_util.override('reset_idp_scim_client.command_name', 'reset-idp-scim-client'), help=u"""Resets the OAuth2 client credentials for the SCIM client associated with this identity provider.""")
+@scim_client_credentials_group.command(name=cli_util.override('iam.reset_idp_scim_client.command_name', 'reset-idp-scim-client'), help=u"""Resets the OAuth2 client credentials for the SCIM client associated with this identity provider.""")
 @cli_util.option('--identity-provider-id', required=True, help=u"""The OCID of the identity provider.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -4048,7 +4048,7 @@ def reset_idp_scim_client(ctx, from_json, identity_provider_id):
     cli_util.render_response(result, ctx)
 
 
-@auth_token_group.command(name=cli_util.override('update_auth_token.command_name', 'update'), help=u"""Updates the specified auth token's description.""")
+@auth_token_group.command(name=cli_util.override('iam.update_auth_token.command_name', 'update'), help=u"""Updates the specified auth token's description.""")
 @cli_util.option('--user-id', required=True, help=u"""The OCID of the user.""")
 @cli_util.option('--auth-token-id', required=True, help=u"""The OCID of the auth token.""")
 @cli_util.option('--description', help=u"""The description you assign to the auth token. Does not have to be unique, and it's changeable.""")
@@ -4085,7 +4085,7 @@ def update_auth_token(ctx, from_json, user_id, auth_token_id, description, if_ma
     cli_util.render_response(result, ctx)
 
 
-@authentication_policy_group.command(name=cli_util.override('update_authentication_policy.command_name', 'update'), help=u"""Updates authentication policy for the specified tenancy""")
+@authentication_policy_group.command(name=cli_util.override('iam.update_authentication_policy.command_name', 'update'), help=u"""Updates authentication policy for the specified tenancy""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
 @cli_util.option('--password-policy', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Password policy.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -4122,7 +4122,7 @@ def update_authentication_policy(ctx, from_json, force, compartment_id, password
     cli_util.render_response(result, ctx)
 
 
-@compartment_group.command(name=cli_util.override('update_compartment.command_name', 'update'), help=u"""Updates the specified compartment's description or name. You can't update the root compartment.""")
+@compartment_group.command(name=cli_util.override('iam.update_compartment.command_name', 'update'), help=u"""Updates the specified compartment's description or name. You can't update the root compartment.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
 @cli_util.option('--description', help=u"""The description you assign to the compartment. Does not have to be unique, and it's changeable.""")
 @cli_util.option('--name', help=u"""The new name you assign to the compartment. The name must be unique across all compartments in the parent compartment. Avoid entering confidential information.""")
@@ -4196,7 +4196,7 @@ def update_compartment(ctx, from_json, force, wait_for_state, max_wait_seconds, 
     cli_util.render_response(result, ctx)
 
 
-@customer_secret_key_group.command(name=cli_util.override('update_customer_secret_key.command_name', 'update'), help=u"""Updates the specified secret key's description.""")
+@customer_secret_key_group.command(name=cli_util.override('iam.update_customer_secret_key.command_name', 'update'), help=u"""Updates the specified secret key's description.""")
 @cli_util.option('--user-id', required=True, help=u"""The OCID of the user.""")
 @cli_util.option('--customer-secret-key-id', required=True, help=u"""The OCID of the secret key.""")
 @cli_util.option('--display-name', help=u"""The description you assign to the secret key. Does not have to be unique, and it's changeable.""")
@@ -4233,7 +4233,7 @@ def update_customer_secret_key(ctx, from_json, user_id, customer_secret_key_id, 
     cli_util.render_response(result, ctx)
 
 
-@dynamic_group_group.command(name=cli_util.override('update_dynamic_group.command_name', 'update'), help=u"""Updates the specified dynamic group.""")
+@dynamic_group_group.command(name=cli_util.override('iam.update_dynamic_group.command_name', 'update'), help=u"""Updates the specified dynamic group.""")
 @cli_util.option('--dynamic-group-id', required=True, help=u"""The OCID of the dynamic group.""")
 @cli_util.option('--description', help=u"""The description you assign to the dynamic group. Does not have to be unique, and it's changeable.""")
 @cli_util.option('--matching-rule', help=u"""The matching rule to dynamically match an instance certificate to this dynamic group. For rule syntax, see [Managing Dynamic Groups].""")
@@ -4307,7 +4307,7 @@ def update_dynamic_group(ctx, from_json, force, wait_for_state, max_wait_seconds
     cli_util.render_response(result, ctx)
 
 
-@group_group.command(name=cli_util.override('update_group.command_name', 'update'), help=u"""Updates the specified group.""")
+@group_group.command(name=cli_util.override('iam.update_group.command_name', 'update'), help=u"""Updates the specified group.""")
 @cli_util.option('--group-id', required=True, help=u"""The OCID of the group.""")
 @cli_util.option('--description', help=u"""The description you assign to the group. Does not have to be unique, and it's changeable.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -4377,7 +4377,7 @@ def update_group(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_i
     cli_util.render_response(result, ctx)
 
 
-@identity_provider_group.command(name=cli_util.override('update_identity_provider.command_name', 'update'), help=u"""Updates the specified identity provider.""")
+@identity_provider_group.command(name=cli_util.override('iam.update_identity_provider.command_name', 'update'), help=u"""Updates the specified identity provider.""")
 @cli_util.option('--identity-provider-id', required=True, help=u"""The OCID of the identity provider.""")
 @cli_util.option('--protocol', required=True, type=custom_types.CliCaseInsensitiveChoice(["SAML2"]), help=u"""The protocol used for federation.
 
@@ -4451,7 +4451,7 @@ def update_identity_provider(ctx, from_json, force, wait_for_state, max_wait_sec
     cli_util.render_response(result, ctx)
 
 
-@identity_provider_group.command(name=cli_util.override('update_identity_provider_update_saml2_identity_provider_details.command_name', 'update-identity-provider-update-saml2-identity-provider-details'), help=u"""Updates the specified identity provider.""")
+@identity_provider_group.command(name=cli_util.override('iam.update_identity_provider_update_saml2_identity_provider_details.command_name', 'update-identity-provider-update-saml2-identity-provider-details'), help=u"""Updates the specified identity provider.""")
 @cli_util.option('--identity-provider-id', required=True, help=u"""The OCID of the identity provider.""")
 @cli_util.option('--description', help=u"""The description you assign to the `IdentityProvider`. Does not have to be unique, and it's changeable.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -4535,7 +4535,7 @@ def update_identity_provider_update_saml2_identity_provider_details(ctx, from_js
     cli_util.render_response(result, ctx)
 
 
-@idp_group_mapping_group.command(name=cli_util.override('update_idp_group_mapping.command_name', 'update'), help=u"""Updates the specified group mapping.""")
+@idp_group_mapping_group.command(name=cli_util.override('iam.update_idp_group_mapping.command_name', 'update'), help=u"""Updates the specified group mapping.""")
 @cli_util.option('--identity-provider-id', required=True, help=u"""The OCID of the identity provider.""")
 @cli_util.option('--mapping-id', required=True, help=u"""The OCID of the group mapping.""")
 @cli_util.option('--idp-group-name', help=u"""The idp group name.""")
@@ -4601,7 +4601,7 @@ def update_idp_group_mapping(ctx, from_json, wait_for_state, max_wait_seconds, w
     cli_util.render_response(result, ctx)
 
 
-@policy_group.command(name=cli_util.override('update_policy.command_name', 'update'), help=u"""Updates the specified policy. You can update the description or the policy statements themselves.
+@policy_group.command(name=cli_util.override('iam.update_policy.command_name', 'update'), help=u"""Updates the specified policy. You can update the description or the policy statements themselves.
 
 Policy changes take effect typically within 10 seconds.""")
 @cli_util.option('--policy-id', required=True, help=u"""The OCID of the policy.""")
@@ -4681,7 +4681,7 @@ def update_policy(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_
     cli_util.render_response(result, ctx)
 
 
-@smtp_credential_group.command(name=cli_util.override('update_smtp_credential.command_name', 'update'), help=u"""Updates the specified SMTP credential's description.""")
+@smtp_credential_group.command(name=cli_util.override('iam.update_smtp_credential.command_name', 'update'), help=u"""Updates the specified SMTP credential's description.""")
 @cli_util.option('--user-id', required=True, help=u"""The OCID of the user.""")
 @cli_util.option('--smtp-credential-id', required=True, help=u"""The OCID of the SMTP credential.""")
 @cli_util.option('--description', help=u"""The description you assign to the SMTP credential. Does not have to be unique, and it's changeable.""")
@@ -4718,7 +4718,7 @@ def update_smtp_credential(ctx, from_json, user_id, smtp_credential_id, descript
     cli_util.render_response(result, ctx)
 
 
-@swift_password_group.command(name=cli_util.override('update_swift_password.command_name', 'update'), help=u"""**Deprecated. Use [UpdateAuthToken] instead.**
+@swift_password_group.command(name=cli_util.override('iam.update_swift_password.command_name', 'update'), help=u"""**Deprecated. Use [UpdateAuthToken] instead.**
 
 Updates the specified Swift password's description.""")
 @cli_util.option('--user-id', required=True, help=u"""The OCID of the user.""")
@@ -4757,7 +4757,7 @@ def update_swift_password(ctx, from_json, user_id, swift_password_id, descriptio
     cli_util.render_response(result, ctx)
 
 
-@tag_group.command(name=cli_util.override('update_tag.command_name', 'update'), help=u"""Updates the specified tag definition.
+@tag_group.command(name=cli_util.override('iam.update_tag.command_name', 'update'), help=u"""Updates the specified tag definition.
 
 Setting a 'validator' will enable enforcement of additional validation on values contained in the specified for this definedTag. Any values that were previously set will not be changed, but any new value set for the definedTag must pass validation.""")
 @cli_util.option('--tag-namespace-id', required=True, help=u"""The OCID of the tag namespace.""")
@@ -4774,7 +4774,7 @@ If no validator is defined for a tag definition, then any (valid) value will be 
 The default value for `validator` is an empty map (no additional validation).""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE", "DELETING", "DELETED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'identity', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'identity', 'class': 'dict(str, dict(str, object))'}, 'validator': {'module': 'identity', 'class': 'BaseTagDefinitionValidator'}})
@@ -4850,7 +4850,7 @@ def update_tag(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_int
     cli_util.render_response(result, ctx)
 
 
-@tag_group.command(name=cli_util.override('update_tag_default_tag_definition_validator.command_name', 'update-tag-default-tag-definition-validator'), help=u"""Updates the specified tag definition.
+@tag_group.command(name=cli_util.override('iam.update_tag_default_tag_definition_validator.command_name', 'update-tag-default-tag-definition-validator'), help=u"""Updates the specified tag definition.
 
 Setting a 'validator' will enable enforcement of additional validation on values contained in the specified for this definedTag. Any values that were previously set will not be changed, but any new value set for the definedTag must pass validation.""")
 @cli_util.option('--tag-namespace-id', required=True, help=u"""The OCID of the tag namespace.""")
@@ -4938,7 +4938,7 @@ def update_tag_default_tag_definition_validator(ctx, from_json, force, wait_for_
     cli_util.render_response(result, ctx)
 
 
-@tag_group.command(name=cli_util.override('update_tag_enum_tag_definition_validator.command_name', 'update-tag-enum-tag-definition-validator'), help=u"""Updates the specified tag definition.
+@tag_group.command(name=cli_util.override('iam.update_tag_enum_tag_definition_validator.command_name', 'update-tag-enum-tag-definition-validator'), help=u"""Updates the specified tag definition.
 
 Setting a 'validator' will enable enforcement of additional validation on values contained in the specified for this definedTag. Any values that were previously set will not be changed, but any new value set for the definedTag must pass validation.""")
 @cli_util.option('--tag-namespace-id', required=True, help=u"""The OCID of the tag namespace.""")
@@ -4951,7 +4951,7 @@ Setting a 'validator' will enable enforcement of additional validation on values
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--validator-values', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of allowed values for a definedTag value.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE", "DELETING", "DELETED"]), help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'identity', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'identity', 'class': 'dict(str, dict(str, object))'}, 'validator-values': {'module': 'identity', 'class': 'list[string]'}})
@@ -5030,7 +5030,7 @@ def update_tag_enum_tag_definition_validator(ctx, from_json, force, wait_for_sta
     cli_util.render_response(result, ctx)
 
 
-@tag_default_group.command(name=cli_util.override('update_tag_default.command_name', 'update'), help=u"""Updates the specified tag default. If you specify that a value is required, a value is set during resource creation (either by the user creating the resource or another tag defualt). If no value is set, resource creation is blocked.
+@tag_default_group.command(name=cli_util.override('iam.update_tag_default.command_name', 'update'), help=u"""Updates the specified tag default. If you specify that a value is required, a value is set during resource creation (either by the user creating the resource or another tag defualt). If no value is set, resource creation is blocked.
 
 * If the `isRequired` flag is set to \"true\", the value is set during resource creation. * If the `isRequired` flag is set to \"false\", the value you enter is set during resource creation.""")
 @cli_util.option('--tag-default-id', required=True, help=u"""The OCID of the tag default.""")
@@ -5096,7 +5096,7 @@ def update_tag_default(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     cli_util.render_response(result, ctx)
 
 
-@tag_namespace_group.command(name=cli_util.override('update_tag_namespace.command_name', 'update'), help=u"""Updates the the specified tag namespace. You can't update the namespace name.
+@tag_namespace_group.command(name=cli_util.override('iam.update_tag_namespace.command_name', 'update'), help=u"""Updates the the specified tag namespace. You can't update the namespace name.
 
 Updating `isRetired` to 'true' retires the namespace and all the tag definitions in the namespace. Reactivating a namespace (changing `isRetired` from 'true' to 'false') does not reactivate tag definitions. To reactivate the tag definitions, you must reactivate each one indvidually *after* you reactivate the namespace, using [UpdateTag]. For more information about retiring tag namespaces, see [Retiring Key Definitions and Namespace Definitions].
 
@@ -5171,7 +5171,7 @@ def update_tag_namespace(ctx, from_json, force, wait_for_state, max_wait_seconds
     cli_util.render_response(result, ctx)
 
 
-@user_group.command(name=cli_util.override('update_user.command_name', 'update'), help=u"""Updates the description of the specified user.""")
+@user_group.command(name=cli_util.override('iam.update_user.command_name', 'update'), help=u"""Updates the description of the specified user.""")
 @cli_util.option('--user-id', required=True, help=u"""The OCID of the user.""")
 @cli_util.option('--description', help=u"""The description you assign to the user. Does not have to be unique, and it's changeable.""")
 @cli_util.option('--email', help=u"""The email address you assign to the user. Has to be unique across the tenancy.""")
@@ -5245,7 +5245,7 @@ def update_user(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_in
     cli_util.render_response(result, ctx)
 
 
-@user_group.command(name=cli_util.override('update_user_capabilities.command_name', 'update-user-capabilities'), help=u"""Updates the capabilities of the specified user.""")
+@user_group.command(name=cli_util.override('iam.update_user_capabilities.command_name', 'update-user-capabilities'), help=u"""Updates the capabilities of the specified user.""")
 @cli_util.option('--user-id', required=True, help=u"""The OCID of the user.""")
 @cli_util.option('--can-use-console-password', type=click.BOOL, help=u"""Indicates if the user can log in to the console.""")
 @cli_util.option('--can-use-api-keys', type=click.BOOL, help=u"""Indicates if the user can use API keys.""")
@@ -5318,7 +5318,7 @@ def update_user_capabilities(ctx, from_json, wait_for_state, max_wait_seconds, w
     cli_util.render_response(result, ctx)
 
 
-@user_group.command(name=cli_util.override('update_user_state.command_name', 'update-user-state'), help=u"""Updates the state of the specified user.""")
+@user_group.command(name=cli_util.override('iam.update_user_state.command_name', 'update-user-state'), help=u"""Updates the state of the specified user.""")
 @cli_util.option('--user-id', required=True, help=u"""The OCID of the user.""")
 @cli_util.option('--blocked', type=click.BOOL, help=u"""Update state to blocked or unblocked. Only \"false\" is supported (for changing the state to unblocked).""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -5375,7 +5375,7 @@ def update_user_state(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
     cli_util.render_response(result, ctx)
 
 
-@api_key_group.command(name=cli_util.override('upload_api_key.command_name', 'upload'), help=u"""Uploads an API signing key for the specified user.
+@api_key_group.command(name=cli_util.override('iam.upload_api_key.command_name', 'upload'), help=u"""Uploads an API signing key for the specified user.
 
 Every user has permission to use this operation to upload a key for *their own user ID*. An administrator in your organization does not need to write a policy to give users this ability. To compare, administrators who have permission to the tenancy can use this operation to upload a key for any user, including themselves.
 

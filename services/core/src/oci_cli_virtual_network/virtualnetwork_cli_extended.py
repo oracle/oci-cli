@@ -13,7 +13,7 @@ from oci_cli import cli_util
 from oci_cli import json_skeleton_utils
 from oci_cli.aliasing import CommandGroupWithAlias
 
-cli_util.rename_command(cli, virtualnetwork_cli.virtual_network_root_group, "network")
+cli_util.rename_command(virtualnetwork_cli, cli, virtualnetwork_cli.virtual_network_root_group, "network")
 
 virtualnetwork_cli.virtual_network_root_group.commands.pop(virtualnetwork_cli.ip_sec_connection_device_config_group.name)
 virtualnetwork_cli.virtual_network_root_group.commands.pop(virtualnetwork_cli.ip_sec_connection_device_status_group.name)
@@ -31,27 +31,27 @@ virtualnetwork_cli.get_ip_sec_connection_device_config.name = 'get-config'
 virtualnetwork_cli.get_ip_sec_connection_device_status.name = 'get-status'
 virtualnetwork_cli.ip_sec_connection_group.add_command(virtualnetwork_cli.get_ip_sec_connection_device_config)
 virtualnetwork_cli.ip_sec_connection_group.add_command(virtualnetwork_cli.get_ip_sec_connection_device_status)
-cli_util.rename_command(virtualnetwork_cli.cross_connect_port_speed_shape_group, virtualnetwork_cli.list_crossconnect_port_speed_shapes, "list")
+cli_util.rename_command(virtualnetwork_cli, virtualnetwork_cli.cross_connect_port_speed_shape_group, virtualnetwork_cli.list_crossconnect_port_speed_shapes, "list")
 
 virtualnetwork_cli.virtual_network_root_group.help = "Networking Service CLI"
 virtualnetwork_cli.virtual_network_root_group.short_help = "Networking Service"
 
-cli_util.rename_command(virtualnetwork_cli.virtual_network_root_group, virtualnetwork_cli.ip_sec_connection_tunnel_group, "ip-sec-tunnel")
-cli_util.rename_command(virtualnetwork_cli.virtual_network_root_group, virtualnetwork_cli.ip_sec_connection_tunnel_shared_secret_group, "ip-sec-psk")
+cli_util.rename_command(virtualnetwork_cli, virtualnetwork_cli.virtual_network_root_group, virtualnetwork_cli.ip_sec_connection_tunnel_group, "ip-sec-tunnel")
+cli_util.rename_command(virtualnetwork_cli, virtualnetwork_cli.virtual_network_root_group, virtualnetwork_cli.ip_sec_connection_tunnel_shared_secret_group, "ip-sec-psk")
 
-cli_util.rename_command(virtualnetwork_cli.virtual_network_root_group, virtualnetwork_cli.network_security_group_group, "nsg")
+cli_util.rename_command(virtualnetwork_cli, virtualnetwork_cli.virtual_network_root_group, virtualnetwork_cli.network_security_group_group, "nsg")
 
 virtualnetwork_cli.virtual_network_root_group.commands.pop(virtualnetwork_cli.network_security_group_vnic_group.name)
 virtualnetwork_cli.network_security_group_group.add_command(virtualnetwork_cli.network_security_group_vnic_group)
-cli_util.rename_command(virtualnetwork_cli.network_security_group_group, virtualnetwork_cli.network_security_group_vnic_group, "vnics")
+cli_util.rename_command(virtualnetwork_cli, virtualnetwork_cli.network_security_group_group, virtualnetwork_cli.network_security_group_vnic_group, "vnics")
 
 
 virtualnetwork_cli.virtual_network_root_group.commands.pop(virtualnetwork_cli.security_rule_group.name)
 virtualnetwork_cli.network_security_group_group.add_command(virtualnetwork_cli.security_rule_group)
-cli_util.rename_command(virtualnetwork_cli.network_security_group_group, virtualnetwork_cli.security_rule_group, "rules")
+cli_util.rename_command(virtualnetwork_cli, virtualnetwork_cli.network_security_group_group, virtualnetwork_cli.security_rule_group, "rules")
 
-cli_util.rename_command(virtualnetwork_cli.security_rule_group, virtualnetwork_cli.list_network_security_group_security_rules, "list")
-cli_util.rename_command(virtualnetwork_cli.security_rule_group, virtualnetwork_cli.update_network_security_group_security_rules, "update")
+cli_util.rename_command(virtualnetwork_cli, virtualnetwork_cli.security_rule_group, virtualnetwork_cli.list_network_security_group_security_rules, "list")
+cli_util.rename_command(virtualnetwork_cli, virtualnetwork_cli.security_rule_group, virtualnetwork_cli.update_network_security_group_security_rules, "update")
 
 # help for oci network ip-sec-connection create --static-routes
 network_create_ip_sec_connection_static_routes_example = """'["10.0.0.0/16"]'"""

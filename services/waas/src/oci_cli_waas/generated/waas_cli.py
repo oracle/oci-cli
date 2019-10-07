@@ -14,13 +14,13 @@ from oci_cli import custom_types  # noqa: F401
 from oci_cli.aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('waas_root_group.command_name', 'waas'), cls=CommandGroupWithAlias, help=cli_util.override('waas_root_group.help', """OCI Web Application Acceleration and Security Services"""), short_help=cli_util.override('waas_root_group.short_help', """Web Application Acceleration and Security Services API"""))
+@cli.command(cli_util.override('waas.waas_root_group.command_name', 'waas'), cls=CommandGroupWithAlias, help=cli_util.override('waas.waas_root_group.help', """OCI Web Application Acceleration and Security Services"""), short_help=cli_util.override('waas.waas_root_group.short_help', """Web Application Acceleration and Security Services API"""))
 @cli_util.help_option_group
 def waas_root_group():
     pass
 
 
-@click.command(cli_util.override('waas_policy_group.command_name', 'waas-policy'), cls=CommandGroupWithAlias, help="""The details of a Web Application Acceleration and Security (WAAS) policy. A policy describes how the WAAS service should operate for the configured web application.
+@click.command(cli_util.override('waas.waas_policy_group.command_name', 'waas-policy'), cls=CommandGroupWithAlias, help="""The details of a Web Application Acceleration and Security (WAAS) policy. A policy describes how the WAAS service should operate for the configured web application.
 
 **Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
 @cli_util.help_option_group
@@ -28,43 +28,43 @@ def waas_policy_group():
     pass
 
 
-@click.command(cli_util.override('access_rule_group.command_name', 'access-rule'), cls=CommandGroupWithAlias, help="""A content access rule. An access rule specifies an action to take if a set of criteria is matched by a request.""")
+@click.command(cli_util.override('waas.access_rule_group.command_name', 'access-rule'), cls=CommandGroupWithAlias, help="""A content access rule. An access rule specifies an action to take if a set of criteria is matched by a request.""")
 @cli_util.help_option_group
 def access_rule_group():
     pass
 
 
-@click.command(cli_util.override('good_bot_group.command_name', 'good-bot'), cls=CommandGroupWithAlias, help="""The good bot settings. Good bots provides a list of bots which are managed by known providers.""")
+@click.command(cli_util.override('waas.good_bot_group.command_name', 'good-bot'), cls=CommandGroupWithAlias, help="""The good bot settings. Good bots provides a list of bots which are managed by known providers.""")
 @cli_util.help_option_group
 def good_bot_group():
     pass
 
 
-@click.command(cli_util.override('threat_feed_group.command_name', 'threat-feed'), cls=CommandGroupWithAlias, help="""The settings of the threat intelligence feed. You can block requests from IP addresses based on their reputations with various commercial and open source threat feeds.""")
+@click.command(cli_util.override('waas.threat_feed_group.command_name', 'threat-feed'), cls=CommandGroupWithAlias, help="""The settings of the threat intelligence feed. You can block requests from IP addresses based on their reputations with various commercial and open source threat feeds.""")
 @cli_util.help_option_group
 def threat_feed_group():
     pass
 
 
-@click.command(cli_util.override('waf_traffic_datum_group.command_name', 'waf-traffic-datum'), cls=CommandGroupWithAlias, help="""A time series of traffic data for the  Web Application Firewall configured for a policy.""")
+@click.command(cli_util.override('waas.waf_traffic_datum_group.command_name', 'waf-traffic-datum'), cls=CommandGroupWithAlias, help="""A time series of traffic data for the  Web Application Firewall configured for a policy.""")
 @cli_util.help_option_group
 def waf_traffic_datum_group():
     pass
 
 
-@click.command(cli_util.override('certificate_group.command_name', 'certificate'), cls=CommandGroupWithAlias, help="""The details of the SSL certificate. **Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
+@click.command(cli_util.override('waas.certificate_group.command_name', 'certificate'), cls=CommandGroupWithAlias, help="""The details of the SSL certificate. **Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
 @cli_util.help_option_group
 def certificate_group():
     pass
 
 
-@click.command(cli_util.override('edge_subnet_group.command_name', 'edge-subnet'), cls=CommandGroupWithAlias, help="""The details about an edge node subnet.""")
+@click.command(cli_util.override('waas.edge_subnet_group.command_name', 'edge-subnet'), cls=CommandGroupWithAlias, help="""The details about an edge node subnet.""")
 @cli_util.help_option_group
 def edge_subnet_group():
     pass
 
 
-@click.command(cli_util.override('recommendation_group.command_name', 'recommendation'), cls=CommandGroupWithAlias, help="""A recommended protection rule for a web application. This recommendation can be accepted to apply it to the Web Application Firewall configuration for this policy.
+@click.command(cli_util.override('waas.recommendation_group.command_name', 'recommendation'), cls=CommandGroupWithAlias, help="""A recommended protection rule for a web application. This recommendation can be accepted to apply it to the Web Application Firewall configuration for this policy.
 
 Use the `POST /waasPolicies/{waasPolicyId}/actions/acceptWafConfigRecommendations` method to accept recommended protection rules.""")
 @cli_util.help_option_group
@@ -72,37 +72,37 @@ def recommendation_group():
     pass
 
 
-@click.command(cli_util.override('waas_policy_custom_protection_rule_group.command_name', 'waas-policy-custom-protection-rule'), cls=CommandGroupWithAlias, help="""Summary information about a Custom Protection rule.""")
+@click.command(cli_util.override('waas.waas_policy_custom_protection_rule_group.command_name', 'waas-policy-custom-protection-rule'), cls=CommandGroupWithAlias, help="""Summary information about a Custom Protection rule.""")
 @cli_util.help_option_group
 def waas_policy_custom_protection_rule_group():
     pass
 
 
-@click.command(cli_util.override('js_challenge_group.command_name', 'js-challenge'), cls=CommandGroupWithAlias, help="""The JavaScript challenge settings. Javascript Challenge is the function to filter abnormal or malicious bots and allow access to real clients.""")
+@click.command(cli_util.override('waas.js_challenge_group.command_name', 'js-challenge'), cls=CommandGroupWithAlias, help="""The JavaScript challenge settings. Javascript Challenge is the function to filter abnormal or malicious bots and allow access to real clients.""")
 @cli_util.help_option_group
 def js_challenge_group():
     pass
 
 
-@click.command(cli_util.override('work_request_group.command_name', 'work-request'), cls=CommandGroupWithAlias, help="""Many of the API requests you use to create and configure WAAS policies do not take effect immediately. In these cases, the request spawns an asynchronous work flow to fulfill the request. `WorkRequest` objects provide visibility for in-progress work flows. For more information about work requests, see [Viewing the State of a Work Request].""")
+@click.command(cli_util.override('waas.work_request_group.command_name', 'work-request'), cls=CommandGroupWithAlias, help="""Many of the API requests you use to create and configure WAAS policies do not take effect immediately. In these cases, the request spawns an asynchronous work flow to fulfill the request. `WorkRequest` objects provide visibility for in-progress work flows. For more information about work requests, see [Viewing the State of a Work Request].""")
 @cli_util.help_option_group
 def work_request_group():
     pass
 
 
-@click.command(cli_util.override('custom_protection_rule_group.command_name', 'custom-protection-rule'), cls=CommandGroupWithAlias, help="""The details of a Custom Protection rule.""")
+@click.command(cli_util.override('waas.custom_protection_rule_group.command_name', 'custom-protection-rule'), cls=CommandGroupWithAlias, help="""The details of a Custom Protection rule.""")
 @cli_util.help_option_group
 def custom_protection_rule_group():
     pass
 
 
-@click.command(cli_util.override('address_rate_limiting_group.command_name', 'address-rate-limiting'), cls=CommandGroupWithAlias, help="""The IP rate limiting configuration. Defines the amount of allowed requests from a unique IP address and the resulting block response code when that threshold is exceeded.""")
+@click.command(cli_util.override('waas.address_rate_limiting_group.command_name', 'address-rate-limiting'), cls=CommandGroupWithAlias, help="""The IP rate limiting configuration. Defines the amount of allowed requests from a unique IP address and the resulting block response code when that threshold is exceeded.""")
 @cli_util.help_option_group
 def address_rate_limiting_group():
     pass
 
 
-@click.command(cli_util.override('captcha_group.command_name', 'captcha'), cls=CommandGroupWithAlias, help="""The settings of the CAPTCHA challenge. If a specific URL should be accessed only by a human, a CAPTCHA challenge can be placed at the URL to protect the web application from bots.
+@click.command(cli_util.override('waas.captcha_group.command_name', 'captcha'), cls=CommandGroupWithAlias, help="""The settings of the CAPTCHA challenge. If a specific URL should be accessed only by a human, a CAPTCHA challenge can be placed at the URL to protect the web application from bots.
 
 *Warning:* Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
 @cli_util.help_option_group
@@ -110,85 +110,85 @@ def captcha_group():
     pass
 
 
-@click.command(cli_util.override('custom_protection_rule_setting_group.command_name', 'custom-protection-rule-setting'), cls=CommandGroupWithAlias, help="""The OCID and action of a Custom Protection rule.""")
+@click.command(cli_util.override('waas.custom_protection_rule_setting_group.command_name', 'custom-protection-rule-setting'), cls=CommandGroupWithAlias, help="""The OCID and action of a Custom Protection rule.""")
 @cli_util.help_option_group
 def custom_protection_rule_setting_group():
     pass
 
 
-@click.command(cli_util.override('waf_blocked_request_group.command_name', 'waf-blocked-request'), cls=CommandGroupWithAlias, help="""""")
+@click.command(cli_util.override('waas.waf_blocked_request_group.command_name', 'waf-blocked-request'), cls=CommandGroupWithAlias, help="""""")
 @cli_util.help_option_group
 def waf_blocked_request_group():
     pass
 
 
-@click.command(cli_util.override('policy_config_group.command_name', 'policy-config'), cls=CommandGroupWithAlias, help="""The configuration details for the WAAS policy.""")
+@click.command(cli_util.override('waas.policy_config_group.command_name', 'policy-config'), cls=CommandGroupWithAlias, help="""The configuration details for the WAAS policy.""")
 @cli_util.help_option_group
 def policy_config_group():
     pass
 
 
-@click.command(cli_util.override('waf_request_group.command_name', 'waf-request'), cls=CommandGroupWithAlias, help="""A time series of request counts handled by the Web Application Firewall, including blocked requests.""")
+@click.command(cli_util.override('waas.waf_request_group.command_name', 'waf-request'), cls=CommandGroupWithAlias, help="""A time series of request counts handled by the Web Application Firewall, including blocked requests.""")
 @cli_util.help_option_group
 def waf_request_group():
     pass
 
 
-@click.command(cli_util.override('protection_rule_group.command_name', 'protection-rule'), cls=CommandGroupWithAlias, help="""The protection rule settings. Protection rules can allow, block, or trigger an alert if a request meets the parameters of an applied rule.""")
+@click.command(cli_util.override('waas.protection_rule_group.command_name', 'protection-rule'), cls=CommandGroupWithAlias, help="""The protection rule settings. Protection rules can allow, block, or trigger an alert if a request meets the parameters of an applied rule.""")
 @cli_util.help_option_group
 def protection_rule_group():
     pass
 
 
-@click.command(cli_util.override('whitelist_group.command_name', 'whitelist'), cls=CommandGroupWithAlias, help="""An array of IP addresses that bypass the Web Application Firewall. Supports both single IP addresses or subnet masks (CIDR notation).""")
+@click.command(cli_util.override('waas.whitelist_group.command_name', 'whitelist'), cls=CommandGroupWithAlias, help="""An array of IP addresses that bypass the Web Application Firewall. Supports both single IP addresses or subnet masks (CIDR notation).""")
 @cli_util.help_option_group
 def whitelist_group():
     pass
 
 
-@click.command(cli_util.override('purge_cache_group.command_name', 'purge-cache'), cls=CommandGroupWithAlias, help="""The list of resources for cache purge. If a resources property is not provided, the purge targets all resources in a policy.""")
+@click.command(cli_util.override('waas.purge_cache_group.command_name', 'purge-cache'), cls=CommandGroupWithAlias, help="""The list of resources for cache purge. If a resources property is not provided, the purge targets all resources in a policy.""")
 @cli_util.help_option_group
 def purge_cache_group():
     pass
 
 
-@click.command(cli_util.override('human_interaction_challenge_group.command_name', 'human-interaction-challenge'), cls=CommandGroupWithAlias, help="""The human interaction challenge settings. The human interaction challenge checks various event listeners in the user's browser to determine if there is a human user making a request.""")
+@click.command(cli_util.override('waas.human_interaction_challenge_group.command_name', 'human-interaction-challenge'), cls=CommandGroupWithAlias, help="""The human interaction challenge settings. The human interaction challenge checks various event listeners in the user's browser to determine if there is a human user making a request.""")
 @cli_util.help_option_group
 def human_interaction_challenge_group():
     pass
 
 
-@click.command(cli_util.override('device_fingerprint_challenge_group.command_name', 'device-fingerprint-challenge'), cls=CommandGroupWithAlias, help="""The device fingerprint challenge settings. The device fingerprint challenge generates hashed signatures of both virtual and real browsers to identify and block malicious bots.""")
+@click.command(cli_util.override('waas.device_fingerprint_challenge_group.command_name', 'device-fingerprint-challenge'), cls=CommandGroupWithAlias, help="""The device fingerprint challenge settings. The device fingerprint challenge generates hashed signatures of both virtual and real browsers to identify and block malicious bots.""")
 @cli_util.help_option_group
 def device_fingerprint_challenge_group():
     pass
 
 
-@click.command(cli_util.override('address_list_group.command_name', 'address-list'), cls=CommandGroupWithAlias, help="""The details of the address list.""")
+@click.command(cli_util.override('waas.address_list_group.command_name', 'address-list'), cls=CommandGroupWithAlias, help="""The details of the address list.""")
 @cli_util.help_option_group
 def address_list_group():
     pass
 
 
-@click.command(cli_util.override('waf_log_group.command_name', 'waf-log'), cls=CommandGroupWithAlias, help="""A list of Web Application Firewall log entries. Each entry is a JSON object, including a timestamp property and other fields varying based on log type. Logs record what rules and countermeasures are triggered by requests and are used as a basis to move request handling into block mode. For more information about WAF logs, see [WAF Logs].""")
+@click.command(cli_util.override('waas.waf_log_group.command_name', 'waf-log'), cls=CommandGroupWithAlias, help="""A list of Web Application Firewall log entries. Each entry is a JSON object, including a timestamp property and other fields varying based on log type. Logs record what rules and countermeasures are triggered by requests and are used as a basis to move request handling into block mode. For more information about WAF logs, see [WAF Logs].""")
 @cli_util.help_option_group
 def waf_log_group():
     pass
 
 
-@click.command(cli_util.override('caching_rule_group.command_name', 'caching-rule'), cls=CommandGroupWithAlias, help="""""")
+@click.command(cli_util.override('waas.caching_rule_group.command_name', 'caching-rule'), cls=CommandGroupWithAlias, help="""""")
 @cli_util.help_option_group
 def caching_rule_group():
     pass
 
 
-@click.command(cli_util.override('protection_settings_group.command_name', 'protection-settings'), cls=CommandGroupWithAlias, help="""The settings used for protection rules.""")
+@click.command(cli_util.override('waas.protection_settings_group.command_name', 'protection-settings'), cls=CommandGroupWithAlias, help="""The settings used for protection rules.""")
 @cli_util.help_option_group
 def protection_settings_group():
     pass
 
 
-@click.command(cli_util.override('waf_config_group.command_name', 'waf-config'), cls=CommandGroupWithAlias, help="""The Web Application Firewall configuration for the WAAS policy.""")
+@click.command(cli_util.override('waas.waf_config_group.command_name', 'waf-config'), cls=CommandGroupWithAlias, help="""The Web Application Firewall configuration for the WAAS policy.""")
 @cli_util.help_option_group
 def waf_config_group():
     pass
@@ -224,7 +224,7 @@ waas_root_group.add_command(protection_settings_group)
 waas_root_group.add_command(waf_config_group)
 
 
-@recommendation_group.command(name=cli_util.override('accept_recommendations.command_name', 'accept'), help=u"""Accepts a list of recommended Web Application Firewall protection rules. Web Application Firewall protection rule recommendations are sets of rules generated by observed traffic patterns through the Web Application Firewall and are meant to optimize the Web Application Firewall's security profile. Only the rules specified in the request body will be updated; all other rules will remain unchanged.
+@recommendation_group.command(name=cli_util.override('waas.accept_recommendations.command_name', 'accept'), help=u"""Accepts a list of recommended Web Application Firewall protection rules. Web Application Firewall protection rule recommendations are sets of rules generated by observed traffic patterns through the Web Application Firewall and are meant to optimize the Web Application Firewall's security profile. Only the rules specified in the request body will be updated; all other rules will remain unchanged.
 
 Use the `GET /waasPolicies/{waasPolicyId}/wafConfig/recommendations` method to view a list of recommended Web Application Firewall protection rules. For more information, see [WAF Protection Rules].""")
 @cli_util.option('--waas-policy-id', required=True, help=u"""The [OCID] of the WAAS policy.""")
@@ -278,7 +278,7 @@ def accept_recommendations(ctx, from_json, wait_for_state, max_wait_seconds, wai
     cli_util.render_response(result, ctx)
 
 
-@work_request_group.command(name=cli_util.override('cancel_work_request.command_name', 'cancel'), help=u"""Cancels a specified work request.""")
+@work_request_group.command(name=cli_util.override('waas.cancel_work_request.command_name', 'cancel'), help=u"""Cancels a specified work request.""")
 @cli_util.option('--work-request-id', required=True, help=u"""The [OCID] of the work request. This number is generated when work request is created.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the `PUT` or `DELETE` call for a resource, set the `if-match` parameter to the value of the etag from a previous `GET` or `POST` response for that resource. The resource will be updated or deleted only if the etag provided matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -304,7 +304,7 @@ def cancel_work_request(ctx, from_json, work_request_id, if_match):
     cli_util.render_response(result, ctx)
 
 
-@address_list_group.command(name=cli_util.override('change_address_list_compartment.command_name', 'change-compartment'), help=u"""Moves address list into a different compartment. When provided, If-Match is checked against ETag values of the address list.""")
+@address_list_group.command(name=cli_util.override('waas.change_address_list_compartment.command_name', 'change-compartment'), help=u"""Moves address list into a different compartment. When provided, If-Match is checked against ETag values of the address list.""")
 @cli_util.option('--address-list-id', required=True, help=u"""The [OCID] of the address list. This number is generated when the address list is added to the compartment.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the `PUT` or `DELETE` call for a resource, set the `if-match` parameter to the value of the etag from a previous `GET` or `POST` response for that resource. The resource will be updated or deleted only if the etag provided matches the resource's current etag value.""")
@@ -335,7 +335,7 @@ def change_address_list_compartment(ctx, from_json, address_list_id, compartment
     cli_util.render_response(result, ctx)
 
 
-@certificate_group.command(name=cli_util.override('change_certificate_compartment.command_name', 'change-compartment'), help=u"""Moves certificate into a different compartment. When provided, If-Match is checked against ETag values of the certificate.""")
+@certificate_group.command(name=cli_util.override('waas.change_certificate_compartment.command_name', 'change-compartment'), help=u"""Moves certificate into a different compartment. When provided, If-Match is checked against ETag values of the certificate.""")
 @cli_util.option('--certificate-id', required=True, help=u"""The [OCID] of the SSL certificate used in the WAAS policy. This number is generated when the certificate is added to the policy.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the `PUT` or `DELETE` call for a resource, set the `if-match` parameter to the value of the etag from a previous `GET` or `POST` response for that resource. The resource will be updated or deleted only if the etag provided matches the resource's current etag value.""")
@@ -366,7 +366,7 @@ def change_certificate_compartment(ctx, from_json, certificate_id, compartment_i
     cli_util.render_response(result, ctx)
 
 
-@custom_protection_rule_group.command(name=cli_util.override('change_custom_protection_rule_compartment.command_name', 'change-compartment'), help=u"""Moves Custom Protection rule into a different compartment. When provided, If-Match is checked against ETag values of the Custom Protection rule.""")
+@custom_protection_rule_group.command(name=cli_util.override('waas.change_custom_protection_rule_compartment.command_name', 'change-compartment'), help=u"""Moves Custom Protection rule into a different compartment. When provided, If-Match is checked against ETag values of the Custom Protection rule.""")
 @cli_util.option('--custom-protection-rule-id', required=True, help=u"""The [OCID] of the Custom Protection rule. This number is generated when the Custom Protection rule is added to the compartment.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the `PUT` or `DELETE` call for a resource, set the `if-match` parameter to the value of the etag from a previous `GET` or `POST` response for that resource. The resource will be updated or deleted only if the etag provided matches the resource's current etag value.""")
@@ -397,7 +397,7 @@ def change_custom_protection_rule_compartment(ctx, from_json, custom_protection_
     cli_util.render_response(result, ctx)
 
 
-@waas_policy_group.command(name=cli_util.override('change_waas_policy_compartment.command_name', 'change-compartment'), help=u"""Moves WAAS policy into a different compartment. When provided, If-Match is checked against ETag values of the WAAS policy.""")
+@waas_policy_group.command(name=cli_util.override('waas.change_waas_policy_compartment.command_name', 'change-compartment'), help=u"""Moves WAAS policy into a different compartment. When provided, If-Match is checked against ETag values of the WAAS policy.""")
 @cli_util.option('--waas-policy-id', required=True, help=u"""The [OCID] of the WAAS policy.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the `PUT` or `DELETE` call for a resource, set the `if-match` parameter to the value of the etag from a previous `GET` or `POST` response for that resource. The resource will be updated or deleted only if the etag provided matches the resource's current etag value.""")
@@ -428,7 +428,7 @@ def change_waas_policy_compartment(ctx, from_json, waas_policy_id, compartment_i
     cli_util.render_response(result, ctx)
 
 
-@address_list_group.command(name=cli_util.override('create_address_list.command_name', 'create'), help=u"""Creates an address list in set compartment and allows it to be used in a WAAS policy. For more information, see [WAF Settings].""")
+@address_list_group.command(name=cli_util.override('waas.create_address_list.command_name', 'create'), help=u"""Creates an address list in set compartment and allows it to be used in a WAAS policy. For more information, see [WAF Settings].""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which to create the address list.""")
 @cli_util.option('--display-name', required=True, help=u"""A unique user-friendly name for the address list.""")
 @cli_util.option('--addresses', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of IP addresses or CIDR notations.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -492,7 +492,7 @@ def create_address_list(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     cli_util.render_response(result, ctx)
 
 
-@certificate_group.command(name=cli_util.override('create_certificate.command_name', 'create'), help=u"""Allows an SSL certificate to be added to a WAAS policy. The Web Application Firewall terminates SSL connections to inspect requests in runtime, and then re-encrypts requests before sending them to the origin for fulfillment.
+@certificate_group.command(name=cli_util.override('waas.create_certificate.command_name', 'create'), help=u"""Allows an SSL certificate to be added to a WAAS policy. The Web Application Firewall terminates SSL connections to inspect requests in runtime, and then re-encrypts requests before sending them to the origin for fulfillment.
 
 For more information, see [WAF Settings].""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which to create the SSL certificate.""")
@@ -570,7 +570,7 @@ def create_certificate(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     cli_util.render_response(result, ctx)
 
 
-@custom_protection_rule_group.command(name=cli_util.override('create_custom_protection_rule.command_name', 'create'), help=u"""Creates a new Custom Protection rule in the specified compartment.""")
+@custom_protection_rule_group.command(name=cli_util.override('waas.create_custom_protection_rule.command_name', 'create'), help=u"""Creates a new Custom Protection rule in the specified compartment.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which to create the Custom Protection rule.""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name for the Custom Protection rule.""")
 @cli_util.option('--template', required=True, help=u"""The template text of the Custom Protection rule. The syntax is based on ModSecurity Rule Language. Additionaly it needs to include two variables / placeholders which will be replaced during publishing.
@@ -646,7 +646,7 @@ def create_custom_protection_rule(ctx, from_json, wait_for_state, max_wait_secon
     cli_util.render_response(result, ctx)
 
 
-@waas_policy_group.command(name=cli_util.override('create_waas_policy.command_name', 'create'), help=u"""Creates a new Web Application Acceleration and Security (WAAS) policy in the specified compartment. A WAAS policy must be established before creating Web Application Firewall (WAF) rules. To use WAF rules, your web application's origin servers must defined in the `WaasPolicy` schema.
+@waas_policy_group.command(name=cli_util.override('waas.create_waas_policy.command_name', 'create'), help=u"""Creates a new Web Application Acceleration and Security (WAAS) policy in the specified compartment. A WAAS policy must be established before creating Web Application Firewall (WAF) rules. To use WAF rules, your web application's origin servers must defined in the `WaasPolicy` schema.
 
 A domain name must be specified when creating a WAAS policy. The domain name should be different from the origins specified in your `WaasPolicy`. Once domain name is entered and stored, it is unchangeable.
 
@@ -748,7 +748,7 @@ def create_waas_policy(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     cli_util.render_response(result, ctx)
 
 
-@address_list_group.command(name=cli_util.override('delete_address_list.command_name', 'delete'), help=u"""Deletes the address list from the compartment if it is not used.""")
+@address_list_group.command(name=cli_util.override('waas.delete_address_list.command_name', 'delete'), help=u"""Deletes the address list from the compartment if it is not used.""")
 @cli_util.option('--address-list-id', required=True, help=u"""The [OCID] of the address list. This number is generated when the address list is added to the compartment.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the `PUT` or `DELETE` call for a resource, set the `if-match` parameter to the value of the etag from a previous `GET` or `POST` response for that resource. The resource will be updated or deleted only if the etag provided matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -811,7 +811,7 @@ def delete_address_list(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     cli_util.render_response(result, ctx)
 
 
-@certificate_group.command(name=cli_util.override('delete_certificate.command_name', 'delete'), help=u"""Deletes an SSL certificate from the WAAS service.""")
+@certificate_group.command(name=cli_util.override('waas.delete_certificate.command_name', 'delete'), help=u"""Deletes an SSL certificate from the WAAS service.""")
 @cli_util.option('--certificate-id', required=True, help=u"""The [OCID] of the SSL certificate used in the WAAS policy. This number is generated when the certificate is added to the policy.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the `PUT` or `DELETE` call for a resource, set the `if-match` parameter to the value of the etag from a previous `GET` or `POST` response for that resource. The resource will be updated or deleted only if the etag provided matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -874,7 +874,7 @@ def delete_certificate(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     cli_util.render_response(result, ctx)
 
 
-@custom_protection_rule_group.command(name=cli_util.override('delete_custom_protection_rule.command_name', 'delete'), help=u"""Deletes a Custom Protection rule.""")
+@custom_protection_rule_group.command(name=cli_util.override('waas.delete_custom_protection_rule.command_name', 'delete'), help=u"""Deletes a Custom Protection rule.""")
 @cli_util.option('--custom-protection-rule-id', required=True, help=u"""The [OCID] of the Custom Protection rule. This number is generated when the Custom Protection rule is added to the compartment.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the `PUT` or `DELETE` call for a resource, set the `if-match` parameter to the value of the etag from a previous `GET` or `POST` response for that resource. The resource will be updated or deleted only if the etag provided matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -937,7 +937,7 @@ def delete_custom_protection_rule(ctx, from_json, wait_for_state, max_wait_secon
     cli_util.render_response(result, ctx)
 
 
-@waas_policy_group.command(name=cli_util.override('delete_waas_policy.command_name', 'delete'), help=u"""Deletes a policy.""")
+@waas_policy_group.command(name=cli_util.override('waas.delete_waas_policy.command_name', 'delete'), help=u"""Deletes a policy.""")
 @cli_util.option('--waas-policy-id', required=True, help=u"""The [OCID] of the WAAS policy.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the `PUT` or `DELETE` call for a resource, set the `if-match` parameter to the value of the etag from a previous `GET` or `POST` response for that resource. The resource will be updated or deleted only if the etag provided matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -988,7 +988,7 @@ def delete_waas_policy(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     cli_util.render_response(result, ctx)
 
 
-@address_list_group.command(name=cli_util.override('get_address_list.command_name', 'get'), help=u"""Gets the details of an address list.""")
+@address_list_group.command(name=cli_util.override('waas.get_address_list.command_name', 'get'), help=u"""Gets the details of an address list.""")
 @cli_util.option('--address-list-id', required=True, help=u"""The [OCID] of the address list. This number is generated when the address list is added to the compartment.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -1010,7 +1010,7 @@ def get_address_list(ctx, from_json, address_list_id):
     cli_util.render_response(result, ctx)
 
 
-@certificate_group.command(name=cli_util.override('get_certificate.command_name', 'get'), help=u"""Gets the details of an SSL certificate.""")
+@certificate_group.command(name=cli_util.override('waas.get_certificate.command_name', 'get'), help=u"""Gets the details of an SSL certificate.""")
 @cli_util.option('--certificate-id', required=True, help=u"""The [OCID] of the SSL certificate used in the WAAS policy. This number is generated when the certificate is added to the policy.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -1032,7 +1032,7 @@ def get_certificate(ctx, from_json, certificate_id):
     cli_util.render_response(result, ctx)
 
 
-@custom_protection_rule_group.command(name=cli_util.override('get_custom_protection_rule.command_name', 'get'), help=u"""Gets the details of a Custom Protection rule.""")
+@custom_protection_rule_group.command(name=cli_util.override('waas.get_custom_protection_rule.command_name', 'get'), help=u"""Gets the details of a Custom Protection rule.""")
 @cli_util.option('--custom-protection-rule-id', required=True, help=u"""The [OCID] of the Custom Protection rule. This number is generated when the Custom Protection rule is added to the compartment.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -1054,7 +1054,7 @@ def get_custom_protection_rule(ctx, from_json, custom_protection_rule_id):
     cli_util.render_response(result, ctx)
 
 
-@device_fingerprint_challenge_group.command(name=cli_util.override('get_device_fingerprint_challenge.command_name', 'get'), help=u"""Gets the device fingerprint challenge settings in the Web Application Firewall configuration for a WAAS policy.""")
+@device_fingerprint_challenge_group.command(name=cli_util.override('waas.get_device_fingerprint_challenge.command_name', 'get'), help=u"""Gets the device fingerprint challenge settings in the Web Application Firewall configuration for a WAAS policy.""")
 @cli_util.option('--waas-policy-id', required=True, help=u"""The [OCID] of the WAAS policy.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -1076,7 +1076,7 @@ def get_device_fingerprint_challenge(ctx, from_json, waas_policy_id):
     cli_util.render_response(result, ctx)
 
 
-@human_interaction_challenge_group.command(name=cli_util.override('get_human_interaction_challenge.command_name', 'get'), help=u"""Gets the human interaction challenge settings in the Web Application Firewall configuration for a WAAS policy.""")
+@human_interaction_challenge_group.command(name=cli_util.override('waas.get_human_interaction_challenge.command_name', 'get'), help=u"""Gets the human interaction challenge settings in the Web Application Firewall configuration for a WAAS policy.""")
 @cli_util.option('--waas-policy-id', required=True, help=u"""The [OCID] of the WAAS policy.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -1098,7 +1098,7 @@ def get_human_interaction_challenge(ctx, from_json, waas_policy_id):
     cli_util.render_response(result, ctx)
 
 
-@js_challenge_group.command(name=cli_util.override('get_js_challenge.command_name', 'get'), help=u"""Gets the JavaScript challenge settings in the Web Application Firewall configuration for a WAAS policy.""")
+@js_challenge_group.command(name=cli_util.override('waas.get_js_challenge.command_name', 'get'), help=u"""Gets the JavaScript challenge settings in the Web Application Firewall configuration for a WAAS policy.""")
 @cli_util.option('--waas-policy-id', required=True, help=u"""The [OCID] of the WAAS policy.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -1120,7 +1120,7 @@ def get_js_challenge(ctx, from_json, waas_policy_id):
     cli_util.render_response(result, ctx)
 
 
-@policy_config_group.command(name=cli_util.override('get_policy_config.command_name', 'get'), help=u"""Gets the configuration of a WAAS policy.""")
+@policy_config_group.command(name=cli_util.override('waas.get_policy_config.command_name', 'get'), help=u"""Gets the configuration of a WAAS policy.""")
 @cli_util.option('--waas-policy-id', required=True, help=u"""The [OCID] of the WAAS policy.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -1142,7 +1142,7 @@ def get_policy_config(ctx, from_json, waas_policy_id):
     cli_util.render_response(result, ctx)
 
 
-@protection_rule_group.command(name=cli_util.override('get_protection_rule.command_name', 'get'), help=u"""Gets the details of a protection rule in the Web Application Firewall configuration for a WAAS policy.""")
+@protection_rule_group.command(name=cli_util.override('waas.get_protection_rule.command_name', 'get'), help=u"""Gets the details of a protection rule in the Web Application Firewall configuration for a WAAS policy.""")
 @cli_util.option('--waas-policy-id', required=True, help=u"""The [OCID] of the WAAS policy.""")
 @cli_util.option('--protection-rule-key', required=True, help=u"""The protection rule key.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1169,7 +1169,7 @@ def get_protection_rule(ctx, from_json, waas_policy_id, protection_rule_key):
     cli_util.render_response(result, ctx)
 
 
-@protection_settings_group.command(name=cli_util.override('get_protection_settings.command_name', 'get'), help=u"""Gets the protection settings in the Web Application Firewall configuration for a WAAS policy.""")
+@protection_settings_group.command(name=cli_util.override('waas.get_protection_settings.command_name', 'get'), help=u"""Gets the protection settings in the Web Application Firewall configuration for a WAAS policy.""")
 @cli_util.option('--waas-policy-id', required=True, help=u"""The [OCID] of the WAAS policy.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -1191,7 +1191,7 @@ def get_protection_settings(ctx, from_json, waas_policy_id):
     cli_util.render_response(result, ctx)
 
 
-@waas_policy_group.command(name=cli_util.override('get_waas_policy.command_name', 'get'), help=u"""Gets the details of a WAAS policy.""")
+@waas_policy_group.command(name=cli_util.override('waas.get_waas_policy.command_name', 'get'), help=u"""Gets the details of a WAAS policy.""")
 @cli_util.option('--waas-policy-id', required=True, help=u"""The [OCID] of the WAAS policy.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -1213,7 +1213,7 @@ def get_waas_policy(ctx, from_json, waas_policy_id):
     cli_util.render_response(result, ctx)
 
 
-@address_rate_limiting_group.command(name=cli_util.override('get_waf_address_rate_limiting.command_name', 'get-waf'), help=u"""Gets the address rate limiting settings of the Web Application Firewall configuration for a WAAS policy.""")
+@address_rate_limiting_group.command(name=cli_util.override('waas.get_waf_address_rate_limiting.command_name', 'get-waf'), help=u"""Gets the address rate limiting settings of the Web Application Firewall configuration for a WAAS policy.""")
 @cli_util.option('--waas-policy-id', required=True, help=u"""The [OCID] of the WAAS policy.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -1235,7 +1235,7 @@ def get_waf_address_rate_limiting(ctx, from_json, waas_policy_id):
     cli_util.render_response(result, ctx)
 
 
-@waf_config_group.command(name=cli_util.override('get_waf_config.command_name', 'get'), help=u"""Gets the Web Application Firewall configuration details for a WAAS policy.""")
+@waf_config_group.command(name=cli_util.override('waas.get_waf_config.command_name', 'get'), help=u"""Gets the Web Application Firewall configuration details for a WAAS policy.""")
 @cli_util.option('--waas-policy-id', required=True, help=u"""The [OCID] of the WAAS policy.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -1257,7 +1257,7 @@ def get_waf_config(ctx, from_json, waas_policy_id):
     cli_util.render_response(result, ctx)
 
 
-@work_request_group.command(name=cli_util.override('get_work_request.command_name', 'get'), help=u"""Gets the details of a specified work request.""")
+@work_request_group.command(name=cli_util.override('waas.get_work_request.command_name', 'get'), help=u"""Gets the details of a specified work request.""")
 @cli_util.option('--work-request-id', required=True, help=u"""The [OCID] of the work request. This number is generated when work request is created.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -1279,7 +1279,7 @@ def get_work_request(ctx, from_json, work_request_id):
     cli_util.render_response(result, ctx)
 
 
-@access_rule_group.command(name=cli_util.override('list_access_rules.command_name', 'list'), help=u"""Gets the currently configured access rules for the Web Application Firewall configuration of a specified WAAS policy. The order of the access rules is important. The rules will be checked in the order they are specified and the first matching rule will be used.""")
+@access_rule_group.command(name=cli_util.override('waas.list_access_rules.command_name', 'list'), help=u"""Gets the currently configured access rules for the Web Application Firewall configuration of a specified WAAS policy. The order of the access rules is important. The rules will be checked in the order they are specified and the first matching rule will be used.""")
 @cli_util.option('--waas-policy-id', required=True, help=u"""The [OCID] of the WAAS policy.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated call. In unspecified, defaults to `10`.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous paginated call.""")
@@ -1330,7 +1330,7 @@ def list_access_rules(ctx, from_json, all_pages, page_size, waas_policy_id, limi
     cli_util.render_response(result, ctx)
 
 
-@address_list_group.command(name=cli_util.override('list_address_lists.command_name', 'list'), help=u"""Gets a list of address lists that can be used in a WAAS policy.""")
+@address_list_group.command(name=cli_util.override('waas.list_address_lists.command_name', 'list'), help=u"""Gets a list of address lists that can be used in a WAAS policy.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment. This number is generated when the compartment is created.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated call. In unspecified, defaults to `10`.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous paginated call.""")
@@ -1399,7 +1399,7 @@ def list_address_lists(ctx, from_json, all_pages, page_size, compartment_id, lim
     cli_util.render_response(result, ctx)
 
 
-@caching_rule_group.command(name=cli_util.override('list_caching_rules.command_name', 'list'), help=u"""Gets the currently configured caching rules for the Web Application Firewall configuration of a specified WAAS policy. The order of the caching rules is important. The rules will be checked in the order they are specified and the first matching rule will be used.""")
+@caching_rule_group.command(name=cli_util.override('waas.list_caching_rules.command_name', 'list'), help=u"""Gets the currently configured caching rules for the Web Application Firewall configuration of a specified WAAS policy. The order of the caching rules is important. The rules will be checked in the order they are specified and the first matching rule will be used.""")
 @cli_util.option('--waas-policy-id', required=True, help=u"""The [OCID] of the WAAS policy.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated call. In unspecified, defaults to `10`.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous paginated call.""")
@@ -1450,7 +1450,7 @@ def list_caching_rules(ctx, from_json, all_pages, page_size, waas_policy_id, lim
     cli_util.render_response(result, ctx)
 
 
-@captcha_group.command(name=cli_util.override('list_captchas.command_name', 'list'), help=u"""Gets the list of currently configured CAPTCHA challenges in the Web Application Firewall configuration of a WAAS policy.
+@captcha_group.command(name=cli_util.override('waas.list_captchas.command_name', 'list'), help=u"""Gets the list of currently configured CAPTCHA challenges in the Web Application Firewall configuration of a WAAS policy.
 
 The order of the CAPTCHA challenges is important. The URL for each CAPTCHA will be checked in the order they are created.""")
 @cli_util.option('--waas-policy-id', required=True, help=u"""The [OCID] of the WAAS policy.""")
@@ -1503,7 +1503,7 @@ def list_captchas(ctx, from_json, all_pages, page_size, waas_policy_id, limit, p
     cli_util.render_response(result, ctx)
 
 
-@certificate_group.command(name=cli_util.override('list_certificates.command_name', 'list'), help=u"""Gets a list of SSL certificates that can be used in a WAAS policy.""")
+@certificate_group.command(name=cli_util.override('waas.list_certificates.command_name', 'list'), help=u"""Gets a list of SSL certificates that can be used in a WAAS policy.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment. This number is generated when the compartment is created.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated call. In unspecified, defaults to `10`.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous paginated call.""")
@@ -1572,7 +1572,7 @@ def list_certificates(ctx, from_json, all_pages, page_size, compartment_id, limi
     cli_util.render_response(result, ctx)
 
 
-@custom_protection_rule_group.command(name=cli_util.override('list_custom_protection_rules.command_name', 'list'), help=u"""Gets a list of Custom Protection rules.""")
+@custom_protection_rule_group.command(name=cli_util.override('waas.list_custom_protection_rules.command_name', 'list'), help=u"""Gets a list of Custom Protection rules.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment. This number is generated when the compartment is created.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated call. In unspecified, defaults to `10`.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous paginated call.""")
@@ -1641,7 +1641,7 @@ def list_custom_protection_rules(ctx, from_json, all_pages, page_size, compartme
     cli_util.render_response(result, ctx)
 
 
-@edge_subnet_group.command(name=cli_util.override('list_edge_subnets.command_name', 'list'), help=u"""Return the list of the tenant's edge node subnets. Use these CIDR blocks to restrict incoming traffic to your origin. These subnets are owned by OCI and forward traffic to customer origins. They are not associated with specific regions or compartments.""")
+@edge_subnet_group.command(name=cli_util.override('waas.list_edge_subnets.command_name', 'list'), help=u"""Return the list of the tenant's edge node subnets. Use these CIDR blocks to restrict incoming traffic to your origin. These subnets are owned by OCI and forward traffic to customer origins. They are not associated with specific regions or compartments.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated call. In unspecified, defaults to `10`.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous paginated call.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["cidr", "region", "timeModified"]), help=u"""The value by which edge node subnets are sorted in a paginated 'List' call. If unspecified, defaults to `timeModified`.""")
@@ -1691,7 +1691,7 @@ def list_edge_subnets(ctx, from_json, all_pages, page_size, limit, page, sort_by
     cli_util.render_response(result, ctx)
 
 
-@good_bot_group.command(name=cli_util.override('list_good_bots.command_name', 'list'), help=u"""Gets the list of good bots defined in the Web Application Firewall configuration for a WAAS policy.
+@good_bot_group.command(name=cli_util.override('waas.list_good_bots.command_name', 'list'), help=u"""Gets the list of good bots defined in the Web Application Firewall configuration for a WAAS policy.
 
 The list is sorted by `key`, in ascending order.""")
 @cli_util.option('--waas-policy-id', required=True, help=u"""The [OCID] of the WAAS policy.""")
@@ -1744,7 +1744,7 @@ def list_good_bots(ctx, from_json, all_pages, page_size, waas_policy_id, limit, 
     cli_util.render_response(result, ctx)
 
 
-@protection_rule_group.command(name=cli_util.override('list_protection_rules.command_name', 'list'), help=u"""Gets the list of available protection rules for a WAAS policy. Use the `GetWafConfig` operation to view a list of currently configured protection rules for the Web Application Firewall, or use the `ListRecommendations` operation to get a list of recommended protection rules for the Web Application Firewall. The list is sorted by `key`, in ascending order.""")
+@protection_rule_group.command(name=cli_util.override('waas.list_protection_rules.command_name', 'list'), help=u"""Gets the list of available protection rules for a WAAS policy. Use the `GetWafConfig` operation to view a list of currently configured protection rules for the Web Application Firewall, or use the `ListRecommendations` operation to get a list of recommended protection rules for the Web Application Firewall. The list is sorted by `key`, in ascending order.""")
 @cli_util.option('--waas-policy-id', required=True, help=u"""The [OCID] of the WAAS policy.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated call. In unspecified, defaults to `10`.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous paginated call.""")
@@ -1801,7 +1801,7 @@ def list_protection_rules(ctx, from_json, all_pages, page_size, waas_policy_id, 
     cli_util.render_response(result, ctx)
 
 
-@recommendation_group.command(name=cli_util.override('list_recommendations.command_name', 'list'), help=u"""Gets the list of recommended Web Application Firewall protection rules.
+@recommendation_group.command(name=cli_util.override('waas.list_recommendations.command_name', 'list'), help=u"""Gets the list of recommended Web Application Firewall protection rules.
 
 Use the `POST /waasPolicies/{waasPolicyId}/actions/acceptWafConfigRecommendations` method to accept recommended Web Application Firewall protection rules. For more information, see [WAF Protection Rules]. The list is sorted by `key`, in ascending order.""")
 @cli_util.option('--waas-policy-id', required=True, help=u"""The [OCID] of the WAAS policy.""")
@@ -1857,7 +1857,7 @@ def list_recommendations(ctx, from_json, all_pages, page_size, waas_policy_id, r
     cli_util.render_response(result, ctx)
 
 
-@threat_feed_group.command(name=cli_util.override('list_threat_feeds.command_name', 'list'), help=u"""Gets the list of available web application threat intelligence feeds and the actions set for each feed. The list is sorted by `key`, in ascending order.""")
+@threat_feed_group.command(name=cli_util.override('waas.list_threat_feeds.command_name', 'list'), help=u"""Gets the list of available web application threat intelligence feeds and the actions set for each feed. The list is sorted by `key`, in ascending order.""")
 @cli_util.option('--waas-policy-id', required=True, help=u"""The [OCID] of the WAAS policy.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated call. In unspecified, defaults to `10`.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous paginated call.""")
@@ -1908,7 +1908,7 @@ def list_threat_feeds(ctx, from_json, all_pages, page_size, waas_policy_id, limi
     cli_util.render_response(result, ctx)
 
 
-@waas_policy_group.command(name=cli_util.override('list_waas_policies.command_name', 'list'), help=u"""Gets a list of WAAS policies.""")
+@waas_policy_group.command(name=cli_util.override('waas.list_waas_policies.command_name', 'list'), help=u"""Gets a list of WAAS policies.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment. This number is generated when the compartment is created.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated call. In unspecified, defaults to `10`.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous paginated call.""")
@@ -1977,7 +1977,7 @@ def list_waas_policies(ctx, from_json, all_pages, page_size, compartment_id, lim
     cli_util.render_response(result, ctx)
 
 
-@waas_policy_custom_protection_rule_group.command(name=cli_util.override('list_waas_policy_custom_protection_rules.command_name', 'list'), help=u"""Gets the list of currently configured custom protection rules for a WAAS policy.""")
+@waas_policy_custom_protection_rule_group.command(name=cli_util.override('waas.list_waas_policy_custom_protection_rules.command_name', 'list'), help=u"""Gets the list of currently configured custom protection rules for a WAAS policy.""")
 @cli_util.option('--waas-policy-id', required=True, help=u"""The [OCID] of the WAAS policy.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated call. In unspecified, defaults to `10`.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous paginated call.""")
@@ -2034,7 +2034,7 @@ def list_waas_policy_custom_protection_rules(ctx, from_json, all_pages, page_siz
     cli_util.render_response(result, ctx)
 
 
-@waf_blocked_request_group.command(name=cli_util.override('list_waf_blocked_requests.command_name', 'list'), help=u"""Gets the number of blocked requests by a Web Application Firewall feature in five minute blocks, sorted by `timeObserved` in ascending order (starting from oldest data).""")
+@waf_blocked_request_group.command(name=cli_util.override('waas.list_waf_blocked_requests.command_name', 'list'), help=u"""Gets the number of blocked requests by a Web Application Firewall feature in five minute blocks, sorted by `timeObserved` in ascending order (starting from oldest data).""")
 @cli_util.option('--waas-policy-id', required=True, help=u"""The [OCID] of the WAAS policy.""")
 @cli_util.option('--time-observed-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""A filter that limits returned events to those occurring on or after a date and time, specified in RFC 3339 format. If unspecified, defaults to 30 minutes before receipt of the request.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-observed-less-than', type=custom_types.CLI_DATETIME, help=u"""A filter that limits returned events to those occurring before a date and time, specified in RFC 3339 format.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -2094,7 +2094,7 @@ def list_waf_blocked_requests(ctx, from_json, all_pages, page_size, waas_policy_
     cli_util.render_response(result, ctx)
 
 
-@waf_log_group.command(name=cli_util.override('list_waf_logs.command_name', 'list'), help=u"""Gets structured Web Application Firewall event logs for a WAAS policy. Sorted by the `timeObserved` in ascending order (starting from the oldest recorded event).""")
+@waf_log_group.command(name=cli_util.override('waas.list_waf_logs.command_name', 'list'), help=u"""Gets structured Web Application Firewall event logs for a WAAS policy. Sorted by the `timeObserved` in ascending order (starting from the oldest recorded event).""")
 @cli_util.option('--waas-policy-id', required=True, help=u"""The [OCID] of the WAAS policy.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated call. In unspecified, defaults to `20`.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous paginated call.""")
@@ -2202,7 +2202,7 @@ def list_waf_logs(ctx, from_json, all_pages, page_size, waas_policy_id, limit, p
     cli_util.render_response(result, ctx)
 
 
-@waf_request_group.command(name=cli_util.override('list_waf_requests.command_name', 'list'), help=u"""Gets the number of requests managed by a Web Application Firewall over a specified period of time, including blocked requests. Sorted by `timeObserved` in ascending order (starting from oldest requests).""")
+@waf_request_group.command(name=cli_util.override('waas.list_waf_requests.command_name', 'list'), help=u"""Gets the number of requests managed by a Web Application Firewall over a specified period of time, including blocked requests. Sorted by `timeObserved` in ascending order (starting from oldest requests).""")
 @cli_util.option('--waas-policy-id', required=True, help=u"""The [OCID] of the WAAS policy.""")
 @cli_util.option('--time-observed-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""A filter that limits returned events to those occurring on or after a date and time, specified in RFC 3339 format. If unspecified, defaults to 30 minutes before receipt of the request.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-observed-less-than', type=custom_types.CLI_DATETIME, help=u"""A filter that limits returned events to those occurring before a date and time, specified in RFC 3339 format.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -2259,7 +2259,7 @@ def list_waf_requests(ctx, from_json, all_pages, page_size, waas_policy_id, time
     cli_util.render_response(result, ctx)
 
 
-@waf_traffic_datum_group.command(name=cli_util.override('list_waf_traffic.command_name', 'list-waf-traffic'), help=u"""Gets the Web Application Firewall traffic data for a WAAS policy. Sorted by `timeObserved` in ascending order (starting from oldest data).""")
+@waf_traffic_datum_group.command(name=cli_util.override('waas.list_waf_traffic.command_name', 'list-waf-traffic'), help=u"""Gets the Web Application Firewall traffic data for a WAAS policy. Sorted by `timeObserved` in ascending order (starting from oldest data).""")
 @cli_util.option('--waas-policy-id', required=True, help=u"""The [OCID] of the WAAS policy.""")
 @cli_util.option('--time-observed-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""A filter that limits returned events to those occurring on or after a date and time, specified in RFC 3339 format. If unspecified, defaults to 30 minutes before receipt of the request.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-observed-less-than', type=custom_types.CLI_DATETIME, help=u"""A filter that limits returned events to those occurring before a date and time, specified in RFC 3339 format.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -2316,7 +2316,7 @@ def list_waf_traffic(ctx, from_json, all_pages, page_size, waas_policy_id, time_
     cli_util.render_response(result, ctx)
 
 
-@whitelist_group.command(name=cli_util.override('list_whitelists.command_name', 'list'), help=u"""Gets the list of whitelists defined in the Web Application Firewall configuration for a WAAS policy.""")
+@whitelist_group.command(name=cli_util.override('waas.list_whitelists.command_name', 'list'), help=u"""Gets the list of whitelists defined in the Web Application Firewall configuration for a WAAS policy.""")
 @cli_util.option('--waas-policy-id', required=True, help=u"""The [OCID] of the WAAS policy.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated call. In unspecified, defaults to `10`.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous paginated call.""")
@@ -2367,7 +2367,7 @@ def list_whitelists(ctx, from_json, all_pages, page_size, waas_policy_id, limit,
     cli_util.render_response(result, ctx)
 
 
-@work_request_group.command(name=cli_util.override('list_work_requests.command_name', 'list'), help=u"""Gets a list of subnets (CIDR notation) from which the WAAS EDGE may make requests. The subnets are owned by OCI and forward traffic to your origins. Allow traffic from these subnets to your origins. They are not associated with specific regions or compartments.""")
+@work_request_group.command(name=cli_util.override('waas.list_work_requests.command_name', 'list'), help=u"""Gets a list of subnets (CIDR notation) from which the WAAS EDGE may make requests. The subnets are owned by OCI and forward traffic to your origins. Allow traffic from these subnets to your origins. They are not associated with specific regions or compartments.""")
 @cli_util.option('--waas-policy-id', required=True, help=u"""The [OCID] of the policy.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment. This number is generated when the compartment is created.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated call. In unspecified, defaults to `10`.""")
@@ -2425,7 +2425,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, waas_policy_id, com
     cli_util.render_response(result, ctx)
 
 
-@purge_cache_group.command(name=cli_util.override('purge_cache.command_name', 'purge-cache'), help=u"""Accepts a list of resources that will get it's cache purged. If resources property is not passed, then the entire cache for Web Application will be purged.""")
+@purge_cache_group.command(name=cli_util.override('waas.purge_cache.command_name', 'purge-cache'), help=u"""Accepts a list of resources that will get it's cache purged. If resources property is not passed, then the entire cache for Web Application will be purged.""")
 @cli_util.option('--waas-policy-id', required=True, help=u"""The [OCID] of the WAAS policy.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the `PUT` or `DELETE` call for a resource, set the `if-match` parameter to the value of the etag from a previous `GET` or `POST` response for that resource. The resource will be updated or deleted only if the etag provided matches the resource's current etag value.""")
 @cli_util.option('--resources', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A resource to purge, identified by either a hostless absolute path starting with a single slash (e.g., \"/path/to/resource\") or by a relative path in which the first component will be interpreted as a domain protected by this policy (e.g., \"example.com/path/to/resource\").""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2483,7 +2483,7 @@ def purge_cache(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
     cli_util.render_response(result, ctx)
 
 
-@access_rule_group.command(name=cli_util.override('update_access_rules.command_name', 'update'), help=u"""Updates the list of access rules in the Web Application Firewall configuration for a specified WAAS policy. Access rules allow explicit actions to be defined and executed for requests that meet various conditions. A rule action can be set to allow, detect, or block requests. The detect setting allows the request to pass through the Web Application Firewall and is tagged with a `DETECT` flag in the Web Application Firewall's log.
+@access_rule_group.command(name=cli_util.override('waas.update_access_rules.command_name', 'update'), help=u"""Updates the list of access rules in the Web Application Firewall configuration for a specified WAAS policy. Access rules allow explicit actions to be defined and executed for requests that meet various conditions. A rule action can be set to allow, detect, or block requests. The detect setting allows the request to pass through the Web Application Firewall and is tagged with a `DETECT` flag in the Web Application Firewall's log.
 
 This operation can create, delete, update, and/or reorder access rules depending on the structure of the request body.
 
@@ -2543,7 +2543,7 @@ def update_access_rules(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     cli_util.render_response(result, ctx)
 
 
-@certificate_group.command(name=cli_util.override('update_address_list.command_name', 'update-address-list'), help=u"""Updates the details of an address list. Only the fields specified in the request body will be updated; all other properties will remain unchanged.""")
+@certificate_group.command(name=cli_util.override('waas.update_address_list.command_name', 'update-address-list'), help=u"""Updates the details of an address list. Only the fields specified in the request body will be updated; all other properties will remain unchanged.""")
 @cli_util.option('--address-list-id', required=True, help=u"""The [OCID] of the address list. This number is generated when the address list is added to the compartment.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the `PUT` or `DELETE` call for a resource, set the `if-match` parameter to the value of the etag from a previous `GET` or `POST` response for that resource. The resource will be updated or deleted only if the etag provided matches the resource's current etag value.""")
 @cli_util.option('--display-name', help=u"""A unique user-friendly name for the address list.""")
@@ -2622,7 +2622,7 @@ def update_address_list(ctx, from_json, force, wait_for_state, max_wait_seconds,
     cli_util.render_response(result, ctx)
 
 
-@caching_rule_group.command(name=cli_util.override('update_caching_rules.command_name', 'update'), help=u"""Updates the configuration for each specified caching rule. This operation can update or delete caching rules depending on the structure of the request body. Caching rules can be updated by changing the properties of the caching rule object with the rule's key specified in the key field. Any existing caching rules that are not specified with a key in the list of access rules will be deleted upon update.""")
+@caching_rule_group.command(name=cli_util.override('waas.update_caching_rules.command_name', 'update'), help=u"""Updates the configuration for each specified caching rule. This operation can update or delete caching rules depending on the structure of the request body. Caching rules can be updated by changing the properties of the caching rule object with the rule's key specified in the key field. Any existing caching rules that are not specified with a key in the list of access rules will be deleted upon update.""")
 @cli_util.option('--waas-policy-id', required=True, help=u"""The [OCID] of the WAAS policy.""")
 @cli_util.option('--caching-rules-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the `PUT` or `DELETE` call for a resource, set the `if-match` parameter to the value of the etag from a previous `GET` or `POST` response for that resource. The resource will be updated or deleted only if the etag provided matches the resource's current etag value.""")
@@ -2674,7 +2674,7 @@ def update_caching_rules(ctx, from_json, wait_for_state, max_wait_seconds, wait_
     cli_util.render_response(result, ctx)
 
 
-@captcha_group.command(name=cli_util.override('update_captchas.command_name', 'update'), help=u"""Updates the list of CAPTCHA challenges in the Web Application Firewall configuration for a WAAS policy. This operation can create, update, or delete CAPTCHAs depending on the structure of the request body. CAPTCHA challenges can be updated by changing the properties of the CAPTCHA object with the rule's key specified in the key field. CAPTCHA challenges can be reordered by changing the order of the CAPTCHA challenges in the list when updating.
+@captcha_group.command(name=cli_util.override('waas.update_captchas.command_name', 'update'), help=u"""Updates the list of CAPTCHA challenges in the Web Application Firewall configuration for a WAAS policy. This operation can create, update, or delete CAPTCHAs depending on the structure of the request body. CAPTCHA challenges can be updated by changing the properties of the CAPTCHA object with the rule's key specified in the key field. CAPTCHA challenges can be reordered by changing the order of the CAPTCHA challenges in the list when updating.
 
 CAPTCHA challenges can be created by adding a new access rule object to the list without a `key` property specified. A `key` will be generated for the new CAPTCHA challenges upon update.
 
@@ -2730,7 +2730,7 @@ def update_captchas(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
     cli_util.render_response(result, ctx)
 
 
-@certificate_group.command(name=cli_util.override('update_certificate.command_name', 'update'), help=u"""It is not possible to update a certificate, only create and delete. Therefore, this operation can only update the display name, freeform tags, and defined tags of a certificate.""")
+@certificate_group.command(name=cli_util.override('waas.update_certificate.command_name', 'update'), help=u"""It is not possible to update a certificate, only create and delete. Therefore, this operation can only update the display name, freeform tags, and defined tags of a certificate.""")
 @cli_util.option('--certificate-id', required=True, help=u"""The [OCID] of the SSL certificate used in the WAAS policy. This number is generated when the certificate is added to the policy.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the `PUT` or `DELETE` call for a resource, set the `if-match` parameter to the value of the etag from a previous `GET` or `POST` response for that resource. The resource will be updated or deleted only if the etag provided matches the resource's current etag value.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name for the SSL certificate. The name can be changed and does not need to be unique.""")
@@ -2805,7 +2805,7 @@ def update_certificate(ctx, from_json, force, wait_for_state, max_wait_seconds, 
     cli_util.render_response(result, ctx)
 
 
-@custom_protection_rule_group.command(name=cli_util.override('update_custom_protection_rule.command_name', 'update'), help=u"""Updates the details of a Custom Protection rule. Only the fields specified in the request body will be updated; all other properties will remain unchanged.""")
+@custom_protection_rule_group.command(name=cli_util.override('waas.update_custom_protection_rule.command_name', 'update'), help=u"""Updates the details of a Custom Protection rule. Only the fields specified in the request body will be updated; all other properties will remain unchanged.""")
 @cli_util.option('--custom-protection-rule-id', required=True, help=u"""The [OCID] of the Custom Protection rule. This number is generated when the Custom Protection rule is added to the compartment.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name for the Custom Protection rule.""")
 @cli_util.option('--description', help=u"""A description for the Custom Protection rule.""")
@@ -2896,7 +2896,7 @@ def update_custom_protection_rule(ctx, from_json, force, wait_for_state, max_wai
     cli_util.render_response(result, ctx)
 
 
-@device_fingerprint_challenge_group.command(name=cli_util.override('update_device_fingerprint_challenge.command_name', 'update'), help=u"""Updates the Device Fingerprint Challenge (DFC) settings in the Web Application Firewall configuration for a policy. The DFC generates a hashed signature of both virtual and real browsers based on 50+ attributes. These proprietary signatures are then leveraged for real-time correlation to identify and block malicious bots.
+@device_fingerprint_challenge_group.command(name=cli_util.override('waas.update_device_fingerprint_challenge.command_name', 'update'), help=u"""Updates the Device Fingerprint Challenge (DFC) settings in the Web Application Firewall configuration for a policy. The DFC generates a hashed signature of both virtual and real browsers based on 50+ attributes. These proprietary signatures are then leveraged for real-time correlation to identify and block malicious bots.
 
 The signature is based on a library of attributes detected via JavaScript listeners; the attributes include OS, screen resolution, fonts, UserAgent, IP address, etc. We are constantly making improvements and considering new libraries to include in our DFC build. We can also exclude attributes from the signature as needed.
 
@@ -2989,7 +2989,7 @@ def update_device_fingerprint_challenge(ctx, from_json, force, wait_for_state, m
     cli_util.render_response(result, ctx)
 
 
-@good_bot_group.command(name=cli_util.override('update_good_bots.command_name', 'update'), help=u"""Updates the list of good bots in the Web Application Firewall configuration for a policy. Only the fields specified in the request body will be updated, all other configuration properties will remain unchanged.
+@good_bot_group.command(name=cli_util.override('waas.update_good_bots.command_name', 'update'), help=u"""Updates the list of good bots in the Web Application Firewall configuration for a policy. Only the fields specified in the request body will be updated, all other configuration properties will remain unchanged.
 
 Good bots allows you to manage access for bots from known providers, such as Google or Baidu. For more information about good bots, see [Bot Management].""")
 @cli_util.option('--waas-policy-id', required=True, help=u"""The [OCID] of the WAAS policy.""")
@@ -3043,7 +3043,7 @@ def update_good_bots(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
     cli_util.render_response(result, ctx)
 
 
-@human_interaction_challenge_group.command(name=cli_util.override('update_human_interaction_challenge.command_name', 'update'), help=u"""Updates the Human Interaction Challenge (HIC) settings in the Web Application Firewall configuration for a WAAS policy. HIC is a countermeasure that allows the proxy to check the user's browser for various behaviors that distinguish a human presence from a bot.""")
+@human_interaction_challenge_group.command(name=cli_util.override('waas.update_human_interaction_challenge.command_name', 'update'), help=u"""Updates the Human Interaction Challenge (HIC) settings in the Web Application Firewall configuration for a WAAS policy. HIC is a countermeasure that allows the proxy to check the user's browser for various behaviors that distinguish a human presence from a bot.""")
 @cli_util.option('--waas-policy-id', required=True, help=u"""The [OCID] of the WAAS policy.""")
 @cli_util.option('--is-enabled', required=True, type=click.BOOL, help=u"""Enables or disables the human interaction challenge Web Application Firewall feature.""")
 @cli_util.option('--action', type=custom_types.CliCaseInsensitiveChoice(["DETECT", "BLOCK"]), help=u"""The action to take against requests from detected bots. If unspecified, defaults to `DETECT`.""")
@@ -3136,7 +3136,7 @@ def update_human_interaction_challenge(ctx, from_json, force, wait_for_state, ma
     cli_util.render_response(result, ctx)
 
 
-@js_challenge_group.command(name=cli_util.override('update_js_challenge.command_name', 'update'), help=u"""Updates the JavaScript challenge settings in the Web Application Firewall configuration for a WAAS policy. JavaScript Challenge validates that the client can accept JavaScript with a binary decision. For more information, see [Bot Management].""")
+@js_challenge_group.command(name=cli_util.override('waas.update_js_challenge.command_name', 'update'), help=u"""Updates the JavaScript challenge settings in the Web Application Firewall configuration for a WAAS policy. JavaScript Challenge validates that the client can accept JavaScript with a binary decision. For more information, see [Bot Management].""")
 @cli_util.option('--waas-policy-id', required=True, help=u"""The [OCID] of the WAAS policy.""")
 @cli_util.option('--is-enabled', required=True, type=click.BOOL, help=u"""Enables or disables the JavaScript challenge Web Application Firewall feature.""")
 @cli_util.option('--action', type=custom_types.CliCaseInsensitiveChoice(["DETECT", "BLOCK"]), help=u"""The action to take against requests from detected bots. If unspecified, defaults to `DETECT`.""")
@@ -3217,7 +3217,7 @@ def update_js_challenge(ctx, from_json, force, wait_for_state, max_wait_seconds,
     cli_util.render_response(result, ctx)
 
 
-@policy_config_group.command(name=cli_util.override('update_policy_config.command_name', 'update'), help=u"""Updates the configuration for a WAAS policy. Only the fields specified in the request body will be updated; all other properties will remain unchanged.""")
+@policy_config_group.command(name=cli_util.override('waas.update_policy_config.command_name', 'update'), help=u"""Updates the configuration for a WAAS policy. Only the fields specified in the request body will be updated; all other properties will remain unchanged.""")
 @cli_util.option('--waas-policy-id', required=True, help=u"""The [OCID] of the WAAS policy.""")
 @cli_util.option('--certificate-id', help=u"""The OCID of the SSL certificate to use if HTTPS is supported.""")
 @cli_util.option('--is-https-enabled', type=click.BOOL, help=u"""Enable or disable HTTPS support. If true, a `certificateId` is required. If unspecified, defaults to `false`.""")
@@ -3334,7 +3334,7 @@ def update_policy_config(ctx, from_json, force, wait_for_state, max_wait_seconds
     cli_util.render_response(result, ctx)
 
 
-@protection_rule_group.command(name=cli_util.override('update_protection_rules.command_name', 'update'), help=u"""Updates the action for each specified protection rule. Requests can either be allowed, blocked, or trigger an alert if they meet the parameters of an applied rule. For more information on protection rules, see [WAF Protection Rules]. This operation can update or disable protection rules depending on the structure of the request body. Protection rules can be updated by changing the properties of the protection rule object with the rule's key specified in the key field.""")
+@protection_rule_group.command(name=cli_util.override('waas.update_protection_rules.command_name', 'update'), help=u"""Updates the action for each specified protection rule. Requests can either be allowed, blocked, or trigger an alert if they meet the parameters of an applied rule. For more information on protection rules, see [WAF Protection Rules]. This operation can update or disable protection rules depending on the structure of the request body. Protection rules can be updated by changing the properties of the protection rule object with the rule's key specified in the key field.""")
 @cli_util.option('--waas-policy-id', required=True, help=u"""The [OCID] of the WAAS policy.""")
 @cli_util.option('--protection-rules', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the `PUT` or `DELETE` call for a resource, set the `if-match` parameter to the value of the etag from a previous `GET` or `POST` response for that resource. The resource will be updated or deleted only if the etag provided matches the resource's current etag value.""")
@@ -3386,7 +3386,7 @@ def update_protection_rules(ctx, from_json, wait_for_state, max_wait_seconds, wa
     cli_util.render_response(result, ctx)
 
 
-@protection_settings_group.command(name=cli_util.override('update_protection_settings.command_name', 'update'), help=u"""Updates the protection settings in the Web Application Firewall configuration for a WAAS policy. Protection settings allow you define what action is taken when a request is blocked by the Web Application Firewall, such as returning a response code or block page. Only the fields specified in the request body will be updated; all other fields will remain unchanged.""")
+@protection_settings_group.command(name=cli_util.override('waas.update_protection_settings.command_name', 'update'), help=u"""Updates the protection settings in the Web Application Firewall configuration for a WAAS policy. Protection settings allow you define what action is taken when a request is blocked by the Web Application Firewall, such as returning a response code or block page. Only the fields specified in the request body will be updated; all other fields will remain unchanged.""")
 @cli_util.option('--waas-policy-id', required=True, help=u"""The [OCID] of the WAAS policy.""")
 @cli_util.option('--block-action', type=custom_types.CliCaseInsensitiveChoice(["SHOW_ERROR_PAGE", "SET_RESPONSE_CODE"]), help=u"""If `action` is set to `BLOCK`, this specifies how the traffic is blocked when detected as malicious by a protection rule. If unspecified, defaults to `SET_RESPONSE_CODE`.""")
 @cli_util.option('--block-response-code', type=click.INT, help=u"""The response code returned when `action` is set to `BLOCK`, `blockAction` is set to `SET_RESPONSE_CODE`, and the traffic is detected as malicious by a protection rule. If unspecified, defaults to `403`.""")
@@ -3507,7 +3507,7 @@ def update_protection_settings(ctx, from_json, force, wait_for_state, max_wait_s
     cli_util.render_response(result, ctx)
 
 
-@threat_feed_group.command(name=cli_util.override('update_threat_feeds.command_name', 'update'), help=u"""Updates the action to take when a request's IP address matches an address in the specified threat intelligence feed. Threat intelligence feeds are compiled lists of IP addresses with malicious reputations based on internet intelligence. Only the threat feeds specified in the request body will be updated; all other threat feeds will remain unchanged.""")
+@threat_feed_group.command(name=cli_util.override('waas.update_threat_feeds.command_name', 'update'), help=u"""Updates the action to take when a request's IP address matches an address in the specified threat intelligence feed. Threat intelligence feeds are compiled lists of IP addresses with malicious reputations based on internet intelligence. Only the threat feeds specified in the request body will be updated; all other threat feeds will remain unchanged.""")
 @cli_util.option('--waas-policy-id', required=True, help=u"""The [OCID] of the WAAS policy.""")
 @cli_util.option('--threat-feeds', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of threat feeds for which to update the actions.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the `PUT` or `DELETE` call for a resource, set the `if-match` parameter to the value of the etag from a previous `GET` or `POST` response for that resource. The resource will be updated or deleted only if the etag provided matches the resource's current etag value.""")
@@ -3559,7 +3559,7 @@ def update_threat_feeds(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     cli_util.render_response(result, ctx)
 
 
-@waas_policy_group.command(name=cli_util.override('update_waas_policy.command_name', 'update'), help=u"""Updates the details of a WAAS policy, including origins and tags. Only the fields specified in the request body will be updated; all other properties will remain unchanged. To update platform provided resources such as `GoodBots`, `ProtectionRules`, and `ThreatFeeds`, first retrieve the list of available resources with the related list operation such as `GetThreatFeeds` or `GetProtectionRules`. The returned list will contain objects with `key` properties that can be used to update the resource during the `UpdateWaasPolicy` request.""")
+@waas_policy_group.command(name=cli_util.override('waas.update_waas_policy.command_name', 'update'), help=u"""Updates the details of a WAAS policy, including origins and tags. Only the fields specified in the request body will be updated; all other properties will remain unchanged. To update platform provided resources such as `GoodBots`, `ProtectionRules`, and `ThreatFeeds`, first retrieve the list of available resources with the related list operation such as `GetThreatFeeds` or `GetProtectionRules`. The returned list will contain objects with `key` properties that can be used to update the resource during the `UpdateWaasPolicy` request.""")
 @cli_util.option('--waas-policy-id', required=True, help=u"""The [OCID] of the WAAS policy.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name for the WAAS policy. The name can be changed and does not need to be unique.""")
 @cli_util.option('--additional-domains', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of additional domains protected by this WAAS policy.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -3658,7 +3658,7 @@ def update_waas_policy(ctx, from_json, force, wait_for_state, max_wait_seconds, 
     cli_util.render_response(result, ctx)
 
 
-@custom_protection_rule_setting_group.command(name=cli_util.override('update_waas_policy_custom_protection_rules.command_name', 'update-waas-policy-custom-protection-rules'), help=u"""Updates the action for each specified custom protection rule. Only the `DETECT` and `BLOCK` actions can be set. Disabled rules should not be included in the list. For more information on protection rules, see [WAF Protection Rules].""")
+@custom_protection_rule_setting_group.command(name=cli_util.override('waas.update_waas_policy_custom_protection_rules.command_name', 'update-waas-policy-custom-protection-rules'), help=u"""Updates the action for each specified custom protection rule. Only the `DETECT` and `BLOCK` actions can be set. Disabled rules should not be included in the list. For more information on protection rules, see [WAF Protection Rules].""")
 @cli_util.option('--waas-policy-id', required=True, help=u"""The [OCID] of the WAAS policy.""")
 @cli_util.option('--update-custom-protection-rules-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the `PUT` or `DELETE` call for a resource, set the `if-match` parameter to the value of the etag from a previous `GET` or `POST` response for that resource. The resource will be updated or deleted only if the etag provided matches the resource's current etag value.""")
@@ -3710,7 +3710,7 @@ def update_waas_policy_custom_protection_rules(ctx, from_json, wait_for_state, m
     cli_util.render_response(result, ctx)
 
 
-@address_rate_limiting_group.command(name=cli_util.override('update_waf_address_rate_limiting.command_name', 'update-waf'), help=u"""Updates the address rate limiting settings in the Web Application Firewall configuration for a policy. Rate limiting allows you to configure a threshold for the number of requests from a unique IP address for the given period. You can also define the response code for the requests from the same address that exceed the threshold.""")
+@address_rate_limiting_group.command(name=cli_util.override('waas.update_waf_address_rate_limiting.command_name', 'update-waf'), help=u"""Updates the address rate limiting settings in the Web Application Firewall configuration for a policy. Rate limiting allows you to configure a threshold for the number of requests from a unique IP address for the given period. You can also define the response code for the requests from the same address that exceed the threshold.""")
 @cli_util.option('--waas-policy-id', required=True, help=u"""The [OCID] of the WAAS policy.""")
 @cli_util.option('--is-enabled', required=True, type=click.BOOL, help=u"""Enables or disables the address rate limiting Web Application Firewall feature.""")
 @cli_util.option('--allowed-rate-per-address', type=click.INT, help=u"""The number of allowed requests per second from one IP address. If unspecified, defaults to `1`.""")
@@ -3778,7 +3778,7 @@ def update_waf_address_rate_limiting(ctx, from_json, wait_for_state, max_wait_se
     cli_util.render_response(result, ctx)
 
 
-@waf_config_group.command(name=cli_util.override('update_waf_config.command_name', 'update'), help=u"""Updates the Web Application Firewall configuration for a specified WAAS policy.
+@waf_config_group.command(name=cli_util.override('waas.update_waf_config.command_name', 'update'), help=u"""Updates the Web Application Firewall configuration for a specified WAAS policy.
 
 To update platform provided resources such as `GoodBots`, `ProtectionRules`, and `ThreatFeeds`, first retrieve the list of available resources with the related list operation, such as `GetThreatFeeds` or `GetProtectionRules`.
 
@@ -3917,7 +3917,7 @@ def update_waf_config(ctx, from_json, force, wait_for_state, max_wait_seconds, w
     cli_util.render_response(result, ctx)
 
 
-@whitelist_group.command(name=cli_util.override('update_whitelists.command_name', 'update'), help=u"""Updates the list of IP addresses that bypass the Web Application Firewall for a WAAS policy. Supports both single IP addresses or subnet masks (CIDR notation).
+@whitelist_group.command(name=cli_util.override('waas.update_whitelists.command_name', 'update'), help=u"""Updates the list of IP addresses that bypass the Web Application Firewall for a WAAS policy. Supports both single IP addresses or subnet masks (CIDR notation).
 
 This operation can create, delete, update, and/or reorder whitelists depending on the structure of the request body.
 

@@ -11,6 +11,10 @@ from tests import util
 
 CASSETTE_LIBRARY_DIR = 'services/dts/tests/cassettes'
 
+# To test on R1, set this value to R1. By default, the region is DESKTOP so make sure you have the DTS control plane
+# running locally
+REGION = "DESKTOP"
+
 
 @pytest.fixture(autouse=True, scope='module')
 def vcr_fixture(request):
@@ -26,70 +30,58 @@ class IntegTestDTS(unittest.TestCase):
 
     def setUp(self):
         self.command_prefix = ["dts"]
-        integ_compartment = os.environ["OCI_CLI_COMPARTMENT_ID"]
-        integ_profile = "R1_LOCAL_AD1"
-        integ_r1_cert_bundle_path = "/root/dts-oci-cli-env/dts-oci-cli-config/combined_r1.crt"
-        integ_bucket = "abhaya_dts_bucket"
         self.config = {
-            "$COMPARTMENT": integ_compartment,
-            "$PROFILE": integ_profile,
-            "$CERT_BUNDLE_PATH": integ_r1_cert_bundle_path,
-            "$BUCKET": integ_bucket,
+            "$COMPARTMENT": os.environ["OCI_CLI_COMPARTMENT_ID"],
+            "$PROFILE": "DEFAULT",
+            "$CERT_BUNDLE_PATH": "/root/dts-oci-cli-env/dts-oci-cli-config/combined_r1.crt",
+            "$BUCKET": "production_bucket",
             "$JOB_ID": "NOT_POPULATED",
             "$APPLIANCE_LABEL": "NOT_POPULATED",
         }
-        shipping_addr_with_required_fields = '{"zipcode": "94555", "country": "USA", "email": "dts@oracle.com", "care-of": "Oracle", "phone-number": "5101234567", "state-or-region": "CA", "addressee": "John Doe", "city-or-locality": "Santa Clara", "address1": "4100 Network Circle"}'
-        shipping_addr_with_required_fields_with_updates = '{"zipcode": "94444", "country": "USA", "email": "dts_updated@oracle.com", "care-of": "Oracle-updated", "phone-number": "5101231234", "state-or-region": "CA", "addressee": "John DoeUpdated", "city-or-locality": "Santa Clara Updated", "address1": "4100 Network Circle Updated"}'
 
         self.commands = [
             {"verb": "list",
              "command_data":
-                 ["job", "list", "--compartment-id", "$COMPARTMENT", "--profile", "$PROFILE",
-                  "--cert-bundle", "$CERT_BUNDLE_PATH"]},
+                 ["job", "list", "--compartment-id", "$COMPARTMENT"]},
             {"verb": "create",
              "command_data":
                  ["job", "create",
-                  "--compartment-id", "$COMPARTMENT", "--profile", "$PROFILE",
-                  "--cert-bundle", "$CERT_BUNDLE_PATH",
-                  "--bucket", "$BUCKET", "--display-name", "oci-cli-test-job-1",
+                  "--compartment-id", "$COMPARTMENT", "--bucket", "$BUCKET", "--display-name", "oci-cli-test-job-1",
                   "--device-type", "APPLIANCE"], "extract_from_output": {"id": "$JOB_ID"}},
             {"verb": "update",
              "command_data":
-                 ["job", "update", "--job-id", "$JOB_ID",
-                  "--profile", "$PROFILE", "--cert-bundle",
-                  "$CERT_BUNDLE_PATH",
-                  "--display-name", "oci-cli-test-job-2"]},
+                 ["job", "update", "--job-id", "$JOB_ID", "--display-name", "oci-cli-test-job-2"]},
             {"verb": "create",
              "command_data":
-                 ["appliance", "request", "--job-id", "$JOB_ID",
-                  "--customer-shipping-address", shipping_addr_with_required_fields,
-                  "--profile", "$PROFILE", "--cert-bundle",
-                  "$CERT_BUNDLE_PATH"], "extract_from_output": {"label": "$APPLIANCE_LABEL"}},
+                 ["appliance", "request", "--job-id", "$JOB_ID", "--addressee",
+                  "John Doe", "--care-of", "Oracle", "--address1", "4110 Network Circle", "--address2",
+                  "Floor 3", "--address3", "Section 5", "--address4", "Cubicle 1234", "--city-or-locality",
+                  "Santa Clara", "--state-province-region", "CA", "--country", "USA", "--zip-postal-code",
+                  "95054", "--phone-number", "123-456-7890", "--email", "john.doe@or.com"],
+             "extract_from_output": {"label": "$APPLIANCE_LABEL"}},
             {"verb": "list",
              "command_data":
-                 ["appliance", "list", "--job-id", "$JOB_ID",
-                  "--profile", "$PROFILE", "--cert-bundle", "$CERT_BUNDLE_PATH"]},
+                 ["appliance", "list", "--job-id", "$JOB_ID"]},
             {"verb": "show",
              "command_data":
-                 ["appliance", "show", "--job-id", "$JOB_ID", "--appliance-label", "$APPLIANCE_LABEL",
-                  "--profile", "$PROFILE", "--cert-bundle", "$CERT_BUNDLE_PATH"]},
+                 ["appliance", "show", "--job-id", "$JOB_ID", "--appliance-label", "$APPLIANCE_LABEL"]},
             {"verb": "update",
              "command_data":
-                 ["appliance", "update-shipping-address", "--job-id", "$JOB_ID", "--appliance-label", "$APPLIANCE_LABEL",
-                  "--customer-shipping-address", shipping_addr_with_required_fields_with_updates, "--force",
-                  "--profile", "$PROFILE", "--cert-bundle", "$CERT_BUNDLE_PATH"]},
+                 ["appliance", "update-shipping-address", "--job-id", "$JOB_ID", "--appliance-label",
+                  "$APPLIANCE_LABEL", "--addressee", "John New Doe", "--care-of", "Oracle New",
+                  "--address1", "4110 Network Circle New", "--address2", "Floor 3 New", "--address3", "Section 5 New",
+                  "--address4", "Cubicle 1234 New", "--city-or-locality", "Santa Clara New",
+                  "--state-province-region", "MI", "--country", "UK", "--zip-postal-code",
+                  "95057", "--phone-number", "123-456-7999", "--email", "john.doe.new@or.com", "--force"]},
             {"verb": "delete",
              "command_data":
-                 ["appliance", "delete", "--force", "--job-id", "$JOB_ID", "--appliance-label", "$APPLIANCE_LABEL",
-                  "--profile", "$PROFILE", "--cert-bundle", "$CERT_BUNDLE_PATH"]},
+                 ["appliance", "delete", "--force", "--job-id", "$JOB_ID", "--appliance-label", "$APPLIANCE_LABEL"]},
             {"verb": "delete",
              "command_data":
-                ["job", "delete", "--force", "--job-id", "$JOB_ID",
-                 "--profile", "$PROFILE", "--cert-bundle", "$CERT_BUNDLE_PATH"]},
+                ["job", "delete", "--force", "--job-id", "$JOB_ID"]},
             {"verb": "verify",
              "command_data":
-                ["job", "verify-upload-user-credentials", "--bucket", integ_bucket,
-                 "--profile", "$PROFILE", "--cert-bundle", "$CERT_BUNDLE_PATH"]}
+                ["job", "verify-upload-user-credentials", "--bucket", "$BUCKET"]}
         ]
 
     def test_dts(self):
@@ -99,6 +91,14 @@ class IntegTestDTS(unittest.TestCase):
         click.echo("")
         for command in self.commands:
             command_data = command["command_data"]
+            if REGION == "DESKTOP":
+                command_data.append("--endpoint")
+                command_data.append("http://localhost:19000")
+            else:
+                command_data.append("--cert-bundle")
+                command_data.append("$CERT_BUNDLE_PATH")
+            command_data.append("--profile")
+            command_data.append("$PROFILE")
             for i, val in enumerate(command_data):
                 if val in self.config:
                     command_data[i] = self.config[val]

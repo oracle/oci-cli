@@ -14,52 +14,52 @@ from oci_cli import custom_types  # noqa: F401
 from oci_cli.aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('ce_root_group.command_name', 'ce'), cls=CommandGroupWithAlias, help=cli_util.override('ce_root_group.help', """API for the Container Engine for Kubernetes service. Use this API to build, deploy,
+@cli.command(cli_util.override('ce.ce_root_group.command_name', 'ce'), cls=CommandGroupWithAlias, help=cli_util.override('ce.ce_root_group.help', """API for the Container Engine for Kubernetes service. Use this API to build, deploy,
 and manage cloud-native applications. For more information, see
 [Overview of Container Engine for Kubernetes](/iaas/Content/ContEng/Concepts/contengoverview.htm).
-"""), short_help=cli_util.override('ce_root_group.short_help', """Container Engine for Kubernetes API"""))
+"""), short_help=cli_util.override('ce.ce_root_group.short_help', """Container Engine for Kubernetes API"""))
 @cli_util.help_option_group
 def ce_root_group():
     pass
 
 
-@click.command(cli_util.override('cluster_group.command_name', 'cluster'), cls=CommandGroupWithAlias, help="""A Kubernetes cluster. Avoid entering confidential information.""")
+@click.command(cli_util.override('ce.cluster_group.command_name', 'cluster'), cls=CommandGroupWithAlias, help="""A Kubernetes cluster. Avoid entering confidential information.""")
 @cli_util.help_option_group
 def cluster_group():
     pass
 
 
-@click.command(cli_util.override('work_request_error_group.command_name', 'work-request-error'), cls=CommandGroupWithAlias, help="""Errors related to a specific work request.""")
+@click.command(cli_util.override('ce.work_request_error_group.command_name', 'work-request-error'), cls=CommandGroupWithAlias, help="""Errors related to a specific work request.""")
 @cli_util.help_option_group
 def work_request_error_group():
     pass
 
 
-@click.command(cli_util.override('node_pool_options_group.command_name', 'node-pool-options'), cls=CommandGroupWithAlias, help="""Options for creating or updating node pools.""")
+@click.command(cli_util.override('ce.node_pool_options_group.command_name', 'node-pool-options'), cls=CommandGroupWithAlias, help="""Options for creating or updating node pools.""")
 @cli_util.help_option_group
 def node_pool_options_group():
     pass
 
 
-@click.command(cli_util.override('work_request_log_entry_group.command_name', 'work-request-log-entry'), cls=CommandGroupWithAlias, help="""Log entries related to a specific work request.""")
+@click.command(cli_util.override('ce.work_request_log_entry_group.command_name', 'work-request-log-entry'), cls=CommandGroupWithAlias, help="""Log entries related to a specific work request.""")
 @cli_util.help_option_group
 def work_request_log_entry_group():
     pass
 
 
-@click.command(cli_util.override('node_pool_group.command_name', 'node-pool'), cls=CommandGroupWithAlias, help="""A pool of compute nodes attached to a cluster. Avoid entering confidential information.""")
+@click.command(cli_util.override('ce.node_pool_group.command_name', 'node-pool'), cls=CommandGroupWithAlias, help="""A pool of compute nodes attached to a cluster. Avoid entering confidential information.""")
 @cli_util.help_option_group
 def node_pool_group():
     pass
 
 
-@click.command(cli_util.override('work_request_group.command_name', 'work-request'), cls=CommandGroupWithAlias, help="""An asynchronous work request.""")
+@click.command(cli_util.override('ce.work_request_group.command_name', 'work-request'), cls=CommandGroupWithAlias, help="""An asynchronous work request.""")
 @cli_util.help_option_group
 def work_request_group():
     pass
 
 
-@click.command(cli_util.override('cluster_options_group.command_name', 'cluster-options'), cls=CommandGroupWithAlias, help="""Options for creating or updating clusters.""")
+@click.command(cli_util.override('ce.cluster_options_group.command_name', 'cluster-options'), cls=CommandGroupWithAlias, help="""Options for creating or updating clusters.""")
 @cli_util.help_option_group
 def cluster_options_group():
     pass
@@ -74,7 +74,7 @@ ce_root_group.add_command(work_request_group)
 ce_root_group.add_command(cluster_options_group)
 
 
-@cluster_group.command(name=cli_util.override('create_cluster.command_name', 'create'), help=u"""Create a new cluster.""")
+@cluster_group.command(name=cli_util.override('ce.create_cluster.command_name', 'create'), help=u"""Create a new cluster.""")
 @cli_util.option('--name', required=True, help=u"""The name of the cluster. Avoid entering confidential information.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to create the cluster.""")
 @cli_util.option('--vcn-id', required=True, help=u"""The OCID of the virtual cloud network (VCN) in which to create the cluster.""")
@@ -136,7 +136,7 @@ def create_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
     cli_util.render_response(result, ctx)
 
 
-@cluster_group.command(name=cli_util.override('create_kubeconfig.command_name', 'create-kubeconfig'), help=u"""Create the Kubeconfig YAML for a cluster.""")
+@cluster_group.command(name=cli_util.override('ce.create_kubeconfig.command_name', 'create-kubeconfig'), help=u"""Create the Kubeconfig YAML for a cluster.""")
 @cli_util.option('--cluster-id', required=True, help=u"""The OCID of the cluster.""")
 @cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
 @cli_util.option('--token-version', help=u"""The version of the kubeconfig token. Supported values 1.0.0 and 2.0.0""")
@@ -193,7 +193,7 @@ def create_kubeconfig(ctx, from_json, file, cluster_id, token_version, expiratio
         file.close()
 
 
-@node_pool_group.command(name=cli_util.override('create_node_pool.command_name', 'create'), help=u"""Create a new node pool.""")
+@node_pool_group.command(name=cli_util.override('ce.create_node_pool.command_name', 'create'), help=u"""Create a new node pool.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which the node pool exists.""")
 @cli_util.option('--cluster-id', required=True, help=u"""The OCID of the cluster to which this node pool is attached.""")
 @cli_util.option('--name', required=True, help=u"""The name of the node pool. Avoid entering confidential information.""")
@@ -277,7 +277,7 @@ def create_node_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
     cli_util.render_response(result, ctx)
 
 
-@cluster_group.command(name=cli_util.override('delete_cluster.command_name', 'delete'), help=u"""Delete a cluster.""")
+@cluster_group.command(name=cli_util.override('ce.delete_cluster.command_name', 'delete'), help=u"""Delete a cluster.""")
 @cli_util.option('--cluster-id', required=True, help=u"""The OCID of the cluster.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -328,7 +328,7 @@ def delete_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
     cli_util.render_response(result, ctx)
 
 
-@node_pool_group.command(name=cli_util.override('delete_node_pool.command_name', 'delete'), help=u"""Delete a node pool.""")
+@node_pool_group.command(name=cli_util.override('ce.delete_node_pool.command_name', 'delete'), help=u"""Delete a node pool.""")
 @cli_util.option('--node-pool-id', required=True, help=u"""The OCID of the node pool.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -379,7 +379,7 @@ def delete_node_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
     cli_util.render_response(result, ctx)
 
 
-@work_request_group.command(name=cli_util.override('delete_work_request.command_name', 'delete'), help=u"""Cancel a work request that has not started.""")
+@work_request_group.command(name=cli_util.override('ce.delete_work_request.command_name', 'delete'), help=u"""Cancel a work request that has not started.""")
 @cli_util.option('--work-request-id', required=True, help=u"""The OCID of the work request.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -405,7 +405,7 @@ def delete_work_request(ctx, from_json, work_request_id, if_match):
     cli_util.render_response(result, ctx)
 
 
-@cluster_group.command(name=cli_util.override('get_cluster.command_name', 'get'), help=u"""Get the details of a cluster.""")
+@cluster_group.command(name=cli_util.override('ce.get_cluster.command_name', 'get'), help=u"""Get the details of a cluster.""")
 @cli_util.option('--cluster-id', required=True, help=u"""The OCID of the cluster.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -427,7 +427,7 @@ def get_cluster(ctx, from_json, cluster_id):
     cli_util.render_response(result, ctx)
 
 
-@cluster_options_group.command(name=cli_util.override('get_cluster_options.command_name', 'get'), help=u"""Get options available for clusters.""")
+@cluster_options_group.command(name=cli_util.override('ce.get_cluster_options.command_name', 'get'), help=u"""Get options available for clusters.""")
 @cli_util.option('--cluster-option-id', required=True, help=u"""The id of the option set to retrieve. Only \"all\" is supported.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -449,7 +449,7 @@ def get_cluster_options(ctx, from_json, cluster_option_id):
     cli_util.render_response(result, ctx)
 
 
-@node_pool_group.command(name=cli_util.override('get_node_pool.command_name', 'get'), help=u"""Get the details of a node pool.""")
+@node_pool_group.command(name=cli_util.override('ce.get_node_pool.command_name', 'get'), help=u"""Get the details of a node pool.""")
 @cli_util.option('--node-pool-id', required=True, help=u"""The OCID of the node pool.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -471,7 +471,7 @@ def get_node_pool(ctx, from_json, node_pool_id):
     cli_util.render_response(result, ctx)
 
 
-@node_pool_options_group.command(name=cli_util.override('get_node_pool_options.command_name', 'get'), help=u"""Get options available for node pools.""")
+@node_pool_options_group.command(name=cli_util.override('ce.get_node_pool_options.command_name', 'get'), help=u"""Get options available for node pools.""")
 @cli_util.option('--node-pool-option-id', required=True, help=u"""The id of the option set to retrieve. Use \"all\" get all options, or use a cluster ID to get options specific to the provided cluster.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -493,7 +493,7 @@ def get_node_pool_options(ctx, from_json, node_pool_option_id):
     cli_util.render_response(result, ctx)
 
 
-@work_request_group.command(name=cli_util.override('get_work_request.command_name', 'get'), help=u"""Get the details of a work request.""")
+@work_request_group.command(name=cli_util.override('ce.get_work_request.command_name', 'get'), help=u"""Get the details of a work request.""")
 @cli_util.option('--work-request-id', required=True, help=u"""The OCID of the work request.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -515,7 +515,7 @@ def get_work_request(ctx, from_json, work_request_id):
     cli_util.render_response(result, ctx)
 
 
-@cluster_group.command(name=cli_util.override('list_clusters.command_name', 'list'), help=u"""List all the cluster objects in a compartment.""")
+@cluster_group.command(name=cli_util.override('ce.list_clusters.command_name', 'list'), help=u"""List all the cluster objects in a compartment.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "FAILED", "DELETING", "DELETED", "UPDATING"]), multiple=True, help=u"""A cluster lifecycle state to filter on. Can have multiple parameters of this name.""")
 @cli_util.option('--name', help=u"""The name to filter on.""")
@@ -575,7 +575,7 @@ def list_clusters(ctx, from_json, all_pages, page_size, compartment_id, lifecycl
     cli_util.render_response(result, ctx)
 
 
-@node_pool_group.command(name=cli_util.override('list_node_pools.command_name', 'list'), help=u"""List all the node pools in a compartment, and optionally filter by cluster.""")
+@node_pool_group.command(name=cli_util.override('ce.list_node_pools.command_name', 'list'), help=u"""List all the node pools in a compartment, and optionally filter by cluster.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
 @cli_util.option('--cluster-id', help=u"""The OCID of the cluster.""")
 @cli_util.option('--name', help=u"""The name to filter on.""")
@@ -635,7 +635,7 @@ def list_node_pools(ctx, from_json, all_pages, page_size, compartment_id, cluste
     cli_util.render_response(result, ctx)
 
 
-@work_request_error_group.command(name=cli_util.override('list_work_request_errors.command_name', 'list'), help=u"""Get the errors of a work request.""")
+@work_request_error_group.command(name=cli_util.override('ce.list_work_request_errors.command_name', 'list'), help=u"""Get the errors of a work request.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
 @cli_util.option('--work-request-id', required=True, help=u"""The OCID of the work request.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
@@ -660,7 +660,7 @@ def list_work_request_errors(ctx, from_json, all_pages, compartment_id, work_req
     cli_util.render_response(result, ctx)
 
 
-@work_request_log_entry_group.command(name=cli_util.override('list_work_request_logs.command_name', 'list-work-request-logs'), help=u"""Get the logs of a work request.""")
+@work_request_log_entry_group.command(name=cli_util.override('ce.list_work_request_logs.command_name', 'list-work-request-logs'), help=u"""Get the logs of a work request.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
 @cli_util.option('--work-request-id', required=True, help=u"""The OCID of the work request.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
@@ -685,7 +685,7 @@ def list_work_request_logs(ctx, from_json, all_pages, compartment_id, work_reque
     cli_util.render_response(result, ctx)
 
 
-@work_request_group.command(name=cli_util.override('list_work_requests.command_name', 'list'), help=u"""List all work requests in a compartment.""")
+@work_request_group.command(name=cli_util.override('ce.list_work_requests.command_name', 'list'), help=u"""List all work requests in a compartment.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
 @cli_util.option('--cluster-id', help=u"""The OCID of the cluster.""")
 @cli_util.option('--resource-id', help=u"""The OCID of the resource associated with a work request""")
@@ -751,7 +751,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, clu
     cli_util.render_response(result, ctx)
 
 
-@cluster_group.command(name=cli_util.override('update_cluster.command_name', 'update'), help=u"""Update the details of a cluster.""")
+@cluster_group.command(name=cli_util.override('ce.update_cluster.command_name', 'update'), help=u"""Update the details of a cluster.""")
 @cli_util.option('--cluster-id', required=True, help=u"""The OCID of the cluster.""")
 @cli_util.option('--name', help=u"""The new name for the cluster. Avoid entering confidential information.""")
 @cli_util.option('--kubernetes-version', help=u"""The version of Kubernetes to which the cluster masters should be upgraded.""")
@@ -813,7 +813,7 @@ def update_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
     cli_util.render_response(result, ctx)
 
 
-@node_pool_group.command(name=cli_util.override('update_node_pool.command_name', 'update'), help=u"""Update the details of a node pool.""")
+@node_pool_group.command(name=cli_util.override('ce.update_node_pool.command_name', 'update'), help=u"""Update the details of a node pool.""")
 @cli_util.option('--node-pool-id', required=True, help=u"""The OCID of the node pool.""")
 @cli_util.option('--name', help=u"""The new name for the cluster. Avoid entering confidential information.""")
 @cli_util.option('--kubernetes-version', help=u"""The version of Kubernetes to which the nodes in the node pool should be upgraded.""")

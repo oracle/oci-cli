@@ -14,19 +14,19 @@ from oci_cli.aliasing import CommandGroupWithAlias
 from services.key_management.src.oci_cli_key_management.generated import kms_service_cli
 
 
-@click.command(cli_util.override('kms_management_root_group.command_name', 'kms-management'), cls=CommandGroupWithAlias, help=cli_util.override('kms_management_root_group.help', """API for managing and performing operations with keys and vaults."""), short_help=cli_util.override('kms_management_root_group.short_help', """Key Management Service API"""))
+@click.command(cli_util.override('kms_management.kms_management_root_group.command_name', 'kms-management'), cls=CommandGroupWithAlias, help=cli_util.override('kms_management.kms_management_root_group.help', """API for managing and performing operations with keys and vaults."""), short_help=cli_util.override('kms_management.kms_management_root_group.short_help', """Key Management Service API"""))
 @cli_util.help_option_group
 def kms_management_root_group():
     pass
 
 
-@click.command(cli_util.override('key_version_group.command_name', 'key-version'), cls=CommandGroupWithAlias, help="""""")
+@click.command(cli_util.override('kms_management.key_version_group.command_name', 'key-version'), cls=CommandGroupWithAlias, help="""""")
 @cli_util.help_option_group
 def key_version_group():
     pass
 
 
-@click.command(cli_util.override('key_group.command_name', 'key'), cls=CommandGroupWithAlias, help="""""")
+@click.command(cli_util.override('kms_management.key_group.command_name', 'key'), cls=CommandGroupWithAlias, help="""""")
 @cli_util.help_option_group
 def key_group():
     pass
@@ -37,7 +37,7 @@ kms_management_root_group.add_command(key_version_group)
 kms_management_root_group.add_command(key_group)
 
 
-@key_group.command(name=cli_util.override('cancel_key_deletion.command_name', 'cancel-key-deletion'), help=u"""Cancels the scheduled deletion of the specified key. Canceling a scheduled deletion restores the key to the respective states they were in before the deletion was scheduled.
+@key_group.command(name=cli_util.override('kms_management.cancel_key_deletion.command_name', 'cancel-key-deletion'), help=u"""Cancels the scheduled deletion of the specified key. Canceling a scheduled deletion restores the key to the respective states they were in before the deletion was scheduled.
 
 The top level --endpoint parameter must be supplied for this operation.""")
 @cli_util.option('--key-id', required=True, help=u"""The OCID of the key.""")
@@ -89,7 +89,7 @@ def cancel_key_deletion(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     cli_util.render_response(result, ctx)
 
 
-@key_group.command(name=cli_util.override('change_key_compartment.command_name', 'change-compartment'), help=u"""Moves a key into a different compartment. When provided, If-Match is checked against ETag values of the key.
+@key_group.command(name=cli_util.override('kms_management.change_key_compartment.command_name', 'change-compartment'), help=u"""Moves a key into a different compartment. When provided, If-Match is checked against ETag values of the key.
 
 The top level --endpoint parameter must be supplied for this operation.""")
 @cli_util.option('--key-id', required=True, help=u"""The OCID of the key.""")
@@ -122,7 +122,7 @@ def change_key_compartment(ctx, from_json, key_id, compartment_id, if_match):
     cli_util.render_response(result, ctx)
 
 
-@key_group.command(name=cli_util.override('create_key.command_name', 'create'), help=u"""Creates a new key.
+@key_group.command(name=cli_util.override('kms_management.create_key.command_name', 'create'), help=u"""Creates a new key.
 
 The top level --endpoint parameter must be supplied for this operation.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains this key.""")
@@ -184,7 +184,7 @@ def create_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
     cli_util.render_response(result, ctx)
 
 
-@key_version_group.command(name=cli_util.override('create_key_version.command_name', 'create'), help=u"""Generates new cryptographic material for a key. The key must be in an `ENABLED` state to be rotated.
+@key_version_group.command(name=cli_util.override('kms_management.create_key_version.command_name', 'create'), help=u"""Generates new cryptographic material for a key. The key must be in an `ENABLED` state to be rotated.
 
 The top level --endpoint parameter must be supplied for this operation.""")
 @cli_util.option('--key-id', required=True, help=u"""The OCID of the key.""")
@@ -208,7 +208,7 @@ def create_key_version(ctx, from_json, key_id):
     cli_util.render_response(result, ctx)
 
 
-@key_group.command(name=cli_util.override('disable_key.command_name', 'disable'), help=u"""Disables a key to make it unavailable for encryption or decryption.
+@key_group.command(name=cli_util.override('kms_management.disable_key.command_name', 'disable'), help=u"""Disables a key to make it unavailable for encryption or decryption.
 
 The top level --endpoint parameter must be supplied for this operation.""")
 @cli_util.option('--key-id', required=True, help=u"""The OCID of the key.""")
@@ -260,7 +260,7 @@ def disable_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
     cli_util.render_response(result, ctx)
 
 
-@key_group.command(name=cli_util.override('enable_key.command_name', 'enable'), help=u"""Enables a key to make it available for encryption or decryption.
+@key_group.command(name=cli_util.override('kms_management.enable_key.command_name', 'enable'), help=u"""Enables a key to make it available for encryption or decryption.
 
 The top level --endpoint parameter must be supplied for this operation.""")
 @cli_util.option('--key-id', required=True, help=u"""The OCID of the key.""")
@@ -312,7 +312,7 @@ def enable_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
     cli_util.render_response(result, ctx)
 
 
-@key_group.command(name=cli_util.override('get_key.command_name', 'get'), help=u"""Gets information about the specified key.
+@key_group.command(name=cli_util.override('kms_management.get_key.command_name', 'get'), help=u"""Gets information about the specified key.
 
 The top level --endpoint parameter must be supplied for this operation.""")
 @cli_util.option('--key-id', required=True, help=u"""The OCID of the key.""")
@@ -336,7 +336,7 @@ def get_key(ctx, from_json, key_id):
     cli_util.render_response(result, ctx)
 
 
-@key_version_group.command(name=cli_util.override('get_key_version.command_name', 'get'), help=u"""Gets information about the specified key version.
+@key_version_group.command(name=cli_util.override('kms_management.get_key_version.command_name', 'get'), help=u"""Gets information about the specified key version.
 
 The top level --endpoint parameter must be supplied for this operation.""")
 @cli_util.option('--key-id', required=True, help=u"""The OCID of the key.""")
@@ -365,7 +365,7 @@ def get_key_version(ctx, from_json, key_id, key_version_id):
     cli_util.render_response(result, ctx)
 
 
-@key_version_group.command(name=cli_util.override('list_key_versions.command_name', 'list'), help=u"""Lists all key versions for the specified key.
+@key_version_group.command(name=cli_util.override('kms_management.list_key_versions.command_name', 'list'), help=u"""Lists all key versions for the specified key.
 
 The top level --endpoint parameter must be supplied for this operation.""")
 @cli_util.option('--key-id', required=True, help=u"""The OCID of the key.""")
@@ -424,7 +424,7 @@ def list_key_versions(ctx, from_json, all_pages, page_size, key_id, limit, page,
     cli_util.render_response(result, ctx)
 
 
-@key_group.command(name=cli_util.override('list_keys.command_name', 'list'), help=u"""Lists the keys in the specified vault and compartment.
+@key_group.command(name=cli_util.override('kms_management.list_keys.command_name', 'list'), help=u"""Lists the keys in the specified vault and compartment.
 
 The top level --endpoint parameter must be supplied for this operation.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
@@ -480,7 +480,7 @@ def list_keys(ctx, from_json, all_pages, page_size, compartment_id, limit, page,
     cli_util.render_response(result, ctx)
 
 
-@key_group.command(name=cli_util.override('schedule_key_deletion.command_name', 'schedule-key-deletion'), help=u"""Schedules the deletion of the specified key. This sets the state of the key to `PENDING_DELETION` and then deletes it after the retention period ends.
+@key_group.command(name=cli_util.override('kms_management.schedule_key_deletion.command_name', 'schedule-key-deletion'), help=u"""Schedules the deletion of the specified key. This sets the state of the key to `PENDING_DELETION` and then deletes it after the retention period ends.
 
 The top level --endpoint parameter must be supplied for this operation.""")
 @cli_util.option('--key-id', required=True, help=u"""The OCID of the key.""")
@@ -540,7 +540,7 @@ def schedule_key_deletion(ctx, from_json, wait_for_state, max_wait_seconds, wait
     cli_util.render_response(result, ctx)
 
 
-@key_group.command(name=cli_util.override('update_key.command_name', 'update'), help=u"""Updates the properties of a key. Specifically, you can update the `displayName`, `freeformTags`, and `definedTags` properties. Furthermore, the key must in an `ACTIVE` or `CREATING` state to be updated.
+@key_group.command(name=cli_util.override('kms_management.update_key.command_name', 'update'), help=u"""Updates the properties of a key. Specifically, you can update the `displayName`, `freeformTags`, and `definedTags` properties. Furthermore, the key must in an `ACTIVE` or `CREATING` state to be updated.
 
 The top level --endpoint parameter must be supplied for this operation.""")
 @cli_util.option('--key-id', required=True, help=u"""The OCID of the key.""")

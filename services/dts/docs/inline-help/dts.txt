@@ -35,7 +35,9 @@ Commands:
   list                     Lists Transfer Appliances associated with a...
   never-receive            Mark the transfer appliance NEVER RECEIVED.
   request                  Create a new Transfer Appliance
+  request-entitlement      Create the Entitlement to use a Transfer...
   show                     Describes a transfer appliance in detail
+  show-entitlement         Describes the Transfer Appliance Entitlement...
   update-shipping-address  Updates the shipping address
 
 ++++++++++++++++++++++++++++++++++++++++++++++
@@ -215,8 +217,81 @@ Usage: oci dts appliance request [OPTIONS]
   Create a new Transfer Appliance
 
 Options:
-  --job-id TEXT                   OCID of the Transfer Job [required]
-  --customer-shipping-address COMPLEX TYPE
+  --job-id TEXT                 OCID of the Transfer Job [required]
+  --addressee TEXT              Company or person to send the appliance to
+                                [required]
+  --care-of TEXT                Place/person to direct the package to.
+                                [required]
+  --address1 TEXT               Address line 1. [required]
+  --address2 TEXT               Optional address line 2.
+  --address3 TEXT               Optional address line 3.
+  --address4 TEXT               Optional address line 4.
+  --city-or-locality TEXT       City or Locality. [required]
+  --state-province-region TEXT  State or Province or Region. [required]
+  --country TEXT                Country. [required]
+  --zip-postal-code TEXT        Zip or Postal Code [required]
+  --phone-number TEXT           Phone number. [required]
+  --email TEXT                  Email address. [required]
+  --from-json TEXT              Provide input to this command as a JSON document
+                                from a file using the file://path-to/file
+                                syntax.
+                                
+                                The --generate-full-command-json-input
+                                option can be used to generate a sample json
+                                file to be used with this command option. The
+                                key names are pre-populated and match the
+                                command option names (converted to camelCase
+                                format, e.g. compartment-id --> compartmentId),
+                                while the values of the keys need to be
+                                populated by the user before using the sample
+                                file as an input to this command. For any
+                                command option that accepts multiple values, the
+                                value of the key can be a JSON array.
+                                
+                                Options
+                                can still be provided on the command line. If an
+                                option exists in both the JSON document and the
+                                command line then the command line specified
+                                value will be used.
+                                
+                                For examples on usage of
+                                this option, please see our "using CLI with
+                                advanced JSON options" link: https://docs.cloud.
+                                oracle.com/iaas/Content/API/SDKDocs/cliusing.htm
+                                #AdvancedJSONOptions
+  -?, -h, --help                For detailed help on any of these individual
+                                commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci dts appliance request-entitlement --help
+Usage: oci dts appliance request-entitlement [OPTIONS]
+
+  Create the Entitlement to use a Transfer Appliance. It requires some offline
+  process of review and signatures before request is granted.
+
+Options:
+  --display-name TEXT
+  --freeform-tags COMPLEX TYPE    Simple key-value pair that is applied without
+                                  any predefined name, type or scope. Exists for
+                                  cross-compatibility only. Example: `{"bar-
+                                  key": "value"}`
+                                  This is a complex type whose
+                                  value must be valid JSON. The value can be
+                                  provided as a string on the command line or
+                                  passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+  --defined-tags COMPLEX TYPE     Usage of predefined tag keys. These predefined
+                                  keys are scoped to namespaces. Example:
+                                  `{"foo-namespace": {"bar-key": "foo-value"}}`
                                   This is a complex type whose value must be
                                   valid JSON. The value can be provided as a
                                   string on the command line or passed in as a
@@ -229,7 +304,30 @@ Options:
                                   in a file, modifying it as needed and
                                   then passing it back in via the file://
                                   syntax.
-                                   [required]
+  --wait-for-state [CREATING|ACTIVE|INACTIVE|DELETED]
+                                  This operation creates, modifies or deletes a
+                                  resource that has a defined lifecycle state.
+                                  Specify this option to perform the action and
+                                  then wait until the resource reaches a given
+                                  lifecycle state. Multiple states can be
+                                  specified, returning on the first state. For
+                                  example, --wait-for-state SUCCEEDED --wait-
+                                  for-state FAILED would return on whichever
+                                  lifecycle state is reached first. If timeout
+                                  is reached, a return code of 2 is returned.
+                                  For any other error, a return code of 1 is
+                                  returned.
+  --max-wait-seconds INTEGER      The maximum time to wait for the resource to
+                                  reach the lifecycle state defined by --wait-
+                                  for-state. Defaults to 1200 seconds.
+  --wait-interval-seconds INTEGER
+                                  Check every --wait-interval-seconds to see
+                                  whether the resource to see if it has reached
+                                  the lifecycle state defined by --wait-for-
+                                  state. Defaults to 30 seconds.
+  -c, --compartment-id TEXT       Root compartment OCID [required]
+  --name TEXT                     Requestor name [required]
+  --email TEXT                    Requestor email [required]
   --from-json TEXT                Provide input to this command as a JSON
                                   document from a file using the file://path-
                                   to/file syntax.
@@ -256,6 +354,8 @@ Options:
                                   link: https://docs.cloud.oracle.com/iaas/Conte
                                   nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
                                   s
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
   --from-json TEXT                Provide input to this command as a JSON
                                   document from a file using the file://path-
                                   to/file syntax.
@@ -320,84 +420,117 @@ Options:
                           enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
+$ oci dts appliance show-entitlement --help
+Usage: oci dts appliance show-entitlement [OPTIONS]
+
+  Describes the Transfer Appliance Entitlement in detail
+
+Options:
+  -c, --compartment-id TEXT  Root compartment OCID [required]
+  --from-json TEXT           Provide input to this command as a JSON document
+                             from a file using the file://path-to/file syntax.
+                             The --generate-full-command-json-input option can
+                             be used to generate a sample json file to be used
+                             with this command option. The key names are pre-
+                             populated and match the command option names
+                             (converted to camelCase format, e.g. compartment-id
+                             --> compartmentId), while the values of the keys
+                             need to be populated by the user before using the
+                             sample file as an input to this command. For any
+                             command option that accepts multiple values, the
+                             value of the key can be a JSON array.
+                             
+                             Options can
+                             still be provided on the command line. If an option
+                             exists in both the JSON document and the command
+                             line then the command line specified value will be
+                             used.
+                             
+                             For examples on usage of this option, please
+                             see our "using CLI with advanced JSON options"
+                             link: https://docs.cloud.oracle.com/iaas/Content/AP
+                             I/SDKDocs/cliusing.htm#AdvancedJSONOptions
+  -?, -h, --help             For detailed help on any of these individual
+                             commands, enter <command> --help.
+  --from-json TEXT           Provide input to this command as a JSON document
+                             from a file using the file://path-to/file syntax.
+                             The --generate-full-command-json-input option can
+                             be used to generate a sample json file to be used
+                             with this command option. The key names are pre-
+                             populated and match the command option names
+                             (converted to camelCase format, e.g. compartment-id
+                             --> compartmentId), while the values of the keys
+                             need to be populated by the user before using the
+                             sample file as an input to this command. For any
+                             command option that accepts multiple values, the
+                             value of the key can be a JSON array.
+                             
+                             Options can
+                             still be provided on the command line. If an option
+                             exists in both the JSON document and the command
+                             line then the command line specified value will be
+                             used.
+                             
+                             For examples on usage of this option, please
+                             see our "using CLI with advanced JSON options"
+                             link: https://docs.cloud.oracle.com/iaas/Content/AP
+                             I/SDKDocs/cliusing.htm#AdvancedJSONOptions
+  -?, -h, --help             For detailed help on any of these individual
+                             commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
 $ oci dts appliance update-shipping-address --help
 Usage: oci dts appliance update-shipping-address [OPTIONS]
 
   Updates the shipping address
 
 Options:
-  --force                         Perform update without prompting for
-                                  confirmation.
-  --job-id TEXT                   OCID of the Transfer Job [required]
-  --appliance-label TEXT          Appliance label [required]
-  --customer-shipping-address COMPLEX TYPE
-                                  This is a complex type whose value must be
-                                  valid JSON. The value can be provided as a
-                                  string on the command line or passed in as a
-                                  file using
-                                  the file://path/to/file syntax.
-                                  The --generate-param-json-input option can be
-                                  used to generate an example of the JSON which
-                                  must be provided. We recommend storing this
-                                  example
-                                  in a file, modifying it as needed and
-                                  then passing it back in via the file://
-                                  syntax.
-                                   [required]
-  --from-json TEXT                Provide input to this command as a JSON
-                                  document from a file using the file://path-
-                                  to/file syntax.
-                                  
-                                  The --generate-full-command-
-                                  json-input option can be used to generate a
-                                  sample json file to be used with this command
-                                  option. The key names are pre-populated and
-                                  match the command option names (converted to
-                                  camelCase format, e.g. compartment-id -->
-                                  compartmentId), while the values of the keys
-                                  need to be populated by the user before using
-                                  the sample file as an input to this command.
-                                  For any command option that accepts multiple
-                                  values, the value of the key can be a JSON
-                                  array.
-                                  
-                                  Options can still be provided on the
-                                  command line. If an option exists in both the
-                                  JSON document and the command line then the
-                                  command line specified value will be used.
-                                  For examples on usage of this option, please
-                                  see our "using CLI with advanced JSON options"
-                                  link: https://docs.cloud.oracle.com/iaas/Conte
-                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
-                                  s
-  --from-json TEXT                Provide input to this command as a JSON
-                                  document from a file using the file://path-
-                                  to/file syntax.
-                                  
-                                  The --generate-full-command-
-                                  json-input option can be used to generate a
-                                  sample json file to be used with this command
-                                  option. The key names are pre-populated and
-                                  match the command option names (converted to
-                                  camelCase format, e.g. compartment-id -->
-                                  compartmentId), while the values of the keys
-                                  need to be populated by the user before using
-                                  the sample file as an input to this command.
-                                  For any command option that accepts multiple
-                                  values, the value of the key can be a JSON
-                                  array.
-                                  
-                                  Options can still be provided on the
-                                  command line. If an option exists in both the
-                                  JSON document and the command line then the
-                                  command line specified value will be used.
-                                  For examples on usage of this option, please
-                                  see our "using CLI with advanced JSON options"
-                                  link: https://docs.cloud.oracle.com/iaas/Conte
-                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
-                                  s
-  -?, -h, --help                  For detailed help on any of these individual
-                                  commands, enter <command> --help.
+  --force                       Perform update without prompting for
+                                confirmation.
+  --job-id TEXT                 OCID of the Transfer Job [required]
+  --appliance-label TEXT        Appliance label [required]
+  --addressee TEXT              Company or person to send the appliance to
+                                [required]
+  --care-of TEXT                Place/person to direct the package to.
+  --address1 TEXT               Address line 1.
+  --address2 TEXT               Optional address line 2.
+  --address3 TEXT               Optional address line 3.
+  --address4 TEXT               Optional address line 4.
+  --city-or-locality TEXT       City or Locality.
+  --state-province-region TEXT  State or Province or Region.
+  --country TEXT                Country.
+  --zip-postal-code TEXT        Zip or Postal Code
+  --phone-number TEXT           Phone number.
+  --email TEXT                  Email address.
+  --from-json TEXT              Provide input to this command as a JSON document
+                                from a file using the file://path-to/file
+                                syntax.
+                                
+                                The --generate-full-command-json-input
+                                option can be used to generate a sample json
+                                file to be used with this command option. The
+                                key names are pre-populated and match the
+                                command option names (converted to camelCase
+                                format, e.g. compartment-id --> compartmentId),
+                                while the values of the keys need to be
+                                populated by the user before using the sample
+                                file as an input to this command. For any
+                                command option that accepts multiple values, the
+                                value of the key can be a JSON array.
+                                
+                                Options
+                                can still be provided on the command line. If an
+                                option exists in both the JSON document and the
+                                command line then the command line specified
+                                value will be used.
+                                
+                                For examples on usage of
+                                this option, please see our "using CLI with
+                                advanced JSON options" link: https://docs.cloud.
+                                oracle.com/iaas/Content/API/SDKDocs/cliusing.htm
+                                #AdvancedJSONOptions
+  -?, -h, --help                For detailed help on any of these individual
+                                commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci dts job --help
@@ -410,6 +543,7 @@ Options:
                   <command> --help.
 
 Commands:
+  change-compartment              Moves a TransferJob into a different...
   close                           Closes the transfer disk or appliance job.
   create                          Creates a new transfer disk or appliance job.
   delete                          Deletes the transfer disk or appliance job.
@@ -418,6 +552,45 @@ Commands:
   show                            Shows the transfer disk or appliance job...
   update                          Updates the transfer disk or appliance job...
   verify-upload-user-credentials  Verifies the transfer disk or appliance...
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci dts job change-compartment --help
+Usage: oci dts job change-compartment [OPTIONS]
+
+  Moves a TransferJob into a different compartment.
+
+Options:
+  -c, --compartment-id TEXT  The [OCID]  of the compartment into which the
+                             resources should be moved. [required]
+  --if-match TEXT            The entity tag to match. Optional, if set, the
+                             update will be successful only if the object's tag
+                             matches the tag specified in the request.
+  --job-id TEXT              ID of the Transfer Job [required]
+  --from-json TEXT           Provide input to this command as a JSON document
+                             from a file using the file://path-to/file syntax.
+                             The --generate-full-command-json-input option can
+                             be used to generate a sample json file to be used
+                             with this command option. The key names are pre-
+                             populated and match the command option names
+                             (converted to camelCase format, e.g. compartment-id
+                             --> compartmentId), while the values of the keys
+                             need to be populated by the user before using the
+                             sample file as an input to this command. For any
+                             command option that accepts multiple values, the
+                             value of the key can be a JSON array.
+                             
+                             Options can
+                             still be provided on the command line. If an option
+                             exists in both the JSON document and the command
+                             line then the command line specified value will be
+                             used.
+                             
+                             For examples on usage of this option, please
+                             see our "using CLI with advanced JSON options"
+                             link: https://docs.cloud.oracle.com/iaas/Content/AP
+                             I/SDKDocs/cliusing.htm#AdvancedJSONOptions
+  -?, -h, --help             For detailed help on any of these individual
+                             commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci dts job close --help

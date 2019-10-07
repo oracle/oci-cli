@@ -14,31 +14,31 @@ from oci_cli import custom_types  # noqa: F401
 from oci_cli.aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('oce_root_group.command_name', 'oce'), cls=CommandGroupWithAlias, help=cli_util.override('oce_root_group.help', """Oracle Content and Experience is a cloud-based content hub to drive omni-channel content management and accelerate experience delivery"""), short_help=cli_util.override('oce_root_group.short_help', """OceInstance API"""))
+@cli.command(cli_util.override('oce.oce_root_group.command_name', 'oce'), cls=CommandGroupWithAlias, help=cli_util.override('oce.oce_root_group.help', """Oracle Content and Experience is a cloud-based content hub to drive omni-channel content management and accelerate experience delivery"""), short_help=cli_util.override('oce.oce_root_group.short_help', """OceInstance API"""))
 @cli_util.help_option_group
 def oce_root_group():
     pass
 
 
-@click.command(cli_util.override('work_request_error_group.command_name', 'work-request-error'), cls=CommandGroupWithAlias, help="""An error encountered while executing a work request.""")
+@click.command(cli_util.override('oce.work_request_error_group.command_name', 'work-request-error'), cls=CommandGroupWithAlias, help="""An error encountered while executing a work request.""")
 @cli_util.help_option_group
 def work_request_error_group():
     pass
 
 
-@click.command(cli_util.override('work_request_log_entry_group.command_name', 'work-request-log-entry'), cls=CommandGroupWithAlias, help="""A log message from the execution of a work request.""")
+@click.command(cli_util.override('oce.work_request_log_entry_group.command_name', 'work-request-log-entry'), cls=CommandGroupWithAlias, help="""A log message from the execution of a work request.""")
 @cli_util.help_option_group
 def work_request_log_entry_group():
     pass
 
 
-@click.command(cli_util.override('work_request_group.command_name', 'work-request'), cls=CommandGroupWithAlias, help="""A description of workrequest status""")
+@click.command(cli_util.override('oce.work_request_group.command_name', 'work-request'), cls=CommandGroupWithAlias, help="""A description of workrequest status""")
 @cli_util.help_option_group
 def work_request_group():
     pass
 
 
-@click.command(cli_util.override('oce_instance_group.command_name', 'oce-instance'), cls=CommandGroupWithAlias, help="""Details of OceInstance.""")
+@click.command(cli_util.override('oce.oce_instance_group.command_name', 'oce-instance'), cls=CommandGroupWithAlias, help="""Details of OceInstance.""")
 @cli_util.help_option_group
 def oce_instance_group():
     pass
@@ -50,7 +50,7 @@ oce_root_group.add_command(work_request_group)
 oce_root_group.add_command(oce_instance_group)
 
 
-@oce_instance_group.command(name=cli_util.override('change_oce_instance_compartment.command_name', 'change-compartment'), help=u"""Moves a OceInstance into a different compartment""")
+@oce_instance_group.command(name=cli_util.override('oce.change_oce_instance_compartment.command_name', 'change-compartment'), help=u"""Moves a OceInstance into a different compartment""")
 @cli_util.option('--oce-instance-id', required=True, help=u"""unique OceInstance identifier""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the OceInstance should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -106,7 +106,7 @@ def change_oce_instance_compartment(ctx, from_json, wait_for_state, max_wait_sec
     cli_util.render_response(result, ctx)
 
 
-@oce_instance_group.command(name=cli_util.override('create_oce_instance.command_name', 'create'), help=u"""Creates a new OceInstance.""")
+@oce_instance_group.command(name=cli_util.override('oce.create_oce_instance.command_name', 'create'), help=u"""Creates a new OceInstance.""")
 @cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier""")
 @cli_util.option('--name', required=True, help=u"""OceInstance Name""")
 @cli_util.option('--tenancy-id', required=True, help=u"""Tenancy Identifier""")
@@ -178,7 +178,7 @@ def create_oce_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     cli_util.render_response(result, ctx)
 
 
-@oce_instance_group.command(name=cli_util.override('delete_oce_instance.command_name', 'delete'), help=u"""Deletes a OceInstance resource by identifier""")
+@oce_instance_group.command(name=cli_util.override('oce.delete_oce_instance.command_name', 'delete'), help=u"""Deletes a OceInstance resource by identifier""")
 @cli_util.option('--oce-instance-id', required=True, help=u"""unique OceInstance identifier""")
 @cli_util.option('--idcs-access-token', required=True, help=u"""IDCS access token identifying a stripe and service administrator user""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -235,7 +235,7 @@ def delete_oce_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     cli_util.render_response(result, ctx)
 
 
-@oce_instance_group.command(name=cli_util.override('get_oce_instance.command_name', 'get'), help=u"""Gets a OceInstance by identifier""")
+@oce_instance_group.command(name=cli_util.override('oce.get_oce_instance.command_name', 'get'), help=u"""Gets a OceInstance by identifier""")
 @cli_util.option('--oce-instance-id', required=True, help=u"""unique OceInstance identifier""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -257,7 +257,7 @@ def get_oce_instance(ctx, from_json, oce_instance_id):
     cli_util.render_response(result, ctx)
 
 
-@work_request_group.command(name=cli_util.override('get_work_request.command_name', 'get'), help=u"""Gets the status of the work request with the given ID.""")
+@work_request_group.command(name=cli_util.override('oce.get_work_request.command_name', 'get'), help=u"""Gets the status of the work request with the given ID.""")
 @cli_util.option('--work-request-id', required=True, help=u"""The ID of the asynchronous request.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -279,7 +279,7 @@ def get_work_request(ctx, from_json, work_request_id):
     cli_util.render_response(result, ctx)
 
 
-@oce_instance_group.command(name=cli_util.override('list_oce_instances.command_name', 'list'), help=u"""Returns a list of OceInstances.""")
+@oce_instance_group.command(name=cli_util.override('oce.list_oce_instances.command_name', 'list'), help=u"""Returns a list of OceInstances.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable.
 
@@ -341,7 +341,7 @@ def list_oce_instances(ctx, from_json, all_pages, page_size, compartment_id, dis
     cli_util.render_response(result, ctx)
 
 
-@work_request_error_group.command(name=cli_util.override('list_work_request_errors.command_name', 'list'), help=u"""Return a (paginated) list of errors for a given work request.""")
+@work_request_error_group.command(name=cli_util.override('oce.list_work_request_errors.command_name', 'list'), help=u"""Return a (paginated) list of errors for a given work request.""")
 @cli_util.option('--work-request-id', required=True, help=u"""The ID of the asynchronous request.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -392,7 +392,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     cli_util.render_response(result, ctx)
 
 
-@work_request_log_entry_group.command(name=cli_util.override('list_work_request_logs.command_name', 'list-work-request-logs'), help=u"""Return a (paginated) list of logs for a given work request.""")
+@work_request_log_entry_group.command(name=cli_util.override('oce.list_work_request_logs.command_name', 'list-work-request-logs'), help=u"""Return a (paginated) list of logs for a given work request.""")
 @cli_util.option('--work-request-id', required=True, help=u"""The ID of the asynchronous request.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -443,7 +443,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     cli_util.render_response(result, ctx)
 
 
-@work_request_group.command(name=cli_util.override('list_work_requests.command_name', 'list'), help=u"""Lists the work requests in a compartment.""")
+@work_request_group.command(name=cli_util.override('oce.list_work_requests.command_name', 'list'), help=u"""Lists the work requests in a compartment.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--resource-id', help=u"""The resource Identifier for which to list resources.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
@@ -494,7 +494,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, res
     cli_util.render_response(result, ctx)
 
 
-@oce_instance_group.command(name=cli_util.override('update_oce_instance.command_name', 'update'), help=u"""Updates the OceInstance""")
+@oce_instance_group.command(name=cli_util.override('oce.update_oce_instance.command_name', 'update'), help=u"""Updates the OceInstance""")
 @cli_util.option('--oce-instance-id', required=True, help=u"""unique OceInstance identifier""")
 @cli_util.option('--description', help=u"""OceInstance description""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)

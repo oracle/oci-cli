@@ -6,22 +6,52 @@ import click
 
 from oci_cli import cli_util
 from oci_cli import json_skeleton_utils
-from oci_cli import custom_types
 from services.dts.src.oci_cli_transfer_appliance.generated import transferappliance_cli
 
 
+customer_address_options = {
+    'addressee': 'addressee',
+    'care_of': 'careOf',
+    'address1': 'address1',
+    'address2': 'address2',
+    'address3': 'address3',
+    'address4': 'address4',
+    'city_or_locality': 'cityOrLocality',
+    'state_province_region': 'stateOrRegion',
+    'country': 'country',
+    'zip_postal_code': 'zipcode',
+    'phone_number': 'phoneNumber',
+    'email': 'email'
+}
+
+
 @cli_util.copy_params_from_generated_command(transferappliance_cli.create_transfer_appliance, params_to_exclude=['id', 'wait_for_state', 'max_wait_seconds', 'wait_interval_seconds', 'customer_shipping_address'])
-@transferappliance_cli.transfer_appliance_root_group.command(name=transferappliance_cli.create_transfer_appliance.name, help=transferappliance_cli.create_transfer_appliance.help)
+@transferappliance_cli.transfer_appliance_root_group.command(name="request", help=transferappliance_cli.create_transfer_appliance.help)
 @cli_util.option('--job-id', required=True, help=u"""OCID of the Transfer Job""")
-@cli_util.option('--customer-shipping-address', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@json_skeleton_utils.get_cli_json_input_option({'customer-shipping-address': {'module': 'dts', 'class': 'ShippingAddress'}})
+@cli_util.option('--addressee', required=True, help=u"""Company or person to send the appliance to""")
+@cli_util.option('--care-of', required=True, help=u"""Place/person to direct the package to.""")
+@cli_util.option('--address1', required=True, help=u"""Address line 1.""")
+@cli_util.option('--address2', help=u"""Optional address line 2.""")
+@cli_util.option('--address3', help=u"""Optional address line 3.""")
+@cli_util.option('--address4', help=u"""Optional address line 4.""")
+@cli_util.option('--city-or-locality', required=True, help=u"""City or Locality.""")
+@cli_util.option('--state-province-region', required=True, help=u"""State or Province or Region.""")
+@cli_util.option('--country', required=True, help=u"""Country.""")
+@cli_util.option('--zip-postal-code', required=True, help=u"""Zip or Postal Code""")
+@cli_util.option('--phone-number', required=True, help=u"""Phone number.""")
+@cli_util.option('--email', required=True, help=u"""Email address.""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'customer-shipping-address': {'module': 'dts', 'class': 'ShippingAddress'}}, output_type={'module': 'dts', 'class': 'TransferAppliance'})
+@json_skeleton_utils.json_skeleton_generation_handler({})
 @cli_util.wrap_exceptions
 def create_transfer_appliance_extended(ctx, **kwargs):
     if 'job_id' in kwargs:
         kwargs['id'] = kwargs['job_id']
         kwargs.pop('job_id')
+    kwargs['customer_shipping_address'] = {}
+    for option, value in customer_address_options.items():
+        if option in kwargs:
+            kwargs['customer_shipping_address'][value] = kwargs[option]
+            kwargs.pop(option)
     ctx.invoke(transferappliance_cli.create_transfer_appliance, **kwargs)
 
 
@@ -115,10 +145,20 @@ def delete_transfer_appliance_extended(ctx, **kwargs):
 @transferappliance_cli.transfer_appliance_root_group.command(name='update-shipping-address', help="""Updates the shipping address""")
 @cli_util.option('--job-id', required=True, help=u"""OCID of the Transfer Job""")
 @cli_util.option('--appliance-label', required=True, help=u"""Appliance label""")
-@cli_util.option('--customer-shipping-address', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@json_skeleton_utils.get_cli_json_input_option({'customer-shipping-address': {'module': 'dts', 'class': 'ShippingAddress'}})
+@cli_util.option('--addressee', required=True, help=u"""Company or person to send the appliance to""")
+@cli_util.option('--care-of', help=u"""Place/person to direct the package to.""")
+@cli_util.option('--address1', help=u"""Address line 1.""")
+@cli_util.option('--address2', help=u"""Optional address line 2.""")
+@cli_util.option('--address3', help=u"""Optional address line 3.""")
+@cli_util.option('--address4', help=u"""Optional address line 4.""")
+@cli_util.option('--city-or-locality', help=u"""City or Locality.""")
+@cli_util.option('--state-province-region', help=u"""State or Province or Region.""")
+@cli_util.option('--country', help=u"""Country.""")
+@cli_util.option('--zip-postal-code', help=u"""Zip or Postal Code""")
+@cli_util.option('--phone-number', help=u"""Phone number.""")
+@cli_util.option('--email', help=u"""Email address.""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'customer-shipping-address': {'module': 'dts', 'class': 'ShippingAddress'}}, output_type={'module': 'dts', 'class': 'TransferAppliance'})
+@json_skeleton_utils.json_skeleton_generation_handler({})
 @cli_util.wrap_exceptions
 def update_shipping_address_transfer_appliance(ctx, **kwargs):
     if 'job_id' in kwargs:
@@ -127,6 +167,11 @@ def update_shipping_address_transfer_appliance(ctx, **kwargs):
     if 'appliance_label' in kwargs:
         kwargs['transfer_appliance_label'] = kwargs['appliance_label']
         kwargs.pop('appliance_label')
+    kwargs['customer_shipping_address'] = {}
+    for option, value in customer_address_options.items():
+        if option in kwargs:
+            kwargs['customer_shipping_address'][value] = kwargs[option]
+            kwargs.pop(option)
     ctx.invoke(transferappliance_cli.update_transfer_appliance, **kwargs)
 
 

@@ -14,24 +14,24 @@ from oci_cli.aliasing import CommandGroupWithAlias
 from services.core.src.oci_cli_core.generated import core_service_cli
 
 
-@click.command(cli_util.override('blockstorage_root_group.command_name', 'blockstorage'), cls=CommandGroupWithAlias, help=cli_util.override('blockstorage_root_group.help', """API covering the [Networking](/iaas/Content/Network/Concepts/overview.htm),
+@click.command(cli_util.override('blockstorage.blockstorage_root_group.command_name', 'blockstorage'), cls=CommandGroupWithAlias, help=cli_util.override('blockstorage.blockstorage_root_group.help', """API covering the [Networking](/iaas/Content/Network/Concepts/overview.htm),
 [Compute](/iaas/Content/Compute/Concepts/computeoverview.htm), and
 [Block Volume](/iaas/Content/Block/Concepts/overview.htm) services. Use this API
 to manage resources such as virtual cloud networks (VCNs), compute instances, and
 block storage volumes.
-"""), short_help=cli_util.override('blockstorage_root_group.short_help', """Core Services API"""))
+"""), short_help=cli_util.override('blockstorage.blockstorage_root_group.short_help', """Core Services API"""))
 @cli_util.help_option_group
 def blockstorage_root_group():
     pass
 
 
-@click.command(cli_util.override('boot_volume_kms_key_group.command_name', 'boot-volume-kms-key'), cls=CommandGroupWithAlias, help="""Kms key id associated with this volume.""")
+@click.command(cli_util.override('blockstorage.boot_volume_kms_key_group.command_name', 'boot-volume-kms-key'), cls=CommandGroupWithAlias, help="""Kms key id associated with this volume.""")
 @cli_util.help_option_group
 def boot_volume_kms_key_group():
     pass
 
 
-@click.command(cli_util.override('volume_group.command_name', 'volume'), cls=CommandGroupWithAlias, help="""A detachable block volume device that allows you to dynamically expand the storage capacity of an instance. For more information, see [Overview of Cloud Volume Storage].
+@click.command(cli_util.override('blockstorage.volume_group.command_name', 'volume'), cls=CommandGroupWithAlias, help="""A detachable block volume device that allows you to dynamically expand the storage capacity of an instance. For more information, see [Overview of Cloud Volume Storage].
 
 To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].
 
@@ -41,7 +41,7 @@ def volume_group():
     pass
 
 
-@click.command(cli_util.override('boot_volume_backup_group.command_name', 'boot-volume-backup'), cls=CommandGroupWithAlias, help="""A point-in-time copy of a boot volume that can then be used to create a new boot volume or recover a boot volume. For more information, see [Overview of Boot Volume Backups] To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].
+@click.command(cli_util.override('blockstorage.boot_volume_backup_group.command_name', 'boot-volume-backup'), cls=CommandGroupWithAlias, help="""A point-in-time copy of a boot volume that can then be used to create a new boot volume or recover a boot volume. For more information, see [Overview of Boot Volume Backups] To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].
 
 **Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
 @cli_util.help_option_group
@@ -49,7 +49,7 @@ def boot_volume_backup_group():
     pass
 
 
-@click.command(cli_util.override('boot_volume_group.command_name', 'boot-volume'), cls=CommandGroupWithAlias, help="""A detachable boot volume device that contains the image used to boot a Compute instance. For more information, see [Overview of Boot Volumes].
+@click.command(cli_util.override('blockstorage.boot_volume_group.command_name', 'boot-volume'), cls=CommandGroupWithAlias, help="""A detachable boot volume device that contains the image used to boot a Compute instance. For more information, see [Overview of Boot Volumes].
 
 To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].
 
@@ -59,7 +59,7 @@ def boot_volume_group():
     pass
 
 
-@click.command(cli_util.override('volume_backup_group.command_name', 'volume-backup'), cls=CommandGroupWithAlias, help="""A point-in-time copy of a volume that can then be used to create a new block volume or recover a block volume. For more information, see [Overview of Cloud Volume Storage].
+@click.command(cli_util.override('blockstorage.volume_backup_group.command_name', 'volume-backup'), cls=CommandGroupWithAlias, help="""A point-in-time copy of a volume that can then be used to create a new block volume or recover a block volume. For more information, see [Overview of Cloud Volume Storage].
 
 To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].
 
@@ -69,7 +69,7 @@ def volume_backup_group():
     pass
 
 
-@click.command(cli_util.override('volume_group_backup_group.command_name', 'volume-group-backup'), cls=CommandGroupWithAlias, help="""A point-in-time copy of a volume group that can then be used to create a new volume group or restore a volume group. For more information, see [Volume Groups].
+@click.command(cli_util.override('blockstorage.volume_group_backup_group.command_name', 'volume-group-backup'), cls=CommandGroupWithAlias, help="""A point-in-time copy of a volume group that can then be used to create a new volume group or restore a volume group. For more information, see [Volume Groups].
 
 To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].
 
@@ -79,13 +79,13 @@ def volume_group_backup_group():
     pass
 
 
-@click.command(cli_util.override('volume_backup_policy_assignment_group.command_name', 'volume-backup-policy-assignment'), cls=CommandGroupWithAlias, help="""Specifies that a particular volume backup policy is assigned to an asset such as a volume.""")
+@click.command(cli_util.override('blockstorage.volume_backup_policy_assignment_group.command_name', 'volume-backup-policy-assignment'), cls=CommandGroupWithAlias, help="""Specifies that a particular volume backup policy is assigned to an asset such as a volume.""")
 @cli_util.help_option_group
 def volume_backup_policy_assignment_group():
     pass
 
 
-@click.command(cli_util.override('volume_group_group.command_name', 'volume-group'), cls=CommandGroupWithAlias, help="""Specifies a volume group which is a collection of volumes. For more information, see [Volume Groups].
+@click.command(cli_util.override('blockstorage.volume_group_group.command_name', 'volume-group'), cls=CommandGroupWithAlias, help="""Specifies a volume group which is a collection of volumes. For more information, see [Volume Groups].
 
 **Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
 @cli_util.help_option_group
@@ -93,7 +93,7 @@ def volume_group_group():
     pass
 
 
-@click.command(cli_util.override('volume_backup_policy_group.command_name', 'volume-backup-policy'), cls=CommandGroupWithAlias, help="""A policy for automatically creating volume backups according to a recurring schedule. Has a set of one or more schedules that control when and how backups are created.
+@click.command(cli_util.override('blockstorage.volume_backup_policy_group.command_name', 'volume-backup-policy'), cls=CommandGroupWithAlias, help="""A policy for automatically creating volume backups according to a recurring schedule. Has a set of one or more schedules that control when and how backups are created.
 
 **Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
 @cli_util.help_option_group
@@ -101,7 +101,7 @@ def volume_backup_policy_group():
     pass
 
 
-@click.command(cli_util.override('volume_kms_key_group.command_name', 'volume-kms-key'), cls=CommandGroupWithAlias, help="""The KMS key OCID associated with this volume.""")
+@click.command(cli_util.override('blockstorage.volume_kms_key_group.command_name', 'volume-kms-key'), cls=CommandGroupWithAlias, help="""The KMS key OCID associated with this volume.""")
 @cli_util.help_option_group
 def volume_kms_key_group():
     pass
@@ -120,7 +120,7 @@ blockstorage_root_group.add_command(volume_backup_policy_group)
 blockstorage_root_group.add_command(volume_kms_key_group)
 
 
-@boot_volume_backup_group.command(name=cli_util.override('change_boot_volume_backup_compartment.command_name', 'change-compartment'), help=u"""Moves a boot volume backup into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].""")
+@boot_volume_backup_group.command(name=cli_util.override('blockstorage.change_boot_volume_backup_compartment.command_name', 'change-compartment'), help=u"""Moves a boot volume backup into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].""")
 @cli_util.option('--boot-volume-backup-id', required=True, help=u"""The OCID of the boot volume backup.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the boot volume backup to.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -148,7 +148,7 @@ def change_boot_volume_backup_compartment(ctx, from_json, boot_volume_backup_id,
     cli_util.render_response(result, ctx)
 
 
-@boot_volume_group.command(name=cli_util.override('change_boot_volume_compartment.command_name', 'change-compartment'), help=u"""Moves a boot volume into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].""")
+@boot_volume_group.command(name=cli_util.override('blockstorage.change_boot_volume_compartment.command_name', 'change-compartment'), help=u"""Moves a boot volume into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].""")
 @cli_util.option('--boot-volume-id', required=True, help=u"""The OCID of the boot volume.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the boot volume to.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -176,7 +176,7 @@ def change_boot_volume_compartment(ctx, from_json, boot_volume_id, compartment_i
     cli_util.render_response(result, ctx)
 
 
-@volume_backup_group.command(name=cli_util.override('change_volume_backup_compartment.command_name', 'change-compartment'), help=u"""Moves a volume backup into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].""")
+@volume_backup_group.command(name=cli_util.override('blockstorage.change_volume_backup_compartment.command_name', 'change-compartment'), help=u"""Moves a volume backup into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].""")
 @cli_util.option('--volume-backup-id', required=True, help=u"""The OCID of the volume backup.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the volume backup to.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -204,7 +204,7 @@ def change_volume_backup_compartment(ctx, from_json, volume_backup_id, compartme
     cli_util.render_response(result, ctx)
 
 
-@volume_group.command(name=cli_util.override('change_volume_compartment.command_name', 'change-compartment'), help=u"""Moves a volume into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].""")
+@volume_group.command(name=cli_util.override('blockstorage.change_volume_compartment.command_name', 'change-compartment'), help=u"""Moves a volume into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].""")
 @cli_util.option('--volume-id', required=True, help=u"""The OCID of the volume.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the volume to.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -232,7 +232,7 @@ def change_volume_compartment(ctx, from_json, volume_id, compartment_id):
     cli_util.render_response(result, ctx)
 
 
-@volume_group_backup_group.command(name=cli_util.override('change_volume_group_backup_compartment.command_name', 'change-compartment'), help=u"""Moves a volume group backup into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].""")
+@volume_group_backup_group.command(name=cli_util.override('blockstorage.change_volume_group_backup_compartment.command_name', 'change-compartment'), help=u"""Moves a volume group backup into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].""")
 @cli_util.option('--volume-group-backup-id', required=True, help=u"""The Oracle Cloud ID (OCID) that uniquely identifies the volume group backup.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the volume group backup to.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -260,7 +260,7 @@ def change_volume_group_backup_compartment(ctx, from_json, volume_group_backup_i
     cli_util.render_response(result, ctx)
 
 
-@volume_group_group.command(name=cli_util.override('change_volume_group_compartment.command_name', 'change-compartment'), help=u"""Moves a volume group into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].""")
+@volume_group_group.command(name=cli_util.override('blockstorage.change_volume_group_compartment.command_name', 'change-compartment'), help=u"""Moves a volume group into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].""")
 @cli_util.option('--volume-group-id', required=True, help=u"""The Oracle Cloud ID (OCID) that uniquely identifies the volume group.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the volume group to.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -288,7 +288,7 @@ def change_volume_group_compartment(ctx, from_json, volume_group_id, compartment
     cli_util.render_response(result, ctx)
 
 
-@volume_backup_group.command(name=cli_util.override('copy_volume_backup.command_name', 'copy'), help=u"""Creates a volume backup copy in specified region. For general information about volume backups, see [Overview of Block Volume Service Backups]""")
+@volume_backup_group.command(name=cli_util.override('blockstorage.copy_volume_backup.command_name', 'copy'), help=u"""Creates a volume backup copy in specified region. For general information about volume backups, see [Overview of Block Volume Service Backups]""")
 @cli_util.option('--volume-backup-id', required=True, help=u"""The OCID of the volume backup.""")
 @cli_util.option('--destination-region', required=True, help=u"""The name of the destination region.
 
@@ -353,7 +353,7 @@ def copy_volume_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     cli_util.render_response(result, ctx)
 
 
-@boot_volume_group.command(name=cli_util.override('create_boot_volume.command_name', 'create'), help=u"""Creates a new boot volume in the specified compartment from an existing boot volume or a boot volume backup. For general information about boot volumes, see [Boot Volumes]. You may optionally specify a *display name* for the volume, which is simply a friendly name or description. It does not have to be unique, and you can change it. Avoid entering confidential information.""")
+@boot_volume_group.command(name=cli_util.override('blockstorage.create_boot_volume.command_name', 'create'), help=u"""Creates a new boot volume in the specified compartment from an existing boot volume or a boot volume backup. For general information about boot volumes, see [Boot Volumes]. You may optionally specify a *display name* for the volume, which is simply a friendly name or description. It does not have to be unique, and you can change it. Avoid entering confidential information.""")
 @cli_util.option('--availability-domain', required=True, help=u"""The availability domain of the boot volume.
 
 Example: `Uocm:PHX-AD-1`""")
@@ -434,7 +434,7 @@ def create_boot_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     cli_util.render_response(result, ctx)
 
 
-@boot_volume_group.command(name=cli_util.override('create_boot_volume_boot_volume_source_from_boot_volume_backup_details.command_name', 'create-boot-volume-boot-volume-source-from-boot-volume-backup-details'), help=u"""Creates a new boot volume in the specified compartment from an existing boot volume or a boot volume backup. For general information about boot volumes, see [Boot Volumes]. You may optionally specify a *display name* for the volume, which is simply a friendly name or description. It does not have to be unique, and you can change it. Avoid entering confidential information.""")
+@boot_volume_group.command(name=cli_util.override('blockstorage.create_boot_volume_boot_volume_source_from_boot_volume_backup_details.command_name', 'create-boot-volume-boot-volume-source-from-boot-volume-backup-details'), help=u"""Creates a new boot volume in the specified compartment from an existing boot volume or a boot volume backup. For general information about boot volumes, see [Boot Volumes]. You may optionally specify a *display name* for the volume, which is simply a friendly name or description. It does not have to be unique, and you can change it. Avoid entering confidential information.""")
 @cli_util.option('--availability-domain', required=True, help=u"""The availability domain of the boot volume.
 
 Example: `Uocm:PHX-AD-1`""")
@@ -518,7 +518,7 @@ def create_boot_volume_boot_volume_source_from_boot_volume_backup_details(ctx, f
     cli_util.render_response(result, ctx)
 
 
-@boot_volume_group.command(name=cli_util.override('create_boot_volume_boot_volume_source_from_boot_volume_details.command_name', 'create-boot-volume-boot-volume-source-from-boot-volume-details'), help=u"""Creates a new boot volume in the specified compartment from an existing boot volume or a boot volume backup. For general information about boot volumes, see [Boot Volumes]. You may optionally specify a *display name* for the volume, which is simply a friendly name or description. It does not have to be unique, and you can change it. Avoid entering confidential information.""")
+@boot_volume_group.command(name=cli_util.override('blockstorage.create_boot_volume_boot_volume_source_from_boot_volume_details.command_name', 'create-boot-volume-boot-volume-source-from-boot-volume-details'), help=u"""Creates a new boot volume in the specified compartment from an existing boot volume or a boot volume backup. For general information about boot volumes, see [Boot Volumes]. You may optionally specify a *display name* for the volume, which is simply a friendly name or description. It does not have to be unique, and you can change it. Avoid entering confidential information.""")
 @cli_util.option('--availability-domain', required=True, help=u"""The availability domain of the boot volume.
 
 Example: `Uocm:PHX-AD-1`""")
@@ -602,7 +602,7 @@ def create_boot_volume_boot_volume_source_from_boot_volume_details(ctx, from_jso
     cli_util.render_response(result, ctx)
 
 
-@boot_volume_backup_group.command(name=cli_util.override('create_boot_volume_backup.command_name', 'create'), help=u"""Creates a new boot volume backup of the specified boot volume. For general information about boot volume backups, see [Overview of Boot Volume Backups]
+@boot_volume_backup_group.command(name=cli_util.override('blockstorage.create_boot_volume_backup.command_name', 'create'), help=u"""Creates a new boot volume backup of the specified boot volume. For general information about boot volume backups, see [Overview of Boot Volume Backups]
 
 When the request is received, the backup object is in a REQUEST_RECEIVED state. When the data is imaged, it goes into a CREATING state. After the backup is fully uploaded to the cloud, it goes into an AVAILABLE state.""")
 @cli_util.option('--boot-volume-id', required=True, help=u"""The OCID of the boot volume that needs to be backed up.""")
@@ -671,7 +671,7 @@ def create_boot_volume_backup(ctx, from_json, wait_for_state, max_wait_seconds, 
     cli_util.render_response(result, ctx)
 
 
-@volume_group.command(name=cli_util.override('create_volume.command_name', 'create'), help=u"""Creates a new volume in the specified compartment. Volumes can be created in sizes ranging from 50 GB (51200 MB) to 32 TB (33554432 MB), in 1 GB (1024 MB) increments. By default, volumes are 1 TB (1048576 MB). For general information about block volumes, see [Overview of Block Volume Service].
+@volume_group.command(name=cli_util.override('blockstorage.create_volume.command_name', 'create'), help=u"""Creates a new volume in the specified compartment. Volumes can be created in sizes ranging from 50 GB (51200 MB) to 32 TB (33554432 MB), in 1 GB (1024 MB) increments. By default, volumes are 1 TB (1048576 MB). For general information about block volumes, see [Overview of Block Volume Service].
 
 A volume and instance can be in separate compartments but must be in the same availability domain. For information about access control and compartments, see [Overview of the IAM Service]. For information about availability domains, see [Regions and Availability Domains]. To get a list of availability domains, use the `ListAvailabilityDomains` operation in the Identity and Access Management Service API.
 
@@ -766,7 +766,7 @@ def create_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
     cli_util.render_response(result, ctx)
 
 
-@volume_group.command(name=cli_util.override('create_volume_volume_source_from_volume_details.command_name', 'create-volume-volume-source-from-volume-details'), help=u"""Creates a new volume in the specified compartment. Volumes can be created in sizes ranging from 50 GB (51200 MB) to 32 TB (33554432 MB), in 1 GB (1024 MB) increments. By default, volumes are 1 TB (1048576 MB). For general information about block volumes, see [Overview of Block Volume Service].
+@volume_group.command(name=cli_util.override('blockstorage.create_volume_volume_source_from_volume_details.command_name', 'create-volume-volume-source-from-volume-details'), help=u"""Creates a new volume in the specified compartment. Volumes can be created in sizes ranging from 50 GB (51200 MB) to 32 TB (33554432 MB), in 1 GB (1024 MB) increments. By default, volumes are 1 TB (1048576 MB). For general information about block volumes, see [Overview of Block Volume Service].
 
 A volume and instance can be in separate compartments but must be in the same availability domain. For information about access control and compartments, see [Overview of the IAM Service]. For information about availability domains, see [Regions and Availability Domains]. To get a list of availability domains, use the `ListAvailabilityDomains` operation in the Identity and Access Management Service API.
 
@@ -862,7 +862,7 @@ def create_volume_volume_source_from_volume_details(ctx, from_json, wait_for_sta
     cli_util.render_response(result, ctx)
 
 
-@volume_group.command(name=cli_util.override('create_volume_volume_source_from_volume_backup_details.command_name', 'create-volume-volume-source-from-volume-backup-details'), help=u"""Creates a new volume in the specified compartment. Volumes can be created in sizes ranging from 50 GB (51200 MB) to 32 TB (33554432 MB), in 1 GB (1024 MB) increments. By default, volumes are 1 TB (1048576 MB). For general information about block volumes, see [Overview of Block Volume Service].
+@volume_group.command(name=cli_util.override('blockstorage.create_volume_volume_source_from_volume_backup_details.command_name', 'create-volume-volume-source-from-volume-backup-details'), help=u"""Creates a new volume in the specified compartment. Volumes can be created in sizes ranging from 50 GB (51200 MB) to 32 TB (33554432 MB), in 1 GB (1024 MB) increments. By default, volumes are 1 TB (1048576 MB). For general information about block volumes, see [Overview of Block Volume Service].
 
 A volume and instance can be in separate compartments but must be in the same availability domain. For information about access control and compartments, see [Overview of the IAM Service]. For information about availability domains, see [Regions and Availability Domains]. To get a list of availability domains, use the `ListAvailabilityDomains` operation in the Identity and Access Management Service API.
 
@@ -958,7 +958,7 @@ def create_volume_volume_source_from_volume_backup_details(ctx, from_json, wait_
     cli_util.render_response(result, ctx)
 
 
-@volume_backup_group.command(name=cli_util.override('create_volume_backup.command_name', 'create'), help=u"""Creates a new backup of the specified volume. For general information about volume backups, see [Overview of Block Volume Service Backups]
+@volume_backup_group.command(name=cli_util.override('blockstorage.create_volume_backup.command_name', 'create'), help=u"""Creates a new backup of the specified volume. For general information about volume backups, see [Overview of Block Volume Service Backups]
 
 When the request is received, the backup object is in a REQUEST_RECEIVED state. When the data is imaged, it goes into a CREATING state. After the backup is fully uploaded to the cloud, it goes into an AVAILABLE state.""")
 @cli_util.option('--volume-id', required=True, help=u"""The OCID of the volume that needs to be backed up.""")
@@ -1027,7 +1027,52 @@ def create_volume_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_
     cli_util.render_response(result, ctx)
 
 
-@volume_backup_policy_assignment_group.command(name=cli_util.override('create_volume_backup_policy_assignment.command_name', 'create'), help=u"""Assigns a policy to the specified asset, such as a volume. Note that a given asset can only have one policy assigned to it; if this method is called for an asset that previously has a different policy assigned, the prior assignment will be silently deleted.""")
+@volume_backup_policy_group.command(name=cli_util.override('blockstorage.create_volume_backup_policy.command_name', 'create'), help=u"""Creates a new backup policy for the caller.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the backup policy.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name for the volume backup policy. Does not have to be unique and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--schedules', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The collection of schedules that this policy will apply.
+
+This option is a JSON list with items of type VolumeBackupSchedule.  For documentation on VolumeBackupSchedule please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/VolumeBackupSchedule.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'schedules': {'module': 'core', 'class': 'list[VolumeBackupSchedule]'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schedules': {'module': 'core', 'class': 'list[VolumeBackupSchedule]'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'VolumeBackupPolicy'})
+@cli_util.wrap_exceptions
+def create_volume_backup_policy(ctx, from_json, compartment_id, display_name, schedules, defined_tags, freeform_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    details = {}
+    details['compartmentId'] = compartment_id
+
+    if display_name is not None:
+        details['displayName'] = display_name
+
+    if schedules is not None:
+        details['schedules'] = cli_util.parse_json_parameter("schedules", schedules)
+
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if freeform_tags is not None:
+        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    client = cli_util.build_client('blockstorage', ctx)
+    result = client.create_volume_backup_policy(
+        create_volume_backup_policy_details=details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@volume_backup_policy_assignment_group.command(name=cli_util.override('blockstorage.create_volume_backup_policy_assignment.command_name', 'create'), help=u"""Assigns a policy to the specified asset, such as a volume. Note that a given asset can only have one policy assigned to it; if this method is called for an asset that previously has a different policy assigned, the prior assignment will be silently deleted.""")
 @cli_util.option('--asset-id', required=True, help=u"""The OCID of the asset (e.g. a volume) to which to assign the policy.""")
 @cli_util.option('--policy-id', required=True, help=u"""The OCID of the volume backup policy to assign to an asset.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1051,7 +1096,7 @@ def create_volume_backup_policy_assignment(ctx, from_json, asset_id, policy_id):
     cli_util.render_response(result, ctx)
 
 
-@volume_group_group.command(name=cli_util.override('create_volume_group.command_name', 'create'), help=u"""Creates a new volume group in the specified compartment. A volume group is a collection of volumes and may be created from a list of volumes, cloning an existing volume group, or by restoring a volume group backup. A volume group can contain up to 64 volumes. You may optionally specify a *display name* for the volume group, which is simply a friendly name or description. It does not have to be unique, and you can change it. Avoid entering confidential information.
+@volume_group_group.command(name=cli_util.override('blockstorage.create_volume_group.command_name', 'create'), help=u"""Creates a new volume group in the specified compartment. A volume group is a collection of volumes and may be created from a list of volumes, cloning an existing volume group, or by restoring a volume group backup. A volume group can contain up to 64 volumes. You may optionally specify a *display name* for the volume group, which is simply a friendly name or description. It does not have to be unique, and you can change it. Avoid entering confidential information.
 
 For more information, see [Volume Groups].""")
 @cli_util.option('--availability-domain', required=True, help=u"""The availability domain of the volume group.""")
@@ -1120,7 +1165,7 @@ def create_volume_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     cli_util.render_response(result, ctx)
 
 
-@volume_group_group.command(name=cli_util.override('create_volume_group_volume_group_source_from_volume_group_details.command_name', 'create-volume-group-volume-group-source-from-volume-group-details'), help=u"""Creates a new volume group in the specified compartment. A volume group is a collection of volumes and may be created from a list of volumes, cloning an existing volume group, or by restoring a volume group backup. A volume group can contain up to 64 volumes. You may optionally specify a *display name* for the volume group, which is simply a friendly name or description. It does not have to be unique, and you can change it. Avoid entering confidential information.
+@volume_group_group.command(name=cli_util.override('blockstorage.create_volume_group_volume_group_source_from_volume_group_details.command_name', 'create-volume-group-volume-group-source-from-volume-group-details'), help=u"""Creates a new volume group in the specified compartment. A volume group is a collection of volumes and may be created from a list of volumes, cloning an existing volume group, or by restoring a volume group backup. A volume group can contain up to 64 volumes. You may optionally specify a *display name* for the volume group, which is simply a friendly name or description. It does not have to be unique, and you can change it. Avoid entering confidential information.
 
 For more information, see [Volume Groups].""")
 @cli_util.option('--availability-domain', required=True, help=u"""The availability domain of the volume group.""")
@@ -1192,7 +1237,7 @@ def create_volume_group_volume_group_source_from_volume_group_details(ctx, from_
     cli_util.render_response(result, ctx)
 
 
-@volume_group_group.command(name=cli_util.override('create_volume_group_volume_group_source_from_volumes_details.command_name', 'create-volume-group-volume-group-source-from-volumes-details'), help=u"""Creates a new volume group in the specified compartment. A volume group is a collection of volumes and may be created from a list of volumes, cloning an existing volume group, or by restoring a volume group backup. A volume group can contain up to 64 volumes. You may optionally specify a *display name* for the volume group, which is simply a friendly name or description. It does not have to be unique, and you can change it. Avoid entering confidential information.
+@volume_group_group.command(name=cli_util.override('blockstorage.create_volume_group_volume_group_source_from_volumes_details.command_name', 'create-volume-group-volume-group-source-from-volumes-details'), help=u"""Creates a new volume group in the specified compartment. A volume group is a collection of volumes and may be created from a list of volumes, cloning an existing volume group, or by restoring a volume group backup. A volume group can contain up to 64 volumes. You may optionally specify a *display name* for the volume group, which is simply a friendly name or description. It does not have to be unique, and you can change it. Avoid entering confidential information.
 
 For more information, see [Volume Groups].""")
 @cli_util.option('--availability-domain', required=True, help=u"""The availability domain of the volume group.""")
@@ -1264,7 +1309,7 @@ def create_volume_group_volume_group_source_from_volumes_details(ctx, from_json,
     cli_util.render_response(result, ctx)
 
 
-@volume_group_group.command(name=cli_util.override('create_volume_group_volume_group_source_from_volume_group_backup_details.command_name', 'create-volume-group-volume-group-source-from-volume-group-backup-details'), help=u"""Creates a new volume group in the specified compartment. A volume group is a collection of volumes and may be created from a list of volumes, cloning an existing volume group, or by restoring a volume group backup. A volume group can contain up to 64 volumes. You may optionally specify a *display name* for the volume group, which is simply a friendly name or description. It does not have to be unique, and you can change it. Avoid entering confidential information.
+@volume_group_group.command(name=cli_util.override('blockstorage.create_volume_group_volume_group_source_from_volume_group_backup_details.command_name', 'create-volume-group-volume-group-source-from-volume-group-backup-details'), help=u"""Creates a new volume group in the specified compartment. A volume group is a collection of volumes and may be created from a list of volumes, cloning an existing volume group, or by restoring a volume group backup. A volume group can contain up to 64 volumes. You may optionally specify a *display name* for the volume group, which is simply a friendly name or description. It does not have to be unique, and you can change it. Avoid entering confidential information.
 
 For more information, see [Volume Groups].""")
 @cli_util.option('--availability-domain', required=True, help=u"""The availability domain of the volume group.""")
@@ -1336,7 +1381,7 @@ def create_volume_group_volume_group_source_from_volume_group_backup_details(ctx
     cli_util.render_response(result, ctx)
 
 
-@volume_group_backup_group.command(name=cli_util.override('create_volume_group_backup.command_name', 'create'), help=u"""Creates a new backup volume group of the specified volume group. For more information, see [Volume Groups].""")
+@volume_group_backup_group.command(name=cli_util.override('blockstorage.create_volume_group_backup.command_name', 'create'), help=u"""Creates a new backup volume group of the specified volume group. For more information, see [Volume Groups].""")
 @cli_util.option('--volume-group-id', required=True, help=u"""The OCID of the volume group that needs to be backed up.""")
 @cli_util.option('--compartment-id', help=u"""The OCID of the compartment that will contain the volume group backup. This parameter is optional, by default backup will be created in the same compartment and source volume group.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
@@ -1407,7 +1452,7 @@ def create_volume_group_backup(ctx, from_json, wait_for_state, max_wait_seconds,
     cli_util.render_response(result, ctx)
 
 
-@boot_volume_group.command(name=cli_util.override('delete_boot_volume.command_name', 'delete'), help=u"""Deletes the specified boot volume. The volume cannot have an active connection to an instance. To disconnect the boot volume from a connected instance, see [Disconnecting From a Boot Volume]. **Warning:** All data on the boot volume will be permanently lost when the boot volume is deleted.""")
+@boot_volume_group.command(name=cli_util.override('blockstorage.delete_boot_volume.command_name', 'delete'), help=u"""Deletes the specified boot volume. The volume cannot have an active connection to an instance. To disconnect the boot volume from a connected instance, see [Disconnecting From a Boot Volume]. **Warning:** All data on the boot volume will be permanently lost when the boot volume is deleted.""")
 @cli_util.option('--boot-volume-id', required=True, help=u"""The OCID of the boot volume.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -1469,7 +1514,7 @@ def delete_boot_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     cli_util.render_response(result, ctx)
 
 
-@boot_volume_backup_group.command(name=cli_util.override('delete_boot_volume_backup.command_name', 'delete'), help=u"""Deletes a boot volume backup.""")
+@boot_volume_backup_group.command(name=cli_util.override('blockstorage.delete_boot_volume_backup.command_name', 'delete'), help=u"""Deletes a boot volume backup.""")
 @cli_util.option('--boot-volume-backup-id', required=True, help=u"""The OCID of the boot volume backup.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -1531,7 +1576,7 @@ def delete_boot_volume_backup(ctx, from_json, wait_for_state, max_wait_seconds, 
     cli_util.render_response(result, ctx)
 
 
-@boot_volume_kms_key_group.command(name=cli_util.override('delete_boot_volume_kms_key.command_name', 'delete'), help=u"""Removes the KMS key for the specified boot volume.""")
+@boot_volume_kms_key_group.command(name=cli_util.override('blockstorage.delete_boot_volume_kms_key.command_name', 'delete'), help=u"""Removes the KMS key for the specified boot volume.""")
 @cli_util.option('--boot-volume-id', required=True, help=u"""The OCID of the boot volume.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -1556,7 +1601,7 @@ def delete_boot_volume_kms_key(ctx, from_json, boot_volume_id, if_match):
     cli_util.render_response(result, ctx)
 
 
-@volume_group.command(name=cli_util.override('delete_volume.command_name', 'delete'), help=u"""Deletes the specified volume. The volume cannot have an active connection to an instance. To disconnect the volume from a connected instance, see [Disconnecting From a Volume]. **Warning:** All data on the volume will be permanently lost when the volume is deleted.""")
+@volume_group.command(name=cli_util.override('blockstorage.delete_volume.command_name', 'delete'), help=u"""Deletes the specified volume. The volume cannot have an active connection to an instance. To disconnect the volume from a connected instance, see [Disconnecting From a Volume]. **Warning:** All data on the volume will be permanently lost when the volume is deleted.""")
 @cli_util.option('--volume-id', required=True, help=u"""The OCID of the volume.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -1618,7 +1663,7 @@ def delete_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
     cli_util.render_response(result, ctx)
 
 
-@volume_backup_group.command(name=cli_util.override('delete_volume_backup.command_name', 'delete'), help=u"""Deletes a volume backup.""")
+@volume_backup_group.command(name=cli_util.override('blockstorage.delete_volume_backup.command_name', 'delete'), help=u"""Deletes a volume backup.""")
 @cli_util.option('--volume-backup-id', required=True, help=u"""The OCID of the volume backup.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -1680,7 +1725,33 @@ def delete_volume_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_
     cli_util.render_response(result, ctx)
 
 
-@volume_backup_policy_assignment_group.command(name=cli_util.override('delete_volume_backup_policy_assignment.command_name', 'delete'), help=u"""Deletes a volume backup policy assignment (i.e. unassigns the policy from an asset).""")
+@volume_backup_policy_group.command(name=cli_util.override('blockstorage.delete_volume_backup_policy.command_name', 'delete'), help=u"""Deletes the specified scheduled backup policy.""")
+@cli_util.option('--policy-id', required=True, help=u"""The OCID of the volume backup policy.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_volume_backup_policy(ctx, from_json, policy_id, if_match):
+
+    if isinstance(policy_id, six.string_types) and len(policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --policy-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('blockstorage', ctx)
+    result = client.delete_volume_backup_policy(
+        policy_id=policy_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@volume_backup_policy_assignment_group.command(name=cli_util.override('blockstorage.delete_volume_backup_policy_assignment.command_name', 'delete'), help=u"""Deletes a volume backup policy assignment (i.e. unassigns the policy from an asset).""")
 @cli_util.option('--policy-assignment-id', required=True, help=u"""The OCID of the volume backup policy assignment.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -1705,7 +1776,7 @@ def delete_volume_backup_policy_assignment(ctx, from_json, policy_assignment_id,
     cli_util.render_response(result, ctx)
 
 
-@volume_group_group.command(name=cli_util.override('delete_volume_group.command_name', 'delete'), help=u"""Deletes the specified volume group. Individual volumes are not deleted, only the volume group is deleted. For more information, see [Volume Groups].""")
+@volume_group_group.command(name=cli_util.override('blockstorage.delete_volume_group.command_name', 'delete'), help=u"""Deletes the specified volume group. Individual volumes are not deleted, only the volume group is deleted. For more information, see [Volume Groups].""")
 @cli_util.option('--volume-group-id', required=True, help=u"""The Oracle Cloud ID (OCID) that uniquely identifies the volume group.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -1767,7 +1838,7 @@ def delete_volume_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     cli_util.render_response(result, ctx)
 
 
-@volume_group_backup_group.command(name=cli_util.override('delete_volume_group_backup.command_name', 'delete'), help=u"""Deletes a volume group backup. This operation deletes all the backups in the volume group. For more information, see [Volume Groups].""")
+@volume_group_backup_group.command(name=cli_util.override('blockstorage.delete_volume_group_backup.command_name', 'delete'), help=u"""Deletes a volume group backup. This operation deletes all the backups in the volume group. For more information, see [Volume Groups].""")
 @cli_util.option('--volume-group-backup-id', required=True, help=u"""The Oracle Cloud ID (OCID) that uniquely identifies the volume group backup.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -1829,7 +1900,7 @@ def delete_volume_group_backup(ctx, from_json, wait_for_state, max_wait_seconds,
     cli_util.render_response(result, ctx)
 
 
-@volume_kms_key_group.command(name=cli_util.override('delete_volume_kms_key.command_name', 'delete'), help=u"""Removes the KMS key for the specified volume.""")
+@volume_kms_key_group.command(name=cli_util.override('blockstorage.delete_volume_kms_key.command_name', 'delete'), help=u"""Removes the KMS key for the specified volume.""")
 @cli_util.option('--volume-id', required=True, help=u"""The OCID of the volume.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -1854,7 +1925,7 @@ def delete_volume_kms_key(ctx, from_json, volume_id, if_match):
     cli_util.render_response(result, ctx)
 
 
-@boot_volume_group.command(name=cli_util.override('get_boot_volume.command_name', 'get'), help=u"""Gets information for the specified boot volume.""")
+@boot_volume_group.command(name=cli_util.override('blockstorage.get_boot_volume.command_name', 'get'), help=u"""Gets information for the specified boot volume.""")
 @cli_util.option('--boot-volume-id', required=True, help=u"""The OCID of the boot volume.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -1875,7 +1946,7 @@ def get_boot_volume(ctx, from_json, boot_volume_id):
     cli_util.render_response(result, ctx)
 
 
-@boot_volume_backup_group.command(name=cli_util.override('get_boot_volume_backup.command_name', 'get'), help=u"""Gets information for the specified boot volume backup.""")
+@boot_volume_backup_group.command(name=cli_util.override('blockstorage.get_boot_volume_backup.command_name', 'get'), help=u"""Gets information for the specified boot volume backup.""")
 @cli_util.option('--boot-volume-backup-id', required=True, help=u"""The OCID of the boot volume backup.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -1896,7 +1967,7 @@ def get_boot_volume_backup(ctx, from_json, boot_volume_backup_id):
     cli_util.render_response(result, ctx)
 
 
-@boot_volume_kms_key_group.command(name=cli_util.override('get_boot_volume_kms_key.command_name', 'get'), help=u"""Gets the KMS key ID for the specified boot volume.""")
+@boot_volume_kms_key_group.command(name=cli_util.override('blockstorage.get_boot_volume_kms_key.command_name', 'get'), help=u"""Gets the KMS key ID for the specified boot volume.""")
 @cli_util.option('--boot-volume-id', required=True, help=u"""The OCID of the boot volume.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1920,7 +1991,7 @@ def get_boot_volume_kms_key(ctx, from_json, boot_volume_id, if_match):
     cli_util.render_response(result, ctx)
 
 
-@volume_group.command(name=cli_util.override('get_volume.command_name', 'get'), help=u"""Gets information for the specified volume.""")
+@volume_group.command(name=cli_util.override('blockstorage.get_volume.command_name', 'get'), help=u"""Gets information for the specified volume.""")
 @cli_util.option('--volume-id', required=True, help=u"""The OCID of the volume.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -1941,7 +2012,7 @@ def get_volume(ctx, from_json, volume_id):
     cli_util.render_response(result, ctx)
 
 
-@volume_backup_group.command(name=cli_util.override('get_volume_backup.command_name', 'get'), help=u"""Gets information for the specified volume backup.""")
+@volume_backup_group.command(name=cli_util.override('blockstorage.get_volume_backup.command_name', 'get'), help=u"""Gets information for the specified volume backup.""")
 @cli_util.option('--volume-backup-id', required=True, help=u"""The OCID of the volume backup.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -1962,7 +2033,7 @@ def get_volume_backup(ctx, from_json, volume_backup_id):
     cli_util.render_response(result, ctx)
 
 
-@volume_backup_policy_group.command(name=cli_util.override('get_volume_backup_policy.command_name', 'get'), help=u"""Gets information for the specified volume backup policy.""")
+@volume_backup_policy_group.command(name=cli_util.override('blockstorage.get_volume_backup_policy.command_name', 'get'), help=u"""Gets information for the specified volume backup policy.""")
 @cli_util.option('--policy-id', required=True, help=u"""The OCID of the volume backup policy.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -1983,7 +2054,7 @@ def get_volume_backup_policy(ctx, from_json, policy_id):
     cli_util.render_response(result, ctx)
 
 
-@volume_backup_policy_assignment_group.command(name=cli_util.override('get_volume_backup_policy_asset_assignment.command_name', 'get-volume-backup-policy-asset-assignment'), help=u"""Gets the volume backup policy assignment for the specified asset. Note that the assetId query parameter is required, and that the returned list will contain at most one item (since any given asset can only have one policy assigned to it).""")
+@volume_backup_policy_assignment_group.command(name=cli_util.override('blockstorage.get_volume_backup_policy_asset_assignment.command_name', 'get-volume-backup-policy-asset-assignment'), help=u"""Gets the volume backup policy assignment for the specified asset. Note that the assetId query parameter is required, and that the returned list will contain at most one item (since any given asset can only have one policy assigned to it).""")
 @cli_util.option('--asset-id', required=True, help=u"""The OCID of an asset (e.g. a volume).""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
@@ -2009,7 +2080,7 @@ def get_volume_backup_policy_asset_assignment(ctx, from_json, asset_id, limit, p
     cli_util.render_response(result, ctx)
 
 
-@volume_backup_policy_assignment_group.command(name=cli_util.override('get_volume_backup_policy_assignment.command_name', 'get'), help=u"""Gets information for the specified volume backup policy assignment.""")
+@volume_backup_policy_assignment_group.command(name=cli_util.override('blockstorage.get_volume_backup_policy_assignment.command_name', 'get'), help=u"""Gets information for the specified volume backup policy assignment.""")
 @cli_util.option('--policy-assignment-id', required=True, help=u"""The OCID of the volume backup policy assignment.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -2030,7 +2101,7 @@ def get_volume_backup_policy_assignment(ctx, from_json, policy_assignment_id):
     cli_util.render_response(result, ctx)
 
 
-@volume_group_group.command(name=cli_util.override('get_volume_group.command_name', 'get'), help=u"""Gets information for the specified volume group. For more information, see [Volume Groups].""")
+@volume_group_group.command(name=cli_util.override('blockstorage.get_volume_group.command_name', 'get'), help=u"""Gets information for the specified volume group. For more information, see [Volume Groups].""")
 @cli_util.option('--volume-group-id', required=True, help=u"""The Oracle Cloud ID (OCID) that uniquely identifies the volume group.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -2051,7 +2122,7 @@ def get_volume_group(ctx, from_json, volume_group_id):
     cli_util.render_response(result, ctx)
 
 
-@volume_group_backup_group.command(name=cli_util.override('get_volume_group_backup.command_name', 'get'), help=u"""Gets information for the specified volume group backup. For more information, see [Volume Groups].""")
+@volume_group_backup_group.command(name=cli_util.override('blockstorage.get_volume_group_backup.command_name', 'get'), help=u"""Gets information for the specified volume group backup. For more information, see [Volume Groups].""")
 @cli_util.option('--volume-group-backup-id', required=True, help=u"""The Oracle Cloud ID (OCID) that uniquely identifies the volume group backup.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -2072,7 +2143,7 @@ def get_volume_group_backup(ctx, from_json, volume_group_backup_id):
     cli_util.render_response(result, ctx)
 
 
-@volume_kms_key_group.command(name=cli_util.override('get_volume_kms_key.command_name', 'get'), help=u"""Gets the KMS key ID for the specified volume.""")
+@volume_kms_key_group.command(name=cli_util.override('blockstorage.get_volume_kms_key.command_name', 'get'), help=u"""Gets the KMS key ID for the specified volume.""")
 @cli_util.option('--volume-id', required=True, help=u"""The OCID of the volume.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2096,7 +2167,7 @@ def get_volume_kms_key(ctx, from_json, volume_id, if_match):
     cli_util.render_response(result, ctx)
 
 
-@boot_volume_backup_group.command(name=cli_util.override('list_boot_volume_backups.command_name', 'list'), help=u"""Lists the boot volume backups in the specified compartment. You can filter the results by boot volume.""")
+@boot_volume_backup_group.command(name=cli_util.override('blockstorage.list_boot_volume_backups.command_name', 'list'), help=u"""Lists the boot volume backups in the specified compartment. You can filter the results by boot volume.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--boot-volume-id', help=u"""The OCID of the boot volume.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
@@ -2162,7 +2233,7 @@ def list_boot_volume_backups(ctx, from_json, all_pages, page_size, compartment_i
     cli_util.render_response(result, ctx)
 
 
-@boot_volume_group.command(name=cli_util.override('list_boot_volumes.command_name', 'list'), help=u"""Lists the boot volumes in the specified compartment and availability domain.""")
+@boot_volume_group.command(name=cli_util.override('blockstorage.list_boot_volumes.command_name', 'list'), help=u"""Lists the boot volumes in the specified compartment and availability domain.""")
 @cli_util.option('--availability-domain', required=True, help=u"""The name of the availability domain.
 
 Example: `Uocm:PHX-AD-1`""")
@@ -2220,11 +2291,12 @@ def list_boot_volumes(ctx, from_json, all_pages, page_size, availability_domain,
     cli_util.render_response(result, ctx)
 
 
-@volume_backup_policy_group.command(name=cli_util.override('list_volume_backup_policies.command_name', 'list'), help=u"""Lists all volume backup policies available to the caller.""")
+@volume_backup_policy_group.command(name=cli_util.override('blockstorage.list_volume_backup_policies.command_name', 'list'), help=u"""Lists all volume backup policies available to the caller.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--compartment-id', help=u"""The OCID of the compartment to list. If no compartment is specified, list the predefined (Gold, Silver, Bronze) backup policies.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2232,7 +2304,7 @@ Example: `50`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[VolumeBackupPolicy]'})
 @cli_util.wrap_exceptions
-def list_volume_backup_policies(ctx, from_json, all_pages, page_size, limit, page):
+def list_volume_backup_policies(ctx, from_json, all_pages, page_size, limit, page, compartment_id):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -2242,6 +2314,8 @@ def list_volume_backup_policies(ctx, from_json, all_pages, page_size, limit, pag
         kwargs['limit'] = limit
     if page is not None:
         kwargs['page'] = page
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
     client = cli_util.build_client('blockstorage', ctx)
     if all_pages:
         if page_size:
@@ -2265,7 +2339,7 @@ def list_volume_backup_policies(ctx, from_json, all_pages, page_size, limit, pag
     cli_util.render_response(result, ctx)
 
 
-@volume_backup_group.command(name=cli_util.override('list_volume_backups.command_name', 'list'), help=u"""Lists the volume backups in the specified compartment. You can filter the results by volume.""")
+@volume_backup_group.command(name=cli_util.override('blockstorage.list_volume_backups.command_name', 'list'), help=u"""Lists the volume backups in the specified compartment. You can filter the results by volume.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--volume-id', help=u"""The OCID of the volume.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
@@ -2334,7 +2408,7 @@ def list_volume_backups(ctx, from_json, all_pages, page_size, compartment_id, vo
     cli_util.render_response(result, ctx)
 
 
-@volume_group_backup_group.command(name=cli_util.override('list_volume_group_backups.command_name', 'list'), help=u"""Lists the volume group backups in the specified compartment. You can filter the results by volume group. For more information, see [Volume Groups].""")
+@volume_group_backup_group.command(name=cli_util.override('blockstorage.list_volume_group_backups.command_name', 'list'), help=u"""Lists the volume group backups in the specified compartment. You can filter the results by volume group. For more information, see [Volume Groups].""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--volume-group-id', help=u"""The OCID of the volume group.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
@@ -2397,7 +2471,7 @@ def list_volume_group_backups(ctx, from_json, all_pages, page_size, compartment_
     cli_util.render_response(result, ctx)
 
 
-@volume_group_group.command(name=cli_util.override('list_volume_groups.command_name', 'list'), help=u"""Lists the volume groups in the specified compartment and availability domain. For more information, see [Volume Groups].""")
+@volume_group_group.command(name=cli_util.override('blockstorage.list_volume_groups.command_name', 'list'), help=u"""Lists the volume groups in the specified compartment and availability domain. For more information, see [Volume Groups].""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--availability-domain', help=u"""The name of the availability domain.
 
@@ -2467,7 +2541,7 @@ def list_volume_groups(ctx, from_json, all_pages, page_size, compartment_id, ava
     cli_util.render_response(result, ctx)
 
 
-@volume_group.command(name=cli_util.override('list_volumes.command_name', 'list'), help=u"""Lists the volumes in the specified compartment and availability domain.""")
+@volume_group.command(name=cli_util.override('blockstorage.list_volumes.command_name', 'list'), help=u"""Lists the volumes in the specified compartment and availability domain.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--availability-domain', help=u"""The name of the availability domain.
 
@@ -2540,7 +2614,7 @@ def list_volumes(ctx, from_json, all_pages, page_size, compartment_id, availabil
     cli_util.render_response(result, ctx)
 
 
-@boot_volume_group.command(name=cli_util.override('update_boot_volume.command_name', 'update'), help=u"""Updates the specified boot volume's display name, defined tags, and free-form tags.""")
+@boot_volume_group.command(name=cli_util.override('blockstorage.update_boot_volume.command_name', 'update'), help=u"""Updates the specified boot volume's display name, defined tags, and free-form tags.""")
 @cli_util.option('--boot-volume-id', required=True, help=u"""The OCID of the boot volume.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
@@ -2618,7 +2692,7 @@ def update_boot_volume(ctx, from_json, force, wait_for_state, max_wait_seconds, 
     cli_util.render_response(result, ctx)
 
 
-@boot_volume_backup_group.command(name=cli_util.override('update_boot_volume_backup.command_name', 'update'), help=u"""Updates the display name for the specified boot volume backup. Avoid entering confidential information.""")
+@boot_volume_backup_group.command(name=cli_util.override('blockstorage.update_boot_volume_backup.command_name', 'update'), help=u"""Updates the display name for the specified boot volume backup. Avoid entering confidential information.""")
 @cli_util.option('--boot-volume-backup-id', required=True, help=u"""The OCID of the boot volume backup.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
@@ -2692,7 +2766,7 @@ def update_boot_volume_backup(ctx, from_json, force, wait_for_state, max_wait_se
     cli_util.render_response(result, ctx)
 
 
-@boot_volume_kms_key_group.command(name=cli_util.override('update_boot_volume_kms_key.command_name', 'update'), help=u"""Updates the KMS key ID for the specified volume.""")
+@boot_volume_kms_key_group.command(name=cli_util.override('blockstorage.update_boot_volume_kms_key.command_name', 'update'), help=u"""Updates the KMS key ID for the specified volume.""")
 @cli_util.option('--boot-volume-id', required=True, help=u"""The OCID of the boot volume.""")
 @cli_util.option('--kms-key-id', help=u"""The OCID of the new KMS key which will be used to protect the specified volume. This key has to be a valid KMS key OCID, and the user must have key delegation policy to allow them to access this key. Even if the new KMS key is the same as the previous KMS key ID, the Block Volume service will use it to regenerate a new volume encryption key.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -2724,7 +2798,7 @@ def update_boot_volume_kms_key(ctx, from_json, boot_volume_id, kms_key_id, if_ma
     cli_util.render_response(result, ctx)
 
 
-@volume_group.command(name=cli_util.override('update_volume.command_name', 'update'), help=u"""Updates the specified volume's display name. Avoid entering confidential information.""")
+@volume_group.command(name=cli_util.override('blockstorage.update_volume.command_name', 'update'), help=u"""Updates the specified volume's display name. Avoid entering confidential information.""")
 @cli_util.option('--volume-id', required=True, help=u"""The OCID of the volume.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
@@ -2802,7 +2876,7 @@ def update_volume(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_
     cli_util.render_response(result, ctx)
 
 
-@volume_backup_group.command(name=cli_util.override('update_volume_backup.command_name', 'update'), help=u"""Updates the display name for the specified volume backup. Avoid entering confidential information.""")
+@volume_backup_group.command(name=cli_util.override('blockstorage.update_volume_backup.command_name', 'update'), help=u"""Updates the display name for the specified volume backup. Avoid entering confidential information.""")
 @cli_util.option('--volume-backup-id', required=True, help=u"""The OCID of the volume backup.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
@@ -2876,7 +2950,63 @@ def update_volume_backup(ctx, from_json, force, wait_for_state, max_wait_seconds
     cli_util.render_response(result, ctx)
 
 
-@volume_group_group.command(name=cli_util.override('update_volume_group.command_name', 'update'), help=u"""Updates the set of volumes in a volume group along with the display name. Use this operation to add or remove volumes in a volume group. Specify the full list of volume IDs to include in the volume group. If the volume ID is not specified in the call, it will be removed from the volume group. Avoid entering confidential information.
+@volume_backup_policy_group.command(name=cli_util.override('blockstorage.update_volume_backup_policy.command_name', 'update'), help=u"""Updates a volume backup policy. Avoid entering confidential information.""")
+@cli_util.option('--policy-id', required=True, help=u"""The OCID of the volume backup policy.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name for the volume backup policy. Does not have to be unique and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--schedules', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The collection of schedules that this policy will apply.
+
+This option is a JSON list with items of type VolumeBackupSchedule.  For documentation on VolumeBackupSchedule please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/VolumeBackupSchedule.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@json_skeleton_utils.get_cli_json_input_option({'schedules': {'module': 'core', 'class': 'list[VolumeBackupSchedule]'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schedules': {'module': 'core', 'class': 'list[VolumeBackupSchedule]'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'VolumeBackupPolicy'})
+@cli_util.wrap_exceptions
+def update_volume_backup_policy(ctx, from_json, force, policy_id, display_name, schedules, defined_tags, freeform_tags, if_match):
+
+    if isinstance(policy_id, six.string_types) and len(policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --policy-id cannot be whitespace or empty string')
+    if not force:
+        if schedules or defined_tags or freeform_tags:
+            if not click.confirm("WARNING: Updates to schedules and defined-tags and freeform-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    details = {}
+
+    if display_name is not None:
+        details['displayName'] = display_name
+
+    if schedules is not None:
+        details['schedules'] = cli_util.parse_json_parameter("schedules", schedules)
+
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if freeform_tags is not None:
+        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    client = cli_util.build_client('blockstorage', ctx)
+    result = client.update_volume_backup_policy(
+        policy_id=policy_id,
+        update_volume_backup_policy_details=details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@volume_group_group.command(name=cli_util.override('blockstorage.update_volume_group.command_name', 'update'), help=u"""Updates the set of volumes in a volume group along with the display name. Use this operation to add or remove volumes in a volume group. Specify the full list of volume IDs to include in the volume group. If the volume ID is not specified in the call, it will be removed from the volume group. Avoid entering confidential information.
 
 For more information, see [Volume Groups].""")
 @cli_util.option('--volume-group-id', required=True, help=u"""The Oracle Cloud ID (OCID) that uniquely identifies the volume group.""")
@@ -2956,7 +3086,7 @@ def update_volume_group(ctx, from_json, force, wait_for_state, max_wait_seconds,
     cli_util.render_response(result, ctx)
 
 
-@volume_group_backup_group.command(name=cli_util.override('update_volume_group_backup.command_name', 'update'), help=u"""Updates the display name for the specified volume group backup. For more information, see [Volume Groups].""")
+@volume_group_backup_group.command(name=cli_util.override('blockstorage.update_volume_group_backup.command_name', 'update'), help=u"""Updates the display name for the specified volume group backup. For more information, see [Volume Groups].""")
 @cli_util.option('--volume-group-backup-id', required=True, help=u"""The Oracle Cloud ID (OCID) that uniquely identifies the volume group backup.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
@@ -3030,7 +3160,7 @@ def update_volume_group_backup(ctx, from_json, force, wait_for_state, max_wait_s
     cli_util.render_response(result, ctx)
 
 
-@volume_kms_key_group.command(name=cli_util.override('update_volume_kms_key.command_name', 'update'), help=u"""Updates the KMS key ID for the specified volume.""")
+@volume_kms_key_group.command(name=cli_util.override('blockstorage.update_volume_kms_key.command_name', 'update'), help=u"""Updates the KMS key ID for the specified volume.""")
 @cli_util.option('--volume-id', required=True, help=u"""The OCID of the volume.""")
 @cli_util.option('--kms-key-id', help=u"""The OCID of the new KMS key which will be used to protect the specified volume. This key has to be a valid KMS key OCID, and the user must have key delegation policy to allow them to access this key. Even if the new KMS key is the same as the previous KMS key ID, the Block Volume service will use it to regenerate a new volume encryption key.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")

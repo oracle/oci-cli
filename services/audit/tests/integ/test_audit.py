@@ -8,11 +8,13 @@ import pytz
 from dateutil.parser import parse
 from tests import test_config_container
 from tests import util
+import pytest
 
 CASSETTE_LIBRARY_DIR = 'services/audit/tests/cassettes'
 DATETIME_FORMAT = '%Y-%m-%dT%H:%M:%SZ'
 
 
+@pytest.mark.skip('Blocking bulk public - DEXREQ-795')
 class TestAudit(unittest.TestCase):
 
     # For recording, don't match on the query string because that includes the date range for the query

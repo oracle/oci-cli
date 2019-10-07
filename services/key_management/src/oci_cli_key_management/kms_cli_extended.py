@@ -11,11 +11,11 @@ from oci_cli import cli_util
 kms_service_cli.kms_service_group.commands.pop(kmsvault_cli.kms_vault_root_group.name)
 kmsmanagement_cli.kms_management_root_group.add_command(kmsvault_cli.vault_group)
 
-cli_util.rename_command(None, kmsvault_cli.kms_vault_root_group, "vault")
-cli_util.rename_command(kmsvault_cli.vault_group, kmsvault_cli.cancel_vault_deletion, "cancel-deletion")
-cli_util.rename_command(kmsvault_cli.vault_group, kmsvault_cli.schedule_vault_deletion, "schedule-deletion")
-cli_util.rename_command(kms_service_cli.kms_service_group, kmscrypto_cli.kms_crypto_root_group, "crypto")
-cli_util.rename_command(kms_service_cli.kms_service_group, kmsmanagement_cli.kms_management_root_group, "management")
+cli_util.rename_command(kmsvault_cli, None, kmsvault_cli.kms_vault_root_group, "vault")
+cli_util.rename_command(kmsvault_cli, kmsvault_cli.vault_group, kmsvault_cli.cancel_vault_deletion, "cancel-deletion")
+cli_util.rename_command(kmsvault_cli, kmsvault_cli.vault_group, kmsvault_cli.schedule_vault_deletion, "schedule-deletion")
+cli_util.rename_command(kmscrypto_cli, kms_service_cli.kms_service_group, kmscrypto_cli.kms_crypto_root_group, "crypto")
+cli_util.rename_command(kmsmanagement_cli, kms_service_cli.kms_service_group, kmsmanagement_cli.kms_management_root_group, "management")
 
 # remove one nested layer from crypto commands (e.g. kms crypto encrypted-data encrypt -> kms crypto encrypt)
 kmscrypto_cli.kms_crypto_root_group.commands.pop(kmscrypto_cli.encrypted_data_group.name)
@@ -34,8 +34,8 @@ cli_util.override_command_short_help_and_help(kmsmanagement_cli.kms_management_r
 cli_util.override_command_short_help_and_help(kmscrypto_cli.kms_crypto_root_group, "Operations for performing data encryption, decryption and generation of data encryption keys.")
 cli_util.override_command_short_help_and_help(kms_service_cli.kms_service_group, "Key Management Service")
 
-cli_util.rename_command(kmsmanagement_cli.key_group, kmsmanagement_cli.schedule_key_deletion, "schedule-deletion")
-cli_util.rename_command(kmsmanagement_cli.key_group, kmsmanagement_cli.cancel_key_deletion, "cancel-deletion")
+cli_util.rename_command(kmsmanagement_cli, kmsmanagement_cli.key_group, kmsmanagement_cli.schedule_key_deletion, "schedule-deletion")
+cli_util.rename_command(kmsmanagement_cli, kmsmanagement_cli.key_group, kmsmanagement_cli.cancel_key_deletion, "cancel-deletion")
 
 # TODO: Potentially integrate with a specific --vault-endpoint parameter or find a way to translate a vault
 # (e.g. a vault's OCID) to the relevant endpoint
