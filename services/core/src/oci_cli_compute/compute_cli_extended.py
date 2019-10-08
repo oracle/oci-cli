@@ -34,14 +34,14 @@ compute_cli.compute_root_group.commands.pop(compute_cli.instance_credentials_gro
 # oci compute dedicated-vm-host instance-shape list
 compute_cli.compute_root_group.commands.pop(compute_cli.dedicated_vm_host_instance_shape_group.name)
 compute_cli.dedicated_vm_host_group.add_command(compute_cli.dedicated_vm_host_instance_shape_group)
-cli_util.rename_command(compute_cli.dedicated_vm_host_group, compute_cli.dedicated_vm_host_instance_shape_group, 'instance-shape')
+cli_util.rename_command(compute_cli, compute_cli.dedicated_vm_host_group, compute_cli.dedicated_vm_host_instance_shape_group, 'instance-shape')
 
 
 # oci compute dedicated-vm-host-shape list
 # oci compute dedicated-vm-host host-shape list
 compute_cli.compute_root_group.commands.pop(compute_cli.dedicated_vm_host_shape_group.name)
 compute_cli.dedicated_vm_host_group.add_command(compute_cli.dedicated_vm_host_shape_group)
-cli_util.rename_command(compute_cli.dedicated_vm_host_group, compute_cli.dedicated_vm_host_shape_group, 'host-shape')
+cli_util.rename_command(compute_cli, compute_cli.dedicated_vm_host_group, compute_cli.dedicated_vm_host_shape_group, 'host-shape')
 
 
 # Disabling subclass commands
@@ -68,20 +68,20 @@ compute_cli.compute_root_group.add_command(compute_cli.volume_attachment_group)
 compute_cli.volume_attachment_group.commands.pop(compute_cli.attach_volume_attach_service_determined_volume_details.name)
 compute_cli.volume_attachment_group.commands.pop(compute_cli.attach_volume_attach_emulated_volume_details.name)
 
-cli_util.rename_command(compute_cli.volume_attachment_group, compute_cli.attach_volume_attach_i_scsi_volume_details, 'attach-iscsi-volume')
+cli_util.rename_command(compute_cli, compute_cli.volume_attachment_group, compute_cli.attach_volume_attach_i_scsi_volume_details, 'attach-iscsi-volume')
 
 compute_cli.compute_root_group.add_command(compute_cli.console_history_group)
-cli_util.rename_command(compute_cli.console_history_group, compute_cli.get_console_history_content, "get-content")
+cli_util.rename_command(compute_cli, compute_cli.console_history_group, compute_cli.get_console_history_content, "get-content")
 compute_cli.compute_root_group.add_command(compute_cli.instance_console_connection_group)
-cli_util.rename_command(compute_cli.instance_group, compute_cli.instance_action, "action")
-cli_util.rename_command(compute_cli.instance_credentials_group, compute_cli.get_windows_instance_initial_credentials, "get-windows-initial-creds")
+cli_util.rename_command(compute_cli, compute_cli.instance_group, compute_cli.instance_action, "action")
+cli_util.rename_command(compute_cli, compute_cli.instance_credentials_group, compute_cli.get_windows_instance_initial_credentials, "get-windows-initial-creds")
 compute_cli.get_windows_instance_initial_credentials.name = "get-windows-initial-creds"
 compute_cli.instance_group.add_command(compute_cli.get_windows_instance_initial_credentials)
 compute_cli.volume_attachment_group.add_command(compute_cli.detach_volume)
 compute_cli.vnic_attachment_group.commands.pop(compute_cli.attach_vnic.name)
 compute_cli.vnic_attachment_group.commands.pop(compute_cli.detach_vnic.name)
 compute_cli.instance_console_connection_group.commands.pop(compute_cli.create_instance_console_connection.name)
-cli_util.rename_command(compute_cli.volume_attachment_group, compute_cli.attach_volume_attach_paravirtualized_volume_details, "attach-paravirtualized-volume")
+cli_util.rename_command(compute_cli, compute_cli.volume_attachment_group, compute_cli.attach_volume_attach_paravirtualized_volume_details, "attach-paravirtualized-volume")
 compute_cli.compute_root_group.help = "Compute Service CLI"
 compute_cli.compute_root_group.short_help = "Compute Service"
 
@@ -382,7 +382,7 @@ def list_vnics(ctx, from_json, instance_id, limit, page, all_pages, page_size):
 @cli_util.option('--source-boot-volume-id', help="""The OCID of the boot volume used to boot the instance. This is a shortcut for specifying a boot volume source via the --source-details complex JSON parameter. If this parameter is provided, you cannot provide the --source-details or --image-id parameters.""")
 @cli_util.option('--boot-volume-size-in-gbs', type=click.INT, help="""The size of the boot volume in GBs. Minimum value is 50 GB and maximum value is 16384 GB (16TB). This is a shortcut for specifying a boot volume size via the --source-details complex JSON parameter. If this parameter is provided, you cannot provide the --source-details or --source-boot-volume-id parameters.""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'nsg-ids': {'module': 'core', 'class': 'list[string]'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}}, output_type={'module': 'core', 'class': 'Instance'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'nsg-ids': {'module': 'core', 'class': 'list[string]'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
 def launch_instance_extended(ctx, **kwargs):
     metadata = {}

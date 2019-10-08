@@ -100,6 +100,7 @@ function createApplication() {
         | grep -v "Action completed" \
         2>/dev/null \
     )
+
     local appID=$(jq -r '.data.id' <<< ${appResp})
     echo ${appID}
 }

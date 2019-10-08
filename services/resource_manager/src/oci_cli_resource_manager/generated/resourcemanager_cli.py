@@ -14,25 +14,25 @@ from oci_cli import custom_types  # noqa: F401
 from oci_cli.aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('resource_manager_root_group.command_name', 'resource-manager'), cls=CommandGroupWithAlias, help=cli_util.override('resource_manager_root_group.help', """API for the Resource Manager service. Use this API to install, configure, and manage resources via the "infrastructure-as-code" model. For more information, see [Overview of Resource Manager](/iaas/Content/ResourceManager/Concepts/resourcemanager.htm)."""), short_help=cli_util.override('resource_manager_root_group.short_help', """Resource Manager API"""))
+@cli.command(cli_util.override('resource_manager.resource_manager_root_group.command_name', 'resource-manager'), cls=CommandGroupWithAlias, help=cli_util.override('resource_manager.resource_manager_root_group.help', """API for the Resource Manager service. Use this API to install, configure, and manage resources via the "infrastructure-as-code" model. For more information, see [Overview of Resource Manager](/iaas/Content/ResourceManager/Concepts/resourcemanager.htm)."""), short_help=cli_util.override('resource_manager.resource_manager_root_group.short_help', """Resource Manager API"""))
 @cli_util.help_option_group
 def resource_manager_root_group():
     pass
 
 
-@click.command(cli_util.override('stack_group.command_name', 'stack'), cls=CommandGroupWithAlias, help="""The stack object. Stacks represent definitions of groups of Oracle Cloud Infrastructure resources that you can act upon as a group. You take action on stacks by using jobs.""")
+@click.command(cli_util.override('resource_manager.stack_group.command_name', 'stack'), cls=CommandGroupWithAlias, help="""The stack object. Stacks represent definitions of groups of Oracle Cloud Infrastructure resources that you can act upon as a group. You take action on stacks by using jobs.""")
 @cli_util.help_option_group
 def stack_group():
     pass
 
 
-@click.command(cli_util.override('work_request_group.command_name', 'work-request'), cls=CommandGroupWithAlias, help="""The status of a work request.""")
+@click.command(cli_util.override('resource_manager.work_request_group.command_name', 'work-request'), cls=CommandGroupWithAlias, help="""The status of a work request.""")
 @cli_util.help_option_group
 def work_request_group():
     pass
 
 
-@click.command(cli_util.override('job_group.command_name', 'job'), cls=CommandGroupWithAlias, help="""Jobs perform the actions that are defined in your configuration. There are three job types - **Plan job**. A plan job takes your Terraform configuration, parses it, and creates an execution plan. - **Apply job**. The apply job takes your execution plan, applies it to the associated stack, then executes the configuration's instructions. - **Destroy job**. To clean up the infrastructure controlled by the stack, you run a destroy job. A destroy job does not delete the stack or associated job resources, but instead releases the resources managed by the stack. - **Import_TF_State job**. An import Terraform state job takes a Terraform state file and sets it as the current state of the stack. This is used to migrate local Terraform environments to Resource Manager.""")
+@click.command(cli_util.override('resource_manager.job_group.command_name', 'job'), cls=CommandGroupWithAlias, help="""Jobs perform the actions that are defined in your configuration. There are three job types - **Plan job**. A plan job takes your Terraform configuration, parses it, and creates an execution plan. - **Apply job**. The apply job takes your execution plan, applies it to the associated stack, then executes the configuration's instructions. - **Destroy job**. To clean up the infrastructure controlled by the stack, you run a destroy job. A destroy job does not delete the stack or associated job resources, but instead releases the resources managed by the stack. - **Import_TF_State job**. An import Terraform state job takes a Terraform state file and sets it as the current state of the stack. This is used to migrate local Terraform environments to Resource Manager.""")
 @cli_util.help_option_group
 def job_group():
     pass
@@ -43,7 +43,7 @@ resource_manager_root_group.add_command(work_request_group)
 resource_manager_root_group.add_command(job_group)
 
 
-@job_group.command(name=cli_util.override('cancel_job.command_name', 'cancel'), help=u"""Indicates the intention to cancel the specified job. Cancellation of the job is not immediate, and may be delayed, or may not happen at all.""")
+@job_group.command(name=cli_util.override('resource_manager.cancel_job.command_name', 'cancel'), help=u"""Indicates the intention to cancel the specified job. Cancellation of the job is not immediate, and may be delayed, or may not happen at all.""")
 @cli_util.option('--job-id', required=True, help=u"""The job OCID.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the `PUT` or `DELETE` call for a resource, set the `if-match` parameter to the value of the etag from a previous `GET` or `POST` response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -106,7 +106,7 @@ def cancel_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
     cli_util.render_response(result, ctx)
 
 
-@stack_group.command(name=cli_util.override('change_stack_compartment.command_name', 'change-compartment'), help=u"""Moves a Stack and it's associated Jobs into a different compartment.""")
+@stack_group.command(name=cli_util.override('resource_manager.change_stack_compartment.command_name', 'change-compartment'), help=u"""Moves a Stack and it's associated Jobs into a different compartment.""")
 @cli_util.option('--stack-id', required=True, help=u"""The stack OCID.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the Stack should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the `PUT` or `DELETE` call for a resource, set the `if-match` parameter to the value of the etag from a previous `GET` or `POST` response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -162,7 +162,7 @@ def change_stack_compartment(ctx, from_json, wait_for_state, max_wait_seconds, w
     cli_util.render_response(result, ctx)
 
 
-@job_group.command(name=cli_util.override('create_job.command_name', 'create'), help=u"""Creates a job.""")
+@job_group.command(name=cli_util.override('resource_manager.create_job.command_name', 'create'), help=u"""Creates a job.""")
 @cli_util.option('--stack-id', required=True, help=u"""OCID of the stack that is associated with the current job.""")
 @cli_util.option('--display-name', help=u"""Description of the job.""")
 @cli_util.option('--operation', help=u"""Terraform-specific operation to execute.""")
@@ -234,7 +234,7 @@ def create_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
     cli_util.render_response(result, ctx)
 
 
-@job_group.command(name=cli_util.override('create_job_create_import_tf_state_job_operation_details.command_name', 'create-job-create-import-tf-state-job-operation-details'), help=u"""Creates a job.""")
+@job_group.command(name=cli_util.override('resource_manager.create_job_create_import_tf_state_job_operation_details.command_name', 'create-job-create-import-tf-state-job-operation-details'), help=u"""Creates a job.""")
 @cli_util.option('--stack-id', required=True, help=u"""OCID of the stack that is associated with the current job.""")
 @cli_util.option('--job-operation-details-tf-state-base64-encoded', required=True, help=u"""Base64-encoded state file""")
 @cli_util.option('--display-name', help=u"""Description of the job.""")
@@ -307,7 +307,7 @@ def create_job_create_import_tf_state_job_operation_details(ctx, from_json, wait
     cli_util.render_response(result, ctx)
 
 
-@job_group.command(name=cli_util.override('create_job_create_apply_job_operation_details.command_name', 'create-job-create-apply-job-operation-details'), help=u"""Creates a job.""")
+@job_group.command(name=cli_util.override('resource_manager.create_job_create_apply_job_operation_details.command_name', 'create-job-create-apply-job-operation-details'), help=u"""Creates a job.""")
 @cli_util.option('--stack-id', required=True, help=u"""OCID of the stack that is associated with the current job.""")
 @cli_util.option('--display-name', help=u"""Description of the job.""")
 @cli_util.option('--operation', help=u"""Terraform-specific operation to execute.""")
@@ -386,7 +386,7 @@ def create_job_create_apply_job_operation_details(ctx, from_json, wait_for_state
     cli_util.render_response(result, ctx)
 
 
-@job_group.command(name=cli_util.override('create_job_create_plan_job_operation_details.command_name', 'create-job-create-plan-job-operation-details'), help=u"""Creates a job.""")
+@job_group.command(name=cli_util.override('resource_manager.create_job_create_plan_job_operation_details.command_name', 'create-job-create-plan-job-operation-details'), help=u"""Creates a job.""")
 @cli_util.option('--stack-id', required=True, help=u"""OCID of the stack that is associated with the current job.""")
 @cli_util.option('--display-name', help=u"""Description of the job.""")
 @cli_util.option('--operation', help=u"""Terraform-specific operation to execute.""")
@@ -457,7 +457,7 @@ def create_job_create_plan_job_operation_details(ctx, from_json, wait_for_state,
     cli_util.render_response(result, ctx)
 
 
-@job_group.command(name=cli_util.override('create_job_create_destroy_job_operation_details.command_name', 'create-job-create-destroy-job-operation-details'), help=u"""Creates a job.""")
+@job_group.command(name=cli_util.override('resource_manager.create_job_create_destroy_job_operation_details.command_name', 'create-job-create-destroy-job-operation-details'), help=u"""Creates a job.""")
 @cli_util.option('--stack-id', required=True, help=u"""OCID of the stack that is associated with the current job.""")
 @cli_util.option('--job-operation-details-execution-plan-strategy', required=True, help=u"""Specifies the source of the execution plan to apply. Currently, only `AUTO_APPROVED` is allowed, which indicates that the job will be run without an execution plan.""")
 @cli_util.option('--display-name', help=u"""Description of the job.""")
@@ -530,7 +530,7 @@ def create_job_create_destroy_job_operation_details(ctx, from_json, wait_for_sta
     cli_util.render_response(result, ctx)
 
 
-@stack_group.command(name=cli_util.override('create_stack.command_name', 'create'), help=u"""Creates a stack in the specified comparment. Specify the compartment using the compartment ID.""")
+@stack_group.command(name=cli_util.override('resource_manager.create_stack.command_name', 'create'), help=u"""Creates a stack in the specified comparment. Specify the compartment using the compartment ID.""")
 @cli_util.option('--compartment-id', required=True, help=u"""Unique identifier (OCID) of the compartment in which the stack resides.""")
 @cli_util.option('--config-source', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""The stack's display name.""")
@@ -604,7 +604,7 @@ def create_stack(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
     cli_util.render_response(result, ctx)
 
 
-@stack_group.command(name=cli_util.override('create_stack_create_zip_upload_config_source_details.command_name', 'create-stack-create-zip-upload-config-source-details'), help=u"""Creates a stack in the specified comparment. Specify the compartment using the compartment ID.""")
+@stack_group.command(name=cli_util.override('resource_manager.create_stack_create_zip_upload_config_source_details.command_name', 'create-stack-create-zip-upload-config-source-details'), help=u"""Creates a stack in the specified comparment. Specify the compartment using the compartment ID.""")
 @cli_util.option('--compartment-id', required=True, help=u"""Unique identifier (OCID) of the compartment in which the stack resides.""")
 @cli_util.option('--config-source-zip-file-base64-encoded', required=True, help=u"""""")
 @cli_util.option('--display-name', help=u"""The stack's display name.""")
@@ -685,7 +685,7 @@ def create_stack_create_zip_upload_config_source_details(ctx, from_json, wait_fo
     cli_util.render_response(result, ctx)
 
 
-@stack_group.command(name=cli_util.override('delete_stack.command_name', 'delete'), help=u"""Deletes the specified stack object.""")
+@stack_group.command(name=cli_util.override('resource_manager.delete_stack.command_name', 'delete'), help=u"""Deletes the specified stack object.""")
 @cli_util.option('--stack-id', required=True, help=u"""The stack OCID.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the `PUT` or `DELETE` call for a resource, set the `if-match` parameter to the value of the etag from a previous `GET` or `POST` response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -748,7 +748,7 @@ def delete_stack(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
     cli_util.render_response(result, ctx)
 
 
-@job_group.command(name=cli_util.override('get_job.command_name', 'get'), help=u"""Returns the specified job along with the job details.""")
+@job_group.command(name=cli_util.override('resource_manager.get_job.command_name', 'get'), help=u"""Returns the specified job along with the job details.""")
 @cli_util.option('--job-id', required=True, help=u"""The job OCID.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -770,7 +770,7 @@ def get_job(ctx, from_json, job_id):
     cli_util.render_response(result, ctx)
 
 
-@job_group.command(name=cli_util.override('get_job_logs.command_name', 'get-job-logs'), help=u"""Returns log entries for the specified job in JSON format.""")
+@job_group.command(name=cli_util.override('resource_manager.get_job_logs.command_name', 'get-job-logs'), help=u"""Returns log entries for the specified job in JSON format.""")
 @cli_util.option('--job-id', required=True, help=u"""The job OCID.""")
 @cli_util.option('--type', type=custom_types.CliCaseInsensitiveChoice(["TERRAFORM_CONSOLE"]), multiple=True, help=u"""A filter that returns only logs of a specified type.""")
 @cli_util.option('--level-greater-than-or-equal-to', type=custom_types.CliCaseInsensitiveChoice(["TRACE", "DEBUG", "INFO", "WARN", "ERROR", "FATAL"]), help=u"""A filter that returns only log entries that match a given severity level or greater.""")
@@ -813,7 +813,7 @@ def get_job_logs(ctx, from_json, job_id, type, level_greater_than_or_equal_to, s
     cli_util.render_response(result, ctx)
 
 
-@job_group.command(name=cli_util.override('get_job_logs_content.command_name', 'get-job-logs-content'), help=u"""Returns raw log file for the specified job in text format. Returns a maximum of 100,000 log entries.""")
+@job_group.command(name=cli_util.override('resource_manager.get_job_logs_content.command_name', 'get-job-logs-content'), help=u"""Returns raw log file for the specified job in text format. Returns a maximum of 100,000 log entries.""")
 @cli_util.option('--job-id', required=True, help=u"""The job OCID.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -835,7 +835,7 @@ def get_job_logs_content(ctx, from_json, job_id):
     cli_util.render_response(result, ctx)
 
 
-@job_group.command(name=cli_util.override('get_job_tf_config.command_name', 'get-job-tf-config'), help=u"""Returns the Terraform configuration file for the specified job in .zip format. Returns an error if no zip file is found.""")
+@job_group.command(name=cli_util.override('resource_manager.get_job_tf_config.command_name', 'get-job-tf-config'), help=u"""Returns the Terraform configuration file for the specified job in .zip format. Returns an error if no zip file is found.""")
 @cli_util.option('--job-id', required=True, help=u"""The job OCID.""")
 @cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -880,7 +880,7 @@ def get_job_tf_config(ctx, from_json, file, job_id):
         file.close()
 
 
-@job_group.command(name=cli_util.override('get_job_tf_state.command_name', 'get-job-tf-state'), help=u"""Returns the Terraform state for the specified job.""")
+@job_group.command(name=cli_util.override('resource_manager.get_job_tf_state.command_name', 'get-job-tf-state'), help=u"""Returns the Terraform state for the specified job.""")
 @cli_util.option('--job-id', required=True, help=u"""The job OCID.""")
 @cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -925,7 +925,7 @@ def get_job_tf_state(ctx, from_json, file, job_id):
         file.close()
 
 
-@stack_group.command(name=cli_util.override('get_stack.command_name', 'get'), help=u"""Gets a stack using the stack ID.""")
+@stack_group.command(name=cli_util.override('resource_manager.get_stack.command_name', 'get'), help=u"""Gets a stack using the stack ID.""")
 @cli_util.option('--stack-id', required=True, help=u"""The stack OCID.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -947,7 +947,7 @@ def get_stack(ctx, from_json, stack_id):
     cli_util.render_response(result, ctx)
 
 
-@stack_group.command(name=cli_util.override('get_stack_tf_config.command_name', 'get-stack-tf-config'), help=u"""Returns the Terraform configuration file in .zip format for the specified stack. Returns an error if no zip file is found.""")
+@stack_group.command(name=cli_util.override('resource_manager.get_stack_tf_config.command_name', 'get-stack-tf-config'), help=u"""Returns the Terraform configuration file in .zip format for the specified stack. Returns an error if no zip file is found.""")
 @cli_util.option('--stack-id', required=True, help=u"""The stack OCID.""")
 @cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -992,7 +992,7 @@ def get_stack_tf_config(ctx, from_json, file, stack_id):
         file.close()
 
 
-@work_request_group.command(name=cli_util.override('get_work_request.command_name', 'get'), help=u"""Return the given work request.""")
+@work_request_group.command(name=cli_util.override('resource_manager.get_work_request.command_name', 'get'), help=u"""Return the given work request.""")
 @cli_util.option('--work-request-id', required=True, help=u"""The OCID of the work request.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -1014,7 +1014,7 @@ def get_work_request(ctx, from_json, work_request_id):
     cli_util.render_response(result, ctx)
 
 
-@job_group.command(name=cli_util.override('list_jobs.command_name', 'list'), help=u"""Returns a list of jobs in a stack or compartment, ordered by time created.
+@job_group.command(name=cli_util.override('resource_manager.list_jobs.command_name', 'list'), help=u"""Returns a list of jobs in a stack or compartment, ordered by time created.
 
 - To list all jobs in a stack, provide the stack OCID. - To list all jobs in a compartment, provide the compartment OCID. - To return a specific job, provide the job OCID.""")
 @cli_util.option('--compartment-id', help=u"""The compartment OCID on which to filter.""")
@@ -1083,7 +1083,7 @@ def list_jobs(ctx, from_json, all_pages, page_size, compartment_id, stack_id, id
     cli_util.render_response(result, ctx)
 
 
-@stack_group.command(name=cli_util.override('list_stacks.command_name', 'list'), help=u"""Returns a list of stacks. - If called using the compartment ID, returns all stacks in the specified compartment. - If called using the stack ID, returns the specified stack.""")
+@stack_group.command(name=cli_util.override('resource_manager.list_stacks.command_name', 'list'), help=u"""Returns a list of stacks. - If called using the compartment ID, returns all stacks in the specified compartment. - If called using the stack ID, returns the specified stack.""")
 @cli_util.option('--compartment-id', help=u"""The compartment OCID on which to filter.""")
 @cli_util.option('--id', help=u"""The OCID on which to query for a stack.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED"]), help=u"""A filter that returns only those resources that match the specified lifecycle state. The state value is case-insensitive.
@@ -1147,7 +1147,7 @@ def list_stacks(ctx, from_json, all_pages, page_size, compartment_id, id, lifecy
     cli_util.render_response(result, ctx)
 
 
-@stack_group.command(name=cli_util.override('list_terraform_versions.command_name', 'list-terraform-versions'), help=u"""Returns a list of supported Terraform versions in a compartment.""")
+@stack_group.command(name=cli_util.override('resource_manager.list_terraform_versions.command_name', 'list-terraform-versions'), help=u"""Returns a list of supported Terraform versions in a compartment.""")
 @cli_util.option('--compartment-id', help=u"""The compartment OCID on which to filter.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1168,7 +1168,7 @@ def list_terraform_versions(ctx, from_json, all_pages, compartment_id):
     cli_util.render_response(result, ctx)
 
 
-@work_request_group.command(name=cli_util.override('list_work_request_errors.command_name', 'list-work-request-errors'), help=u"""Return a (paginated) list of errors for a given work request.""")
+@work_request_group.command(name=cli_util.override('resource_manager.list_work_request_errors.command_name', 'list-work-request-errors'), help=u"""Return a (paginated) list of errors for a given work request.""")
 @cli_util.option('--work-request-id', required=True, help=u"""The OCID of the work request.""")
 @cli_util.option('--compartment-id', help=u"""The compartment OCID on which to filter.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The number of items returned in a paginated `List` call. For information about pagination, see [List Pagination].""")
@@ -1225,7 +1225,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     cli_util.render_response(result, ctx)
 
 
-@work_request_group.command(name=cli_util.override('list_work_request_logs.command_name', 'list-work-request-logs'), help=u"""Return a (paginated) list of logs for a given work request.""")
+@work_request_group.command(name=cli_util.override('resource_manager.list_work_request_logs.command_name', 'list-work-request-logs'), help=u"""Return a (paginated) list of logs for a given work request.""")
 @cli_util.option('--work-request-id', required=True, help=u"""The OCID of the work request.""")
 @cli_util.option('--compartment-id', help=u"""The compartment OCID on which to filter.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The number of items returned in a paginated `List` call. For information about pagination, see [List Pagination].""")
@@ -1282,7 +1282,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     cli_util.render_response(result, ctx)
 
 
-@work_request_group.command(name=cli_util.override('list_work_requests.command_name', 'list'), help=u"""Lists the work requests in a given compartment or for a given resource.""")
+@work_request_group.command(name=cli_util.override('resource_manager.list_work_requests.command_name', 'list'), help=u"""Lists the work requests in a given compartment or for a given resource.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The compartment OCID on which to filter.""")
 @cli_util.option('--resource-id', help=u"""The OCID of the resource.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The number of items returned in a paginated `List` call. For information about pagination, see [List Pagination].""")
@@ -1333,7 +1333,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, res
     cli_util.render_response(result, ctx)
 
 
-@job_group.command(name=cli_util.override('update_job.command_name', 'update'), help=u"""Updates the specified job.""")
+@job_group.command(name=cli_util.override('resource_manager.update_job.command_name', 'update'), help=u"""Updates the specified job.""")
 @cli_util.option('--job-id', required=True, help=u"""The job OCID.""")
 @cli_util.option('--display-name', help=u"""The new display name to set.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags associated with this resource. Each tag is a key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1404,7 +1404,7 @@ def update_job(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_int
     cli_util.render_response(result, ctx)
 
 
-@stack_group.command(name=cli_util.override('update_stack.command_name', 'update'), help=u"""Updates the specified stack object. Use `UpdateStack` when you update your Terraform configuration and want your changes to be reflected in the execution plan.""")
+@stack_group.command(name=cli_util.override('resource_manager.update_stack.command_name', 'update'), help=u"""Updates the specified stack object. Use `UpdateStack` when you update your Terraform configuration and want your changes to be reflected in the execution plan.""")
 @cli_util.option('--stack-id', required=True, help=u"""The stack OCID.""")
 @cli_util.option('--display-name', help=u"""The name of the stack.""")
 @cli_util.option('--description', help=u"""Description of the stack.""")
@@ -1491,7 +1491,7 @@ def update_stack(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_i
     cli_util.render_response(result, ctx)
 
 
-@stack_group.command(name=cli_util.override('update_stack_update_zip_upload_config_source_details.command_name', 'update-stack-update-zip-upload-config-source-details'), help=u"""Updates the specified stack object. Use `UpdateStack` when you update your Terraform configuration and want your changes to be reflected in the execution plan.""")
+@stack_group.command(name=cli_util.override('resource_manager.update_stack_update_zip_upload_config_source_details.command_name', 'update-stack-update-zip-upload-config-source-details'), help=u"""Updates the specified stack object. Use `UpdateStack` when you update your Terraform configuration and want your changes to be reflected in the execution plan.""")
 @cli_util.option('--stack-id', required=True, help=u"""The stack OCID.""")
 @cli_util.option('--display-name', help=u"""The name of the stack.""")
 @cli_util.option('--description', help=u"""Description of the stack.""")

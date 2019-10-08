@@ -13,7 +13,7 @@ limits_service_cli.limits_service_group.add_command(limits_cli.limit_definition_
 limits_service_cli.limits_service_group.add_command(limits_cli.resource_availability_group)
 
 # rename limit-definition command to definition
-cli_util.rename_command(limits_service_cli.limits_service_group, limits_cli.limit_definition_group, "definition")
+cli_util.rename_command(limits_cli, limits_service_cli.limits_service_group, limits_cli.limit_definition_group, "definition")
 
 # rename limit-value command to value
-cli_util.rename_command(limits_service_cli.limits_service_group, limits_cli.limit_value_group, "value")
+cli_util.rename_command(limits_cli, limits_service_cli.limits_service_group, limits_cli.limit_value_group, "value")

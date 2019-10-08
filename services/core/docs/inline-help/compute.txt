@@ -3206,6 +3206,18 @@ Options:
                                   
                                   For more information about iPXE,
                                   see http://ipxe.org.
+  --launch-options COMPLEX TYPE   This is a complex type whose value must be
+                                  valid JSON. The value can be provided as a
+                                  string on the command line or passed in as a
+                                  file using
+                                  the file://path/to/file syntax.
+                                  The --generate-param-json-input option can be
+                                  used to generate an example of the JSON which
+                                  must be provided. We recommend storing this
+                                  example
+                                  in a file, modifying it as needed and
+                                  then passing it back in via the file://
+                                  syntax.
   --metadata COMPLEX TYPE         Custom metadata key/value pairs that you
                                   provide, such as the SSH public key required
                                   to connect to the instance. For more info see

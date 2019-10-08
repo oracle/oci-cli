@@ -4,6 +4,7 @@
 from __future__ import print_function
 
 from oci_cli import cli_util
+from services.dts.src.oci_cli_dts.generated import dts_service_cli
 
 
 class DTS_Transform(object):
@@ -22,7 +23,7 @@ class DTS_Transform(object):
             item["group"].help = item["help_text"]
             item["group"].short_help = item["short_help_text"]
         for item in rename_command_list:
-            cli_util.rename_command(item["group"], item["old"], item["new"])
+            cli_util.rename_command(dts_service_cli, item["group"], item["old"], item["new"])
         for item in relocate_command_list:
             item["group"].add_command(item["command"])
         for item in pop_command_list:

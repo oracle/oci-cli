@@ -4,4 +4,4 @@
 from services.work_requests.src.oci_cli_work_request.generated import workrequest_cli
 from oci_cli import cli_util
 
-cli_util.rename_command(workrequest_cli.work_request_log_entry_group, workrequest_cli.list_work_request_logs, "list")
+cli_util.rename_command(workrequest_cli, workrequest_cli.work_request_log_entry_group, workrequest_cli.list_work_request_logs, "list")

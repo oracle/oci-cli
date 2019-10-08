@@ -14,20 +14,20 @@ from oci_cli.aliasing import CommandGroupWithAlias
 from services.functions.src.oci_cli_functions.generated import fn_service_cli
 
 
-@click.command(cli_util.override('functions_management_root_group.command_name', 'functions-management'), cls=CommandGroupWithAlias, help=cli_util.override('functions_management_root_group.help', """API for the Functions service.
-"""), short_help=cli_util.override('functions_management_root_group.short_help', """Functions Service API"""))
+@click.command(cli_util.override('functions_management.functions_management_root_group.command_name', 'functions-management'), cls=CommandGroupWithAlias, help=cli_util.override('functions_management.functions_management_root_group.help', """API for the Functions service.
+"""), short_help=cli_util.override('functions_management.functions_management_root_group.short_help', """Functions Service API"""))
 @cli_util.help_option_group
 def functions_management_root_group():
     pass
 
 
-@click.command(cli_util.override('application_group.command_name', 'application'), cls=CommandGroupWithAlias, help="""An application contains functions and defined attributes shared between those functions, such as network configuration and configuration. Avoid entering confidential information.""")
+@click.command(cli_util.override('functions_management.application_group.command_name', 'application'), cls=CommandGroupWithAlias, help="""An application contains functions and defined attributes shared between those functions, such as network configuration and configuration. Avoid entering confidential information.""")
 @cli_util.help_option_group
 def application_group():
     pass
 
 
-@click.command(cli_util.override('function_group.command_name', 'function'), cls=CommandGroupWithAlias, help="""A function resource defines the code (Docker image) and configuration for a specific function. Functions are defined in applications. Avoid entering confidential information.""")
+@click.command(cli_util.override('functions_management.function_group.command_name', 'function'), cls=CommandGroupWithAlias, help="""A function resource defines the code (Docker image) and configuration for a specific function. Functions are defined in applications. Avoid entering confidential information.""")
 @cli_util.help_option_group
 def function_group():
     pass
@@ -38,7 +38,7 @@ functions_management_root_group.add_command(application_group)
 functions_management_root_group.add_command(function_group)
 
 
-@application_group.command(name=cli_util.override('change_application_compartment.command_name', 'change-compartment'), help=u"""Moves an application into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources Between Compartments].""")
+@application_group.command(name=cli_util.override('functions_management.change_application_compartment.command_name', 'change-compartment'), help=u"""Moves an application into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources Between Compartments].""")
 @cli_util.option('--application-id', required=True, help=u"""The [OCID] of this application.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -69,7 +69,7 @@ def change_application_compartment(ctx, from_json, application_id, compartment_i
     cli_util.render_response(result, ctx)
 
 
-@application_group.command(name=cli_util.override('create_application.command_name', 'create'), help=u"""Creates a new application.""")
+@application_group.command(name=cli_util.override('functions_management.create_application.command_name', 'create'), help=u"""Creates a new application.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to create the application within.""")
 @cli_util.option('--display-name', required=True, help=u"""The display name of the application. The display name must be unique within the compartment containing the application. Avoid entering confidential information.""")
 @cli_util.option('--subnet-ids', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The [OCID]s of the subnets in which to run functions in the application.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -141,7 +141,7 @@ def create_application(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     cli_util.render_response(result, ctx)
 
 
-@function_group.command(name=cli_util.override('create_function.command_name', 'create'), help=u"""Creates a new function.""")
+@function_group.command(name=cli_util.override('functions_management.create_function.command_name', 'create'), help=u"""Creates a new function.""")
 @cli_util.option('--display-name', required=True, help=u"""The display name of the function. The display name must be unique within the application containing the function. Avoid entering confidential information.""")
 @cli_util.option('--application-id', required=True, help=u"""The OCID of the application this function belongs to.""")
 @cli_util.option('--image', required=True, help=u"""The qualified name of the Docker image to use in the function, including the image tag. The image should be in the OCI Registry that is in the same region as the function itself. Example: `phx.ocir.io/ten/functions/function:0.0.1`""")
@@ -223,7 +223,7 @@ def create_function(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
     cli_util.render_response(result, ctx)
 
 
-@application_group.command(name=cli_util.override('delete_application.command_name', 'delete'), help=u"""Deletes an application.""")
+@application_group.command(name=cli_util.override('functions_management.delete_application.command_name', 'delete'), help=u"""Deletes an application.""")
 @cli_util.option('--application-id', required=True, help=u"""The [OCID] of this application.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -286,7 +286,7 @@ def delete_application(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     cli_util.render_response(result, ctx)
 
 
-@function_group.command(name=cli_util.override('delete_function.command_name', 'delete'), help=u"""Deletes a function.""")
+@function_group.command(name=cli_util.override('functions_management.delete_function.command_name', 'delete'), help=u"""Deletes a function.""")
 @cli_util.option('--function-id', required=True, help=u"""The [OCID] of this function.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -349,7 +349,7 @@ def delete_function(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
     cli_util.render_response(result, ctx)
 
 
-@application_group.command(name=cli_util.override('get_application.command_name', 'get'), help=u"""Retrieves an application.""")
+@application_group.command(name=cli_util.override('functions_management.get_application.command_name', 'get'), help=u"""Retrieves an application.""")
 @cli_util.option('--application-id', required=True, help=u"""The [OCID] of this application.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -371,7 +371,7 @@ def get_application(ctx, from_json, application_id):
     cli_util.render_response(result, ctx)
 
 
-@function_group.command(name=cli_util.override('get_function.command_name', 'get'), help=u"""Retrieves a function.""")
+@function_group.command(name=cli_util.override('functions_management.get_function.command_name', 'get'), help=u"""Retrieves a function.""")
 @cli_util.option('--function-id', required=True, help=u"""The [OCID] of this function.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -393,7 +393,7 @@ def get_function(ctx, from_json, function_id):
     cli_util.render_response(result, ctx)
 
 
-@application_group.command(name=cli_util.override('list_applications.command_name', 'list'), help=u"""Lists applications for a compartment.""")
+@application_group.command(name=cli_util.override('functions_management.list_applications.command_name', 'list'), help=u"""Lists applications for a compartment.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to which this resource belongs.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return. 1 is the minimum, 50 is the maximum.
 
@@ -464,7 +464,7 @@ def list_applications(ctx, from_json, all_pages, page_size, compartment_id, limi
     cli_util.render_response(result, ctx)
 
 
-@function_group.command(name=cli_util.override('list_functions.command_name', 'list'), help=u"""Lists functions for an application.""")
+@function_group.command(name=cli_util.override('functions_management.list_functions.command_name', 'list'), help=u"""Lists functions for an application.""")
 @cli_util.option('--application-id', required=True, help=u"""The [OCID] of the application to which this function belongs.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return. 1 is the minimum, 50 is the maximum.
 
@@ -535,7 +535,7 @@ def list_functions(ctx, from_json, all_pages, page_size, application_id, limit, 
     cli_util.render_response(result, ctx)
 
 
-@application_group.command(name=cli_util.override('update_application.command_name', 'update'), help=u"""Modifies an application""")
+@application_group.command(name=cli_util.override('functions_management.update_application.command_name', 'update'), help=u"""Modifies an application""")
 @cli_util.option('--application-id', required=True, help=u"""The [OCID] of this application.""")
 @cli_util.option('--config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Application configuration. These values are passed on to the function as environment variables, functions may override application configuration. Keys must be ASCII strings consisting solely of letters, digits, and the '_' (underscore) character, and must not begin with a digit. Values should be limited to printable unicode characters.
 
@@ -614,7 +614,7 @@ def update_application(ctx, from_json, force, wait_for_state, max_wait_seconds, 
     cli_util.render_response(result, ctx)
 
 
-@function_group.command(name=cli_util.override('update_function.command_name', 'update'), help=u"""Modifies a function""")
+@function_group.command(name=cli_util.override('functions_management.update_function.command_name', 'update'), help=u"""Modifies a function""")
 @cli_util.option('--function-id', required=True, help=u"""The [OCID] of this function.""")
 @cli_util.option('--image', help=u"""The qualified name of the Docker image to use in the function, including the image tag. The image should be in the OCI Registry that is in the same region as the function itself. If an image is specified but no value for imageDigest is provided, the digest currently associated with the image tag in the OCI Registry will be used. Example: `phx.ocir.io/ten/functions/function:0.0.1`""")
 @cli_util.option('--image-digest', help=u"""The image digest for the version of the image that will be pulled when invoking this function. Example: `sha256:ca0eeb6fb05351dfc8759c20733c91def84cb8007aa89a5bf606bc8b315b9fc7`""")

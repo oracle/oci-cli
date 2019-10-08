@@ -14,10 +14,10 @@ from oci_cli.cli_root import cli
 from oci_cli import cli_util
 from oci_cli import json_skeleton_utils
 
-cli_util.rename_command(cli, blockstorage_cli.blockstorage_root_group, "bv")
+cli_util.rename_command(blockstorage_cli, cli, blockstorage_cli.blockstorage_root_group, "bv")
 blockstorage_cli.volume_group.commands.pop(blockstorage_cli.create_volume.name)
 blockstorage_cli.boot_volume_group.commands.pop(blockstorage_cli.create_boot_volume.name)
-cli_util.rename_command(blockstorage_cli.blockstorage_root_group, blockstorage_cli.volume_backup_group, "backup")
+cli_util.rename_command(blockstorage_cli, blockstorage_cli.blockstorage_root_group, blockstorage_cli.volume_backup_group, "backup")
 blockstorage_cli.blockstorage_root_group.help = "Block Volume Service CLI"
 blockstorage_cli.blockstorage_root_group.short_help = "Block Volume Service"
 

@@ -14,31 +14,31 @@ from oci_cli.aliasing import CommandGroupWithAlias
 from services.limits.src.oci_cli_limits.generated import limits_service_cli
 
 
-@click.command(cli_util.override('limits_root_group.command_name', 'limits'), cls=CommandGroupWithAlias, help=cli_util.override('limits_root_group.help', """APIs that interact with the resource limits of a specific resource type"""), short_help=cli_util.override('limits_root_group.short_help', """Service limits APIs"""))
+@click.command(cli_util.override('limits.limits_root_group.command_name', 'limits'), cls=CommandGroupWithAlias, help=cli_util.override('limits.limits_root_group.help', """APIs that interact with the resource limits of a specific resource type"""), short_help=cli_util.override('limits.limits_root_group.short_help', """Service limits APIs"""))
 @cli_util.help_option_group
 def limits_root_group():
     pass
 
 
-@click.command(cli_util.override('service_group.command_name', 'service'), cls=CommandGroupWithAlias, help="""A specific OCI service supported by resource limits.""")
+@click.command(cli_util.override('limits.service_group.command_name', 'service'), cls=CommandGroupWithAlias, help="""A specific OCI service supported by resource limits.""")
 @cli_util.help_option_group
 def service_group():
     pass
 
 
-@click.command(cli_util.override('limit_value_group.command_name', 'limit-value'), cls=CommandGroupWithAlias, help="""The value of a specific resource limit.""")
+@click.command(cli_util.override('limits.limit_value_group.command_name', 'limit-value'), cls=CommandGroupWithAlias, help="""The value of a specific resource limit.""")
 @cli_util.help_option_group
 def limit_value_group():
     pass
 
 
-@click.command(cli_util.override('limit_definition_group.command_name', 'limit-definition'), cls=CommandGroupWithAlias, help="""The metadata specific to a resource limit definition.""")
+@click.command(cli_util.override('limits.limit_definition_group.command_name', 'limit-definition'), cls=CommandGroupWithAlias, help="""The metadata specific to a resource limit definition.""")
 @cli_util.help_option_group
 def limit_definition_group():
     pass
 
 
-@click.command(cli_util.override('resource_availability_group.command_name', 'resource-availability'), cls=CommandGroupWithAlias, help="""The availability of a given resource limit, based on the usage, tenant service limits and quotas set for the tenancy. Note: We cannot guarantee this data for all the limits. In those cases, these fields will be empty.""")
+@click.command(cli_util.override('limits.resource_availability_group.command_name', 'resource-availability'), cls=CommandGroupWithAlias, help="""The availability of a given resource limit, based on the usage, tenant service limits and quotas set for the tenancy. Note: We cannot guarantee this data for all the limits. In those cases, these fields will be empty.""")
 @cli_util.help_option_group
 def resource_availability_group():
     pass
@@ -51,7 +51,7 @@ limits_root_group.add_command(limit_definition_group)
 limits_root_group.add_command(resource_availability_group)
 
 
-@resource_availability_group.command(name=cli_util.override('get_resource_availability.command_name', 'get'), help=u"""For a given compartmentId, resource limit name, and scope, returns the following:   - the number of available resources associated with the given limit   - the usage in the selected compartment for the given limit   Note: not all resource limits support this API. If the value is not available, the API will return 404.""")
+@resource_availability_group.command(name=cli_util.override('limits.get_resource_availability.command_name', 'get'), help=u"""For a given compartmentId, resource limit name, and scope, returns the following:   - the number of available resources associated with the given limit   - the usage in the selected compartment for the given limit   Note: not all resource limits support this API. If the value is not available, the API will return 404.""")
 @cli_util.option('--service-name', required=True, help=u"""The service name of the target quota.""")
 @cli_util.option('--limit-name', required=True, help=u"""The limit name for which to fetch the data.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment for which data is being fetched.""")
@@ -83,7 +83,7 @@ def get_resource_availability(ctx, from_json, service_name, limit_name, compartm
     cli_util.render_response(result, ctx)
 
 
-@limit_definition_group.command(name=cli_util.override('list_limit_definitions.command_name', 'list'), help=u"""Includes a list of resource limits that are currently supported. If the 'areQuotasSupported' property is true, you can create quota policies on top of this limit at the compartment level.""")
+@limit_definition_group.command(name=cli_util.override('limits.list_limit_definitions.command_name', 'list'), help=u"""Includes a list of resource limits that are currently supported. If the 'areQuotasSupported' property is true, you can create quota policies on top of this limit at the compartment level.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the parent compartment (remember that the tenancy is simply the root compartment).""")
 @cli_util.option('--service-name', help=u"""The target service name.""")
 @cli_util.option('--name', help=u"""Optional field, filter for a specific resource limit.""")
@@ -143,7 +143,7 @@ def list_limit_definitions(ctx, from_json, all_pages, page_size, compartment_id,
     cli_util.render_response(result, ctx)
 
 
-@limit_value_group.command(name=cli_util.override('list_limit_values.command_name', 'list'), help=u"""Includes a full list of resource limits belonging to a given service.""")
+@limit_value_group.command(name=cli_util.override('limits.list_limit_values.command_name', 'list'), help=u"""Includes a full list of resource limits belonging to a given service.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the parent compartment (remember that the tenancy is simply the root compartment).""")
 @cli_util.option('--service-name', required=True, help=u"""The target service name""")
 @cli_util.option('--scope-type', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "REGION", "AD"]), help=u"""Filter entries by scope type.""")
@@ -212,7 +212,7 @@ def list_limit_values(ctx, from_json, all_pages, page_size, compartment_id, serv
     cli_util.render_response(result, ctx)
 
 
-@service_group.command(name=cli_util.override('list_services.command_name', 'list'), help=u"""Returns the list of supported services. This will include the programmatic service name, along with the friendly service name.""")
+@service_group.command(name=cli_util.override('limits.list_services.command_name', 'list'), help=u"""Returns the list of supported services. This will include the programmatic service name, along with the friendly service name.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the parent compartment (remember that the tenancy is simply the root compartment).""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["name", "description"]), help=u"""The field to sort by.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'. By default it will be ascending.""")

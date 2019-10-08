@@ -14,15 +14,15 @@ from oci_cli import custom_types  # noqa: F401
 from oci_cli.aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('events_root_group.command_name', 'events'), cls=CommandGroupWithAlias, help=cli_util.override('events_root_group.help', """API for the Events Service. Use this API to manage rules and actions that create automation
+@cli.command(cli_util.override('events.events_root_group.command_name', 'events'), cls=CommandGroupWithAlias, help=cli_util.override('events.events_root_group.help', """API for the Events Service. Use this API to manage rules and actions that create automation
 in your tenancy. For more information, see [Overview of Events](/iaas/Content/Events/Concepts/eventsoverview.htm).
-"""), short_help=cli_util.override('events_root_group.short_help', """Events API"""))
+"""), short_help=cli_util.override('events.events_root_group.short_help', """Events API"""))
 @cli_util.help_option_group
 def events_root_group():
     pass
 
 
-@click.command(cli_util.override('rule_group.command_name', 'rule'), cls=CommandGroupWithAlias, help="""The configuration details of an Events rule. For more information, see [Managing Rules for Events]""")
+@click.command(cli_util.override('events.rule_group.command_name', 'rule'), cls=CommandGroupWithAlias, help="""The configuration details of an Events rule. For more information, see [Managing Rules for Events]""")
 @cli_util.help_option_group
 def rule_group():
     pass
@@ -31,7 +31,7 @@ def rule_group():
 events_root_group.add_command(rule_group)
 
 
-@rule_group.command(name=cli_util.override('change_rule_compartment.command_name', 'change-compartment'), help=u"""Moves a rule into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].""")
+@rule_group.command(name=cli_util.override('events.change_rule_compartment.command_name', 'change-compartment'), help=u"""Moves a rule into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].""")
 @cli_util.option('--rule-id', required=True, help=u"""The [OCID] of this rule.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -62,7 +62,7 @@ def change_rule_compartment(ctx, from_json, rule_id, compartment_id, if_match):
     cli_util.render_response(result, ctx)
 
 
-@rule_group.command(name=cli_util.override('create_rule.command_name', 'create'), help=u"""Creates a new rule.""")
+@rule_group.command(name=cli_util.override('events.create_rule.command_name', 'create'), help=u"""Creates a new rule.""")
 @cli_util.option('--display-name', required=True, help=u"""A string that describes the rule. It does not have to be unique, and you can change it. Avoid entering confidential information.""")
 @cli_util.option('--is-enabled', required=True, type=click.BOOL, help=u"""Whether or not this rule is currently enabled.
 
@@ -146,7 +146,7 @@ def create_rule(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
     cli_util.render_response(result, ctx)
 
 
-@rule_group.command(name=cli_util.override('delete_rule.command_name', 'delete'), help=u"""Deletes a rule.""")
+@rule_group.command(name=cli_util.override('events.delete_rule.command_name', 'delete'), help=u"""Deletes a rule.""")
 @cli_util.option('--rule-id', required=True, help=u"""The [OCID] of this rule.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -209,7 +209,7 @@ def delete_rule(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
     cli_util.render_response(result, ctx)
 
 
-@rule_group.command(name=cli_util.override('get_rule.command_name', 'get'), help=u"""Retrieves a rule.""")
+@rule_group.command(name=cli_util.override('events.get_rule.command_name', 'get'), help=u"""Retrieves a rule.""")
 @cli_util.option('--rule-id', required=True, help=u"""The [OCID] of this rule.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -231,7 +231,7 @@ def get_rule(ctx, from_json, rule_id):
     cli_util.render_response(result, ctx)
 
 
-@rule_group.command(name=cli_util.override('list_rules.command_name', 'list'), help=u"""Lists rules for this compartment.""")
+@rule_group.command(name=cli_util.override('events.list_rules.command_name', 'list'), help=u"""Lists rules for this compartment.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to which this rule belongs.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return. 1 is the minimum, 50 is the maximum. Default: 10""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the opc-next-page response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
@@ -301,7 +301,7 @@ def list_rules(ctx, from_json, all_pages, page_size, compartment_id, limit, page
     cli_util.render_response(result, ctx)
 
 
-@rule_group.command(name=cli_util.override('update_rule.command_name', 'update'), help=u"""Updates a rule.""")
+@rule_group.command(name=cli_util.override('events.update_rule.command_name', 'update'), help=u"""Updates a rule.""")
 @cli_util.option('--rule-id', required=True, help=u"""The [OCID] of this rule.""")
 @cli_util.option('--display-name', help=u"""A string that describes the rule. It does not have to be unique, and you can change it. Avoid entering confidential information.""")
 @cli_util.option('--description', help=u"""A string that describes the details of the rule. It does not have to be unique, and you can change it. Avoid entering confidential information.""")

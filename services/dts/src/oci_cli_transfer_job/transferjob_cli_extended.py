@@ -104,3 +104,16 @@ def delete_transfer_job_extended(ctx, **kwargs):
         kwargs['id'] = kwargs['job_id']
         kwargs.pop('job_id')
     ctx.invoke(transferjob_cli.delete_transfer_job, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(transferjob_cli.change_transfer_job_compartment, params_to_exclude=['transfer_job_id'])
+@transferjob_cli.transfer_job_root_group.command(name=transferjob_cli.change_transfer_job_compartment.name, help=transferjob_cli.change_transfer_job_compartment.help)
+@cli_util.option('--job-id', required=True, help=u"""ID of the Transfer Job""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler({})
+@cli_util.wrap_exceptions
+def change_transfer_job_compartment_extended(ctx, **kwargs):
+    if 'job_id' in kwargs:
+        kwargs['transfer_job_id'] = kwargs['job_id']
+        kwargs.pop('job_id')
+    ctx.invoke(transferjob_cli.change_transfer_job_compartment, **kwargs)

@@ -163,11 +163,11 @@ get_param(objectstorage_cli.get_preauthenticated_request, 'namespace_name').opts
 get_param(objectstorage_cli.list_preauthenticated_requests, 'bucket_name').opts.extend(['-bn'])
 get_param(objectstorage_cli.list_preauthenticated_requests, 'namespace_name').opts.extend(['--namespace', '-ns'])
 
-cli_util.rename_command(objectstorage_cli.os_root_group, objectstorage_cli.namespace_group, "ns")
-cli_util.rename_command(objectstorage_cli.namespace_group, objectstorage_cli.get_namespace_metadata, "get-metadata")
-cli_util.rename_command(objectstorage_cli.namespace_group, objectstorage_cli.update_namespace_metadata, "update-metadata")
-cli_util.rename_command(objectstorage_cli.os_root_group, objectstorage_cli.preauthenticated_request_group, "preauth-request")
-cli_util.rename_command(objectstorage_cli.work_request_log_entry_group, objectstorage_cli.list_work_request_logs, "list")
+cli_util.rename_command(objectstorage_cli, objectstorage_cli.os_root_group, objectstorage_cli.namespace_group, "ns")
+cli_util.rename_command(objectstorage_cli, objectstorage_cli.namespace_group, objectstorage_cli.get_namespace_metadata, "get-metadata")
+cli_util.rename_command(objectstorage_cli, objectstorage_cli.namespace_group, objectstorage_cli.update_namespace_metadata, "update-metadata")
+cli_util.rename_command(objectstorage_cli, objectstorage_cli.os_root_group, objectstorage_cli.preauthenticated_request_group, "preauth-request")
+cli_util.rename_command(objectstorage_cli, objectstorage_cli.work_request_log_entry_group, objectstorage_cli.list_work_request_logs, "list")
 
 objectstorage_cli.os_root_group.help = "Object Storage Service CLI"
 objectstorage_cli.os_root_group.short_help = "Object Storage Service"

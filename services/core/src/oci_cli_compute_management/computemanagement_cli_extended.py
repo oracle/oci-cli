@@ -9,12 +9,12 @@ from oci_cli import cli_util
 from oci_cli import json_skeleton_utils
 
 cli.add_command(computemanagement_cli.compute_management_root_group)
-cli_util.rename_command(computemanagement_cli.instance_pool_group, computemanagement_cli.list_instance_pool_instances, "list-instances")
-cli_util.rename_command(computemanagement_cli.instance_configuration_group, computemanagement_cli.launch_instance_configuration_compute_instance_details, "launch-compute-instance")
+cli_util.rename_command(computemanagement_cli, computemanagement_cli.instance_pool_group, computemanagement_cli.list_instance_pool_instances, "list-instances")
+cli_util.rename_command(computemanagement_cli, computemanagement_cli.instance_configuration_group, computemanagement_cli.launch_instance_configuration_compute_instance_details, "launch-compute-instance")
 
 computemanagement_cli.instance_configuration_group.commands.pop(computemanagement_cli.create_instance_configuration.name)
-cli_util.rename_command(computemanagement_cli.instance_configuration_group, computemanagement_cli.create_instance_configuration_create_instance_configuration_details, "create")
-cli_util.rename_command(computemanagement_cli.instance_configuration_group, computemanagement_cli.create_instance_configuration_create_instance_configuration_from_instance_details, "create-from-instance")
+cli_util.rename_command(computemanagement_cli, computemanagement_cli.instance_configuration_group, computemanagement_cli.create_instance_configuration_create_instance_configuration_details, "create")
+cli_util.rename_command(computemanagement_cli, computemanagement_cli.instance_configuration_group, computemanagement_cli.create_instance_configuration_create_instance_configuration_from_instance_details, "create-from-instance")
 
 # hide compute management 'instances' group, commands belong under other groups
 computemanagement_cli.compute_management_root_group.commands.pop(computemanagement_cli.instance_group.name)
@@ -24,15 +24,15 @@ computemanagement_cli.instance_configuration_group.add_command(computemanagement
 computemanagement_cli.compute_management_root_group.help = "Compute Management Service CLI"
 computemanagement_cli.compute_management_root_group.short_help = "Compute Management Service"
 
-cli_util.rename_command(computemanagement_cli.instance_pool_group, computemanagement_cli.attach_load_balancer, "attach-lb")
-cli_util.rename_command(computemanagement_cli.instance_pool_group, computemanagement_cli.detach_load_balancer, "detach-lb")
+cli_util.rename_command(computemanagement_cli, computemanagement_cli.instance_pool_group, computemanagement_cli.attach_load_balancer, "attach-lb")
+cli_util.rename_command(computemanagement_cli, computemanagement_cli.instance_pool_group, computemanagement_cli.detach_load_balancer, "detach-lb")
 
 # From: oci compute-management instance-pool-load-balancer-attachment get --instance-pool-id, --instance-pool-load-balancer-attachment-id
 # To:   oci compute-management instance-pool lb-attachment get --instance-pool-id, --lb-attachment-id
 computemanagement_cli.compute_management_root_group.commands.pop(computemanagement_cli.instance_pool_load_balancer_attachment_group.name)
 computemanagement_cli.instance_pool_load_balancer_attachment_group.commands.pop(computemanagement_cli.get_instance_pool_load_balancer_attachment.name)
 computemanagement_cli.instance_pool_group.add_command(computemanagement_cli.instance_pool_load_balancer_attachment_group)
-cli_util.rename_command(computemanagement_cli.instance_pool_group, computemanagement_cli.instance_pool_load_balancer_attachment_group, "lb-attachment")
+cli_util.rename_command(computemanagement_cli, computemanagement_cli.instance_pool_group, computemanagement_cli.instance_pool_load_balancer_attachment_group, "lb-attachment")
 
 
 # Adding the following 2 manual renames since using the rename_command also renames the existing top level commands (attach-lb, detach-lb)
@@ -68,4 +68,4 @@ def get_lb_attachment(ctx, **kwargs):
 
 # from: oci compute-management cluster-network list-cluster-network-instances
 # to:   oci compute-management cluster-network list-instances
-cli_util.rename_command(computemanagement_cli.cluster_network_group, computemanagement_cli.list_cluster_network_instances, "list-instances")
+cli_util.rename_command(computemanagement_cli, computemanagement_cli.cluster_network_group, computemanagement_cli.list_cluster_network_instances, "list-instances")

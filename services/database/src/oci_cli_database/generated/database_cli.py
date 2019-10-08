@@ -14,73 +14,73 @@ from oci_cli import custom_types  # noqa: F401
 from oci_cli.aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('db_root_group.command_name', 'db'), cls=CommandGroupWithAlias, help=cli_util.override('db_root_group.help', """The API for the Database Service."""), short_help=cli_util.override('db_root_group.short_help', """Database Service API"""))
+@cli.command(cli_util.override('db.db_root_group.command_name', 'db'), cls=CommandGroupWithAlias, help=cli_util.override('db.db_root_group.help', """The API for the Database Service."""), short_help=cli_util.override('db.db_root_group.short_help', """Database Service API"""))
 @cli_util.help_option_group
 def db_root_group():
     pass
 
 
-@click.command(cli_util.override('autonomous_data_warehouse_group.command_name', 'autonomous-data-warehouse'), cls=CommandGroupWithAlias, help="""**Deprecated.** See [AutonomousDatabase] for reference information about Autonomous Databases with the warehouse workload type.""")
+@click.command(cli_util.override('db.autonomous_data_warehouse_group.command_name', 'autonomous-data-warehouse'), cls=CommandGroupWithAlias, help="""**Deprecated.** See [AutonomousDatabase] for reference information about Autonomous Databases with the warehouse workload type.""")
 @cli_util.help_option_group
 def autonomous_data_warehouse_group():
     pass
 
 
-@click.command(cli_util.override('backup_group.command_name', 'backup'), cls=CommandGroupWithAlias, help="""""")
+@click.command(cli_util.override('db.backup_group.command_name', 'backup'), cls=CommandGroupWithAlias, help="""""")
 @cli_util.help_option_group
 def backup_group():
     pass
 
 
-@click.command(cli_util.override('autonomous_container_database_group.command_name', 'autonomous-container-database'), cls=CommandGroupWithAlias, help="""""")
+@click.command(cli_util.override('db.autonomous_container_database_group.command_name', 'autonomous-container-database'), cls=CommandGroupWithAlias, help="""""")
 @cli_util.help_option_group
 def autonomous_container_database_group():
     pass
 
 
-@click.command(cli_util.override('patch_group.command_name', 'patch'), cls=CommandGroupWithAlias, help="""""")
+@click.command(cli_util.override('db.patch_group.command_name', 'patch'), cls=CommandGroupWithAlias, help="""""")
 @cli_util.help_option_group
 def patch_group():
     pass
 
 
-@click.command(cli_util.override('exadata_infrastructure_group.command_name', 'exadata-infrastructure'), cls=CommandGroupWithAlias, help="""ExadataInfrastructure""")
+@click.command(cli_util.override('db.exadata_infrastructure_group.command_name', 'exadata-infrastructure'), cls=CommandGroupWithAlias, help="""ExadataInfrastructure""")
 @cli_util.help_option_group
 def exadata_infrastructure_group():
     pass
 
 
-@click.command(cli_util.override('database_group.command_name', 'database'), cls=CommandGroupWithAlias, help="""""")
+@click.command(cli_util.override('db.database_group.command_name', 'database'), cls=CommandGroupWithAlias, help="""""")
 @cli_util.help_option_group
 def database_group():
     pass
 
 
-@click.command(cli_util.override('db_system_shape_group.command_name', 'db-system-shape'), cls=CommandGroupWithAlias, help="""The shape of the DB system. The shape determines resources to allocate to the DB system - CPU cores and memory for VM shapes; CPU cores, memory and storage for non-VM (or bare metal) shapes. For a description of shapes, see [DB System Launch Options]. To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
+@click.command(cli_util.override('db.db_system_shape_group.command_name', 'db-system-shape'), cls=CommandGroupWithAlias, help="""The shape of the DB system. The shape determines resources to allocate to the DB system - CPU cores and memory for VM shapes; CPU cores, memory and storage for non-VM (or bare metal) shapes. For a description of shapes, see [DB System Launch Options]. To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
 @cli_util.help_option_group
 def db_system_shape_group():
     pass
 
 
-@click.command(cli_util.override('data_guard_association_group.command_name', 'data-guard-association'), cls=CommandGroupWithAlias, help="""""")
+@click.command(cli_util.override('db.data_guard_association_group.command_name', 'data-guard-association'), cls=CommandGroupWithAlias, help="""""")
 @cli_util.help_option_group
 def data_guard_association_group():
     pass
 
 
-@click.command(cli_util.override('autonomous_database_backup_group.command_name', 'autonomous-database-backup'), cls=CommandGroupWithAlias, help="""An Autonomous Database backup.""")
+@click.command(cli_util.override('db.autonomous_database_backup_group.command_name', 'autonomous-database-backup'), cls=CommandGroupWithAlias, help="""An Autonomous Database backup.""")
 @cli_util.help_option_group
 def autonomous_database_backup_group():
     pass
 
 
-@click.command(cli_util.override('db_home_group.command_name', 'db-home'), cls=CommandGroupWithAlias, help="""""")
+@click.command(cli_util.override('db.db_home_group.command_name', 'db-home'), cls=CommandGroupWithAlias, help="""""")
 @cli_util.help_option_group
 def db_home_group():
     pass
 
 
-@click.command(cli_util.override('autonomous_exadata_infrastructure_shape_group.command_name', 'autonomous-exadata-infrastructure-shape'), cls=CommandGroupWithAlias, help="""The shape of the Autonomous Exadata Infrastructure. The shape determines resources to allocate to the Autonomous Exadata Infrastructure (CPU cores, memory and storage).
+@click.command(cli_util.override('db.autonomous_exadata_infrastructure_shape_group.command_name', 'autonomous-exadata-infrastructure-shape'), cls=CommandGroupWithAlias, help="""The shape of the Autonomous Exadata Infrastructure. The shape determines resources to allocate to the Autonomous Exadata Infrastructure (CPU cores, memory and storage).
 
 To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
 @cli_util.help_option_group
@@ -88,7 +88,7 @@ def autonomous_exadata_infrastructure_shape_group():
     pass
 
 
-@click.command(cli_util.override('gi_version_group.command_name', 'gi-version'), cls=CommandGroupWithAlias, help="""The Oracle Grid Infrastructure (GI) version.
+@click.command(cli_util.override('db.gi_version_group.command_name', 'gi-version'), cls=CommandGroupWithAlias, help="""The Oracle Grid Infrastructure (GI) version.
 
 To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
 @cli_util.help_option_group
@@ -96,49 +96,49 @@ def gi_version_group():
     pass
 
 
-@click.command(cli_util.override('external_backup_job_group.command_name', 'external-backup-job'), cls=CommandGroupWithAlias, help="""Provides all the details that apply to an external backup job.""")
+@click.command(cli_util.override('db.external_backup_job_group.command_name', 'external-backup-job'), cls=CommandGroupWithAlias, help="""Provides all the details that apply to an external backup job.""")
 @cli_util.help_option_group
 def external_backup_job_group():
     pass
 
 
-@click.command(cli_util.override('autonomous_exadata_infrastructure_group.command_name', 'autonomous-exadata-infrastructure'), cls=CommandGroupWithAlias, help="""""")
+@click.command(cli_util.override('db.autonomous_exadata_infrastructure_group.command_name', 'autonomous-exadata-infrastructure'), cls=CommandGroupWithAlias, help="""""")
 @cli_util.help_option_group
 def autonomous_exadata_infrastructure_group():
     pass
 
 
-@click.command(cli_util.override('autonomous_data_warehouse_backup_group.command_name', 'autonomous-data-warehouse-backup'), cls=CommandGroupWithAlias, help="""**Deprecated.** See [AutonomousDatabaseBackup Reference] for reference information about Autonomous Data Warehouse backups.""")
+@click.command(cli_util.override('db.autonomous_data_warehouse_backup_group.command_name', 'autonomous-data-warehouse-backup'), cls=CommandGroupWithAlias, help="""**Deprecated.** See [AutonomousDatabaseBackup Reference] for reference information about Autonomous Data Warehouse backups.""")
 @cli_util.help_option_group
 def autonomous_data_warehouse_backup_group():
     pass
 
 
-@click.command(cli_util.override('backup_destination_group.command_name', 'backup-destination'), cls=CommandGroupWithAlias, help="""Backup destination details.""")
+@click.command(cli_util.override('db.backup_destination_group.command_name', 'backup-destination'), cls=CommandGroupWithAlias, help="""Backup destination details.""")
 @cli_util.help_option_group
 def backup_destination_group():
     pass
 
 
-@click.command(cli_util.override('maintenance_run_group.command_name', 'maintenance-run'), cls=CommandGroupWithAlias, help="""Details of a Maintenance Run.""")
+@click.command(cli_util.override('db.maintenance_run_group.command_name', 'maintenance-run'), cls=CommandGroupWithAlias, help="""Details of a Maintenance Run.""")
 @cli_util.help_option_group
 def maintenance_run_group():
     pass
 
 
-@click.command(cli_util.override('db_system_group.command_name', 'db-system'), cls=CommandGroupWithAlias, help="""""")
+@click.command(cli_util.override('db.db_system_group.command_name', 'db-system'), cls=CommandGroupWithAlias, help="""""")
 @cli_util.help_option_group
 def db_system_group():
     pass
 
 
-@click.command(cli_util.override('autonomous_database_group.command_name', 'autonomous-database'), cls=CommandGroupWithAlias, help="""An Oracle Autonomous Database.""")
+@click.command(cli_util.override('db.autonomous_database_group.command_name', 'autonomous-database'), cls=CommandGroupWithAlias, help="""An Oracle Autonomous Database.""")
 @cli_util.help_option_group
 def autonomous_database_group():
     pass
 
 
-@click.command(cli_util.override('db_version_group.command_name', 'db-version'), cls=CommandGroupWithAlias, help="""The Oracle Database software version.
+@click.command(cli_util.override('db.db_version_group.command_name', 'db-version'), cls=CommandGroupWithAlias, help="""The Oracle Database software version.
 
 To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
 @cli_util.help_option_group
@@ -146,37 +146,37 @@ def db_version_group():
     pass
 
 
-@click.command(cli_util.override('patch_history_entry_group.command_name', 'patch-history-entry'), cls=CommandGroupWithAlias, help="""""")
+@click.command(cli_util.override('db.patch_history_entry_group.command_name', 'patch-history-entry'), cls=CommandGroupWithAlias, help="""""")
 @cli_util.help_option_group
 def patch_history_entry_group():
     pass
 
 
-@click.command(cli_util.override('vm_cluster_network_group.command_name', 'vm-cluster-network'), cls=CommandGroupWithAlias, help="""The VM cluster network.""")
+@click.command(cli_util.override('db.vm_cluster_network_group.command_name', 'vm-cluster-network'), cls=CommandGroupWithAlias, help="""The VM cluster network.""")
 @cli_util.help_option_group
 def vm_cluster_network_group():
     pass
 
 
-@click.command(cli_util.override('autonomous_db_preview_version_group.command_name', 'autonomous-db-preview-version'), cls=CommandGroupWithAlias, help="""The Autonomous Database preview version. Note that preview version software is only available for [serverless deployments].""")
+@click.command(cli_util.override('db.autonomous_db_preview_version_group.command_name', 'autonomous-db-preview-version'), cls=CommandGroupWithAlias, help="""The Autonomous Database preview version. Note that preview version software is only available for [serverless deployments].""")
 @cli_util.help_option_group
 def autonomous_db_preview_version_group():
     pass
 
 
-@click.command(cli_util.override('vm_cluster_group.command_name', 'vm-cluster'), cls=CommandGroupWithAlias, help="""Details of the VM cluster.""")
+@click.command(cli_util.override('db.vm_cluster_group.command_name', 'vm-cluster'), cls=CommandGroupWithAlias, help="""Details of the VM cluster.""")
 @cli_util.help_option_group
 def vm_cluster_group():
     pass
 
 
-@click.command(cli_util.override('backup_destination_summary_group.command_name', 'backup-destination-summary'), cls=CommandGroupWithAlias, help="""Backup destination details, including the list of databases using the backup destination.""")
+@click.command(cli_util.override('db.backup_destination_summary_group.command_name', 'backup-destination-summary'), cls=CommandGroupWithAlias, help="""Backup destination details, including the list of databases using the backup destination.""")
 @cli_util.help_option_group
 def backup_destination_summary_group():
     pass
 
 
-@click.command(cli_util.override('db_node_group.command_name', 'db-node'), cls=CommandGroupWithAlias, help="""""")
+@click.command(cli_util.override('db.db_node_group.command_name', 'db-node'), cls=CommandGroupWithAlias, help="""""")
 @cli_util.help_option_group
 def db_node_group():
     pass
@@ -210,7 +210,7 @@ db_root_group.add_command(backup_destination_summary_group)
 db_root_group.add_command(db_node_group)
 
 
-@exadata_infrastructure_group.command(name=cli_util.override('activate_exadata_infrastructure.command_name', 'activate'), help=u"""Activates the specified Exadata infrastructure.""")
+@exadata_infrastructure_group.command(name=cli_util.override('db.activate_exadata_infrastructure.command_name', 'activate'), help=u"""Activates the specified Exadata infrastructure.""")
 @cli_util.option('--exadata-infrastructure-id', required=True, help=u"""The Exadata infrastructure [OCID].""")
 @cli_util.option('--activation-file', required=True, help=u"""The activation zip file.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "REQUIRES_ACTIVATION", "ACTIVATING", "ACTIVE", "ACTIVATION_FAILED", "FAILED", "UPDATING", "DELETING", "DELETED", "OFFLINE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -263,7 +263,7 @@ def activate_exadata_infrastructure(ctx, from_json, wait_for_state, max_wait_sec
     cli_util.render_response(result, ctx)
 
 
-@autonomous_container_database_group.command(name=cli_util.override('change_autonomous_container_database_compartment.command_name', 'change-compartment'), help=u"""Move the Autonomous Container Database and its dependent resources to the specified compartment. For more information about moving Autonomous Container Databases, see [Moving Database Resources to a Different Compartment].""")
+@autonomous_container_database_group.command(name=cli_util.override('db.change_autonomous_container_database_compartment.command_name', 'change-compartment'), help=u"""Move the Autonomous Container Database and its dependent resources to the specified compartment. For more information about moving Autonomous Container Databases, see [Moving Database Resources to a Different Compartment].""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the resource to.""")
 @cli_util.option('--autonomous-container-database-id', required=True, help=u"""The Autonomous Container Database [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -294,7 +294,7 @@ def change_autonomous_container_database_compartment(ctx, from_json, compartment
     cli_util.render_response(result, ctx)
 
 
-@autonomous_database_group.command(name=cli_util.override('change_autonomous_database_compartment.command_name', 'change-compartment'), help=u"""Move the Autonomous Database and its dependent resources to the specified compartment. For more information about moving Autonomous Databases, see [Moving Database Resources to a Different Compartment].""")
+@autonomous_database_group.command(name=cli_util.override('db.change_autonomous_database_compartment.command_name', 'change-compartment'), help=u"""Move the Autonomous Database and its dependent resources to the specified compartment. For more information about moving Autonomous Databases, see [Moving Database Resources to a Different Compartment].""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the resource to.""")
 @cli_util.option('--autonomous-database-id', required=True, help=u"""The database [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -325,7 +325,7 @@ def change_autonomous_database_compartment(ctx, from_json, compartment_id, auton
     cli_util.render_response(result, ctx)
 
 
-@autonomous_exadata_infrastructure_group.command(name=cli_util.override('change_autonomous_exadata_infrastructure_compartment.command_name', 'change-compartment'), help=u"""Move the Autonomous Exadata Infrastructure and its dependent resources to the specified compartment. For more information about moving Autonomous Exadata Infrastructures, see [Moving Database Resources to a Different Compartment].""")
+@autonomous_exadata_infrastructure_group.command(name=cli_util.override('db.change_autonomous_exadata_infrastructure_compartment.command_name', 'change-compartment'), help=u"""Move the Autonomous Exadata Infrastructure and its dependent resources to the specified compartment. For more information about moving Autonomous Exadata Infrastructures, see [Moving Database Resources to a Different Compartment].""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the resource to.""")
 @cli_util.option('--autonomous-exadata-infrastructure-id', required=True, help=u"""The Autonomous Exadata Infrastructure  [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -356,7 +356,7 @@ def change_autonomous_exadata_infrastructure_compartment(ctx, from_json, compart
     cli_util.render_response(result, ctx)
 
 
-@backup_destination_group.command(name=cli_util.override('change_backup_destination_compartment.command_name', 'change-compartment'), help=u"""Move the backup destination and its dependent resources to the specified compartment. For more information about moving backup destinations, see [Moving Database Resources to a Different Compartment].""")
+@backup_destination_group.command(name=cli_util.override('db.change_backup_destination_compartment.command_name', 'change-compartment'), help=u"""Move the backup destination and its dependent resources to the specified compartment. For more information about moving backup destinations, see [Moving Database Resources to a Different Compartment].""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the resource to.""")
 @cli_util.option('--backup-destination-id', required=True, help=u"""The [OCID] of the backup destination.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -387,7 +387,7 @@ def change_backup_destination_compartment(ctx, from_json, compartment_id, backup
     cli_util.render_response(result, ctx)
 
 
-@db_system_group.command(name=cli_util.override('change_db_system_compartment.command_name', 'change-compartment'), help=u"""Move the DB system and its dependent resources to the specified compartment. For more information about moving DB systems, see [Moving Database Resources to a Different Compartment].""")
+@db_system_group.command(name=cli_util.override('db.change_db_system_compartment.command_name', 'change-compartment'), help=u"""Move the DB system and its dependent resources to the specified compartment. For more information about moving DB systems, see [Moving Database Resources to a Different Compartment].""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the resource to.""")
 @cli_util.option('--db-system-id', required=True, help=u"""The DB system [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -418,7 +418,7 @@ def change_db_system_compartment(ctx, from_json, compartment_id, db_system_id, i
     cli_util.render_response(result, ctx)
 
 
-@exadata_infrastructure_group.command(name=cli_util.override('change_exadata_infrastructure_compartment.command_name', 'change-compartment'), help=u"""To move an Exadata infrastructure and its dependent resources to another compartment, use the [ChangeExadataInfrastructureCompartment] operation.""")
+@exadata_infrastructure_group.command(name=cli_util.override('db.change_exadata_infrastructure_compartment.command_name', 'change-compartment'), help=u"""To move an Exadata infrastructure and its dependent resources to another compartment, use the [ChangeExadataInfrastructureCompartment] operation.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the resource to.""")
 @cli_util.option('--exadata-infrastructure-id', required=True, help=u"""The Exadata infrastructure [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -449,7 +449,7 @@ def change_exadata_infrastructure_compartment(ctx, from_json, compartment_id, ex
     cli_util.render_response(result, ctx)
 
 
-@vm_cluster_group.command(name=cli_util.override('change_vm_cluster_compartment.command_name', 'change-compartment'), help=u"""To move a VM cluster and its dependent resources to another compartment, use the [ChangeVmClusterCompartment] operation.""")
+@vm_cluster_group.command(name=cli_util.override('db.change_vm_cluster_compartment.command_name', 'change-compartment'), help=u"""To move a VM cluster and its dependent resources to another compartment, use the [ChangeVmClusterCompartment] operation.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the VM cluster to.""")
 @cli_util.option('--vm-cluster-id', required=True, help=u"""The VM cluster [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -480,7 +480,7 @@ def change_vm_cluster_compartment(ctx, from_json, compartment_id, vm_cluster_id,
     cli_util.render_response(result, ctx)
 
 
-@external_backup_job_group.command(name=cli_util.override('complete_external_backup_job.command_name', 'complete'), help=u"""Changes the status of the standalone backup resource to `ACTIVE` after the backup is created from the on-premises database and placed in Oracle Cloud Infrastructure Object Storage.
+@external_backup_job_group.command(name=cli_util.override('db.complete_external_backup_job.command_name', 'complete'), help=u"""Changes the status of the standalone backup resource to `ACTIVE` after the backup is created from the on-premises database and placed in Oracle Cloud Infrastructure Object Storage.
 
 **Note:** This API is used by an Oracle Cloud Infrastructure Python script that is packaged with the Oracle Cloud Infrastructure CLI. Oracle recommends that you use the script instead using the API directly. See [Migrating an On-Premises Database to Oracle Cloud Infrastructure by Creating a Backup in the Cloud] for more information.""")
 @cli_util.option('--backup-id', required=True, help=u"""The backup [OCID].""")
@@ -534,7 +534,7 @@ def complete_external_backup_job(ctx, from_json, backup_id, tde_wallet_path, cf_
     cli_util.render_response(result, ctx)
 
 
-@autonomous_container_database_group.command(name=cli_util.override('create_autonomous_container_database.command_name', 'create'), help=u"""Create a new Autonomous Container Database in the specified Autonomous Exadata Infrastructure.""")
+@autonomous_container_database_group.command(name=cli_util.override('db.create_autonomous_container_database.command_name', 'create'), help=u"""Create a new Autonomous Container Database in the specified Autonomous Exadata Infrastructure.""")
 @cli_util.option('--display-name', required=True, help=u"""The display name for the Autonomous Container Database.""")
 @cli_util.option('--autonomous-exadata-infrastructure-id', required=True, help=u"""The OCID of the Autonomous Exadata Infrastructure.""")
 @cli_util.option('--patch-model', required=True, type=custom_types.CliCaseInsensitiveChoice(["RELEASE_UPDATES", "RELEASE_UPDATE_REVISIONS"]), help=u"""Database Patch model preference.""")
@@ -607,7 +607,7 @@ def create_autonomous_container_database(ctx, from_json, wait_for_state, max_wai
     cli_util.render_response(result, ctx)
 
 
-@autonomous_data_warehouse_group.command(name=cli_util.override('create_autonomous_data_warehouse.command_name', 'create'), help=u"""**Deprecated.** To create a new Autonomous Data Warehouse, use the [CreateAutonomousDatabase] operation and specify `DW` as the workload type.""")
+@autonomous_data_warehouse_group.command(name=cli_util.override('db.create_autonomous_data_warehouse.command_name', 'create'), help=u"""**Deprecated.** To create a new Autonomous Data Warehouse, use the [CreateAutonomousDatabase] operation and specify `DW` as the workload type.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment of the Autonomous Data Warehouse.""")
 @cli_util.option('--db-name', required=True, help=u"""The database name. The name must begin with an alphabetic character and can contain a maximum of 14 alphanumeric characters. Special characters are not permitted. The database name must be unique in the tenancy.""")
 @cli_util.option('--cpu-core-count', required=True, type=click.INT, help=u"""The number of CPU Cores to be made available to the database.""")
@@ -680,7 +680,7 @@ def create_autonomous_data_warehouse(ctx, from_json, wait_for_state, max_wait_se
     cli_util.render_response(result, ctx)
 
 
-@autonomous_data_warehouse_backup_group.command(name=cli_util.override('create_autonomous_data_warehouse_backup.command_name', 'create'), help=u"""**Deprecated.** To create a new Autonomous Data Warehouse backup for a specified database, use the [CreateAutonomousDatabaseBackup] operation.""")
+@autonomous_data_warehouse_backup_group.command(name=cli_util.override('db.create_autonomous_data_warehouse_backup.command_name', 'create'), help=u"""**Deprecated.** To create a new Autonomous Data Warehouse backup for a specified database, use the [CreateAutonomousDatabaseBackup] operation.""")
 @cli_util.option('--display-name', required=True, help=u"""The user-friendly name for the backup. The name does not have to be unique.""")
 @cli_util.option('--autonomous-data-warehouse-id', required=True, help=u"""The [OCID] of the Autonomous Data Warehouse backup.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -729,7 +729,7 @@ def create_autonomous_data_warehouse_backup(ctx, from_json, wait_for_state, max_
     cli_util.render_response(result, ctx)
 
 
-@autonomous_database_group.command(name=cli_util.override('create_autonomous_database.command_name', 'create'), help=u"""Creates a new Autonomous Database.""")
+@autonomous_database_group.command(name=cli_util.override('db.create_autonomous_database.command_name', 'create'), help=u"""Creates a new Autonomous Database.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment of the autonomous database.""")
 @cli_util.option('--db-name', required=True, help=u"""The database name. The name must begin with an alphabetic character and can contain a maximum of 14 alphanumeric characters. Special characters are not permitted. The database name must be unique in the tenancy.""")
 @cli_util.option('--cpu-core-count', required=True, type=click.INT, help=u"""The number of CPU Cores to be made available to the database.""")
@@ -831,7 +831,7 @@ def create_autonomous_database(ctx, from_json, wait_for_state, max_wait_seconds,
     cli_util.render_response(result, ctx)
 
 
-@autonomous_database_group.command(name=cli_util.override('create_autonomous_database_create_autonomous_database_clone_details.command_name', 'create-autonomous-database-create-autonomous-database-clone-details'), help=u"""Creates a new Autonomous Database.""")
+@autonomous_database_group.command(name=cli_util.override('db.create_autonomous_database_create_autonomous_database_clone_details.command_name', 'create-autonomous-database-create-autonomous-database-clone-details'), help=u"""Creates a new Autonomous Database.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment of the autonomous database.""")
 @cli_util.option('--db-name', required=True, help=u"""The database name. The name must begin with an alphabetic character and can contain a maximum of 14 alphanumeric characters. Special characters are not permitted. The database name must be unique in the tenancy.""")
 @cli_util.option('--cpu-core-count', required=True, type=click.INT, help=u"""The number of CPU Cores to be made available to the database.""")
@@ -935,7 +935,7 @@ def create_autonomous_database_create_autonomous_database_clone_details(ctx, fro
     cli_util.render_response(result, ctx)
 
 
-@autonomous_database_group.command(name=cli_util.override('create_autonomous_database_create_autonomous_database_details.command_name', 'create-autonomous-database-create-autonomous-database-details'), help=u"""Creates a new Autonomous Database.""")
+@autonomous_database_group.command(name=cli_util.override('db.create_autonomous_database_create_autonomous_database_details.command_name', 'create-autonomous-database-create-autonomous-database-details'), help=u"""Creates a new Autonomous Database.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment of the autonomous database.""")
 @cli_util.option('--db-name', required=True, help=u"""The database name. The name must begin with an alphabetic character and can contain a maximum of 14 alphanumeric characters. Special characters are not permitted. The database name must be unique in the tenancy.""")
 @cli_util.option('--cpu-core-count', required=True, type=click.INT, help=u"""The number of CPU Cores to be made available to the database.""")
@@ -1035,7 +1035,7 @@ def create_autonomous_database_create_autonomous_database_details(ctx, from_json
     cli_util.render_response(result, ctx)
 
 
-@autonomous_database_backup_group.command(name=cli_util.override('create_autonomous_database_backup.command_name', 'create'), help=u"""Creates a new Autonomous Database backup for the specified database based on the provided request parameters.""")
+@autonomous_database_backup_group.command(name=cli_util.override('db.create_autonomous_database_backup.command_name', 'create'), help=u"""Creates a new Autonomous Database backup for the specified database based on the provided request parameters.""")
 @cli_util.option('--display-name', required=True, help=u"""The user-friendly name for the backup. The name does not have to be unique.""")
 @cli_util.option('--autonomous-database-id', required=True, help=u"""The [OCID] of the Autonomous Database backup.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -1085,7 +1085,7 @@ def create_autonomous_database_backup(ctx, from_json, wait_for_state, max_wait_s
     cli_util.render_response(result, ctx)
 
 
-@backup_group.command(name=cli_util.override('create_backup.command_name', 'create'), help=u"""Creates a new backup in the specified database based on the request parameters you provide. If you previously used RMAN or dbcli to configure backups and then you switch to using the Console or the API for backups, a new backup configuration is created and associated with your database. This means that you can no longer rely on your previously configured unmanaged backups to work.""")
+@backup_group.command(name=cli_util.override('db.create_backup.command_name', 'create'), help=u"""Creates a new backup in the specified database based on the request parameters you provide. If you previously used RMAN or dbcli to configure backups and then you switch to using the Console or the API for backups, a new backup configuration is created and associated with your database. This means that you can no longer rely on your previously configured unmanaged backups to work.""")
 @cli_util.option('--database-id', required=True, help=u"""The [OCID] of the database.""")
 @cli_util.option('--display-name', required=True, help=u"""The user-friendly name for the backup. The name does not have to be unique.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED", "RESTORING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -1134,7 +1134,7 @@ def create_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
     cli_util.render_response(result, ctx)
 
 
-@backup_destination_group.command(name=cli_util.override('create_backup_destination.command_name', 'create'), help=u"""Creates a backup destination.""")
+@backup_destination_group.command(name=cli_util.override('db.create_backup_destination.command_name', 'create'), help=u"""Creates a backup destination.""")
 @cli_util.option('--display-name', required=True, help=u"""The user-provided name of the backup destination.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["NFS", "RECOVERY_APPLIANCE"]), help=u"""Type of the backup destination.""")
@@ -1196,7 +1196,7 @@ def create_backup_destination(ctx, from_json, wait_for_state, max_wait_seconds, 
     cli_util.render_response(result, ctx)
 
 
-@backup_destination_group.command(name=cli_util.override('create_backup_destination_create_nfs_backup_destination_details.command_name', 'create-backup-destination-create-nfs-backup-destination-details'), help=u"""Creates a backup destination.""")
+@backup_destination_group.command(name=cli_util.override('db.create_backup_destination_create_nfs_backup_destination_details.command_name', 'create-backup-destination-create-nfs-backup-destination-details'), help=u"""Creates a backup destination.""")
 @cli_util.option('--display-name', required=True, help=u"""The user-provided name of the backup destination.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--local-mount-point-path', required=True, help=u"""The local directory path on each VM cluster node where the NFS server location is mounted. The local directory path and the NFS server location must each be the same across all of the VM cluster nodes. Ensure that the NFS mount is maintained continuously on all of the VM cluster nodes.""")
@@ -1260,7 +1260,7 @@ def create_backup_destination_create_nfs_backup_destination_details(ctx, from_js
     cli_util.render_response(result, ctx)
 
 
-@backup_destination_group.command(name=cli_util.override('create_backup_destination_create_recovery_appliance_backup_destination_details.command_name', 'create-backup-destination-create-recovery-appliance-backup-destination-details'), help=u"""Creates a backup destination.""")
+@backup_destination_group.command(name=cli_util.override('db.create_backup_destination_create_recovery_appliance_backup_destination_details.command_name', 'create-backup-destination-create-recovery-appliance-backup-destination-details'), help=u"""Creates a backup destination.""")
 @cli_util.option('--display-name', required=True, help=u"""The user-provided name of the backup destination.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--connection-string', required=True, help=u"""The connection string for connecting to the Recovery Appliance.""")
@@ -1326,7 +1326,7 @@ def create_backup_destination_create_recovery_appliance_backup_destination_detai
     cli_util.render_response(result, ctx)
 
 
-@data_guard_association_group.command(name=cli_util.override('create_data_guard_association.command_name', 'create'), help=u"""Creates a new Data Guard association.  A Data Guard association represents the replication relationship between the specified database and a peer database. For more information, see [Using Oracle Data Guard].
+@data_guard_association_group.command(name=cli_util.override('db.create_data_guard_association.command_name', 'create'), help=u"""Creates a new Data Guard association.  A Data Guard association represents the replication relationship between the specified database and a peer database. For more information, see [Using Oracle Data Guard].
 
 All Oracle Cloud Infrastructure resources, including Data Guard associations, get an Oracle-assigned, unique ID called an Oracle Cloud Identifier (OCID). When you create a resource, you can find its OCID in the response. You can also retrieve a resource's OCID by using a List API operation on that resource type, or by viewing the resource in the Console. For more information, see [Resource Identifiers].""")
 @cli_util.option('--database-id', required=True, help=u"""The database [OCID].""")
@@ -1406,7 +1406,7 @@ def create_data_guard_association(ctx, from_json, wait_for_state, max_wait_secon
     cli_util.render_response(result, ctx)
 
 
-@data_guard_association_group.command(name=cli_util.override('create_data_guard_association_create_data_guard_association_with_new_db_system_details.command_name', 'create-data-guard-association-create-data-guard-association-with-new-db-system-details'), help=u"""Creates a new Data Guard association.  A Data Guard association represents the replication relationship between the specified database and a peer database. For more information, see [Using Oracle Data Guard].
+@data_guard_association_group.command(name=cli_util.override('db.create_data_guard_association_create_data_guard_association_with_new_db_system_details.command_name', 'create-data-guard-association-create-data-guard-association-with-new-db-system-details'), help=u"""Creates a new Data Guard association.  A Data Guard association represents the replication relationship between the specified database and a peer database. For more information, see [Using Oracle Data Guard].
 
 All Oracle Cloud Infrastructure resources, including Data Guard associations, get an Oracle-assigned, unique ID called an Oracle Cloud Identifier (OCID). When you create a resource, you can find its OCID in the response. You can also retrieve a resource's OCID by using a List API operation on that resource type, or by viewing the resource in the Console. For more information, see [Resource Identifiers].""")
 @cli_util.option('--database-id', required=True, help=u"""The database [OCID].""")
@@ -1512,7 +1512,7 @@ def create_data_guard_association_create_data_guard_association_with_new_db_syst
     cli_util.render_response(result, ctx)
 
 
-@data_guard_association_group.command(name=cli_util.override('create_data_guard_association_create_data_guard_association_to_existing_db_system_details.command_name', 'create-data-guard-association-create-data-guard-association-to-existing-db-system-details'), help=u"""Creates a new Data Guard association.  A Data Guard association represents the replication relationship between the specified database and a peer database. For more information, see [Using Oracle Data Guard].
+@data_guard_association_group.command(name=cli_util.override('db.create_data_guard_association_create_data_guard_association_to_existing_db_system_details.command_name', 'create-data-guard-association-create-data-guard-association-to-existing-db-system-details'), help=u"""Creates a new Data Guard association.  A Data Guard association represents the replication relationship between the specified database and a peer database. For more information, see [Using Oracle Data Guard].
 
 All Oracle Cloud Infrastructure resources, including Data Guard associations, get an Oracle-assigned, unique ID called an Oracle Cloud Identifier (OCID). When you create a resource, you can find its OCID in the response. You can also retrieve a resource's OCID by using a List API operation on that resource type, or by viewing the resource in the Console. For more information, see [Resource Identifiers].""")
 @cli_util.option('--database-id', required=True, help=u"""The database [OCID].""")
@@ -1596,7 +1596,7 @@ def create_data_guard_association_create_data_guard_association_to_existing_db_s
     cli_util.render_response(result, ctx)
 
 
-@db_home_group.command(name=cli_util.override('create_db_home.command_name', 'create'), help=u"""Creates a new database home in the specified DB system based on the request parameters you provide.""")
+@db_home_group.command(name=cli_util.override('db.create_db_home.command_name', 'create'), help=u"""Creates a new database home in the specified DB system based on the request parameters you provide.""")
 @cli_util.option('--display-name', help=u"""The user-provided name of the database home.""")
 @cli_util.option('--source', type=custom_types.CliCaseInsensitiveChoice(["NONE", "DB_BACKUP", "VM_CLUSTER_NEW", "VM_CLUSTER_BACKUP"]), help=u"""The source of database: NONE for creating a new database. DB_BACKUP for creating a new database by restoring from a database backup.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -1649,7 +1649,7 @@ def create_db_home(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
     cli_util.render_response(result, ctx)
 
 
-@db_home_group.command(name=cli_util.override('create_db_home_create_db_home_with_db_system_id_from_backup_details.command_name', 'create-db-home-create-db-home-with-db-system-id-from-backup-details'), help=u"""Creates a new database home in the specified DB system based on the request parameters you provide.""")
+@db_home_group.command(name=cli_util.override('db.create_db_home_create_db_home_with_db_system_id_from_backup_details.command_name', 'create-db-home-create-db-home-with-db-system-id-from-backup-details'), help=u"""Creates a new database home in the specified DB system based on the request parameters you provide.""")
 @cli_util.option('--db-system-id', required=True, help=u"""The [OCID] of the DB system.""")
 @cli_util.option('--database', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""The user-provided name of the database home.""")
@@ -1704,7 +1704,7 @@ def create_db_home_create_db_home_with_db_system_id_from_backup_details(ctx, fro
     cli_util.render_response(result, ctx)
 
 
-@db_home_group.command(name=cli_util.override('create_db_home_create_db_home_with_vm_cluster_id_from_backup_details.command_name', 'create-db-home-create-db-home-with-vm-cluster-id-from-backup-details'), help=u"""Creates a new database home in the specified DB system based on the request parameters you provide.""")
+@db_home_group.command(name=cli_util.override('db.create_db_home_create_db_home_with_vm_cluster_id_from_backup_details.command_name', 'create-db-home-create-db-home-with-vm-cluster-id-from-backup-details'), help=u"""Creates a new database home in the specified DB system based on the request parameters you provide.""")
 @cli_util.option('--vm-cluster-id', required=True, help=u"""The [OCID] of the VM cluster.""")
 @cli_util.option('--database', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""The user-provided name of the database home.""")
@@ -1759,7 +1759,7 @@ def create_db_home_create_db_home_with_vm_cluster_id_from_backup_details(ctx, fr
     cli_util.render_response(result, ctx)
 
 
-@db_home_group.command(name=cli_util.override('create_db_home_create_db_home_with_db_system_id_details.command_name', 'create-db-home-create-db-home-with-db-system-id-details'), help=u"""Creates a new database home in the specified DB system based on the request parameters you provide.""")
+@db_home_group.command(name=cli_util.override('db.create_db_home_create_db_home_with_db_system_id_details.command_name', 'create-db-home-create-db-home-with-db-system-id-details'), help=u"""Creates a new database home in the specified DB system based on the request parameters you provide.""")
 @cli_util.option('--db-system-id', required=True, help=u"""The [OCID] of the DB system.""")
 @cli_util.option('--db-version', required=True, help=u"""A valid Oracle Database version. To get a list of supported versions, use the [ListDbVersions] operation.""")
 @cli_util.option('--database', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1816,7 +1816,7 @@ def create_db_home_create_db_home_with_db_system_id_details(ctx, from_json, wait
     cli_util.render_response(result, ctx)
 
 
-@db_home_group.command(name=cli_util.override('create_db_home_create_db_home_with_vm_cluster_id_details.command_name', 'create-db-home-create-db-home-with-vm-cluster-id-details'), help=u"""Creates a new database home in the specified DB system based on the request parameters you provide.""")
+@db_home_group.command(name=cli_util.override('db.create_db_home_create_db_home_with_vm_cluster_id_details.command_name', 'create-db-home-create-db-home-with-vm-cluster-id-details'), help=u"""Creates a new database home in the specified DB system based on the request parameters you provide.""")
 @cli_util.option('--vm-cluster-id', required=True, help=u"""The [OCID] of the VM cluster.""")
 @cli_util.option('--db-version', required=True, help=u"""A valid Oracle Database version. To get a list of supported versions, use the [ListDbVersions] operation.""")
 @cli_util.option('--database', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1873,7 +1873,7 @@ def create_db_home_create_db_home_with_vm_cluster_id_details(ctx, from_json, wai
     cli_util.render_response(result, ctx)
 
 
-@exadata_infrastructure_group.command(name=cli_util.override('create_exadata_infrastructure.command_name', 'create'), help=u"""Create Exadata infrastructure.""")
+@exadata_infrastructure_group.command(name=cli_util.override('db.create_exadata_infrastructure.command_name', 'create'), help=u"""Create Exadata infrastructure.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--display-name', required=True, help=u"""The user-friendly name for the Exadata infrastructure. The name does not need to be unique.""")
 @cli_util.option('--shape', required=True, help=u"""The shape of the Exadata infrastructure. The shape determines the amount of CPU, storage, and memory resources allocated to the instance.""")
@@ -1955,7 +1955,7 @@ def create_exadata_infrastructure(ctx, from_json, wait_for_state, max_wait_secon
     cli_util.render_response(result, ctx)
 
 
-@external_backup_job_group.command(name=cli_util.override('create_external_backup_job.command_name', 'create'), help=u"""Creates a new backup resource and returns the information the caller needs to back up an on-premises Oracle Database to Oracle Cloud Infrastructure.
+@external_backup_job_group.command(name=cli_util.override('db.create_external_backup_job.command_name', 'create'), help=u"""Creates a new backup resource and returns the information the caller needs to back up an on-premises Oracle Database to Oracle Cloud Infrastructure.
 
 **Note:** This API is used by an Oracle Cloud Infrastructure Python script that is packaged with the Oracle Cloud Infrastructure CLI. Oracle recommends that you use the script instead using the API directly. See [Migrating an On-Premises Database to Oracle Cloud Infrastructure by Creating a Backup in the Cloud] for more information.""")
 @cli_util.option('--availability-domain', required=True, help=u"""The targeted availability domain for the backup.""")
@@ -2005,7 +2005,7 @@ def create_external_backup_job(ctx, from_json, availability_domain, compartment_
     cli_util.render_response(result, ctx)
 
 
-@vm_cluster_group.command(name=cli_util.override('create_vm_cluster.command_name', 'create'), help=u"""Creates a VM cluster.""")
+@vm_cluster_group.command(name=cli_util.override('db.create_vm_cluster.command_name', 'create'), help=u"""Creates a VM cluster.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--display-name', required=True, help=u"""The user-friendly name for the VM cluster. The name does not need to be unique.""")
 @cli_util.option('--exadata-infrastructure-id', required=True, help=u"""The [OCID] of the Exadata infrastructure.""")
@@ -2091,7 +2091,7 @@ def create_vm_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
     cli_util.render_response(result, ctx)
 
 
-@vm_cluster_network_group.command(name=cli_util.override('create_vm_cluster_network.command_name', 'create'), help=u"""Creates the VM cluster network.""")
+@vm_cluster_network_group.command(name=cli_util.override('db.create_vm_cluster_network.command_name', 'create'), help=u"""Creates the VM cluster network.""")
 @cli_util.option('--exadata-infrastructure-id', required=True, help=u"""The Exadata infrastructure [OCID].""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--display-name', required=True, help=u"""The user-friendly name for the VM cluster network. The name does not need to be unique.""")
@@ -2168,7 +2168,7 @@ def create_vm_cluster_network(ctx, from_json, wait_for_state, max_wait_seconds, 
     cli_util.render_response(result, ctx)
 
 
-@db_node_group.command(name=cli_util.override('db_node_action.command_name', 'db-node-action'), help=u"""Performs one of the following power actions on the specified DB node: - start - power on - stop - power off - softreset - ACPI shutdown and power on - reset - power off and power on
+@db_node_group.command(name=cli_util.override('db.db_node_action.command_name', 'db-node-action'), help=u"""Performs one of the following power actions on the specified DB node: - start - power on - stop - power off - softreset - ACPI shutdown and power on - reset - power off and power on
 
 **Note:** Stopping a node affects billing differently, depending on the type of DB system: *Bare metal and Exadata DB systems* - The _stop_ state has no effect on the resources you consume. Billing continues for DB nodes that you stop, and related resources continue to apply against any relevant quotas. You must terminate the DB system ([TerminateDbSystem]) to remove its resources from billing and quotas. *Virtual machine DB systems* - Stopping a node stops billing for all OCPUs associated with that node, and billing resumes when you restart the node.""")
 @cli_util.option('--db-node-id', required=True, help=u"""The database node [OCID].""")
@@ -2221,7 +2221,7 @@ def db_node_action(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
     cli_util.render_response(result, ctx)
 
 
-@autonomous_data_warehouse_group.command(name=cli_util.override('delete_autonomous_data_warehouse.command_name', 'delete'), help=u"""**Deprecated.** To delete an Autonomous Data Warehouse, use the [DeleteAutonomousDatabase] operation.""")
+@autonomous_data_warehouse_group.command(name=cli_util.override('db.delete_autonomous_data_warehouse.command_name', 'delete'), help=u"""**Deprecated.** To delete an Autonomous Data Warehouse, use the [DeleteAutonomousDatabase] operation.""")
 @cli_util.option('--autonomous-data-warehouse-id', required=True, help=u"""The database [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -2283,7 +2283,7 @@ def delete_autonomous_data_warehouse(ctx, from_json, wait_for_state, max_wait_se
     cli_util.render_response(result, ctx)
 
 
-@autonomous_database_group.command(name=cli_util.override('delete_autonomous_database.command_name', 'delete'), help=u"""Deletes the specified Autonomous Database.""")
+@autonomous_database_group.command(name=cli_util.override('db.delete_autonomous_database.command_name', 'delete'), help=u"""Deletes the specified Autonomous Database.""")
 @cli_util.option('--autonomous-database-id', required=True, help=u"""The database [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -2346,7 +2346,7 @@ def delete_autonomous_database(ctx, from_json, wait_for_state, max_wait_seconds,
     cli_util.render_response(result, ctx)
 
 
-@backup_group.command(name=cli_util.override('delete_backup.command_name', 'delete'), help=u"""Deletes a full backup. You cannot delete automatic backups using this API.""")
+@backup_group.command(name=cli_util.override('db.delete_backup.command_name', 'delete'), help=u"""Deletes a full backup. You cannot delete automatic backups using this API.""")
 @cli_util.option('--backup-id', required=True, help=u"""The backup [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -2408,7 +2408,7 @@ def delete_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
     cli_util.render_response(result, ctx)
 
 
-@backup_destination_group.command(name=cli_util.override('delete_backup_destination.command_name', 'delete'), help=u"""Deletes a backup destination.""")
+@backup_destination_group.command(name=cli_util.override('db.delete_backup_destination.command_name', 'delete'), help=u"""Deletes a backup destination.""")
 @cli_util.option('--backup-destination-id', required=True, help=u"""The [OCID] of the backup destination.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -2471,7 +2471,7 @@ def delete_backup_destination(ctx, from_json, wait_for_state, max_wait_seconds, 
     cli_util.render_response(result, ctx)
 
 
-@db_home_group.command(name=cli_util.override('delete_db_home.command_name', 'delete'), help=u"""Deletes a DB Home. The DB Home and its database data are local to the DB system and will be lost when it is deleted. Oracle recommends that you back up any data in the DB system prior to deleting it.""")
+@db_home_group.command(name=cli_util.override('db.delete_db_home.command_name', 'delete'), help=u"""Deletes a DB Home. The DB Home and its database data are local to the DB system and will be lost when it is deleted. Oracle recommends that you back up any data in the DB system prior to deleting it.""")
 @cli_util.option('--db-home-id', required=True, help=u"""The database home [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--perform-final-backup', type=click.BOOL, help=u"""Whether to perform a final backup of the database or not. Default is false. If you previously used RMAN or dbcli to configure backups and then you switch to using the Console or the API for backups, a new backup configuration is created and associated with your database. This means that you can no longer rely on your previously configured unmanaged backups to work.""")
@@ -2536,7 +2536,7 @@ def delete_db_home(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
     cli_util.render_response(result, ctx)
 
 
-@exadata_infrastructure_group.command(name=cli_util.override('delete_exadata_infrastructure.command_name', 'delete'), help=u"""Deletes the Exadata infrastructure.""")
+@exadata_infrastructure_group.command(name=cli_util.override('db.delete_exadata_infrastructure.command_name', 'delete'), help=u"""Deletes the Exadata infrastructure.""")
 @cli_util.option('--exadata-infrastructure-id', required=True, help=u"""The Exadata infrastructure [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -2599,7 +2599,7 @@ def delete_exadata_infrastructure(ctx, from_json, wait_for_state, max_wait_secon
     cli_util.render_response(result, ctx)
 
 
-@vm_cluster_group.command(name=cli_util.override('delete_vm_cluster.command_name', 'delete'), help=u"""Deletes the specified VM cluster.""")
+@vm_cluster_group.command(name=cli_util.override('db.delete_vm_cluster.command_name', 'delete'), help=u"""Deletes the specified VM cluster.""")
 @cli_util.option('--vm-cluster-id', required=True, help=u"""The VM cluster [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -2662,7 +2662,7 @@ def delete_vm_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
     cli_util.render_response(result, ctx)
 
 
-@vm_cluster_network_group.command(name=cli_util.override('delete_vm_cluster_network.command_name', 'delete'), help=u"""Deletes the specified VM cluster network.""")
+@vm_cluster_network_group.command(name=cli_util.override('db.delete_vm_cluster_network.command_name', 'delete'), help=u"""Deletes the specified VM cluster network.""")
 @cli_util.option('--exadata-infrastructure-id', required=True, help=u"""The Exadata infrastructure [OCID].""")
 @cli_util.option('--vm-cluster-network-id', required=True, help=u"""The VM cluster network [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -2693,7 +2693,7 @@ def delete_vm_cluster_network(ctx, from_json, exadata_infrastructure_id, vm_clus
     cli_util.render_response(result, ctx)
 
 
-@exadata_infrastructure_group.command(name=cli_util.override('download_exadata_infrastructure_config_file.command_name', 'download-exadata-infrastructure-config-file'), help=u"""Downloads the configuration file for the specified Exadata infrastructure.""")
+@exadata_infrastructure_group.command(name=cli_util.override('db.download_exadata_infrastructure_config_file.command_name', 'download-exadata-infrastructure-config-file'), help=u"""Downloads the configuration file for the specified Exadata infrastructure.""")
 @cli_util.option('--exadata-infrastructure-id', required=True, help=u"""The Exadata infrastructure [OCID].""")
 @cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2738,7 +2738,7 @@ def download_exadata_infrastructure_config_file(ctx, from_json, file, exadata_in
         file.close()
 
 
-@vm_cluster_network_group.command(name=cli_util.override('download_vm_cluster_network_config_file.command_name', 'download-vm-cluster-network-config-file'), help=u"""Downloads the configuration file for the specified VM Cluster Network.""")
+@vm_cluster_network_group.command(name=cli_util.override('db.download_vm_cluster_network_config_file.command_name', 'download-vm-cluster-network-config-file'), help=u"""Downloads the configuration file for the specified VM Cluster Network.""")
 @cli_util.option('--exadata-infrastructure-id', required=True, help=u"""The Exadata infrastructure [OCID].""")
 @cli_util.option('--vm-cluster-network-id', required=True, help=u"""The VM cluster network [OCID].""")
 @cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
@@ -2788,7 +2788,7 @@ def download_vm_cluster_network_config_file(ctx, from_json, file, exadata_infras
         file.close()
 
 
-@data_guard_association_group.command(name=cli_util.override('failover_data_guard_association.command_name', 'failover'), help=u"""Performs a failover to transition the standby database identified by the `databaseId` parameter into the specified Data Guard association's primary role after the existing primary database fails or becomes unreachable.
+@data_guard_association_group.command(name=cli_util.override('db.failover_data_guard_association.command_name', 'failover'), help=u"""Performs a failover to transition the standby database identified by the `databaseId` parameter into the specified Data Guard association's primary role after the existing primary database fails or becomes unreachable.
 
 A failover might result in data loss depending on the protection mode in effect at the time of the primary database failure.""")
 @cli_util.option('--database-id', required=True, help=u"""The database [OCID].""")
@@ -2850,7 +2850,7 @@ def failover_data_guard_association(ctx, from_json, wait_for_state, max_wait_sec
     cli_util.render_response(result, ctx)
 
 
-@autonomous_data_warehouse_group.command(name=cli_util.override('generate_autonomous_data_warehouse_wallet.command_name', 'generate-autonomous-data-warehouse-wallet'), help=u"""**Deprecated.** To create and download a wallet for an Autonomous Data Warehouse, use the [GenerateAutonomousDatabaseWallet] operation.""")
+@autonomous_data_warehouse_group.command(name=cli_util.override('db.generate_autonomous_data_warehouse_wallet.command_name', 'generate-autonomous-data-warehouse-wallet'), help=u"""**Deprecated.** To create and download a wallet for an Autonomous Data Warehouse, use the [GenerateAutonomousDatabaseWallet] operation.""")
 @cli_util.option('--autonomous-data-warehouse-id', required=True, help=u"""The database [OCID].""")
 @cli_util.option('--password', required=True, help=u"""The password to encrypt the keys inside the wallet. The password must be at least 8 characters long and must include at least 1 letter and either 1 numeric character or 1 special character.""")
 @cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
@@ -2901,7 +2901,7 @@ def generate_autonomous_data_warehouse_wallet(ctx, from_json, file, autonomous_d
         file.close()
 
 
-@autonomous_database_group.command(name=cli_util.override('generate_autonomous_database_wallet.command_name', 'generate-autonomous-database-wallet'), help=u"""Creates and downloads a wallet for the specified Autonomous Database.""")
+@autonomous_database_group.command(name=cli_util.override('db.generate_autonomous_database_wallet.command_name', 'generate-autonomous-database-wallet'), help=u"""Creates and downloads a wallet for the specified Autonomous Database.""")
 @cli_util.option('--autonomous-database-id', required=True, help=u"""The database [OCID].""")
 @cli_util.option('--password', required=True, help=u"""The password to encrypt the keys inside the wallet. The password must be at least 8 characters long and must include at least 1 letter and either 1 numeric character or 1 special character.""")
 @cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
@@ -2952,7 +2952,7 @@ def generate_autonomous_database_wallet(ctx, from_json, file, autonomous_databas
         file.close()
 
 
-@exadata_infrastructure_group.command(name=cli_util.override('generate_recommended_vm_cluster_network.command_name', 'generate-recommended-vm-cluster-network'), help=u"""Generates a recommended VM cluster network configuration.""")
+@exadata_infrastructure_group.command(name=cli_util.override('db.generate_recommended_vm_cluster_network.command_name', 'generate-recommended-vm-cluster-network'), help=u"""Generates a recommended VM cluster network configuration.""")
 @cli_util.option('--exadata-infrastructure-id', required=True, help=u"""The Exadata infrastructure [OCID].""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--display-name', required=True, help=u"""The user-friendly name for the VM cluster network. The name does not need to be unique.""")
@@ -3002,7 +3002,7 @@ def generate_recommended_vm_cluster_network(ctx, from_json, exadata_infrastructu
     cli_util.render_response(result, ctx)
 
 
-@autonomous_container_database_group.command(name=cli_util.override('get_autonomous_container_database.command_name', 'get'), help=u"""Gets information about the specified Autonomous Container Database.""")
+@autonomous_container_database_group.command(name=cli_util.override('db.get_autonomous_container_database.command_name', 'get'), help=u"""Gets information about the specified Autonomous Container Database.""")
 @cli_util.option('--autonomous-container-database-id', required=True, help=u"""The Autonomous Container Database [OCID].""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -3023,7 +3023,7 @@ def get_autonomous_container_database(ctx, from_json, autonomous_container_datab
     cli_util.render_response(result, ctx)
 
 
-@autonomous_data_warehouse_group.command(name=cli_util.override('get_autonomous_data_warehouse.command_name', 'get'), help=u"""**Deprecated.** To get the details of an Autonomous Data Warehouse, use the [GetAutonomousDatabase] operation.""")
+@autonomous_data_warehouse_group.command(name=cli_util.override('db.get_autonomous_data_warehouse.command_name', 'get'), help=u"""**Deprecated.** To get the details of an Autonomous Data Warehouse, use the [GetAutonomousDatabase] operation.""")
 @cli_util.option('--autonomous-data-warehouse-id', required=True, help=u"""The database [OCID].""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -3044,7 +3044,7 @@ def get_autonomous_data_warehouse(ctx, from_json, autonomous_data_warehouse_id):
     cli_util.render_response(result, ctx)
 
 
-@autonomous_data_warehouse_backup_group.command(name=cli_util.override('get_autonomous_data_warehouse_backup.command_name', 'get'), help=u"""**Deprecated.** To get information about a specified Autonomous Data Warehouse backup, use the [GetAutonomousDatabaseBackup] operation.""")
+@autonomous_data_warehouse_backup_group.command(name=cli_util.override('db.get_autonomous_data_warehouse_backup.command_name', 'get'), help=u"""**Deprecated.** To get information about a specified Autonomous Data Warehouse backup, use the [GetAutonomousDatabaseBackup] operation.""")
 @cli_util.option('--autonomous-data-warehouse-backup-id', required=True, help=u"""The [OCID] of the Autonomous Data Warehouse backup.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -3065,7 +3065,7 @@ def get_autonomous_data_warehouse_backup(ctx, from_json, autonomous_data_warehou
     cli_util.render_response(result, ctx)
 
 
-@autonomous_database_group.command(name=cli_util.override('get_autonomous_database.command_name', 'get'), help=u"""Gets the details of the specified Autonomous Database.""")
+@autonomous_database_group.command(name=cli_util.override('db.get_autonomous_database.command_name', 'get'), help=u"""Gets the details of the specified Autonomous Database.""")
 @cli_util.option('--autonomous-database-id', required=True, help=u"""The database [OCID].""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -3087,7 +3087,7 @@ def get_autonomous_database(ctx, from_json, autonomous_database_id):
     cli_util.render_response(result, ctx)
 
 
-@autonomous_database_backup_group.command(name=cli_util.override('get_autonomous_database_backup.command_name', 'get'), help=u"""Gets information about the specified Autonomous Database backup.""")
+@autonomous_database_backup_group.command(name=cli_util.override('db.get_autonomous_database_backup.command_name', 'get'), help=u"""Gets information about the specified Autonomous Database backup.""")
 @cli_util.option('--autonomous-database-backup-id', required=True, help=u"""The [OCID] of the Autonomous Database backup.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -3109,7 +3109,7 @@ def get_autonomous_database_backup(ctx, from_json, autonomous_database_backup_id
     cli_util.render_response(result, ctx)
 
 
-@autonomous_exadata_infrastructure_group.command(name=cli_util.override('get_autonomous_exadata_infrastructure.command_name', 'get'), help=u"""Gets information about the specified Autonomous Exadata Infrastructure.""")
+@autonomous_exadata_infrastructure_group.command(name=cli_util.override('db.get_autonomous_exadata_infrastructure.command_name', 'get'), help=u"""Gets information about the specified Autonomous Exadata Infrastructure.""")
 @cli_util.option('--autonomous-exadata-infrastructure-id', required=True, help=u"""The Autonomous Exadata Infrastructure  [OCID].""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -3130,7 +3130,7 @@ def get_autonomous_exadata_infrastructure(ctx, from_json, autonomous_exadata_inf
     cli_util.render_response(result, ctx)
 
 
-@backup_group.command(name=cli_util.override('get_backup.command_name', 'get'), help=u"""Gets information about the specified backup.""")
+@backup_group.command(name=cli_util.override('db.get_backup.command_name', 'get'), help=u"""Gets information about the specified backup.""")
 @cli_util.option('--backup-id', required=True, help=u"""The backup [OCID].""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -3151,7 +3151,7 @@ def get_backup(ctx, from_json, backup_id):
     cli_util.render_response(result, ctx)
 
 
-@backup_destination_group.command(name=cli_util.override('get_backup_destination.command_name', 'get'), help=u"""Gets information about the specified backup destination.""")
+@backup_destination_group.command(name=cli_util.override('db.get_backup_destination.command_name', 'get'), help=u"""Gets information about the specified backup destination.""")
 @cli_util.option('--backup-destination-id', required=True, help=u"""The [OCID] of the backup destination.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -3173,7 +3173,7 @@ def get_backup_destination(ctx, from_json, backup_destination_id):
     cli_util.render_response(result, ctx)
 
 
-@data_guard_association_group.command(name=cli_util.override('get_data_guard_association.command_name', 'get'), help=u"""Gets the specified Data Guard association's configuration information.""")
+@data_guard_association_group.command(name=cli_util.override('db.get_data_guard_association.command_name', 'get'), help=u"""Gets the specified Data Guard association's configuration information.""")
 @cli_util.option('--database-id', required=True, help=u"""The database [OCID].""")
 @cli_util.option('--data-guard-association-id', required=True, help=u"""The Data Guard association's [OCID].""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -3199,7 +3199,7 @@ def get_data_guard_association(ctx, from_json, database_id, data_guard_associati
     cli_util.render_response(result, ctx)
 
 
-@database_group.command(name=cli_util.override('get_database.command_name', 'get'), help=u"""Gets information about a specific database.""")
+@database_group.command(name=cli_util.override('db.get_database.command_name', 'get'), help=u"""Gets information about a specific database.""")
 @cli_util.option('--database-id', required=True, help=u"""The database [OCID].""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -3220,7 +3220,7 @@ def get_database(ctx, from_json, database_id):
     cli_util.render_response(result, ctx)
 
 
-@db_home_group.command(name=cli_util.override('get_db_home.command_name', 'get'), help=u"""Gets information about the specified database home.""")
+@db_home_group.command(name=cli_util.override('db.get_db_home.command_name', 'get'), help=u"""Gets information about the specified database home.""")
 @cli_util.option('--db-home-id', required=True, help=u"""The database home [OCID].""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -3241,7 +3241,7 @@ def get_db_home(ctx, from_json, db_home_id):
     cli_util.render_response(result, ctx)
 
 
-@patch_group.command(name=cli_util.override('get_db_home_patch.command_name', 'get-db-home'), help=u"""Gets information about a specified patch package.""")
+@patch_group.command(name=cli_util.override('db.get_db_home_patch.command_name', 'get-db-home'), help=u"""Gets information about a specified patch package.""")
 @cli_util.option('--db-home-id', required=True, help=u"""The database home [OCID].""")
 @cli_util.option('--patch-id', required=True, help=u"""The [OCID] of the patch.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -3267,7 +3267,7 @@ def get_db_home_patch(ctx, from_json, db_home_id, patch_id):
     cli_util.render_response(result, ctx)
 
 
-@patch_history_entry_group.command(name=cli_util.override('get_db_home_patch_history_entry.command_name', 'get-db-home'), help=u"""Gets the patch history details for the specified patchHistoryEntryId""")
+@patch_history_entry_group.command(name=cli_util.override('db.get_db_home_patch_history_entry.command_name', 'get-db-home'), help=u"""Gets the patch history details for the specified patchHistoryEntryId""")
 @cli_util.option('--db-home-id', required=True, help=u"""The database home [OCID].""")
 @cli_util.option('--patch-history-entry-id', required=True, help=u"""The [OCID] of the patch history entry.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -3293,7 +3293,7 @@ def get_db_home_patch_history_entry(ctx, from_json, db_home_id, patch_history_en
     cli_util.render_response(result, ctx)
 
 
-@db_node_group.command(name=cli_util.override('get_db_node.command_name', 'get'), help=u"""Gets information about the specified database node.""")
+@db_node_group.command(name=cli_util.override('db.get_db_node.command_name', 'get'), help=u"""Gets information about the specified database node.""")
 @cli_util.option('--db-node-id', required=True, help=u"""The database node [OCID].""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -3314,7 +3314,7 @@ def get_db_node(ctx, from_json, db_node_id):
     cli_util.render_response(result, ctx)
 
 
-@db_system_group.command(name=cli_util.override('get_db_system.command_name', 'get'), help=u"""Gets information about the specified DB system.""")
+@db_system_group.command(name=cli_util.override('db.get_db_system.command_name', 'get'), help=u"""Gets information about the specified DB system.""")
 @cli_util.option('--db-system-id', required=True, help=u"""The DB system [OCID].""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -3335,7 +3335,7 @@ def get_db_system(ctx, from_json, db_system_id):
     cli_util.render_response(result, ctx)
 
 
-@patch_group.command(name=cli_util.override('get_db_system_patch.command_name', 'get-db-system'), help=u"""Gets information about a specified patch package.""")
+@patch_group.command(name=cli_util.override('db.get_db_system_patch.command_name', 'get-db-system'), help=u"""Gets information about a specified patch package.""")
 @cli_util.option('--db-system-id', required=True, help=u"""The DB system [OCID].""")
 @cli_util.option('--patch-id', required=True, help=u"""The [OCID] of the patch.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -3361,7 +3361,7 @@ def get_db_system_patch(ctx, from_json, db_system_id, patch_id):
     cli_util.render_response(result, ctx)
 
 
-@patch_history_entry_group.command(name=cli_util.override('get_db_system_patch_history_entry.command_name', 'get-db-system'), help=u"""Gets the patch history details for the specified patchHistoryEntryId.""")
+@patch_history_entry_group.command(name=cli_util.override('db.get_db_system_patch_history_entry.command_name', 'get-db-system'), help=u"""Gets the patch history details for the specified patchHistoryEntryId.""")
 @cli_util.option('--db-system-id', required=True, help=u"""The DB system [OCID].""")
 @cli_util.option('--patch-history-entry-id', required=True, help=u"""The [OCID] of the patch history entry.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -3387,7 +3387,7 @@ def get_db_system_patch_history_entry(ctx, from_json, db_system_id, patch_histor
     cli_util.render_response(result, ctx)
 
 
-@exadata_infrastructure_group.command(name=cli_util.override('get_exadata_infrastructure.command_name', 'get'), help=u"""Gets information about the specified Exadata infrastructure.""")
+@exadata_infrastructure_group.command(name=cli_util.override('db.get_exadata_infrastructure.command_name', 'get'), help=u"""Gets information about the specified Exadata infrastructure.""")
 @cli_util.option('--exadata-infrastructure-id', required=True, help=u"""The Exadata infrastructure [OCID].""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -3409,7 +3409,7 @@ def get_exadata_infrastructure(ctx, from_json, exadata_infrastructure_id):
     cli_util.render_response(result, ctx)
 
 
-@db_system_group.command(name=cli_util.override('get_exadata_iorm_config.command_name', 'get-exadata-iorm-config'), help=u"""Gets `IORM` Setting for the requested Exadata DB System. The default IORM Settings is pre-created in all the Exadata DB System.""")
+@db_system_group.command(name=cli_util.override('db.get_exadata_iorm_config.command_name', 'get-exadata-iorm-config'), help=u"""Gets `IORM` Setting for the requested Exadata DB System. The default IORM Settings is pre-created in all the Exadata DB System.""")
 @cli_util.option('--db-system-id', required=True, help=u"""The DB system [OCID].""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -3431,7 +3431,7 @@ def get_exadata_iorm_config(ctx, from_json, db_system_id):
     cli_util.render_response(result, ctx)
 
 
-@external_backup_job_group.command(name=cli_util.override('get_external_backup_job.command_name', 'get'), help=u"""Gets information about the specified external backup job.
+@external_backup_job_group.command(name=cli_util.override('db.get_external_backup_job.command_name', 'get'), help=u"""Gets information about the specified external backup job.
 
 **Note:** This API is used by an Oracle Cloud Infrastructure Python script that is packaged with the Oracle Cloud Infrastructure CLI. Oracle recommends that you use the script instead using the API directly. See [Migrating an On-Premises Database to Oracle Cloud Infrastructure by Creating a Backup in the Cloud] for more information.""")
 @cli_util.option('--backup-id', required=True, help=u"""The backup [OCID].""")
@@ -3454,7 +3454,7 @@ def get_external_backup_job(ctx, from_json, backup_id):
     cli_util.render_response(result, ctx)
 
 
-@maintenance_run_group.command(name=cli_util.override('get_maintenance_run.command_name', 'get'), help=u"""Gets information about the specified Maintenance Run.""")
+@maintenance_run_group.command(name=cli_util.override('db.get_maintenance_run.command_name', 'get'), help=u"""Gets information about the specified Maintenance Run.""")
 @cli_util.option('--maintenance-run-id', required=True, help=u"""The Maintenance Run OCID.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -3475,7 +3475,7 @@ def get_maintenance_run(ctx, from_json, maintenance_run_id):
     cli_util.render_response(result, ctx)
 
 
-@vm_cluster_group.command(name=cli_util.override('get_vm_cluster.command_name', 'get'), help=u"""Gets information about the specified VM cluster.""")
+@vm_cluster_group.command(name=cli_util.override('db.get_vm_cluster.command_name', 'get'), help=u"""Gets information about the specified VM cluster.""")
 @cli_util.option('--vm-cluster-id', required=True, help=u"""The VM cluster [OCID].""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -3497,7 +3497,7 @@ def get_vm_cluster(ctx, from_json, vm_cluster_id):
     cli_util.render_response(result, ctx)
 
 
-@vm_cluster_network_group.command(name=cli_util.override('get_vm_cluster_network.command_name', 'get'), help=u"""Gets information about the specified VM cluster network.""")
+@vm_cluster_network_group.command(name=cli_util.override('db.get_vm_cluster_network.command_name', 'get'), help=u"""Gets information about the specified VM cluster network.""")
 @cli_util.option('--exadata-infrastructure-id', required=True, help=u"""The Exadata infrastructure [OCID].""")
 @cli_util.option('--vm-cluster-network-id', required=True, help=u"""The VM cluster network [OCID].""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -3524,7 +3524,7 @@ def get_vm_cluster_network(ctx, from_json, exadata_infrastructure_id, vm_cluster
     cli_util.render_response(result, ctx)
 
 
-@autonomous_exadata_infrastructure_group.command(name=cli_util.override('launch_autonomous_exadata_infrastructure.command_name', 'launch'), help=u"""Launches a new Autonomous Exadata Infrastructure in the specified compartment and availability domain.""")
+@autonomous_exadata_infrastructure_group.command(name=cli_util.override('db.launch_autonomous_exadata_infrastructure.command_name', 'launch'), help=u"""Launches a new Autonomous Exadata Infrastructure in the specified compartment and availability domain.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment the Autonomous Exadata Infrastructure belongs in.""")
 @cli_util.option('--availability-domain', required=True, help=u"""The availability domain where the Autonomous Exadata Infrastructure is located.""")
 @cli_util.option('--subnet-id', required=True, help=u"""The [OCID] of the subnet the Autonomous Exadata Infrastructure is associated with.
@@ -3611,7 +3611,7 @@ def launch_autonomous_exadata_infrastructure(ctx, from_json, wait_for_state, max
     cli_util.render_response(result, ctx)
 
 
-@db_system_group.command(name=cli_util.override('launch_db_system.command_name', 'launch'), help=u"""Launches a new DB system in the specified compartment and availability domain. The Oracle Database edition that you specify applies to all the databases on that DB system. The selected edition cannot be changed.
+@db_system_group.command(name=cli_util.override('db.launch_db_system.command_name', 'launch'), help=u"""Launches a new DB system in the specified compartment and availability domain. The Oracle Database edition that you specify applies to all the databases on that DB system. The selected edition cannot be changed.
 
 An initial database is created on the DB system based on the request parameters you provide and some default options. For more information, see [Default Options for the Initial Database].""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment the DB system  belongs in.""")
@@ -3762,7 +3762,7 @@ def launch_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
     cli_util.render_response(result, ctx)
 
 
-@db_system_group.command(name=cli_util.override('launch_db_system_launch_db_system_details.command_name', 'launch-db-system-launch-db-system-details'), help=u"""Launches a new DB system in the specified compartment and availability domain. The Oracle Database edition that you specify applies to all the databases on that DB system. The selected edition cannot be changed.
+@db_system_group.command(name=cli_util.override('db.launch_db_system_launch_db_system_details.command_name', 'launch-db-system-launch-db-system-details'), help=u"""Launches a new DB system in the specified compartment and availability domain. The Oracle Database edition that you specify applies to all the databases on that DB system. The selected edition cannot be changed.
 
 An initial database is created on the DB system based on the request parameters you provide and some default options. For more information, see [Default Options for the Initial Database].""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment the DB system  belongs in.""")
@@ -3923,7 +3923,7 @@ def launch_db_system_launch_db_system_details(ctx, from_json, wait_for_state, ma
     cli_util.render_response(result, ctx)
 
 
-@db_system_group.command(name=cli_util.override('launch_db_system_launch_db_system_from_backup_details.command_name', 'launch-db-system-launch-db-system-from-backup-details'), help=u"""Launches a new DB system in the specified compartment and availability domain. The Oracle Database edition that you specify applies to all the databases on that DB system. The selected edition cannot be changed.
+@db_system_group.command(name=cli_util.override('db.launch_db_system_launch_db_system_from_backup_details.command_name', 'launch-db-system-launch-db-system-from-backup-details'), help=u"""Launches a new DB system in the specified compartment and availability domain. The Oracle Database edition that you specify applies to all the databases on that DB system. The selected edition cannot be changed.
 
 An initial database is created on the DB system based on the request parameters you provide and some default options. For more information, see [Default Options for the Initial Database].""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment the DB system  belongs in.""")
@@ -4084,7 +4084,7 @@ def launch_db_system_launch_db_system_from_backup_details(ctx, from_json, wait_f
     cli_util.render_response(result, ctx)
 
 
-@autonomous_container_database_group.command(name=cli_util.override('list_autonomous_container_databases.command_name', 'list'), help=u"""Gets a list of the Autonomous Container Databases in the specified compartment.""")
+@autonomous_container_database_group.command(name=cli_util.override('db.list_autonomous_container_databases.command_name', 'list'), help=u"""Gets a list of the Autonomous Container Databases in the specified compartment.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
 @cli_util.option('--autonomous-exadata-infrastructure-id', help=u"""The Autonomous Exadata Infrastructure [OCID].""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
@@ -4153,7 +4153,7 @@ def list_autonomous_container_databases(ctx, from_json, all_pages, page_size, co
     cli_util.render_response(result, ctx)
 
 
-@autonomous_data_warehouse_backup_group.command(name=cli_util.override('list_autonomous_data_warehouse_backups.command_name', 'list'), help=u"""**Deprecated.** To get a list of Autonomous Data Warehouse backups, use the [ListAutonomousDatabaseBackups] operation.""")
+@autonomous_data_warehouse_backup_group.command(name=cli_util.override('db.list_autonomous_data_warehouse_backups.command_name', 'list'), help=u"""**Deprecated.** To get a list of Autonomous Data Warehouse backups, use the [ListAutonomousDatabaseBackups] operation.""")
 @cli_util.option('--autonomous-data-warehouse-id', help=u"""The database [OCID].""")
 @cli_util.option('--compartment-id', help=u"""The compartment [OCID].""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
@@ -4216,7 +4216,7 @@ def list_autonomous_data_warehouse_backups(ctx, from_json, all_pages, page_size,
     cli_util.render_response(result, ctx)
 
 
-@autonomous_data_warehouse_group.command(name=cli_util.override('list_autonomous_data_warehouses.command_name', 'list'), help=u"""**Deprecated.** To get a list of Autonomous Data Warehouses, use the [ListAutonomousDatabases] operation and specify `DW` as the workload type.""")
+@autonomous_data_warehouse_group.command(name=cli_util.override('db.list_autonomous_data_warehouses.command_name', 'list'), help=u"""**Deprecated.** To get a list of Autonomous Data Warehouses, use the [ListAutonomousDatabases] operation and specify `DW` as the workload type.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
@@ -4277,7 +4277,7 @@ def list_autonomous_data_warehouses(ctx, from_json, all_pages, page_size, compar
     cli_util.render_response(result, ctx)
 
 
-@autonomous_database_backup_group.command(name=cli_util.override('list_autonomous_database_backups.command_name', 'list'), help=u"""Gets a list of Autonomous Database backups based on either the `autonomousDatabaseId` or `compartmentId` specified as a query parameter.""")
+@autonomous_database_backup_group.command(name=cli_util.override('db.list_autonomous_database_backups.command_name', 'list'), help=u"""Gets a list of Autonomous Database backups based on either the `autonomousDatabaseId` or `compartmentId` specified as a query parameter.""")
 @cli_util.option('--autonomous-database-id', help=u"""The database [OCID].""")
 @cli_util.option('--compartment-id', help=u"""The compartment [OCID].""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
@@ -4341,7 +4341,7 @@ def list_autonomous_database_backups(ctx, from_json, all_pages, page_size, auton
     cli_util.render_response(result, ctx)
 
 
-@autonomous_database_group.command(name=cli_util.override('list_autonomous_databases.command_name', 'list'), help=u"""Gets a list of Autonomous Databases.""")
+@autonomous_database_group.command(name=cli_util.override('db.list_autonomous_databases.command_name', 'list'), help=u"""Gets a list of Autonomous Databases.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
 @cli_util.option('--autonomous-container-database-id', help=u"""The Autonomous Container Database [OCID].""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
@@ -4412,7 +4412,7 @@ def list_autonomous_databases(ctx, from_json, all_pages, page_size, compartment_
     cli_util.render_response(result, ctx)
 
 
-@autonomous_db_preview_version_group.command(name=cli_util.override('list_autonomous_db_preview_versions.command_name', 'list'), help=u"""Gets a list of supported Autonomous Database versions. Note that preview version software is only available for [serverless deployments].""")
+@autonomous_db_preview_version_group.command(name=cli_util.override('db.list_autonomous_db_preview_versions.command_name', 'list'), help=u"""Gets a list of supported Autonomous Database versions. Note that preview version software is only available for [serverless deployments].""")
 @cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
@@ -4468,7 +4468,7 @@ def list_autonomous_db_preview_versions(ctx, from_json, all_pages, page_size, co
     cli_util.render_response(result, ctx)
 
 
-@autonomous_exadata_infrastructure_shape_group.command(name=cli_util.override('list_autonomous_exadata_infrastructure_shapes.command_name', 'list'), help=u"""Gets a list of the shapes that can be used to launch a new Autonomous Exadata Infrastructure DB system. The shape determines resources to allocate to the DB system (CPU cores, memory and storage).""")
+@autonomous_exadata_infrastructure_shape_group.command(name=cli_util.override('db.list_autonomous_exadata_infrastructure_shapes.command_name', 'list'), help=u"""Gets a list of the shapes that can be used to launch a new Autonomous Exadata Infrastructure DB system. The shape determines resources to allocate to the DB system (CPU cores, memory and storage).""")
 @cli_util.option('--availability-domain', required=True, help=u"""The name of the Availability Domain.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
@@ -4520,7 +4520,7 @@ def list_autonomous_exadata_infrastructure_shapes(ctx, from_json, all_pages, pag
     cli_util.render_response(result, ctx)
 
 
-@autonomous_exadata_infrastructure_group.command(name=cli_util.override('list_autonomous_exadata_infrastructures.command_name', 'list'), help=u"""Gets a list of the Autonomous Exadata Infrastructures in the specified compartment.""")
+@autonomous_exadata_infrastructure_group.command(name=cli_util.override('db.list_autonomous_exadata_infrastructures.command_name', 'list'), help=u"""Gets a list of the Autonomous Exadata Infrastructures in the specified compartment.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
@@ -4586,7 +4586,7 @@ def list_autonomous_exadata_infrastructures(ctx, from_json, all_pages, page_size
     cli_util.render_response(result, ctx)
 
 
-@backup_destination_summary_group.command(name=cli_util.override('list_backup_destination.command_name', 'list-backup-destination'), help=u"""Gets a list of backup destinations in the specified compartment.""")
+@backup_destination_summary_group.command(name=cli_util.override('db.list_backup_destination.command_name', 'list-backup-destination'), help=u"""Gets a list of backup destinations in the specified compartment.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
@@ -4637,7 +4637,7 @@ def list_backup_destination(ctx, from_json, all_pages, page_size, compartment_id
     cli_util.render_response(result, ctx)
 
 
-@backup_group.command(name=cli_util.override('list_backups.command_name', 'list'), help=u"""Gets a list of backups based on the databaseId or compartmentId specified. Either one of the query parameters must be provided.""")
+@backup_group.command(name=cli_util.override('db.list_backups.command_name', 'list'), help=u"""Gets a list of backups based on the databaseId or compartmentId specified. Either one of the query parameters must be provided.""")
 @cli_util.option('--database-id', help=u"""The [OCID] of the database.""")
 @cli_util.option('--compartment-id', help=u"""The compartment [OCID].""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
@@ -4686,7 +4686,7 @@ def list_backups(ctx, from_json, all_pages, page_size, database_id, compartment_
     cli_util.render_response(result, ctx)
 
 
-@data_guard_association_group.command(name=cli_util.override('list_data_guard_associations.command_name', 'list'), help=u"""Lists all Data Guard associations for the specified database.""")
+@data_guard_association_group.command(name=cli_util.override('db.list_data_guard_associations.command_name', 'list'), help=u"""Lists all Data Guard associations for the specified database.""")
 @cli_util.option('--database-id', required=True, help=u"""The database [OCID].""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
@@ -4736,7 +4736,7 @@ def list_data_guard_associations(ctx, from_json, all_pages, page_size, database_
     cli_util.render_response(result, ctx)
 
 
-@database_group.command(name=cli_util.override('list_databases.command_name', 'list'), help=u"""Gets a list of the databases in the specified database home.""")
+@database_group.command(name=cli_util.override('db.list_databases.command_name', 'list'), help=u"""Gets a list of the databases in the specified database home.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
 @cli_util.option('--db-home-id', required=True, help=u"""A database home [OCID].""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
@@ -4799,7 +4799,7 @@ def list_databases(ctx, from_json, all_pages, page_size, compartment_id, db_home
     cli_util.render_response(result, ctx)
 
 
-@patch_history_entry_group.command(name=cli_util.override('list_db_home_patch_history_entries.command_name', 'list-db-home'), help=u"""Gets history of the actions taken for patches for the specified database home.""")
+@patch_history_entry_group.command(name=cli_util.override('db.list_db_home_patch_history_entries.command_name', 'list-db-home'), help=u"""Gets history of the actions taken for patches for the specified database home.""")
 @cli_util.option('--db-home-id', required=True, help=u"""The database home [OCID].""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
@@ -4849,7 +4849,7 @@ def list_db_home_patch_history_entries(ctx, from_json, all_pages, page_size, db_
     cli_util.render_response(result, ctx)
 
 
-@patch_group.command(name=cli_util.override('list_db_home_patches.command_name', 'list-db-home'), help=u"""Lists patches applicable to the requested database home.""")
+@patch_group.command(name=cli_util.override('db.list_db_home_patches.command_name', 'list-db-home'), help=u"""Lists patches applicable to the requested database home.""")
 @cli_util.option('--db-home-id', required=True, help=u"""The database home [OCID].""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
@@ -4899,7 +4899,7 @@ def list_db_home_patches(ctx, from_json, all_pages, page_size, db_home_id, limit
     cli_util.render_response(result, ctx)
 
 
-@db_home_group.command(name=cli_util.override('list_db_homes.command_name', 'list'), help=u"""Gets a list of database homes in the specified DB system and compartment. A database home is a directory where Oracle Database software is installed.""")
+@db_home_group.command(name=cli_util.override('db.list_db_homes.command_name', 'list'), help=u"""Gets a list of database homes in the specified DB system and compartment. A database home is a directory where Oracle Database software is installed.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
 @cli_util.option('--db-system-id', help=u"""The [OCID] of the DB system.""")
 @cli_util.option('--vm-cluster-id', help=u"""The [OCID] of the VM cluster.""")
@@ -4964,7 +4964,7 @@ def list_db_homes(ctx, from_json, all_pages, page_size, compartment_id, db_syste
     cli_util.render_response(result, ctx)
 
 
-@db_node_group.command(name=cli_util.override('list_db_nodes.command_name', 'list'), help=u"""Gets a list of database nodes in the specified DB system and compartment. A database node is a server running database software.""")
+@db_node_group.command(name=cli_util.override('db.list_db_nodes.command_name', 'list'), help=u"""Gets a list of database nodes in the specified DB system and compartment. A database node is a server running database software.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
 @cli_util.option('--db-system-id', help=u"""The [OCID] of the DB system.""")
 @cli_util.option('--vm-cluster-id', help=u"""The [OCID] of the VM cluster.""")
@@ -5026,7 +5026,7 @@ def list_db_nodes(ctx, from_json, all_pages, page_size, compartment_id, db_syste
     cli_util.render_response(result, ctx)
 
 
-@patch_history_entry_group.command(name=cli_util.override('list_db_system_patch_history_entries.command_name', 'list-db-system'), help=u"""Gets the history of the patch actions performed on the specified DB system.""")
+@patch_history_entry_group.command(name=cli_util.override('db.list_db_system_patch_history_entries.command_name', 'list-db-system'), help=u"""Gets the history of the patch actions performed on the specified DB system.""")
 @cli_util.option('--db-system-id', required=True, help=u"""The DB system [OCID].""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
@@ -5076,7 +5076,7 @@ def list_db_system_patch_history_entries(ctx, from_json, all_pages, page_size, d
     cli_util.render_response(result, ctx)
 
 
-@patch_group.command(name=cli_util.override('list_db_system_patches.command_name', 'list-db-system'), help=u"""Lists the patches applicable to the requested DB system.""")
+@patch_group.command(name=cli_util.override('db.list_db_system_patches.command_name', 'list-db-system'), help=u"""Lists the patches applicable to the requested DB system.""")
 @cli_util.option('--db-system-id', required=True, help=u"""The DB system [OCID].""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
@@ -5126,7 +5126,7 @@ def list_db_system_patches(ctx, from_json, all_pages, page_size, db_system_id, l
     cli_util.render_response(result, ctx)
 
 
-@db_system_shape_group.command(name=cli_util.override('list_db_system_shapes.command_name', 'list'), help=u"""Gets a list of the shapes that can be used to launch a new DB system. The shape determines resources to allocate to the DB system - CPU cores and memory for VM shapes; CPU cores, memory and storage for non-VM (or bare metal) shapes.""")
+@db_system_shape_group.command(name=cli_util.override('db.list_db_system_shapes.command_name', 'list'), help=u"""Gets a list of the shapes that can be used to launch a new DB system. The shape determines resources to allocate to the DB system - CPU cores and memory for VM shapes; CPU cores, memory and storage for non-VM (or bare metal) shapes.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
 @cli_util.option('--availability-domain', help=u"""The name of the Availability Domain.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
@@ -5176,7 +5176,7 @@ def list_db_system_shapes(ctx, from_json, all_pages, page_size, compartment_id, 
     cli_util.render_response(result, ctx)
 
 
-@db_system_group.command(name=cli_util.override('list_db_systems.command_name', 'list'), help=u"""Gets a list of the DB systems in the specified compartment. You can specify a backupId to list only the DB systems that support creating a database using this backup in this compartment.""")
+@db_system_group.command(name=cli_util.override('db.list_db_systems.command_name', 'list'), help=u"""Gets a list of the DB systems in the specified compartment. You can specify a backupId to list only the DB systems that support creating a database using this backup in this compartment.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
@@ -5245,7 +5245,7 @@ def list_db_systems(ctx, from_json, all_pages, page_size, compartment_id, limit,
     cli_util.render_response(result, ctx)
 
 
-@db_version_group.command(name=cli_util.override('list_db_versions.command_name', 'list'), help=u"""Gets a list of supported Oracle Database versions.""")
+@db_version_group.command(name=cli_util.override('db.list_db_versions.command_name', 'list'), help=u"""Gets a list of supported Oracle Database versions.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
@@ -5298,7 +5298,7 @@ def list_db_versions(ctx, from_json, all_pages, page_size, compartment_id, limit
     cli_util.render_response(result, ctx)
 
 
-@exadata_infrastructure_group.command(name=cli_util.override('list_exadata_infrastructures.command_name', 'list'), help=u"""Gets a list of the Exadata infrastructure in the specified compartment.""")
+@exadata_infrastructure_group.command(name=cli_util.override('db.list_exadata_infrastructures.command_name', 'list'), help=u"""Gets a list of the Exadata infrastructure in the specified compartment.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
@@ -5358,7 +5358,7 @@ def list_exadata_infrastructures(ctx, from_json, all_pages, page_size, compartme
     cli_util.render_response(result, ctx)
 
 
-@gi_version_group.command(name=cli_util.override('list_gi_versions.command_name', 'list'), help=u"""Gets a list of supported GI versions for VM Cluster.""")
+@gi_version_group.command(name=cli_util.override('db.list_gi_versions.command_name', 'list'), help=u"""Gets a list of supported GI versions for VM Cluster.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
@@ -5411,7 +5411,7 @@ def list_gi_versions(ctx, from_json, all_pages, page_size, compartment_id, limit
     cli_util.render_response(result, ctx)
 
 
-@maintenance_run_group.command(name=cli_util.override('list_maintenance_runs.command_name', 'list'), help=u"""Gets a list of the Maintenance Runs in the specified compartment.""")
+@maintenance_run_group.command(name=cli_util.override('db.list_maintenance_runs.command_name', 'list'), help=u"""Gets a list of the Maintenance Runs in the specified compartment.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
 @cli_util.option('--target-resource-id', help=u"""The target resource ID.""")
 @cli_util.option('--target-resource-type', type=custom_types.CliCaseInsensitiveChoice(["AUTONOMOUS_EXADATA_INFRASTRUCTURE", "AUTONOMOUS_CONTAINER_DATABASE"]), help=u"""The type of the target resource.""")
@@ -5483,7 +5483,7 @@ def list_maintenance_runs(ctx, from_json, all_pages, page_size, compartment_id, 
     cli_util.render_response(result, ctx)
 
 
-@vm_cluster_network_group.command(name=cli_util.override('list_vm_cluster_networks.command_name', 'list'), help=u"""Gets a list of the VM cluster networks in the specified compartment.""")
+@vm_cluster_network_group.command(name=cli_util.override('db.list_vm_cluster_networks.command_name', 'list'), help=u"""Gets a list of the VM cluster networks in the specified compartment.""")
 @cli_util.option('--exadata-infrastructure-id', required=True, help=u"""The Exadata infrastructure [OCID].""")
 @cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
@@ -5550,7 +5550,7 @@ def list_vm_cluster_networks(ctx, from_json, all_pages, page_size, exadata_infra
     cli_util.render_response(result, ctx)
 
 
-@vm_cluster_group.command(name=cli_util.override('list_vm_clusters.command_name', 'list'), help=u"""Gets a list of the VM clusters in the specified compartment.""")
+@vm_cluster_group.command(name=cli_util.override('db.list_vm_clusters.command_name', 'list'), help=u"""Gets a list of the VM clusters in the specified compartment.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
 @cli_util.option('--exadata-infrastructure-id', help=u"""If provided, filters the results for the given Exadata Infrastructure.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
@@ -5613,7 +5613,7 @@ def list_vm_clusters(ctx, from_json, all_pages, page_size, compartment_id, exada
     cli_util.render_response(result, ctx)
 
 
-@data_guard_association_group.command(name=cli_util.override('reinstate_data_guard_association.command_name', 'reinstate'), help=u"""Reinstates the database identified by the `databaseId` parameter into the standby role in a Data Guard association.""")
+@data_guard_association_group.command(name=cli_util.override('db.reinstate_data_guard_association.command_name', 'reinstate'), help=u"""Reinstates the database identified by the `databaseId` parameter into the standby role in a Data Guard association.""")
 @cli_util.option('--database-id', required=True, help=u"""The database [OCID].""")
 @cli_util.option('--data-guard-association-id', required=True, help=u"""The Data Guard association's [OCID].""")
 @cli_util.option('--database-admin-password', required=True, help=u"""The DB system administrator password.""")
@@ -5673,7 +5673,7 @@ def reinstate_data_guard_association(ctx, from_json, wait_for_state, max_wait_se
     cli_util.render_response(result, ctx)
 
 
-@autonomous_container_database_group.command(name=cli_util.override('restart_autonomous_container_database.command_name', 'restart'), help=u"""Rolling restarts the specified Autonomous Container Database.""")
+@autonomous_container_database_group.command(name=cli_util.override('db.restart_autonomous_container_database.command_name', 'restart'), help=u"""Rolling restarts the specified Autonomous Container Database.""")
 @cli_util.option('--autonomous-container-database-id', required=True, help=u"""The Autonomous Container Database [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED", "BACKUP_IN_PROGRESS", "RESTORING", "RESTORE_FAILED", "RESTARTING", "MAINTENANCE_IN_PROGRESS"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -5723,7 +5723,7 @@ def restart_autonomous_container_database(ctx, from_json, wait_for_state, max_wa
     cli_util.render_response(result, ctx)
 
 
-@autonomous_data_warehouse_group.command(name=cli_util.override('restore_autonomous_data_warehouse.command_name', 'restore'), help=u"""**Deprecated.** To restore an Autonomous Data Warehouse, use the [RestoreAutonomousDatabase] operation.""")
+@autonomous_data_warehouse_group.command(name=cli_util.override('db.restore_autonomous_data_warehouse.command_name', 'restore'), help=u"""**Deprecated.** To restore an Autonomous Data Warehouse, use the [RestoreAutonomousDatabase] operation.""")
 @cli_util.option('--autonomous-data-warehouse-id', required=True, help=u"""The database [OCID].""")
 @cli_util.option('--timestamp', required=True, type=custom_types.CLI_DATETIME, help=u"""The time to restore the database to.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -5778,7 +5778,7 @@ def restore_autonomous_data_warehouse(ctx, from_json, wait_for_state, max_wait_s
     cli_util.render_response(result, ctx)
 
 
-@autonomous_database_group.command(name=cli_util.override('restore_autonomous_database.command_name', 'restore'), help=u"""Restores an Autonomous Database based on the provided request parameters.""")
+@autonomous_database_group.command(name=cli_util.override('db.restore_autonomous_database.command_name', 'restore'), help=u"""Restores an Autonomous Database based on the provided request parameters.""")
 @cli_util.option('--autonomous-database-id', required=True, help=u"""The database [OCID].""")
 @cli_util.option('--timestamp', required=True, type=custom_types.CLI_DATETIME, help=u"""The time to restore the database to.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--database-scn', help=u"""Restores using the backup with the System Change Number (SCN) specified.""")
@@ -5841,7 +5841,7 @@ def restore_autonomous_database(ctx, from_json, wait_for_state, max_wait_seconds
     cli_util.render_response(result, ctx)
 
 
-@database_group.command(name=cli_util.override('restore_database.command_name', 'restore'), help=u"""Restore a Database based on the request parameters you provide.""")
+@database_group.command(name=cli_util.override('db.restore_database.command_name', 'restore'), help=u"""Restore a Database based on the request parameters you provide.""")
 @cli_util.option('--database-id', required=True, help=u"""The database [OCID].""")
 @cli_util.option('--database-scn', help=u"""Restores using the backup with the System Change Number (SCN) specified.""")
 @cli_util.option('--timestamp', type=custom_types.CLI_DATETIME, help=u"""Restores to the timestamp specified.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -5906,7 +5906,7 @@ def restore_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
     cli_util.render_response(result, ctx)
 
 
-@autonomous_data_warehouse_group.command(name=cli_util.override('start_autonomous_data_warehouse.command_name', 'start'), help=u"""**Deprecated.** To start an Autonomous Data Warehouse, use the [StartAutonomousDatabase] operation.""")
+@autonomous_data_warehouse_group.command(name=cli_util.override('db.start_autonomous_data_warehouse.command_name', 'start'), help=u"""**Deprecated.** To start an Autonomous Data Warehouse, use the [StartAutonomousDatabase] operation.""")
 @cli_util.option('--autonomous-data-warehouse-id', required=True, help=u"""The database [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "STOPPING", "STOPPED", "STARTING", "TERMINATING", "TERMINATED", "UNAVAILABLE", "RESTORE_IN_PROGRESS", "BACKUP_IN_PROGRESS", "SCALE_IN_PROGRESS", "AVAILABLE_NEEDS_ATTENTION", "UPDATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -5955,7 +5955,7 @@ def start_autonomous_data_warehouse(ctx, from_json, wait_for_state, max_wait_sec
     cli_util.render_response(result, ctx)
 
 
-@autonomous_database_group.command(name=cli_util.override('start_autonomous_database.command_name', 'start'), help=u"""Starts the specified Autonomous Database.""")
+@autonomous_database_group.command(name=cli_util.override('db.start_autonomous_database.command_name', 'start'), help=u"""Starts the specified Autonomous Database.""")
 @cli_util.option('--autonomous-database-id', required=True, help=u"""The database [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "STOPPING", "STOPPED", "STARTING", "TERMINATING", "TERMINATED", "UNAVAILABLE", "RESTORE_IN_PROGRESS", "RESTORE_FAILED", "BACKUP_IN_PROGRESS", "SCALE_IN_PROGRESS", "AVAILABLE_NEEDS_ATTENTION", "UPDATING", "MAINTENANCE_IN_PROGRESS"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -6004,7 +6004,7 @@ def start_autonomous_database(ctx, from_json, wait_for_state, max_wait_seconds, 
     cli_util.render_response(result, ctx)
 
 
-@autonomous_data_warehouse_group.command(name=cli_util.override('stop_autonomous_data_warehouse.command_name', 'stop'), help=u"""**Deprecated.** To stop an Autonomous Data Warehouse, use the [StopAutonomousDatabase] operation.""")
+@autonomous_data_warehouse_group.command(name=cli_util.override('db.stop_autonomous_data_warehouse.command_name', 'stop'), help=u"""**Deprecated.** To stop an Autonomous Data Warehouse, use the [StopAutonomousDatabase] operation.""")
 @cli_util.option('--autonomous-data-warehouse-id', required=True, help=u"""The database [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "STOPPING", "STOPPED", "STARTING", "TERMINATING", "TERMINATED", "UNAVAILABLE", "RESTORE_IN_PROGRESS", "BACKUP_IN_PROGRESS", "SCALE_IN_PROGRESS", "AVAILABLE_NEEDS_ATTENTION", "UPDATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -6053,7 +6053,7 @@ def stop_autonomous_data_warehouse(ctx, from_json, wait_for_state, max_wait_seco
     cli_util.render_response(result, ctx)
 
 
-@autonomous_database_group.command(name=cli_util.override('stop_autonomous_database.command_name', 'stop'), help=u"""Stops the specified Autonomous Database.""")
+@autonomous_database_group.command(name=cli_util.override('db.stop_autonomous_database.command_name', 'stop'), help=u"""Stops the specified Autonomous Database.""")
 @cli_util.option('--autonomous-database-id', required=True, help=u"""The database [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "STOPPING", "STOPPED", "STARTING", "TERMINATING", "TERMINATED", "UNAVAILABLE", "RESTORE_IN_PROGRESS", "RESTORE_FAILED", "BACKUP_IN_PROGRESS", "SCALE_IN_PROGRESS", "AVAILABLE_NEEDS_ATTENTION", "UPDATING", "MAINTENANCE_IN_PROGRESS"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -6103,7 +6103,7 @@ def stop_autonomous_database(ctx, from_json, wait_for_state, max_wait_seconds, w
     cli_util.render_response(result, ctx)
 
 
-@data_guard_association_group.command(name=cli_util.override('switchover_data_guard_association.command_name', 'switchover'), help=u"""Performs a switchover to transition the primary database of a Data Guard association into a standby role. The standby database associated with the `dataGuardAssociationId` assumes the primary database role.
+@data_guard_association_group.command(name=cli_util.override('db.switchover_data_guard_association.command_name', 'switchover'), help=u"""Performs a switchover to transition the primary database of a Data Guard association into a standby role. The standby database associated with the `dataGuardAssociationId` assumes the primary database role.
 
 A switchover guarantees no data loss.""")
 @cli_util.option('--database-id', required=True, help=u"""The database [OCID].""")
@@ -6165,7 +6165,7 @@ def switchover_data_guard_association(ctx, from_json, wait_for_state, max_wait_s
     cli_util.render_response(result, ctx)
 
 
-@autonomous_container_database_group.command(name=cli_util.override('terminate_autonomous_container_database.command_name', 'terminate'), help=u"""Terminates an Autonomous Container Database, which permanently deletes the container database and any databases within the container database. The database data is local to the Autonomous Exadata Infrastructure and will be lost when the container database is terminated. Oracle recommends that you back up any data in the Autonomous Container Database prior to terminating it.""")
+@autonomous_container_database_group.command(name=cli_util.override('db.terminate_autonomous_container_database.command_name', 'terminate'), help=u"""Terminates an Autonomous Container Database, which permanently deletes the container database and any databases within the container database. The database data is local to the Autonomous Exadata Infrastructure and will be lost when the container database is terminated. Oracle recommends that you back up any data in the Autonomous Container Database prior to terminating it.""")
 @cli_util.option('--autonomous-container-database-id', required=True, help=u"""The Autonomous Container Database [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -6227,7 +6227,7 @@ def terminate_autonomous_container_database(ctx, from_json, wait_for_state, max_
     cli_util.render_response(result, ctx)
 
 
-@autonomous_exadata_infrastructure_group.command(name=cli_util.override('terminate_autonomous_exadata_infrastructure.command_name', 'terminate'), help=u"""Terminates an Autonomous Exadata Infrastructure, which permanently deletes the Exadata Infrastructure and any container databases and databases contained in the Exadata Infrastructure. The database data is local to the Autonomous Exadata Infrastructure and will be lost when the system is terminated. Oracle recommends that you back up any data in the Autonomous Exadata Infrastructure prior to terminating it.""")
+@autonomous_exadata_infrastructure_group.command(name=cli_util.override('db.terminate_autonomous_exadata_infrastructure.command_name', 'terminate'), help=u"""Terminates an Autonomous Exadata Infrastructure, which permanently deletes the Exadata Infrastructure and any container databases and databases contained in the Exadata Infrastructure. The database data is local to the Autonomous Exadata Infrastructure and will be lost when the system is terminated. Oracle recommends that you back up any data in the Autonomous Exadata Infrastructure prior to terminating it.""")
 @cli_util.option('--autonomous-exadata-infrastructure-id', required=True, help=u"""The Autonomous Exadata Infrastructure  [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -6289,7 +6289,7 @@ def terminate_autonomous_exadata_infrastructure(ctx, from_json, wait_for_state, 
     cli_util.render_response(result, ctx)
 
 
-@db_system_group.command(name=cli_util.override('terminate_db_system.command_name', 'terminate'), help=u"""Terminates a DB system and permanently deletes it and any databases running on it, and any storage volumes attached to it. The database data is local to the DB system and will be lost when the system is terminated. Oracle recommends that you back up any data in the DB system prior to terminating it.""")
+@db_system_group.command(name=cli_util.override('db.terminate_db_system.command_name', 'terminate'), help=u"""Terminates a DB system and permanently deletes it and any databases running on it, and any storage volumes attached to it. The database data is local to the DB system and will be lost when the system is terminated. Oracle recommends that you back up any data in the DB system prior to terminating it.""")
 @cli_util.option('--db-system-id', required=True, help=u"""The DB system [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -6351,7 +6351,7 @@ def terminate_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     cli_util.render_response(result, ctx)
 
 
-@autonomous_container_database_group.command(name=cli_util.override('update_autonomous_container_database.command_name', 'update'), help=u"""Updates the properties of an Autonomous Container Database, such as the CPU core count and storage size.""")
+@autonomous_container_database_group.command(name=cli_util.override('db.update_autonomous_container_database.command_name', 'update'), help=u"""Updates the properties of an Autonomous Container Database, such as the CPU core count and storage size.""")
 @cli_util.option('--autonomous-container-database-id', required=True, help=u"""The Autonomous Container Database [OCID].""")
 @cli_util.option('--display-name', help=u"""The display name for the Autonomous Container Database.""")
 @cli_util.option('--patch-model', type=custom_types.CliCaseInsensitiveChoice(["RELEASE_UPDATES", "RELEASE_UPDATE_REVISIONS"]), help=u"""Database Patch model preference.""")
@@ -6431,7 +6431,7 @@ def update_autonomous_container_database(ctx, from_json, force, wait_for_state, 
     cli_util.render_response(result, ctx)
 
 
-@autonomous_data_warehouse_group.command(name=cli_util.override('update_autonomous_data_warehouse.command_name', 'update'), help=u"""**Deprecated.** To update the CPU core count and storage size of an Autonomous Data Warehouse, use the [UpdateAutonomousDatabase] operation.""")
+@autonomous_data_warehouse_group.command(name=cli_util.override('db.update_autonomous_data_warehouse.command_name', 'update'), help=u"""**Deprecated.** To update the CPU core count and storage size of an Autonomous Data Warehouse, use the [UpdateAutonomousDatabase] operation.""")
 @cli_util.option('--autonomous-data-warehouse-id', required=True, help=u"""The database [OCID].""")
 @cli_util.option('--cpu-core-count', type=click.INT, help=u"""The number of CPU cores to be made available to the database.""")
 @cli_util.option('--data-storage-size-in-tbs', type=click.INT, help=u"""Size, in terabytes, of the data volume that will be attached to the database.""")
@@ -6515,7 +6515,7 @@ def update_autonomous_data_warehouse(ctx, from_json, force, wait_for_state, max_
     cli_util.render_response(result, ctx)
 
 
-@autonomous_database_group.command(name=cli_util.override('update_autonomous_database.command_name', 'update'), help=u"""Updates the specified Autonomous Database with a new CPU core count and size.""")
+@autonomous_database_group.command(name=cli_util.override('db.update_autonomous_database.command_name', 'update'), help=u"""Updates the specified Autonomous Database with a new CPU core count and size.""")
 @cli_util.option('--autonomous-database-id', required=True, help=u"""The database [OCID].""")
 @cli_util.option('--cpu-core-count', type=click.INT, help=u"""The number of CPU cores to be made available to the database.""")
 @cli_util.option('--data-storage-size-in-tbs', type=click.INT, help=u"""The size, in terabytes, of the data volume that will be attached to the database.""")
@@ -6620,7 +6620,7 @@ def update_autonomous_database(ctx, from_json, force, wait_for_state, max_wait_s
     cli_util.render_response(result, ctx)
 
 
-@autonomous_exadata_infrastructure_group.command(name=cli_util.override('update_autonomous_exadata_infrastructure.command_name', 'update'), help=u"""Updates the properties of an Autonomous Exadata Infrastructure, such as the CPU core count.""")
+@autonomous_exadata_infrastructure_group.command(name=cli_util.override('db.update_autonomous_exadata_infrastructure.command_name', 'update'), help=u"""Updates the properties of an Autonomous Exadata Infrastructure, such as the CPU core count.""")
 @cli_util.option('--autonomous-exadata-infrastructure-id', required=True, help=u"""The Autonomous Exadata Infrastructure  [OCID].""")
 @cli_util.option('--display-name', help=u"""The display name is a user-friendly name for the Autonomous Exadata Infrastructure. The display name does not have to be unique.""")
 @cli_util.option('--maintenance-window-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -6700,7 +6700,7 @@ def update_autonomous_exadata_infrastructure(ctx, from_json, force, wait_for_sta
     cli_util.render_response(result, ctx)
 
 
-@backup_destination_group.command(name=cli_util.override('update_backup_destination.command_name', 'update'), help=u"""If no database is associated with the backup destination: - For a RECOVERY_APPLIANCE backup destination, updates the connection string and/or the list of VPC users. - For an NFS backup destination, updates the NFS location.""")
+@backup_destination_group.command(name=cli_util.override('db.update_backup_destination.command_name', 'update'), help=u"""If no database is associated with the backup destination: - For a RECOVERY_APPLIANCE backup destination, updates the connection string and/or the list of VPC users. - For an NFS backup destination, updates the NFS location.""")
 @cli_util.option('--backup-destination-id', required=True, help=u"""The [OCID] of the backup destination.""")
 @cli_util.option('--vpc-users', type=custom_types.CLI_COMPLEX_TYPE, help=u"""For a RECOVERY_APPLIANCE backup destination, the Virtual Private Catalog (VPC) users that are used to access the Recovery Appliance.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--connection-string', help=u"""For a RECOVERY_APPLIANCE backup destination, the connection string for connecting to the Recovery Appliance.""")
@@ -6781,7 +6781,7 @@ def update_backup_destination(ctx, from_json, force, wait_for_state, max_wait_se
     cli_util.render_response(result, ctx)
 
 
-@database_group.command(name=cli_util.override('update_database.command_name', 'update'), help=u"""Update a Database based on the request parameters you provide.""")
+@database_group.command(name=cli_util.override('db.update_database.command_name', 'update'), help=u"""Update a Database based on the request parameters you provide.""")
 @cli_util.option('--database-id', required=True, help=u"""The database [OCID].""")
 @cli_util.option('--db-backup-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
@@ -6853,7 +6853,7 @@ def update_database(ctx, from_json, force, wait_for_state, max_wait_seconds, wai
     cli_util.render_response(result, ctx)
 
 
-@db_home_group.command(name=cli_util.override('update_db_home.command_name', 'update'), help=u"""Patches the specified dbHome.""")
+@db_home_group.command(name=cli_util.override('db.update_db_home.command_name', 'update'), help=u"""Patches the specified dbHome.""")
 @cli_util.option('--db-home-id', required=True, help=u"""The database home [OCID].""")
 @cli_util.option('--db-version', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -6915,7 +6915,7 @@ def update_db_home(ctx, from_json, force, wait_for_state, max_wait_seconds, wait
     cli_util.render_response(result, ctx)
 
 
-@db_system_group.command(name=cli_util.override('update_db_system.command_name', 'update'), help=u"""Updates the properties of a DB system, such as the CPU core count.""")
+@db_system_group.command(name=cli_util.override('db.update_db_system.command_name', 'update'), help=u"""Updates the properties of a DB system, such as the CPU core count.""")
 @cli_util.option('--db-system-id', required=True, help=u"""The DB system [OCID].""")
 @cli_util.option('--cpu-core-count', type=click.INT, help=u"""The new number of CPU cores to set for the DB system. Not applicable for virtual machine DB systems.""")
 @cli_util.option('--version', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -7007,7 +7007,7 @@ def update_db_system(ctx, from_json, force, wait_for_state, max_wait_seconds, wa
     cli_util.render_response(result, ctx)
 
 
-@exadata_infrastructure_group.command(name=cli_util.override('update_exadata_infrastructure.command_name', 'update'), help=u"""Updates the Exadata infrastructure.""")
+@exadata_infrastructure_group.command(name=cli_util.override('db.update_exadata_infrastructure.command_name', 'update'), help=u"""Updates the Exadata infrastructure.""")
 @cli_util.option('--exadata-infrastructure-id', required=True, help=u"""The Exadata infrastructure [OCID].""")
 @cli_util.option('--cloud-control-plane-server1', help=u"""The IP address for the first control plane server.""")
 @cli_util.option('--cloud-control-plane-server2', help=u"""The IP address for the second control plane server.""")
@@ -7116,7 +7116,7 @@ def update_exadata_infrastructure(ctx, from_json, force, wait_for_state, max_wai
     cli_util.render_response(result, ctx)
 
 
-@db_system_group.command(name=cli_util.override('update_exadata_iorm_config.command_name', 'update-exadata-iorm-config'), help=u"""Update `IORM` Settings for the requested Exadata DB System.""")
+@db_system_group.command(name=cli_util.override('db.update_exadata_iorm_config.command_name', 'update-exadata-iorm-config'), help=u"""Update `IORM` Settings for the requested Exadata DB System.""")
 @cli_util.option('--db-system-id', required=True, help=u"""The DB system [OCID].""")
 @cli_util.option('--objective', type=custom_types.CliCaseInsensitiveChoice(["LOW_LATENCY", "HIGH_THROUGHPUT", "BALANCED", "AUTO", "BASIC"]), help=u"""Value for the IORM objective Default is \"Auto\"""")
 @cli_util.option('--db-plans', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Array of IORM Setting for all the database in this Exadata DB System
@@ -7185,7 +7185,7 @@ def update_exadata_iorm_config(ctx, from_json, force, wait_for_state, max_wait_s
     cli_util.render_response(result, ctx)
 
 
-@maintenance_run_group.command(name=cli_util.override('update_maintenance_run.command_name', 'update'), help=u"""Updates the properties of a Maintenance Run, such as the state of a Maintenance Run.""")
+@maintenance_run_group.command(name=cli_util.override('db.update_maintenance_run.command_name', 'update'), help=u"""Updates the properties of a Maintenance Run, such as the state of a Maintenance Run.""")
 @cli_util.option('--maintenance-run-id', required=True, help=u"""The Maintenance Run OCID.""")
 @cli_util.option('--is-enabled', type=click.BOOL, help=u"""If set to false, skips the Maintenance Run.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -7242,7 +7242,7 @@ def update_maintenance_run(ctx, from_json, wait_for_state, max_wait_seconds, wai
     cli_util.render_response(result, ctx)
 
 
-@vm_cluster_group.command(name=cli_util.override('update_vm_cluster.command_name', 'update'), help=u"""Updates the specified VM cluster.""")
+@vm_cluster_group.command(name=cli_util.override('db.update_vm_cluster.command_name', 'update'), help=u"""Updates the specified VM cluster.""")
 @cli_util.option('--vm-cluster-id', required=True, help=u"""The VM cluster [OCID].""")
 @cli_util.option('--cpu-core-count', type=click.INT, help=u"""The number of CPU cores to enable for the VM cluster.""")
 @cli_util.option('--license-model', type=custom_types.CliCaseInsensitiveChoice(["LICENSE_INCLUDED", "BRING_YOUR_OWN_LICENSE"]), help=u"""The Oracle license model that applies to the VM cluster. The default is BRING_YOUR_OWN_LICENSE.""")
@@ -7323,7 +7323,7 @@ def update_vm_cluster(ctx, from_json, force, wait_for_state, max_wait_seconds, w
     cli_util.render_response(result, ctx)
 
 
-@vm_cluster_network_group.command(name=cli_util.override('update_vm_cluster_network.command_name', 'update'), help=u"""Updates the specified VM cluster network.""")
+@vm_cluster_network_group.command(name=cli_util.override('db.update_vm_cluster_network.command_name', 'update'), help=u"""Updates the specified VM cluster network.""")
 @cli_util.option('--exadata-infrastructure-id', required=True, help=u"""The Exadata infrastructure [OCID].""")
 @cli_util.option('--vm-cluster-network-id', required=True, help=u"""The VM cluster network [OCID].""")
 @cli_util.option('--scans', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The SCAN details.
@@ -7417,7 +7417,7 @@ def update_vm_cluster_network(ctx, from_json, force, wait_for_state, max_wait_se
     cli_util.render_response(result, ctx)
 
 
-@vm_cluster_network_group.command(name=cli_util.override('validate_vm_cluster_network.command_name', 'validate'), help=u"""Validates the specified VM cluster network.""")
+@vm_cluster_network_group.command(name=cli_util.override('db.validate_vm_cluster_network.command_name', 'validate'), help=u"""Validates the specified VM cluster network.""")
 @cli_util.option('--exadata-infrastructure-id', required=True, help=u"""The Exadata infrastructure [OCID].""")
 @cli_util.option('--vm-cluster-network-id', required=True, help=u"""The VM cluster network [OCID].""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "REQUIRES_VALIDATION", "VALIDATING", "VALIDATED", "VALIDATION_FAILED", "UPDATING", "ALLOCATED", "TERMINATING", "TERMINATED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")

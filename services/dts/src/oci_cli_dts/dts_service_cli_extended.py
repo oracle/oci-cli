@@ -59,6 +59,8 @@ rename_command_list = [
     {"group": transferappliance_cli.transfer_appliance_root_group, "old": transferappliance_cli.create_transfer_appliance, "new": "request"},
     {"group": transferappliance_cli.transfer_appliance_encryption_passphrase_group, "old": transferappliance_cli.get_transfer_appliance_encryption_passphrase, "new": "get-passphrase"},
     {"group": transferappliance_cli.transfer_appliance_root_group, "old": transferappliance_cli.list_transfer_appliances, "new": "list"},
+    {"group": transferapplianceentitlement_cli.transfer_appliance_entitlement_root_group, "old": transferapplianceentitlement_cli.create_transfer_appliance_entitlement, "new": "request-entitlement"},
+    {"group": transferapplianceentitlement_cli.transfer_appliance_entitlement_root_group, "old": transferapplianceentitlement_cli.get_transfer_appliance_entitlement, "new": "show-entitlement"},
 
 ]
 #
@@ -80,13 +82,6 @@ relocate_command_list = [
     {"group": transferappliance_cli.transfer_appliance_root_group, "command": transferappliance_cli.get_transfer_appliance},
     {"group": transferappliance_cli.transfer_appliance_root_group, "command": transferappliance_cli.get_transfer_appliance_encryption_passphrase},
 
-    # transfer-appliance-entitlement
-    # Entitlement is made out of scope since it is going through spec review and backend code is turned off.
-    #    This will be turned on in a subsequent release.
-    # {"group": transferapplianceentitlement_cli.transfer_appliance_entitlement_root_group,
-    #  "command": transferapplianceentitlement_cli.create_transfer_appliance_entitlement},
-    # {"group": transferapplianceentitlement_cli.transfer_appliance_entitlement_root_group,
-    #  "command": transferapplianceentitlement_cli.get_transfer_appliance_entitlement},
 ]
 #
 
@@ -96,6 +91,7 @@ pop_command_list = [
     {"group": dts_service_cli.dts_service_group, "command": transferdevice_cli.transfer_device_group.name},
     {"group": dts_service_cli.dts_service_group, "command": transferpackage_cli.transfer_package_group.name},
     {"group": dts_service_cli.dts_service_group, "command": shippingvendors_cli.shipping_vendors_group.name},
+    {"group": dts_service_cli.dts_service_group, "command": transferapplianceentitlement_cli.transfer_appliance_entitlement_root_group.name},
 
     # dts job
     {"group": transferjob_cli.transfer_job_root_group, "command": transferjob_cli.transfer_job_group.name},
@@ -106,12 +102,6 @@ pop_command_list = [
     {"group": transferappliance_cli.transfer_appliance_root_group, "command": transferappliance_cli.transfer_appliance_certificate_group.name},
     {"group": transferappliance_cli.transfer_appliance_root_group, "command": transferappliance_cli.transfer_appliance_public_key_group.name},
 
-    # dts appliance entitlement
-    # Entitlement command: Turn this on and delete the lines right below making entitlement command visible once the spec review completes and backend code is turned on.
-    # {"group": transferapplianceentitlement_cli.transfer_appliance_entitlement_root_group,
-    # "command": transferapplianceentitlement_cli.transfer_appliance_entitlement_group.name},
-    {"group": dts_service_cli.dts_service_group,
-        "command": transferapplianceentitlement_cli.transfer_appliance_entitlement_group.name},
 ]
 ####
 

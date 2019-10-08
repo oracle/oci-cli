@@ -14,15 +14,15 @@ from oci_cli.aliasing import CommandGroupWithAlias
 from services.ons.src.oci_cli_ons.generated import ons_service_cli
 
 
-@click.command(cli_util.override('notification_control_plane_root_group.command_name', 'notification-control-plane'), cls=CommandGroupWithAlias, help=cli_util.override('notification_control_plane_root_group.help', """Use the Notifications API to broadcast messages to distributed components by topic, using a publish-subscribe pattern.
+@click.command(cli_util.override('notification_control_plane.notification_control_plane_root_group.command_name', 'notification-control-plane'), cls=CommandGroupWithAlias, help=cli_util.override('notification_control_plane.notification_control_plane_root_group.help', """Use the Notifications API to broadcast messages to distributed components by topic, using a publish-subscribe pattern.
 For information about managing topics, subscriptions, and messages, see [Notifications Overview](/iaas/Content/Notification/Concepts/notificationoverview.htm).
-"""), short_help=cli_util.override('notification_control_plane_root_group.short_help', """Notifications API"""))
+"""), short_help=cli_util.override('notification_control_plane.notification_control_plane_root_group.short_help', """Notifications API"""))
 @cli_util.help_option_group
 def notification_control_plane_root_group():
     pass
 
 
-@click.command(cli_util.override('notification_topic_group.command_name', 'notification-topic'), cls=CommandGroupWithAlias, help="""The properties that define a topic. For general information about topics, see [Notifications Overview].""")
+@click.command(cli_util.override('notification_control_plane.notification_topic_group.command_name', 'notification-topic'), cls=CommandGroupWithAlias, help="""The properties that define a topic. For general information about topics, see [Notifications Overview].""")
 @cli_util.help_option_group
 def notification_topic_group():
     pass
@@ -32,7 +32,7 @@ ons_service_cli.ons_service_group.add_command(notification_control_plane_root_gr
 notification_control_plane_root_group.add_command(notification_topic_group)
 
 
-@notification_topic_group.command(name=cli_util.override('change_topic_compartment.command_name', 'change-compartment'), help=u"""Moves a topic into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].
+@notification_topic_group.command(name=cli_util.override('notification_control_plane.change_topic_compartment.command_name', 'change-compartment'), help=u"""Moves a topic into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].
 
 Transactions Per Minute (TPM) per-tenancy limit for this operation: 60.""")
 @cli_util.option('--topic-id', required=True, help=u"""The [OCID] of the topic to move.""")
@@ -65,7 +65,7 @@ def change_topic_compartment(ctx, from_json, topic_id, compartment_id, if_match)
     cli_util.render_response(result, ctx)
 
 
-@notification_topic_group.command(name=cli_util.override('create_topic.command_name', 'create-topic'), help=u"""Creates a topic in the specified compartment. For general information about topics, see [Managing Topics and Subscriptions].
+@notification_topic_group.command(name=cli_util.override('notification_control_plane.create_topic.command_name', 'create-topic'), help=u"""Creates a topic in the specified compartment. For general information about topics, see [Managing Topics and Subscriptions].
 
 For the purposes of access control, you must provide the OCID of the compartment where you want the topic to reside. For information about access control and compartments, see [Overview of the IAM Service].
 
@@ -114,7 +114,7 @@ def create_topic(ctx, from_json, name, compartment_id, description, freeform_tag
     cli_util.render_response(result, ctx)
 
 
-@notification_topic_group.command(name=cli_util.override('delete_topic.command_name', 'delete-topic'), help=u"""Deletes the specified topic.
+@notification_topic_group.command(name=cli_util.override('notification_control_plane.delete_topic.command_name', 'delete-topic'), help=u"""Deletes the specified topic.
 
 Transactions Per Minute (TPM) per-tenancy limit for this operation: 60.""")
 @cli_util.option('--topic-id', required=True, help=u"""The [OCID] of the topic to delete.""")
@@ -142,7 +142,7 @@ def delete_topic(ctx, from_json, topic_id, if_match):
     cli_util.render_response(result, ctx)
 
 
-@notification_topic_group.command(name=cli_util.override('get_topic.command_name', 'get-topic'), help=u"""Gets the specified topic's configuration information.""")
+@notification_topic_group.command(name=cli_util.override('notification_control_plane.get_topic.command_name', 'get-topic'), help=u"""Gets the specified topic's configuration information.""")
 @cli_util.option('--topic-id', required=True, help=u"""The [OCID] of the topic to retrieve.
 
 Transactions Per Minute (TPM) per-tenancy limit for this operation: 120.""")
@@ -166,7 +166,7 @@ def get_topic(ctx, from_json, topic_id):
     cli_util.render_response(result, ctx)
 
 
-@notification_topic_group.command(name=cli_util.override('list_topics.command_name', 'list-topics'), help=u"""Lists topics in the specified compartment.
+@notification_topic_group.command(name=cli_util.override('notification_control_plane.list_topics.command_name', 'list-topics'), help=u"""Lists topics in the specified compartment.
 
 Transactions Per Minute (TPM) per-tenancy limit for this operation: 120.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
@@ -231,7 +231,7 @@ def list_topics(ctx, from_json, all_pages, page_size, compartment_id, id, name, 
     cli_util.render_response(result, ctx)
 
 
-@notification_topic_group.command(name=cli_util.override('update_topic.command_name', 'update-topic'), help=u"""Updates the specified topic's configuration.
+@notification_topic_group.command(name=cli_util.override('notification_control_plane.update_topic.command_name', 'update-topic'), help=u"""Updates the specified topic's configuration.
 
 Transactions Per Minute (TPM) per-tenancy limit for this operation: 60.""")
 @cli_util.option('--topic-id', required=True, help=u"""The [OCID] of the topic to update.""")

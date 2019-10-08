@@ -9,5 +9,5 @@ autoscaling_cli.auto_scaling_policy_group.commands.pop(autoscaling_cli.create_au
 autoscaling_cli.auto_scaling_policy_group.commands.pop(autoscaling_cli.update_auto_scaling_policy_update_threshold_policy_details.name)
 autoscaling_cli.auto_scaling_configuration_group.commands.pop(autoscaling_cli.create_auto_scaling_configuration_instance_pool_resource.name)
 
-cli_util.rename_command(autoscaling_cli.autoscaling_root_group, autoscaling_cli.auto_scaling_configuration_group, "configuration")
-cli_util.rename_command(autoscaling_cli.autoscaling_root_group, autoscaling_cli.auto_scaling_policy_group, "policy")
+cli_util.rename_command(autoscaling_cli, autoscaling_cli.autoscaling_root_group, autoscaling_cli.auto_scaling_configuration_group, "configuration")
+cli_util.rename_command(autoscaling_cli, autoscaling_cli.autoscaling_root_group, autoscaling_cli.auto_scaling_policy_group, "policy")

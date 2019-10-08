@@ -51,7 +51,8 @@ IGNORED_COMMANDS = [
     ['dts', 'physical-appliance', 'finalize'],
     ['dts', 'physical-appliance', 'initialize-authentication'],
     ['dts', 'physical-appliance', 'unlock'],
-    ['dts', 'job', 'verify-upload-user-credentials']
+    ['dts', 'job', 'verify-upload-user-credentials'],
+    ['dts', 'appliance', 'show-entitlement']
 ]
 
 # List of extended commands for which test_run_all_commands will fail. These tests fail because of the extended code, where we

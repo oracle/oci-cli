@@ -14,31 +14,31 @@ from oci_cli import custom_types  # noqa: F401
 from oci_cli.aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('work_requests_root_group.command_name', 'work-requests'), cls=CommandGroupWithAlias, help=cli_util.override('work_requests_root_group.help', """Many of the API operations that you use to create and configure Compute resources do not take effect
+@cli.command(cli_util.override('work_requests.work_requests_root_group.command_name', 'work-requests'), cls=CommandGroupWithAlias, help=cli_util.override('work_requests.work_requests_root_group.help', """Many of the API operations that you use to create and configure Compute resources do not take effect
 immediately. In these cases, the operation spawns an asynchronous workflow to fulfill the request.
 Work requests provide visibility into the status of these in-progress, long-running workflows.
 
 For more information about work requests and the operations that spawn work requests, see
 [Viewing the State of a Compute Work Request](/iaas/Content/Compute/Tasks/viewingworkrequestcompute.htm).
-"""), short_help=cli_util.override('work_requests_root_group.short_help', """Work Requests API"""))
+"""), short_help=cli_util.override('work_requests.work_requests_root_group.short_help', """Work Requests API"""))
 @cli_util.help_option_group
 def work_requests_root_group():
     pass
 
 
-@click.command(cli_util.override('work_request_error_group.command_name', 'work-request-error'), cls=CommandGroupWithAlias, help="""An error encountered while executing an operation that is tracked by a work request.""")
+@click.command(cli_util.override('work_requests.work_request_error_group.command_name', 'work-request-error'), cls=CommandGroupWithAlias, help="""An error encountered while executing an operation that is tracked by a work request.""")
 @cli_util.help_option_group
 def work_request_error_group():
     pass
 
 
-@click.command(cli_util.override('work_request_log_entry_group.command_name', 'work-request-log-entry'), cls=CommandGroupWithAlias, help="""A log message from executing an operation that is tracked by a work request.""")
+@click.command(cli_util.override('work_requests.work_request_log_entry_group.command_name', 'work-request-log-entry'), cls=CommandGroupWithAlias, help="""A log message from executing an operation that is tracked by a work request.""")
 @cli_util.help_option_group
 def work_request_log_entry_group():
     pass
 
 
-@click.command(cli_util.override('work_request_group.command_name', 'work-request'), cls=CommandGroupWithAlias, help="""An asynchronous work request.""")
+@click.command(cli_util.override('work_requests.work_request_group.command_name', 'work-request'), cls=CommandGroupWithAlias, help="""An asynchronous work request.""")
 @cli_util.help_option_group
 def work_request_group():
     pass
@@ -49,7 +49,7 @@ work_requests_root_group.add_command(work_request_log_entry_group)
 work_requests_root_group.add_command(work_request_group)
 
 
-@work_request_group.command(name=cli_util.override('get_work_request.command_name', 'get'), help=u"""Gets the details of a work request.""")
+@work_request_group.command(name=cli_util.override('work_requests.get_work_request.command_name', 'get'), help=u"""Gets the details of a work request.""")
 @cli_util.option('--work-request-id', required=True, help=u"""The [OCID] of the work request.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -71,7 +71,7 @@ def get_work_request(ctx, from_json, work_request_id):
     cli_util.render_response(result, ctx)
 
 
-@work_request_error_group.command(name=cli_util.override('list_work_request_errors.command_name', 'list'), help=u"""Gets the errors for a work request.""")
+@work_request_error_group.command(name=cli_util.override('work_requests.list_work_request_errors.command_name', 'list'), help=u"""Gets the errors for a work request.""")
 @cli_util.option('--work-request-id', required=True, help=u"""The [OCID] of the work request.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
@@ -125,7 +125,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     cli_util.render_response(result, ctx)
 
 
-@work_request_log_entry_group.command(name=cli_util.override('list_work_request_logs.command_name', 'list-work-request-logs'), help=u"""Gets the logs for a work request.""")
+@work_request_log_entry_group.command(name=cli_util.override('work_requests.list_work_request_logs.command_name', 'list-work-request-logs'), help=u"""Gets the logs for a work request.""")
 @cli_util.option('--work-request-id', required=True, help=u"""The [OCID] of the work request.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
@@ -179,7 +179,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     cli_util.render_response(result, ctx)
 
 
-@work_request_group.command(name=cli_util.override('list_work_requests.command_name', 'list'), help=u"""Lists the work requests in a compartment or for a specified resource.""")
+@work_request_group.command(name=cli_util.override('work_requests.list_work_requests.command_name', 'list'), help=u"""Lists the work requests in a compartment or for a specified resource.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--resource-id', help=u"""The [OCID] of the resource.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")

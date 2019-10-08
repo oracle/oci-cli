@@ -11,13 +11,13 @@ from oci_cli import custom_types  # noqa: F401
 from services.load_balancer.src.oci_cli_load_balancer.generated import loadbalancer_cli
 
 # Rename some commands and groups
-cli_util.rename_command(loadbalancer_cli.lb_root_group, loadbalancer_cli.load_balancer_policy_group, "policy")
-cli_util.rename_command(loadbalancer_cli.lb_root_group, loadbalancer_cli.load_balancer_protocol_group, "protocol")
-cli_util.rename_command(loadbalancer_cli.lb_root_group, loadbalancer_cli.load_balancer_shape_group, "shape")
-cli_util.rename_command(loadbalancer_cli.lb_root_group, loadbalancer_cli.network_security_groups_group, "nsg")
-cli_util.rename_command(loadbalancer_cli.load_balancer_policy_group, loadbalancer_cli.list_policies, "list")
-cli_util.rename_command(loadbalancer_cli.load_balancer_protocol_group, loadbalancer_cli.list_protocols, "list")
-cli_util.rename_command(loadbalancer_cli.load_balancer_shape_group, loadbalancer_cli.list_shapes, "list")
+cli_util.rename_command(loadbalancer_cli, loadbalancer_cli.lb_root_group, loadbalancer_cli.load_balancer_policy_group, "policy")
+cli_util.rename_command(loadbalancer_cli, loadbalancer_cli.lb_root_group, loadbalancer_cli.load_balancer_protocol_group, "protocol")
+cli_util.rename_command(loadbalancer_cli, loadbalancer_cli.lb_root_group, loadbalancer_cli.load_balancer_shape_group, "shape")
+cli_util.rename_command(loadbalancer_cli, loadbalancer_cli.lb_root_group, loadbalancer_cli.network_security_groups_group, "nsg")
+cli_util.rename_command(loadbalancer_cli, loadbalancer_cli.load_balancer_policy_group, loadbalancer_cli.list_policies, "list")
+cli_util.rename_command(loadbalancer_cli, loadbalancer_cli.load_balancer_protocol_group, loadbalancer_cli.list_protocols, "list")
+cli_util.rename_command(loadbalancer_cli, loadbalancer_cli.load_balancer_shape_group, loadbalancer_cli.list_shapes, "list")
 
 
 @cli_util.copy_params_from_generated_command(loadbalancer_cli.create_load_balancer, params_to_exclude=['network_security_group_ids'])

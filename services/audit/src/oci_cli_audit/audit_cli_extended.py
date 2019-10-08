@@ -11,8 +11,8 @@ from timeit import default_timer as timer
 import click
 import sys
 
-cli_util.rename_command(audit_cli.audit_root_group, audit_cli.audit_event_group, "event")
-cli_util.rename_command(audit_cli.audit_root_group, audit_cli.configuration_group, "config")
+cli_util.rename_command(audit_cli, audit_cli.audit_root_group, audit_cli.audit_event_group, "event")
+cli_util.rename_command(audit_cli, audit_cli.audit_root_group, audit_cli.configuration_group, "config")
 audit_cli.configuration_group.commands.pop(audit_cli.update_configuration.name)
 audit_cli.audit_event_group.commands.pop(audit_cli.list_events.name)
 

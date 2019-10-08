@@ -14,16 +14,16 @@ from oci_cli import custom_types  # noqa: F401
 from oci_cli.aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('monitoring_root_group.command_name', 'monitoring'), cls=CommandGroupWithAlias, help=cli_util.override('monitoring_root_group.help', """Use the Monitoring API to manage metric queries and alarms for assessing the health, capacity, and performance of your cloud resources.
+@cli.command(cli_util.override('monitoring.monitoring_root_group.command_name', 'monitoring'), cls=CommandGroupWithAlias, help=cli_util.override('monitoring.monitoring_root_group.help', """Use the Monitoring API to manage metric queries and alarms for assessing the health, capacity, and performance of your cloud resources.
 Endpoints vary by operation. For PostMetric, use the `telemetry-ingestion` endpoints; for all other operations, use the `telemetry` endpoints.
 For information about monitoring, see [Monitoring Overview](/iaas/Content/Monitoring/Concepts/monitoringoverview.htm).
-"""), short_help=cli_util.override('monitoring_root_group.short_help', """Monitoring API"""))
+"""), short_help=cli_util.override('monitoring.monitoring_root_group.short_help', """Monitoring API"""))
 @cli_util.help_option_group
 def monitoring_root_group():
     pass
 
 
-@click.command(cli_util.override('metric_data_group.command_name', 'metric-data'), cls=CommandGroupWithAlias, help="""The set of aggregated data returned for a metric. For information about metrics, see [Metrics Overview].
+@click.command(cli_util.override('monitoring.metric_data_group.command_name', 'metric-data'), cls=CommandGroupWithAlias, help="""The set of aggregated data returned for a metric. For information about metrics, see [Metrics Overview].
 
 Limits information for returned data follows.
 
@@ -35,13 +35,13 @@ def metric_data_group():
     pass
 
 
-@click.command(cli_util.override('metric_group.command_name', 'metric'), cls=CommandGroupWithAlias, help="""The properties that define a metric. For information about metrics, see [Metrics Overview].""")
+@click.command(cli_util.override('monitoring.metric_group.command_name', 'metric'), cls=CommandGroupWithAlias, help="""The properties that define a metric. For information about metrics, see [Metrics Overview].""")
 @cli_util.help_option_group
 def metric_group():
     pass
 
 
-@click.command(cli_util.override('alarm_status_group.command_name', 'alarm-status'), cls=CommandGroupWithAlias, help="""A summary of properties for the specified alarm and its current evaluation status. For information about alarms, see [Alarms Overview].
+@click.command(cli_util.override('monitoring.alarm_status_group.command_name', 'alarm-status'), cls=CommandGroupWithAlias, help="""A summary of properties for the specified alarm and its current evaluation status. For information about alarms, see [Alarms Overview].
 
 To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].
 
@@ -51,13 +51,13 @@ def alarm_status_group():
     pass
 
 
-@click.command(cli_util.override('alarm_history_collection_group.command_name', 'alarm-history-collection'), cls=CommandGroupWithAlias, help="""The configuration details for retrieving alarm history.""")
+@click.command(cli_util.override('monitoring.alarm_history_collection_group.command_name', 'alarm-history-collection'), cls=CommandGroupWithAlias, help="""The configuration details for retrieving alarm history.""")
 @cli_util.help_option_group
 def alarm_history_collection_group():
     pass
 
 
-@click.command(cli_util.override('alarm_group.command_name', 'alarm'), cls=CommandGroupWithAlias, help="""The properties that define an alarm. For information about alarms, see [Alarms Overview].
+@click.command(cli_util.override('monitoring.alarm_group.command_name', 'alarm'), cls=CommandGroupWithAlias, help="""The properties that define an alarm. For information about alarms, see [Alarms Overview].
 
 To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].
 
@@ -67,7 +67,7 @@ def alarm_group():
     pass
 
 
-@click.command(cli_util.override('suppression_group.command_name', 'suppression'), cls=CommandGroupWithAlias, help="""The configuration details for suppressing an alarm. For information about alarms, see [Alarms Overview].
+@click.command(cli_util.override('monitoring.suppression_group.command_name', 'suppression'), cls=CommandGroupWithAlias, help="""The configuration details for suppressing an alarm. For information about alarms, see [Alarms Overview].
 
 **Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
 @cli_util.help_option_group
@@ -83,7 +83,7 @@ monitoring_root_group.add_command(alarm_group)
 monitoring_root_group.add_command(suppression_group)
 
 
-@alarm_group.command(name=cli_util.override('change_alarm_compartment.command_name', 'change-compartment'), help=u"""Moves an alarm into a different compartment within the same tenancy.
+@alarm_group.command(name=cli_util.override('monitoring.change_alarm_compartment.command_name', 'change-compartment'), help=u"""Moves an alarm into a different compartment within the same tenancy.
 
 For information about moving resources between compartments, see [Moving Resources Between Compartments].""")
 @cli_util.option('--alarm-id', required=True, help=u"""The [OCID] of an alarm.""")
@@ -116,7 +116,7 @@ def change_alarm_compartment(ctx, from_json, alarm_id, compartment_id, if_match)
     cli_util.render_response(result, ctx)
 
 
-@alarm_group.command(name=cli_util.override('create_alarm.command_name', 'create'), help=u"""Creates a new alarm in the specified compartment. For important limits information, see [Limits on Monitoring].
+@alarm_group.command(name=cli_util.override('monitoring.create_alarm.command_name', 'create'), help=u"""Creates a new alarm in the specified compartment. For important limits information, see [Limits on Monitoring].
 
 This call is subject to a Monitoring limit that applies to the total number of requests across all alarm operations. Monitoring might throttle this call to reject an otherwise valid request when the total rate of alarm operations exceeds 10 requests, or transactions, per second (TPS) for a given tenancy.""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name for the alarm. It does not have to be unique, and it's changeable. Avoid entering confidential information.
@@ -260,7 +260,7 @@ def create_alarm(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
     cli_util.render_response(result, ctx)
 
 
-@alarm_group.command(name=cli_util.override('delete_alarm.command_name', 'delete'), help=u"""Deletes the specified alarm. For important limits information, see [Limits on Monitoring].
+@alarm_group.command(name=cli_util.override('monitoring.delete_alarm.command_name', 'delete'), help=u"""Deletes the specified alarm. For important limits information, see [Limits on Monitoring].
 
 This call is subject to a Monitoring limit that applies to the total number of requests across all alarm operations. Monitoring might throttle this call to reject an otherwise valid request when the total rate of alarm operations exceeds 10 requests, or transactions, per second (TPS) for a given tenancy.""")
 @cli_util.option('--alarm-id', required=True, help=u"""The [OCID] of an alarm.""")
@@ -325,7 +325,7 @@ def delete_alarm(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
     cli_util.render_response(result, ctx)
 
 
-@alarm_group.command(name=cli_util.override('get_alarm.command_name', 'get'), help=u"""Gets the specified alarm. For important limits information, see [Limits on Monitoring].
+@alarm_group.command(name=cli_util.override('monitoring.get_alarm.command_name', 'get'), help=u"""Gets the specified alarm. For important limits information, see [Limits on Monitoring].
 
 This call is subject to a Monitoring limit that applies to the total number of requests across all alarm operations. Monitoring might throttle this call to reject an otherwise valid request when the total rate of alarm operations exceeds 10 requests, or transactions, per second (TPS) for a given tenancy.""")
 @cli_util.option('--alarm-id', required=True, help=u"""The [OCID] of an alarm.""")
@@ -349,7 +349,7 @@ def get_alarm(ctx, from_json, alarm_id):
     cli_util.render_response(result, ctx)
 
 
-@alarm_history_collection_group.command(name=cli_util.override('get_alarm_history.command_name', 'get-alarm-history'), help=u"""Get the history of the specified alarm. For important limits information, see [Limits on Monitoring].
+@alarm_history_collection_group.command(name=cli_util.override('monitoring.get_alarm_history.command_name', 'get-alarm-history'), help=u"""Get the history of the specified alarm. For important limits information, see [Limits on Monitoring].
 
 This call is subject to a Monitoring limit that applies to the total number of requests across all alarm operations. Monitoring might throttle this call to reject an otherwise valid request when the total rate of alarm operations exceeds 10 requests, or transactions, per second (TPS) for a given tenancy.""")
 @cli_util.option('--alarm-id', required=True, help=u"""The [OCID] of an alarm.""")
@@ -398,7 +398,7 @@ def get_alarm_history(ctx, from_json, alarm_id, alarm_historytype, page, limit, 
     cli_util.render_response(result, ctx)
 
 
-@alarm_group.command(name=cli_util.override('list_alarms.command_name', 'list'), help=u"""Lists the alarms for the specified compartment. For important limits information, see [Limits on Monitoring].
+@alarm_group.command(name=cli_util.override('monitoring.list_alarms.command_name', 'list'), help=u"""Lists the alarms for the specified compartment. For important limits information, see [Limits on Monitoring].
 
 This call is subject to a Monitoring limit that applies to the total number of requests across all alarm operations. Monitoring might throttle this call to reject an otherwise valid request when the total rate of alarm operations exceeds 10 requests, or transactions, per second (TPS) for a given tenancy.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the resources monitored by the metric that you are searching for. Use tenancyId to search in the root compartment.
@@ -473,7 +473,7 @@ def list_alarms(ctx, from_json, all_pages, page_size, compartment_id, page, limi
     cli_util.render_response(result, ctx)
 
 
-@alarm_status_group.command(name=cli_util.override('list_alarms_status.command_name', 'list-alarms-status'), help=u"""List the status of each alarm in the specified compartment. For important limits information, see [Limits on Monitoring].
+@alarm_status_group.command(name=cli_util.override('monitoring.list_alarms_status.command_name', 'list-alarms-status'), help=u"""List the status of each alarm in the specified compartment. For important limits information, see [Limits on Monitoring].
 
 This call is subject to a Monitoring limit that applies to the total number of requests across all alarm operations. Monitoring might throttle this call to reject an otherwise valid request when the total rate of alarm operations exceeds 10 requests, or transactions, per second (TPS) for a given tenancy.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the resources monitored by the metric that you are searching for. Use tenancyId to search in the root compartment.
@@ -545,7 +545,7 @@ def list_alarms_status(ctx, from_json, all_pages, page_size, compartment_id, com
     cli_util.render_response(result, ctx)
 
 
-@metric_group.command(name=cli_util.override('list_metrics.command_name', 'list'), help=u"""Returns metric definitions that match the criteria specified in the request. Compartment OCID required. For information about metrics, see [Metrics Overview]. For important limits information, see [Limits on Monitoring].
+@metric_group.command(name=cli_util.override('monitoring.list_metrics.command_name', 'list'), help=u"""Returns metric definitions that match the criteria specified in the request. Compartment OCID required. For information about metrics, see [Metrics Overview]. For important limits information, see [Limits on Monitoring].
 
 Transactions Per Second (TPS) per-tenancy limit for this operation: 10.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the resources monitored by the metric that you are searching for. Use tenancyId to search in the root compartment.
@@ -652,7 +652,7 @@ def list_metrics(ctx, from_json, all_pages, page_size, compartment_id, name, nam
     cli_util.render_response(result, ctx)
 
 
-@metric_data_group.command(name=cli_util.override('post_metric_data.command_name', 'post'), help=u"""Publishes raw metric data points to the Monitoring service. For more information about publishing metrics, see [Publishing Custom Metrics]. For important limits information, see [Limits on Monitoring].
+@metric_data_group.command(name=cli_util.override('monitoring.post_metric_data.command_name', 'post'), help=u"""Publishes raw metric data points to the Monitoring service. For more information about publishing metrics, see [Publishing Custom Metrics]. For important limits information, see [Limits on Monitoring].
 
 Per-call limits information follows.
 
@@ -691,7 +691,7 @@ def post_metric_data(ctx, from_json, metric_data, batch_atomicity):
     cli_util.render_response(result, ctx)
 
 
-@suppression_group.command(name=cli_util.override('remove_alarm_suppression.command_name', 'remove'), help=u"""Removes any existing suppression for the specified alarm. For important limits information, see [Limits on Monitoring].
+@suppression_group.command(name=cli_util.override('monitoring.remove_alarm_suppression.command_name', 'remove'), help=u"""Removes any existing suppression for the specified alarm. For important limits information, see [Limits on Monitoring].
 
 This call is subject to a Monitoring limit that applies to the total number of requests across all alarm operations. Monitoring might throttle this call to reject an otherwise valid request when the total rate of alarm operations exceeds 10 requests, or transactions, per second (TPS) for a given tenancy.""")
 @cli_util.option('--alarm-id', required=True, help=u"""The [OCID] of an alarm.""")
@@ -718,7 +718,7 @@ def remove_alarm_suppression(ctx, from_json, alarm_id, if_match):
     cli_util.render_response(result, ctx)
 
 
-@metric_data_group.command(name=cli_util.override('summarize_metrics_data.command_name', 'summarize-metrics-data'), help=u"""Returns aggregated data that match the criteria specified in the request. Compartment OCID required. For information on metric queries, see [Building Metric Queries]. For important limits information, see [Limits on Monitoring].
+@metric_data_group.command(name=cli_util.override('monitoring.summarize_metrics_data.command_name', 'summarize-metrics-data'), help=u"""Returns aggregated data that match the criteria specified in the request. Compartment OCID required. For information on metric queries, see [Building Metric Queries]. For important limits information, see [Limits on Monitoring].
 
 Transactions Per Second (TPS) per-tenancy limit for this operation: 10.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the resources monitored by the metric that you are searching for. Use tenancyId to search in the root compartment.
@@ -784,7 +784,7 @@ def summarize_metrics_data(ctx, from_json, compartment_id, namespace, query, res
     cli_util.render_response(result, ctx)
 
 
-@alarm_group.command(name=cli_util.override('update_alarm.command_name', 'update'), help=u"""Updates the specified alarm. For important limits information, see [Limits on Monitoring].
+@alarm_group.command(name=cli_util.override('monitoring.update_alarm.command_name', 'update'), help=u"""Updates the specified alarm. For important limits information, see [Limits on Monitoring].
 
 This call is subject to a Monitoring limit that applies to the total number of requests across all alarm operations. Monitoring might throttle this call to reject an otherwise valid request when the total rate of alarm operations exceeds 10 requests, or transactions, per second (TPS) for a given tenancy.""")
 @cli_util.option('--alarm-id', required=True, help=u"""The [OCID] of an alarm.""")

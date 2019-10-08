@@ -44,7 +44,7 @@ announcement_cli.announce_root_group.add_command(announcements_group)
 announcement_cli.announce_root_group.add_command(user_status_group)
 announcements_group.add_command(announcement_cli.get_announcement)
 user_status_group.add_command(announcement_cli.update_announcement_user_status)
-cli_util.rename_command(user_status_group, announcement_cli.get_announcement_user_status, "get")
+cli_util.rename_command(announcement_cli, user_status_group, announcement_cli.get_announcement_user_status, "get")
 
 
 @cli_util.copy_params_from_generated_command(announcement_cli.list_announcements, params_to_exclude=['all_pages', 'limit', 'page_size'])

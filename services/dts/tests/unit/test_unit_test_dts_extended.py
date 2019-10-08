@@ -26,6 +26,7 @@ import mock
 from oci.response import Response
 from oci.request import Request
 from services.dts.src.oci_cli_dts.physical_appliance_control_plane.client.models.nfs_dataset_info import NfsDatasetInfo
+from oci.dts.models.transfer_appliance_entitlement_summary import TransferApplianceEntitlementSummary
 
 CASSETTE_LIBRARY_DIR = 'services/dts/tests/cassettes'
 
@@ -93,11 +94,15 @@ class UnitTestDTS(unittest.TestCase):
             {"sub_command": "verify-upload-user-credentials",
              "required_params": ["bucket"],
              "optional_params": []},
+            {"sub_command": "change-compartment",
+             "required_params": ["job-id", "compartment-id"],
+             "optional_params": []},
         ]
         self.appliance_subcommands = [
             {"sub_command": "request",
-             "required_params": ["job-id", "customer-shipping-address"],
-             "optional_params": []},
+             "required_params": ["job-id", "addressee", "care-of", "address1", "city-or-locality",
+                                 "state-province-region", "country", "zip-postal-code", "phone-number", "email"],
+             "optional_params": ["address2", "address3", "address4"]},
             {"sub_command": "show",
              "required_params": ["job-id", "appliance-label"],
              "optional_params": []},
@@ -117,8 +122,9 @@ class UnitTestDTS(unittest.TestCase):
              "required_params": ["job-id", "appliance-label"],
              "optional_params": []},
             {"sub_command": "update-shipping-address",
-             "required_params": ["job-id", "appliance-label", "customer-shipping-address"],
-             "optional_params": []}
+             "required_params": ["job-id", "appliance-label", "addressee"],
+             "optional_params": ["address2", "address3", "address4", "care-of", "address1", "city-or-locality",
+                                 "state-province-region", "country", "zip-postal-code", "phone-number", "email"]}
         ]
         self.pa_subcommands = [
             {"sub_command": "initialize-authentication",
@@ -180,21 +186,24 @@ class UnitTestDTS(unittest.TestCase):
              "required_params": ["name", "output-file"],
              "optional_params": ["appliance-profile"]},
         ]
+        entitlement = TransferApplianceEntitlementSummary()
+        entitlement.id = '123'
+        entitlements = [entitlement]
         self.entitlement_subcommands = [
-            {"sub_command": "create",
-             "required_params": ["tenant-id", "name", "email"],
-             "optional_params": ["profile"]},
-            {"sub_command": "get",
-             "required_params": ["tenant-id"],
-             "optional_params": ["profile"]},
+            {"sub_command": "request-entitlement",
+             "required_params": ["compartment-id", "name", "email"],
+             "optional_params": []},
+            {"sub_command": "show-entitlement",
+             "required_params": ["compartment-id"],
+             "optional_params": [],
+             "methods_to_side_effect": {"mock_client": {"list_transfer_appliance_entitlement": (200, {}, entitlements)}}},
         ]
         self.command_defs = [
             {"command": "job", "sub_commands": self.job_subcommands},
             {"command": "appliance", "sub_commands": self.appliance_subcommands},
             {"command": "physical-appliance", "sub_commands": self.pa_subcommands},
-            {"command": "nfs-dataset", "sub_commands": self.nfs_ds_subcommands}
-            # Uncomment the line below when entitlement command is in scope.
-            # {"command": "transfer-appliance-entitlement", "sub_commands": self.entitlement_subcommands},
+            {"command": "nfs-dataset", "sub_commands": self.nfs_ds_subcommands},
+            {"command": "appliance", "sub_commands": self.entitlement_subcommands},
         ]
 
         self.success_count = 0
@@ -231,17 +240,21 @@ class UnitTestDTS(unittest.TestCase):
                             for k, v in value.items():
                                 def method_side_effect(**kwargs):
                                     return Response(v[0], v[1], v[2], Request("mock.method", "mock.url"))
-                                exec("{}.return_value.{}.side_effect = method_side_effect".format(key, k)) in globals(), locals()
+
+                                exec("{}.return_value.{}.side_effect = method_side_effect".format(
+                                    key, k)) in globals(), locals()
                     self._execute_subcommand(command, sub_command_def)
                 else:
-                    click.echo("Skipping command::sub-command=%s::%s; Not in test_specific_set;" % (command, sub_command_def["sub_command"]))
+                    click.echo("Skipping command::sub-command=%s::%s; Not in test_specific_set;" % (
+                        command, sub_command_def["sub_command"]))
                     self.skipped_count += 1
                     continue
 
         click.echo("Consolidated-ErrorList=")
         for item in self.failure_msg_list:
             click.echo(item)
-        click.echo("Tests: success=%d, failures=%d, skipped=%d" % (self.success_count, self.failed_count, self.skipped_count))
+        click.echo(
+            "Tests: success=%d, failures=%d, skipped=%d" % (self.success_count, self.failed_count, self.skipped_count))
 
     def _sub_command_list_in_specific_test_set(self, command):
         if len(self.test_specific_set) == 0:
@@ -284,7 +297,7 @@ class UnitTestDTS(unittest.TestCase):
         if (test_type == self.TestType.NoArgs):
             return c_list
 
-        if 'update' in sub_command_def["sub_command"] or 'delete' in sub_command_def["sub_command"]\
+        if 'update' in sub_command_def["sub_command"] or 'delete' in sub_command_def["sub_command"] \
                 and command not in ['physical-appliance', 'nfs-dataset']:
             c_list.append("--force")
         c_arg_list = []
@@ -340,7 +353,8 @@ class UnitTestDTS(unittest.TestCase):
         if test_type == self.TestType.NoArgs:
             cmd_result = UnitTestDTS.TestResult.Success
             if len(required_params) and self.Missing_params_Text not in result.output:
-                self._print_error(command, sub_command_def["sub_command"], "Spec issue: %s need to be marked as Required." % (required_params))
+                self._print_error(command, sub_command_def["sub_command"],
+                                  "Spec issue: %s need to be marked as Required." % (required_params))
                 return UnitTestDTS.TestResult.Failed
 
             msg = ""
@@ -351,7 +365,8 @@ class UnitTestDTS(unittest.TestCase):
                     if s not in result.output:
                         msg += r_p + ","
                 except Exception as e:
-                    self._print_error(command, sub_command_def["sub_command"], "result does not carry field output: %s" % (result))
+                    self._print_error(command, sub_command_def["sub_command"],
+                                      "result does not carry field output: %s" % (result))
             if len(msg) > 0:
                 msg = "Spec issue: %s need to be marked as Required." % (msg)
                 self._print_error(command, sub_command_def["sub_command"], msg)

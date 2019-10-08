@@ -13,11 +13,11 @@ from services.database.src.oci_cli_database.generated import database_cli
 from oci_cli.aliasing import CommandGroupWithAlias
 
 # Rename some commands and groups
-cli_util.rename_command(database_cli.db_root_group, database_cli.db_node_group, "node")
-cli_util.rename_command(database_cli.db_root_group, database_cli.db_system_group, "system")
-cli_util.rename_command(database_cli.db_root_group, database_cli.db_system_shape_group, "system-shape")
-cli_util.rename_command(database_cli.db_root_group, database_cli.db_version_group, "version")
-cli_util.rename_command(database_cli.db_root_group, database_cli.patch_history_entry_group, "patch-history")
+cli_util.rename_command(database_cli, database_cli.db_root_group, database_cli.db_node_group, "node")
+cli_util.rename_command(database_cli, database_cli.db_root_group, database_cli.db_system_group, "system")
+cli_util.rename_command(database_cli, database_cli.db_root_group, database_cli.db_system_shape_group, "system-shape")
+cli_util.rename_command(database_cli, database_cli.db_root_group, database_cli.db_version_group, "version")
+cli_util.rename_command(database_cli, database_cli.db_root_group, database_cli.patch_history_entry_group, "patch-history")
 
 database_cli.patch_group.commands.pop("get-db-system")
 database_cli.patch_group.commands.pop("list-db-system")
@@ -29,15 +29,15 @@ database_cli.get_db_system_patch_history_entry.name = "by-db-system"
 database_cli.list_db_system_patches.name = "by-db-system"
 database_cli.list_db_system_patch_history_entries.name = "by-db-system"
 
-cli_util.rename_command(database_cli.autonomous_database_group, database_cli.generate_autonomous_database_wallet, "generate-wallet")
-cli_util.rename_command(database_cli.autonomous_data_warehouse_group, database_cli.generate_autonomous_data_warehouse_wallet, "generate-wallet")
+cli_util.rename_command(database_cli, database_cli.autonomous_database_group, database_cli.generate_autonomous_database_wallet, "generate-wallet")
+cli_util.rename_command(database_cli, database_cli.autonomous_data_warehouse_group, database_cli.generate_autonomous_data_warehouse_wallet, "generate-wallet")
 
 database_cli.autonomous_database_group.commands.pop(database_cli.create_autonomous_database.name)
-cli_util.rename_command(database_cli.autonomous_database_group, database_cli.create_autonomous_database_create_autonomous_database_clone_details, "create-from-clone")
-cli_util.rename_command(database_cli.autonomous_database_group, database_cli.create_autonomous_database_create_autonomous_database_details, "create")
+cli_util.rename_command(database_cli, database_cli.autonomous_database_group, database_cli.create_autonomous_database_create_autonomous_database_clone_details, "create-from-clone")
+cli_util.rename_command(database_cli, database_cli.autonomous_database_group, database_cli.create_autonomous_database_create_autonomous_database_details, "create")
 
-cli_util.rename_command(database_cli.backup_destination_group, database_cli.create_backup_destination_create_nfs_backup_destination_details, "create-nfs-details")
-cli_util.rename_command(database_cli.backup_destination_group, database_cli.create_backup_destination_create_recovery_appliance_backup_destination_details, "create-recovery-appliance-details")
+cli_util.rename_command(database_cli, database_cli.backup_destination_group, database_cli.create_backup_destination_create_nfs_backup_destination_details, "create-nfs-details")
+cli_util.rename_command(database_cli, database_cli.backup_destination_group, database_cli.create_backup_destination_create_recovery_appliance_backup_destination_details, "create-recovery-appliance-details")
 database_cli.backup_destination_group.commands.pop(database_cli.create_backup_destination.name)
 database_cli.db_root_group.commands.pop(database_cli.backup_destination_summary_group.name)
 

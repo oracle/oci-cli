@@ -27,7 +27,7 @@ import logging
 from .formatting import render_config_errors
 from terminaltables import AsciiTable
 from timeit import default_timer as timer
-import hashlib
+from oci_cli.util import pymd5
 import codecs
 
 from cryptography.hazmat.backends import default_backend
@@ -171,14 +171,18 @@ class FilePermissionChecker(object):
                 click.echo(FilePermissionChecker.ALTERNATE_BASH_CMD + '\n', file=sys.stderr)
 
 
-def rename_command(parent_group, command, new_name):
+def rename_command(cli_package, parent_group, command, new_name):
     if parent_group and command.name in parent_group.commands:
         parent_group.commands.pop(command.name)
+
+    for package_command in dir(cli_package):
+        if package_command.endswith('_root_group'):
+            service_name = re.sub('_root_group$', '', package_command)
 
     # This is helpful for generated tests which rely on oci_cli.cli_util.override(
     try:
         # callback.__name__ is something like blockstorage_root_group
-        OVERRIDES[command.callback.__name__ + ".command_name"] = new_name
+        OVERRIDES[service_name + '.' + command.callback.__name__ + ".command_name"] = new_name
     except Exception:
         pass
 
@@ -1911,16 +1915,19 @@ def to_jwk(key_obj):
 def verify_checksum(filename, no_multipart, ma):
     try:
         with open(filename, 'rb') as f:
+            m = pymd5.md5()
             if no_multipart:
-                multipart_hash = hashlib.md5(f.read()).hexdigest()
+                m.update(f.read())
+                multipart_hash = m.hexdigest()
             else:
                 hash_list = [codecs.decode(codecs.encode(base64.b64decode(part['opc_md5']), 'hex').strip(), 'hex') for part in ma.manifest['parts']]
-                multipart_hash = hashlib.md5(b''.join(hash_list)).hexdigest()
+                m.update(b''.join(hash_list))
+                multipart_hash = m.hexdigest()
     except IOError:
         print('Cannot open file to generate hash')
         sys.exit(1)
     except Exception as e:
-        print('Encountered exception when generating hash' + e)
+        print('Encountered exception when generating hash' + str(e))
         sys.exit(1)
     multipart_hash = codecs.encode(codecs.decode(multipart_hash, 'hex'), 'base64').decode().strip()
     if not no_multipart:
