@@ -25,11 +25,11 @@ To run the install.sh in non-interactive mode, download the script locally and t
 
     curl -L -O https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/install/install.sh
 
-    ./install.sh --accept-all-defauts
+    ./install.sh --accept-all-defaults
 
 Here are the parameters accepted by this script:
 
---accept-all-defauts  When specified, skips all interactive prompts by selecting the default response.
+--accept-all-defaults  When specified, skips all interactive prompts by selecting the default response.
 --python-install-location  Optionally specifies where to install python on systems where it is not present. This must be an absolute path and it will be created if it does not exist. This value will only be used on systems with 'yum' where a valid version of Python is not present on the system PATH.
 --install-dir  This input parameter allows the user to specify the directory where CLI installation is done.
 --exec-dir  This input parameter allows the user to specify the directory where CLI executable is stored.
