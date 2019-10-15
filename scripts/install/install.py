@@ -401,22 +401,21 @@ def handle_path_and_tab_completion(completion_file_path, exec_filepath, exec_dir
                 with open(profile_file_path, 'w') as f:
                     f.write('. {}'.format(completion_file_path))
             else:
-                with open(profile_file_path, 'r') as f:
+                with open(profile_file_path, 'a+') as f:
                     current_file_contents = f.read()
 
-                if current_file_contents.find(completion_file_path) >= 0:
-                    # They have the tab completion script in the place we thought already. No action needed
-                    pass
-                elif current_file_contents.find('OciTabExpansion.ps1') >= 0:
-                    # They have the tab completion script, but not in the place we thought. Print out a warning
-                    # but otherwise take no action on the profile
-                    print_status()
+                    if current_file_contents.find(completion_file_path) >= 0:
+                        # They have the tab completion script in the place we thought already. No action needed
+                        pass
+                    elif current_file_contents.find('OciTabExpansion.ps1') >= 0:
+                        # They have the tab completion script, but not in the place we thought. Print out a warning
+                        # but otherwise take no action on the profile
+                        print_status()
 
-                    format_str = "It looks like tab completion for oci is already configured in {profile_file_path}. If you wish to replace this with the tab completion script included in this version of the CLI, please remove any lines containing 'OciTabExpansion.ps1' from {profile_file_path} and then run 'oci setup autocomplete'"
-                    print_status(format_str.format(profile_file_path=profile_file_path))
-                else:
-                    # They don't have the tab completion script in their profile. Add it
-                    with open(profile_file_path, 'a'):
+                        format_str = "It looks like tab completion for oci is already configured in {profile_file_path}. If you wish to replace this with the tab completion script included in this version of the CLI, please remove any lines containing 'OciTabExpansion.ps1' from {profile_file_path} and then run 'oci setup autocomplete'"
+                        print_status(format_str.format(profile_file_path=profile_file_path))
+                    else:
+                        # They don't have the tab completion script in their profile. Add it
                         f.write('\n. {}\n'.format(completion_file_path))
 
             # powershell one-liner to append the exec_dir to the USER path permanently

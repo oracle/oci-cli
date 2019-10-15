@@ -10,6 +10,7 @@ import six
 import random
 import vcr
 import os
+import pytest
 
 
 # Commands which we skip evaluation of because they don't have the JSON input
@@ -55,49 +56,24 @@ IGNORED_COMMANDS = [
     ['dts', 'appliance', 'show-entitlement']
 ]
 
-# List of extended commands for which test_run_all_commands will fail. These tests fail because of the extended code, where we
-# check for a combination of input params. Please add a new command to this list, if the test is failing because of extended code.
-IGNORE_EXTENDED_TESTS_COMMANDS = [
-    ['bv', 'boot-volume', 'create'],
-    ['bv', 'volume', 'create'],
-    ['compute', 'instance', 'launch'],
-    ['iam', 'api-key', 'upload'],
-    ['iam', 'user', 'api-key', 'upload'],
-    ['network', 'public-ip', 'get'],
-    ['os', 'object', 'bulk-download'],
-    ['os', 'object', 'bulk-upload'],
-    ['os', 'object', 'put'],
-    ['os', 'object', 'resume-put'],
-    ['os', 'object', 'bulk-delete'],
-    ['batch', 'job-log', 'get'],
-    ['waas', 'protection-settings', 'update'],
-    ['resource-manager', 'stack', 'update'],
-    ['resource-manager', 'stack', 'create'],
-    ['waas', 'protection-settings', 'update'],
-    ['waas', 'policy-config', 'update'],
-    ['dts', 'nfs-dataset', 'activate'],
-    ['dts', 'nfs-dataset', 'create'],
-    ['dts', 'nfs-dataset', 'deactivate'],
-    ['dts', 'nfs-dataset', 'delete'],
-    ['dts', 'nfs-dataset', 'get-seal-manifest'],
-    ['dts', 'nfs-dataset', 'list'],
-    ['dts', 'nfs-dataset', 'reopen'],
-    ['dts', 'nfs-dataset', 'seal'],
-    ['dts', 'nfs-dataset', 'seal-status'],
-    ['dts', 'nfs-dataset', 'set-export'],
-    ['dts', 'nfs-dataset', 'show'],
-    ['dts', 'physical-appliance', 'list'],
-    ['dts', 'physical-appliance', 'show'],
-    ['dts', 'physical-appliance', 'unregister'],
-    ['dts', 'physical-appliance', 'configure-encryption'],
-    ['dts', 'physical-appliance', 'finalize'],
-    ['dts', 'physical-appliance', 'initialize-authentication'],
-    ['dts', 'physical-appliance', 'unlock'],
-    ['dts', 'job', 'verify-upload-user-credentials'],
-    ['resource-manager', 'job', 'create-import-tf-state-job'],
-    ['waas', 'waas-policy', 'list'],
-    ['waas', 'certificate', 'list']
-]
+
+IGNORE_COMMANDS_LOCATION = 'tests/resources/json_ignore_command_list.txt'
+
+ALLOW_JSON_TEST_FAILURES_ENV_VAR = 'ALLOW_JSON_TEST_FAILURES'
+
+
+@pytest.fixture(autouse=True, scope='function')
+def ignored_extended_commands():
+    ignored_commands = []
+    with open(IGNORE_COMMANDS_LOCATION, 'r') as f:
+        lines = f.readlines()
+
+        for line in lines:
+            line = line.strip()
+            if len(line) != 0:
+                ignored_commands.append(line.split(', '))
+
+    return ignored_commands
 
 
 # Commands which have no parameters and so produce empty dictionaries
@@ -167,10 +143,10 @@ none_mode_vcr = vcr.VCR(record_mode='none')
 # The main aim of this test is to verify if all the generated CLI code is function and CLI <-> PythonSDK interaction.
 # In this test, we use VCR with record mode none as to stop any out-going http request.
 @none_mode_vcr.use_cassette('invalid-file-path')
-def test_run_all_commands(runner, config_file, config_profile, tmpdir):
+def test_run_all_commands(runner, config_file, config_profile, tmpdir, ignored_extended_commands):
     failed_commands = []
     for cmd in commands_list:
-        if cmd not in IGNORE_EXTENDED_TESTS_COMMANDS:
+        if cmd not in ignored_extended_commands:
             full_command = list(cmd)
             try:
                 result = util.invoke_command(full_command + ['--generate-full-command-json-input'])
@@ -202,7 +178,25 @@ def test_run_all_commands(runner, config_file, config_profile, tmpdir):
                 failed_commands.append(cmd)
                 print(cmd)
 
-    assert len(failed_commands) == 0, 'The following commands failed to run: {}'.format(failed_commands)
+    handle_failed_commands(failed_commands)
+
+
+def handle_failed_commands(failed_commands):
+    try:
+        assert len(failed_commands) == 0, 'The following commands failed to run: {}'.format(failed_commands)
+    except AssertionError as ae:
+        if ALLOW_JSON_TEST_FAILURES_ENV_VAR in os.environ:
+            print("Writing failed commands to json_ignore_commands_list.txt file")
+            append_failed_commands_to_file(failed_commands)
+        else:
+            raise ae
+
+
+def append_failed_commands_to_file(failed_commands):
+    with open(IGNORE_COMMANDS_LOCATION, 'a') as f:
+        for cmd in failed_commands:
+            f.write(', '.join(cmd))
+            f.write('\n')
 
 
 def process_json_input(input, tmpdir):
@@ -242,12 +236,12 @@ def get_choice_from_choices(choices):
     return choice
 
 
-def _traverse_oci_cli(command, path, failed_commands):
+def _traverse_oci_cli(command, path, failed_commands, ignored_extended_commands):
     if hasattr(command, "commands"):
         for name, command in six.iteritems(command.commands):
-            _traverse_oci_cli(command, path + [name], failed_commands)
+            _traverse_oci_cli(command, path + [name], failed_commands, ignored_extended_commands)
     else:
-        if path not in IGNORED_COMMANDS:
+        if path not in IGNORED_COMMANDS and path not in ignored_extended_commands:
             complex_options = [option for option in command.params if str(option.type) == 'COMPLEX_TYPE']
             if complex_options:
                 for option in complex_options:
@@ -258,10 +252,11 @@ def _traverse_oci_cli(command, path, failed_commands):
                         failed_commands.append(full_command)
 
 
-def test_generate_param_json_input_for_all_complex_types():
+def test_generate_param_json_input_for_all_complex_types(ignored_extended_commands):
     failed_commands = []
-    _traverse_oci_cli(oci_cli.cli, [], failed_commands)
-    assert len(failed_commands) == 0, 'The following commands failed to run: {}'.format(failed_commands)
+    _traverse_oci_cli(oci_cli.cli, [], failed_commands, ignored_extended_commands)
+
+    handle_failed_commands(failed_commands)
 
 
 def test_all_commands_can_accept_from_json_input():

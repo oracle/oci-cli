@@ -345,12 +345,12 @@ def update_database_extended(ctx, **kwargs):
             db_backup_config['recoveryWindowInDays'] = kwargs['recovery_window_in_days']
         if 'backup_destination' in kwargs and kwargs['backup_destination']:
             db_backup_config['backupDestinationDetails'] = cli_util.parse_json_parameter("backup_destination_details", kwargs['backup_destination'])
-        del kwargs['backup_destination']
         kwargs['db_backup_config'] = json.dumps(db_backup_config)
 
     del kwargs['auto_backup_enabled']
     del kwargs['recovery_window_in_days']
     del kwargs['auto_backup_window']
+    del kwargs['backup_destination']
 
     ctx.invoke(database_cli.update_database, **kwargs)
 

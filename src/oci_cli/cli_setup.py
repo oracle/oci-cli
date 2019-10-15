@@ -462,6 +462,9 @@ def apply_user_only_access_permissions(path):
         #   - thus if the user elects to place a new file (config or key) in an existing directory, we will not change the
         #     permissions of that directory but will explicitly set the permissions on that file
         username = os.environ['USERNAME']
+        userdomain = os.environ['UserDomain']
+        if userdomain:
+            username = userdomain + "\\" + username
         admin_grp = '*S-1-5-32-544'
         system_usr = '*S-1-5-18'
         try:

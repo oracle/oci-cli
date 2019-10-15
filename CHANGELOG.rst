@@ -6,6 +6,41 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.6.9 - 2019-10-15
+-------------------
+Added
+~~~~~
+* Support for Digital Assistant service
+
+  * ``oci oda``
+* Includes the ``opc-workrequest-id`` in the response header of 3 APIs belonging to Instance Pools
+* Support for the following environment variables for CLI:
+
+  * OCI_CLI_PROFILE
+  * OCI_CLI_REGION
+  * OCI_CLI_USER
+  * OCI_CLI_FINGERPRINT
+  * OCI_CLI_KEY_FILE
+  * OCI_CLI_TENANCY
+  * OCI_CLI_ENDPOINT
+  * OCI_CLI_CONFIG_FILE
+  * OCI_CLI_RC_FILE
+  * OCI_CLI_CERT_BUNDLE
+  * OCI_CLI_AUTH
+  * OCI_CLI_DELEGATION_TOKEN_FILE
+  * OCI_CLI_SECURITY_TOKEN_FILE
+
+Fixed
+~~~~~
+* Fix Json output format for "oci audit event list" with streaming enabled and when output is null. (`Issue 204 <https://github.com/oracle/oci-cli/issues/204>`__)
+* Fix User can update database with backup-destination.
+
+  * ``oci db database update --backup-destination``
+* Fix CLI Installation issue if the installation path contains ``oci_cli``
+* Fix Windows issue where there is a local account and network account with the same username causing permission problems during ``oci setup bootstrap``.
+* Fix Windows issue where profile created by ``New-Item -Path $Profile -Type File`` can not be updated for autocomplete by the CLI installer.
+* Fix CLI pytest failures caused by unpinned dependency (pytest-forked v1.0.2) of a pinned dependent package (pytest-xdist) getting updated to a new incompatible version (pytest-forked v1.1.1)
+
 2.6.8 - 2019-10-08
 -------------------
 Added

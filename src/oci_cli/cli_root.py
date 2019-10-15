@@ -50,9 +50,15 @@ def eager_load_cli_rc_file(ctx, param, value):
         'settings': {}
     }
 
+    # read rc file location from env variable if present.
+    file_location_from_env = None
+    if cli_constants.OCI_CLI_RC_FILE_ENV_VAR in os.environ:
+        file_location_from_env = os.path.expandvars(os.path.expanduser(os.environ[cli_constants.OCI_CLI_RC_FILE_ENV_VAR]))
+
     # Try and find the configuration file. This is checked in the following order:
     #
     #   - The file which the customer specified
+    #   - Read file path from OCI_CLI_RC_FILE env variable
     #   - The default location
     #   - The fallback location
     #
@@ -64,6 +70,11 @@ def eager_load_cli_rc_file(ctx, param, value):
         populate_aliases_canned_queries_and_settings(ctx, parser_without_defaults)
 
         return file_location
+    elif file_location_from_env and os.path.exists(file_location_from_env):
+        parser_without_defaults.read(file_location_from_env)
+        populate_aliases_canned_queries_and_settings(ctx, parser_without_defaults)
+
+        return file_location_from_env
     elif os.path.exists(expanded_rc_default_location):
         parser_without_defaults.read(expanded_rc_default_location)
         populate_aliases_canned_queries_and_settings(ctx, parser_without_defaults)
@@ -76,6 +87,16 @@ def eager_load_cli_rc_file(ctx, param, value):
         return expanded_rc_fallback_location
     else:
         return value
+
+
+# Read values from env variables if value is None or default value and corresponding env variable is set.
+# This is used to read region, endpoint, cert_bundle, config_file values from env variables.
+def read_values_from_env(ctx, param, value):
+    if not value or value == param.default:
+        if param.name in cli_constants.OCI_CLI_PARAM_TO_ENV_MAP and cli_constants.OCI_CLI_PARAM_TO_ENV_MAP[param.name] in os.environ:
+            return os.environ[cli_constants.OCI_CLI_PARAM_TO_ENV_MAP[param.name]]
+
+    return value
 
 
 def populate_aliases_canned_queries_and_settings(ctx, parser_without_defaults):
@@ -193,7 +214,7 @@ Output is in JSON format.
 For information on configuration, see https://docs.cloud.oracle.com/Content/API/Concepts/sdkconfig.htm.""")
 @click.version_option(__version__, '-v', '--version', message='%(version)s')
 @click.option('--config-file',
-              default=DEFAULT_LOCATION, show_default=True,
+              default=DEFAULT_LOCATION, show_default=True, callback=read_values_from_env,
               help='The path to the config file.')
 @click.option('--profile',
               default=Sentinel(DEFAULT_PROFILE), show_default=False,
@@ -204,9 +225,9 @@ For information on configuration, see https://docs.cloud.oracle.com/Content/API/
               help='The path to the OCI CLI-specific configuration file, containing parameter default values and other configuration information such as command aliases and predefined queries. The --defaults-file option is deprecated and you should use the --cli-rc-file option instead.')
 @click.option('--opc-request-id', '--opc-client-request-id', '--request-id', 'request_id',
               help='The request id to use for tracking the request.')
-@click.option('--region', help='The region to make calls against.  For a list of valid region names use the command: "oci iam region list".')
-@click.option('--endpoint', help='The value to use as the service endpoint, including any required API version path. For example: "https://iaas.us-phoenix-1.oracle.com/20160918". This will override the default service endpoint / API version path. Note: The --region parameter is the recommended way of targeting different regions.')
-@click.option('--cert-bundle', help='The full path to a CA certificate bundle to be used for SSL verification. This will override the default CA certificate bundle.')
+@click.option('--region', callback=read_values_from_env, help='The region to make calls against.  For a list of valid region names use the command: "oci iam region list".')
+@click.option('--endpoint', callback=read_values_from_env, help='The value to use as the service endpoint, including any required API version path. For example: "https://iaas.us-phoenix-1.oracle.com/20160918". This will override the default service endpoint / API version path. Note: The --region parameter is the recommended way of targeting different regions.')
+@click.option('--cert-bundle', callback=read_values_from_env, help='The full path to a CA certificate bundle to be used for SSL verification. This will override the default CA certificate bundle.')
 @click.option('--output', type=click.Choice(choices=['json', 'table']), help='The output format. [Default is json]')
 @click.option('--query', help="""JMESPath query [http://jmespath.org/] to run on the response JSON before output.
 
