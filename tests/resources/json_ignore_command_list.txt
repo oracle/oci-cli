@@ -1,0 +1,15 @@
+bv, boot-volume, create
+bv, volume, create
+compute, instance, launch
+iam, user, api-key, upload
+network, public-ip, get
+os, object, bulk-delete
+os, object, bulk-download
+os, object, bulk-upload
+os, object, put
+os, object, resume-put
+resource-manager, job, create-import-tf-state-job
+resource-manager, stack, create
+resource-manager, stack, update
+waas, policy-config, update
+waas, protection-settings, update

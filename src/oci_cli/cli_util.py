@@ -473,6 +473,11 @@ def build_config(command_args):
 
     FilePermissionChecker.warn_on_invalid_file_permissions(config._get_config_path_with_fallback(command_args['config_file']))
 
+    # READ config keys from env variables.
+    for env in cli_constants.OCI_CONFIG_ENV_VARS:
+        if env in os.environ:
+            client_config[cli_constants.OCI_CONFIG_ENV_VARS[env]] = os.environ[env]
+
     client_config["additional_user_agent"] = 'Oracle-PythonCLI/{}'.format(__version__)
 
     if command_args['region']:
@@ -1668,11 +1673,13 @@ def list_call_get_all_results(list_func_ref, ctx=None, is_json=False, stream_out
     dns_record_collection_class = None
 
     page_index = 1
+    has_stream_data = False
     previous_page_has_data = False  # Indicates whether some previous page had data
     if stream_output:
         if ctx.obj['query']:
             ctx.obj['expression'] = build_query_expression(ctx)
         stream_header(is_json, ctx)
+    ex = None
     try:
         while keep_paginating:
             call_result = list_func_ref(**func_kwargs)
@@ -1684,6 +1691,8 @@ def list_call_get_all_results(list_func_ref, ctx=None, is_json=False, stream_out
             else:
                 if stream_output:
                     previous_page_has_data = stream_page(is_json, page_index, call_result, ctx, previous_page_has_data)
+                    if previous_page_has_data:
+                        has_stream_data = previous_page_has_data
                 else:
                     aggregated_results.extend(call_result.data)
 
@@ -1696,11 +1705,27 @@ def list_call_get_all_results(list_func_ref, ctx=None, is_json=False, stream_out
                 logger.debug(oci.base_client.utc_now() + 'time elapsed evaluating logic after page {}: {}'.format(str(page_index), str(end - start)))
                 output_memory('total memory usage after evaluating page' + str(page_index) + ': ')
             page_index = page_index + 1
+    except Exception as e:
+        ex = e
+        raise e
     finally:
         if stream_output:
+            if ex and ctx and ctx.obj['debug']:
+                print(str(ex).replace("'", '"'), file=sys.stderr)
+            elif ex:
+                print(str(ex).replace("'", '"'))
+            elif not has_stream_data:
+                print('null')
             stream_footer(is_json, ctx)
             post_processed_results = aggregated_results
-            final_response = Response(call_result.status, call_result.headers, post_processed_results, call_result.request)
+            status = None
+            headers = None
+            request = None
+            if call_result:
+                status = call_result.status
+                headers = call_result.headers
+                request = call_result.request
+            final_response = Response(status, headers, post_processed_results, request)
             return final_response
     if ctx and ctx.obj['debug']:
         print("", file=sys.stderr)

@@ -82,6 +82,70 @@ def test_default_profile_setting_from_cli_rc_file(runner, config_file):
     assert 1 == result.exit_code
 
 
+def test_rc_file_location_environment_variable(runner, config_file):
+    os.environ[oci_cli.cli_constants.OCI_CLI_RC_FILE_ENV_VAR] = 'tests/resources/default_files/settings_with_invalid_default_profile'
+    result = invoke_example_operation(runner, [], config_file)
+    del os.environ[oci_cli.cli_constants.OCI_CLI_RC_FILE_ENV_VAR]
+    assert "ERROR: Profile 'INAVLID_PROFILE' not found in config file" in result.output
+    assert 1 == result.exit_code
+
+
+def test_config_file_location_environment_variable(runner, config_file):
+    original_value = os.environ[oci_cli.cli_constants.OCI_CLI_CONFIG_FILE_ENV_VAR]
+    os.environ[oci_cli.cli_constants.OCI_CLI_CONFIG_FILE_ENV_VAR] = 'tests/invalid_config'
+    result = invoke_example_operation(runner, [], None)
+    del os.environ[oci_cli.cli_constants.OCI_CLI_CONFIG_FILE_ENV_VAR]
+    assert 1 == result.exit_code
+    assert 'tests/invalid_config' in result.output
+
+    # restore OCI_CLI_CONFIG_FILE env variable env variable as it used in other tests.
+    os.environ[oci_cli.cli_constants.OCI_CLI_CONFIG_FILE_ENV_VAR] = original_value
+
+
+def test_config_values_from_environment_variable_overrides_default_settings(runner, config_file):
+    values_to_test = list(oci_cli.cli_constants.OCI_CONFIG_ENV_VARS)
+    values_to_test.extend([
+        oci_cli.cli_constants.OCI_CLI_CERT_BUNDLE_ENV_VAR,
+        oci_cli.cli_constants.OCI_CLI_ENDPOINT_ENV_VAR,
+        oci_cli.cli_constants.OCI_CLI_REGION_ENV_VAR
+    ])
+
+    for key in values_to_test:
+        print("Testing entry: " + key)
+        os.environ[key] = 'invalid_value'
+        result = invoke_example_operation(runner, [], config_file)
+        del os.environ[key]
+        if key not in [oci_cli.cli_constants.OCI_CLI_DELEGATION_TOKEN_FILE_ENV_VAR, oci_cli.cli_constants.OCI_CLI_SECURITY_TOKEN_FILE_ENV_VAR]:
+            assert 0 != result.exit_code
+
+
+def test_root_level_options_overrides_environment_variable(runner, config_file):
+    original_value = os.environ[oci_cli.cli_constants.OCI_CLI_CONFIG_FILE_ENV_VAR]
+    values_to_test = [
+        oci_cli.cli_constants.OCI_CLI_ENDPOINT_ENV_VAR,
+        oci_cli.cli_constants.OCI_CLI_REGION_ENV_VAR,
+        oci_cli.cli_constants.OCI_CLI_CONFIG_FILE_ENV_VAR,
+        oci_cli.cli_constants.OCI_CLI_RC_FILE_ENV_VAR
+    ]
+
+    for key in values_to_test:
+        print("Testing entry: " + key)
+        os.environ[key] = 'invalid_value'
+
+        result = invoke_example_operation(runner,
+                                          ['--endpoint', 'https://objectstorage.us-phoenix-1.oraclecloud.com',
+                                           '--region', "us-phoenix-1",
+                                           '--cli-rc-file', 'tests/resources/default_files/settings_with_invalid_default_profile',
+                                           '--profile', 'DEFAULT'],
+                                          'internal_resources/config')
+
+        del os.environ[key]
+        assert 0 == result.exit_code
+
+    # restore OCI_CLI_CONFIG_FILE env variable env variable as it used in other tests.
+    os.environ[oci_cli.cli_constants.OCI_CLI_CONFIG_FILE_ENV_VAR] = original_value
+
+
 def test_auth_instance_principal_param(runner, config_file):
     with patch.object(oci.auth.signers.InstancePrincipalsSecurityTokenSigner, '__init__', return_value=None) as mock_init:
         result = invoke_example_operation(runner, ['--auth', 'instance_principal'], 'non-existent-config')
