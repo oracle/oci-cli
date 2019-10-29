@@ -1,8 +1,10 @@
 # coding: utf-8
 # Copyright (c) 2016, 2019, Oracle and/or its affiliates. All rights reserved.
 
+from __future__ import division
 import arrow
 import click
+import math
 import os
 import os.path
 import stat
@@ -78,7 +80,8 @@ final_command_processor.SERVICE_FUNCTIONS_TO_EXECUTE.append(remove_namespace_req
 OBJECT_LIST_PAGE_SIZE = 100
 OBJECT_LIST_PAGE_SIZE_BULK_OPERATIONS = 1000
 
-MEBIBYTE = 1024 * 1024
+MAX_MULTIPART_SIZE = 10000
+MEBIBYTE = constants.MEBIBYTE
 
 OBJECT_GET_CHUNK_SIZE = MEBIBYTE
 
@@ -291,16 +294,16 @@ def object_list(ctx, from_json, namespace, bucket_name, prefix, start, end, limi
 @cli_util.option('--content-type', help='The content type of the object. If content type is set to auto, then the CLI will guess the content type of the file.')
 @cli_util.option('--content-language', help='The content language of the object.')
 @cli_util.option('--content-encoding', help='The content encoding of the object.')
-@cli_util.option('--force', is_flag=True, help='If the object already exists, overwrite the existing object without a confirmation prompt.')
-@cli_util.option('--no-overwrite', is_flag=True, help='If the object already exists, do not overwrite the existing object.')
+@cli_util.option('--force', is_flag=True, help='If the object name already exists, overwrite the existing object without a confirmation prompt.')
+@cli_util.option('--no-overwrite', is_flag=True, help='If the object name already exists, do not overwrite the existing object.')
 @cli_util.option('--no-multipart', is_flag=True,
                  help='Do not use multipart uploads to upload the file in parts. By default files above 128 MiB will be uploaded in multiple parts, then combined server-side.')
 @cli_util.option('--part-size', type=click.INT,
                  help='Part size (in MiB) to use if uploading via multipart upload operations')
 @cli_util.option('--disable-parallel-uploads', is_flag=True,
                  help='If the object will be uploaded in multiple parts, this option disables those parts from being uploaded in parallel.')
-@cli_util.option('--parallel-upload-count', type=click.INT, default=None,
-                 help='If the object will be uploaded in multiple parts, this option allows you to specify the maximum number of parts that can be uploaded in parallel. This option cannot be used with --disable-parallel-uploads or --no-multipart. Defaults to 3.')
+@cli_util.option('--parallel-upload-count', type=click.IntRange(1, 1000), default=None,
+                 help='If the object will be uploaded in multiple parts, this option allows you to specify the maximum number of parts that can be uploaded in parallel. This option cannot be used with --disable-parallel-uploads or --no-multipart. Defaults to 3 and the maximum is 1000.')
 @cli_util.option('--verify-checksum', is_flag=True, help='Verify the checksum of the uploaded object with the local file.')
 @json_skeleton_utils.get_cli_json_input_option({'metadata': {'module': 'object_storage', 'class': 'dict(str, str)'}})
 @help_option
@@ -331,6 +334,7 @@ def object_put(ctx, from_json, namespace, bucket_name, name, file, if_match, con
 
     client_request_id = ctx.obj['request_id']
     kwargs = {'opc_client_request_id': client_request_id}
+    part_size_mib = constants.DEFAULT_PART_SIZE
 
     if parallel_upload_count is not None:
         if disable_parallel_uploads:
@@ -388,8 +392,14 @@ def object_put(ctx, from_json, namespace, bucket_name, name, file, if_match, con
 
     if part_size is not None:
         kwargs['part_size'] = part_size * MEBIBYTE
+        part_size_mib = part_size * MEBIBYTE
 
     total_size = os.fstat(file.fileno()).st_size
+
+    if math.ceil(total_size / part_size_mib) > MAX_MULTIPART_SIZE:
+        part_size = math.ceil(math.ceil(total_size / MAX_MULTIPART_SIZE) / MEBIBYTE)
+        kwargs['part_size'] = part_size * MEBIBYTE
+
     size_qualifies_for_multipart = UploadManager._use_multipart(total_size, part_size) if part_size else UploadManager._use_multipart(total_size)
 
     ma = None
@@ -470,7 +480,13 @@ def object_put(ctx, from_json, namespace, bucket_name, name, file, if_match, con
         ma.add_parts_from_file(file.name)
         click.echo('Split file into {} parts for upload.'.format(len(ma.manifest["parts"])), file=sys.stderr)
         with ProgressBar(total_size, 'Uploading object') as bar:
-            ma.upload(progress_callback=bar.update)
+            try:
+                ma.upload(progress_callback=bar.update)
+            except RuntimeError as re:
+                if 'thread' in str(re) or 'Thread' in str(re):
+                    raise Exception('Cannot start that many threads, please reduce the parallel-upload-count. The default is 3.')
+                else:
+                    raise re
         response = ma.commit()
 
     display_headers = filter_object_headers(response.headers, OBJECT_PUT_DISPLAY_HEADERS)
@@ -493,18 +509,18 @@ def object_put(ctx, from_json, namespace, bucket_name, name, file, if_match, con
 @cli_util.option('--content-type', help='The content type to apply to all files being uploaded. If content type is set to auto, then the CLI will guess the content type of the file.')
 @cli_util.option('--content-language', help='The content language to apply to all files being uploaded.')
 @cli_util.option('--content-encoding', help='The content encoding to apply to all files being uploaded.')
-@cli_util.option('--overwrite', is_flag=True, help="""If a file being uploaded already exists in Object Storage, overwrite the existing object in Object Storage without a confirmation prompt. If neither this flag nor --no-overwrite is specified, you will be prompted each time an object would be overwritten.
+@cli_util.option('--overwrite', is_flag=True, help="""If a file being uploaded already exists in Object Storage with the same name, overwrite the existing object in Object Storage without a confirmation prompt. If neither this flag nor --no-overwrite is specified, you will be prompted each time an object with the same name would be overwritten.
 
-Specifying this flag will also allow for faster uploads as the CLI will not initially check whether or not the files already exist in Object Storage.""")
-@cli_util.option('--no-overwrite', is_flag=True, help='If a file being uploaded already exists in Object Storage, do not overwite it. If neither this flag nor --overwrite is specified, you will be prompted each time an object would be overwritten')
+Specifying this flag will also allow for faster uploads as the CLI will not initially check whether or not the files with the same name already exist in Object Storage.""")
+@cli_util.option('--no-overwrite', is_flag=True, help='If a file being uploaded already exists in Object Storage with the same name, do not overwite the object. If neither this flag nor --overwrite is specified, you will be prompted each time an object with the same name would be overwritten.')
 @cli_util.option('--no-multipart', is_flag=True,
-                 help='Do not use multipart uploads to upload the file in parts. By default files above 128 MiB will be uploaded in multiple parts, then combined server-side. This applies to all files being uploaded')
+                 help='Do not use multipart uploads to upload the file in parts. By default, files above 128 MiB will be uploaded in multiple parts, then combined server-side. This applies to all files being uploaded')
 @cli_util.option('--part-size', type=click.INT,
                  help='Part size (in MiB) to use if uploading via multipart upload operations. This applies to all files which will be uploaded in multiple parts. Part size must be greater than 10 MiB')
 @cli_util.option('--disable-parallel-uploads', is_flag=True,
                  help='[DEPRECATED] This option is no longer used. If a file in the directory will be uploaded in multiple parts, this option disables those parts from being uploaded in parallel. This applies to all files being uploaded in multiple parts')
-@cli_util.option('--parallel-upload-count', type=click.INT, default=10, show_default=True,
-                 help='The number of parallel operations to perform. Decreasing this value will make bulk uploads less resource intensive but they may take longer. Increasing this value may improve bulk upload times, but the upload process will consume more system resources and network bandwidth.')
+@cli_util.option('--parallel-upload-count', type=click.IntRange(1, 1000), default=10, show_default=True,
+                 help='The number of parallel operations to perform. Decreasing this value will make bulk uploads less resource intensive but they may take longer. Increasing this value may improve bulk upload times, but the upload process will consume more system resources and network bandwidth. The maximum is 1000.')
 @cli_util.option('--verify-checksum', is_flag=True, help='Verify the checksum of the uploaded object with the local file.')
 @cli_util.option('--include', multiple=True, help="""Only upload files which match the provided pattern. Patterns are taken relative to the CURRENT directory. This option can be provided mulitple times to match on mulitple patterns. Supported pattern symbols are:
 \b
@@ -548,9 +564,9 @@ def object_bulk_put(ctx, from_json, namespace, bucket_name, src_dir, object_pref
     oci os object bulk-upload -ns mynamespace -bn mybucket --src-dir path/to/upload/directory --overwrite
 
     \b
-    If a file being uploaded already exists in Object Storage, it can be overwritten without a prompt by
+    If a file being uploaded already exists in Object Storage with the same name, it can be overwritten without a prompt by
     using the --overwrite flag. Specifying --overwrite will also allow for faster uploads as the CLI will not
-    initially check whether or not the files already exist in Object Storage.
+    initially check whether or not the files already exist in Object Storage with the same name.
 
     \b
     Prevent object overwrite to resolve object name collision
@@ -558,7 +574,7 @@ def object_bulk_put(ctx, from_json, namespace, bucket_name, src_dir, object_pref
     oci os object bulk-upload -ns mynamespace -bn mybucket --src-dir path/to/upload/directory --no-overwrite
 
     \b
-    If a file being uploaded already exists in Object Storage, it can be preserved (not overwritten) without a
+    If a file being uploaded already exists in Object Storage with the same name, it can be preserved (not overwritten) without a
     prompt by using the --no-overwrite flag.
     """
     # there is existing retry logic for bulk_put so we don't want the Python SDK level retries to interfere / overlap with that
@@ -566,7 +582,7 @@ def object_bulk_put(ctx, from_json, namespace, bucket_name, src_dir, object_pref
     auto_content_type = False
 
     if include and exclude:
-        raise click.UsageError('The --include and --exclude parameters cannot both be provided')
+        raise click.UsageError('The --include and --exclude parameters cannot both be provided.')
 
     expanded_directory = os.path.expandvars(os.path.expanduser(src_dir))
     if not os.path.exists(expanded_directory):
@@ -578,7 +594,7 @@ def object_bulk_put(ctx, from_json, namespace, bucket_name, src_dir, object_pref
         raise click.UsageError('The option --part-size is not applicable when using the --no-multipart flag.')
 
     if overwrite and no_overwrite:
-        raise click.UsageError('The options --overwrite and --no-overwrite cannot be used together')
+        raise click.UsageError('The options --overwrite and --no-overwrite cannot be used together.')
 
     client = build_client('object_storage', ctx)
     client_request_id = ctx.obj['request_id']
@@ -785,7 +801,10 @@ def object_get(ctx, from_json, namespace, bucket_name, name, file, if_match, if_
     head_object = client.head_object(namespace, bucket_name, name, opc_client_request_id=ctx.obj['request_id'])
     if not head_object:
         raise click.ClickException('The specified object does not exist')
-    object_size_bytes = int(head_object.headers['Content-Length'])
+
+    object_size_bytes = 0
+    if 'Content-Length' in head_object.headers:
+        object_size_bytes = int(head_object.headers['Content-Length'])
 
     if not part_size:
         part_size = 128 * MEBIBYTE
@@ -929,7 +948,7 @@ def object_bulk_get(ctx, from_json, namespace, bucket_name, prefix, delimiter, d
     --overwrite option, or preserve them with the --no-overwrite option.
     """
     if include and exclude:
-        raise click.UsageError('The --include and --exclude parameters cannot both be provided')
+        raise click.UsageError('The --include and --exclude parameters cannot both be provided.')
 
     if not part_size:
         part_size = 128 * MEBIBYTE
@@ -939,7 +958,7 @@ def object_bulk_get(ctx, from_json, namespace, bucket_name, prefix, delimiter, d
     client = build_client('object_storage', ctx)
 
     if overwrite and no_overwrite:
-        raise click.UsageError('The options --overwrite and --no-overwrite cannot be used together')
+        raise click.UsageError('The options --overwrite and --no-overwrite cannot be used together.')
 
     expanded_directory = os.path.expandvars(os.path.expanduser(download_dir))
     if not os.path.exists(expanded_directory):
@@ -958,6 +977,7 @@ def object_bulk_get(ctx, from_json, namespace, bucket_name, prefix, delimiter, d
         'fields': 'name,size'
     }
     keep_paginating = True
+    ask_overwrite = True
 
     output = BulkGetOperationOutput()
 
@@ -970,11 +990,16 @@ def object_bulk_get(ctx, from_json, namespace, bucket_name, prefix, delimiter, d
     while keep_paginating:
         list_objects_response = retrying_list_objects_single_page(**kwargs)
         next_start = list_objects_response.data.next_start_with
+        to_download = []
+
+        if next_start is not None and not overwrite and not no_overwrite and ask_overwrite:
+            if click.confirm("You are downloading more than 1000 objects, do you want to overwrite all?"):
+                overwrite = True
+            ask_overwrite = False
 
         # Process the current batch and write to disk
         for obj in list_objects_response.data.objects:
             object_name = obj.name
-            object_size = obj.size
 
             # If the object name starts with the path separator (account for Unix and Windows paths) then remove it when we
             # do the joining to create a full file name, otherwise we could get an unexpected result
@@ -993,9 +1018,25 @@ def object_bulk_get(ctx, from_json, namespace, bucket_name, prefix, delimiter, d
                     continue
 
                 if not overwrite:
-                    if not click.confirm('WARNING: {} already exists. Are you sure you want to overwrite it?'.format(object_name)):
+                    confirm = click.prompt('WARNING: {} already exists. Are you sure you want to overwrite it? [y/N/yes to (a)ll]'.format(object_name), default='N', type=custom_types.CliCaseInsensitiveChoice(["Y", "N", "A"]))
+                    if confirm == 'N':
                         output.add_skipped(object_name)
                         continue
+                    elif confirm == 'A':
+                        overwrite = True
+
+            dl_obj = {
+                "name": obj.name,
+                "size": obj.size,
+                "full_file_path": full_file_path
+            }
+            to_download.append(dl_obj)
+            list_objects_response = None
+
+        for obj in to_download:
+            object_name = obj['name']
+            object_size = obj['size']
+            full_file_path = obj['full_file_path']
 
             directory_for_file = os.path.dirname(full_file_path)
             if not os.path.exists(directory_for_file):
@@ -1365,8 +1406,8 @@ def object_bulk_delete(ctx, from_json, namespace, bucket_name, prefix, delimiter
                  help='Part size in MiB')
 @cli_util.option('--disable-parallel-uploads', is_flag=True,
                  help='If the object will be uploaded in multiple parts, this option disables those parts from being uploaded in parallel.')
-@cli_util.option('--parallel-upload-count', type=click.INT, default=None,
-                 help='This option allows you to specify the maximum number of parts that can be uploaded in parallel. This option cannot be used with --disable-parallel-uploads. Defaults to 3.')
+@cli_util.option('--parallel-upload-count', type=click.IntRange(1, 1000), default=None,
+                 help='This option allows you to specify the maximum number of parts that can be uploaded in parallel. This option cannot be used with --disable-parallel-uploads. Defaults to 3 and the maximum is 1000.')
 @json_skeleton_utils.get_cli_json_input_option({})
 @help_option
 @click.pass_context
@@ -1820,6 +1861,7 @@ class ProgressBar:
         self._progressbar.label = new_label
         self._progressbar.finished = True
         self._progressbar.render_progress()
+        print()
 
     def render_finish(self):
         self._progressbar.render_finish()

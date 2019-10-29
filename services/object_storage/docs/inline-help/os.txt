@@ -1223,15 +1223,15 @@ Usage: oci os object bulk-upload [OPTIONS]
   ----------------------------------------------------------
   oci os object bulk-upload -ns mynamespace -bn mybucket --src-dir path/to/upload/directory --overwrite
 
-  If a file being uploaded already exists in Object Storage, it can be overwritten without a prompt by
+  If a file being uploaded already exists in Object Storage with the same name, it can be overwritten without a prompt by
   using the --overwrite flag. Specifying --overwrite will also allow for faster uploads as the CLI will not
-  initially check whether or not the files already exist in Object Storage.
+  initially check whether or not the files already exist in Object Storage with the same name.
 
   Prevent object overwrite to resolve object name collision
   ----------------------------------------------------------
   oci os object bulk-upload -ns mynamespace -bn mybucket --src-dir path/to/upload/directory --no-overwrite
 
-  If a file being uploaded already exists in Object Storage, it can be preserved (not overwritten) without a
+  If a file being uploaded already exists in Object Storage with the same name, it can be preserved (not overwritten) without a
   prompt by using the --no-overwrite flag.
 
 Options:
@@ -1258,22 +1258,26 @@ Options:
   --content-encoding TEXT         The content encoding to apply to all files
                                   being uploaded.
   --overwrite                     If a file being uploaded already exists in
-                                  Object Storage, overwrite the existing object
-                                  in Object Storage without a confirmation
-                                  prompt. If neither this flag nor --no-
-                                  overwrite is specified, you will be prompted
-                                  each time an object would be overwritten.
-                                  Specifying this flag will also allow for
-                                  faster uploads as the CLI will not initially
-                                  check whether or not the files already exist
-                                  in Object Storage.
+                                  Object Storage with the same name, overwrite
+                                  the existing object in Object Storage without
+                                  a confirmation prompt. If neither this flag
+                                  nor --no-overwrite is specified, you will be
+                                  prompted each time an object with the same
+                                  name would be overwritten.
+                                  
+                                  Specifying this
+                                  flag will also allow for faster uploads as the
+                                  CLI will not initially check whether or not
+                                  the files with the same name already exist in
+                                  Object Storage.
   --no-overwrite                  If a file being uploaded already exists in
-                                  Object Storage, do not overwite it. If neither
-                                  this flag nor --overwrite is specified, you
-                                  will be prompted each time an object would be
-                                  overwritten
+                                  Object Storage with the same name, do not
+                                  overwite the object. If neither this flag nor
+                                  --overwrite is specified, you will be prompted
+                                  each time an object with the same name would
+                                  be overwritten.
   --no-multipart                  Do not use multipart uploads to upload the
-                                  file in parts. By default files above 128 MiB
+                                  file in parts. By default, files above 128 MiB
                                   will be uploaded in multiple parts, then
                                   combined server-side. This applies to all
                                   files being uploaded
@@ -1287,14 +1291,14 @@ Options:
                                   parts from being uploaded in parallel. This
                                   applies to all files being uploaded in
                                   multiple parts
-  --parallel-upload-count INTEGER
+  --parallel-upload-count INTEGER RANGE
                                   The number of parallel operations to perform.
                                   Decreasing this value will make bulk uploads
                                   less resource intensive but they may take
                                   longer. Increasing this value may improve bulk
                                   upload times, but the upload process will
                                   consume more system resources and network
-                                  bandwidth. [default: 10]
+                                  bandwidth. The maximum is 1000. [default: 10]
   --verify-checksum               Verify the checksum of the uploaded object
                                   with the local file.
   --include TEXT                  Only upload files which match the provided
@@ -1772,10 +1776,11 @@ Options:
                                   the content type of the file.
   --content-language TEXT         The content language of the object.
   --content-encoding TEXT         The content encoding of the object.
-  --force                         If the object already exists, overwrite the
-                                  existing object without a confirmation prompt.
-  --no-overwrite                  If the object already exists, do not overwrite
-                                  the existing object.
+  --force                         If the object name already exists, overwrite
+                                  the existing object without a confirmation
+                                  prompt.
+  --no-overwrite                  If the object name already exists, do not
+                                  overwrite the existing object.
   --no-multipart                  Do not use multipart uploads to upload the
                                   file in parts. By default files above 128 MiB
                                   will be uploaded in multiple parts, then
@@ -1785,13 +1790,13 @@ Options:
   --disable-parallel-uploads      If the object will be uploaded in multiple
                                   parts, this option disables those parts from
                                   being uploaded in parallel.
-  --parallel-upload-count INTEGER
+  --parallel-upload-count INTEGER RANGE
                                   If the object will be uploaded in multiple
                                   parts, this option allows you to specify the
                                   maximum number of parts that can be uploaded
                                   in parallel. This option cannot be used with
                                   --disable-parallel-uploads or --no-multipart.
-                                  Defaults to 3.
+                                  Defaults to 3 and the maximum is 1000.
   --verify-checksum               Verify the checksum of the uploaded object
                                   with the local file.
   --from-json TEXT                Provide input to this command as a JSON
@@ -2005,11 +2010,12 @@ Options:
   --disable-parallel-uploads      If the object will be uploaded in multiple
                                   parts, this option disables those parts from
                                   being uploaded in parallel.
-  --parallel-upload-count INTEGER
+  --parallel-upload-count INTEGER RANGE
                                   This option allows you to specify the maximum
                                   number of parts that can be uploaded in
                                   parallel. This option cannot be used with
-                                  --disable-parallel-uploads. Defaults to 3.
+                                  --disable-parallel-uploads. Defaults to 3 and
+                                  the maximum is 1000.
   --from-json TEXT                Provide input to this command as a JSON
                                   document from a file using the file://path-
                                   to/file syntax.

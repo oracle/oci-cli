@@ -46,8 +46,12 @@ class GetObjectTask(WorkPoolTask):
             with open(self.kwargs['full_file_path'], "wb") as file:
                 for chunk in get_object_response.data.raw.stream(OBJECT_GET_CHUNK_SIZE, decode_content=False):
                     file.write(chunk)
-        except IsADirectoryError:
-            pass
+        except IOError as e:
+            # IsADirectoryError
+            if e.errno == 21:
+                pass
+            else:
+                raise
 
 
 # A task which coordinates getting an object in multiple parts (using ranged GetObject calls), combining them and then sending them

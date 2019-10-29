@@ -42,6 +42,44 @@ database_cli.backup_destination_group.commands.pop(database_cli.create_backup_de
 database_cli.db_root_group.commands.pop(database_cli.backup_destination_summary_group.name)
 
 
+# wallet commands
+
+cli_util.rename_command(database_cli, database_cli.autonomous_database_wallet_group, database_cli.get_autonomous_database_wallet, "get-metadata")
+cli_util.rename_command(database_cli, database_cli.autonomous_database_wallet_group, database_cli.get_autonomous_database_regional_wallet, "get-regional-wallet-metadata")
+cli_util.rename_command(database_cli, database_cli.autonomous_database_wallet_group, database_cli.update_autonomous_database_wallet, "rotate")
+cli_util.rename_command(database_cli, database_cli.autonomous_database_wallet_group, database_cli.update_autonomous_database_regional_wallet, "rotate-regional-wallet")
+
+
+@cli_util.copy_params_from_generated_command(database_cli.get_autonomous_database_wallet, params_to_exclude=['autonomous_database_id'])
+@cli_util.option('--id', required=True, help="""The OCID of the Autonomous Database to get the wallet metadata for.""")
+@database_cli.autonomous_database_wallet_group.command(name='get-metadata', help=database_cli.get_autonomous_database_wallet.help)
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def get_wallet_metadata(ctx, **kwargs):
+    if 'id' in kwargs and kwargs['id']:
+        kwargs['autonomous_database_id'] = kwargs['id']
+
+    del kwargs['id']
+
+    ctx.invoke(database_cli.get_autonomous_database_wallet, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(database_cli.update_autonomous_database_wallet, params_to_exclude=['autonomous_database_id'])
+@cli_util.option('--id', required=True, help="""The OCID of the Autonomous Database to rotate the wallet for.""")
+@database_cli.autonomous_database_wallet_group.command(name='rotate', help=database_cli.update_autonomous_database_wallet.help)
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def rotate_wallet(ctx, **kwargs):
+    if 'id' in kwargs and kwargs['id']:
+        kwargs['autonomous_database_id'] = kwargs['id']
+
+    del kwargs['id']
+
+    ctx.invoke(database_cli.update_autonomous_database_wallet, **kwargs)
+
+
 @cli_util.copy_params_from_generated_command(database_cli.launch_db_system_launch_db_system_details, params_to_exclude=['db_home', 'db_system_options', 'ssh_public_keys'])
 @database_cli.db_system_group.command(name='launch', help=database_cli.launch_db_system_launch_db_system_details.help)
 @cli_util.option('--admin-password', required=True, help="""A strong password for SYS, SYSTEM, and PDB Admin. The password must be at least nine characters and contain at least two uppercase, two lowercase, two numbers, and two special characters. The special characters must be _, #, or -.""")

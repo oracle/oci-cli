@@ -6,6 +6,66 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.6.10 - 2019-10-29
+-------------------
+Added
+~~~~~
+* Support for retrieving metadata for Autonomous Wallet, both regional and instance, as well as requesting rotation of Autonomous Wallets, both regional instance. Generate wallet now allows for specifying the wallet type to download, All or Single.
+
+  * ``oci db autonomous-database get-metadata --id <an OCID of an autonomous database>``
+  * ``oci db autonomous-database get-regional-wallet-metadata``
+  * ``oci db autonomous-database-wallet rotate --should-rotate true --id <an OCID of an autonomous database>``
+  * ``oci db autonomous-database-wallet rotate-regional-wallet --should-rotate true``
+  * ``oci db autonomous-database generate-wallet --generate-type ALL``
+  * ``oci db autonomous-database generate-wallet --generate-type SINGLE``
+
+* Support for adding and removing image shape compatibility entries
+
+   * ``oci compute image-shape-compatibility-entry add``
+   * ``oci compute image-shape-compatibility-entry remove``
+
+* Support for managing redirects (e.g. create, update, delete, get list)
+
+  * ``oci waas http-redirect change-compartment --compartment-id, --http-redirect-id``
+  * ``oci waas http-redirect create --compartment-id, --domain, --target, --defined-tags, --display-name, --freeform-tags, --response-code``
+  * ``oci waas http-redirect delete --http-redirect-id, --force``
+  * ``oci waas http-redirect get --http-redirect-id``
+  * ``oci waas http-redirect list --compartment-id, --all-pages, --display-name, --id, --time-created-greater-than-or-equal-to, --time-created-less-than``
+  * ``oci waas http-redirect update --http-redirect-id, --defined-tags, --display-name, --force, --freeform-tags, --response-code, --target``
+
+* Support for migrating Dyn HTTP Redirect Service to OCI DNS
+
+  * ``oci dns zone migrate-from-dynect``
+
+Changed
+~~~~~~~
+* ``oci setup oci-cli-rc`` will try to create the directory for the oci_cli_rc file, if it does not exist.
+
+Fixed
+~~~~~
+* Added validation check for thread count ``--parallel-upload-count`` and also improved error message when threads are exhausted.
+
+* Upload parts in ``oci os object put`` now correctly limited to 10000 parts
+
+* Updated help messages for the overwrite and no-overwrite flags in object storage operations
+
+  * ``oci os object bulk-upload --overwrite --no-overwrite``
+  * ``oci os object put --overwrite --no-overwrite``
+
+* Using ``oci os object bulk-download`` correctly prints out downloaded objects in a new line instead of overwriting the same line
+
+* Problem with ``oci setup`` when there were spaces in a user's profile name on Windows.
+
+* Data Transfer Service - Fix the broken output string for showing progress during command
+
+  * ``oci dts nfs-dataset seal``
+
+* Data Transfer Service - Provide help string to monitor progress after running the command
+
+  * ``oci dts nfs-dataset seal``
+
+* Typo in the install README
+
 2.6.9 - 2019-10-15
 -------------------
 Added

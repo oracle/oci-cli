@@ -217,13 +217,13 @@ def install_cli(install_dir, tmp_dir, version, optional_features):
     exec_command(cmd, env=env)
 
 
-def get_install_dir():
+def get_install_dir(allow_spaces):
     install_dir = None
     while not install_dir:
         prompt_message = 'In what directory would you like to place the install?'
         install_dir = prompt_input_with_default(prompt_message, DEFAULT_INSTALL_DIR)
         install_dir = os.path.realpath(os.path.expanduser(install_dir))
-        if ' ' in install_dir:
+        if ' ' in install_dir and not allow_spaces:
             print_status("The install directory '{}' cannot contain spaces.".format(install_dir))
             install_dir = None
         else:
@@ -250,15 +250,16 @@ def get_install_dir():
     return install_dir
 
 
-def get_exec_dir(install_dir):
+def get_exec_dir(install_dir, allow_spaces):
     exec_dir = None
     while not exec_dir:
         prompt_message = "In what directory would you like to place the '{}' executable?".format(OCI_EXECUTABLE_NAME)
         exec_dir = prompt_input_with_default(prompt_message, DEFAULT_EXEC_DIR)
         exec_dir = os.path.realpath(os.path.expanduser(exec_dir))
-        if ' ' in exec_dir:
+        if ' ' in exec_dir and not allow_spaces:
             print_status("The executable directory '{}' cannot contain spaces.".format(exec_dir))
             exec_dir = None
+            continue
 
         install_dir_bin_folder = 'Scripts' if is_windows() else 'bin'
         install_bin_dir = os.path.join(install_dir, install_dir_bin_folder)
@@ -271,15 +272,16 @@ def get_exec_dir(install_dir):
     return exec_dir
 
 
-def get_script_dir(install_dir):
+def get_script_dir(install_dir, allow_spaces):
     script_dir = None
     while not script_dir:
         prompt_message = "In what directory would you like to place the OCI scripts?"
         script_dir = prompt_input_with_default(prompt_message, DEFAULT_SCRIPT_DIR)
         script_dir = os.path.realpath(os.path.expanduser(script_dir))
-        if ' ' in script_dir:
+        if ' ' in script_dir and not allow_spaces:
             print_status("The script directory '{}' cannot contain spaces.".format(script_dir))
             script_dir = None
+            continue
 
         install_dir_bin_folder = 'Scripts' if is_windows() else 'bin'
         install_bin_dir = os.path.join(install_dir, install_dir_bin_folder)
@@ -399,7 +401,7 @@ def handle_path_and_tab_completion(completion_file_path, exec_filepath, exec_dir
                     os.makedirs(os.path.dirname(profile_file_path))
 
                 with open(profile_file_path, 'w') as f:
-                    f.write('. {}'.format(completion_file_path))
+                    f.write('. "{}"'.format(completion_file_path))
             else:
                 with open(profile_file_path, 'a+') as f:
                     current_file_contents = f.read()
@@ -416,7 +418,7 @@ def handle_path_and_tab_completion(completion_file_path, exec_filepath, exec_dir
                         print_status(format_str.format(profile_file_path=profile_file_path))
                     else:
                         # They don't have the tab completion script in their profile. Add it
-                        f.write('\n. {}\n'.format(completion_file_path))
+                        f.write('\n. "{}"\n'.format(completion_file_path))
 
             # powershell one-liner to append the exec_dir to the USER path permanently
             # makes the assumption that powershell is on the PATH already
@@ -589,17 +591,20 @@ def main():
     if args.verify_native_dependencies:
         verify_native_dependencies()
     tmp_dir = create_tmp_dir()
+    allow_spaces = False    # on *nix systems, virtualenv pip does not work properly when there are spaces in the dir.
+    if is_windows():
+        allow_spaces = True
     if install_dir is None:
-        install_dir = get_install_dir()
+        install_dir = get_install_dir(allow_spaces)
     else:
         # Create the install directory provided by the user if it does not exist
         create_dir(install_dir)
     if exec_dir is None:
-        exec_dir = get_exec_dir(install_dir)
+        exec_dir = get_exec_dir(install_dir, allow_spaces)
     else:
         # Create the executable directory provided by the user if it does not exist
         create_dir(exec_dir)
-    script_dir = get_script_dir(install_dir)
+    script_dir = get_script_dir(install_dir, allow_spaces)
     if OPTIONAL_FEATURES is None:
         OPTIONAL_FEATURES = get_optional_features()
 

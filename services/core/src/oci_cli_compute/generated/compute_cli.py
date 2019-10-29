@@ -87,6 +87,12 @@ def dedicated_vm_host_instance_group():
     pass
 
 
+@click.command(cli_util.override('compute.image_shape_compatibility_entry_group.command_name', 'image-shape-compatibility-entry'), cls=CommandGroupWithAlias, help="""An image and shape that are compatible.""")
+@cli_util.help_option_group
+def image_shape_compatibility_entry_group():
+    pass
+
+
 @click.command(cli_util.override('compute.app_catalog_listing_group.command_name', 'app-catalog-listing'), cls=CommandGroupWithAlias, help="""Listing details.""")
 @cli_util.help_option_group
 def app_catalog_listing_group():
@@ -182,6 +188,7 @@ compute_root_group.add_command(vnic_attachment_group)
 compute_root_group.add_command(volume_attachment_group)
 compute_root_group.add_command(app_catalog_listing_resource_version_group)
 compute_root_group.add_command(dedicated_vm_host_instance_group)
+compute_root_group.add_command(image_shape_compatibility_entry_group)
 compute_root_group.add_command(app_catalog_listing_group)
 compute_root_group.add_command(app_catalog_subscription_group)
 compute_root_group.add_command(boot_volume_attachment_group)
@@ -194,6 +201,32 @@ compute_root_group.add_command(dedicated_vm_host_shape_group)
 compute_root_group.add_command(app_catalog_listing_resource_version_agreements_group)
 compute_root_group.add_command(device_group)
 compute_root_group.add_command(console_history_group)
+
+
+@image_shape_compatibility_entry_group.command(name=cli_util.override('compute.add_image_shape_compatibility_entry.command_name', 'add'), help=u"""Adds a shape to the compatible shapes list for the image.""")
+@cli_util.option('--image-id', required=True, help=u"""The [OCID] of the image.""")
+@cli_util.option('--shape-name', required=True, help=u"""Shape name.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'ImageShapeCompatibilityEntry'})
+@cli_util.wrap_exceptions
+def add_image_shape_compatibility_entry(ctx, from_json, image_id, shape_name):
+
+    if isinstance(image_id, six.string_types) and len(image_id.strip()) == 0:
+        raise click.UsageError('Parameter --image-id cannot be whitespace or empty string')
+
+    if isinstance(shape_name, six.string_types) and len(shape_name.strip()) == 0:
+        raise click.UsageError('Parameter --shape-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    client = cli_util.build_client('compute', ctx)
+    result = client.add_image_shape_compatibility_entry(
+        image_id=image_id,
+        shape_name=shape_name,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
 
 
 @boot_volume_attachment_group.command(name=cli_util.override('compute.attach_boot_volume.command_name', 'attach'), help=u"""Attaches the specified boot volume to the specified instance.""")
@@ -3866,6 +3899,33 @@ def list_volume_attachments(ctx, from_json, all_pages, page_size, compartment_id
             compartment_id=compartment_id,
             **kwargs
         )
+    cli_util.render_response(result, ctx)
+
+
+@image_shape_compatibility_entry_group.command(name=cli_util.override('compute.remove_image_shape_compatibility_entry.command_name', 'remove'), help=u"""Removes a shape from the compatible shapes list for the image.""")
+@cli_util.option('--image-id', required=True, help=u"""The [OCID] of the image.""")
+@cli_util.option('--shape-name', required=True, help=u"""Shape name.""")
+@cli_util.confirm_delete_option
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def remove_image_shape_compatibility_entry(ctx, from_json, image_id, shape_name):
+
+    if isinstance(image_id, six.string_types) and len(image_id.strip()) == 0:
+        raise click.UsageError('Parameter --image-id cannot be whitespace or empty string')
+
+    if isinstance(shape_name, six.string_types) and len(shape_name.strip()) == 0:
+        raise click.UsageError('Parameter --shape-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    client = cli_util.build_client('compute', ctx)
+    result = client.remove_image_shape_compatibility_entry(
+        image_id=image_id,
+        shape_name=shape_name,
+        **kwargs
+    )
     cli_util.render_response(result, ctx)
 
 

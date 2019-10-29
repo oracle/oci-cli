@@ -19,16 +19,17 @@ Commands:
   caching-rule
   captcha                       The settings of the CAPTCHA challenge.
   certificate                   The details of the SSL certificate.
-  custom-protection-rule        The details of a Custom Protection rule.
+  custom-protection-rule        The details of a custom protection rule.
   device-fingerprint-challenge  The device fingerprint challenge settings.
   edge-subnet                   The details about an edge node subnet.
   good-bot                      The good bot settings.
+  http-redirect                 The details of a HTTP Redirect configuration...
   human-interaction-challenge   The human interaction challenge settings.
   js-challenge                  The JavaScript challenge settings.
   policy-config                 The configuration details for the WAAS...
   protection-rule               The protection rule settings.
   protection-settings           The settings used for protection rules.
-  purge-cache                   Accepts a list of resources that will get...
+  purge-cache                   Performs a purge of the cache for each...
   recommendation                A recommended protection rule for a web...
   threat-feed                   The settings of the threat intelligence feed.
   waas-policy                   The details of a Web Application Acceleration...
@@ -212,24 +213,29 @@ Options:
 
 Commands:
   change-compartment  Moves address list into a different...
-  create              Creates an address list in set compartment...
+  create              Creates an address list in a set compartment...
   delete              Deletes the address list from the compartment...
   get                 Gets the details of an address list.
   list                Gets a list of address lists that can be used...
+  update              Updates the details of an address list.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci waas address-list change-compartment --help
 Usage: oci waas address-list change-compartment [OPTIONS]
 
   Moves address list into a different compartment. When provided, If-Match is
-  checked against ETag values of the address list.
+  checked against ETag values of the address list. For information about
+  moving resources between compartments, see [Moving Resources to a Different
+  Compartment].
 
 Options:
   --address-list-id TEXT     The [OCID] of the address list. This number is
                              generated when the address list is added to the
                              compartment. [required]
   -c, --compartment-id TEXT  The [OCID] of the compartment into which the
-                             resource should be moved. [required]
+                             resource should be moved. For information about
+                             moving resources between compartments, see [Moving
+                             Resources to a Different Compartment]. [required]
   --if-match TEXT            For optimistic concurrency control. In the `PUT` or
                              `DELETE` call for a resource, set the `if-match`
                              parameter to the value of the etag from a previous
@@ -267,8 +273,9 @@ Options:
 $ oci waas address-list create --help
 Usage: oci waas address-list create [OPTIONS]
 
-  Creates an address list in set compartment and allows it to be used in a
-  WAAS policy. For more information, see [WAF Settings].
+  Creates an address list in a set compartment and allows it to be used in a
+  WAAS policy and referenced by access rules. Addresses can be IP addresses
+  and CIDR notations.
 
 Options:
   -c, --compartment-id TEXT       The [OCID] of the compartment in which to
@@ -694,6 +701,132 @@ Options:
                                   commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
+$ oci waas address-list update --help
+Usage: oci waas address-list update [OPTIONS]
+
+  Updates the details of an address list. Only the fields specified in the
+  request body will be updated; all other properties will remain unchanged.
+
+Options:
+  --address-list-id TEXT          The [OCID] of the address list. This number is
+                                  generated when the address list is added to
+                                  the compartment. [required]
+  --if-match TEXT                 For optimistic concurrency control. In the
+                                  `PUT` or `DELETE` call for a resource, set the
+                                  `if-match` parameter to the value of the etag
+                                  from a previous `GET` or `POST` response for
+                                  that resource. The resource will be updated or
+                                  deleted only if the etag provided matches the
+                                  resource's current etag value.
+  --display-name TEXT             A unique user-friendly name for the address
+                                  list.
+  --addresses COMPLEX TYPE        A list of IP addresses or CIDR notations.
+                                  This
+                                  is a complex type whose value must be valid
+                                  JSON. The value can be provided as a string on
+                                  the command line or passed in as a file using
+                                  the file://path/to/file syntax.
+                                  
+                                  The
+                                  --generate-param-json-input option can be used
+                                  to generate an example of the JSON which must
+                                  be provided. We recommend storing this example
+                                  in a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+  --freeform-tags COMPLEX TYPE    Free-form tags for this resource. Each tag is
+                                  a simple key-value pair with no predefined
+                                  name, type, or namespace. For more
+                                  information, see [Resource Tags].
+                                  
+                                  Example:
+                                  `{"Department": "Finance"}`
+                                  This is a complex
+                                  type whose value must be valid JSON. The value
+                                  can be provided as a string on the command
+                                  line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+  --defined-tags COMPLEX TYPE     Defined tags for this resource. Each key is
+                                  predefined and scoped to a namespace. For more
+                                  information, see [Resource Tags].
+                                  
+                                  Example:
+                                  `{"Operations": {"CostCenter": "42"}}`
+                                  This is
+                                  a complex type whose value must be valid JSON.
+                                  The value can be provided as a string on the
+                                  command line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+  --force                         Perform update without prompting for
+                                  confirmation.
+  --wait-for-state [CREATING|ACTIVE|FAILED|UPDATING|DELETING|DELETED]
+                                  This operation creates, modifies or deletes a
+                                  resource that has a defined lifecycle state.
+                                  Specify this option to perform the action and
+                                  then wait until the resource reaches a given
+                                  lifecycle state. Multiple states can be
+                                  specified, returning on the first state. For
+                                  example, --wait-for-state SUCCEEDED --wait-
+                                  for-state FAILED would return on whichever
+                                  lifecycle state is reached first. If timeout
+                                  is reached, a return code of 2 is returned.
+                                  For any other error, a return code of 1 is
+                                  returned.
+  --max-wait-seconds INTEGER      The maximum time to wait for the resource to
+                                  reach the lifecycle state defined by --wait-
+                                  for-state. Defaults to 1200 seconds.
+  --wait-interval-seconds INTEGER
+                                  Check every --wait-interval-seconds to see
+                                  whether the resource to see if it has reached
+                                  the lifecycle state defined by --wait-for-
+                                  state. Defaults to 30 seconds.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file using the file://path-
+                                  to/file syntax.
+                                  
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
 $ oci waas address-rate-limiting --help
 Usage: oci waas address-rate-limiting [OPTIONS] COMMAND [ARGS]...
 
@@ -767,7 +900,13 @@ Options:
                                   If unspecified, defaults to `10`.
   --block-response-code INTEGER   The response status code returned when a
                                   request is blocked. If unspecified, defaults
-                                  to `503`.
+                                  to `503`. The list of available response
+                                  codes: `200`, `201`, `202`, `204`, `206`,
+                                  `300`, `301`, `302`, `303`, `304`, `307`,
+                                  `400`, `401`, `403`, `404`, `405`, `408`,
+                                  `409`, `411`, `412`, `413`, `414`, `415`,
+                                  `416`, `422`, `444`, `499`, `500`, `501`,
+                                  `502`, `503`, `504`, `507`.
   --if-match TEXT                 For optimistic concurrency control. In the
                                   `PUT` or `DELETE` call for a resource, set the
                                   `if-match` parameter to the value of the etag
@@ -843,9 +982,9 @@ $ oci waas caching-rule list --help
 Usage: oci waas caching-rule list [OPTIONS]
 
   Gets the currently configured caching rules for the Web Application Firewall
-  configuration of a specified WAAS policy. The order of the caching rules is
-  important. The rules will be checked in the order they are specified and the
-  first matching rule will be used.
+  configuration of a specified WAAS policy. The rules are processed in the
+  order they are specified in and the first matching rule will be used when
+  processing a request.
 
 Options:
   --waas-policy-id TEXT  The [OCID] of the WAAS policy. [required]
@@ -887,12 +1026,23 @@ Options:
 $ oci waas caching-rule update --help
 Usage: oci waas caching-rule update [OPTIONS]
 
-  Updates the configuration for each specified caching rule. This operation
-  can update or delete caching rules depending on the structure of the request
-  body. Caching rules can be updated by changing the properties of the caching
-  rule object with the rule's key specified in the key field. Any existing
-  caching rules that are not specified with a key in the list of access rules
-  will be deleted upon update.
+  Updates the configuration for each specified caching rule.
+
+  Caching rules WAF policies allow you to selectively cache content on Oracle
+  Cloud Infrastructure's edge servers, such as webpages or certain file types.
+  For more information about caching rules, see [Caching Rules].
+
+  This operation can create, delete, update, and/or reorder caching rules
+  depending on the structure of the request body. Caching rules can be updated
+  by changing the properties of the caching rule object with the rule's key
+  specified in the key field. Any existing caching rules that are not
+  specified with a key in the list of access rules will be deleted upon
+  update.
+
+  The order the caching rules are specified in is important. The rules are
+  processed in the order they are specified and the first matching rule will
+  be used when processing a request. Use `ListCachingRules` to view a list of
+  all available caching rules in a compartment.
 
 Options:
   --waas-policy-id TEXT           The [OCID] of the WAAS policy. [required]
@@ -1147,21 +1297,25 @@ Commands:
   get                  Gets the details of an SSL certificate.
   list                 Gets a list of SSL certificates that can be...
   update               It is not possible to update a certificate,...
-  update-address-list  Updates the details of an address list.
+  update-address-list  **Deprecated**, use oci waas address-list...
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci waas certificate change-compartment --help
 Usage: oci waas certificate change-compartment [OPTIONS]
 
   Moves certificate into a different compartment. When provided, If-Match is
-  checked against ETag values of the certificate.
+  checked against ETag values of the certificate. For information about moving
+  resources between compartments, see [Moving Resources to a Different
+  Compartment].
 
 Options:
   --certificate-id TEXT      The [OCID] of the SSL certificate used in the WAAS
                              policy. This number is generated when the
                              certificate is added to the policy. [required]
   -c, --compartment-id TEXT  The [OCID] of the compartment into which the
-                             resource should be moved. [required]
+                             resource should be moved. For information about
+                             moving resources between compartments, see [Moving
+                             Resources to a Different Compartment]. [required]
   --if-match TEXT            For optimistic concurrency control. In the `PUT` or
                              `DELETE` call for a resource, set the `if-match`
                              parameter to the value of the etag from a previous
@@ -1758,8 +1912,9 @@ Options:
 $ oci waas certificate update-address-list --help
 Usage: oci waas certificate update-address-list [OPTIONS]
 
-  Updates the details of an address list. Only the fields specified in the
-  request body will be updated; all other properties will remain unchanged.
+  **Deprecated**, use oci waas address-list update command Updates the details
+  of an address list. Only the fields specified in the request body will be
+  updated; all other properties will remain unchanged.
 
 Options:
   --address-list-id TEXT          The [OCID] of the address list. This number is
@@ -1884,35 +2039,40 @@ Options:
 $ oci waas custom-protection-rule --help
 Usage: oci waas custom-protection-rule [OPTIONS] COMMAND [ARGS]...
 
-  The details of a Custom Protection rule.
+  The details of a custom protection rule.
 
 Options:
   -?, -h, --help  For detailed help on any of these individual commands, enter
                   <command> --help.
 
 Commands:
-  change-compartment  Moves Custom Protection rule into a different...
-  create              Creates a new Custom Protection rule in the...
+  change-compartment  Moves a custom protection rule into a...
+  create              Creates a new custom protection rule in the...
   delete              Deletes a Custom Protection rule.
-  get                 Gets the details of a Custom Protection rule.
-  list                Gets a list of Custom Protection rules.
-  update              Updates the details of a Custom Protection...
+  get                 Gets the details of a custom protection rule.
+  list                Gets a list of custom protection rules for...
+  update              Updates the configuration of a custom...
   update-setting      Updates the action for each specified custom...
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci waas custom-protection-rule change-compartment --help
 Usage: oci waas custom-protection-rule change-compartment [OPTIONS]
 
-  Moves Custom Protection rule into a different compartment. When provided,
-  If-Match is checked against ETag values of the Custom Protection rule.
+  Moves a custom protection rule into a different compartment within the same
+  tenancy. When provided, If-Match is checked against ETag values of the
+  custom protection rule. For information about moving resources between
+  compartments, see [Moving Resources to a Different Compartment].
 
 Options:
   --custom-protection-rule-id TEXT
-                                  The [OCID] of the Custom Protection rule. This
-                                  number is generated when the Custom Protection
+                                  The [OCID] of the custom protection rule. This
+                                  number is generated when the custom protection
                                   rule is added to the compartment. [required]
   -c, --compartment-id TEXT       The [OCID] of the compartment into which the
-                                  resource should be moved. [required]
+                                  resource should be moved. For information
+                                  about moving resources between compartments,
+                                  see [Moving Resources to a Different
+                                  Compartment]. [required]
   --if-match TEXT                 For optimistic concurrency control. In the
                                   `PUT` or `DELETE` call for a resource, set the
                                   `if-match` parameter to the value of the etag
@@ -1953,31 +2113,45 @@ Options:
 $ oci waas custom-protection-rule create --help
 Usage: oci waas custom-protection-rule create [OPTIONS]
 
-  Creates a new Custom Protection rule in the specified compartment.
+  Creates a new custom protection rule in the specified compartment.
+
+  Custom protection rules allow you to create rules in addition to the
+  rulesets provided by the Web Application Firewall service, including rules
+  from [ModSecurity]. The syntax for custom rules is based on the ModSecurity
+  syntax. For more information about custom protection rules, see [Custom
+  Protection Rules].
 
 Options:
   -c, --compartment-id TEXT       The [OCID] of the compartment in which to
-                                  create the Custom Protection rule. [required]
-  --display-name TEXT             A user-friendly name for the Custom Protection
+                                  create the custom protection rule. [required]
+  --display-name TEXT             A user-friendly name for the custom protection
                                   rule. [required]
-  --template TEXT                 The template text of the Custom Protection
-                                  rule. The syntax is based on ModSecurity Rule
-                                  Language. Additionaly it needs to include two
-                                  variables / placeholders which will be
-                                  replaced during publishing.
+  --template TEXT                 The template text of the custom protection
+                                  rule. All custom protection rules are
+                                  expressed in ModSecurity Rule Language.
+                                  Additionally, each rule must include two
+                                  placeholder variables that are updated by the
+                                  WAF service upon publication of the rule.
+                                  `id: {{id_1}}` - This field is populated with
+                                  a unique rule ID generated by the WAF service
+                                  which identifies a `SecRule`. More than one
+                                  `SecRule` can be defined in the `template`
+                                  field of a CreateCustomSecurityRule call. The
+                                  value of the first `SecRule` must be `id:
+                                  {{id_1}}` and the `id` field of each
+                                  subsequent `SecRule` should increase by one,
+                                  as shown in the example.
+                                  `ctl:ruleEngine={{mode}}` - The action to be
+                                  taken when the criteria of the `SecRule` are
+                                  met, either `OFF`, `DETECT` or `BLOCK`. This
+                                  field is automatically populated with the
+                                  corresponding value of the `action` field of
+                                  the `CustomProtectionRuleSetting` schema when
+                                  the `WafConfig` is updated.
                                   
-                                  - **{{mode}}** -
-                                  rule action, defined by user in UI, like
-                                  `OFF`, `DETECT` or `BLOCK`.
-                                  
-                                  - **{{id_1}}** -
-                                  unique rule ID which identifies a `SecRule`,
-                                  generated by the system. Multiple IDs can be
-                                  used by increasing the number of the variable
-                                  for every `SecRule` defined in the template.
-                                  *Example usage:*   ```   SecRule
-                                  REQUEST_COOKIES "regex matching SQL injection
-                                  - part 1/2" \           "phase:2,
+                                  *Example:*   ```
+                                  SecRule REQUEST_COOKIES "regex matching SQL
+                                  injection - part 1/2" \           "phase:2,
                                   \           msg:'Detects chained SQL injection
                                   attempts 1/2.',        \           id:
                                   {{id_1}},
@@ -1989,19 +2163,25 @@ Options:
                                   attempts 2/2.',        \           id:
                                   {{id_2}},
                                   \           ctl:ruleEngine={{mode}},
-                                  \           deny"   ```   The example contains
-                                  two `SecRules` each having distinct regex
-                                  expression to match   `Cookie` header value
-                                  during second input analysis phase.   The
-                                  disruptive `deny` action takes effect only
-                                  when `{{mode}}` is set to `BLOCK`.   The
-                                  message is logged either when `{{mode}}` is
-                                  set to `DETECT` or `BLOCK`.
+                                  \           deny"   ```
                                   
-                                   For more
+                                   The example contains
+                                  two `SecRules` each having distinct regex
+                                  expression to match the `Cookie` header value
+                                  during the second input analysis phase.
+                                  
+                                  For
+                                  more information about custom protection
+                                  rules, see [Custom Protection Rules].
+                                  
+                                  For
+                                  more information about ModSecurity syntax, see
+                                  [Making Rules: The Basic Syntax].
+                                  
+                                  For more
                                   information about ModSecurity's open source
-                                  WAF rules, see [Mod Security's documentation].
-                                  [required]
+                                  WAF rules, see [Mod Security's OWASP Core Rule
+                                  Set documentation]. [required]
   --description TEXT              A description for the Custom Protection rule.
   --freeform-tags COMPLEX TYPE    Free-form tags for this resource. Each tag is
                                   a simple key-value pair with no predefined
@@ -2102,8 +2282,8 @@ Usage: oci waas custom-protection-rule delete [OPTIONS]
 
 Options:
   --custom-protection-rule-id TEXT
-                                  The [OCID] of the Custom Protection rule. This
-                                  number is generated when the Custom Protection
+                                  The [OCID] of the custom protection rule. This
+                                  number is generated when the custom protection
                                   rule is added to the compartment. [required]
   --if-match TEXT                 For optimistic concurrency control. In the
                                   `PUT` or `DELETE` call for a resource, set the
@@ -2168,12 +2348,12 @@ Options:
 $ oci waas custom-protection-rule get --help
 Usage: oci waas custom-protection-rule get [OPTIONS]
 
-  Gets the details of a Custom Protection rule.
+  Gets the details of a custom protection rule.
 
 Options:
   --custom-protection-rule-id TEXT
-                                  The [OCID] of the Custom Protection rule. This
-                                  number is generated when the Custom Protection
+                                  The [OCID] of the custom protection rule. This
+                                  number is generated when the custom protection
                                   rule is added to the compartment. [required]
   --from-json TEXT                Provide input to this command as a JSON
                                   document from a file using the file://path-
@@ -2208,7 +2388,8 @@ Options:
 $ oci waas custom-protection-rule list --help
 Usage: oci waas custom-protection-rule list [OPTIONS]
 
-  Gets a list of Custom Protection rules.
+  Gets a list of custom protection rules for the specified Web Application
+  Firewall.
 
 Options:
   -c, --compartment-id TEXT       The [OCID] of the compartment. This number is
@@ -2220,15 +2401,15 @@ Options:
   --page TEXT                     The value of the `opc-next-page` response
                                   header from the previous paginated call.
   --sort-by [id|compartmentId|displayName|modSecurityRuleId|timeCreated]
-                                  The value by which Custom Protection rules are
+                                  The value by which custom protection rules are
                                   sorted in a paginated 'List' call. If
                                   unspecified, defaults to `timeCreated`.
   --sort-order [ASC|DESC]         The value of the sorting direction of
                                   resources in a paginated 'List' call. If
                                   unspecified, defaults to `DESC`.
-  --id TEXT                       Filter Custom Protection rules using a list of
-                                  Custom Protection rules OCIDs.
-  --display-name TEXT             Filter Custom Protection rules using a list of
+  --id TEXT                       Filter custom protection rules using a list of
+                                  custom protection rule OCIDs.
+  --display-name TEXT             Filter custom protection rules using a list of
                                   display names.
   --lifecycle-state [CREATING|ACTIVE|FAILED|UPDATING|DELETING|DELETED]
                                   Filter Custom Protection rules using a list of
@@ -2307,7 +2488,7 @@ Options:
                                   **************
                                   Example: 1412195400
   --time-created-less-than DATETIME
-                                  A filter that matches Custom Protection rules
+                                  A filter that matches custom protection rules
                                   created before the specified date-time.
                                   
                                   The
@@ -2418,36 +2599,44 @@ Options:
 $ oci waas custom-protection-rule update --help
 Usage: oci waas custom-protection-rule update [OPTIONS]
 
-  Updates the details of a Custom Protection rule. Only the fields specified
-  in the request body will be updated; all other properties will remain
-  unchanged.
+  Updates the configuration of a custom protection rule. Only the fields
+  specified in the request body will be updated; all other properties will
+  remain unchanged.
 
 Options:
   --custom-protection-rule-id TEXT
-                                  The [OCID] of the Custom Protection rule. This
-                                  number is generated when the Custom Protection
+                                  The [OCID] of the custom protection rule. This
+                                  number is generated when the custom protection
                                   rule is added to the compartment. [required]
-  --display-name TEXT             A user-friendly name for the Custom Protection
+  --display-name TEXT             A user-friendly name for the custom protection
                                   rule.
-  --description TEXT              A description for the Custom Protection rule.
-  --template TEXT                 The template text of the Custom Protection
-                                  rule. The syntax is based on ModSecurity Rule
-                                  Language. Additionaly it needs to include two
-                                  variables / placeholders which will be
-                                  replaced during publishing.
+  --description TEXT              A description for the custom protection rule.
+  --template TEXT                 The template text of the custom protection
+                                  rule. All custom protection rules are
+                                  expressed in ModSecurity Rule Language.
+                                  Additionally, each rule must include two
+                                  placeholder variables that are updated by the
+                                  WAF service upon publication of the rule.
+                                  `id: {{id_1}}` - This field is populated with
+                                  a unique rule ID generated by the WAF service
+                                  which identifies a `SecRule`. More than one
+                                  `SecRule` can be defined in the `template`
+                                  field of a CreateCustomSecurityRule call. The
+                                  value of the first `SecRule` must be `id:
+                                  {{id_1}}` and the `id` field of each
+                                  subsequent `SecRule` should increase by one,
+                                  as shown in the example.
+                                  `ctl:ruleEngine={{mode}}` - The action to be
+                                  taken when the criteria of the `SecRule` are
+                                  met, either `OFF`, `DETECT` or `BLOCK`. This
+                                  field is automatically populated with the
+                                  corresponding value of the `action` field of
+                                  the `CustomProtectionRuleSetting` schema when
+                                  the `WafConfig` is updated.
                                   
-                                  - **{{mode}}** -
-                                  rule action, defined by user in UI, like
-                                  `OFF`, `DETECT` or `BLOCK`.
-                                  
-                                  - **{{id_1}}** -
-                                  unique rule ID which identifies a `SecRule`,
-                                  generated by the system. Multiple IDs can be
-                                  used by increasing the number of the variable
-                                  for every `SecRule` defined in the template.
-                                  *Example usage:*   ```   SecRule
-                                  REQUEST_COOKIES "regex matching SQL injection
-                                  - part 1/2" \           "phase:2,
+                                  *Example:*   ```
+                                  SecRule REQUEST_COOKIES "regex matching SQL
+                                  injection - part 1/2" \           "phase:2,
                                   \           msg:'Detects chained SQL injection
                                   attempts 1/2.',        \           id:
                                   {{id_1}},
@@ -2459,18 +2648,25 @@ Options:
                                   attempts 2/2.',        \           id:
                                   {{id_2}},
                                   \           ctl:ruleEngine={{mode}},
-                                  \           deny"   ```   The example contains
-                                  two `SecRules` each having distinct regex
-                                  expression to match   `Cookie` header value
-                                  during second input analysis phase.   The
-                                  disruptive `deny` action takes effect only
-                                  when `{{mode}}` is set to `BLOCK`.   The
-                                  message is logged either when `{{mode}}` is
-                                  set to `DETECT` or `BLOCK`.
+                                  \           deny"   ```
                                   
-                                   For more
+                                   The example contains
+                                  two `SecRules` each having distinct regex
+                                  expression to match the `Cookie` header value
+                                  during the second input analysis phase.
+                                  
+                                  For
+                                  more information about custom protection
+                                  rules, see [Custom Protection Rules].
+                                  
+                                  For
+                                  more information about ModSecurity syntax, see
+                                  [Making Rules: The Basic Syntax].
+                                  
+                                  For more
                                   information about ModSecurity's open source
-                                  WAF rules, see [Mod Security's documentation].
+                                  WAF rules, see [Mod Security's OWASP Core Rule
+                                  Set documentation].
   --freeform-tags COMPLEX TYPE    Free-form tags for this resource. Each tag is
                                   a simple key-value pair with no predefined
                                   name, type, or namespace. For more
@@ -3038,6 +3234,646 @@ Options:
                                   commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
+$ oci waas http-redirect --help
+Usage: oci waas http-redirect [OPTIONS] COMMAND [ARGS]...
+
+  The details of a HTTP Redirect configuration to allow redirecting HTTP
+  traffic to allow redirecting HTTP traffic from a request domain to a new
+  target.
+
+  **Warning:** Oracle recommends that you avoid using any confidential
+  information when you supply string values using the API.
+
+Options:
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
+
+Commands:
+  change-compartment  Moves HTTP Redirect into a different...
+  create              Creates a new HTTP Redirect on the WAF edge.
+  delete              Deletes a redirect.
+  get                 Gets the details of a HTTP Redirect.
+  list                Gets a list of HTTP Redirects.
+  update              Updates the details of a HTTP Redirect,...
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci waas http-redirect change-compartment --help
+Usage: oci waas http-redirect change-compartment [OPTIONS]
+
+  Moves HTTP Redirect into a different compartment. When provided, If-Match is
+  checked against ETag values of the WAAS policy.
+
+Options:
+  --http-redirect-id TEXT    The [OCID] of the HTTP Redirect. [required]
+  -c, --compartment-id TEXT  The [OCID] of the compartment into which the
+                             resource should be moved. [required]
+  --if-match TEXT            For optimistic concurrency control. In the `PUT` or
+                             `DELETE` call for a resource, set the `if-match`
+                             parameter to the value of the etag from a previous
+                             `GET` or `POST` response for that resource. The
+                             resource will be updated or deleted only if the
+                             etag provided matches the resource's current etag
+                             value.
+  --from-json TEXT           Provide input to this command as a JSON document
+                             from a file using the file://path-to/file syntax.
+                             The --generate-full-command-json-input option can
+                             be used to generate a sample json file to be used
+                             with this command option. The key names are pre-
+                             populated and match the command option names
+                             (converted to camelCase format, e.g. compartment-id
+                             --> compartmentId), while the values of the keys
+                             need to be populated by the user before using the
+                             sample file as an input to this command. For any
+                             command option that accepts multiple values, the
+                             value of the key can be a JSON array.
+                             
+                             Options can
+                             still be provided on the command line. If an option
+                             exists in both the JSON document and the command
+                             line then the command line specified value will be
+                             used.
+                             
+                             For examples on usage of this option, please
+                             see our "using CLI with advanced JSON options"
+                             link: https://docs.cloud.oracle.com/iaas/Content/AP
+                             I/SDKDocs/cliusing.htm#AdvancedJSONOptions
+  -?, -h, --help             For detailed help on any of these individual
+                             commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci waas http-redirect create --help
+Usage: oci waas http-redirect create [OPTIONS]
+
+  Creates a new HTTP Redirect on the WAF edge.
+
+Options:
+  -c, --compartment-id TEXT       The [OCID] of the HTTP Redirects compartment.
+                                  [required]
+  --domain TEXT                   The domain from which traffic will be
+                                  redirected. [required]
+  --target COMPLEX TYPE           The redirect target object including all the
+                                  redirect data.
+                                  This is a complex type whose
+                                  value must be valid JSON. The value can be
+                                  provided as a string on the command line or
+                                  passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+                                  [required]
+  --display-name TEXT             The user-friendly name of the HTTP Redirect.
+                                  The name can be changed and does not need to
+                                  be unique.
+  --response-code INTEGER         The response code returned for the redirect to
+                                  the client. reference - https://tools.ietf.org
+                                  /html/rfc7231#section-6.4
+  --freeform-tags COMPLEX TYPE    Free-form tags for this resource. Each tag is
+                                  a simple key-value pair with no predefined
+                                  name, type, or namespace. For more
+                                  information, see [Resource Tags].
+                                  
+                                  Example:
+                                  `{"Department": "Finance"}`
+                                  This is a complex
+                                  type whose value must be valid JSON. The value
+                                  can be provided as a string on the command
+                                  line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+  --defined-tags COMPLEX TYPE     Defined tags for this resource. Each key is
+                                  predefined and scoped to a namespace. For more
+                                  information, see [Resource Tags].
+                                  
+                                  Example:
+                                  `{"Operations": {"CostCenter": "42"}}`
+                                  This is
+                                  a complex type whose value must be valid JSON.
+                                  The value can be provided as a string on the
+                                  command line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+  --wait-for-state [ACCEPTED|IN_PROGRESS|FAILED|SUCCEEDED|CANCELING|CANCELED]
+                                  This operation asynchronously creates,
+                                  modifies or deletes a resource and uses a work
+                                  request to track the progress of the
+                                  operation. Specify this option to perform the
+                                  action and then wait until the work request
+                                  reaches a certain state. Multiple states can
+                                  be specified, returning on the first state.
+                                  For example, --wait-for-state SUCCEEDED
+                                  --wait-for-state FAILED would return on
+                                  whichever lifecycle state is reached first. If
+                                  timeout is reached, a return code of 2 is
+                                  returned. For any other error, a return code
+                                  of 1 is returned.
+  --max-wait-seconds INTEGER      The maximum time to wait for the work request
+                                  to reach the state defined by --wait-for-
+                                  state. Defaults to 1200 seconds.
+  --wait-interval-seconds INTEGER
+                                  Check every --wait-interval-seconds to see
+                                  whether the work request to see if it has
+                                  reached the state defined by --wait-for-state.
+                                  Defaults to 30 seconds.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file using the file://path-
+                                  to/file syntax.
+                                  
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci waas http-redirect delete --help
+Usage: oci waas http-redirect delete [OPTIONS]
+
+  Deletes a redirect.
+
+Options:
+  --http-redirect-id TEXT         The [OCID] of the HTTP Redirect. [required]
+  --if-match TEXT                 For optimistic concurrency control. In the
+                                  `PUT` or `DELETE` call for a resource, set the
+                                  `if-match` parameter to the value of the etag
+                                  from a previous `GET` or `POST` response for
+                                  that resource. The resource will be updated or
+                                  deleted only if the etag provided matches the
+                                  resource's current etag value.
+  --force                         Perform deletion without prompting for
+                                  confirmation.
+  --wait-for-state [ACCEPTED|IN_PROGRESS|FAILED|SUCCEEDED|CANCELING|CANCELED]
+                                  This operation asynchronously creates,
+                                  modifies or deletes a resource and uses a work
+                                  request to track the progress of the
+                                  operation. Specify this option to perform the
+                                  action and then wait until the work request
+                                  reaches a certain state. Multiple states can
+                                  be specified, returning on the first state.
+                                  For example, --wait-for-state SUCCEEDED
+                                  --wait-for-state FAILED would return on
+                                  whichever lifecycle state is reached first. If
+                                  timeout is reached, a return code of 2 is
+                                  returned. For any other error, a return code
+                                  of 1 is returned.
+  --max-wait-seconds INTEGER      The maximum time to wait for the work request
+                                  to reach the state defined by --wait-for-
+                                  state. Defaults to 1200 seconds.
+  --wait-interval-seconds INTEGER
+                                  Check every --wait-interval-seconds to see
+                                  whether the work request to see if it has
+                                  reached the state defined by --wait-for-state.
+                                  Defaults to 30 seconds.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file using the file://path-
+                                  to/file syntax.
+                                  
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci waas http-redirect get --help
+Usage: oci waas http-redirect get [OPTIONS]
+
+  Gets the details of a HTTP Redirect.
+
+Options:
+  --http-redirect-id TEXT  The [OCID] of the HTTP Redirect. [required]
+  --from-json TEXT         Provide input to this command as a JSON document from
+                           a file using the file://path-to/file syntax.
+                           
+                           The
+                           --generate-full-command-json-input option can be used
+                           to generate a sample json file to be used with this
+                           command option. The key names are pre-populated and
+                           match the command option names (converted to
+                           camelCase format, e.g. compartment-id -->
+                           compartmentId), while the values of the keys need to
+                           be populated by the user before using the sample file
+                           as an input to this command. For any command option
+                           that accepts multiple values, the value of the key
+                           can be a JSON array.
+                           
+                           Options can still be provided
+                           on the command line. If an option exists in both the
+                           JSON document and the command line then the command
+                           line specified value will be used.
+                           
+                           For examples on
+                           usage of this option, please see our "using CLI with
+                           advanced JSON options" link: https://docs.cloud.oracl
+                           e.com/iaas/Content/API/SDKDocs/cliusing.htm#AdvancedJ
+                           SONOptions
+  -?, -h, --help           For detailed help on any of these individual
+                           commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci waas http-redirect list --help
+Usage: oci waas http-redirect list [OPTIONS]
+
+  Gets a list of HTTP Redirects.
+
+Options:
+  -c, --compartment-id TEXT       The [OCID] of the compartment. This number is
+                                  generated when the compartment is created.
+                                  [required]
+  --limit INTEGER                 The maximum number of items to return in a
+                                  paginated call. In unspecified, defaults to
+                                  `10`.
+  --page TEXT                     The value of the `opc-next-page` response
+                                  header from the previous paginated call.
+  --sort-order [ASC|DESC]         The value of the sorting direction of
+                                  resources in a paginated 'List' call. If
+                                  unspecified, defaults to `DESC`.
+  --sort-by [id|domain|target|displayName]
+                                  The field to sort the results of the List
+                                  query.
+  --id TEXT                       Filter redirects using a list of redirect
+                                  OCIDs.
+  --display-name TEXT             Filter redirects using a display name.
+  --lifecycle-state [CREATING|ACTIVE|FAILED|UPDATING|DELETING|DELETED]
+                                  Filter redirects using a list of lifecycle
+                                  states.
+  --time-created-greater-than-or-equal-to DATETIME
+                                  A filter that matches redirects created on or
+                                  after the specified date and time.
+                                  
+                                  The
+                                  following datetime formats are supported:
+                                  
+                                  UTC with milliseconds
+                                  ***********************
+                                  Format: YYYY-MM-DDTHH:mm:ss.sssTZD
+                                  Example:
+                                  2017-09-15T20:30:00.123Z
+                                  
+                                  UTC without
+                                  milliseconds
+                                  **************************
+                                  Format: YYYY-MM-DDTHH:mm:ssTZD
+                                  Example:
+                                  2017-09-15T20:30:00Z
+                                  
+                                  UTC with minute
+                                  precision
+                                  **************************
+                                  Format:
+                                  YYYY-MM-DDTHH:mmTZD
+                                  Example: 2017-09-15T20:30Z
+                                  
+                                  Timezone with milliseconds
+                                  ***************************
+                                  Format: YYYY-MM-
+                                  DDTHH:mm:ssTZD
+                                  Example:
+                                  2017-09-15T12:30:00.456-08:00,
+                                  2017-09-15T12:30:00.456-0800
+                                  
+                                  Timezone
+                                  without milliseconds
+                                  *******************************
+                                  Format: YYYY-
+                                  MM-DDTHH:mm:ssTZD
+                                  Example:
+                                  2017-09-15T12:30:00-08:00,
+                                  2017-09-15T12:30:00-0800
+                                  
+                                  Timezone with
+                                  minute precision
+                                  *******************************
+                                  Format: YYYY-
+                                  MM-DDTHH:mmTZD
+                                  Example:
+                                  2017-09-15T12:30-08:00,
+                                  2017-09-15T12:30-0800
+                                  
+                                  Short date and time
+                                  ********************
+                                  The
+                                  timezone for this date and time will be taken
+                                  as UTC (Needs to be surrounded by single or
+                                  double quotes)
+                                  Format: 'YYYY-MM-DD HH:mm' or
+                                  "YYYY-MM-DD HH:mm"
+                                  Example: '2017-09-15 17:25'
+                                  
+                                  Date Only
+                                  *********
+                                  This date will be taken
+                                  as midnight UTC of that day
+                                  Format: YYYY-MM-DD
+                                  Example: 2017-09-15
+                                  
+                                  Epoch seconds
+                                  **************
+                                  Example: 1412195400
+  --time-created-less-than DATETIME
+                                  A filter that matches redirects created before
+                                  the specified date-time. Default to 1 day
+                                  before now.
+                                  
+                                  The following datetime formats
+                                  are supported:
+                                  
+                                  UTC with milliseconds
+                                  ***********************
+                                  Format: YYYY-MM-
+                                  DDTHH:mm:ss.sssTZD
+                                  Example:
+                                  2017-09-15T20:30:00.123Z
+                                  
+                                  UTC without
+                                  milliseconds
+                                  **************************
+                                  Format: YYYY-MM-DDTHH:mm:ssTZD
+                                  Example:
+                                  2017-09-15T20:30:00Z
+                                  
+                                  UTC with minute
+                                  precision
+                                  **************************
+                                  Format:
+                                  YYYY-MM-DDTHH:mmTZD
+                                  Example: 2017-09-15T20:30Z
+                                  
+                                  Timezone with milliseconds
+                                  ***************************
+                                  Format: YYYY-MM-
+                                  DDTHH:mm:ssTZD
+                                  Example:
+                                  2017-09-15T12:30:00.456-08:00,
+                                  2017-09-15T12:30:00.456-0800
+                                  
+                                  Timezone
+                                  without milliseconds
+                                  *******************************
+                                  Format: YYYY-
+                                  MM-DDTHH:mm:ssTZD
+                                  Example:
+                                  2017-09-15T12:30:00-08:00,
+                                  2017-09-15T12:30:00-0800
+                                  
+                                  Timezone with
+                                  minute precision
+                                  *******************************
+                                  Format: YYYY-
+                                  MM-DDTHH:mmTZD
+                                  Example:
+                                  2017-09-15T12:30-08:00,
+                                  2017-09-15T12:30-0800
+                                  
+                                  Short date and time
+                                  ********************
+                                  The
+                                  timezone for this date and time will be taken
+                                  as UTC (Needs to be surrounded by single or
+                                  double quotes)
+                                  Format: 'YYYY-MM-DD HH:mm' or
+                                  "YYYY-MM-DD HH:mm"
+                                  Example: '2017-09-15 17:25'
+                                  
+                                  Date Only
+                                  *********
+                                  This date will be taken
+                                  as midnight UTC of that day
+                                  Format: YYYY-MM-DD
+                                  Example: 2017-09-15
+                                  
+                                  Epoch seconds
+                                  **************
+                                  Example: 1412195400
+  --all                           Fetches all pages of results. If you provide
+                                  this option, then you cannot provide the
+                                  --limit option.
+  --page-size INTEGER             When fetching results, the number of results
+                                  to fetch per call. Only valid when used with
+                                  --all or --limit, and ignored otherwise.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file using the file://path-
+                                  to/file syntax.
+                                  
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci waas http-redirect update --help
+Usage: oci waas http-redirect update [OPTIONS]
+
+  Updates the details of a HTTP Redirect, including target and tags. Only the
+  fields specified in the request body will be updated; all other properties
+  will remain unchanged.
+
+Options:
+  --http-redirect-id TEXT         The [OCID] of the HTTP Redirect. [required]
+  --display-name TEXT             The user-friendly name of the HTTP Redirect.
+                                  The name can be changed and does not need to
+                                  be unique.
+  --target COMPLEX TYPE           The redirect target object including all the
+                                  redirect data.
+                                  This is a complex type whose
+                                  value must be valid JSON. The value can be
+                                  provided as a string on the command line or
+                                  passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+  --response-code INTEGER         The response code returned for the redirect to
+                                  the client. reference - https://tools.ietf.org
+                                  /html/rfc7231#section-6.4
+  --freeform-tags COMPLEX TYPE    Free-form tags for this resource. Each tag is
+                                  a simple key-value pair with no predefined
+                                  name, type, or namespace. For more
+                                  information, see [Resource Tags].
+                                  
+                                  Example:
+                                  `{"Department": "Finance"}`
+                                  This is a complex
+                                  type whose value must be valid JSON. The value
+                                  can be provided as a string on the command
+                                  line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+  --defined-tags COMPLEX TYPE     Defined tags for this resource. Each key is
+                                  predefined and scoped to a namespace. For more
+                                  information, see [Resource Tags].
+                                  
+                                  Example:
+                                  `{"Operations": {"CostCenter": "42"}}`
+                                  This is
+                                  a complex type whose value must be valid JSON.
+                                  The value can be provided as a string on the
+                                  command line or passed in as a file using
+                                  the
+                                  file://path/to/file syntax.
+                                  
+                                  The --generate-
+                                  param-json-input option can be used to
+                                  generate an example of the JSON which must be
+                                  provided. We recommend storing this example
+                                  in
+                                  a file, modifying it as needed and then
+                                  passing it back in via the file:// syntax.
+  --if-match TEXT                 For optimistic concurrency control. In the
+                                  `PUT` or `DELETE` call for a resource, set the
+                                  `if-match` parameter to the value of the etag
+                                  from a previous `GET` or `POST` response for
+                                  that resource. The resource will be updated or
+                                  deleted only if the etag provided matches the
+                                  resource's current etag value.
+  --force                         Perform update without prompting for
+                                  confirmation.
+  --wait-for-state [ACCEPTED|IN_PROGRESS|FAILED|SUCCEEDED|CANCELING|CANCELED]
+                                  This operation asynchronously creates,
+                                  modifies or deletes a resource and uses a work
+                                  request to track the progress of the
+                                  operation. Specify this option to perform the
+                                  action and then wait until the work request
+                                  reaches a certain state. Multiple states can
+                                  be specified, returning on the first state.
+                                  For example, --wait-for-state SUCCEEDED
+                                  --wait-for-state FAILED would return on
+                                  whichever lifecycle state is reached first. If
+                                  timeout is reached, a return code of 2 is
+                                  returned. For any other error, a return code
+                                  of 1 is returned.
+  --max-wait-seconds INTEGER      The maximum time to wait for the work request
+                                  to reach the state defined by --wait-for-
+                                  state. Defaults to 1200 seconds.
+  --wait-interval-seconds INTEGER
+                                  Check every --wait-interval-seconds to see
+                                  whether the work request to see if it has
+                                  reached the state defined by --wait-for-state.
+                                  Defaults to 30 seconds.
+  --from-json TEXT                Provide input to this command as a JSON
+                                  document from a file using the file://path-
+                                  to/file syntax.
+                                  
+                                  The --generate-full-command-
+                                  json-input option can be used to generate a
+                                  sample json file to be used with this command
+                                  option. The key names are pre-populated and
+                                  match the command option names (converted to
+                                  camelCase format, e.g. compartment-id -->
+                                  compartmentId), while the values of the keys
+                                  need to be populated by the user before using
+                                  the sample file as an input to this command.
+                                  For any command option that accepts multiple
+                                  values, the value of the key can be a JSON
+                                  array.
+                                  
+                                  Options can still be provided on the
+                                  command line. If an option exists in both the
+                                  JSON document and the command line then the
+                                  command line specified value will be used.
+                                  For examples on usage of this option, please
+                                  see our "using CLI with advanced JSON options"
+                                  link: https://docs.cloud.oracle.com/iaas/Conte
+                                  nt/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                                  s
+  -?, -h, --help                  For detailed help on any of these individual
+                                  commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
 $ oci waas human-interaction-challenge --help
 Usage: oci waas human-interaction-challenge [OPTIONS] COMMAND [ARGS]...
 
@@ -3441,9 +4277,12 @@ Options:
                                   unspecified, defaults to `false`.
   --tls-protocols [TLS_V1|TLS_V1_1|TLS_V1_2|TLS_V1_3]
                                   A list of allowed TLS protocols. Only
-                                  applicable when HTTPS support is enabled. It
-                                  affects client's connection to the edge nodes.
-                                  The most secure TLS version will be chosen. -
+                                  applicable when HTTPS support is enabled. The
+                                  TLS protocol is negotiated while the request
+                                  is connecting and the most recent protocol
+                                  supported by both the edge node and client
+                                  browser will be selected. If no such version
+                                  exists, the connection will be aborted. -
                                   **TLS_V1:** corresponds to TLS 1.0
                                   specification.
                                   
@@ -3458,36 +4297,42 @@ Options:
                                   specification.
                                   
                                   Enabled TLS protocols must go
-                                  in a row. For example if TLS_v1_1 and TLS_V1_3
-                                  are enabled, TLS_V1_2 must be enabled too.
+                                  in a row. For example if `TLS_v1_1` and
+                                  `TLS_V1_3` are enabled, `TLS_V1_2` must be
+                                  enabled too.
   --is-origin-compression-enabled BOOLEAN
                                   Enable or disable GZIP compression of origin
                                   responses. If enabled, the header `Accept-
-                                  Encoding: gzip` is sent to origin, otherwise -
-                                  empty `Accept-Encoding:` header is used.
-  --is-behind-cdn BOOLEAN         Enable or disable the use of CDN. It allows to
-                                  specify true client IP address if clients do
-                                  not connect directly to us.
+                                  Encoding: gzip` is sent to origin, otherwise,
+                                  the empty `Accept-Encoding:` header is used.
+  --is-behind-cdn BOOLEAN         Enabling `isBehindCdn` allows for the
+                                  collection of IP addresses from client
+                                  requests if the WAF is connected to a CDN.
   --client-address-header [X_FORWARDED_FOR|X_CLIENT_IP|X_REAL_IP|CLIENT_IP|TRUE_CLIENT_IP]
-                                  The HTTP header used to pass the client IP
-                                  address from the CDN if `isBehindCdn` is
-                                  enabled. This feature consumes the header and
-                                  its value as the true client IP address. It
-                                  does not create the header. Using trusted
-                                  chains (for example `X-Client-Ip: 11.1.1.1,
-                                  13.3.3.3`), the last IP address in the list
-                                  will be used as true client IP address. In
-                                  case of multiple headers with the same name,
-                                  the first one will be used. If the header is
-                                  not present it will use the connecting IP
-                                  address as the true client IP address. It's
-                                  assumed that CDN sets the correct client IP
-                                  address and prevents spoofing.
+                                  Specifies an HTTP header name which is treated
+                                  as the connecting client's IP address.
+                                  Applicable only if `isBehindCdn` is enabled.
+                                  The edge node reads this header and its value
+                                  and sets the client IP address as specified.
+                                  It does not create the header if the header is
+                                  not present in the request. If the header is
+                                  not present, the connecting IP address will be
+                                  used as the client's true IP address. It uses
+                                  the last IP address in the header's value as
+                                  the true IP address.
                                   
-                                  -
-                                  **X_FORWARDED_FOR:** Corresponds to
-                                  `X-Forwarded-For` header name.
+                                  Example: `X-Client-Ip:
+                                  11.1.1.1, 13.3.3.3`
                                   
+                                  In the case of multiple
+                                  headers with the same name, only the first
+                                  header will be used. It is assumed that CDN
+                                  sets the correct client IP address to prevent
+                                  spoofing.
+                                  
+                                  - **X_FORWARDED_FOR:** Corresponds
+                                  to `X-Forwarded-For` header name.
+
                                   -
                                   **X_CLIENT_IP:** Corresponds to `X-Client-Ip`
                                   header name.
@@ -3505,24 +4350,26 @@ Options:
                                   Enable or disable automatic content caching
                                   based on the response `cache-control` header.
                                   This feature enables the origin to act as a
-                                  proxy cache. Caching policies are usually
-                                  defined using `cache-control` header. For
-                                  example `cache-control: max-age=120` means
-                                  that the returned resource is valid for 120
-                                  seconds. Caching rules will overwrite this
-                                  setting.
+                                  proxy cache. Caching is usually defined using
+                                  `cache-control` header. For example `cache-
+                                  control: max-age=120` means that the returned
+                                  resource is valid for 120 seconds. Caching
+                                  rules will overwrite this setting.
   --is-response-buffering-enabled BOOLEAN
                                   Enable or disable buffering of responses from
                                   the origin. Buffering improves overall
                                   stability in case of network issues, but
                                   slightly increases Time To First Byte.
-  --cipher-group [DEFAULT]        The cipher group - **DEFAULT:** Cipher group
-                                  supports TLS 1.0, TLS 1.1, TLS 1.2, TLS 1.3
-                                  protocols. It has the following ciphers
-                                  enabled: `ECDHE-RSA-AES128-GCM-SHA256:ECDHE-
-                                  ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-
-                                  SHA384:ECDHE-ECDSA-AES256-GCM-SHA384:DHE-RSA-
-                                  AES128-GCM-SHA256:DHE-DSS-AES128-GCM-
+  --cipher-group [DEFAULT]        The set cipher group for the configured TLS
+                                  protocol. This sets the configuration for the
+                                  TLS connections between clients and edge nodes
+                                  only. - **DEFAULT:** Cipher group supports TLS
+                                  1.0, TLS 1.1, TLS 1.2, TLS 1.3 protocols. It
+                                  has the following ciphers enabled: `ECDHE-RSA-
+                                  AES128-GCM-SHA256:ECDHE-ECDSA-AES128-GCM-
+                                  SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-
+                                  ECDSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-
+                                  SHA256:DHE-DSS-AES128-GCM-
                                   SHA256:kEDH+AESGCM:ECDHE-RSA-
                                   AES128-SHA256:ECDHE-ECDSA-AES128-SHA256:ECDHE-
                                   RSA-AES128-SHA:ECDHE-ECDSA-AES128-SHA:ECDHE-
@@ -3857,7 +4704,11 @@ Options:
                                   set to `BLOCK`, `blockAction` is set to
                                   `SET_RESPONSE_CODE`, and the traffic is
                                   detected as malicious by a protection rule. If
-                                  unspecified, defaults to `403`.
+                                  unspecified, defaults to `403`. The list of
+                                  available response codes: `400`, `401`, `403`,
+                                  `405`, `409`, `411`, `412`, `413`, `414`,
+                                  `415`, `416`, `500`, `501`, `502`, `503`,
+                                  `504`, `507`.
   --block-error-page-message TEXT
                                   The message to show on the error page when
                                   `action` is set to `BLOCK`, `blockAction` is
@@ -4037,9 +4888,9 @@ Options:
 $ oci waas purge-cache --help
 Usage: oci waas purge-cache [OPTIONS]
 
-  Accepts a list of resources that will get it's cache purged. If resources
-  property is not passed, then the entire cache for Web Application will be
-  purged.
+  Performs a purge of the cache for each specified resource. If no resources
+  are passed, the cache for the entire Web Application Firewall will be
+  purged. For more information, see [Caching Rules].
 
 Options:
   --waas-policy-id TEXT           The [OCID] of the WAAS policy. [required]
@@ -4050,13 +4901,13 @@ Options:
                                   that resource. The resource will be updated or
                                   deleted only if the etag provided matches the
                                   resource's current etag value.
-  --resources COMPLEX TYPE        A resource to purge, identified by either a
+  --resources COMPLEX TYPE        A resource to purge, specified by either a
                                   hostless absolute path starting with a single
-                                  slash (e.g., "/path/to/resource") or by a
+                                  slash (Example: `/path/to/resource`) or by a
                                   relative path in which the first component
                                   will be interpreted as a domain protected by
-                                  this policy (e.g.,
-                                  "example.com/path/to/resource").
+                                  the WAAS policy (Example:
+                                  `example.com/path/to/resource`).
                                   This is a
                                   complex type whose value must be valid JSON.
                                   The value can be provided as a string on the
@@ -4465,12 +5316,16 @@ $ oci waas waas-policy change-compartment --help
 Usage: oci waas waas-policy change-compartment [OPTIONS]
 
   Moves WAAS policy into a different compartment. When provided, If-Match is
-  checked against ETag values of the WAAS policy.
+  checked against ETag values of the WAAS policy. For information about moving
+  resources between compartments, see [Moving Resources to a Different
+  Compartment].
 
 Options:
   --waas-policy-id TEXT      The [OCID] of the WAAS policy. [required]
   -c, --compartment-id TEXT  The [OCID] of the compartment into which the
-                             resource should be moved. [required]
+                             resource should be moved. For information about
+                             moving resources between compartments, see [Moving
+                             Resources to a Different Compartment]. [required]
   --if-match TEXT            For optimistic concurrency control. In the `PUT` or
                              `DELETE` call for a resource, set the `if-match`
                              parameter to the value of the etag from a previous
@@ -4590,28 +5445,32 @@ Options:
                                   a file, modifying it as needed and then
                                   passing it back in via the file:// syntax.
   --origin-groups COMPLEX TYPE    The map of origin groups and their keys used
-                                  to associate origins to the wafConfig.
+                                  to associate origins to the `wafConfig`.
+                                  Origin groups allow you to apply weights to
+                                  groups of origins for load balancing purposes.
+                                  Origins with higher weights will receive
+                                  larger proportions of client requests. To add
+                                  additional origins to your WAAS policy, update
+                                  the `origins` field of a `UpdateWaasPolicy`
+                                  request.
                                   
-                                  This
-                                  option is a JSON dictionary of type dict(str,
-                                  OriginGroup).  For documentation on
-                                  OriginGroup please see our API reference: http
-                                  s://docs.cloud.oracle.com/api/#/en/waas/201811
-                                  16/datatypes/OriginGroup.
-                                  This is a complex
-                                  type whose value must be valid JSON. The value
-                                  can be provided as a string on the command
-                                  line or passed in as a file using
-                                  the
-                                  file://path/to/file syntax.
-                                  
-                                  The --generate-
-                                  param-json-input option can be used to
-                                  generate an example of the JSON which must be
-                                  provided. We recommend storing this example
-                                  in
-                                  a file, modifying it as needed and then
-                                  passing it back in via the file:// syntax.
+                                  This option is a JSON dictionary of
+                                  type dict(str, OriginGroup).  For
+                                  documentation on OriginGroup please see our
+                                  API reference: https://docs.cloud.oracle.com/a
+                                  pi/#/en/waas/20181116/datatypes/OriginGroup.
+                                  This is a complex type whose value must be
+                                  valid JSON. The value can be provided as a
+                                  string on the command line or passed in as a
+                                  file using
+                                  the file://path/to/file syntax.
+                                  The --generate-param-json-input option can be
+                                  used to generate an example of the JSON which
+                                  must be provided. We recommend storing this
+                                  example
+                                  in a file, modifying it as needed and
+                                  then passing it back in via the file://
+                                  syntax.
   --policy-config COMPLEX TYPE    This is a complex type whose value must be
                                   valid JSON. The value can be provided as a
                                   string on the command line or passed in as a
@@ -5161,28 +6020,32 @@ Options:
                                   a file, modifying it as needed and then
                                   passing it back in via the file:// syntax.
   --origin-groups COMPLEX TYPE    The map of origin groups and their keys used
-                                  to associate origins to the wafConfig.
+                                  to associate origins to the `wafConfig`.
+                                  Origin groups allow you to apply weights to
+                                  groups of origins for load balancing purposes.
+                                  Origins with higher weights will receive
+                                  larger proportions of client requests. To add
+                                  additional origins to your WAAS policy, update
+                                  the `origins` field of a `UpdateWaasPolicy`
+                                  request.
                                   
-                                  This
-                                  option is a JSON dictionary of type dict(str,
-                                  OriginGroup).  For documentation on
-                                  OriginGroup please see our API reference: http
-                                  s://docs.cloud.oracle.com/api/#/en/waas/201811
-                                  16/datatypes/OriginGroup.
-                                  This is a complex
-                                  type whose value must be valid JSON. The value
-                                  can be provided as a string on the command
-                                  line or passed in as a file using
-                                  the
-                                  file://path/to/file syntax.
-                                  
-                                  The --generate-
-                                  param-json-input option can be used to
-                                  generate an example of the JSON which must be
-                                  provided. We recommend storing this example
-                                  in
-                                  a file, modifying it as needed and then
-                                  passing it back in via the file:// syntax.
+                                  This option is a JSON dictionary of
+                                  type dict(str, OriginGroup).  For
+                                  documentation on OriginGroup please see our
+                                  API reference: https://docs.cloud.oracle.com/a
+                                  pi/#/en/waas/20181116/datatypes/OriginGroup.
+                                  This is a complex type whose value must be
+                                  valid JSON. The value can be provided as a
+                                  string on the command line or passed in as a
+                                  file using
+                                  the file://path/to/file syntax.
+                                  The --generate-param-json-input option can be
+                                  used to generate an example of the JSON which
+                                  must be provided. We recommend storing this
+                                  example
+                                  in a file, modifying it as needed and
+                                  then passing it back in via the file://
+                                  syntax.
   --policy-config COMPLEX TYPE    This is a complex type whose value must be
                                   valid JSON. The value can be provided as a
                                   string on the command line or passed in as a
@@ -5778,22 +6641,29 @@ Options:
                                   in
                                   a file, modifying it as needed and then
                                   passing it back in via the file:// syntax.
-  --origin-groups COMPLEX TYPE    The list of origin group references that
-                                  provide support for additional origin servers.
-                                  A list of combined unique origin servers from
-                                  `origin` and `originGroups` will be used.
-                                  This
-                                  is a complex type whose value must be valid
-                                  JSON. The value can be provided as a string on
-                                  the command line or passed in as a file using
-                                  the file://path/to/file syntax.
+  --origin-groups COMPLEX TYPE    The map of origin groups and their keys used
+                                  to associate origins to the `wafConfig`.
+                                  Origin groups allow you to apply weights to
+                                  groups of origins for load balancing purposes.
+                                  Origins with higher weights will receive
+                                  larger proportions of client requests. To add
+                                  additional origins to your WAAS policy, update
+                                  the `origins` field of a `UpdateWaasPolicy`
+                                  request.
+                                  This is a complex type whose value
+                                  must be valid JSON. The value can be provided
+                                  as a string on the command line or passed in
+                                  as a file using
+                                  the file://path/to/file
+                                  syntax.
                                   
-                                  The
-                                  --generate-param-json-input option can be used
-                                  to generate an example of the JSON which must
-                                  be provided. We recommend storing this example
-                                  in a file, modifying it as needed and then
-                                  passing it back in via the file:// syntax.
+                                  The --generate-param-json-input
+                                  option can be used to generate an example of
+                                  the JSON which must be provided. We recommend
+                                  storing this example
+                                  in a file, modifying it
+                                  as needed and then passing it back in via the
+                                  file:// syntax.
   --protection-rules COMPLEX TYPE
                                   A list of the protection rules and their
                                   details.

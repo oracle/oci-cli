@@ -50,6 +50,12 @@ def exadata_infrastructure_group():
     pass
 
 
+@click.command(cli_util.override('db.autonomous_database_wallet_group.command_name', 'autonomous-database-wallet'), cls=CommandGroupWithAlias, help="""The Autonomous Database wallet details.""")
+@cli_util.help_option_group
+def autonomous_database_wallet_group():
+    pass
+
+
 @click.command(cli_util.override('db.database_group.command_name', 'database'), cls=CommandGroupWithAlias, help="""""")
 @cli_util.help_option_group
 def database_group():
@@ -187,6 +193,7 @@ db_root_group.add_command(backup_group)
 db_root_group.add_command(autonomous_container_database_group)
 db_root_group.add_command(patch_group)
 db_root_group.add_command(exadata_infrastructure_group)
+db_root_group.add_command(autonomous_database_wallet_group)
 db_root_group.add_command(database_group)
 db_root_group.add_command(db_system_shape_group)
 db_root_group.add_command(data_guard_association_group)
@@ -2905,12 +2912,13 @@ def generate_autonomous_data_warehouse_wallet(ctx, from_json, file, autonomous_d
 @cli_util.option('--autonomous-database-id', required=True, help=u"""The database [OCID].""")
 @cli_util.option('--password', required=True, help=u"""The password to encrypt the keys inside the wallet. The password must be at least 8 characters long and must include at least 1 letter and either 1 numeric character or 1 special character.""")
 @cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
+@cli_util.option('--generate-type', type=custom_types.CliCaseInsensitiveChoice(["ALL", "SINGLE"]), help=u"""The type of wallet to generate. `SINGLE` is used to generate a wallet for a single database. `ALL` is used to generate wallet for all databases in the region.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def generate_autonomous_database_wallet(ctx, from_json, file, autonomous_database_id, password):
+def generate_autonomous_database_wallet(ctx, from_json, file, autonomous_database_id, password, generate_type):
 
     if isinstance(autonomous_database_id, six.string_types) and len(autonomous_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-database-id cannot be whitespace or empty string')
@@ -2920,6 +2928,9 @@ def generate_autonomous_database_wallet(ctx, from_json, file, autonomous_databas
 
     details = {}
     details['password'] = password
+
+    if generate_type is not None:
+        details['generateType'] = generate_type
 
     client = cli_util.build_client('database', ctx)
     result = client.generate_autonomous_database_wallet(
@@ -3104,6 +3115,45 @@ def get_autonomous_database_backup(ctx, from_json, autonomous_database_backup_id
     client = cli_util.build_client('database', ctx)
     result = client.get_autonomous_database_backup(
         autonomous_database_backup_id=autonomous_database_backup_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@autonomous_database_wallet_group.command(name=cli_util.override('db.get_autonomous_database_regional_wallet.command_name', 'get-autonomous-database-regional-wallet'), help=u"""Gets the Autonomous Database regional wallet details.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'AutonomousDatabaseWallet'})
+@cli_util.wrap_exceptions
+def get_autonomous_database_regional_wallet(ctx, from_json, ):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database', ctx)
+    result = client.get_autonomous_database_regional_wallet(
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@autonomous_database_wallet_group.command(name=cli_util.override('db.get_autonomous_database_wallet.command_name', 'get'), help=u"""Gets the wallet details for the specified Autonomous Database.""")
+@cli_util.option('--autonomous-database-id', required=True, help=u"""The database [OCID].""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'AutonomousDatabaseWallet'})
+@cli_util.wrap_exceptions
+def get_autonomous_database_wallet(ctx, from_json, autonomous_database_id):
+
+    if isinstance(autonomous_database_id, six.string_types) and len(autonomous_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --autonomous-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database', ctx)
+    result = client.get_autonomous_database_wallet(
+        autonomous_database_id=autonomous_database_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -6617,6 +6667,61 @@ def update_autonomous_database(ctx, from_json, force, wait_for_state, max_wait_s
                 raise
         else:
             click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@autonomous_database_wallet_group.command(name=cli_util.override('db.update_autonomous_database_regional_wallet.command_name', 'update-autonomous-database-regional-wallet'), help=u"""Updates the Autonomous Database regional wallet.""")
+@cli_util.option('--should-rotate', type=click.BOOL, help=u"""Indicates whether to rotate the wallet or not. If `false`, the wallet will not be rotated. The default is `false`.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def update_autonomous_database_regional_wallet(ctx, from_json, should_rotate):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    details = {}
+
+    if should_rotate is not None:
+        details['shouldRotate'] = should_rotate
+
+    client = cli_util.build_client('database', ctx)
+    result = client.update_autonomous_database_regional_wallet(
+        update_autonomous_database_wallet_details=details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@autonomous_database_wallet_group.command(name=cli_util.override('db.update_autonomous_database_wallet.command_name', 'update'), help=u"""Updates the wallet for the specified Autonomous Database.""")
+@cli_util.option('--autonomous-database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--should-rotate', type=click.BOOL, help=u"""Indicates whether to rotate the wallet or not. If `false`, the wallet will not be rotated. The default is `false`.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def update_autonomous_database_wallet(ctx, from_json, autonomous_database_id, should_rotate):
+
+    if isinstance(autonomous_database_id, six.string_types) and len(autonomous_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --autonomous-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    details = {}
+
+    if should_rotate is not None:
+        details['shouldRotate'] = should_rotate
+
+    client = cli_util.build_client('database', ctx)
+    result = client.update_autonomous_database_wallet(
+        autonomous_database_id=autonomous_database_id,
+        update_autonomous_database_wallet_details=details,
+        **kwargs
+    )
     cli_util.render_response(result, ctx)
 
 

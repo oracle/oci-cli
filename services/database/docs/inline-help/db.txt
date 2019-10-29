@@ -21,6 +21,7 @@ Commands:
                                   [AutonomousDatabaseBackup...
   autonomous-database             An Oracle Autonomous Database.
   autonomous-database-backup      An Autonomous Database backup.
+  autonomous-database-wallet      The Autonomous Database wallet details.
   autonomous-db-preview-version   The Autonomous Database preview version.
   autonomous-exadata-infrastructure
   autonomous-exadata-infrastructure-shape
@@ -2024,6 +2025,10 @@ Options:
   --file FILENAME                The name of the file that will receive the
                                  response data, or '-' to write to STDOUT.
                                  [required]
+  --generate-type [ALL|SINGLE]   The type of wallet to generate. `SINGLE` is
+                                 used to generate a wallet for a single
+                                 database. `ALL` is used to generate wallet for
+                                 all databases in the region.
   --from-json TEXT               Provide input to this command as a JSON
                                  document from a file using the file://path-
                                  to/file syntax.
@@ -2792,6 +2797,166 @@ Options:
                                   s
   -?, -h, --help                  For detailed help on any of these individual
                                   commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci db autonomous-database-wallet --help
+Usage: oci db autonomous-database-wallet [OPTIONS] COMMAND [ARGS]...
+
+  The Autonomous Database wallet details.
+
+Options:
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
+
+Commands:
+  get-metadata                  Gets the wallet details for the specified...
+  get-regional-wallet-metadata  Gets the Autonomous Database regional wallet...
+  rotate                        Updates the wallet for the specified...
+  rotate-regional-wallet        Updates the Autonomous Database regional...
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci db autonomous-database-wallet get-metadata --help
+Usage: oci db autonomous-database-wallet get-metadata [OPTIONS]
+
+  Gets the wallet details for the specified Autonomous Database.
+
+Options:
+  --id TEXT         The OCID of the Autonomous Database to get the wallet
+                    metadata for. [required]
+  --from-json TEXT  Provide input to this command as a JSON document from a file
+                    using the file://path-to/file syntax.
+                    
+                    The --generate-full-
+                    command-json-input option can be used to generate a sample
+                    json file to be used with this command option. The key names
+                    are pre-populated and match the command option names
+                    (converted to camelCase format, e.g. compartment-id -->
+                    compartmentId), while the values of the keys need to be
+                    populated by the user before using the sample file as an
+                    input to this command. For any command option that accepts
+                    multiple values, the value of the key can be a JSON array.
+                    Options can still be provided on the command line. If an
+                    option exists in both the JSON document and the command line
+                    then the command line specified value will be used.
+                    
+                    For
+                    examples on usage of this option, please see our "using CLI
+                    with advanced JSON options" link: https://docs.cloud.oracle.
+                    com/iaas/Content/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                    s
+  -?, -h, --help    For detailed help on any of these individual commands, enter
+                    <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci db autonomous-database-wallet get-regional-wallet-metadata --help
+Usage: oci db autonomous-database-wallet get-regional-wallet-metadata 
+           [OPTIONS]
+
+  Gets the Autonomous Database regional wallet details.
+
+Options:
+  --from-json TEXT  Provide input to this command as a JSON document from a file
+                    using the file://path-to/file syntax.
+                    
+                    The --generate-full-
+                    command-json-input option can be used to generate a sample
+                    json file to be used with this command option. The key names
+                    are pre-populated and match the command option names
+                    (converted to camelCase format, e.g. compartment-id -->
+                    compartmentId), while the values of the keys need to be
+                    populated by the user before using the sample file as an
+                    input to this command. For any command option that accepts
+                    multiple values, the value of the key can be a JSON array.
+                    Options can still be provided on the command line. If an
+                    option exists in both the JSON document and the command line
+                    then the command line specified value will be used.
+                    
+                    For
+                    examples on usage of this option, please see our "using CLI
+                    with advanced JSON options" link: https://docs.cloud.oracle.
+                    com/iaas/Content/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                    s
+  -?, -h, --help    For detailed help on any of these individual commands, enter
+                    <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci db autonomous-database-wallet rotate --help
+Usage: oci db autonomous-database-wallet rotate [OPTIONS]
+
+  Updates the wallet for the specified Autonomous Database.
+
+Options:
+  --should-rotate BOOLEAN  Indicates whether to rotate the wallet or not. If
+                           `false`, the wallet will not be rotated. The default
+                           is `false`.
+  --id TEXT                The OCID of the Autonomous Database to rotate the
+                           wallet for. [required]
+  --from-json TEXT         Provide input to this command as a JSON document from
+                           a file using the file://path-to/file syntax.
+                           
+                           The
+                           --generate-full-command-json-input option can be used
+                           to generate a sample json file to be used with this
+                           command option. The key names are pre-populated and
+                           match the command option names (converted to
+                           camelCase format, e.g. compartment-id -->
+                           compartmentId), while the values of the keys need to
+                           be populated by the user before using the sample file
+                           as an input to this command. For any command option
+                           that accepts multiple values, the value of the key
+                           can be a JSON array.
+                           
+                           Options can still be provided
+                           on the command line. If an option exists in both the
+                           JSON document and the command line then the command
+                           line specified value will be used.
+                           
+                           For examples on
+                           usage of this option, please see our "using CLI with
+                           advanced JSON options" link: https://docs.cloud.oracl
+                           e.com/iaas/Content/API/SDKDocs/cliusing.htm#AdvancedJ
+                           SONOptions
+  -?, -h, --help           For detailed help on any of these individual
+                           commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci db autonomous-database-wallet rotate-regional-wallet --help
+Usage: oci db autonomous-database-wallet rotate-regional-wallet 
+           [OPTIONS]
+
+  Updates the Autonomous Database regional wallet.
+
+Options:
+  --should-rotate BOOLEAN  Indicates whether to rotate the wallet or not. If
+                           `false`, the wallet will not be rotated. The default
+                           is `false`.
+  --from-json TEXT         Provide input to this command as a JSON document from
+                           a file using the file://path-to/file syntax.
+                           
+                           The
+                           --generate-full-command-json-input option can be used
+                           to generate a sample json file to be used with this
+                           command option. The key names are pre-populated and
+                           match the command option names (converted to
+                           camelCase format, e.g. compartment-id -->
+                           compartmentId), while the values of the keys need to
+                           be populated by the user before using the sample file
+                           as an input to this command. For any command option
+                           that accepts multiple values, the value of the key
+                           can be a JSON array.
+                           
+                           Options can still be provided
+                           on the command line. If an option exists in both the
+                           JSON document and the command line then the command
+                           line specified value will be used.
+                           
+                           For examples on
+                           usage of this option, please see our "using CLI with
+                           advanced JSON options" link: https://docs.cloud.oracl
+                           e.com/iaas/Content/API/SDKDocs/cliusing.htm#AdvancedJ
+                           SONOptions
+  -?, -h, --help           For detailed help on any of these individual
+                           commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci db autonomous-db-preview-version --help
