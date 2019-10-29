@@ -6,15 +6,15 @@ import click
 import oci  # noqa: F401
 import six  # noqa: F401
 import sys  # noqa: F401
-from oci_cli.cli_root import cli
 from oci_cli import cli_constants  # noqa: F401
 from oci_cli import cli_util
 from oci_cli import json_skeleton_utils
 from oci_cli import custom_types  # noqa: F401
 from oci_cli.aliasing import CommandGroupWithAlias
+from services.waas.src.oci_cli_waas.generated import waas_service_cli
 
 
-@cli.command(cli_util.override('waas.waas_root_group.command_name', 'waas'), cls=CommandGroupWithAlias, help=cli_util.override('waas.waas_root_group.help', """OCI Web Application Acceleration and Security Services"""), short_help=cli_util.override('waas.waas_root_group.short_help', """Web Application Acceleration and Security Services API"""))
+@click.command(cli_util.override('waas.waas_root_group.command_name', 'waas'), cls=CommandGroupWithAlias, help=cli_util.override('waas.waas_root_group.help', """OCI Web Application Acceleration and Security Services"""), short_help=cli_util.override('waas.waas_root_group.short_help', """Web Application Acceleration and Security Services API"""))
 @cli_util.help_option_group
 def waas_root_group():
     pass
@@ -72,12 +72,6 @@ def recommendation_group():
     pass
 
 
-@click.command(cli_util.override('waas.waas_policy_custom_protection_rule_group.command_name', 'waas-policy-custom-protection-rule'), cls=CommandGroupWithAlias, help="""Summary information about a Custom Protection rule.""")
-@cli_util.help_option_group
-def waas_policy_custom_protection_rule_group():
-    pass
-
-
 @click.command(cli_util.override('waas.js_challenge_group.command_name', 'js-challenge'), cls=CommandGroupWithAlias, help="""The JavaScript challenge settings. Javascript Challenge is the function to filter abnormal or malicious bots and allow access to real clients.""")
 @cli_util.help_option_group
 def js_challenge_group():
@@ -90,7 +84,7 @@ def work_request_group():
     pass
 
 
-@click.command(cli_util.override('waas.custom_protection_rule_group.command_name', 'custom-protection-rule'), cls=CommandGroupWithAlias, help="""The details of a Custom Protection rule.""")
+@click.command(cli_util.override('waas.custom_protection_rule_group.command_name', 'custom-protection-rule'), cls=CommandGroupWithAlias, help="""The details of a custom protection rule.""")
 @cli_util.help_option_group
 def custom_protection_rule_group():
     pass
@@ -107,12 +101,6 @@ def address_rate_limiting_group():
 *Warning:* Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
 @cli_util.help_option_group
 def captcha_group():
-    pass
-
-
-@click.command(cli_util.override('waas.custom_protection_rule_setting_group.command_name', 'custom-protection-rule-setting'), cls=CommandGroupWithAlias, help="""The OCID and action of a Custom Protection rule.""")
-@cli_util.help_option_group
-def custom_protection_rule_setting_group():
     pass
 
 
@@ -146,7 +134,7 @@ def whitelist_group():
     pass
 
 
-@click.command(cli_util.override('waas.purge_cache_group.command_name', 'purge-cache'), cls=CommandGroupWithAlias, help="""The list of resources for cache purge. If a resources property is not provided, the purge targets all resources in a policy.""")
+@click.command(cli_util.override('waas.purge_cache_group.command_name', 'purge-cache'), cls=CommandGroupWithAlias, help="""The list of cached resources to purge. If a resource is not specified, the purge targets all rules in a policy.""")
 @cli_util.help_option_group
 def purge_cache_group():
     pass
@@ -176,12 +164,6 @@ def waf_log_group():
     pass
 
 
-@click.command(cli_util.override('waas.caching_rule_group.command_name', 'caching-rule'), cls=CommandGroupWithAlias, help="""""")
-@cli_util.help_option_group
-def caching_rule_group():
-    pass
-
-
 @click.command(cli_util.override('waas.protection_settings_group.command_name', 'protection-settings'), cls=CommandGroupWithAlias, help="""The settings used for protection rules.""")
 @cli_util.help_option_group
 def protection_settings_group():
@@ -194,6 +176,13 @@ def waf_config_group():
     pass
 
 
+@click.command(cli_util.override('waas.caching_rules_group.command_name', 'caching-rules'), cls=CommandGroupWithAlias, help="""""")
+@cli_util.help_option_group
+def caching_rules_group():
+    pass
+
+
+waas_service_cli.waas_service_group.add_command(waas_root_group)
 waas_root_group.add_command(waas_policy_group)
 waas_root_group.add_command(access_rule_group)
 waas_root_group.add_command(good_bot_group)
@@ -202,13 +191,11 @@ waas_root_group.add_command(waf_traffic_datum_group)
 waas_root_group.add_command(certificate_group)
 waas_root_group.add_command(edge_subnet_group)
 waas_root_group.add_command(recommendation_group)
-waas_root_group.add_command(waas_policy_custom_protection_rule_group)
 waas_root_group.add_command(js_challenge_group)
 waas_root_group.add_command(work_request_group)
 waas_root_group.add_command(custom_protection_rule_group)
 waas_root_group.add_command(address_rate_limiting_group)
 waas_root_group.add_command(captcha_group)
-waas_root_group.add_command(custom_protection_rule_setting_group)
 waas_root_group.add_command(waf_blocked_request_group)
 waas_root_group.add_command(policy_config_group)
 waas_root_group.add_command(waf_request_group)
@@ -219,9 +206,9 @@ waas_root_group.add_command(human_interaction_challenge_group)
 waas_root_group.add_command(device_fingerprint_challenge_group)
 waas_root_group.add_command(address_list_group)
 waas_root_group.add_command(waf_log_group)
-waas_root_group.add_command(caching_rule_group)
 waas_root_group.add_command(protection_settings_group)
 waas_root_group.add_command(waf_config_group)
+waas_root_group.add_command(caching_rules_group)
 
 
 @recommendation_group.command(name=cli_util.override('waas.accept_recommendations.command_name', 'accept'), help=u"""Accepts a list of recommended Web Application Firewall protection rules. Web Application Firewall protection rule recommendations are sets of rules generated by observed traffic patterns through the Web Application Firewall and are meant to optimize the Web Application Firewall's security profile. Only the rules specified in the request body will be updated; all other rules will remain unchanged.
@@ -304,9 +291,9 @@ def cancel_work_request(ctx, from_json, work_request_id, if_match):
     cli_util.render_response(result, ctx)
 
 
-@address_list_group.command(name=cli_util.override('waas.change_address_list_compartment.command_name', 'change-compartment'), help=u"""Moves address list into a different compartment. When provided, If-Match is checked against ETag values of the address list.""")
+@address_list_group.command(name=cli_util.override('waas.change_address_list_compartment.command_name', 'change-compartment'), help=u"""Moves address list into a different compartment. When provided, If-Match is checked against ETag values of the address list. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].""")
 @cli_util.option('--address-list-id', required=True, help=u"""The [OCID] of the address list. This number is generated when the address list is added to the compartment.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the `PUT` or `DELETE` call for a resource, set the `if-match` parameter to the value of the etag from a previous `GET` or `POST` response for that resource. The resource will be updated or deleted only if the etag provided matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -335,9 +322,9 @@ def change_address_list_compartment(ctx, from_json, address_list_id, compartment
     cli_util.render_response(result, ctx)
 
 
-@certificate_group.command(name=cli_util.override('waas.change_certificate_compartment.command_name', 'change-compartment'), help=u"""Moves certificate into a different compartment. When provided, If-Match is checked against ETag values of the certificate.""")
+@certificate_group.command(name=cli_util.override('waas.change_certificate_compartment.command_name', 'change-compartment'), help=u"""Moves certificate into a different compartment. When provided, If-Match is checked against ETag values of the certificate. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].""")
 @cli_util.option('--certificate-id', required=True, help=u"""The [OCID] of the SSL certificate used in the WAAS policy. This number is generated when the certificate is added to the policy.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the `PUT` or `DELETE` call for a resource, set the `if-match` parameter to the value of the etag from a previous `GET` or `POST` response for that resource. The resource will be updated or deleted only if the etag provided matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -366,9 +353,9 @@ def change_certificate_compartment(ctx, from_json, certificate_id, compartment_i
     cli_util.render_response(result, ctx)
 
 
-@custom_protection_rule_group.command(name=cli_util.override('waas.change_custom_protection_rule_compartment.command_name', 'change-compartment'), help=u"""Moves Custom Protection rule into a different compartment. When provided, If-Match is checked against ETag values of the Custom Protection rule.""")
-@cli_util.option('--custom-protection-rule-id', required=True, help=u"""The [OCID] of the Custom Protection rule. This number is generated when the Custom Protection rule is added to the compartment.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
+@custom_protection_rule_group.command(name=cli_util.override('waas.change_custom_protection_rule_compartment.command_name', 'change-compartment'), help=u"""Moves a custom protection rule into a different compartment within the same tenancy. When provided, If-Match is checked against ETag values of the custom protection rule. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].""")
+@cli_util.option('--custom-protection-rule-id', required=True, help=u"""The [OCID] of the custom protection rule. This number is generated when the custom protection rule is added to the compartment.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the `PUT` or `DELETE` call for a resource, set the `if-match` parameter to the value of the etag from a previous `GET` or `POST` response for that resource. The resource will be updated or deleted only if the etag provided matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -397,9 +384,9 @@ def change_custom_protection_rule_compartment(ctx, from_json, custom_protection_
     cli_util.render_response(result, ctx)
 
 
-@waas_policy_group.command(name=cli_util.override('waas.change_waas_policy_compartment.command_name', 'change-compartment'), help=u"""Moves WAAS policy into a different compartment. When provided, If-Match is checked against ETag values of the WAAS policy.""")
+@waas_policy_group.command(name=cli_util.override('waas.change_waas_policy_compartment.command_name', 'change-compartment'), help=u"""Moves WAAS policy into a different compartment. When provided, If-Match is checked against ETag values of the WAAS policy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].""")
 @cli_util.option('--waas-policy-id', required=True, help=u"""The [OCID] of the WAAS policy.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the `PUT` or `DELETE` call for a resource, set the `if-match` parameter to the value of the etag from a previous `GET` or `POST` response for that resource. The resource will be updated or deleted only if the etag provided matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -428,7 +415,7 @@ def change_waas_policy_compartment(ctx, from_json, waas_policy_id, compartment_i
     cli_util.render_response(result, ctx)
 
 
-@address_list_group.command(name=cli_util.override('waas.create_address_list.command_name', 'create'), help=u"""Creates an address list in set compartment and allows it to be used in a WAAS policy. For more information, see [WAF Settings].""")
+@address_list_group.command(name=cli_util.override('waas.create_address_list.command_name', 'create'), help=u"""Creates an address list in a set compartment and allows it to be used in a WAAS policy and referenced by access rules. Addresses can be IP addresses and CIDR notations.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which to create the address list.""")
 @cli_util.option('--display-name', required=True, help=u"""A unique user-friendly name for the address list.""")
 @cli_util.option('--addresses', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of IP addresses or CIDR notations.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -570,18 +557,28 @@ def create_certificate(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     cli_util.render_response(result, ctx)
 
 
-@custom_protection_rule_group.command(name=cli_util.override('waas.create_custom_protection_rule.command_name', 'create'), help=u"""Creates a new Custom Protection rule in the specified compartment.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which to create the Custom Protection rule.""")
-@cli_util.option('--display-name', required=True, help=u"""A user-friendly name for the Custom Protection rule.""")
-@cli_util.option('--template', required=True, help=u"""The template text of the Custom Protection rule. The syntax is based on ModSecurity Rule Language. Additionaly it needs to include two variables / placeholders which will be replaced during publishing.
+@custom_protection_rule_group.command(name=cli_util.override('waas.create_custom_protection_rule.command_name', 'create'), help=u"""Creates a new custom protection rule in the specified compartment.
 
-- **{{mode}}** - rule action, defined by user in UI, like `OFF`, `DETECT` or `BLOCK`.
+Custom protection rules allow you to create rules in addition to the rulesets provided by the Web Application Firewall service, including rules from [ModSecurity]. The syntax for custom rules is based on the ModSecurity syntax. For more information about custom protection rules, see [Custom Protection Rules].""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which to create the custom protection rule.""")
+@cli_util.option('--display-name', required=True, help=u"""A user-friendly name for the custom protection rule.""")
+@cli_util.option('--template', required=True, help=u"""The template text of the custom protection rule. All custom protection rules are expressed in ModSecurity Rule Language.
 
-- **{{id_1}}** - unique rule ID which identifies a `SecRule`, generated by the system. Multiple IDs can be used by increasing the number of the variable for every `SecRule` defined in the template.
+Additionally, each rule must include two placeholder variables that are updated by the WAF service upon publication of the rule.
 
-*Example usage:*   ```   SecRule REQUEST_COOKIES \"regex matching SQL injection - part 1/2\" \\           \"phase:2,                                                 \\           msg:'Detects chained SQL injection attempts 1/2.',        \\           id: {{id_1}},                                             \\           ctl:ruleEngine={{mode}},                                  \\           deny\"   SecRule REQUEST_COOKIES \"regex matching SQL injection - part 2/2\" \\           \"phase:2,                                                 \\           msg:'Detects chained SQL injection attempts 2/2.',        \\           id: {{id_2}},                                             \\           ctl:ruleEngine={{mode}},                                  \\           deny\"   ```   The example contains two `SecRules` each having distinct regex expression to match   `Cookie` header value during second input analysis phase.   The disruptive `deny` action takes effect only when `{{mode}}` is set to `BLOCK`.   The message is logged either when `{{mode}}` is set to `DETECT` or `BLOCK`.
+`id: {{id_1}}` - This field is populated with a unique rule ID generated by the WAF service which identifies a `SecRule`. More than one `SecRule` can be defined in the `template` field of a CreateCustomSecurityRule call. The value of the first `SecRule` must be `id: {{id_1}}` and the `id` field of each subsequent `SecRule` should increase by one, as shown in the example.
 
- For more information about ModSecurity's open source WAF rules, see [Mod Security's documentation].""")
+`ctl:ruleEngine={{mode}}` - The action to be taken when the criteria of the `SecRule` are met, either `OFF`, `DETECT` or `BLOCK`. This field is automatically populated with the corresponding value of the `action` field of the `CustomProtectionRuleSetting` schema when the `WafConfig` is updated.
+
+*Example:*   ```   SecRule REQUEST_COOKIES \"regex matching SQL injection - part 1/2\" \\           \"phase:2,                                                 \\           msg:'Detects chained SQL injection attempts 1/2.',        \\           id: {{id_1}},                                             \\           ctl:ruleEngine={{mode}},                                  \\           deny\"   SecRule REQUEST_COOKIES \"regex matching SQL injection - part 2/2\" \\           \"phase:2,                                                 \\           msg:'Detects chained SQL injection attempts 2/2.',        \\           id: {{id_2}},                                             \\           ctl:ruleEngine={{mode}},                                  \\           deny\"   ```
+
+ The example contains two `SecRules` each having distinct regex expression to match the `Cookie` header value during the second input analysis phase.
+
+For more information about custom protection rules, see [Custom Protection Rules].
+
+For more information about ModSecurity syntax, see [Making Rules: The Basic Syntax].
+
+For more information about ModSecurity's open source WAF rules, see [Mod Security's OWASP Core Rule Set documentation].""")
 @cli_util.option('--description', help=u"""A description for the Custom Protection rule.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
@@ -666,7 +663,7 @@ All Oracle Cloud Infrastructure resources, including WAAS policies, receive a un
 @cli_util.option('--origins', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A map of host to origin for the web application. The key should be a customer friendly name for the host, ex. primary, secondary, etc.
 
 This option is a JSON dictionary of type dict(str, Origin).  For documentation on Origin please see our API reference: https://docs.cloud.oracle.com/api/#/en/waas/20181116/datatypes/Origin.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--origin-groups', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The map of origin groups and their keys used to associate origins to the wafConfig.
+@cli_util.option('--origin-groups', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The map of origin groups and their keys used to associate origins to the `wafConfig`. Origin groups allow you to apply weights to groups of origins for load balancing purposes. Origins with higher weights will receive larger proportions of client requests. To add additional origins to your WAAS policy, update the `origins` field of a `UpdateWaasPolicy` request.
 
 This option is a JSON dictionary of type dict(str, OriginGroup).  For documentation on OriginGroup please see our API reference: https://docs.cloud.oracle.com/api/#/en/waas/20181116/datatypes/OriginGroup.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--policy-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -875,7 +872,7 @@ def delete_certificate(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
 
 @custom_protection_rule_group.command(name=cli_util.override('waas.delete_custom_protection_rule.command_name', 'delete'), help=u"""Deletes a Custom Protection rule.""")
-@cli_util.option('--custom-protection-rule-id', required=True, help=u"""The [OCID] of the Custom Protection rule. This number is generated when the Custom Protection rule is added to the compartment.""")
+@cli_util.option('--custom-protection-rule-id', required=True, help=u"""The [OCID] of the custom protection rule. This number is generated when the custom protection rule is added to the compartment.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the `PUT` or `DELETE` call for a resource, set the `if-match` parameter to the value of the etag from a previous `GET` or `POST` response for that resource. The resource will be updated or deleted only if the etag provided matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "FAILED", "UPDATING", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -1032,8 +1029,8 @@ def get_certificate(ctx, from_json, certificate_id):
     cli_util.render_response(result, ctx)
 
 
-@custom_protection_rule_group.command(name=cli_util.override('waas.get_custom_protection_rule.command_name', 'get'), help=u"""Gets the details of a Custom Protection rule.""")
-@cli_util.option('--custom-protection-rule-id', required=True, help=u"""The [OCID] of the Custom Protection rule. This number is generated when the Custom Protection rule is added to the compartment.""")
+@custom_protection_rule_group.command(name=cli_util.override('waas.get_custom_protection_rule.command_name', 'get'), help=u"""Gets the details of a custom protection rule.""")
+@cli_util.option('--custom-protection-rule-id', required=True, help=u"""The [OCID] of the custom protection rule. This number is generated when the custom protection rule is added to the compartment.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -1399,7 +1396,7 @@ def list_address_lists(ctx, from_json, all_pages, page_size, compartment_id, lim
     cli_util.render_response(result, ctx)
 
 
-@caching_rule_group.command(name=cli_util.override('waas.list_caching_rules.command_name', 'list'), help=u"""Gets the currently configured caching rules for the Web Application Firewall configuration of a specified WAAS policy. The order of the caching rules is important. The rules will be checked in the order they are specified and the first matching rule will be used.""")
+@caching_rules_group.command(name=cli_util.override('waas.list_caching_rules.command_name', 'list'), help=u"""Gets the currently configured caching rules for the Web Application Firewall configuration of a specified WAAS policy. The rules are processed in the order they are specified in and the first matching rule will be used when processing a request.""")
 @cli_util.option('--waas-policy-id', required=True, help=u"""The [OCID] of the WAAS policy.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated call. In unspecified, defaults to `10`.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous paginated call.""")
@@ -1572,17 +1569,17 @@ def list_certificates(ctx, from_json, all_pages, page_size, compartment_id, limi
     cli_util.render_response(result, ctx)
 
 
-@custom_protection_rule_group.command(name=cli_util.override('waas.list_custom_protection_rules.command_name', 'list'), help=u"""Gets a list of Custom Protection rules.""")
+@custom_protection_rule_group.command(name=cli_util.override('waas.list_custom_protection_rules.command_name', 'list'), help=u"""Gets a list of custom protection rules for the specified Web Application Firewall.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment. This number is generated when the compartment is created.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated call. In unspecified, defaults to `10`.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous paginated call.""")
-@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["id", "compartmentId", "displayName", "modSecurityRuleId", "timeCreated"]), help=u"""The value by which Custom Protection rules are sorted in a paginated 'List' call. If unspecified, defaults to `timeCreated`.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["id", "compartmentId", "displayName", "modSecurityRuleId", "timeCreated"]), help=u"""The value by which custom protection rules are sorted in a paginated 'List' call. If unspecified, defaults to `timeCreated`.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The value of the sorting direction of resources in a paginated 'List' call. If unspecified, defaults to `DESC`.""")
-@cli_util.option('--id', multiple=True, help=u"""Filter Custom Protection rules using a list of Custom Protection rules OCIDs.""")
-@cli_util.option('--display-name', multiple=True, help=u"""Filter Custom Protection rules using a list of display names.""")
+@cli_util.option('--id', multiple=True, help=u"""Filter custom protection rules using a list of custom protection rule OCIDs.""")
+@cli_util.option('--display-name', multiple=True, help=u"""Filter custom protection rules using a list of display names.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "FAILED", "UPDATING", "DELETING", "DELETED"]), multiple=True, help=u"""Filter Custom Protection rules using a list of lifecycle states.""")
 @cli_util.option('--time-created-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""A filter that matches Custom Protection rules created on or after the specified date-time.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--time-created-less-than', type=custom_types.CLI_DATETIME, help=u"""A filter that matches Custom Protection rules created before the specified date-time.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-created-less-than', type=custom_types.CLI_DATETIME, help=u"""A filter that matches custom protection rules created before the specified date-time.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({'id': {'module': 'waas', 'class': 'list[string]'}, 'display-name': {'module': 'waas', 'class': 'list[string]'}})
@@ -1977,7 +1974,7 @@ def list_waas_policies(ctx, from_json, all_pages, page_size, compartment_id, lim
     cli_util.render_response(result, ctx)
 
 
-@waas_policy_custom_protection_rule_group.command(name=cli_util.override('waas.list_waas_policy_custom_protection_rules.command_name', 'list'), help=u"""Gets the list of currently configured custom protection rules for a WAAS policy.""")
+@custom_protection_rule_group.command(name=cli_util.override('waas.list_waas_policy_custom_protection_rules.command_name', 'list-waas-policy'), help=u"""Gets the list of currently configured custom protection rules for a WAAS policy.""")
 @cli_util.option('--waas-policy-id', required=True, help=u"""The [OCID] of the WAAS policy.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated call. In unspecified, defaults to `10`.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous paginated call.""")
@@ -2425,10 +2422,10 @@ def list_work_requests(ctx, from_json, all_pages, page_size, waas_policy_id, com
     cli_util.render_response(result, ctx)
 
 
-@purge_cache_group.command(name=cli_util.override('waas.purge_cache.command_name', 'purge-cache'), help=u"""Accepts a list of resources that will get it's cache purged. If resources property is not passed, then the entire cache for Web Application will be purged.""")
+@purge_cache_group.command(name=cli_util.override('waas.purge_cache.command_name', 'purge-cache'), help=u"""Performs a purge of the cache for each specified resource. If no resources are passed, the cache for the entire Web Application Firewall will be purged. For more information, see [Caching Rules].""")
 @cli_util.option('--waas-policy-id', required=True, help=u"""The [OCID] of the WAAS policy.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the `PUT` or `DELETE` call for a resource, set the `if-match` parameter to the value of the etag from a previous `GET` or `POST` response for that resource. The resource will be updated or deleted only if the etag provided matches the resource's current etag value.""")
-@cli_util.option('--resources', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A resource to purge, identified by either a hostless absolute path starting with a single slash (e.g., \"/path/to/resource\") or by a relative path in which the first component will be interpreted as a domain protected by this policy (e.g., \"example.com/path/to/resource\").""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--resources', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A resource to purge, specified by either a hostless absolute path starting with a single slash (Example: `/path/to/resource`) or by a relative path in which the first component will be interpreted as a domain protected by the WAAS policy (Example: `example.com/path/to/resource`).""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -2543,7 +2540,7 @@ def update_access_rules(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     cli_util.render_response(result, ctx)
 
 
-@certificate_group.command(name=cli_util.override('waas.update_address_list.command_name', 'update-address-list'), help=u"""Updates the details of an address list. Only the fields specified in the request body will be updated; all other properties will remain unchanged.""")
+@address_list_group.command(name=cli_util.override('waas.update_address_list.command_name', 'update'), help=u"""Updates the details of an address list. Only the fields specified in the request body will be updated; all other properties will remain unchanged.""")
 @cli_util.option('--address-list-id', required=True, help=u"""The [OCID] of the address list. This number is generated when the address list is added to the compartment.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the `PUT` or `DELETE` call for a resource, set the `if-match` parameter to the value of the etag from a previous `GET` or `POST` response for that resource. The resource will be updated or deleted only if the etag provided matches the resource's current etag value.""")
 @cli_util.option('--display-name', help=u"""A unique user-friendly name for the address list.""")
@@ -2622,7 +2619,13 @@ def update_address_list(ctx, from_json, force, wait_for_state, max_wait_seconds,
     cli_util.render_response(result, ctx)
 
 
-@caching_rule_group.command(name=cli_util.override('waas.update_caching_rules.command_name', 'update'), help=u"""Updates the configuration for each specified caching rule. This operation can update or delete caching rules depending on the structure of the request body. Caching rules can be updated by changing the properties of the caching rule object with the rule's key specified in the key field. Any existing caching rules that are not specified with a key in the list of access rules will be deleted upon update.""")
+@caching_rules_group.command(name=cli_util.override('waas.update_caching_rules.command_name', 'update'), help=u"""Updates the configuration for each specified caching rule.
+
+Caching rules WAF policies allow you to selectively cache content on Oracle Cloud Infrastructure's edge servers, such as webpages or certain file types. For more information about caching rules, see [Caching Rules].
+
+This operation can create, delete, update, and/or reorder caching rules depending on the structure of the request body. Caching rules can be updated by changing the properties of the caching rule object with the rule's key specified in the key field. Any existing caching rules that are not specified with a key in the list of access rules will be deleted upon update.
+
+The order the caching rules are specified in is important. The rules are processed in the order they are specified and the first matching rule will be used when processing a request. Use `ListCachingRules` to view a list of all available caching rules in a compartment.""")
 @cli_util.option('--waas-policy-id', required=True, help=u"""The [OCID] of the WAAS policy.""")
 @cli_util.option('--caching-rules-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the `PUT` or `DELETE` call for a resource, set the `if-match` parameter to the value of the etag from a previous `GET` or `POST` response for that resource. The resource will be updated or deleted only if the etag provided matches the resource's current etag value.""")
@@ -2805,19 +2808,27 @@ def update_certificate(ctx, from_json, force, wait_for_state, max_wait_seconds, 
     cli_util.render_response(result, ctx)
 
 
-@custom_protection_rule_group.command(name=cli_util.override('waas.update_custom_protection_rule.command_name', 'update'), help=u"""Updates the details of a Custom Protection rule. Only the fields specified in the request body will be updated; all other properties will remain unchanged.""")
-@cli_util.option('--custom-protection-rule-id', required=True, help=u"""The [OCID] of the Custom Protection rule. This number is generated when the Custom Protection rule is added to the compartment.""")
-@cli_util.option('--display-name', help=u"""A user-friendly name for the Custom Protection rule.""")
-@cli_util.option('--description', help=u"""A description for the Custom Protection rule.""")
-@cli_util.option('--template', help=u"""The template text of the Custom Protection rule. The syntax is based on ModSecurity Rule Language. Additionaly it needs to include two variables / placeholders which will be replaced during publishing.
+@custom_protection_rule_group.command(name=cli_util.override('waas.update_custom_protection_rule.command_name', 'update'), help=u"""Updates the configuration of a custom protection rule. Only the fields specified in the request body will be updated; all other properties will remain unchanged.""")
+@cli_util.option('--custom-protection-rule-id', required=True, help=u"""The [OCID] of the custom protection rule. This number is generated when the custom protection rule is added to the compartment.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name for the custom protection rule.""")
+@cli_util.option('--description', help=u"""A description for the custom protection rule.""")
+@cli_util.option('--template', help=u"""The template text of the custom protection rule. All custom protection rules are expressed in ModSecurity Rule Language.
 
-- **{{mode}}** - rule action, defined by user in UI, like `OFF`, `DETECT` or `BLOCK`.
+Additionally, each rule must include two placeholder variables that are updated by the WAF service upon publication of the rule.
 
-- **{{id_1}}** - unique rule ID which identifies a `SecRule`, generated by the system. Multiple IDs can be used by increasing the number of the variable for every `SecRule` defined in the template.
+`id: {{id_1}}` - This field is populated with a unique rule ID generated by the WAF service which identifies a `SecRule`. More than one `SecRule` can be defined in the `template` field of a CreateCustomSecurityRule call. The value of the first `SecRule` must be `id: {{id_1}}` and the `id` field of each subsequent `SecRule` should increase by one, as shown in the example.
 
-*Example usage:*   ```   SecRule REQUEST_COOKIES \"regex matching SQL injection - part 1/2\" \\           \"phase:2,                                                 \\           msg:'Detects chained SQL injection attempts 1/2.',        \\           id: {{id_1}},                                             \\           ctl:ruleEngine={{mode}},                                  \\           deny\"   SecRule REQUEST_COOKIES \"regex matching SQL injection - part 2/2\" \\           \"phase:2,                                                 \\           msg:'Detects chained SQL injection attempts 2/2.',        \\           id: {{id_2}},                                             \\           ctl:ruleEngine={{mode}},                                  \\           deny\"   ```   The example contains two `SecRules` each having distinct regex expression to match   `Cookie` header value during second input analysis phase.   The disruptive `deny` action takes effect only when `{{mode}}` is set to `BLOCK`.   The message is logged either when `{{mode}}` is set to `DETECT` or `BLOCK`.
+`ctl:ruleEngine={{mode}}` - The action to be taken when the criteria of the `SecRule` are met, either `OFF`, `DETECT` or `BLOCK`. This field is automatically populated with the corresponding value of the `action` field of the `CustomProtectionRuleSetting` schema when the `WafConfig` is updated.
 
- For more information about ModSecurity's open source WAF rules, see [Mod Security's documentation].""")
+*Example:*   ```   SecRule REQUEST_COOKIES \"regex matching SQL injection - part 1/2\" \\           \"phase:2,                                                 \\           msg:'Detects chained SQL injection attempts 1/2.',        \\           id: {{id_1}},                                             \\           ctl:ruleEngine={{mode}},                                  \\           deny\"   SecRule REQUEST_COOKIES \"regex matching SQL injection - part 2/2\" \\           \"phase:2,                                                 \\           msg:'Detects chained SQL injection attempts 2/2.',        \\           id: {{id_2}},                                             \\           ctl:ruleEngine={{mode}},                                  \\           deny\"   ```
+
+ The example contains two `SecRules` each having distinct regex expression to match the `Cookie` header value during the second input analysis phase.
+
+For more information about custom protection rules, see [Custom Protection Rules].
+
+For more information about ModSecurity syntax, see [Making Rules: The Basic Syntax].
+
+For more information about ModSecurity's open source WAF rules, see [Mod Security's OWASP Core Rule Set documentation].""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -3222,7 +3233,7 @@ def update_js_challenge(ctx, from_json, force, wait_for_state, max_wait_seconds,
 @cli_util.option('--certificate-id', help=u"""The OCID of the SSL certificate to use if HTTPS is supported.""")
 @cli_util.option('--is-https-enabled', type=click.BOOL, help=u"""Enable or disable HTTPS support. If true, a `certificateId` is required. If unspecified, defaults to `false`.""")
 @cli_util.option('--is-https-forced', type=click.BOOL, help=u"""Force HTTP to HTTPS redirection. If unspecified, defaults to `false`.""")
-@cli_util.option('--tls-protocols', type=custom_types.CliCaseInsensitiveChoice(["TLS_V1", "TLS_V1_1", "TLS_V1_2", "TLS_V1_3"]), help=u"""A list of allowed TLS protocols. Only applicable when HTTPS support is enabled. It affects client's connection to the edge nodes. The most secure TLS version will be chosen. - **TLS_V1:** corresponds to TLS 1.0 specification.
+@cli_util.option('--tls-protocols', type=custom_types.CliCaseInsensitiveChoice(["TLS_V1", "TLS_V1_1", "TLS_V1_2", "TLS_V1_3"]), help=u"""A list of allowed TLS protocols. Only applicable when HTTPS support is enabled. The TLS protocol is negotiated while the request is connecting and the most recent protocol supported by both the edge node and client browser will be selected. If no such version exists, the connection will be aborted. - **TLS_V1:** corresponds to TLS 1.0 specification.
 
 - **TLS_V1_1:** corresponds to TLS 1.1 specification.
 
@@ -3230,10 +3241,16 @@ def update_js_challenge(ctx, from_json, force, wait_for_state, max_wait_seconds,
 
 - **TLS_V1_3:** corresponds to TLS 1.3 specification.
 
-Enabled TLS protocols must go in a row. For example if TLS_v1_1 and TLS_V1_3 are enabled, TLS_V1_2 must be enabled too.""")
-@cli_util.option('--is-origin-compression-enabled', type=click.BOOL, help=u"""Enable or disable GZIP compression of origin responses. If enabled, the header `Accept-Encoding: gzip` is sent to origin, otherwise - empty `Accept-Encoding:` header is used.""")
-@cli_util.option('--is-behind-cdn', type=click.BOOL, help=u"""Enable or disable the use of CDN. It allows to specify true client IP address if clients do not connect directly to us.""")
-@cli_util.option('--client-address-header', type=custom_types.CliCaseInsensitiveChoice(["X_FORWARDED_FOR", "X_CLIENT_IP", "X_REAL_IP", "CLIENT_IP", "TRUE_CLIENT_IP"]), help=u"""The HTTP header used to pass the client IP address from the CDN if `isBehindCdn` is enabled. This feature consumes the header and its value as the true client IP address. It does not create the header. Using trusted chains (for example `X-Client-Ip: 11.1.1.1, 13.3.3.3`), the last IP address in the list will be used as true client IP address. In case of multiple headers with the same name, the first one will be used. If the header is not present it will use the connecting IP address as the true client IP address. It's assumed that CDN sets the correct client IP address and prevents spoofing.
+Enabled TLS protocols must go in a row. For example if `TLS_v1_1` and `TLS_V1_3` are enabled, `TLS_V1_2` must be enabled too.""")
+@cli_util.option('--is-origin-compression-enabled', type=click.BOOL, help=u"""Enable or disable GZIP compression of origin responses. If enabled, the header `Accept-Encoding: gzip` is sent to origin, otherwise, the empty `Accept-Encoding:` header is used.""")
+@cli_util.option('--is-behind-cdn', type=click.BOOL, help=u"""Enabling `isBehindCdn` allows for the collection of IP addresses from client requests if the WAF is connected to a CDN.""")
+@cli_util.option('--client-address-header', type=custom_types.CliCaseInsensitiveChoice(["X_FORWARDED_FOR", "X_CLIENT_IP", "X_REAL_IP", "CLIENT_IP", "TRUE_CLIENT_IP"]), help=u"""Specifies an HTTP header name which is treated as the connecting client's IP address. Applicable only if `isBehindCdn` is enabled.
+
+The edge node reads this header and its value and sets the client IP address as specified. It does not create the header if the header is not present in the request. If the header is not present, the connecting IP address will be used as the client's true IP address. It uses the last IP address in the header's value as the true IP address.
+
+Example: `X-Client-Ip: 11.1.1.1, 13.3.3.3`
+
+In the case of multiple headers with the same name, only the first header will be used. It is assumed that CDN sets the correct client IP address to prevent spoofing.
 
 - **X_FORWARDED_FOR:** Corresponds to `X-Forwarded-For` header name.
 
@@ -3244,9 +3261,9 @@ Enabled TLS protocols must go in a row. For example if TLS_v1_1 and TLS_V1_3 are
 - **CLIENT_IP:** Corresponds to `Client-Ip` header name.
 
 - **TRUE_CLIENT_IP:** Corresponds to `True-Client-Ip` header name.""")
-@cli_util.option('--is-cache-control-respected', type=click.BOOL, help=u"""Enable or disable automatic content caching based on the response `cache-control` header. This feature enables the origin to act as a proxy cache. Caching policies are usually defined using `cache-control` header. For example `cache-control: max-age=120` means that the returned resource is valid for 120 seconds. Caching rules will overwrite this setting.""")
+@cli_util.option('--is-cache-control-respected', type=click.BOOL, help=u"""Enable or disable automatic content caching based on the response `cache-control` header. This feature enables the origin to act as a proxy cache. Caching is usually defined using `cache-control` header. For example `cache-control: max-age=120` means that the returned resource is valid for 120 seconds. Caching rules will overwrite this setting.""")
 @cli_util.option('--is-response-buffering-enabled', type=click.BOOL, help=u"""Enable or disable buffering of responses from the origin. Buffering improves overall stability in case of network issues, but slightly increases Time To First Byte.""")
-@cli_util.option('--cipher-group', type=custom_types.CliCaseInsensitiveChoice(["DEFAULT"]), help=u"""The cipher group - **DEFAULT:** Cipher group supports TLS 1.0, TLS 1.1, TLS 1.2, TLS 1.3 protocols. It has the following ciphers enabled: `ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:DHE-DSS-AES128-GCM-SHA256:kEDH+AESGCM:ECDHE-RSA-AES128-SHA256:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA:ECDHE-ECDSA-AES128-SHA:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA:ECDHE-ECDSA-AES256-SHA:DHE-RSA-AES128-SHA256:DHE-RSA-AES128-SHA:DHE-DSS-AES128-SHA256:DHE-RSA-AES256-SHA256:DHE-DSS-AES256-SHA:DHE-RSA-AES256-SHA:AES128-GCM-SHA256:AES256-GCM-SHA384:AES128-SHA256:AES256-SHA256:AES128-SHA:AES256-SHA:AES:CAMELLIA:!DES-CBC3-SHA:!aNULL:!eNULL:!EXPORT:!DES:!RC4:!MD5:!PSK:!aECDH:!EDH-DSS-DES-CBC3-SHA:!EDH-RSA-DES-CBC3-SHA:!KRB5-DES-CBC3-SHA`""")
+@cli_util.option('--cipher-group', type=custom_types.CliCaseInsensitiveChoice(["DEFAULT"]), help=u"""The set cipher group for the configured TLS protocol. This sets the configuration for the TLS connections between clients and edge nodes only. - **DEFAULT:** Cipher group supports TLS 1.0, TLS 1.1, TLS 1.2, TLS 1.3 protocols. It has the following ciphers enabled: `ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:DHE-DSS-AES128-GCM-SHA256:kEDH+AESGCM:ECDHE-RSA-AES128-SHA256:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA:ECDHE-ECDSA-AES128-SHA:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA:ECDHE-ECDSA-AES256-SHA:DHE-RSA-AES128-SHA256:DHE-RSA-AES128-SHA:DHE-DSS-AES128-SHA256:DHE-RSA-AES256-SHA256:DHE-DSS-AES256-SHA:DHE-RSA-AES256-SHA:AES128-GCM-SHA256:AES256-GCM-SHA384:AES128-SHA256:AES256-SHA256:AES128-SHA:AES256-SHA:AES:CAMELLIA:!DES-CBC3-SHA:!aNULL:!eNULL:!EXPORT:!DES:!RC4:!MD5:!PSK:!aECDH:!EDH-DSS-DES-CBC3-SHA:!EDH-RSA-DES-CBC3-SHA:!KRB5-DES-CBC3-SHA`""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the `PUT` or `DELETE` call for a resource, set the `if-match` parameter to the value of the etag from a previous `GET` or `POST` response for that resource. The resource will be updated or deleted only if the etag provided matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -3389,7 +3406,7 @@ def update_protection_rules(ctx, from_json, wait_for_state, max_wait_seconds, wa
 @protection_settings_group.command(name=cli_util.override('waas.update_protection_settings.command_name', 'update'), help=u"""Updates the protection settings in the Web Application Firewall configuration for a WAAS policy. Protection settings allow you define what action is taken when a request is blocked by the Web Application Firewall, such as returning a response code or block page. Only the fields specified in the request body will be updated; all other fields will remain unchanged.""")
 @cli_util.option('--waas-policy-id', required=True, help=u"""The [OCID] of the WAAS policy.""")
 @cli_util.option('--block-action', type=custom_types.CliCaseInsensitiveChoice(["SHOW_ERROR_PAGE", "SET_RESPONSE_CODE"]), help=u"""If `action` is set to `BLOCK`, this specifies how the traffic is blocked when detected as malicious by a protection rule. If unspecified, defaults to `SET_RESPONSE_CODE`.""")
-@cli_util.option('--block-response-code', type=click.INT, help=u"""The response code returned when `action` is set to `BLOCK`, `blockAction` is set to `SET_RESPONSE_CODE`, and the traffic is detected as malicious by a protection rule. If unspecified, defaults to `403`.""")
+@cli_util.option('--block-response-code', type=click.INT, help=u"""The response code returned when `action` is set to `BLOCK`, `blockAction` is set to `SET_RESPONSE_CODE`, and the traffic is detected as malicious by a protection rule. If unspecified, defaults to `403`. The list of available response codes: `400`, `401`, `403`, `405`, `409`, `411`, `412`, `413`, `414`, `415`, `416`, `500`, `501`, `502`, `503`, `504`, `507`.""")
 @cli_util.option('--block-error-page-message', help=u"""The message to show on the error page when `action` is set to `BLOCK`, `blockAction` is set to `SHOW_ERROR_PAGE`, and the traffic is detected as malicious by a protection rule. If unspecified, defaults to 'Access to the website is blocked.'""")
 @cli_util.option('--block-error-page-code', help=u"""The error code to show on the error page when `action` is set to `BLOCK`, `blockAction` is set to `SHOW_ERROR_PAGE`, and the traffic is detected as malicious by a protection rule. If unspecified, defaults to `403`.""")
 @cli_util.option('--block-error-page-description', help=u"""The description text to show on the error page when `action` is set to `BLOCK`, `blockAction` is set to `SHOW_ERROR_PAGE`, and the traffic is detected as malicious by a protection rule. If unspecified, defaults to `Access blocked by website owner. Please contact support.`""")
@@ -3566,7 +3583,7 @@ def update_threat_feeds(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 @cli_util.option('--origins', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A map of host to origin for the web application. The key should be a customer friendly name for the host, ex. primary, secondary, etc.
 
 This option is a JSON dictionary of type dict(str, Origin).  For documentation on Origin please see our API reference: https://docs.cloud.oracle.com/api/#/en/waas/20181116/datatypes/Origin.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--origin-groups', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The map of origin groups and their keys used to associate origins to the wafConfig.
+@cli_util.option('--origin-groups', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The map of origin groups and their keys used to associate origins to the `wafConfig`. Origin groups allow you to apply weights to groups of origins for load balancing purposes. Origins with higher weights will receive larger proportions of client requests. To add additional origins to your WAAS policy, update the `origins` field of a `UpdateWaasPolicy` request.
 
 This option is a JSON dictionary of type dict(str, OriginGroup).  For documentation on OriginGroup please see our API reference: https://docs.cloud.oracle.com/api/#/en/waas/20181116/datatypes/OriginGroup.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--policy-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -3658,7 +3675,7 @@ def update_waas_policy(ctx, from_json, force, wait_for_state, max_wait_seconds, 
     cli_util.render_response(result, ctx)
 
 
-@custom_protection_rule_setting_group.command(name=cli_util.override('waas.update_waas_policy_custom_protection_rules.command_name', 'update-waas-policy-custom-protection-rules'), help=u"""Updates the action for each specified custom protection rule. Only the `DETECT` and `BLOCK` actions can be set. Disabled rules should not be included in the list. For more information on protection rules, see [WAF Protection Rules].""")
+@custom_protection_rule_group.command(name=cli_util.override('waas.update_waas_policy_custom_protection_rules.command_name', 'update-waas-policy'), help=u"""Updates the action for each specified custom protection rule. Only the `DETECT` and `BLOCK` actions can be set. Disabled rules should not be included in the list. For more information on protection rules, see [WAF Protection Rules].""")
 @cli_util.option('--waas-policy-id', required=True, help=u"""The [OCID] of the WAAS policy.""")
 @cli_util.option('--update-custom-protection-rules-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the `PUT` or `DELETE` call for a resource, set the `if-match` parameter to the value of the etag from a previous `GET` or `POST` response for that resource. The resource will be updated or deleted only if the etag provided matches the resource's current etag value.""")
@@ -3715,7 +3732,7 @@ def update_waas_policy_custom_protection_rules(ctx, from_json, wait_for_state, m
 @cli_util.option('--is-enabled', required=True, type=click.BOOL, help=u"""Enables or disables the address rate limiting Web Application Firewall feature.""")
 @cli_util.option('--allowed-rate-per-address', type=click.INT, help=u"""The number of allowed requests per second from one IP address. If unspecified, defaults to `1`.""")
 @cli_util.option('--max-delayed-count-per-address', type=click.INT, help=u"""The maximum number of requests allowed to be queued before subsequent requests are dropped. If unspecified, defaults to `10`.""")
-@cli_util.option('--block-response-code', type=click.INT, help=u"""The response status code returned when a request is blocked. If unspecified, defaults to `503`.""")
+@cli_util.option('--block-response-code', type=click.INT, help=u"""The response status code returned when a request is blocked. If unspecified, defaults to `503`. The list of available response codes: `200`, `201`, `202`, `204`, `206`, `300`, `301`, `302`, `303`, `304`, `307`, `400`, `401`, `403`, `404`, `405`, `408`, `409`, `411`, `412`, `413`, `414`, `415`, `416`, `422`, `444`, `499`, `500`, `501`, `502`, `503`, `504`, `507`.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the `PUT` or `DELETE` call for a resource, set the `if-match` parameter to the value of the etag from a previous `GET` or `POST` response for that resource. The resource will be updated or deleted only if the etag provided matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -3804,7 +3821,7 @@ This option is a JSON list with items of type CachingRule.  For documentation on
 @cli_util.option('--custom-protection-rules', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of the custom protection rule OCIDs and their actions.
 
 This option is a JSON list with items of type CustomProtectionRuleSetting.  For documentation on CustomProtectionRuleSetting please see our API reference: https://docs.cloud.oracle.com/api/#/en/waas/20181116/datatypes/CustomProtectionRuleSetting.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--origin-groups', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of origin group references that provide support for additional origin servers. A list of combined unique origin servers from `origin` and `originGroups` will be used.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--origin-groups', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The map of origin groups and their keys used to associate origins to the `wafConfig`. Origin groups allow you to apply weights to groups of origins for load balancing purposes. Origins with higher weights will receive larger proportions of client requests. To add additional origins to your WAAS policy, update the `origins` field of a `UpdateWaasPolicy` request.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--protection-rules', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of the protection rules and their details.
 
 This option is a JSON list with items of type ProtectionRule.  For documentation on ProtectionRule please see our API reference: https://docs.cloud.oracle.com/api/#/en/waas/20181116/datatypes/ProtectionRule.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)

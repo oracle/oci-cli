@@ -121,7 +121,7 @@ class FilePermissionChecker(object):
                 '$defaults+=[wmi]\"win32_SID.SID=\'S-1-5-18\'\"|%{{$_.ReferencedDomainName + \"\\\" + $_.AccountName}};'
                 '$defaults+=\"$env:USERDOMAIN\" + \"\\\" + \"$env:USERNAME\";'
                 'foreach ($i in $macls){{foreach ($m in $defaults){{if($i -eq $m){{$found=$true;}}}};if(!$found){{$ex_perms+=$i}};$found=$false;}};'
-                '"$ex_perms";'.format(filename=filename)
+                '"$ex_perms";'.format(filename='"' + filename + '"')
             )
             output = subprocess.check_output(["powershell.exe", '{}'.format(cmd)], shell=True).strip()
         except Exception:
@@ -224,10 +224,11 @@ def override(key, default):
     # note: this is simply meant to cover as many places as possible automatically, if there are descriptions
     # that don't work well, we should add them to the manual overrides
     if 'API' in default:
+        pattern = r'API(s?)(?! Gateway)'
         if key.endswith('_root_group.help') or key.endswith('_service_group.help'):
-            default = default.replace('API', 'CLI').strip()
+            default = re.sub(pattern, 'CLI', default).strip()
         elif key.endswith('_root_group.short_help') or key.endswith('_service_group.short_help'):
-            default = default.replace('API', '').strip()
+            default = re.sub(pattern, '', default).strip()
 
     return OVERRIDES.get(key, default)
 
@@ -1940,14 +1941,14 @@ def to_jwk(key_obj):
 def verify_checksum(filename, no_multipart, ma):
     try:
         with open(filename, 'rb') as f:
-            m = pymd5.md5()
+            checksum_func = checksum_hashlib
+            fips_libcrypto_file = os.getenv("OCI_CLI_FIPS_LIBCRYPTO_FILE")
+            if fips_libcrypto_file:
+                checksum_func = checksum_fips
             if no_multipart:
-                m.update(f.read())
-                multipart_hash = m.hexdigest()
+                multipart_hash = checksum_func(f, no_multipart, ma)
             else:
-                hash_list = [codecs.decode(codecs.encode(base64.b64decode(part['opc_md5']), 'hex').strip(), 'hex') for part in ma.manifest['parts']]
-                m.update(b''.join(hash_list))
-                multipart_hash = m.hexdigest()
+                hash_list, multipart_hash = checksum_func(f, no_multipart, ma)
     except IOError:
         print('Cannot open file to generate hash')
         sys.exit(1)
@@ -1958,6 +1959,28 @@ def verify_checksum(filename, no_multipart, ma):
     if not no_multipart:
         multipart_hash += '-' + str(len(hash_list))
     return multipart_hash
+
+
+def checksum_fips(f, no_multipart, ma):
+    m = pymd5.md5()
+    if no_multipart:
+        m.update(f.read())
+        return m.hexdigest()
+    else:
+        hash_list = [codecs.decode(codecs.encode(base64.b64decode(part['opc_md5']), 'hex').strip(), 'hex') for part
+                     in ma.manifest['parts']]
+        m.update(b''.join(hash_list))
+        return hash_list, m.hexdigest()
+
+
+def checksum_hashlib(f, no_multipart, ma):
+    import hashlib
+    if no_multipart:
+        return hashlib.md5(f.read()).hexdigest()
+    else:
+        hash_list = [codecs.decode(codecs.encode(base64.b64decode(part['opc_md5']), 'hex').strip(), 'hex') for part in
+                     ma.manifest['parts']]
+        return hash_list, hashlib.md5(b''.join(hash_list)).hexdigest()
 
 
 def get_checksum_message(response_headers, checksum):

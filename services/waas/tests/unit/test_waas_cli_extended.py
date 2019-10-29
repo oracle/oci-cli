@@ -18,3 +18,15 @@ class TestWaas(unittest.TestCase):
         result = util.invoke_command(['waas', 'custom-protection-rule', 'update-setting', '--custom-protection-rules-details', '{}'])
         assert 'Error: Missing option(s)' in result.output
         assert 'waas-policy-id' in result.output
+
+    def test_update_address_list(self):
+        result = util.invoke_command(['waas', 'certificate', 'update-address-list'])
+        assert 'Error: Missing option(s)' in result.output
+
+    def test_caching_rules_group(self):
+        result = util.invoke_command(['waas', 'caching-rule'])
+        assert 'Options:' in result.output
+
+    def test_list_waas_policy(self):
+        result = util.invoke_command(['waas', 'waas-policy', 'custom-protection-rule'])
+        assert 'list' in result.output

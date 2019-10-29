@@ -16,6 +16,7 @@ import os.path
 import stat
 import subprocess
 import sys
+import errno
 
 from oci.regions import is_region
 from oci.regions import REGIONS
@@ -244,11 +245,20 @@ def generate_oci_config():
 
 This command will populate the file with some default aliases and predefined queries.
 """)
-@cli_util.option('--file', show_default=True, default=CLI_RC_DEFAULT_LOCATION, type=click.File(mode='a+b'), help="The file into which default aliases and predefined queries will be loaded")
+@cli_util.option('--file', show_default=True, default=CLI_RC_DEFAULT_LOCATION, type=click.File(mode='a+b', lazy=True), help="The file into which default aliases and predefined queries will be loaded")
 @cli_util.help_option
 def setup_cli_rc(file):
     if hasattr(file, 'name') and file.name == '<stdout>':
         raise click.UsageError('This command does not support writing data to stdout')
+
+    if not os.path.exists(file.name):
+        try:
+            os.makedirs(os.path.dirname(file.name))
+        except OSError as exc:  # Python >2.5
+            if exc.errno == errno.EEXIST:
+                pass
+            else:
+                raise
 
     file.seek(0)
     data = file.read().decode()
@@ -472,18 +482,18 @@ def apply_user_only_access_permissions(path):
             if os.path.isfile(path):
                 subprocess.check_output('icacls "{path}" /reset'.format(path=path), stderr=subprocess.STDOUT)
                 try:
-                    subprocess.check_output('icacls "{path}" /inheritance:r /grant:r {username}:F /grant {admin_grp}:F /grant {system_usr}:F'.format(path=path, username=userWithDomain, admin_grp=admin_grp, system_usr=system_usr), stderr=subprocess.STDOUT)
+                    subprocess.check_output('icacls "{path}" /inheritance:r /grant:r "{username}:F" /grant {admin_grp}:F /grant {system_usr}:F'.format(path=path, username=userWithDomain, admin_grp=admin_grp, system_usr=system_usr), stderr=subprocess.STDOUT)
                 except subprocess.CalledProcessError:
-                    subprocess.check_output('icacls "{path}" /inheritance:r /grant:r {username}:F /grant {admin_grp}:F /grant {system_usr}:F'.format(path=path, username=username, admin_grp=admin_grp, system_usr=system_usr), stderr=subprocess.STDOUT)
+                    subprocess.check_output('icacls "{path}" /inheritance:r /grant:r "{username}:F" /grant {admin_grp}:F /grant {system_usr}:F'.format(path=path, username=username, admin_grp=admin_grp, system_usr=system_usr), stderr=subprocess.STDOUT)
             else:
                 if os.listdir(path):
                     # safety check to make sure we aren't changing permissions of existing files
                     raise RuntimeError("Failed attempting to set permissions on existing folder that is not empty.")
                 subprocess.check_output('icacls "{path}" /reset'.format(path=path), stderr=subprocess.STDOUT)
                 try:
-                    subprocess.check_output('icacls "{path}" /inheritance:r /grant:r {username}:(OI)(CI)F  /grant:r {admin_grp}:(OI)(CI)F /grant:r {system_usr}:(OI)(CI)F'.format(path=path, username=userWithDomain, admin_grp=admin_grp, system_usr=system_usr), stderr=subprocess.STDOUT)
+                    subprocess.check_output('icacls "{path}" /inheritance:r /grant:r "{username}:(OI)(CI)F"  /grant:r {admin_grp}:(OI)(CI)F /grant:r {system_usr}:(OI)(CI)F'.format(path=path, username=userWithDomain, admin_grp=admin_grp, system_usr=system_usr), stderr=subprocess.STDOUT)
                 except subprocess.CalledProcessError:
-                    subprocess.check_output('icacls "{path}" /inheritance:r /grant:r {username}:(OI)(CI)F  /grant:r {admin_grp}:(OI)(CI)F /grant:r {system_usr}:(OI)(CI)F'.format(path=path, username=username, admin_grp=admin_grp, system_usr=system_usr), stderr=subprocess.STDOUT)
+                    subprocess.check_output('icacls "{path}" /inheritance:r /grant:r "{username}:(OI)(CI)F"  /grant:r {admin_grp}:(OI)(CI)F /grant:r {system_usr}:(OI)(CI)F'.format(path=path, username=username, admin_grp=admin_grp, system_usr=system_usr), stderr=subprocess.STDOUT)
         except subprocess.CalledProcessError as exc_info:
             print("Error occurred while attempting to set permissions for {path}: {exception}".format(path=path, exception=str(exc_info)))
             sys.exit(exc_info.returncode)

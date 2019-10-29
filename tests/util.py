@@ -619,11 +619,20 @@ def create_object(api, namespace, bucket_name, object_name, file_name=None, meta
     show_progress()
 
 
+CLEAN_UP_STATS = """
+Finished deleting test data.
+total_elapsed_time: {total_time}
+total_objects: {obj_count}
+total_buckets: {bucket_count}
+"""
+
+
 def clear_test_data(api, namespace, compartment, bucket_prefix):
     print('Deleting test data.')
     bucket_list = []
     next_page = None
     count = 0
+    start_time = time.time()
     while True:
         if next_page:
             response = api.list_buckets(namespace, compartment, page=next_page)
@@ -640,6 +649,8 @@ def clear_test_data(api, namespace, compartment, bucket_prefix):
             break
         next_page = response.next_page
 
+    object_count = 0
+    bucket_count = 0
     for bucket in bucket_list:
         # only delete buckets starting with prefix (i.e. CliReadOnlyTestBucket)
         if bucket_prefix not in bucket:
@@ -667,8 +678,16 @@ def clear_test_data(api, namespace, compartment, bucket_prefix):
         for obj in object_list:
             api.delete_object(namespace, bucket, obj)
 
+        object_count += len(object_list)
+        bucket_count += 1
         api.delete_bucket(namespace, bucket)
         show_progress()
+
+    print(CLEAN_UP_STATS.format(
+        total_time=str(time.time() - start_time),
+        obj_count=object_count,
+        bucket_count=bucket_count
+    ))
 
 
 def show_progress():

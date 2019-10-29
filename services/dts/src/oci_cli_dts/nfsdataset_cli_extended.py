@@ -207,7 +207,8 @@ def nfs_dataset_seal(ctx, from_json, wait, name, appliance_profile):
     """
     nfs_dataset_client = create_nfs_dataset_client(ctx, appliance_profile)
 
-    click.echo("Fetching all the datasets")
+    click.echo("Initiating Seal .... \n(Track progress using 'oci dts nfs-dataset seal-status' command)")
+    click.echo("Fetching all the datasets ...\n")
     nfs_datasets = nfs_dataset_client.list_nfs_datasets().data
     if len(nfs_datasets) < 1:
         raise exceptions.ClientError("No datasets exist. Create a Dataset first")
@@ -237,9 +238,8 @@ def nfs_dataset_seal(ctx, from_json, wait, name, appliance_profile):
 
 def _seal_progress_display(seal_status):
     if seal_status['bytesToProcess'] > 0 and seal_status['numFilesToProcess'] > 0:
-        click.echo("\nFiles processed: %d / %d".format(
-            seal_status['numFilesProcessed'], seal_status['numFilesToProcess']))
-        click.echo("\nBytes processed: %s / %s".format(seal_status['bytesProcessed'], seal_status['bytesToProcess']))
+        click.echo("\nFiles processed: {} / {}".format(seal_status['numFilesProcessed'], seal_status['numFilesToProcess']))
+        click.echo("\nBytes processed: {} / {}".format(seal_status['bytesProcessed'], seal_status['bytesToProcess']))
 
 
 @nfs_dataset_group.command('delete', help=u"""Deletes the NFS dataset""")
