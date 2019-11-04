@@ -44,7 +44,7 @@ resource_manager_root_group.add_command(job_group)
 
 
 @job_group.command(name=cli_util.override('resource_manager.cancel_job.command_name', 'cancel'), help=u"""Indicates the intention to cancel the specified job. Cancellation of the job is not immediate, and may be delayed, or may not happen at all.""")
-@cli_util.option('--job-id', required=True, help=u"""The job OCID.""")
+@cli_util.option('--job-id', required=True, help=u"""The [OCID] of the job.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the `PUT` or `DELETE` call for a resource, set the `if-match` parameter to the value of the etag from a previous `GET` or `POST` response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -107,7 +107,7 @@ def cancel_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
 
 
 @stack_group.command(name=cli_util.override('resource_manager.change_stack_compartment.command_name', 'change-compartment'), help=u"""Moves a Stack and it's associated Jobs into a different compartment.""")
-@cli_util.option('--stack-id', required=True, help=u"""The stack OCID.""")
+@cli_util.option('--stack-id', required=True, help=u"""The [OCID] of the stack.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the Stack should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the `PUT` or `DELETE` call for a resource, set the `if-match` parameter to the value of the etag from a previous `GET` or `POST` response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -163,11 +163,11 @@ def change_stack_compartment(ctx, from_json, wait_for_state, max_wait_seconds, w
 
 
 @job_group.command(name=cli_util.override('resource_manager.create_job.command_name', 'create'), help=u"""Creates a job.""")
-@cli_util.option('--stack-id', required=True, help=u"""OCID of the stack that is associated with the current job.""")
+@cli_util.option('--stack-id', required=True, help=u"""The [OCID] of the stack that is associated with the current job.""")
 @cli_util.option('--display-name', help=u"""Description of the job.""")
 @cli_util.option('--operation', help=u"""Terraform-specific operation to execute.""")
-@cli_util.option('--job-operation-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Job details that are specific to the operation type.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--apply-job-plan-resolution', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Deprecated. Use the property `executionPlanStrategy` in `jobOperationDetails` instead.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--job-operation-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--apply-job-plan-resolution', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags associated with this resource. Each tag is a key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -235,11 +235,11 @@ def create_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
 
 
 @job_group.command(name=cli_util.override('resource_manager.create_job_create_import_tf_state_job_operation_details.command_name', 'create-job-create-import-tf-state-job-operation-details'), help=u"""Creates a job.""")
-@cli_util.option('--stack-id', required=True, help=u"""OCID of the stack that is associated with the current job.""")
+@cli_util.option('--stack-id', required=True, help=u"""The [OCID] of the stack that is associated with the current job.""")
 @cli_util.option('--job-operation-details-tf-state-base64-encoded', required=True, help=u"""Base64-encoded state file""")
 @cli_util.option('--display-name', help=u"""Description of the job.""")
 @cli_util.option('--operation', help=u"""Terraform-specific operation to execute.""")
-@cli_util.option('--apply-job-plan-resolution', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Deprecated. Use the property `executionPlanStrategy` in `jobOperationDetails` instead.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--apply-job-plan-resolution', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags associated with this resource. Each tag is a key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -308,14 +308,14 @@ def create_job_create_import_tf_state_job_operation_details(ctx, from_json, wait
 
 
 @job_group.command(name=cli_util.override('resource_manager.create_job_create_apply_job_operation_details.command_name', 'create-job-create-apply-job-operation-details'), help=u"""Creates a job.""")
-@cli_util.option('--stack-id', required=True, help=u"""OCID of the stack that is associated with the current job.""")
+@cli_util.option('--stack-id', required=True, help=u"""The [OCID] of the stack that is associated with the current job.""")
 @cli_util.option('--display-name', help=u"""Description of the job.""")
 @cli_util.option('--operation', help=u"""Terraform-specific operation to execute.""")
-@cli_util.option('--apply-job-plan-resolution', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Deprecated. Use the property `executionPlanStrategy` in `jobOperationDetails` instead.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--apply-job-plan-resolution', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags associated with this resource. Each tag is a key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--job-operation-details-execution-plan-strategy', help=u"""Specifies the source of the execution plan to apply. Use `AUTO_APPROVED` to run the job without an execution plan.""")
-@cli_util.option('--job-operation-details-execution-plan-job-id', help=u"""The OCID of a plan job, for use when specifying `FROM_PLAN_JOB_ID` as the `executionPlanStrategy`.""")
+@cli_util.option('--job-operation-details-execution-plan-job-id', help=u"""The [OCID] of a plan job, for use when specifying `FROM_PLAN_JOB_ID` as the `executionPlanStrategy`.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -387,10 +387,10 @@ def create_job_create_apply_job_operation_details(ctx, from_json, wait_for_state
 
 
 @job_group.command(name=cli_util.override('resource_manager.create_job_create_plan_job_operation_details.command_name', 'create-job-create-plan-job-operation-details'), help=u"""Creates a job.""")
-@cli_util.option('--stack-id', required=True, help=u"""OCID of the stack that is associated with the current job.""")
+@cli_util.option('--stack-id', required=True, help=u"""The [OCID] of the stack that is associated with the current job.""")
 @cli_util.option('--display-name', help=u"""Description of the job.""")
 @cli_util.option('--operation', help=u"""Terraform-specific operation to execute.""")
-@cli_util.option('--apply-job-plan-resolution', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Deprecated. Use the property `executionPlanStrategy` in `jobOperationDetails` instead.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--apply-job-plan-resolution', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags associated with this resource. Each tag is a key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -458,11 +458,11 @@ def create_job_create_plan_job_operation_details(ctx, from_json, wait_for_state,
 
 
 @job_group.command(name=cli_util.override('resource_manager.create_job_create_destroy_job_operation_details.command_name', 'create-job-create-destroy-job-operation-details'), help=u"""Creates a job.""")
-@cli_util.option('--stack-id', required=True, help=u"""OCID of the stack that is associated with the current job.""")
+@cli_util.option('--stack-id', required=True, help=u"""The [OCID] of the stack that is associated with the current job.""")
 @cli_util.option('--job-operation-details-execution-plan-strategy', required=True, help=u"""Specifies the source of the execution plan to apply. Currently, only `AUTO_APPROVED` is allowed, which indicates that the job will be run without an execution plan.""")
 @cli_util.option('--display-name', help=u"""Description of the job.""")
 @cli_util.option('--operation', help=u"""Terraform-specific operation to execute.""")
-@cli_util.option('--apply-job-plan-resolution', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Deprecated. Use the property `executionPlanStrategy` in `jobOperationDetails` instead.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--apply-job-plan-resolution', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags associated with this resource. Each tag is a key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -530,13 +530,13 @@ def create_job_create_destroy_job_operation_details(ctx, from_json, wait_for_sta
     cli_util.render_response(result, ctx)
 
 
-@stack_group.command(name=cli_util.override('resource_manager.create_stack.command_name', 'create'), help=u"""Creates a stack in the specified comparment. Specify the compartment using the compartment ID.""")
-@cli_util.option('--compartment-id', required=True, help=u"""Unique identifier (OCID) of the compartment in which the stack resides.""")
+@stack_group.command(name=cli_util.override('resource_manager.create_stack.command_name', 'create'), help=u"""Creates a stack in the specified comparment. Specify the compartment using the compartment ID. For more information, see [Create a Stack].""")
+@cli_util.option('--compartment-id', required=True, help=u"""Unique identifier ([OCID]) of the compartment in which the stack resides.""")
 @cli_util.option('--config-source', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""The stack's display name.""")
 @cli_util.option('--description', help=u"""Description of the stack.""")
 @cli_util.option('--variables', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Terraform variables associated with this resource. Maximum number of variables supported is 100. The maximum size of each variable, including both name and value, is 4096 bytes. Example: `{\"CompartmentId\": \"compartment-id-value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--terraform-version', help=u"""The stack's Terraform version""")
+@cli_util.option('--terraform-version', help=u"""The version of Terraform to use with the stack. Example: `0.12.x`""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags associated with this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags associated with this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -604,13 +604,13 @@ def create_stack(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
     cli_util.render_response(result, ctx)
 
 
-@stack_group.command(name=cli_util.override('resource_manager.create_stack_create_zip_upload_config_source_details.command_name', 'create-stack-create-zip-upload-config-source-details'), help=u"""Creates a stack in the specified comparment. Specify the compartment using the compartment ID.""")
-@cli_util.option('--compartment-id', required=True, help=u"""Unique identifier (OCID) of the compartment in which the stack resides.""")
+@stack_group.command(name=cli_util.override('resource_manager.create_stack_create_zip_upload_config_source_details.command_name', 'create-stack-create-zip-upload-config-source-details'), help=u"""Creates a stack in the specified comparment. Specify the compartment using the compartment ID. For more information, see [Create a Stack].""")
+@cli_util.option('--compartment-id', required=True, help=u"""Unique identifier ([OCID]) of the compartment in which the stack resides.""")
 @cli_util.option('--config-source-zip-file-base64-encoded', required=True, help=u"""""")
 @cli_util.option('--display-name', help=u"""The stack's display name.""")
 @cli_util.option('--description', help=u"""Description of the stack.""")
 @cli_util.option('--variables', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Terraform variables associated with this resource. Maximum number of variables supported is 100. The maximum size of each variable, including both name and value, is 4096 bytes. Example: `{\"CompartmentId\": \"compartment-id-value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--terraform-version', help=u"""The stack's Terraform version""")
+@cli_util.option('--terraform-version', help=u"""The version of Terraform to use with the stack. Example: `0.12.x`""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags associated with this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags associated with this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--config-source-working-directory', help=u"""File path to the directory from which Terraform runs. If not specified, the root directory is used.""")
@@ -686,7 +686,7 @@ def create_stack_create_zip_upload_config_source_details(ctx, from_json, wait_fo
 
 
 @stack_group.command(name=cli_util.override('resource_manager.delete_stack.command_name', 'delete'), help=u"""Deletes the specified stack object.""")
-@cli_util.option('--stack-id', required=True, help=u"""The stack OCID.""")
+@cli_util.option('--stack-id', required=True, help=u"""The [OCID] of the stack.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the `PUT` or `DELETE` call for a resource, set the `if-match` parameter to the value of the etag from a previous `GET` or `POST` response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -749,7 +749,7 @@ def delete_stack(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 
 
 @job_group.command(name=cli_util.override('resource_manager.get_job.command_name', 'get'), help=u"""Returns the specified job along with the job details.""")
-@cli_util.option('--job-id', required=True, help=u"""The job OCID.""")
+@cli_util.option('--job-id', required=True, help=u"""The [OCID] of the job.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -771,7 +771,7 @@ def get_job(ctx, from_json, job_id):
 
 
 @job_group.command(name=cli_util.override('resource_manager.get_job_logs.command_name', 'get-job-logs'), help=u"""Returns log entries for the specified job in JSON format.""")
-@cli_util.option('--job-id', required=True, help=u"""The job OCID.""")
+@cli_util.option('--job-id', required=True, help=u"""The [OCID] of the job.""")
 @cli_util.option('--type', type=custom_types.CliCaseInsensitiveChoice(["TERRAFORM_CONSOLE"]), multiple=True, help=u"""A filter that returns only logs of a specified type.""")
 @cli_util.option('--level-greater-than-or-equal-to', type=custom_types.CliCaseInsensitiveChoice(["TRACE", "DEBUG", "INFO", "WARN", "ERROR", "FATAL"]), help=u"""A filter that returns only log entries that match a given severity level or greater.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order, either `ASC` (ascending) or `DESC` (descending).""")
@@ -814,7 +814,7 @@ def get_job_logs(ctx, from_json, job_id, type, level_greater_than_or_equal_to, s
 
 
 @job_group.command(name=cli_util.override('resource_manager.get_job_logs_content.command_name', 'get-job-logs-content'), help=u"""Returns raw log file for the specified job in text format. Returns a maximum of 100,000 log entries.""")
-@cli_util.option('--job-id', required=True, help=u"""The job OCID.""")
+@cli_util.option('--job-id', required=True, help=u"""The [OCID] of the job.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -836,7 +836,7 @@ def get_job_logs_content(ctx, from_json, job_id):
 
 
 @job_group.command(name=cli_util.override('resource_manager.get_job_tf_config.command_name', 'get-job-tf-config'), help=u"""Returns the Terraform configuration file for the specified job in .zip format. Returns an error if no zip file is found.""")
-@cli_util.option('--job-id', required=True, help=u"""The job OCID.""")
+@cli_util.option('--job-id', required=True, help=u"""The [OCID] of the job.""")
 @cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -881,7 +881,7 @@ def get_job_tf_config(ctx, from_json, file, job_id):
 
 
 @job_group.command(name=cli_util.override('resource_manager.get_job_tf_state.command_name', 'get-job-tf-state'), help=u"""Returns the Terraform state for the specified job.""")
-@cli_util.option('--job-id', required=True, help=u"""The job OCID.""")
+@cli_util.option('--job-id', required=True, help=u"""The [OCID] of the job.""")
 @cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -926,7 +926,7 @@ def get_job_tf_state(ctx, from_json, file, job_id):
 
 
 @stack_group.command(name=cli_util.override('resource_manager.get_stack.command_name', 'get'), help=u"""Gets a stack using the stack ID.""")
-@cli_util.option('--stack-id', required=True, help=u"""The stack OCID.""")
+@cli_util.option('--stack-id', required=True, help=u"""The [OCID] of the stack.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -948,7 +948,7 @@ def get_stack(ctx, from_json, stack_id):
 
 
 @stack_group.command(name=cli_util.override('resource_manager.get_stack_tf_config.command_name', 'get-stack-tf-config'), help=u"""Returns the Terraform configuration file in .zip format for the specified stack. Returns an error if no zip file is found.""")
-@cli_util.option('--stack-id', required=True, help=u"""The stack OCID.""")
+@cli_util.option('--stack-id', required=True, help=u"""The [OCID] of the stack.""")
 @cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -992,8 +992,53 @@ def get_stack_tf_config(ctx, from_json, file, stack_id):
         file.close()
 
 
+@stack_group.command(name=cli_util.override('resource_manager.get_stack_tf_state.command_name', 'get-stack-tf-state'), help=u"""Returns the Terraform state for the specified stack.""")
+@cli_util.option('--stack-id', required=True, help=u"""The [OCID] of the stack.""")
+@cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def get_stack_tf_state(ctx, from_json, file, stack_id):
+
+    if isinstance(stack_id, six.string_types) and len(stack_id.strip()) == 0:
+        raise click.UsageError('Parameter --stack-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('resource_manager', ctx)
+    result = client.get_stack_tf_state(
+        stack_id=stack_id,
+        **kwargs
+    )
+
+    # If outputting to stdout we don't want to print a progress bar because it will get mixed up with the output
+    # Also we need a non-zero Content-Length in order to display a meaningful progress bar
+    bar = None
+    if hasattr(file, 'name') and file.name != '<stdout>' and 'Content-Length' in result.headers:
+        content_length = int(result.headers['Content-Length'])
+        if content_length > 0:
+            bar = click.progressbar(length=content_length, label='Downloading file')
+
+    try:
+        if bar:
+            bar.__enter__()
+
+        # TODO: Make the download size a configurable option
+        # use decode_content=True to automatically unzip service responses (this should be overridden for object storage)
+        for chunk in result.data.raw.stream(cli_constants.MEBIBYTE, decode_content=True):
+            if bar:
+                bar.update(len(chunk))
+            file.write(chunk)
+    finally:
+        if bar:
+            bar.render_finish()
+        file.close()
+
+
 @work_request_group.command(name=cli_util.override('resource_manager.get_work_request.command_name', 'get'), help=u"""Return the given work request.""")
-@cli_util.option('--work-request-id', required=True, help=u"""The OCID of the work request.""")
+@cli_util.option('--work-request-id', required=True, help=u"""The [OCID] of the work request.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -1016,10 +1061,10 @@ def get_work_request(ctx, from_json, work_request_id):
 
 @job_group.command(name=cli_util.override('resource_manager.list_jobs.command_name', 'list'), help=u"""Returns a list of jobs in a stack or compartment, ordered by time created.
 
-- To list all jobs in a stack, provide the stack OCID. - To list all jobs in a compartment, provide the compartment OCID. - To return a specific job, provide the job OCID.""")
-@cli_util.option('--compartment-id', help=u"""The compartment OCID on which to filter.""")
-@cli_util.option('--stack-id', help=u"""The stack OCID on which to filter.""")
-@cli_util.option('--id', help=u"""The OCID on which to query for jobs.""")
+- To list all jobs in a stack, provide the stack [OCID]. - To list all jobs in a compartment, provide the compartment [OCID]. - To return a specific job, provide the job [OCID].""")
+@cli_util.option('--compartment-id', help=u"""The compartment [OCID] on which to filter.""")
+@cli_util.option('--stack-id', help=u"""The stack [OCID] on which to filter.""")
+@cli_util.option('--id', help=u"""The [OCID] on which to query for jobs.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), help=u"""A filter that returns all resources that match the specified lifecycle state. The state value is case-insensitive.
 
 Allowable values: - ACCEPTED - IN_PROGRESS - FAILED - SUCCEEDED - CANCELING - CANCELED""")
@@ -1084,8 +1129,8 @@ def list_jobs(ctx, from_json, all_pages, page_size, compartment_id, stack_id, id
 
 
 @stack_group.command(name=cli_util.override('resource_manager.list_stacks.command_name', 'list'), help=u"""Returns a list of stacks. - If called using the compartment ID, returns all stacks in the specified compartment. - If called using the stack ID, returns the specified stack.""")
-@cli_util.option('--compartment-id', help=u"""The compartment OCID on which to filter.""")
-@cli_util.option('--id', help=u"""The OCID on which to query for a stack.""")
+@cli_util.option('--compartment-id', help=u"""The compartment [OCID] on which to filter.""")
+@cli_util.option('--id', help=u"""The [OCID] on which to query for a stack.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED"]), help=u"""A filter that returns only those resources that match the specified lifecycle state. The state value is case-insensitive.
 
 Allowable values: - CREATING - ACTIVE - DELETING - DELETED""")
@@ -1147,8 +1192,8 @@ def list_stacks(ctx, from_json, all_pages, page_size, compartment_id, id, lifecy
     cli_util.render_response(result, ctx)
 
 
-@stack_group.command(name=cli_util.override('resource_manager.list_terraform_versions.command_name', 'list-terraform-versions'), help=u"""Returns a list of supported Terraform versions in a compartment.""")
-@cli_util.option('--compartment-id', help=u"""The compartment OCID on which to filter.""")
+@stack_group.command(name=cli_util.override('resource_manager.list_terraform_versions.command_name', 'list-terraform-versions'), help=u"""Returns a list of supported Terraform versions for use with stacks.""")
+@cli_util.option('--compartment-id', help=u"""The compartment [OCID] on which to filter.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -1169,8 +1214,8 @@ def list_terraform_versions(ctx, from_json, all_pages, compartment_id):
 
 
 @work_request_group.command(name=cli_util.override('resource_manager.list_work_request_errors.command_name', 'list-work-request-errors'), help=u"""Return a (paginated) list of errors for a given work request.""")
-@cli_util.option('--work-request-id', required=True, help=u"""The OCID of the work request.""")
-@cli_util.option('--compartment-id', help=u"""The compartment OCID on which to filter.""")
+@cli_util.option('--work-request-id', required=True, help=u"""The [OCID] of the work request.""")
+@cli_util.option('--compartment-id', help=u"""The compartment [OCID] on which to filter.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The number of items returned in a paginated `List` call. For information about pagination, see [List Pagination].""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the preceding `List` call. For information about pagination, see [List Pagination].""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order, either `ASC` (ascending) or `DESC` (descending).""")
@@ -1226,8 +1271,8 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
 
 
 @work_request_group.command(name=cli_util.override('resource_manager.list_work_request_logs.command_name', 'list-work-request-logs'), help=u"""Return a (paginated) list of logs for a given work request.""")
-@cli_util.option('--work-request-id', required=True, help=u"""The OCID of the work request.""")
-@cli_util.option('--compartment-id', help=u"""The compartment OCID on which to filter.""")
+@cli_util.option('--work-request-id', required=True, help=u"""The [OCID] of the work request.""")
+@cli_util.option('--compartment-id', help=u"""The compartment [OCID] on which to filter.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The number of items returned in a paginated `List` call. For information about pagination, see [List Pagination].""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the preceding `List` call. For information about pagination, see [List Pagination].""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order, either `ASC` (ascending) or `DESC` (descending).""")
@@ -1283,8 +1328,8 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
 
 
 @work_request_group.command(name=cli_util.override('resource_manager.list_work_requests.command_name', 'list'), help=u"""Lists the work requests in a given compartment or for a given resource.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The compartment OCID on which to filter.""")
-@cli_util.option('--resource-id', help=u"""The OCID of the resource.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID] on which to filter.""")
+@cli_util.option('--resource-id', help=u"""The [OCID] of the resource.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The number of items returned in a paginated `List` call. For information about pagination, see [List Pagination].""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the preceding `List` call. For information about pagination, see [List Pagination].""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -1334,7 +1379,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, res
 
 
 @job_group.command(name=cli_util.override('resource_manager.update_job.command_name', 'update'), help=u"""Updates the specified job.""")
-@cli_util.option('--job-id', required=True, help=u"""The job OCID.""")
+@cli_util.option('--job-id', required=True, help=u"""The [OCID] of the job.""")
 @cli_util.option('--display-name', help=u"""The new display name to set.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags associated with this resource. Each tag is a key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1404,13 +1449,13 @@ def update_job(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_int
     cli_util.render_response(result, ctx)
 
 
-@stack_group.command(name=cli_util.override('resource_manager.update_stack.command_name', 'update'), help=u"""Updates the specified stack object. Use `UpdateStack` when you update your Terraform configuration and want your changes to be reflected in the execution plan.""")
-@cli_util.option('--stack-id', required=True, help=u"""The stack OCID.""")
+@stack_group.command(name=cli_util.override('resource_manager.update_stack.command_name', 'update'), help=u"""Updates the specified stack object. Use `UpdateStack` when you update your Terraform configuration and want your changes to be reflected in the execution plan. For more information, see [Update a Stack] and [Edit or Delete a Stack].""")
+@cli_util.option('--stack-id', required=True, help=u"""The [OCID] of the stack.""")
 @cli_util.option('--display-name', help=u"""The name of the stack.""")
 @cli_util.option('--description', help=u"""Description of the stack.""")
 @cli_util.option('--config-source', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--variables', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Terraform variables associated with this resource. The maximum number of variables supported is 100. The maximum size of each variable, including both name and value, is 4096 bytes. Example: `{\"CompartmentId\": \"compartment-id-value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--terraform-version', help=u"""The Terraform version of the stack.""")
+@cli_util.option('--terraform-version', help=u"""The version of Terraform to use with the stack. Example: `0.12.x`""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags associated with this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the `PUT` or `DELETE` call for a resource, set the `if-match` parameter to the value of the etag from a previous `GET` or `POST` response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -1491,12 +1536,12 @@ def update_stack(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_i
     cli_util.render_response(result, ctx)
 
 
-@stack_group.command(name=cli_util.override('resource_manager.update_stack_update_zip_upload_config_source_details.command_name', 'update-stack-update-zip-upload-config-source-details'), help=u"""Updates the specified stack object. Use `UpdateStack` when you update your Terraform configuration and want your changes to be reflected in the execution plan.""")
-@cli_util.option('--stack-id', required=True, help=u"""The stack OCID.""")
+@stack_group.command(name=cli_util.override('resource_manager.update_stack_update_zip_upload_config_source_details.command_name', 'update-stack-update-zip-upload-config-source-details'), help=u"""Updates the specified stack object. Use `UpdateStack` when you update your Terraform configuration and want your changes to be reflected in the execution plan. For more information, see [Update a Stack] and [Edit or Delete a Stack].""")
+@cli_util.option('--stack-id', required=True, help=u"""The [OCID] of the stack.""")
 @cli_util.option('--display-name', help=u"""The name of the stack.""")
 @cli_util.option('--description', help=u"""Description of the stack.""")
 @cli_util.option('--variables', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Terraform variables associated with this resource. The maximum number of variables supported is 100. The maximum size of each variable, including both name and value, is 4096 bytes. Example: `{\"CompartmentId\": \"compartment-id-value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--terraform-version', help=u"""The Terraform version of the stack.""")
+@cli_util.option('--terraform-version', help=u"""The version of Terraform to use with the stack. Example: `0.12.x`""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags associated with this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the `PUT` or `DELETE` call for a resource, set the `if-match` parameter to the value of the etag from a previous `GET` or `POST` response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")

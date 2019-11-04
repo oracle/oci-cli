@@ -6,6 +6,24 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.6.11 - 2019-11-5
+-------------------
+Added
+~~~~~
+* Support for Analytics Service (``oci analytics``)
+
+* Support for Oracle Integration Service (``oci integration``)
+
+* Support for adding optional parameter to IPSecconnection in Core Service.
+
+  * ``oci network ip-sec-connection update --ike-version``
+
+* Support for GetStackTfState API as part of Resource Manager service.
+
+  * ``oci resource-manager stack get-stack-tf-state --file, --stack-id``
+
+
+
 2.6.10 - 2019-10-29
 -------------------
 Added

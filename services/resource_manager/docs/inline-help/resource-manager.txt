@@ -63,7 +63,7 @@ Usage: oci resource-manager job cancel [OPTIONS]
   is not immediate, and may be delayed, or may not happen at all.
 
 Options:
-  --job-id TEXT                   The job OCID. [required]
+  --job-id TEXT                   The [OCID] of the job. [required]
   --if-match TEXT                 For optimistic concurrency control. In the
                                   `PUT` or `DELETE` call for a resource, set the
                                   `if-match` parameter to the value of the etag
@@ -130,15 +130,13 @@ Usage: oci resource-manager job create [OPTIONS]
   Creates a job.
 
 Options:
-  --stack-id TEXT                 OCID of the stack that is associated with the
-                                  current job. [required]
+  --stack-id TEXT                 The [OCID] of the stack that is associated
+                                  with the current job. [required]
   --display-name TEXT             Description of the job.
   --operation TEXT                Terraform-specific operation to execute.
   --job-operation-details COMPLEX TYPE
-                                  Job details that are specific to the operation
-                                  type.
-                                  This is a complex type whose value must
-                                  be valid JSON. The value can be provided as a
+                                  This is a complex type whose value must be
+                                  valid JSON. The value can be provided as a
                                   string on the command line or passed in as a
                                   file using
                                   the file://path/to/file syntax.
@@ -150,23 +148,18 @@ Options:
                                   then passing it back in via the file://
                                   syntax.
   --apply-job-plan-resolution COMPLEX TYPE
-                                  Deprecated. Use the property
-                                  `executionPlanStrategy` in
-                                  `jobOperationDetails` instead.
-                                  This is a
-                                  complex type whose value must be valid JSON.
-                                  The value can be provided as a string on the
-                                  command line or passed in as a file using
-                                  the
-                                  file://path/to/file syntax.
-                                  
-                                  The --generate-
-                                  param-json-input option can be used to
-                                  generate an example of the JSON which must be
-                                  provided. We recommend storing this example
-                                  in
-                                  a file, modifying it as needed and then
-                                  passing it back in via the file:// syntax.
+                                  This is a complex type whose value must be
+                                  valid JSON. The value can be provided as a
+                                  string on the command line or passed in as a
+                                  file using
+                                  the file://path/to/file syntax.
+                                  The --generate-param-json-input option can be
+                                  used to generate an example of the JSON which
+                                  must be provided. We recommend storing this
+                                  example
+                                  in a file, modifying it as needed and
+                                  then passing it back in via the file://
+                                  syntax.
   --freeform-tags COMPLEX TYPE    Free-form tags associated with this resource.
                                   Each tag is a key-value pair with no
                                   predefined name, type, or namespace. For more
@@ -261,8 +254,8 @@ Usage: oci resource-manager job create-apply-job [OPTIONS]
   Creates a job.
 
 Options:
-  --stack-id TEXT                 OCID of the stack that is associated with the
-                                  current job. [required]
+  --stack-id TEXT                 The [OCID] of the stack that is associated
+                                  with the current job. [required]
   --display-name TEXT             Description of the job.
   --freeform-tags COMPLEX TYPE    Free-form tags associated with this resource.
                                   Each tag is a key-value pair with no
@@ -364,8 +357,8 @@ Usage: oci resource-manager job create-destroy-job [OPTIONS]
   Creates a job.
 
 Options:
-  --stack-id TEXT                 OCID of the stack that is associated with the
-                                  current job. [required]
+  --stack-id TEXT                 The [OCID] of the stack that is associated
+                                  with the current job. [required]
   --display-name TEXT             Description of the job.
   --freeform-tags COMPLEX TYPE    Free-form tags associated with this resource.
                                   Each tag is a key-value pair with no
@@ -465,8 +458,8 @@ Usage: oci resource-manager job create-import-tf-state-job [OPTIONS]
   Creates a job.
 
 Options:
-  --stack-id TEXT                 OCID of the stack that is associated with the
-                                  current job. [required]
+  --stack-id TEXT                 The [OCID] of the stack that is associated
+                                  with the current job. [required]
   --display-name TEXT             Description of the job.
   --freeform-tags COMPLEX TYPE    Free-form tags associated with this resource.
                                   Each tag is a key-value pair with no
@@ -564,8 +557,8 @@ Usage: oci resource-manager job create-plan-job [OPTIONS]
   Creates a job.
 
 Options:
-  --stack-id TEXT                 OCID of the stack that is associated with the
-                                  current job. [required]
+  --stack-id TEXT                 The [OCID] of the stack that is associated
+                                  with the current job. [required]
   --display-name TEXT             Description of the job.
   --freeform-tags COMPLEX TYPE    Free-form tags associated with this resource.
                                   Each tag is a key-value pair with no
@@ -661,7 +654,7 @@ Usage: oci resource-manager job get [OPTIONS]
   Returns the specified job along with the job details.
 
 Options:
-  --job-id TEXT     The job OCID. [required]
+  --job-id TEXT     The [OCID] of the job. [required]
   --from-json TEXT  Provide input to this command as a JSON document from a file
                     using the file://path-to/file syntax.
                     
@@ -693,7 +686,7 @@ Usage: oci resource-manager job get-job-logs [OPTIONS]
   Returns log entries for the specified job in JSON format.
 
 Options:
-  --job-id TEXT                   The job OCID. [required]
+  --job-id TEXT                   The [OCID] of the job. [required]
   --type [TERRAFORM_CONSOLE]      A filter that returns only logs of a specified
                                   type.
   --level-greater-than-or-equal-to [TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
@@ -891,7 +884,7 @@ Usage: oci resource-manager job get-job-logs-content [OPTIONS]
   of 100,000 log entries.
 
 Options:
-  --job-id TEXT     The job OCID. [required]
+  --job-id TEXT     The [OCID] of the job. [required]
   --from-json TEXT  Provide input to this command as a JSON document from a file
                     using the file://path-to/file syntax.
                     
@@ -924,7 +917,7 @@ Usage: oci resource-manager job get-job-tf-config [OPTIONS]
   format. Returns an error if no zip file is found.
 
 Options:
-  --job-id TEXT     The job OCID. [required]
+  --job-id TEXT     The [OCID] of the job. [required]
   --file FILENAME   The name of the file that will receive the response data, or
                     '-' to write to STDOUT. [required]
   --from-json TEXT  Provide input to this command as a JSON document from a file
@@ -958,7 +951,7 @@ Usage: oci resource-manager job get-job-tf-state [OPTIONS]
   Returns the Terraform state for the specified job.
 
 Options:
-  --job-id TEXT     The job OCID. [required]
+  --job-id TEXT     The [OCID] of the job. [required]
   --file FILENAME   The name of the file that will receive the response data, or
                     '-' to write to STDOUT. [required]
   --from-json TEXT  Provide input to this command as a JSON document from a file
@@ -991,14 +984,14 @@ Usage: oci resource-manager job list [OPTIONS]
 
   Returns a list of jobs in a stack or compartment, ordered by time created.
 
-  - To list all jobs in a stack, provide the stack OCID. - To list all jobs in
-  a compartment, provide the compartment OCID. - To return a specific job,
-  provide the job OCID.
+  - To list all jobs in a stack, provide the stack [OCID]. - To list all jobs
+  in a compartment, provide the compartment [OCID]. - To return a specific
+  job, provide the job [OCID].
 
 Options:
-  -c, --compartment-id TEXT       The compartment OCID on which to filter.
-  --stack-id TEXT                 The stack OCID on which to filter.
-  --id TEXT                       The OCID on which to query for jobs.
+  -c, --compartment-id TEXT       The compartment [OCID] on which to filter.
+  --stack-id TEXT                 The stack [OCID] on which to filter.
+  --id TEXT                       The [OCID] on which to query for jobs.
   --lifecycle-state [ACCEPTED|IN_PROGRESS|FAILED|SUCCEEDED|CANCELING|CANCELED]
                                   A filter that returns all resources that match
                                   the specified lifecycle state. The state value
@@ -1065,7 +1058,7 @@ Usage: oci resource-manager job update [OPTIONS]
   Updates the specified job.
 
 Options:
-  --job-id TEXT                   The job OCID. [required]
+  --job-id TEXT                   The [OCID] of the job. [required]
   --display-name TEXT             The new display name to set.
   --freeform-tags COMPLEX TYPE    Free-form tags associated with this resource.
                                   Each tag is a key-value pair with no
@@ -1181,6 +1174,7 @@ Commands:
   delete                   Deletes the specified stack object.
   get                      Gets a stack using the stack ID.
   get-stack-tf-config      Returns the Terraform configuration file in...
+  get-stack-tf-state       Returns the Terraform state for the specified...
   list                     Returns a list of stacks.
   list-terraform-versions  Returns a list of supported Terraform...
   update                   Update the Stack object
@@ -1192,7 +1186,7 @@ Usage: oci resource-manager stack change-compartment [OPTIONS]
   Moves a Stack and it's associated Jobs into a different compartment.
 
 Options:
-  --stack-id TEXT                 The stack OCID. [required]
+  --stack-id TEXT                 The [OCID] of the stack. [required]
   -c, --compartment-id TEXT       The [OCID] of the compartment into which the
                                   Stack should be moved. [required]
   --if-match TEXT                 For optimistic concurrency control. In the
@@ -1260,8 +1254,8 @@ Usage: oci resource-manager stack create [OPTIONS]
   Creates a Stack
 
 Options:
-  -c, --compartment-id TEXT       Unique identifier (OCID) of the compartment in
-                                  which the stack resides. [required]
+  -c, --compartment-id TEXT       Unique identifier ([OCID]) of the compartment
+                                  in which the stack resides. [required]
   --display-name TEXT             The stack's display name.
   --description TEXT              Description of the stack.
   --variables COMPLEX TYPE        Terraform variables associated with this
@@ -1284,7 +1278,8 @@ Options:
                                   in
                                   a file, modifying it as needed and then
                                   passing it back in via the file:// syntax.
-  --terraform-version TEXT        The stack's Terraform version
+  --terraform-version TEXT        The version of Terraform to use with the
+                                  stack. Example: `0.12.x`
   --freeform-tags COMPLEX TYPE    Free-form tags associated with this resource.
                                   Each tag is a simple key-value pair with no
                                   predefined name, type, or namespace. For more
@@ -1385,7 +1380,7 @@ Usage: oci resource-manager stack delete [OPTIONS]
   Deletes the specified stack object.
 
 Options:
-  --stack-id TEXT                 The stack OCID. [required]
+  --stack-id TEXT                 The [OCID] of the stack. [required]
   --if-match TEXT                 For optimistic concurrency control. In the
                                   `PUT` or `DELETE` call for a resource, set the
                                   `if-match` parameter to the value of the etag
@@ -1452,7 +1447,7 @@ Usage: oci resource-manager stack get [OPTIONS]
   Gets a stack using the stack ID.
 
 Options:
-  --stack-id TEXT   The stack OCID. [required]
+  --stack-id TEXT   The [OCID] of the stack. [required]
   --from-json TEXT  Provide input to this command as a JSON document from a file
                     using the file://path-to/file syntax.
                     
@@ -1485,7 +1480,41 @@ Usage: oci resource-manager stack get-stack-tf-config [OPTIONS]
   stack. Returns an error if no zip file is found.
 
 Options:
-  --stack-id TEXT   The stack OCID. [required]
+  --stack-id TEXT   The [OCID] of the stack. [required]
+  --file FILENAME   The name of the file that will receive the response data, or
+                    '-' to write to STDOUT. [required]
+  --from-json TEXT  Provide input to this command as a JSON document from a file
+                    using the file://path-to/file syntax.
+                    
+                    The --generate-full-
+                    command-json-input option can be used to generate a sample
+                    json file to be used with this command option. The key names
+                    are pre-populated and match the command option names
+                    (converted to camelCase format, e.g. compartment-id -->
+                    compartmentId), while the values of the keys need to be
+                    populated by the user before using the sample file as an
+                    input to this command. For any command option that accepts
+                    multiple values, the value of the key can be a JSON array.
+                    Options can still be provided on the command line. If an
+                    option exists in both the JSON document and the command line
+                    then the command line specified value will be used.
+                    
+                    For
+                    examples on usage of this option, please see our "using CLI
+                    with advanced JSON options" link: https://docs.cloud.oracle.
+                    com/iaas/Content/API/SDKDocs/cliusing.htm#AdvancedJSONOption
+                    s
+  -?, -h, --help    For detailed help on any of these individual commands, enter
+                    <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci resource-manager stack get-stack-tf-state --help
+Usage: oci resource-manager stack get-stack-tf-state [OPTIONS]
+
+  Returns the Terraform state for the specified stack.
+
+Options:
+  --stack-id TEXT   The [OCID] of the stack. [required]
   --file FILENAME   The name of the file that will receive the response data, or
                     '-' to write to STDOUT. [required]
   --from-json TEXT  Provide input to this command as a JSON document from a file
@@ -1521,8 +1550,8 @@ Usage: oci resource-manager stack list [OPTIONS]
   the specified stack.
 
 Options:
-  -c, --compartment-id TEXT       The compartment OCID on which to filter.
-  --id TEXT                       The OCID on which to query for a stack.
+  -c, --compartment-id TEXT       The compartment [OCID] on which to filter.
+  --id TEXT                       The [OCID] on which to query for a stack.
   --lifecycle-state [CREATING|ACTIVE|DELETING|DELETED]
                                   A filter that returns only those resources
                                   that match the specified lifecycle state. The
@@ -1586,10 +1615,10 @@ Options:
 $ oci resource-manager stack list-terraform-versions --help
 Usage: oci resource-manager stack list-terraform-versions [OPTIONS]
 
-  Returns a list of supported Terraform versions in a compartment.
+  Returns a list of supported Terraform versions for use with stacks.
 
 Options:
-  -c, --compartment-id TEXT  The compartment OCID on which to filter.
+  -c, --compartment-id TEXT  The compartment [OCID] on which to filter.
   --all                      Fetches all pages of results.
   --from-json TEXT           Provide input to this command as a JSON document
                              from a file using the file://path-to/file syntax.
@@ -1624,7 +1653,7 @@ Usage: oci resource-manager stack update [OPTIONS]
   Update the Stack object
 
 Options:
-  --stack-id TEXT                 The stack OCID. [required]
+  --stack-id TEXT                 The [OCID] of the stack. [required]
   --display-name TEXT             The name of the stack.
   --description TEXT              Description of the stack.
   --variables COMPLEX TYPE        Terraform variables associated with this
@@ -1647,7 +1676,8 @@ Options:
                                   in
                                   a file, modifying it as needed and then
                                   passing it back in via the file:// syntax.
-  --terraform-version TEXT        The Terraform version of the stack.
+  --terraform-version TEXT        The version of Terraform to use with the
+                                  stack. Example: `0.12.x`
   --freeform-tags COMPLEX TYPE    Free-form tags associated with this resource.
                                   Each tag is a simple key-value pair with no
                                   predefined name, type, or namespace. For more
@@ -1771,7 +1801,7 @@ Usage: oci resource-manager work-request get [OPTIONS]
   Return the given work request.
 
 Options:
-  --work-request-id TEXT  The OCID of the work request. [required]
+  --work-request-id TEXT  The [OCID] of the work request. [required]
   --from-json TEXT        Provide input to this command as a JSON document from
                           a file using the file://path-to/file syntax.
                           
@@ -1804,8 +1834,9 @@ Usage: oci resource-manager work-request list [OPTIONS]
   Lists the work requests in a given compartment or for a given resource.
 
 Options:
-  -c, --compartment-id TEXT  The compartment OCID on which to filter. [required]
-  --resource-id TEXT         The OCID of the resource.
+  -c, --compartment-id TEXT  The compartment [OCID] on which to filter.
+                             [required]
+  --resource-id TEXT         The [OCID] of the resource.
   --limit INTEGER            The number of items returned in a paginated `List`
                              call. For information about pagination, see [List
                              Pagination].
@@ -1851,8 +1882,8 @@ Usage: oci resource-manager work-request list-work-request-errors
   Return a (paginated) list of errors for a given work request.
 
 Options:
-  --work-request-id TEXT     The OCID of the work request. [required]
-  -c, --compartment-id TEXT  The compartment OCID on which to filter.
+  --work-request-id TEXT     The [OCID] of the work request. [required]
+  -c, --compartment-id TEXT  The compartment [OCID] on which to filter.
   --limit INTEGER            The number of items returned in a paginated `List`
                              call. For information about pagination, see [List
                              Pagination].
@@ -1900,8 +1931,8 @@ Usage: oci resource-manager work-request list-work-request-logs
   Return a (paginated) list of logs for a given work request.
 
 Options:
-  --work-request-id TEXT     The OCID of the work request. [required]
-  -c, --compartment-id TEXT  The compartment OCID on which to filter.
+  --work-request-id TEXT     The [OCID] of the work request. [required]
+  -c, --compartment-id TEXT  The compartment [OCID] on which to filter.
   --limit INTEGER            The number of items returned in a paginated `List`
                              call. For information about pagination, see [List
                              Pagination].

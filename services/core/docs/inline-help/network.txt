@@ -4601,6 +4601,7 @@ Options:
   --routing [BGP|STATIC]          The type of routing to use for this tunnel
                                   (either BGP dynamic routing or static
                                   routing).
+  --ike-version [V1|V2]           Internet Key Exchange protocol version.
   --bgp-session-config COMPLEX TYPE
                                   Information for establishing a BGP session for
                                   the IPSec tunnel.
