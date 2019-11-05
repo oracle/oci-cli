@@ -7305,6 +7305,7 @@ def update_ip_sec_connection(ctx, from_json, force, wait_for_state, max_wait_sec
 @cli_util.option('--tunnel-id', required=True, help=u"""The [OCID] of the tunnel.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--routing', type=custom_types.CliCaseInsensitiveChoice(["BGP", "STATIC"]), help=u"""The type of routing to use for this tunnel (either BGP dynamic routing or static routing).""")
+@cli_util.option('--ike-version', type=custom_types.CliCaseInsensitiveChoice(["V1", "V2"]), help=u"""Internet Key Exchange protocol version.""")
 @cli_util.option('--bgp-session-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Information for establishing a BGP session for the IPSec tunnel.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
@@ -7316,7 +7317,7 @@ def update_ip_sec_connection(ctx, from_json, force, wait_for_state, max_wait_sec
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'bgp-session-config': {'module': 'core', 'class': 'UpdateIPSecTunnelBgpSessionDetails'}}, output_type={'module': 'core', 'class': 'IPSecConnectionTunnel'})
 @cli_util.wrap_exceptions
-def update_ip_sec_connection_tunnel(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, ipsc_id, tunnel_id, display_name, routing, bgp_session_config, if_match):
+def update_ip_sec_connection_tunnel(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, ipsc_id, tunnel_id, display_name, routing, ike_version, bgp_session_config, if_match):
 
     if isinstance(ipsc_id, six.string_types) and len(ipsc_id.strip()) == 0:
         raise click.UsageError('Parameter --ipsc-id cannot be whitespace or empty string')
@@ -7340,6 +7341,9 @@ def update_ip_sec_connection_tunnel(ctx, from_json, force, wait_for_state, max_w
 
     if routing is not None:
         details['routing'] = routing
+
+    if ike_version is not None:
+        details['ikeVersion'] = ike_version
 
     if bgp_session_config is not None:
         details['bgpSessionConfig'] = cli_util.parse_json_parameter("bgp_session_config", bgp_session_config)
