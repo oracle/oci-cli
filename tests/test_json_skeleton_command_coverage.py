@@ -27,6 +27,7 @@ IGNORED_COMMANDS = [
     ['session', 'refresh'],
     ['session', 'terminate'],
     ['session', 'validate'],
+    ['raw-request'],
     # Note this is being added b/c python sdk doesn't generate models
     # for top level enums.
     # This means that the --generate-full-command-json-input will not work

@@ -79,7 +79,7 @@ ce_root_group.add_command(cluster_options_group)
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment in which to create the cluster.""")
 @cli_util.option('--vcn-id', required=True, help=u"""The OCID of the virtual cloud network (VCN) in which to create the cluster.""")
 @cli_util.option('--kubernetes-version', required=True, help=u"""The version of Kubernetes to install into the cluster masters.""")
-@cli_util.option('--kms-key-id', help=u"""The OCID of the KMS Key to be used as the master encryption key for Kubernetes Secret encryption.""")
+@cli_util.option('--kms-key-id', help=u"""The OCID of the KMS key to be used as the master encryption key for Kubernetes secret encryption. When used, `kubernetesVersion` must be at least `v1.13.0`.""")
 @cli_util.option('--options', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Optional attributes for the cluster.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -429,17 +429,20 @@ def get_cluster(ctx, from_json, cluster_id):
 
 @cluster_options_group.command(name=cli_util.override('ce.get_cluster_options.command_name', 'get'), help=u"""Get options available for clusters.""")
 @cli_util.option('--cluster-option-id', required=True, help=u"""The id of the option set to retrieve. Only \"all\" is supported.""")
+@cli_util.option('--compartment-id', help=u"""The OCID of the compartment.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'container_engine', 'class': 'ClusterOptions'})
 @cli_util.wrap_exceptions
-def get_cluster_options(ctx, from_json, cluster_option_id):
+def get_cluster_options(ctx, from_json, cluster_option_id, compartment_id):
 
     if isinstance(cluster_option_id, six.string_types) and len(cluster_option_id.strip()) == 0:
         raise click.UsageError('Parameter --cluster-option-id cannot be whitespace or empty string')
 
     kwargs = {}
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('container_engine', ctx)
     result = client.get_cluster_options(
@@ -473,17 +476,20 @@ def get_node_pool(ctx, from_json, node_pool_id):
 
 @node_pool_options_group.command(name=cli_util.override('ce.get_node_pool_options.command_name', 'get'), help=u"""Get options available for node pools.""")
 @cli_util.option('--node-pool-option-id', required=True, help=u"""The id of the option set to retrieve. Use \"all\" get all options, or use a cluster ID to get options specific to the provided cluster.""")
+@cli_util.option('--compartment-id', help=u"""The OCID of the compartment.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'container_engine', 'class': 'NodePoolOptions'})
 @cli_util.wrap_exceptions
-def get_node_pool_options(ctx, from_json, node_pool_option_id):
+def get_node_pool_options(ctx, from_json, node_pool_option_id, compartment_id):
 
     if isinstance(node_pool_option_id, six.string_types) and len(node_pool_option_id.strip()) == 0:
         raise click.UsageError('Parameter --node-pool-option-id cannot be whitespace or empty string')
 
     kwargs = {}
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('container_engine', ctx)
     result = client.get_node_pool_options(

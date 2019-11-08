@@ -6,6 +6,41 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.6.12 - 2019-11-12
+-------------------
+Added
+~~~~~
+* Support to register and deregister an autonomous data warehouse, or autonomous transaction processing, database with Data Safe.
+
+  * ``oci db autonomous-database data-safe register --autonomous-database-id <autonomous database OCID>``
+  * ``oci db autonomous-database data-safe deregister --autonomous-database-id <autonomous database OCID>`` 
+
+* Add capability to redirect an input HTTP/HTTPS request URI to a different URI in Load Balancer service.
+
+  * ``oci lb rule-set create --items``
+
+* Console access to APEX and SQL Dev features for Create and Update ATP/ADW in the Database service
+
+* Support for Volume Performance Units for Block Volumes in Block Storage service.
+
+  * ``oci bv boot-volume create --vpus-per-gb``
+  * ``oci bv boot-volume update --vpus-per-gb``
+
+* Support for specifying compartment for OKE options APIs
+
+  * ``oci ce cluster-options get --compartment-id``
+  * ``oci ce node-pool-options get --compartment-id``
+
+* Support for HTTP raw requests
+
+  * ``oci raw-request``
+
+* Deprecation warning message for python 2. This can be turned-off by setting the environment variable ``SUPPRESS_PYTHON2_WARNING``.
+
+Changed
+~~~~~~~
+* Removed deprecated ``bmcs`` entry point for CLI. Now only ``oci`` is supported.  
+
 2.6.11 - 2019-11-5
 -------------------
 Added

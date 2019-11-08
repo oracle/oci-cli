@@ -26,8 +26,6 @@ LARGE_FILE_PATH=scripts/temp/large_file
 LARGE_FILE_DOWNLOAD_PATH=scripts/temp/large_file_downloaded
 ARGS="--config-file $OCI_CLI_CONFIG_FILE"
 
-# test that invoking with deprecated entry point 'bmcs' still works
-bmcs $ARGS os ns get
 oci $ARGS os ns get
 oci $ARGS os bucket create -ns $NS --compartment-id $C --name $BUCKET
 echo 'example object content!' > $FILE

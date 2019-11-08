@@ -39,23 +39,23 @@ function OciTabExpansionInternal($lastBlock) {
 	$ociAliasPattern = GetOciAliasPattern 
 	
 	switch -regex ($lastBlock -replace "^$($ociAliasPattern) ","") {
-		# Handles [oci|bmcs] <top-level command>
+		# Handles [oci] <top-level command>
 		"^(?<cmd>\w+?)$" {
             $com = $matches['cmd']
 			$ociTopLevelCommands | Where-Object { $_ -like "$com*" }
 		}
 	
-		# Handles [oci|bmcs] <top-level command> <sub-command> <sub-command> ...
+		# Handles [oci] <top-level command> <sub-command> <sub-command> ...
         "^(?<cmd>$ociSubcommandKeys)\s+(?<op>\S*)$" {
             ociCmdOperations $ociSubcommands $matches['cmd'] $matches['op']
         }
 		
-		# Handles [oci|bmcs] <some level of commands> --<param>
+		# Handles [oci] <some level of commands> --<param>
         "^(?<cmd>$ociCommandsWithLongParams).* --(?<param>\S*)$" {
             expandOciLongParams $matches['cmd'] $matches['param']
         }
 
-        # Handles [oci|bmcs] <some level of commands> -<shortparam>
+        # Handles [oci] <some level of commands> -<shortparam>
         "^(?<cmd>$ociCommandsWithShortParams).* -(?<shortparam>\S*)$" {
             expandOciShortParams $matches['cmd'] $matches['shortparam']
         }
@@ -81,7 +81,7 @@ function script:expandOciShortParams($cmd, $filter) {
 }
 
 function GetOciAliasPattern() {
-	$ociAliases = @("oci", "bmcs") + @(Get-Alias | where { $_.Definition -eq "oci" } | select -Exp Name) + @(Get-Alias | where { $_.Definition -eq "bmcs" } | select -Exp Name)
+	$ociAliases = @("oci") + @(Get-Alias | where { $_.Definition -eq "oci" } | select -Exp Name)
 	$ociAliasPattern = "($($ociAliases -join '|'))"
 	
 	return $ociAliasPattern
@@ -126,7 +126,7 @@ function TabExpansion($line, $lastWord) {
 	$ociAliasPattern = GetOciAliasPattern
 	
 	switch -regex ($lastBlock) {
-        # Execute OCI/BMCS tab completion
+        # Execute OCI tab completion
         "^$($ociAliasPattern) (.*)" { OciTabExpansion $lastBlock }
 
         # Fall back on existing tab expansion

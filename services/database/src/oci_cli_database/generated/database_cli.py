@@ -2700,6 +2700,28 @@ def delete_vm_cluster_network(ctx, from_json, exadata_infrastructure_id, vm_clus
     cli_util.render_response(result, ctx)
 
 
+@autonomous_database_group.command(name=cli_util.override('db.deregister_autonomous_database_data_safe.command_name', 'deregister-autonomous-database-data-safe'), help=u"""Asynchronously deregisters Data Safe for this Autonomous Database.""")
+@cli_util.option('--autonomous-database-id', required=True, help=u"""The database [OCID].""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def deregister_autonomous_database_data_safe(ctx, from_json, autonomous_database_id):
+
+    if isinstance(autonomous_database_id, six.string_types) and len(autonomous_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --autonomous-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database', ctx)
+    result = client.deregister_autonomous_database_data_safe(
+        autonomous_database_id=autonomous_database_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @exadata_infrastructure_group.command(name=cli_util.override('db.download_exadata_infrastructure_config_file.command_name', 'download-exadata-infrastructure-config-file'), help=u"""Downloads the configuration file for the specified Exadata infrastructure.""")
 @cli_util.option('--exadata-infrastructure-id', required=True, help=u"""The Exadata infrastructure [OCID].""")
 @cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
@@ -5660,6 +5682,28 @@ def list_vm_clusters(ctx, from_json, all_pages, page_size, compartment_id, exada
             compartment_id=compartment_id,
             **kwargs
         )
+    cli_util.render_response(result, ctx)
+
+
+@autonomous_database_group.command(name=cli_util.override('db.register_autonomous_database_data_safe.command_name', 'register-autonomous-database-data-safe'), help=u"""Asynchronously registers Data Safe with this Autonomous Database.""")
+@cli_util.option('--autonomous-database-id', required=True, help=u"""The database [OCID].""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def register_autonomous_database_data_safe(ctx, from_json, autonomous_database_id):
+
+    if isinstance(autonomous_database_id, six.string_types) and len(autonomous_database_id.strip()) == 0:
+        raise click.UsageError('Parameter --autonomous-database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database', ctx)
+    result = client.register_autonomous_database_data_safe(
+        autonomous_database_id=autonomous_database_id,
+        **kwargs
+    )
     cli_util.render_response(result, ctx)
 
 

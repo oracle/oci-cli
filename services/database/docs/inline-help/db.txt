@@ -1574,6 +1574,7 @@ Commands:
   change-compartment  Move the Autonomous Database and its...
   create              Creates a new Autonomous Database.
   create-from-clone   Creates a new Autonomous Database.
+  data-safe           The Data Safe to use with this Autonomous...
   delete              Deletes the specified Autonomous Database.
   generate-wallet     Creates and downloads a wallet for the...
   get                 Gets the details of the specified Autonomous...
@@ -1941,6 +1942,96 @@ Options:
                                   s
   -?, -h, --help                  For detailed help on any of these individual
                                   commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci db autonomous-database data-safe --help
+Usage: oci db autonomous-database data-safe [OPTIONS] COMMAND [ARGS]...
+
+  The Data Safe to use with this Autonomous Database.
+
+Options:
+  -?, -h, --help  For detailed help on any of these individual commands, enter
+                  <command> --help.
+
+Commands:
+  deregister  Asynchronously deregisters Data Safe for this...
+  register    Asynchronously registers Data Safe with this...
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci db autonomous-database data-safe deregister --help
+Usage: oci db autonomous-database data-safe deregister [OPTIONS]
+
+  Asynchronously deregisters Data Safe for this Autonomous Database.
+
+Options:
+  --autonomous-database-id TEXT  The database [OCID]. [required]
+  --from-json TEXT               Provide input to this command as a JSON
+                                 document from a file using the file://path-
+                                 to/file syntax.
+                                 
+                                 The --generate-full-command-
+                                 json-input option can be used to generate a
+                                 sample json file to be used with this command
+                                 option. The key names are pre-populated and
+                                 match the command option names (converted to
+                                 camelCase format, e.g. compartment-id -->
+                                 compartmentId), while the values of the keys
+                                 need to be populated by the user before using
+                                 the sample file as an input to this command.
+                                 For any command option that accepts multiple
+                                 values, the value of the key can be a JSON
+                                 array.
+                                 
+                                 Options can still be provided on the
+                                 command line. If an option exists in both the
+                                 JSON document and the command line then the
+                                 command line specified value will be used.
+                                 
+                                 For
+                                 examples on usage of this option, please see
+                                 our "using CLI with advanced JSON options"
+                                 link: https://docs.cloud.oracle.com/iaas/Conten
+                                 t/API/SDKDocs/cliusing.htm#AdvancedJSONOptions
+  -?, -h, --help                 For detailed help on any of these individual
+                                 commands, enter <command> --help.
+
+++++++++++++++++++++++++++++++++++++++++++++++
+$ oci db autonomous-database data-safe register --help
+Usage: oci db autonomous-database data-safe register [OPTIONS]
+
+  Asynchronously registers Data Safe with this Autonomous Database.
+
+Options:
+  --autonomous-database-id TEXT  The database [OCID]. [required]
+  --from-json TEXT               Provide input to this command as a JSON
+                                 document from a file using the file://path-
+                                 to/file syntax.
+                                 
+                                 The --generate-full-command-
+                                 json-input option can be used to generate a
+                                 sample json file to be used with this command
+                                 option. The key names are pre-populated and
+                                 match the command option names (converted to
+                                 camelCase format, e.g. compartment-id -->
+                                 compartmentId), while the values of the keys
+                                 need to be populated by the user before using
+                                 the sample file as an input to this command.
+                                 For any command option that accepts multiple
+                                 values, the value of the key can be a JSON
+                                 array.
+                                 
+                                 Options can still be provided on the
+                                 command line. If an option exists in both the
+                                 JSON document and the command line then the
+                                 command line specified value will be used.
+                                 
+                                 For
+                                 examples on usage of this option, please see
+                                 our "using CLI with advanced JSON options"
+                                 link: https://docs.cloud.oracle.com/iaas/Conten
+                                 t/API/SDKDocs/cliusing.htm#AdvancedJSONOptions
+  -?, -h, --help                 For detailed help on any of these individual
+                                 commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci db autonomous-database delete --help
@@ -5086,6 +5177,16 @@ Options:
                                   alphabetic character and can contain a maximum
                                   of eight alphanumeric characters. Special
                                   characters are not permitted. [required]
+  --db-unique-name TEXT           The database unique name. It must be greater
+                                  than 3 characters, but at most 30 characters,
+                                  begin with a letter, and contain only letters,
+                                  numbers, and underscores. The first eight
+                                  characters must also be unique within a
+                                  Database Domain and within a Database System
+                                  or VM Cluster. In addition, if it is not on a
+                                  VM Cluster it might either be identical to the
+                                  database name or prefixed by the datbase name
+                                  and followed by an underscore.
   --db-workload [OLTP|DSS]        Database workload type. Allowed values are:
                                   OLTP, DSS
   --ncharacter-set TEXT           National character set for the database. The
@@ -5183,6 +5284,16 @@ Options:
                                   alphabetic character and can contain a maximum
                                   of eight alphanumeric characters. Special
                                   characters are not permitted.
+  --db-unique-name TEXT           The database unique name. It must be greater
+                                  than 3 characters, but at most 30 characters,
+                                  begin with a letter, and contain only letters,
+                                  numbers, and underscores. The first eight
+                                  characters must also be unique within a
+                                  Database Domain and within a Database System
+                                  or VM Cluster. In addition, if it is not on a
+                                  VM Cluster it might either be identical to the
+                                  database name or prefixed by the datbase name
+                                  and followed by an underscore.
   --from-json TEXT                Provide input to this command as a JSON
                                   document from a file using the file://path-
                                   to/file syntax.
@@ -8114,6 +8225,16 @@ Options:
                                   alphabetic character and can contain a maximum
                                   of eight alphanumeric characters. Special
                                   characters are not permitted. [required]
+  --db-unique-name TEXT           The database unique name. It must be greater
+                                  than 3 characters, but at most 30 characters,
+                                  begin with a letter, and contain only letters,
+                                  numbers, and underscores. The first eight
+                                  characters must also be unique within a
+                                  Database Domain and within a Database System
+                                  or VM Cluster. In addition, if it is not on a
+                                  VM Cluster it might either be identical to the
+                                  database name or prefixed by the datbase name
+                                  and followed by an underscore.
   --db-version TEXT               A valid Oracle database version. To get a list
                                   of supported versions, use the command 'oci db
                                   version list'. [required]
@@ -8477,6 +8598,16 @@ Options:
                                   alphabetic character and can contain a maximum
                                   of eight alphanumeric characters. Special
                                   characters are not permitted.
+  --db-unique-name TEXT           The database unique name. It must be greater
+                                  than 3 characters, but at most 30 characters,
+                                  begin with a letter, and contain only letters,
+                                  numbers, and underscores. The first eight
+                                  characters must also be unique within a
+                                  Database Domain and within a Database System
+                                  or VM Cluster. In addition, if it is not on a
+                                  VM Cluster it might either be identical to the
+                                  database name or prefixed by the datbase name
+                                  and followed by an underscore.
   --ssh-authorized-keys-file FILENAME
                                   A file containing one or more public SSH keys
                                   to use for SSH access to the DB System. Use a
