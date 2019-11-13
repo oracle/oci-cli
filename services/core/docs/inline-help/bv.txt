@@ -709,6 +709,8 @@ Options:
   --kms-key-id TEXT               The OCID of the KMS key to be used as the
                                   master encryption key for the boot volume.
   --size-in-gbs INTEGER           The size of the volume in GBs.
+  --vpus-per-gb INTEGER           The number of Volume Performance Units that
+                                  will be applied to this boot volume per GB.
   --wait-for-state [PROVISIONING|RESTORING|AVAILABLE|TERMINATING|TERMINATED|FAULTY]
                                   This operation creates, modifies or deletes a
                                   resource that has a defined lifecycle state.
@@ -997,6 +999,8 @@ Options:
                                   passing it back in via the file:// syntax.
   --size-in-gbs INTEGER           The size to resize the volume to in GBs. Has
                                   to be larger than the current size.
+  --vpus-per-gb INTEGER           The number of Volume Performance Units that
+                                  will be applied to this boot volume per GB.
   --if-match TEXT                 For optimistic concurrency control. In the PUT
                                   or DELETE call for a resource, set the `if-
                                   match` parameter to the value of the etag from
@@ -1810,6 +1814,8 @@ Options:
                                   passing it back in via the file:// syntax.
   --kms-key-id TEXT               The OCID of the KMS key to be used as the
                                   master encryption key for the volume.
+  --vpus-per-gb INTEGER           The number of Volume Performance Units that
+                                  will be applied to this volume per GB.
   --size-in-gbs INTEGER           The size of the volume in GBs.
   --size-in-mbs INTEGER           [DEPRECATED] The size of the volume in MBs.
                                   The value must be a multiple of 1024. This
@@ -2120,6 +2126,8 @@ Options:
                                   in
                                   a file, modifying it as needed and then
                                   passing it back in via the file:// syntax.
+  --vpus-per-gb INTEGER           The number of Volume Performance Units that
+                                  will be applied to this volume per GB.
   --size-in-gbs INTEGER           The size to resize the volume to in GBs. Has
                                   to be larger than the current size.
   --if-match TEXT                 For optimistic concurrency control. In the PUT

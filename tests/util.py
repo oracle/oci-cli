@@ -410,7 +410,7 @@ def log_test(func):
 def collect_commands(command, prefix=None, leaf_commands_only=False):
     """Returns a list of commands under and including the given command.
         Each entry is a list of strings to invoke a particular command,
-        such as ["bmcs", "iam", "user", "list"]."""
+        such as ["oci", "iam", "user", "list"]."""
     for path, _, _ in _collect_commands(command, prefix, leaf_commands_only):
         yield path
 

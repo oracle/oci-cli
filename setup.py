@@ -29,7 +29,7 @@ with open_relative("README.rst") as f:
     readme = f.read()
 
 requires = [
-    'oci==2.6.3',
+    'oci==2.6.4',
     'arrow==0.10.0',
     'certifi',
     'click==6.7',
@@ -84,7 +84,7 @@ setup(
     description='Oracle Cloud Infrastructure CLI',
     long_description=readme,
     entry_points={
-        'console_scripts': ["bmcs=oci_cli.cli:cli", "oci=oci_cli.cli:cli",
+        'console_scripts': ["oci=oci_cli.cli:cli",
                             "create_backup_from_onprem=oci_cli.scripts.database.dbaas:create_backup_from_onprem"]
     },
     install_requires=requires,

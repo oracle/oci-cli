@@ -58,9 +58,10 @@ Options:
                                   which to create the cluster. [required]
   --kubernetes-version TEXT       The version of Kubernetes to install into the
                                   cluster masters. [required]
-  --kms-key-id TEXT               The OCID of the KMS Key to be used as the
-                                  master encryption key for Kubernetes Secret
-                                  encryption.
+  --kms-key-id TEXT               The OCID of the KMS key to be used as the
+                                  master encryption key for Kubernetes secret
+                                  encryption. When used, `kubernetesVersion`
+                                  must be at least `v1.13.0`.
   --wait-for-state [ACCEPTED|IN_PROGRESS|FAILED|SUCCEEDED|CANCELING|CANCELED]
                                   This operation asynchronously creates,
                                   modifies or deletes a resource and uses a work
@@ -474,33 +475,34 @@ Usage: oci ce cluster-options get [OPTIONS]
   Get options available for clusters.
 
 Options:
-  --cluster-option-id TEXT  The id of the option set to retrieve. Only "all" is
-                            supported. [required]
-  --from-json TEXT          Provide input to this command as a JSON document
-                            from a file using the file://path-to/file syntax.
-                            The --generate-full-command-json-input option can be
-                            used to generate a sample json file to be used with
-                            this command option. The key names are pre-populated
-                            and match the command option names (converted to
-                            camelCase format, e.g. compartment-id -->
-                            compartmentId), while the values of the keys need to
-                            be populated by the user before using the sample
-                            file as an input to this command. For any command
-                            option that accepts multiple values, the value of
-                            the key can be a JSON array.
-                            
-                            Options can still be
-                            provided on the command line. If an option exists in
-                            both the JSON document and the command line then the
-                            command line specified value will be used.
-                            
-                            For
-                            examples on usage of this option, please see our
-                            "using CLI with advanced JSON options" link: https:/
-                            /docs.cloud.oracle.com/iaas/Content/API/SDKDocs/cliu
-                            sing.htm#AdvancedJSONOptions
-  -?, -h, --help            For detailed help on any of these individual
-                            commands, enter <command> --help.
+  --cluster-option-id TEXT   The id of the option set to retrieve. Only "all" is
+                             supported. [required]
+  -c, --compartment-id TEXT  The OCID of the compartment.
+  --from-json TEXT           Provide input to this command as a JSON document
+                             from a file using the file://path-to/file syntax.
+                             The --generate-full-command-json-input option can
+                             be used to generate a sample json file to be used
+                             with this command option. The key names are pre-
+                             populated and match the command option names
+                             (converted to camelCase format, e.g. compartment-id
+                             --> compartmentId), while the values of the keys
+                             need to be populated by the user before using the
+                             sample file as an input to this command. For any
+                             command option that accepts multiple values, the
+                             value of the key can be a JSON array.
+                             
+                             Options can
+                             still be provided on the command line. If an option
+                             exists in both the JSON document and the command
+                             line then the command line specified value will be
+                             used.
+                             
+                             For examples on usage of this option, please
+                             see our "using CLI with advanced JSON options"
+                             link: https://docs.cloud.oracle.com/iaas/Content/AP
+                             I/SDKDocs/cliusing.htm#AdvancedJSONOptions
+  -?, -h, --help             For detailed help on any of these individual
+                             commands, enter <command> --help.
 
 ++++++++++++++++++++++++++++++++++++++++++++++
 $ oci ce node-pool --help
@@ -1005,6 +1007,7 @@ Options:
                               get all options, or use a cluster ID to get
                               options specific to the provided cluster.
                               [required]
+  -c, --compartment-id TEXT   The OCID of the compartment.
   --from-json TEXT            Provide input to this command as a JSON document
                               from a file using the file://path-to/file syntax.
                               The --generate-full-command-json-input option can

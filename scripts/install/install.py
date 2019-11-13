@@ -53,8 +53,6 @@ DEFAULT_INSTALL_DIR = os.path.expanduser(os.path.join('~', 'lib', 'oracle-cli'))
 DEFAULT_EXEC_DIR = os.path.expanduser(os.path.join('~', 'bin'))
 DEFAULT_SCRIPT_DIR = os.path.expanduser(os.path.join('~', 'bin', 'oci-cli-scripts'))
 OCI_EXECUTABLE_NAME = 'oci.exe' if is_windows() else 'oci'
-# 'bmcs' is deprecated and is retained for backwards compatibiity, it will be removed completely in March 2018.
-BMCS_EXECUTABLE_NAME = 'bmcs.exe' if is_windows() else 'bmcs'
 DBAAS_SCRIPT_NAME = 'create_backup_from_onprem.exe' if is_windows() else 'create_backup_from_onprem'
 
 USER_BASH_RC = os.path.expanduser(os.path.join('~', '.bashrc'))
@@ -362,21 +360,18 @@ def get_rc_file_path():
     return None
 
 
-def warn_other_oci_or_bmcs_on_path(exec_dir, exec_filepath):
+def warn_other_oci_on_path(exec_dir, exec_filepath):
     env_path = os.environ.get('PATH')
     conflicting_paths = []
     if env_path:
         for p in env_path.split(':'):
             p_to_oci = os.path.join(p, OCI_EXECUTABLE_NAME)
-            p_to_bmcs = os.path.join(p, BMCS_EXECUTABLE_NAME)
             if p != exec_dir:
                 if os.path.isfile(p_to_oci):
                     conflicting_paths.append(p_to_oci)
-                if os.path.isfile(p_to_bmcs):
-                    conflicting_paths.append(p_to_bmcs)
     if conflicting_paths:
         print_status()
-        print_status("** WARNING: Other '{}' or '{}' executables are on your $PATH. **".format(OCI_EXECUTABLE_NAME, BMCS_EXECUTABLE_NAME))
+        print_status("** WARNING: Other '{}' executables are on your $PATH. **".format(OCI_EXECUTABLE_NAME))
         print_status("Conflicting paths: {}".format(', '.join(conflicting_paths)))
         print_status("You can run this installation of the CLI with '{}'.".format(exec_filepath))
 
@@ -448,7 +443,7 @@ def handle_path_and_tab_completion(completion_file_path, exec_filepath, exec_dir
             _modify_rc(rc_file_path, line_to_add)
             print_status('Tab completion set up complete.')
             print_status("If tab completion is not activated, verify that '{}' is sourced by your shell.".format(rc_file_path))
-            warn_other_oci_or_bmcs_on_path(exec_dir, exec_filepath)
+            warn_other_oci_on_path(exec_dir, exec_filepath)
             print_status()
             print_status('** Run `exec -l $SHELL` to restart your shell. **')
             print_status()
@@ -609,10 +604,8 @@ def main():
         OPTIONAL_FEATURES = get_optional_features()
 
     oci_exec_path = os.path.join(exec_dir, OCI_EXECUTABLE_NAME)
-    bmcs_exec_path = os.path.join(exec_dir, BMCS_EXECUTABLE_NAME)
     dbaas_exec_path = os.path.join(script_dir, DBAAS_SCRIPT_NAME)
     verify_install_dir_exec_path_conflict(install_dir, oci_exec_path)
-    verify_install_dir_exec_path_conflict(install_dir, bmcs_exec_path)
     create_virtualenv(tmp_dir, install_dir)
     install_cli(install_dir, tmp_dir, args.oci_cli_version, OPTIONAL_FEATURES)
 
@@ -627,19 +620,15 @@ def main():
 
         # copy the executable created from the pip install to the bin directory specified by the user
         shutil.copyfile(os.path.join(install_dir, 'Scripts', OCI_EXECUTABLE_NAME), oci_exec_path)
-        shutil.copyfile(os.path.join(install_dir, 'Scripts', BMCS_EXECUTABLE_NAME), bmcs_exec_path)
         shutil.copyfile(os.path.join(install_dir, 'Scripts', DBAAS_SCRIPT_NAME), dbaas_exec_path)
     else:
         # copy the executable created from the pip install to the bin directory specified by the user
         shutil.copyfile(os.path.join(install_dir, 'bin', OCI_EXECUTABLE_NAME), oci_exec_path)
-        shutil.copyfile(os.path.join(install_dir, 'bin', BMCS_EXECUTABLE_NAME), bmcs_exec_path)
         shutil.copyfile(os.path.join(install_dir, 'bin', DBAAS_SCRIPT_NAME), dbaas_exec_path)
 
         oci_exec_cur_stat = os.stat(oci_exec_path)
-        bmcs_exec_cur_stat = os.stat(bmcs_exec_path)
         dbaas_exec_cur_stat = os.stat(dbaas_exec_path)
         os.chmod(oci_exec_path, oci_exec_cur_stat.st_mode | stat.S_IXUSR | stat.S_IXGRP | stat.S_IXOTH)
-        os.chmod(bmcs_exec_path, bmcs_exec_cur_stat.st_mode | stat.S_IXUSR | stat.S_IXGRP | stat.S_IXOTH)
         os.chmod(dbaas_exec_path, dbaas_exec_cur_stat.st_mode | stat.S_IXUSR | stat.S_IXGRP | stat.S_IXOTH)
 
         # find the site-packages directory in the virtual environment where we installed oci

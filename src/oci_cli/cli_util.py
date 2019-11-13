@@ -354,7 +354,7 @@ def set_request_session_properties_from_context(session, ctx, uses_ssl=True):
         # TODO: Update this once alternate certs are exposed in the SDK.
         session.verify = cert_bundle
 
-    if ctx.obj['proxy'] or ctx.obj.get('settings', {}).get('proxy'):
+    if ctx.obj.get('settings', {}).get('proxy'):
         # If the proxy is specified explicitly on the command line then use that, otherwise use
         # the one from the cli_rc_file
         proxy_to_use = ctx.obj['proxy']
@@ -1474,6 +1474,13 @@ def warn_if_token_present_in_profile_but_not_using_token_auth(ctx):
 
 def is_windows():
     return sys.platform == 'win32' or sys.platform == 'cygwin'
+
+
+def get_jmespath_expression_from_context(ctx):
+    if ctx.obj['query']:
+        search_path = resolve_jmespath_query(ctx, ctx.obj['query'])
+        return jmespath.compile(search_path)
+    return None
 
 
 def resolve_jmespath_query(ctx, query):

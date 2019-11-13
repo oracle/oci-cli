@@ -80,11 +80,33 @@ def rotate_wallet(ctx, **kwargs):
     ctx.invoke(database_cli.update_autonomous_database_wallet, **kwargs)
 
 
+# Rename from:
+# oci db autonomous-database deregister-autonomous-database-data-safe
+# oci db autonomous-database register-autonomous-database-data-safe --autonomous-database-id
+# To:
+# oci db autonomous-database data-safe register
+# oci db autonomous-database data-safe deregister
+@click.command('data-safe', cls=CommandGroupWithAlias, help="""The Data Safe to use with this Autonomous Database.""")
+@cli_util.help_option_group
+def autonomous_database_data_safe_group():
+    pass
+
+
+database_cli.autonomous_database_group.add_command(autonomous_database_data_safe_group)
+autonomous_database_data_safe_group.add_command(database_cli.register_autonomous_database_data_safe)
+autonomous_database_data_safe_group.add_command(database_cli.deregister_autonomous_database_data_safe)
+database_cli.autonomous_database_group.commands.pop(database_cli.register_autonomous_database_data_safe.name)
+database_cli.autonomous_database_group.commands.pop(database_cli.deregister_autonomous_database_data_safe.name)
+cli_util.rename_command(database_cli, autonomous_database_data_safe_group, database_cli.register_autonomous_database_data_safe, "register")
+cli_util.rename_command(database_cli, autonomous_database_data_safe_group, database_cli.deregister_autonomous_database_data_safe, "deregister")
+
+
 @cli_util.copy_params_from_generated_command(database_cli.launch_db_system_launch_db_system_details, params_to_exclude=['db_home', 'db_system_options', 'ssh_public_keys'])
 @database_cli.db_system_group.command(name='launch', help=database_cli.launch_db_system_launch_db_system_details.help)
 @cli_util.option('--admin-password', required=True, help="""A strong password for SYS, SYSTEM, and PDB Admin. The password must be at least nine characters and contain at least two uppercase, two lowercase, two numbers, and two special characters. The special characters must be _, #, or -.""")
 @cli_util.option('--character-set', help="""The character set for the database. The default is AL32UTF8. Allowed values are: AL32UTF8, AR8ADOS710, AR8ADOS720, AR8APTEC715, AR8ARABICMACS, AR8ASMO8X, AR8ISO8859P6, AR8MSWIN1256, AR8MUSSAD768, AR8NAFITHA711, AR8NAFITHA721, AR8SAKHR706, AR8SAKHR707, AZ8ISO8859P9E, BG8MSWIN, BG8PC437S, BLT8CP921, BLT8ISO8859P13, BLT8MSWIN1257, BLT8PC775, BN8BSCII, CDN8PC863, CEL8ISO8859P14, CL8ISO8859P5, CL8ISOIR111, CL8KOI8R, CL8KOI8U, CL8MACCYRILLICS, CL8MSWIN1251, EE8ISO8859P2, EE8MACCES, EE8MACCROATIANS, EE8MSWIN1250, EE8PC852, EL8DEC, EL8ISO8859P7, EL8MACGREEKS, EL8MSWIN1253, EL8PC437S, EL8PC851, EL8PC869, ET8MSWIN923, HU8ABMOD, HU8CWI2, IN8ISCII, IS8PC861, IW8ISO8859P8, IW8MACHEBREWS, IW8MSWIN1255, IW8PC1507, JA16EUC, JA16EUCTILDE, JA16SJIS, JA16SJISTILDE, JA16VMS, KO16KSC5601, KO16KSCCS, KO16MSWIN949, LA8ISO6937, LA8PASSPORT, LT8MSWIN921, LT8PC772, LT8PC774, LV8PC1117, LV8PC8LR, LV8RST104090, N8PC865, NE8ISO8859P10, NEE8ISO8859P4, RU8BESTA, RU8PC855, RU8PC866, SE8ISO8859P3, TH8MACTHAIS, TH8TISASCII, TR8DEC, TR8MACTURKISHS, TR8MSWIN1254, TR8PC857, US7ASCII, US8PC437, UTF8, VN8MSWIN1258, VN8VN3, WE8DEC, WE8DG, WE8ISO8859P1, WE8ISO8859P15, WE8ISO8859P9, WE8MACROMAN8S, WE8MSWIN1252, WE8NCR4970, WE8NEXTSTEP, WE8PC850, WE8PC858, WE8PC860, WE8ROMAN8, ZHS16CGB231280, ZHS16GBK, ZHT16BIG5, ZHT16CCDC, ZHT16DBT, ZHT16HKSCS, ZHT16MSWIN950, ZHT32EUC, ZHT32SOPS, ZHT32TRIS.""")
 @cli_util.option('--db-name', required=True, help="""The database name. It must begin with an alphabetic character and can contain a maximum of eight alphanumeric characters. Special characters are not permitted.""")
+@cli_util.option('--db-unique-name', required=False, help="""The database unique name. It must be greater than 3 characters, but at most 30 characters, begin with a letter, and contain only letters, numbers, and underscores. The first eight characters must also be unique within a Database Domain and within a Database System or VM Cluster. In addition, if it is not on a VM Cluster it might either be identical to the database name or prefixed by the datbase name and followed by an underscore.""")
 @cli_util.option('--db-version', required=True, help="""A valid Oracle database version. To get a list of supported versions, use the command 'oci db version list'.""")
 @cli_util.option('--db-workload', help="""Database workload type. Allowed values are: OLTP, DSS""")
 @cli_util.option('--ncharacter-set', help="""National character set for the database. The default is AL16UTF16. Allowed values are: AL16UTF16 or UTF8.""")
@@ -112,6 +134,9 @@ def launch_db_system_extended(ctx, **kwargs):
 
     if 'db_name' in kwargs and kwargs['db_name']:
         create_database_details['dbName'] = kwargs['db_name']
+
+    if 'db_unique_name' in kwargs and kwargs['db_unique_name']:
+        create_database_details['db_unique_name'] = kwargs['db_unique_name']
 
     if 'db_workload' in kwargs and kwargs['db_workload']:
         create_database_details['dbWorkload'] = kwargs['db_workload']
@@ -146,6 +171,7 @@ def launch_db_system_extended(ctx, **kwargs):
     # remove all of the kwargs that launch_db_system wont recognize
     del kwargs['admin_password']
     del kwargs['character_set']
+    del kwargs['db_unique_name']
     del kwargs['db_name']
     del kwargs['db_version']
     del kwargs['db_workload']
@@ -165,6 +191,7 @@ def launch_db_system_extended(ctx, **kwargs):
 @cli_util.option('--backup-id', required=True, help="""The backup OCID.""")
 @cli_util.option('--backup-tde-password', required=True, help="""The password to open the TDE wallet.""")
 @cli_util.option('--db-name', required=False, help="""The display name of the database to be created from the backup. It must begin with an alphabetic character and can contain a maximum of eight alphanumeric characters. Special characters are not permitted.""")
+@cli_util.option('--db-unique-name', required=False, help="""The database unique name. It must be greater than 3 characters, but at most 30 characters, begin with a letter, and contain only letters, numbers, and underscores. The first eight characters must also be unique within a Database Domain and within a Database System or VM Cluster. In addition, if it is not on a VM Cluster it might either be identical to the database name or prefixed by the datbase name and followed by an underscore.""")
 @cli_util.option('--ssh-authorized-keys-file', required=True, type=click.File('r'), help="""A file containing one or more public SSH keys to use for SSH access to the DB System. Use a newline character to separate multiple keys. The length of the combined keys cannot exceed 10,000 characters.""")
 @cli_util.option('--storage-management', type=custom_types.CliCaseInsensitiveChoice(["LVM", "ASM"]), help="""Option for storage management for the database system. Allowed values are: LVM, ASM.""")
 @click.pass_context
@@ -187,6 +214,9 @@ def launch_db_system_backup_extended(ctx, **kwargs):
     if 'db_name' in kwargs and kwargs['db_name']:
         create_database_details['dbName'] = kwargs['db_name']
 
+    if 'db_unique_name' in kwargs and kwargs['db_unique_name']:
+        create_database_details['db_unique_name'] = kwargs['db_unique_name']
+
     create_db_home_details = {}
     create_db_home_details['database'] = create_database_details
 
@@ -203,6 +233,7 @@ def launch_db_system_backup_extended(ctx, **kwargs):
         kwargs['db_system_options'] = json.dumps(create_db_system_options)
 
     # remove all of the kwargs that launch_db_system wont recognize
+    del kwargs['db_unique_name']
     del kwargs['admin_password']
     del kwargs['backup_id']
     del kwargs['backup_tde_password']
@@ -220,6 +251,7 @@ def launch_db_system_backup_extended(ctx, **kwargs):
 @cli_util.option('--vm-cluster-id', required=False, help="""The Vm Cluster Id to create this database under. Either --db-system-id or --vm-cluster-id must be specified, but if both are passed, --vm-cluster-id will be ignored.""")
 @cli_util.option('--character-set', help="""The character set for the database. The default is AL32UTF8. Allowed values are: AL32UTF8, AR8ADOS710, AR8ADOS720, AR8APTEC715, AR8ARABICMACS, AR8ASMO8X, AR8ISO8859P6, AR8MSWIN1256, AR8MUSSAD768, AR8NAFITHA711, AR8NAFITHA721, AR8SAKHR706, AR8SAKHR707, AZ8ISO8859P9E, BG8MSWIN, BG8PC437S, BLT8CP921, BLT8ISO8859P13, BLT8MSWIN1257, BLT8PC775, BN8BSCII, CDN8PC863, CEL8ISO8859P14, CL8ISO8859P5, CL8ISOIR111, CL8KOI8R, CL8KOI8U, CL8MACCYRILLICS, CL8MSWIN1251, EE8ISO8859P2, EE8MACCES, EE8MACCROATIANS, EE8MSWIN1250, EE8PC852, EL8DEC, EL8ISO8859P7, EL8MACGREEKS, EL8MSWIN1253, EL8PC437S, EL8PC851, EL8PC869, ET8MSWIN923, HU8ABMOD, HU8CWI2, IN8ISCII, IS8PC861, IW8ISO8859P8, IW8MACHEBREWS, IW8MSWIN1255, IW8PC1507, JA16EUC, JA16EUCTILDE, JA16SJIS, JA16SJISTILDE, JA16VMS, KO16KSC5601, KO16KSCCS, KO16MSWIN949, LA8ISO6937, LA8PASSPORT, LT8MSWIN921, LT8PC772, LT8PC774, LV8PC1117, LV8PC8LR, LV8RST104090, N8PC865, NE8ISO8859P10, NEE8ISO8859P4, RU8BESTA, RU8PC855, RU8PC866, SE8ISO8859P3, TH8MACTHAIS, TH8TISASCII, TR8DEC, TR8MACTURKISHS, TR8MSWIN1254, TR8PC857, US7ASCII, US8PC437, UTF8, VN8MSWIN1258, VN8VN3, WE8DEC, WE8DG, WE8ISO8859P1, WE8ISO8859P15, WE8ISO8859P9, WE8MACROMAN8S, WE8MSWIN1252, WE8NCR4970, WE8NEXTSTEP, WE8PC850, WE8PC858, WE8PC860, WE8ROMAN8, ZHS16CGB231280, ZHS16GBK, ZHT16BIG5, ZHT16CCDC, ZHT16DBT, ZHT16HKSCS, ZHT16MSWIN950, ZHT32EUC, ZHT32SOPS, ZHT32TRIS.""")
 @cli_util.option('--db-name', required=True, help="""The database name. It must begin with an alphabetic character and can contain a maximum of eight alphanumeric characters. Special characters are not permitted.""")
+@cli_util.option('--db-unique-name', required=False, help="""The database unique name. It must be greater than 3 characters, but at most 30 characters, begin with a letter, and contain only letters, numbers, and underscores. The first eight characters must also be unique within a Database Domain and within a Database System or VM Cluster. In addition, if it is not on a VM Cluster it might either be identical to the database name or prefixed by the datbase name and followed by an underscore.""")
 @cli_util.option('--db-workload', type=custom_types.CliCaseInsensitiveChoice(["OLTP", "DSS"]), help="""Database workload type. Allowed values are: OLTP, DSS""")
 @cli_util.option('--ncharacter-set', help="""National character set for the database. The default is AL16UTF16. Allowed values are: AL16UTF16 or UTF8.""")
 @cli_util.option('--pdb-name', help="""Pluggable database name. It must begin with an alphabetic character and can contain a maximum of eight alphanumeric characters. Special characters are not permitted. Pluggable database should not be same as database name.""")
@@ -254,6 +286,9 @@ def create_database(ctx, **kwargs):
 
     if 'db_name' in kwargs and kwargs['db_name']:
         create_database_details.db_name = kwargs['db_name']
+
+    if 'db_unique_name' in kwargs and kwargs['db_unique_name']:
+        create_database_details.db_unique_name = kwargs['db_unique_name']
 
     if 'db_workload' in kwargs and kwargs['db_workload']:
         create_database_details.db_workload = kwargs['db_workload']
@@ -315,6 +350,7 @@ def create_database(ctx, **kwargs):
 @cli_util.option('--backup-id', required=True, help="""The backup OCID.""")
 @cli_util.option('--backup-tde-password', required=True, help="""The password to open the TDE wallet.""")
 @cli_util.option('--db-name', required=False, help="""The display name of the database to be created from the backup. It must begin with an alphabetic character and can contain a maximum of eight alphanumeric characters. Special characters are not permitted.""")
+@cli_util.option('--db-unique-name', required=False, help="""The database unique name. It must be greater than 3 characters, but at most 30 characters, begin with a letter, and contain only letters, numbers, and underscores. The first eight characters must also be unique within a Database Domain and within a Database System or VM Cluster. In addition, if it is not on a VM Cluster it might either be identical to the database name or prefixed by the datbase name and followed by an underscore.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'DatabaseSummary'})
 @cli_util.wrap_exceptions
@@ -332,6 +368,9 @@ def create_database_from_backup(ctx, **kwargs):
 
     if 'db_name' in kwargs and kwargs['db_name']:
         create_database_details.db_name = kwargs['db_name']
+
+    if 'db_unique_name' in kwargs and kwargs['db_unique_name']:
+        create_database_details.db_unique_name = kwargs['db_unique_name']
 
     create_db_home_with_system_details.database = create_database_details
 

@@ -68,6 +68,7 @@ from . import cli_exceptions  # noqa: F401,E402
 from . import json_skeleton_utils  # noqa: F401,E402
 from . import string_utils  # noqa: F401,E402
 from . import help_text_producer  # noqa: F401,E402
+from . import raw_request_cli  # noqa: F401,E402
 from oci import config  # noqa: F401,E402
 from .version import __version__  # noqa: F401,E402
 
