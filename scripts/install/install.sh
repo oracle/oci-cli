@@ -10,8 +10,8 @@
 #           individual params > accept_all_defaults > interactive inputs
 #
 SHELL_INSTALL_SCRIPT_URL="https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/install/install.sh"
-INSTALL_SCRIPT_URL="https://raw.githubusercontent.com/oracle/oci-cli/v2.5.15/scripts/install/install.py"
-FALLBACK_INSTALL_SCRIPT_URL="https://raw.githubusercontent.com/oracle/oci-cli/v2.5.14/scripts/install/install.py"
+INSTALL_SCRIPT_URL="https://raw.githubusercontent.com/oracle/oci-cli/v2.6.12/scripts/install/install.py"
+FALLBACK_INSTALL_SCRIPT_URL="https://raw.githubusercontent.com/oracle/oci-cli/v2.6.11/scripts/install/install.py"
 _TTY=/dev/tty
 
 # Below is the usage text to be printed when --help is invoked on this script.
