@@ -16,8 +16,7 @@ from oci_cli.aliasing import CommandGroupWithAlias
 
 @cli.command(cli_util.override('health_checks.health_checks_root_group.command_name', 'health-checks'), cls=CommandGroupWithAlias, help=cli_util.override('health_checks.health_checks_root_group.help', """API for the Health Checks service. Use this API to manage endpoint probes and monitors.
 For more information, see
-[Overview of the Health Checks Service](/iaas/Content/HealthChecks/Concepts/healthchecks.htm).
-"""), short_help=cli_util.override('health_checks.health_checks_root_group.short_help', """Health Checks API"""))
+[Overview of the Health Checks Service]."""), short_help=cli_util.override('health_checks.health_checks_root_group.short_help', """Health Checks API"""))
 @cli_util.help_option_group
 def health_checks_root_group():
     pass

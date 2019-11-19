@@ -15,8 +15,7 @@ from oci_cli.aliasing import CommandGroupWithAlias
 
 
 @cli.command(cli_util.override('autoscaling.autoscaling_root_group.command_name', 'autoscaling'), cls=CommandGroupWithAlias, help=cli_util.override('autoscaling.autoscaling_root_group.help', """APIs for dynamically scaling Compute resources to meet application requirements.
-For information about the Compute service, see [Overview of the Compute Service](/Content/Compute/Concepts/computeoverview.htm).
-"""), short_help=cli_util.override('autoscaling.autoscaling_root_group.short_help', """Autoscaling API"""))
+For information about the Compute service, see [Overview of the Compute Service]."""), short_help=cli_util.override('autoscaling.autoscaling_root_group.short_help', """Autoscaling API"""))
 @cli_util.help_option_group
 def autoscaling_root_group():
     pass

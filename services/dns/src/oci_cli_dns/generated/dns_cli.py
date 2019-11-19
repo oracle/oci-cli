@@ -15,8 +15,7 @@ from oci_cli.aliasing import CommandGroupWithAlias
 
 
 @cli.command(cli_util.override('dns.dns_root_group.command_name', 'dns'), cls=CommandGroupWithAlias, help=cli_util.override('dns.dns_root_group.help', """API for the DNS service. Use this API to manage DNS zones, records, and other DNS resources.
-For more information, see [Overview of the DNS Service](/iaas/Content/DNS/Concepts/dnszonemanagement.htm).
-"""), short_help=cli_util.override('dns.dns_root_group.short_help', """DNS API"""))
+For more information, see [Overview of the DNS Service]."""), short_help=cli_util.override('dns.dns_root_group.short_help', """DNS API"""))
 @cli_util.help_option_group
 def dns_root_group():
     pass

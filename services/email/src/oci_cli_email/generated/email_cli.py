@@ -15,11 +15,10 @@ from oci_cli.aliasing import CommandGroupWithAlias
 
 
 @cli.command(cli_util.override('email.email_root_group.command_name', 'email'), cls=CommandGroupWithAlias, help=cli_util.override('email.email_root_group.help', """API for the Email Delivery service. Use this API to send high-volume, application-generated
-emails. For more information, see [Overview of the Email Delivery Service](/iaas/Content/Email/Concepts/overview.htm).
+emails. For more information, see [Overview of the Email Delivery Service].
 
 
-**Note:** Write actions (POST, UPDATE, DELETE) may take several minutes to propagate and be reflected by the API. If a subsequent read request fails to reflect your changes, wait a few minutes and try again.
-"""), short_help=cli_util.override('email.email_root_group.short_help', """Email Delivery API"""))
+**Note:** Write actions (POST, UPDATE, DELETE) may take several minutes to propagate and be reflected by the API. If a subsequent read request fails to reflect your changes, wait a few minutes and try again."""), short_help=cli_util.override('email.email_root_group.short_help', """Email Delivery API"""))
 @cli_util.help_option_group
 def email_root_group():
     pass

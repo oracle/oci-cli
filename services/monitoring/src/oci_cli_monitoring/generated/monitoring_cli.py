@@ -16,8 +16,7 @@ from oci_cli.aliasing import CommandGroupWithAlias
 
 @cli.command(cli_util.override('monitoring.monitoring_root_group.command_name', 'monitoring'), cls=CommandGroupWithAlias, help=cli_util.override('monitoring.monitoring_root_group.help', """Use the Monitoring API to manage metric queries and alarms for assessing the health, capacity, and performance of your cloud resources.
 Endpoints vary by operation. For PostMetric, use the `telemetry-ingestion` endpoints; for all other operations, use the `telemetry` endpoints.
-For information about monitoring, see [Monitoring Overview](/iaas/Content/Monitoring/Concepts/monitoringoverview.htm).
-"""), short_help=cli_util.override('monitoring.monitoring_root_group.short_help', """Monitoring API"""))
+For information about monitoring, see [Monitoring Overview]."""), short_help=cli_util.override('monitoring.monitoring_root_group.short_help', """Monitoring API"""))
 @cli_util.help_option_group
 def monitoring_root_group():
     pass

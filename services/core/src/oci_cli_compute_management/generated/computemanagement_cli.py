@@ -14,12 +14,11 @@ from oci_cli.aliasing import CommandGroupWithAlias
 from services.core.src.oci_cli_core.generated import core_service_cli
 
 
-@click.command(cli_util.override('compute_management.compute_management_root_group.command_name', 'compute-management'), cls=CommandGroupWithAlias, help=cli_util.override('compute_management.compute_management_root_group.help', """API covering the [Networking](/iaas/Content/Network/Concepts/overview.htm),
-[Compute](/iaas/Content/Compute/Concepts/computeoverview.htm), and
-[Block Volume](/iaas/Content/Block/Concepts/overview.htm) services. Use this API
+@click.command(cli_util.override('compute_management.compute_management_root_group.command_name', 'compute-management'), cls=CommandGroupWithAlias, help=cli_util.override('compute_management.compute_management_root_group.help', """API covering the [Networking],
+[Compute], and
+[Block Volume] services. Use this API
 to manage resources such as virtual cloud networks (VCNs), compute instances, and
-block storage volumes.
-"""), short_help=cli_util.override('compute_management.compute_management_root_group.short_help', """Core Services API"""))
+block storage volumes."""), short_help=cli_util.override('compute_management.compute_management_root_group.short_help', """Core Services API"""))
 @cli_util.help_option_group
 def compute_management_root_group():
     pass
@@ -47,7 +46,7 @@ def instance_configuration_group():
     pass
 
 
-@click.command(cli_util.override('compute_management.cluster_network_group.command_name', 'cluster-network'), cls=CommandGroupWithAlias, help="""Cluster Network""")
+@click.command(cli_util.override('compute_management.cluster_network_group.command_name', 'cluster-network'), cls=CommandGroupWithAlias, help="""A cluster network is a group of high performance computing (HPC) bare metal instances that are connected with an ultra low latency network. For more information about cluster networks, see [Managing Cluster Networks].""")
 @cli_util.help_option_group
 def cluster_network_group():
     pass
@@ -128,8 +127,10 @@ def attach_load_balancer(ctx, from_json, wait_for_state, max_wait_seconds, wait_
     cli_util.render_response(result, ctx)
 
 
-@cluster_network_group.command(name=cli_util.override('compute_management.change_cluster_network_compartment.command_name', 'change-compartment'), help=u"""Change the compartment of a cluster network.""")
-@cli_util.option('--cluster-network-id', required=True, help=u"""The OCID of the cluster network.""")
+@cluster_network_group.command(name=cli_util.override('compute_management.change_cluster_network_compartment.command_name', 'change-compartment'), help=u"""Moves a cluster network into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].
+
+When you move a cluster network to a different compartment, associated resources such as the instances in the cluster network, boot volumes, and VNICs are not moved.""")
+@cli_util.option('--cluster-network-id', required=True, help=u"""The [OCID] of the cluster network.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -227,14 +228,16 @@ def change_instance_pool_compartment(ctx, from_json, instance_pool_id, compartme
     cli_util.render_response(result, ctx)
 
 
-@cluster_network_group.command(name=cli_util.override('compute_management.create_cluster_network.command_name', 'create'), help=u"""Create a cluster network.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment containing the cluster network.""")
-@cli_util.option('--instance-pools', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""the data to create the instance pools in the cluster network.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--placement-configuration', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""the placement data for the intance pools in the cluster network""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cluster_network_group.command(name=cli_util.override('compute_management.create_cluster_network.command_name', 'create'), help=u"""Creates a cluster network. For more information about cluster networks, see [Managing Cluster Networks].""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the cluster network.""")
+@cli_util.option('--instance-pools', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The data to create the instance pools in the cluster network.
+
+Each cluster network can have one instance pool.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--placement-configuration', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The placement configuration for the instance pools in the cluster network.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--display-name', help=u"""The user-friendly name.  Does not have to be unique.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name for the cluster network. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -585,8 +588,8 @@ def detach_load_balancer(ctx, from_json, wait_for_state, max_wait_seconds, wait_
     cli_util.render_response(result, ctx)
 
 
-@cluster_network_group.command(name=cli_util.override('compute_management.get_cluster_network.command_name', 'get'), help=u"""Gets the specified cluster network""")
-@cli_util.option('--cluster-network-id', required=True, help=u"""The OCID of the cluster network.""")
+@cluster_network_group.command(name=cli_util.override('compute_management.get_cluster_network.command_name', 'get'), help=u"""Gets information about the specified cluster network.""")
+@cli_util.option('--cluster-network-id', required=True, help=u"""The [OCID] of the cluster network.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -748,9 +751,9 @@ def launch_instance_configuration_compute_instance_details(ctx, from_json, insta
     cli_util.render_response(result, ctx)
 
 
-@cluster_network_group.command(name=cli_util.override('compute_management.list_cluster_network_instances.command_name', 'list-cluster-network-instances'), help=u"""List the instances in the specified cluster network.""")
+@cluster_network_group.command(name=cli_util.override('compute_management.list_cluster_network_instances.command_name', 'list-cluster-network-instances'), help=u"""Lists the instances in the specified cluster network.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
-@cli_util.option('--cluster-network-id', required=True, help=u"""The OCID of the cluster network.""")
+@cli_util.option('--cluster-network-id', required=True, help=u"""The [OCID] of the cluster network.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
@@ -826,7 +829,7 @@ Example: `50`""")
 
 **Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by availability domain if the scope of the resource type is within a single availability domain. If you call one of these \"List\" operations without specifying an availability domain, the resources are grouped by availability domain, then sorted.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The DISPLAYNAME sort order is case sensitive.""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "SCALING", "STARTING", "STOPPING", "TERMINATING", "STOPPED", "TERMINATED", "RUNNING"]), help=u"""A filter to only return resources that match the given lifecycle state.  The state value is case-insensitive.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "SCALING", "STARTING", "STOPPING", "TERMINATING", "STOPPED", "TERMINATED", "RUNNING"]), help=u"""A filter to only return resources that match the given lifecycle state. The state value is case-insensitive.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1261,8 +1264,10 @@ def stop_instance_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     cli_util.render_response(result, ctx)
 
 
-@cluster_network_group.command(name=cli_util.override('compute_management.terminate_cluster_network.command_name', 'terminate'), help=u"""Terminate the specified cluster network.""")
-@cli_util.option('--cluster-network-id', required=True, help=u"""The OCID of the cluster network.""")
+@cluster_network_group.command(name=cli_util.override('compute_management.terminate_cluster_network.command_name', 'terminate'), help=u"""Terminates the specified cluster network.
+
+When you delete a cluster network, all of its resources are permanently deleted, including associated instances and instance pools.""")
+@cli_util.option('--cluster-network-id', required=True, help=u"""The [OCID] of the cluster network.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "SCALING", "STARTING", "STOPPING", "TERMINATING", "STOPPED", "TERMINATED", "RUNNING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -1385,12 +1390,12 @@ def terminate_instance_pool(ctx, from_json, wait_for_state, max_wait_seconds, wa
     cli_util.render_response(result, ctx)
 
 
-@cluster_network_group.command(name=cli_util.override('compute_management.update_cluster_network.command_name', 'update'), help=u"""Update the specified cluster network. The OCID of the cluster network remains the same.""")
-@cli_util.option('--cluster-network-id', required=True, help=u"""The OCID of the cluster network.""")
+@cluster_network_group.command(name=cli_util.override('compute_management.update_cluster_network.command_name', 'update'), help=u"""Updates the specified cluster network. The OCID of the cluster network remains the same.""")
+@cli_util.option('--cluster-network-id', required=True, help=u"""The [OCID] of the cluster network.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--display-name', help=u"""The user-friendly name.  Does not have to be unique.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)

@@ -16,8 +16,7 @@ from oci_cli.aliasing import CommandGroupWithAlias
 
 @cli.command(cli_util.override('ce.ce_root_group.command_name', 'ce'), cls=CommandGroupWithAlias, help=cli_util.override('ce.ce_root_group.help', """API for the Container Engine for Kubernetes service. Use this API to build, deploy,
 and manage cloud-native applications. For more information, see
-[Overview of Container Engine for Kubernetes](/iaas/Content/ContEng/Concepts/contengoverview.htm).
-"""), short_help=cli_util.override('ce.ce_root_group.short_help', """Container Engine for Kubernetes API"""))
+[Overview of Container Engine for Kubernetes]."""), short_help=cli_util.override('ce.ce_root_group.short_help', """Container Engine for Kubernetes API"""))
 @cli_util.help_option_group
 def ce_root_group():
     pass

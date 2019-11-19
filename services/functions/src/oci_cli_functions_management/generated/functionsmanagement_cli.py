@@ -14,8 +14,7 @@ from oci_cli.aliasing import CommandGroupWithAlias
 from services.functions.src.oci_cli_functions.generated import fn_service_cli
 
 
-@click.command(cli_util.override('functions_management.functions_management_root_group.command_name', 'functions-management'), cls=CommandGroupWithAlias, help=cli_util.override('functions_management.functions_management_root_group.help', """API for the Functions service.
-"""), short_help=cli_util.override('functions_management.functions_management_root_group.short_help', """Functions Service API"""))
+@click.command(cli_util.override('functions_management.functions_management_root_group.command_name', 'functions-management'), cls=CommandGroupWithAlias, help=cli_util.override('functions_management.functions_management_root_group.help', """API for the Functions service."""), short_help=cli_util.override('functions_management.functions_management_root_group.short_help', """Functions Service API"""))
 @cli_util.help_option_group
 def functions_management_root_group():
     pass
