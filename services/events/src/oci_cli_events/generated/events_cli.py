@@ -15,8 +15,7 @@ from oci_cli.aliasing import CommandGroupWithAlias
 
 
 @cli.command(cli_util.override('events.events_root_group.command_name', 'events'), cls=CommandGroupWithAlias, help=cli_util.override('events.events_root_group.help', """API for the Events Service. Use this API to manage rules and actions that create automation
-in your tenancy. For more information, see [Overview of Events](/iaas/Content/Events/Concepts/eventsoverview.htm).
-"""), short_help=cli_util.override('events.events_root_group.short_help', """Events API"""))
+in your tenancy. For more information, see [Overview of Events]."""), short_help=cli_util.override('events.events_root_group.short_help', """Events API"""))
 @cli_util.help_option_group
 def events_root_group():
     pass

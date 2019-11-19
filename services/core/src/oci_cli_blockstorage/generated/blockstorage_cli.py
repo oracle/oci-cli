@@ -14,12 +14,11 @@ from oci_cli.aliasing import CommandGroupWithAlias
 from services.core.src.oci_cli_core.generated import core_service_cli
 
 
-@click.command(cli_util.override('blockstorage.blockstorage_root_group.command_name', 'blockstorage'), cls=CommandGroupWithAlias, help=cli_util.override('blockstorage.blockstorage_root_group.help', """API covering the [Networking](/iaas/Content/Network/Concepts/overview.htm),
-[Compute](/iaas/Content/Compute/Concepts/computeoverview.htm), and
-[Block Volume](/iaas/Content/Block/Concepts/overview.htm) services. Use this API
+@click.command(cli_util.override('blockstorage.blockstorage_root_group.command_name', 'blockstorage'), cls=CommandGroupWithAlias, help=cli_util.override('blockstorage.blockstorage_root_group.help', """API covering the [Networking],
+[Compute], and
+[Block Volume] services. Use this API
 to manage resources such as virtual cloud networks (VCNs), compute instances, and
-block storage volumes.
-"""), short_help=cli_util.override('blockstorage.blockstorage_root_group.short_help', """Core Services API"""))
+block storage volumes."""), short_help=cli_util.override('blockstorage.blockstorage_root_group.short_help', """Core Services API"""))
 @cli_util.help_option_group
 def blockstorage_root_group():
     pass

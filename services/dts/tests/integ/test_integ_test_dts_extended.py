@@ -33,7 +33,7 @@ class IntegTestDTS(unittest.TestCase):
         self.config = {
             "$COMPARTMENT": os.environ["OCI_CLI_COMPARTMENT_ID"],
             "$PROFILE": "DEFAULT",
-            "$CERT_BUNDLE_PATH": "/root/dts-oci-cli-env/dts-oci-cli-config/combined_r1.crt",
+            "$CERT_BUNDLE_PATH": "~/SDK/dts-oci-cli-env/dts-oci-cli-config/combined_r1.crt",
             "$BUCKET": "production_bucket",
             "$JOB_ID": "NOT_POPULATED",
             "$APPLIANCE_LABEL": "NOT_POPULATED",
@@ -79,9 +79,6 @@ class IntegTestDTS(unittest.TestCase):
             {"verb": "delete",
              "command_data":
                 ["job", "delete", "--force", "--job-id", "$JOB_ID"]},
-            {"verb": "verify",
-             "command_data":
-                ["job", "verify-upload-user-credentials", "--bucket", "$BUCKET"]}
         ]
 
     def test_dts(self):

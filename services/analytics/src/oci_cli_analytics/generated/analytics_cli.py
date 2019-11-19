@@ -14,8 +14,7 @@ from oci_cli import custom_types  # noqa: F401
 from oci_cli.aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('analytics.analytics_root_group.command_name', 'analytics'), cls=CommandGroupWithAlias, help=cli_util.override('analytics.analytics_root_group.help', """Analytics API.
-"""), short_help=cli_util.override('analytics.analytics_root_group.short_help', """Analytics API"""))
+@cli.command(cli_util.override('analytics.analytics_root_group.command_name', 'analytics'), cls=CommandGroupWithAlias, help=cli_util.override('analytics.analytics_root_group.help', """Analytics API."""), short_help=cli_util.override('analytics.analytics_root_group.short_help', """Analytics API"""))
 @cli_util.help_option_group
 def analytics_root_group():
     pass

@@ -15,10 +15,9 @@ from oci_cli.aliasing import CommandGroupWithAlias
 
 
 @cli.command(cli_util.override('audit.audit_root_group.command_name', 'audit'), cls=CommandGroupWithAlias, help=cli_util.override('audit.audit_root_group.help', """API for the Audit Service. Use this API for compliance monitoring in your tenancy.
-For more information, see [Overview of Audit](/iaas/Content/Audit/Concepts/auditoverview.htm).
+For more information, see [Overview of Audit].
 
-**Tip**: This API is good for queries, but not bulk-export operations.
-"""), short_help=cli_util.override('audit.audit_root_group.short_help', """Audit API"""))
+**Tip**: This API is good for queries, but not bulk-export operations."""), short_help=cli_util.override('audit.audit_root_group.short_help', """Audit API"""))
 @cli_util.help_option_group
 def audit_root_group():
     pass

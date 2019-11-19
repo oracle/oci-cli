@@ -250,7 +250,7 @@ def _traverse_oci_cli(command, path, failed_commands, ignored_extended_commands)
                     result = util.invoke_command(full_command)
                     if result.exit_code != 0 or 'is not a recognized complex type, so no example JSON can be produced. Invoke help for this command' in result.output:
                         print(full_command, result.exit_code)
-                        failed_commands.append(full_command)
+                        failed_commands.append(path)
 
 
 def test_generate_param_json_input_for_all_complex_types(ignored_extended_commands):

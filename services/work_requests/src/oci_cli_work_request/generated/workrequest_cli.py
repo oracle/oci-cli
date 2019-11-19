@@ -19,8 +19,7 @@ immediately. In these cases, the operation spawns an asynchronous workflow to fu
 Work requests provide visibility into the status of these in-progress, long-running workflows.
 
 For more information about work requests and the operations that spawn work requests, see
-[Viewing the State of a Compute Work Request](/iaas/Content/Compute/Tasks/viewingworkrequestcompute.htm).
-"""), short_help=cli_util.override('work_requests.work_requests_root_group.short_help', """Work Requests API"""))
+[Viewing the State of a Compute Work Request]."""), short_help=cli_util.override('work_requests.work_requests_root_group.short_help', """Work Requests API"""))
 @cli_util.help_option_group
 def work_requests_root_group():
     pass

@@ -25,8 +25,6 @@ DEFAULT_PROFILE = 'DEFAULT'
 ENDPOINT = 'endpoint'
 APPLIANCE_PROFILE = 'appliance_profile'
 
-LIFECYCLE_STATE_PREPARING = 'PREPARING'
-
 TEST_OBJECT = "BulkDataTransferTestObject"
 
 XA_AUTH = "xa-auth"

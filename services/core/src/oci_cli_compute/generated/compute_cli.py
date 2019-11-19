@@ -14,12 +14,11 @@ from oci_cli.aliasing import CommandGroupWithAlias
 from services.core.src.oci_cli_core.generated import core_service_cli
 
 
-@click.command(cli_util.override('compute.compute_root_group.command_name', 'compute'), cls=CommandGroupWithAlias, help=cli_util.override('compute.compute_root_group.help', """API covering the [Networking](/iaas/Content/Network/Concepts/overview.htm),
-[Compute](/iaas/Content/Compute/Concepts/computeoverview.htm), and
-[Block Volume](/iaas/Content/Block/Concepts/overview.htm) services. Use this API
+@click.command(cli_util.override('compute.compute_root_group.command_name', 'compute'), cls=CommandGroupWithAlias, help=cli_util.override('compute.compute_root_group.help', """API covering the [Networking],
+[Compute], and
+[Block Volume] services. Use this API
 to manage resources such as virtual cloud networks (VCNs), compute instances, and
-block storage volumes.
-"""), short_help=cli_util.override('compute.compute_root_group.short_help', """Core Services API"""))
+block storage volumes."""), short_help=cli_util.override('compute.compute_root_group.short_help', """Core Services API"""))
 @cli_util.help_option_group
 def compute_root_group():
     pass
@@ -113,7 +112,7 @@ def boot_volume_attachment_group():
     pass
 
 
-@click.command(cli_util.override('compute.instance_console_connection_group.command_name', 'instance-console-connection'), cls=CommandGroupWithAlias, help="""The `InstanceConsoleConnection` API provides you with console access to virtual machine (VM) instances, enabling you to troubleshoot malfunctioning instances remotely.
+@click.command(cli_util.override('compute.instance_console_connection_group.command_name', 'instance-console-connection'), cls=CommandGroupWithAlias, help="""The `InstanceConsoleConnection` API provides you with console access to Compute instances, enabling you to troubleshoot malfunctioning instances remotely.
 
 For more information about console access, see [Accessing the Console].""")
 @cli_util.help_option_group
@@ -1255,7 +1254,7 @@ def create_image_image_source_via_object_storage_uri_details(ctx, from_json, wai
     cli_util.render_response(result, ctx)
 
 
-@instance_console_connection_group.command(name=cli_util.override('compute.create_instance_console_connection.command_name', 'create'), help=u"""Creates a new console connection to the specified instance. Once the console connection has been created and is available, you connect to the console using SSH.
+@instance_console_connection_group.command(name=cli_util.override('compute.create_instance_console_connection.command_name', 'create'), help=u"""Creates a new console connection to the specified instance. After the console connection has been created and is available, you connect to the console using SSH.
 
 For more information about console access, see [Accessing the Console].""")
 @cli_util.option('--instance-id', required=True, help=u"""The OCID of the instance to create the console connection to.""")

@@ -4,12 +4,15 @@
 from __future__ import print_function
 
 import click
+import configparser
+from enum import Enum
 import os
 import six
 import sys
 
 from oci import exceptions
 from oci import config as oci_config
+from oci.dts.models.transfer_appliance import TransferAppliance
 
 from oci_cli import cli_util
 from oci_cli import json_skeleton_utils
@@ -19,10 +22,12 @@ from services.dts.src.oci_cli_dts.appliance_init_auth_spec import InitAuthSpec
 from services.dts.src.oci_cli_dts.generated import dts_service_cli
 from services.dts.src.oci_cli_dts.appliance_init_auth import InitAuth
 from services.dts.src.oci_cli_dts.appliance_client_proxy import ApplianceClientProxy
+from services.dts.src.oci_cli_dts.physical_appliance_control_plane.client.models.physical_transfer_appliance import \
+    PhysicalTransferAppliance
 
 from services.dts.src.oci_cli_dts.appliance_config_manager import ApplianceConfigManager
 from services.dts.src.oci_cli_dts.appliance_constants import APPLIANCE_CONFIGS_BASE_DIR, ENDPOINT, APPLIANCE_PROFILE, \
-    LIFECYCLE_STATE_PREPARING, KEY_FILE_KEY, APPLIANCE_UPLOAD_USER_CONFIG_PATH, TEST_OBJECT
+    KEY_FILE_KEY, APPLIANCE_UPLOAD_USER_CONFIG_PATH, TEST_OBJECT, DEFAULT_PROFILE
 
 
 """
@@ -90,7 +95,8 @@ def pa_initialize_authentication(ctx, from_json, job_id, appliance_label, applia
 
     # The initialize-authentication shows the transfer appliance details the same as oci dts physical-appliance show
     appliance_client = create_appliance_client(ctx, appliance_profile)
-    cli_util.render_response(appliance_client.get_physical_transfer_appliance(), ctx)
+    user_friendly_appliance_info = convert_to_user_friendly(appliance_client.get_physical_transfer_appliance())
+    cli_util.render_response(user_friendly_appliance_info, ctx)
 
 
 def create_init_auth(auth_spec):
@@ -151,10 +157,10 @@ def pa_configure_encryption(ctx, from_json, appliance_profile, job_id, appliance
         transfer_appliance_label=appliance_label
     )
     # If the appliance is not already in a preparing state, move it to a preparing state
-    if result.data.lifecycle_state != LIFECYCLE_STATE_PREPARING:
+    if result.data.lifecycle_state != TransferAppliance.LIFECYCLE_STATE_PREPARING:
         click.echo("Moving the state of the appliance to preparing...")
         details = {
-            "lifecycleState": LIFECYCLE_STATE_PREPARING
+            "lifecycleState": TransferAppliance.LIFECYCLE_STATE_PREPARING
         }
         client.update_transfer_appliance(
             id=job_id,
@@ -173,7 +179,8 @@ def pa_configure_encryption(ctx, from_json, appliance_profile, job_id, appliance
     appliance_client.configure_encryption(passphrase_details={'passphrase': passphrase})
     click.echo("Encryption configured. Getting physical transfer appliance info...")
     appliance_info = appliance_client.get_physical_transfer_appliance()
-    cli_util.render_response(appliance_info, ctx)
+    user_friendly_appliance_info = convert_to_user_friendly(appliance_info)
+    cli_util.render_response(user_friendly_appliance_info, ctx)
 
 
 def create_appliance_client(ctx, appliance_profile):
@@ -207,7 +214,9 @@ def pa_unlock(ctx, from_json, appliance_profile, job_id, appliance_label):
         ).data.encryption_passphrase
     appliance_client = create_appliance_client(ctx, appliance_profile)
     appliance_client.unlock_appliance(details={'passphrase': passphrase})
-    cli_util.render_response(appliance_client.get_physical_transfer_appliance(), ctx)
+    appliance_info = appliance_client.get_physical_transfer_appliance()
+    user_friendly_appliance_info = convert_to_user_friendly(appliance_info)
+    cli_util.render_response(user_friendly_appliance_info, ctx)
 
 
 @physical_appliance_group.command('show', help=u"""Shows transfer appliance details.""")
@@ -220,7 +229,8 @@ def pa_unlock(ctx, from_json, appliance_profile, job_id, appliance_label):
 def pa_show(ctx, from_json, appliance_profile):
     appliance_client = create_appliance_client(ctx, appliance_profile)
     appliance_info = appliance_client.get_physical_transfer_appliance()
-    cli_util.render_response(appliance_info, ctx)
+    user_friendly_appliance_info = convert_to_user_friendly(appliance_info)
+    cli_util.render_response(user_friendly_appliance_info, ctx)
 
 
 @physical_appliance_group.command('finalize', help=u"""Finalizes the appliance.""")
@@ -271,7 +281,23 @@ def pa_finalize(ctx, from_json, appliance_profile, job_id, appliance_label, skip
 
     click.echo("The transfer appliance is locked after finalize. Hence the finalize status will be shown as NA. "
                "Please unlock the transfer appliance again to see the correct finalize status")
-    cli_util.render_response(appliance_info, ctx)
+
+    click.echo("Changing the state of the transfer appliance to FINALIZED")
+    current_state = client.get_transfer_appliance(
+        id=job_id,
+        transfer_appliance_label=appliance_label
+    ).data.lifecycle_state
+    if current_state != TransferAppliance.LIFECYCLE_STATE_FINALIZED:
+        details = {
+            "lifecycleState": TransferAppliance.LIFECYCLE_STATE_FINALIZED
+        }
+        client.update_transfer_appliance(
+            id=job_id,
+            transfer_appliance_label=appliance_label,
+            update_transfer_appliance_details=details)
+
+    user_friendly_appliance_info = convert_to_user_friendly(appliance_info)
+    cli_util.render_response(user_friendly_appliance_info, ctx)
 
 
 def validate_upload_user_credentials(ctx, upload_bucket):
@@ -303,6 +329,17 @@ def validate_upload_user_credentials(ctx, upload_bucket):
     # override parameter
     ctx.endpoint = None
     ctx.obj['endpoint'] = None
+    # To support cross region uploads. get the region from the Upload User file
+    # For example, let's say the config file had us-phoenix-1 as the region and config_upload_user had us-ashburn-1
+    # If the region is not changed in the context, the admin client would be talking to us-phoenix-1 whereas the
+    # upload client would be talking to us-ashburn-1. That's not what we want.
+    try:
+        config = configparser.ConfigParser()
+        config.read(APPLIANCE_UPLOAD_USER_CONFIG_PATH)
+        region = config.get(DEFAULT_PROFILE, 'region')
+    except IOError as e:
+        click.FileError('Unable to parse the appliance config file %s: %s' % (APPLIANCE_UPLOAD_USER_CONFIG_PATH, e))
+    ctx.obj['region'] = region
     object_storage_admin_client = cli_util.build_client('object_storage', ctx)
     # A bit hacky but gets the job done. Only two parameters need to be changed to get the upload user context,
     # the profile and the config file. All other parameters remain the same
@@ -312,7 +349,6 @@ def validate_upload_user_credentials(ctx, upload_bucket):
     # Overriding any endpoint that was set. Need to get to the endpoint based on the config_upload_user file
     upload_user_ctx.endpoint = None
     object_storage_upload_client = cli_util.build_client('object_storage', upload_user_ctx)
-
     namespace = object_storage_admin_client.get_namespace().data
     try:
         try:
@@ -357,3 +393,38 @@ def validate_upload_user_credentials(ctx, upload_bucket):
             except exceptions.ServiceError as se:
                 raise exceptions.ServiceError(
                     "Failed to delete test object {} as admin user {}: {}".format(TEST_OBJECT, admin_user, se.message))
+
+
+def convert_to_user_friendly(appliance_info):
+    if appliance_info.data['lockStatus'] == PhysicalTransferAppliance.LOCK_STATUS_NOT_LOCKED:
+        appliance_info.data['availableSpaceInBytes'] = get_user_friendly_size(
+            appliance_info.data['availableSpaceInBytes'])
+        appliance_info.data['totalSpaceInBytes'] = get_user_friendly_size(appliance_info.data['totalSpaceInBytes'])
+    else:
+        appliance_info.data['availableSpaceInBytes'] = "Unknown"
+        appliance_info.data['totalSpaceInBytes'] = "Unknown"
+    return appliance_info
+
+
+class SpaceUnit(Enum):
+    KB = 1024
+    MB = 1024 * 1024
+    GB = 1024 * 1024 * 1024
+    TB = 1024 * 1024 * 1024 * 1024
+
+
+def get_unit(size_in_bytes):
+    if SpaceUnit.TB.value < size_in_bytes:
+        return SpaceUnit.TB
+    elif SpaceUnit.GB.value < size_in_bytes:
+        return SpaceUnit.GB
+    elif SpaceUnit.MB.value < size_in_bytes:
+        return SpaceUnit.MB
+    return SpaceUnit.KB
+
+
+def get_user_friendly_size(size_in_bytes):
+    unit = get_unit(size_in_bytes)
+    print(type(unit.value), unit.value)
+    value = "%.2f" % float(int(size_in_bytes) / unit.value)
+    return value + unit.name

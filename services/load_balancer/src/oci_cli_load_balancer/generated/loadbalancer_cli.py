@@ -15,8 +15,7 @@ from oci_cli.aliasing import CommandGroupWithAlias
 
 
 @cli.command(cli_util.override('lb.lb_root_group.command_name', 'lb'), cls=CommandGroupWithAlias, help=cli_util.override('lb.lb_root_group.help', """API for the Load Balancing service. Use this API to manage load balancers, backend sets, and related items. For more
-information, see [Overview of Load Balancing](/iaas/Content/Balance/Concepts/balanceoverview.htm).
-"""), short_help=cli_util.override('lb.lb_root_group.short_help', """Load Balancing API"""))
+information, see [Overview of Load Balancing]."""), short_help=cli_util.override('lb.lb_root_group.short_help', """Load Balancing API"""))
 @cli_util.help_option_group
 def lb_root_group():
     pass

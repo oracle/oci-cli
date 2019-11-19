@@ -6,6 +6,25 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.6.13 - 2019-11-19
+-------------------
+Added
+~~~~~
+* Support for Autonomous Database to create and update with whitelisted ips.
+
+  * ``oci db autonomous-database create --whitelisted-ips``
+  * ``oci db autonomous-database update --whitelisted-ips``
+
+* Support for Four Byte ASN support for Fast-Connect.
+
+* Ability to choose fault domains when creating instance pools.
+ 
+  * ``oci compute-management instance-pool create``
+
+Fixed
+~~~~~
+* Broken links in help documents.
+
 2.6.12 - 2019-11-12
 -------------------
 Added
