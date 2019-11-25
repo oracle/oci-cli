@@ -62,3 +62,14 @@ class TestDBCliExtended(unittest.TestCase):
         result = util.invoke_command(['db', 'autonomous-database', 'data-safe', 'deregister'])
         assert 'Error: Missing option(s)' in result.output
         assert '--autonomous-database-id' in result.output
+
+    def test_ocp_us_exadata_infrastructure(self):
+        result = util.invoke_command(['db', 'ocp-us'])
+        assert 'get-exadata-infrastructure-ocpus' not in result.output
+
+    def test_exadata_infrastructure_ocpus(self):
+        result = util.invoke_command(['db', 'exadata-infrastructure'])
+        assert 'get-compute-units' in result.output
+        result = util.invoke_command(['db', 'exadata-infrastructure', 'get-compute-units'])
+        assert 'Error: Missing option(s)' in result.output
+        assert '--autonomous-exadata-infrastructure-id' in result.output
