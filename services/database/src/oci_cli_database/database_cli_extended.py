@@ -42,6 +42,13 @@ database_cli.backup_destination_group.commands.pop(database_cli.create_backup_de
 database_cli.db_root_group.commands.pop(database_cli.backup_destination_summary_group.name)
 
 
+# OCPUs
+database_cli.exadata_infrastructure_group.add_command(database_cli.get_exadata_infrastructure_ocpus)
+database_cli.ocp_us_group.commands.pop(database_cli.get_exadata_infrastructure_ocpus.name)
+cli_util.rename_command(database_cli, database_cli.exadata_infrastructure_group, database_cli.get_exadata_infrastructure_ocpus, "get-compute-units")
+database_cli.db_root_group.commands.pop(database_cli.ocp_us_group.name)
+
+
 # wallet commands
 
 cli_util.rename_command(database_cli, database_cli.autonomous_database_wallet_group, database_cli.get_autonomous_database_wallet, "get-metadata")

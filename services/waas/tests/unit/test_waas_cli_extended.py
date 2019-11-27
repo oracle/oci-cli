@@ -30,3 +30,7 @@ class TestWaas(unittest.TestCase):
     def test_list_waas_policy(self):
         result = util.invoke_command(['waas', 'waas-policy', 'custom-protection-rule'])
         assert 'list' in result.output
+
+    def test_update_policy_config(self):
+        result = util.invoke_command(['waas', 'policy-config', 'update', '--tls-protocols', 'TLS_V1_3', '--tls-protocols', 'TLS_V1_2'])
+        assert 'Missing option(s)' in result.output

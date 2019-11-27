@@ -14,7 +14,7 @@ from oci_cli import custom_types  # noqa: F401
 from oci_cli.aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('fs.fs_root_group.command_name', 'fs'), cls=CommandGroupWithAlias, help=cli_util.override('fs.fs_root_group.help', """The API for the File Storage Service."""), short_help=cli_util.override('fs.fs_root_group.short_help', """File Storage Service API"""))
+@cli.command(cli_util.override('fs.fs_root_group.command_name', 'fs'), cls=CommandGroupWithAlias, help=cli_util.override('fs.fs_root_group.help', """API for the File Storage service. Use this API to manage file systems, mount targets, and snapshots. For more information, see [Overview of File Storage]."""), short_help=cli_util.override('fs.fs_root_group.short_help', """File Storage API"""))
 @cli_util.help_option_group
 def fs_root_group():
     pass
@@ -223,6 +223,8 @@ After you create a file system, you can associate it with a mount target. Instan
 
 For information about access control and compartments, see [Overview of the IAM Service].
 
+For information about Network Security Groups access control, see [Network Security Groups].
+
 For information about availability domains, see [Regions and Availability Domains]. To get a list of availability domains, use the `ListAvailabilityDomains` operation in the Identity and Access Management Service API.
 
 All Oracle Cloud Infrastructure resources, including file systems, get an Oracle-assigned, unique ID called an Oracle Cloud Identifier (OCID).  When you create a resource, you can find its OCID in the response. You can also retrieve a resource's OCID by using a List API operation on that resource type or by viewing the resource in the Console.""")
@@ -320,17 +322,18 @@ Example: `files-1`""")
 @cli_util.option('--ip-address', help=u"""A private IP address of your choice. Must be an available IP address within the subnet's CIDR. If you don't specify a value, Oracle automatically assigns a private IP address from the subnet.
 
 Example: `10.0.3.3`""")
+@cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of Network Security Group [OCIDs] associated with this mount target. A maximum of 5 is allowed. Setting this to an empty array after the list is created removes the mount target from all NSGs. For more information about NSGs, see [Security Rules].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair  with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'file_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'file_storage', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'nsg-ids': {'module': 'file_storage', 'class': 'list[string]'}, 'freeform-tags': {'module': 'file_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'file_storage', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'file_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'file_storage', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'file_storage', 'class': 'MountTarget'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'nsg-ids': {'module': 'file_storage', 'class': 'list[string]'}, 'freeform-tags': {'module': 'file_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'file_storage', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'file_storage', 'class': 'MountTarget'})
 @cli_util.wrap_exceptions
-def create_mount_target(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, subnet_id, display_name, hostname_label, ip_address, freeform_tags, defined_tags):
+def create_mount_target(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, subnet_id, display_name, hostname_label, ip_address, nsg_ids, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -348,6 +351,9 @@ def create_mount_target(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 
     if ip_address is not None:
         details['ipAddress'] = ip_address
+
+    if nsg_ids is not None:
+        details['nsgIds'] = cli_util.parse_json_parameter("nsg_ids", nsg_ids)
 
     if freeform_tags is not None:
         details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -828,7 +834,7 @@ Example: `My resource`""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""Filter results by the specified lifecycle state. Must be a valid state for the resource type.""")
 @cli_util.option('--id', help=u"""Filter results by OCID. Must be an OCID of the correct type for the resouce type.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. You can provide either value, but not both. By default, when you sort by time created, results are shown in descending order. When you sort by display name, results are shown in ascending order.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc', where 'asc' is ascending and 'desc' is descending.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc', where 'asc' is ascending and 'desc' is descending. The default order is 'desc' except for numeric values.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -903,7 +909,7 @@ For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""Filter results by the specified lifecycle state. Must be a valid state for the resource type.""")
 @cli_util.option('--id', help=u"""Filter results by OCID. Must be an OCID of the correct type for the resouce type.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "PATH"]), help=u"""The field to sort by. You can provide either value, but not both. By default, when you sort by time created, results are shown in descending order. When you sort by path, results are shown in ascending alphanumeric order.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc', where 'asc' is ascending and 'desc' is descending.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc', where 'asc' is ascending and 'desc' is descending. The default order is 'desc' except for numeric values.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -978,7 +984,7 @@ Example: `My resource`""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""Filter results by the specified lifecycle state. Must be a valid state for the resource type.""")
 @cli_util.option('--id', help=u"""Filter results by OCID. Must be an OCID of the correct type for the resouce type.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. You can provide either value, but not both. By default, when you sort by time created, results are shown in descending order. When you sort by display name, results are shown in ascending order.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc', where 'asc' is ascending and 'desc' is descending.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc', where 'asc' is ascending and 'desc' is descending. The default order is 'desc' except for numeric values.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1058,7 +1064,7 @@ Example: `My resource`""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""Filter results by the specified lifecycle state. Must be a valid state for the resource type.""")
 @cli_util.option('--id', help=u"""Filter results by OCID. Must be an OCID of the correct type for the resouce type.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. You can choose either value, but not both. By default, when you sort by time created, results are shown in descending order. When you sort by display name, results are shown in ascending order.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc', where 'asc' is ascending and 'desc' is descending.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc', where 'asc' is ascending and 'desc' is descending. The default order is 'desc' except for numeric values.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1122,17 +1128,17 @@ def list_mount_targets(ctx, from_json, all_pages, page_size, compartment_id, ava
 
 @snapshot_group.command(name=cli_util.override('fs.list_snapshots.command_name', 'list'), help=u"""Lists snapshots of the specified file system.""")
 @cli_util.option('--file-system-id', required=True, help=u"""The OCID of the file system.""")
-@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 1000 is the maximum.
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 100 is the maximum.
 
 For important details about how pagination works, see [List Pagination].
 
-Example: `500`""")
+Example: `100`""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call.
 
 For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""Filter results by the specified lifecycle state. Must be a valid state for the resource type.""")
 @cli_util.option('--id', help=u"""Filter results by OCID. Must be an OCID of the correct type for the resouce type.""")
-@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc', where 'asc' is ascending and 'desc' is descending.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc', where 'asc' is ascending and 'desc' is descending. The default order is 'desc' except for numeric values.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1327,7 +1333,9 @@ def update_export_set(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 Example: `My file system`""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair  with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--kms-key-id', help=u"""A KMS key OCID that will be associated with the given file system. If it is empty the Update operation will actually remove the KMS key, if there is one, from the given file system. Note that the old KMS key should still be enabled in KMS otherwise all the files in the file system encrypted with the old KMS key will no longer be accessible.""")
+@cli_util.option('--kms-key-id', help=u"""The OCID of the Key Management master encryption key to associate with the specified file system. If this value is empty, the Update operation will remove the associated key, if there is one, from the file system. (The file system will continue to be encrypted, but with an encryption key managed by Oracle.)
+
+If updating to a new Key Management key, the old key must remain enabled so that files previously encrypted continue to be accessible. For more information, see [Overview of Key Management].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -1402,6 +1410,7 @@ def update_file_system(ctx, from_json, force, wait_for_state, max_wait_seconds, 
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it is changeable. Avoid entering confidential information.
 
 Example: `My mount target`""")
+@cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of Network Security Group [OCIDs] associated with this mount target. A maximum of 5 is allowed. Setting this to an empty array after the list is created removes the mount target from all NSGs. For more information about NSGs, see [Security Rules].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair  with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -1409,18 +1418,18 @@ Example: `My mount target`""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'file_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'file_storage', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'nsg-ids': {'module': 'file_storage', 'class': 'list[string]'}, 'freeform-tags': {'module': 'file_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'file_storage', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'file_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'file_storage', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'file_storage', 'class': 'MountTarget'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'nsg-ids': {'module': 'file_storage', 'class': 'list[string]'}, 'freeform-tags': {'module': 'file_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'file_storage', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'file_storage', 'class': 'MountTarget'})
 @cli_util.wrap_exceptions
-def update_mount_target(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, mount_target_id, display_name, freeform_tags, defined_tags, if_match):
+def update_mount_target(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, mount_target_id, display_name, nsg_ids, freeform_tags, defined_tags, if_match):
 
     if isinstance(mount_target_id, six.string_types) and len(mount_target_id.strip()) == 0:
         raise click.UsageError('Parameter --mount-target-id cannot be whitespace or empty string')
     if not force:
-        if freeform_tags or defined_tags:
-            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+        if nsg_ids or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to nsg-ids and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -1432,6 +1441,9 @@ def update_mount_target(ctx, from_json, force, wait_for_state, max_wait_seconds,
 
     if display_name is not None:
         details['displayName'] = display_name
+
+    if nsg_ids is not None:
+        details['nsgIds'] = cli_util.parse_json_parameter("nsg_ids", nsg_ids)
 
     if freeform_tags is not None:
         details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)

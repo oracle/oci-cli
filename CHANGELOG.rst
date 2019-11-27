@@ -6,6 +6,23 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.6.14 - 2019-11-26
+-------------------
+Added
+~~~~~
+* get the OCPUs info of an exadata infrastructure instance for ATP-D
+
+  * ``oci db exadata-infrastructure get-compute-units --autonomous-exadata-infrastructure-id``
+
+Changed
+~~~~~~~
+* Added timeMaintenanceBegin & timeMaintenanceEnd to autonomous database api response
+* Inline help text has been removed, ``--help`` will still work as normal
+
+Fixed
+~~~~~
+* ``oci waas policy-config update`` command which now takes multiple values for ``--tls-protocols`` option
+
 2.6.13 - 2019-11-19
 -------------------
 Added

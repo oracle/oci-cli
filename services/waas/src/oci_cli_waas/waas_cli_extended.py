@@ -6,6 +6,9 @@ from services.waas.src.oci_cli_waas.generated import waas_cli
 from .generated import waas_service_cli
 from oci_cli import cli_util
 from oci_cli import custom_types  # noqa: F401
+import sys  # noqa: F401
+import six  # noqa: F401
+import oci  # noqa: F401
 from oci_cli import json_skeleton_utils
 from oci_cli.aliasing import CommandGroupWithAlias
 
@@ -71,3 +74,94 @@ cli_util.rename_command(cli, waas_cli.waas_root_group, waas_cli.caching_rules_gr
 @cli_util.wrap_exceptions
 def update_address_list_extended(ctx, **kwargs):
     ctx.invoke(waas_cli.update_address_list, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(waas_cli.update_policy_config, params_to_exclude=['tls_protocols'])
+@waas_cli.policy_config_group.command(name=cli_util.override('waas.update_policy_config.command_name', 'update'), help=waas_cli.update_policy_config.help)
+@cli_util.option('--tls-protocols', type=custom_types.CliCaseInsensitiveChoice(["TLS_V1", "TLS_V1_1", "TLS_V1_2", "TLS_V1_3"]), multiple=True, help=u"""A list of allowed TLS protocols. Only applicable when HTTPS support is enabled. The TLS protocol is negotiated while the request is connecting and the most recent protocol supported by both the edge node and client browser will be selected. If no such version exists, the connection will be aborted. - **TLS_V1:** corresponds to TLS 1.0 specification.
+
+- **TLS_V1_1:** corresponds to TLS 1.1 specification.
+
+- **TLS_V1_2:** corresponds to TLS 1.2 specification.
+
+- **TLS_V1_3:** corresponds to TLS 1.3 specification.
+
+Enabled TLS protocols must go in a row. For example if `TLS_v1_1` and `TLS_V1_3` are enabled, `TLS_V1_2` must be enabled too.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def update_policy_config(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, waas_policy_id, certificate_id, is_https_enabled, is_https_forced, tls_protocols, is_origin_compression_enabled, is_behind_cdn, client_address_header, is_cache_control_respected, is_response_buffering_enabled, cipher_group, if_match):
+    if isinstance(waas_policy_id, six.string_types) and len(waas_policy_id.strip()) == 0:
+        raise click.UsageError('Parameter --waas-policy-id cannot be whitespace or empty string')
+    if not force:
+        if tls_protocols:
+            if not click.confirm("WARNING: Updates to tls-protocols will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    details = {}
+
+    if certificate_id is not None:
+        details['certificateId'] = certificate_id
+
+    if is_https_enabled is not None:
+        details['isHttpsEnabled'] = is_https_enabled
+
+    if is_https_forced is not None:
+        details['isHttpsForced'] = is_https_forced
+
+    if tls_protocols is not None and len(tls_protocols) > 0:
+        print(tls_protocols)
+        details['tlsProtocols'] = tls_protocols
+
+    if is_origin_compression_enabled is not None:
+        details['isOriginCompressionEnabled'] = is_origin_compression_enabled
+
+    if is_behind_cdn is not None:
+        details['isBehindCdn'] = is_behind_cdn
+
+    if client_address_header is not None:
+        details['clientAddressHeader'] = client_address_header
+
+    if is_cache_control_respected is not None:
+        details['isCacheControlRespected'] = is_cache_control_respected
+
+    if is_response_buffering_enabled is not None:
+        details['isResponseBufferingEnabled'] = is_response_buffering_enabled
+
+    if cipher_group is not None:
+        details['cipherGroup'] = cipher_group
+
+    client = cli_util.build_client('waas', ctx)
+    result = client.update_policy_config(
+        waas_policy_id=waas_policy_id,
+        update_policy_config_details=details,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
