@@ -6,6 +6,39 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.6.15 - 2019-12-10
+-------------------
+Added
+~~~~~~
+* Support for Stream Pools and Connect Harness
+
+  * ``oci streaming admin connect-harness``
+  * ``oci streaming admin stream-pool``
+
+* Support for recovering the compartment from DELETED state to ACTIVE state.
+
+  * ``oci iam compartment recover``
+
+* Support for multi-attach feature for block storage.
+
+  * ``oci compute volume-attachment attach --is-shareable``
+  * ``oci compute volume-attachment attach-iscsi-volume --is-shareable``
+  * ``oci compute volume-attachment attach-paravirtualized-volume --is-shareable``
+
+* New parameters added to ``oci os object put`` command.
+
+  * ``oci os object put --cache-control --content-disposition``
+
+Changed
+~~~~~~~
+* Improved retry strategy for multipart uploads.
+
+* Modified stream create to make compartment ID optional and include stream pool id parameter
+
+  * ``oci streaming admin stream create --compartment-id, --stream-pool-id``
+  * ``oci streaming admin stream list --stream-pool-id``
+  * ``oci streaming admin stream update --stream-pool-id``
+
 2.6.14 - 2019-11-26
 -------------------
 Added

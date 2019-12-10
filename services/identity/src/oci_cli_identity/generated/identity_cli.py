@@ -1179,26 +1179,30 @@ def create_swift_password(ctx, from_json, description, user_id):
 
 @tag_group.command(name=cli_util.override('iam.create_tag.command_name', 'create'), help=u"""Creates a new tag in the specified tag namespace.
 
-You must specify either the OCID or the name of the tag namespace that will contain this tag definition.
+The tag requires either the OCID or the name of the tag namespace that will contain this tag definition.
 
-You must also specify a *name* for the tag, which must be unique across all tags in the tag namespace and cannot be changed. The name can contain any ASCII character except the space (_) or period (.) characters. Names are case insensitive. That means, for example, \"myTag\" and \"mytag\" are not allowed in the same namespace. If you specify a name that's already in use in the tag namespace, a 409 error is returned.
+You must specify a *name* for the tag, which must be unique across all tags in the tag namespace and cannot be changed. The name can contain any ASCII character except the space (_) or period (.) characters. Names are case insensitive. That means, for example, \"myTag\" and \"mytag\" are not allowed in the same namespace. If you specify a name that's already in use in the tag namespace, a 409 error is returned.
 
-You must also specify a *description* for the tag. It does not have to be unique, and you can change it with [UpdateTag].
+The tag must have a *description*. It does not have to be unique, and you can change it with [UpdateTag].
 
-If no 'validator' is set on this tag definition, then any (valid) value can be set for this definedTag.
+The tag must have a value type, which is specified with a validator. Tags can use either a static value or a list of possible values. Static values are entered by a user applying the tag to a resource. Lists are created by you and the user must apply a value from the list. Lists are validiated.
 
-If a 'validator' is set on this tag definition, then the only valid values that can be set for this definedTag those that pass the additional validation imposed by the set 'validator'.""")
+* If no `validator` is set, the user applying the tag to a resource can type in a static value or leave the tag value empty. * If a `validator` is set, the user applying the tag to a resource must select from a list of values that you supply with [EnumTagDefinitionValidator].""")
 @cli_util.option('--tag-namespace-id', required=True, help=u"""The OCID of the tag namespace.""")
 @cli_util.option('--name', required=True, help=u"""The name you assign to the tag during creation. This is the tag key definition. The name must be unique within the tag namespace and cannot be changed.""")
 @cli_util.option('--description', required=True, help=u"""The description you assign to the tag during creation.""")
-@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-cost-tracking', type=click.BOOL, help=u"""Indicates whether the tag is enabled for cost tracking.""")
-@cli_util.option('--validator', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Additional validation rule for values specified for the tag definition.
+@cli_util.option('--validator', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The tag must have a value type, which is specified with a validator. Tags can use either a static value or a list of possible values. Static values are entered by a user applying the tag to a resource. Lists are created by you and the user must apply a value from the list. Lists are validiated.
 
-If no validator is defined for a tag definition, then any (valid) value will be accepted.
+If you use the default validiator (or don't define a validator), the user applying the tag enters a value. No additional validation is performed.
 
-The default value for `validator` is an empty map (no additional validation).""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+To clear the validator, call UpdateTag with [DefaultTagDefinitionValidator].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -1263,20 +1267,24 @@ def create_tag(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
 
 @tag_group.command(name=cli_util.override('iam.create_tag_default_tag_definition_validator.command_name', 'create-tag-default-tag-definition-validator'), help=u"""Creates a new tag in the specified tag namespace.
 
-You must specify either the OCID or the name of the tag namespace that will contain this tag definition.
+The tag requires either the OCID or the name of the tag namespace that will contain this tag definition.
 
-You must also specify a *name* for the tag, which must be unique across all tags in the tag namespace and cannot be changed. The name can contain any ASCII character except the space (_) or period (.) characters. Names are case insensitive. That means, for example, \"myTag\" and \"mytag\" are not allowed in the same namespace. If you specify a name that's already in use in the tag namespace, a 409 error is returned.
+You must specify a *name* for the tag, which must be unique across all tags in the tag namespace and cannot be changed. The name can contain any ASCII character except the space (_) or period (.) characters. Names are case insensitive. That means, for example, \"myTag\" and \"mytag\" are not allowed in the same namespace. If you specify a name that's already in use in the tag namespace, a 409 error is returned.
 
-You must also specify a *description* for the tag. It does not have to be unique, and you can change it with [UpdateTag].
+The tag must have a *description*. It does not have to be unique, and you can change it with [UpdateTag].
 
-If no 'validator' is set on this tag definition, then any (valid) value can be set for this definedTag.
+The tag must have a value type, which is specified with a validator. Tags can use either a static value or a list of possible values. Static values are entered by a user applying the tag to a resource. Lists are created by you and the user must apply a value from the list. Lists are validiated.
 
-If a 'validator' is set on this tag definition, then the only valid values that can be set for this definedTag those that pass the additional validation imposed by the set 'validator'.""")
+* If no `validator` is set, the user applying the tag to a resource can type in a static value or leave the tag value empty. * If a `validator` is set, the user applying the tag to a resource must select from a list of values that you supply with [EnumTagDefinitionValidator].""")
 @cli_util.option('--tag-namespace-id', required=True, help=u"""The OCID of the tag namespace.""")
 @cli_util.option('--name', required=True, help=u"""The name you assign to the tag during creation. This is the tag key definition. The name must be unique within the tag namespace and cannot be changed.""")
 @cli_util.option('--description', required=True, help=u"""The description you assign to the tag during creation.""")
-@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-cost-tracking', type=click.BOOL, help=u"""Indicates whether the tag is enabled for cost tracking.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -1342,20 +1350,24 @@ def create_tag_default_tag_definition_validator(ctx, from_json, wait_for_state, 
 
 @tag_group.command(name=cli_util.override('iam.create_tag_enum_tag_definition_validator.command_name', 'create-tag-enum-tag-definition-validator'), help=u"""Creates a new tag in the specified tag namespace.
 
-You must specify either the OCID or the name of the tag namespace that will contain this tag definition.
+The tag requires either the OCID or the name of the tag namespace that will contain this tag definition.
 
-You must also specify a *name* for the tag, which must be unique across all tags in the tag namespace and cannot be changed. The name can contain any ASCII character except the space (_) or period (.) characters. Names are case insensitive. That means, for example, \"myTag\" and \"mytag\" are not allowed in the same namespace. If you specify a name that's already in use in the tag namespace, a 409 error is returned.
+You must specify a *name* for the tag, which must be unique across all tags in the tag namespace and cannot be changed. The name can contain any ASCII character except the space (_) or period (.) characters. Names are case insensitive. That means, for example, \"myTag\" and \"mytag\" are not allowed in the same namespace. If you specify a name that's already in use in the tag namespace, a 409 error is returned.
 
-You must also specify a *description* for the tag. It does not have to be unique, and you can change it with [UpdateTag].
+The tag must have a *description*. It does not have to be unique, and you can change it with [UpdateTag].
 
-If no 'validator' is set on this tag definition, then any (valid) value can be set for this definedTag.
+The tag must have a value type, which is specified with a validator. Tags can use either a static value or a list of possible values. Static values are entered by a user applying the tag to a resource. Lists are created by you and the user must apply a value from the list. Lists are validiated.
 
-If a 'validator' is set on this tag definition, then the only valid values that can be set for this definedTag those that pass the additional validation imposed by the set 'validator'.""")
+* If no `validator` is set, the user applying the tag to a resource can type in a static value or leave the tag value empty. * If a `validator` is set, the user applying the tag to a resource must select from a list of values that you supply with [EnumTagDefinitionValidator].""")
 @cli_util.option('--tag-namespace-id', required=True, help=u"""The OCID of the tag namespace.""")
 @cli_util.option('--name', required=True, help=u"""The name you assign to the tag during creation. This is the tag key definition. The name must be unique within the tag namespace and cannot be changed.""")
 @cli_util.option('--description', required=True, help=u"""The description you assign to the tag during creation.""")
-@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-cost-tracking', type=click.BOOL, help=u"""Indicates whether the tag is enabled for cost tracking.""")
 @cli_util.option('--validator-values', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of allowed values for a definedTag value.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -1497,8 +1509,12 @@ You must also specify a *description* for the namespace. It does not have to be 
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the tenancy containing the tag namespace.""")
 @cli_util.option('--name', required=True, help=u"""The name you assign to the tag namespace during creation. It must be unique across all tag namespaces in the tenancy and cannot be changed.""")
 @cli_util.option('--description', required=True, help=u"""The description you assign to the tag namespace during creation.""")
-@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -3788,7 +3804,7 @@ def list_tags(ctx, from_json, all_pages, page_size, tag_namespace_id, page, limi
 
 @user_group_membership_group.command(name=cli_util.override('iam.list_user_group_memberships.command_name', 'list'), help=u"""Lists the `UserGroupMembership` objects in your tenancy. You must specify your tenancy's OCID as the value for the compartment ID (see [Where to Get the Tenancy's OCID and User's OCID]). You must also then filter the list in one of these ways:
 
-- You can limit the results to just the memberships for a given user by specifying a `userId`. - Similarly, you can limit the results to just the memberships for a given group by specifying a `groupId`. - You can set both the `userId` and `groupId` to determine if the specified user is in the specified group. If the answer is no, the response is an empty list. - Although`userId` and `groupId` are not indvidually required, you must set one of them.""")
+- You can limit the results to just the memberships for a given user by specifying a `userId`. - Similarly, you can limit the results to just the memberships for a given group by specifying a `groupId`. - You can set both the `userId` and `groupId` to determine if the specified user is in the specified group. If the answer is no, the response is an empty list. - Although`userId` and `groupId` are not individually required, you must set one of them.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment (remember that the tenancy is simply the root compartment).""")
 @cli_util.option('--user-id', help=u"""The OCID of the user.""")
 @cli_util.option('--group-id', help=u"""The OCID of the group.""")
@@ -3999,6 +4015,56 @@ def move_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
                 raise
         else:
             click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@compartment_group.command(name=cli_util.override('iam.recover_compartment.command_name', 'recover'), help=u"""Recover the compartment from DELETED state to ACTIVE state.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'Compartment'})
+@cli_util.wrap_exceptions
+def recover_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, if_match):
+
+    if isinstance(compartment_id, six.string_types) and len(compartment_id.strip()) == 0:
+        raise click.UsageError('Parameter --compartment-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('identity', ctx)
+    result = client.recover_compartment(
+        compartment_id=compartment_id,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_compartment') and callable(getattr(client, 'get_compartment')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_compartment(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -4759,19 +4825,25 @@ def update_swift_password(ctx, from_json, user_id, swift_password_id, descriptio
 
 @tag_group.command(name=cli_util.override('iam.update_tag.command_name', 'update'), help=u"""Updates the specified tag definition.
 
-Setting a 'validator' will enable enforcement of additional validation on values contained in the specified for this definedTag. Any values that were previously set will not be changed, but any new value set for the definedTag must pass validation.""")
+Setting `validator` determines the value type. Tags can use either a static value or a list of possible values. Static values are entered by a user applying the tag to a resource. Lists are created by you and the user must apply a value from the list. On update, any values in a list that were previously set do not change, but new values must pass validation. Values already applied to a resource do not change.
+
+You cannot remove list values that appear in a TagDefault. To remove a list value that appears in a TagDefault, first update the TagDefault to use a different value.""")
 @cli_util.option('--tag-namespace-id', required=True, help=u"""The OCID of the tag namespace.""")
 @cli_util.option('--tag-name', required=True, help=u"""The name of the tag.""")
 @cli_util.option('--description', help=u"""The description you assign to the tag during creation.""")
 @cli_util.option('--is-retired', type=click.BOOL, help=u"""Whether the tag is retired. See [Retiring Key Definitions and Namespace Definitions].""")
-@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-cost-tracking', type=click.BOOL, help=u"""Indicates whether the tag is enabled for cost tracking.""")
-@cli_util.option('--validator', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Additional validation rule for values specified for the tag definition.
+@cli_util.option('--validator', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The tag must have a value type, which is specified with a validator. Tags can use either a static value or a list of possible values. Static values are entered by a user applying the tag to a resource. Lists are created by you and the user must apply a value from the list. Lists are validiated.
 
-If no validator is defined for a tag definition, then any (valid) value will be accepted.
+If you use the default validiator (or don't define a validator), the user applying the tag enters a value. No additional validation is performed.
 
-The default value for `validator` is an empty map (no additional validation).""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+To clear the validator, call UpdateTag with [DefaultTagDefinitionValidator].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -4852,13 +4924,19 @@ def update_tag(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_int
 
 @tag_group.command(name=cli_util.override('iam.update_tag_default_tag_definition_validator.command_name', 'update-tag-default-tag-definition-validator'), help=u"""Updates the specified tag definition.
 
-Setting a 'validator' will enable enforcement of additional validation on values contained in the specified for this definedTag. Any values that were previously set will not be changed, but any new value set for the definedTag must pass validation.""")
+Setting `validator` determines the value type. Tags can use either a static value or a list of possible values. Static values are entered by a user applying the tag to a resource. Lists are created by you and the user must apply a value from the list. On update, any values in a list that were previously set do not change, but new values must pass validation. Values already applied to a resource do not change.
+
+You cannot remove list values that appear in a TagDefault. To remove a list value that appears in a TagDefault, first update the TagDefault to use a different value.""")
 @cli_util.option('--tag-namespace-id', required=True, help=u"""The OCID of the tag namespace.""")
 @cli_util.option('--tag-name', required=True, help=u"""The name of the tag.""")
 @cli_util.option('--description', help=u"""The description you assign to the tag during creation.""")
 @cli_util.option('--is-retired', type=click.BOOL, help=u"""Whether the tag is retired. See [Retiring Key Definitions and Namespace Definitions].""")
-@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-cost-tracking', type=click.BOOL, help=u"""Indicates whether the tag is enabled for cost tracking.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
@@ -4940,13 +5018,19 @@ def update_tag_default_tag_definition_validator(ctx, from_json, force, wait_for_
 
 @tag_group.command(name=cli_util.override('iam.update_tag_enum_tag_definition_validator.command_name', 'update-tag-enum-tag-definition-validator'), help=u"""Updates the specified tag definition.
 
-Setting a 'validator' will enable enforcement of additional validation on values contained in the specified for this definedTag. Any values that were previously set will not be changed, but any new value set for the definedTag must pass validation.""")
+Setting `validator` determines the value type. Tags can use either a static value or a list of possible values. Static values are entered by a user applying the tag to a resource. Lists are created by you and the user must apply a value from the list. On update, any values in a list that were previously set do not change, but new values must pass validation. Values already applied to a resource do not change.
+
+You cannot remove list values that appear in a TagDefault. To remove a list value that appears in a TagDefault, first update the TagDefault to use a different value.""")
 @cli_util.option('--tag-namespace-id', required=True, help=u"""The OCID of the tag namespace.""")
 @cli_util.option('--tag-name', required=True, help=u"""The name of the tag.""")
 @cli_util.option('--description', help=u"""The description you assign to the tag during creation.""")
 @cli_util.option('--is-retired', type=click.BOOL, help=u"""Whether the tag is retired. See [Retiring Key Definitions and Namespace Definitions].""")
-@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-cost-tracking', type=click.BOOL, help=u"""Indicates whether the tag is enabled for cost tracking.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--validator-values', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of allowed values for a definedTag value.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -5098,7 +5182,7 @@ def update_tag_default(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
 @tag_namespace_group.command(name=cli_util.override('iam.update_tag_namespace.command_name', 'update'), help=u"""Updates the the specified tag namespace. You can't update the namespace name.
 
-Updating `isRetired` to 'true' retires the namespace and all the tag definitions in the namespace. Reactivating a namespace (changing `isRetired` from 'true' to 'false') does not reactivate tag definitions. To reactivate the tag definitions, you must reactivate each one indvidually *after* you reactivate the namespace, using [UpdateTag]. For more information about retiring tag namespaces, see [Retiring Key Definitions and Namespace Definitions].
+Updating `isRetired` to 'true' retires the namespace and all the tag definitions in the namespace. Reactivating a namespace (changing `isRetired` from 'true' to 'false') does not reactivate tag definitions. To reactivate the tag definitions, you must reactivate each one individually *after* you reactivate the namespace, using [UpdateTag]. For more information about retiring tag namespaces, see [Retiring Key Definitions and Namespace Definitions].
 
 You can't add a namespace with the same name as a retired namespace in the same tenancy.""")
 @cli_util.option('--tag-namespace-id', required=True, help=u"""The OCID of the tag namespace.""")

@@ -47,7 +47,7 @@ stream_root_group.add_command(group_group)
 @group_group.command(name=cli_util.override('stream.consumer_commit.command_name', 'consumer-commit'), help=u"""Provides a mechanism to manually commit offsets, if not using commit-on-get consumer semantics. This commits offsets assicated with the provided cursor, extends the timeout on each of the affected partitions, and returns an updated cursor.
 
 The top level --endpoint parameter must be supplied for this operation.""")
-@cli_util.option('--stream-id', required=True, help=u"""The OCID of the stream for which the group is committing offsets.""")
+@cli_util.option('--stream-id', required=True, help=u"""The OCID of the stream.""")
 @cli_util.option('--cursor', required=True, help=u"""The group-cursor representing the offsets of the group. This cursor is retrieved from the CreateGroupCursor API call.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -73,7 +73,7 @@ def consumer_commit(ctx, from_json, stream_id, cursor):
 @group_group.command(name=cli_util.override('stream.consumer_heartbeat.command_name', 'consumer-heartbeat'), help=u"""Allows long-running processes to extend the timeout on partitions reserved by a consumer instance.
 
 The top level --endpoint parameter must be supplied for this operation.""")
-@cli_util.option('--stream-id', required=True, help=u"""The OCID of the stream for which the group is committing offsets.""")
+@cli_util.option('--stream-id', required=True, help=u"""The OCID of the stream.""")
 @cli_util.option('--cursor', required=True, help=u"""The group-cursor representing the offsets of the group. This cursor is retrieved from the CreateGroupCursor API call.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -99,7 +99,7 @@ def consumer_heartbeat(ctx, from_json, stream_id, cursor):
 @cursor_group.command(name=cli_util.override('stream.create_cursor.command_name', 'create'), help=u"""Creates a cursor. Cursors are used to consume a stream, starting from a specific point in the partition and going forward from there. You can create a cursor based on an offset, a time, the trim horizon, or the most recent message in the stream. As the oldest message inside the retention period boundary, using the trim horizon effectively lets you consume all messages in the stream. A cursor based on the most recent message allows consumption of only messages that are added to the stream after you create the cursor. Cursors expire five minutes after you receive them from the service.
 
 The top level --endpoint parameter must be supplied for this operation.""")
-@cli_util.option('--stream-id', required=True, help=u"""The OCID of the stream to create a cursor for.""")
+@cli_util.option('--stream-id', required=True, help=u"""The OCID of the stream.""")
 @cli_util.option('--partition', required=True, help=u"""The partition to get messages from.""")
 @cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["AFTER_OFFSET", "AT_OFFSET", "AT_TIME", "LATEST", "TRIM_HORIZON"]), help=u"""The type of cursor, which determines the starting point from which the stream will be consumed:
 
@@ -141,7 +141,7 @@ def create_cursor(ctx, from_json, stream_id, partition, type, offset, time):
 @cursor_group.command(name=cli_util.override('stream.create_group_cursor.command_name', 'create-group'), help=u"""Creates a group-cursor.
 
 The top level --endpoint parameter must be supplied for this operation.""")
-@cli_util.option('--stream-id', required=True, help=u"""The OCID of the stream to create a cursor for.""")
+@cli_util.option('--stream-id', required=True, help=u"""The OCID of the stream.""")
 @cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["AT_TIME", "LATEST", "TRIM_HORIZON"]), help=u"""The type of the cursor. This value is only used when the group is created.""")
 @cli_util.option('--group-name', required=True, help=u"""Name of the consumer group.""")
 @cli_util.option('--time', type=custom_types.CLI_DATETIME, help=u"""The time to consume from if type is AT_TIME.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -189,7 +189,7 @@ def create_group_cursor(ctx, from_json, stream_id, type, group_name, time, insta
 @group_group.command(name=cli_util.override('stream.get_group.command_name', 'get'), help=u"""Returns the current state of a consumer group.
 
 The top level --endpoint parameter must be supplied for this operation.""")
-@cli_util.option('--stream-id', required=True, help=u"""The OCID of the stream, on which the group is operating.""")
+@cli_util.option('--stream-id', required=True, help=u"""The OCID of the stream.""")
 @cli_util.option('--group-name', required=True, help=u"""The name of the consumer group.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -218,7 +218,7 @@ def get_group(ctx, from_json, stream_id, group_name):
 @message_group.command(name=cli_util.override('stream.get_messages.command_name', 'get'), help=u"""Returns messages from the specified stream using the specified cursor as the starting point for consumption. By default, the number of messages returned is undefined, but the service returns as many as possible. To get messages, you must first obtain a cursor using the [CreateCursor] operation. In the response, retrieve the value of the 'opc-next-cursor' header to pass as a parameter to get the next batch of messages in the stream.
 
 The top level --endpoint parameter must be supplied for this operation.""")
-@cli_util.option('--stream-id', required=True, help=u"""The OCID of the stream to get messages from.""")
+@cli_util.option('--stream-id', required=True, help=u"""The OCID of the stream.""")
 @cli_util.option('--cursor', required=True, help=u"""The cursor used to consume the stream.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of messages to return. You can specify any value up to 10000. By default, the service returns as many messages as possible. Consider your average message size to help avoid exceeding throughput on the stream.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -247,7 +247,7 @@ def get_messages(ctx, from_json, stream_id, cursor, limit):
 @message_group.command(name=cli_util.override('stream.put_messages.command_name', 'put'), help=u"""Emits messages to a stream. There's no limit to the number of messages in a request, but the total size of a message or request must be 1 MiB or less. The service calculates the partition ID from the message key and stores messages that share a key on the same partition. If a message does not contain a key or if the key is null, the service generates a message key for you. The partition ID cannot be passed as a parameter.
 
 The top level --endpoint parameter must be supplied for this operation.""")
-@cli_util.option('--stream-id', required=True, help=u"""The OCID of the stream where you want to put messages.""")
+@cli_util.option('--stream-id', required=True, help=u"""The OCID of the stream.""")
 @cli_util.option('--messages', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The array of messages to put into a stream.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'messages': {'module': 'streaming', 'class': 'list[PutMessagesDetailsEntry]'}})
 @cli_util.help_option
@@ -277,7 +277,7 @@ def put_messages(ctx, from_json, stream_id, messages):
 @group_group.command(name=cli_util.override('stream.update_group.command_name', 'update'), help=u"""Forcefully changes the current location of a group as a whole; reseting processing location of all consumers to a particular location in the stream.
 
 The top level --endpoint parameter must be supplied for this operation.""")
-@cli_util.option('--stream-id', required=True, help=u"""The OCID of the stream, on which the group is operating.""")
+@cli_util.option('--stream-id', required=True, help=u"""The OCID of the stream.""")
 @cli_util.option('--group-name', required=True, help=u"""The name of the consumer group.""")
 @cli_util.option('--type', type=custom_types.CliCaseInsensitiveChoice(["AT_TIME", "LATEST", "TRIM_HORIZON"]), help=u"""The type of the cursor.""")
 @cli_util.option('--time', type=custom_types.CLI_DATETIME, help=u"""The time to consume from if type is AT_TIME.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)

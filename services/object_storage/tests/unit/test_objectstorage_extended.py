@@ -62,3 +62,9 @@ class TestObjectStorage(unittest.TestCase):
                     print(command.parent.name, command.name, param.opts)
                     assert '-bn' in param.opts
                     assert '--bucket-name' in param.opts
+
+    def test_object_put(self):
+        result = util.invoke_command(['os', 'object', 'put', '--content-disposition', 'dummy-value', '--cache-control', 'dummy-value'])
+
+        print(result.output)
+        assert "Missing option(s)" in result.output

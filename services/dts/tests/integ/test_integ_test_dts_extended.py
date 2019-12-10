@@ -32,7 +32,7 @@ class IntegTestDTS(unittest.TestCase):
         self.command_prefix = ["dts"]
         self.config = {
             "$COMPARTMENT": os.environ["OCI_CLI_COMPARTMENT_ID"],
-            "$PROFILE": "DEFAULT",
+            "$PROFILE": "DESKTOP",
             "$CERT_BUNDLE_PATH": "~/SDK/dts-oci-cli-env/dts-oci-cli-config/combined_r1.crt",
             "$BUCKET": "production_bucket",
             "$JOB_ID": "NOT_POPULATED",

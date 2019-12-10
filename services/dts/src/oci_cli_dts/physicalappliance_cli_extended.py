@@ -246,10 +246,10 @@ def pa_show(ctx, from_json, appliance_profile):
 @cli_util.wrap_exceptions
 def pa_finalize(ctx, from_json, appliance_profile, job_id, appliance_label, skip_upload_user_check):
     click.echo("Retrieving the upload summary object name from Oracle Cloud Infrastructure")
-    client = cli_util.build_client('transfer_appliance', ctx)
-    appliance_client = create_appliance_client(ctx, appliance_profile)
+    appliance_client = cli_util.build_client('transfer_appliance', ctx)
+    physical_appliance_client = create_appliance_client(ctx, appliance_profile)
 
-    upload_summary_obj_name = client.get_transfer_appliance(
+    upload_summary_obj_name = appliance_client.get_transfer_appliance(
         id=job_id,
         transfer_appliance_label=appliance_label
     ).data.upload_status_log_uri
@@ -273,17 +273,17 @@ def pa_finalize(ctx, from_json, appliance_profile, job_id, appliance_label, skip
         'uploadUserOciConfig': open(APPLIANCE_UPLOAD_USER_CONFIG_PATH).read(),
         'uploadUserPrivateKeyPem': upload_user_key_file
     }
-    appliance_client.set_object_storage_upload_config(upload_config=upload_config)
+    physical_appliance_client.set_object_storage_upload_config(upload_config=upload_config)
 
     click.echo("Finalizing the transfer appliance...")
-    appliance_client.finalize_appliance()
-    appliance_info = appliance_client.get_physical_transfer_appliance()
+    physical_appliance_client.finalize_appliance()
+    appliance_info = physical_appliance_client.get_physical_transfer_appliance()
 
     click.echo("The transfer appliance is locked after finalize. Hence the finalize status will be shown as NA. "
                "Please unlock the transfer appliance again to see the correct finalize status")
 
     click.echo("Changing the state of the transfer appliance to FINALIZED")
-    current_state = client.get_transfer_appliance(
+    current_state = appliance_client.get_transfer_appliance(
         id=job_id,
         transfer_appliance_label=appliance_label
     ).data.lifecycle_state
@@ -291,7 +291,7 @@ def pa_finalize(ctx, from_json, appliance_profile, job_id, appliance_label, skip
         details = {
             "lifecycleState": TransferAppliance.LIFECYCLE_STATE_FINALIZED
         }
-        client.update_transfer_appliance(
+        appliance_client.update_transfer_appliance(
             id=job_id,
             transfer_appliance_label=appliance_label,
             update_transfer_appliance_details=details)
@@ -425,6 +425,5 @@ def get_unit(size_in_bytes):
 
 def get_user_friendly_size(size_in_bytes):
     unit = get_unit(size_in_bytes)
-    print(type(unit.value), unit.value)
     value = "%.2f" % float(int(size_in_bytes) / unit.value)
     return value + unit.name

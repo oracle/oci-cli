@@ -345,6 +345,7 @@ def attach_vnic(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 @cli_util.option('--device', help=u"""The device name.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it cannot be changed. Avoid entering confidential information.""")
 @cli_util.option('--is-read-only', type=click.BOOL, help=u"""Whether the attachment was created in read-only mode.""")
+@cli_util.option('--is-shareable', type=click.BOOL, help=u"""Whether the attachment should be created in shareable mode. If an attachment is created in shareable mode, then other instances can attach the same volume, provided that they also create their attachments in shareable mode. Only certain volume types can be attached in shareable mode. Defaults to false if not specified.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ATTACHING", "ATTACHED", "DETACHING", "DETACHED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -353,7 +354,7 @@ def attach_vnic(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'VolumeAttachment'})
 @cli_util.wrap_exceptions
-def attach_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_id, type, volume_id, device, display_name, is_read_only):
+def attach_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_id, type, volume_id, device, display_name, is_read_only, is_shareable):
 
     kwargs = {}
 
@@ -370,6 +371,9 @@ def attach_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 
     if is_read_only is not None:
         details['isReadOnly'] = is_read_only
+
+    if is_shareable is not None:
+        details['isShareable'] = is_shareable
 
     client = cli_util.build_client('compute', ctx)
     result = client.attach_volume(
@@ -407,6 +411,7 @@ def attach_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 @cli_util.option('--device', help=u"""The device name.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it cannot be changed. Avoid entering confidential information.""")
 @cli_util.option('--is-read-only', type=click.BOOL, help=u"""Whether the attachment was created in read-only mode.""")
+@cli_util.option('--is-shareable', type=click.BOOL, help=u"""Whether the attachment should be created in shareable mode. If an attachment is created in shareable mode, then other instances can attach the same volume, provided that they also create their attachments in shareable mode. Only certain volume types can be attached in shareable mode. Defaults to false if not specified.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ATTACHING", "ATTACHED", "DETACHING", "DETACHED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -415,7 +420,7 @@ def attach_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'VolumeAttachment'})
 @cli_util.wrap_exceptions
-def attach_volume_attach_service_determined_volume_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_id, volume_id, device, display_name, is_read_only):
+def attach_volume_attach_service_determined_volume_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_id, volume_id, device, display_name, is_read_only, is_shareable):
 
     kwargs = {}
 
@@ -431,6 +436,9 @@ def attach_volume_attach_service_determined_volume_details(ctx, from_json, wait_
 
     if is_read_only is not None:
         details['isReadOnly'] = is_read_only
+
+    if is_shareable is not None:
+        details['isShareable'] = is_shareable
 
     details['type'] = 'service_determined'
 
@@ -470,6 +478,7 @@ def attach_volume_attach_service_determined_volume_details(ctx, from_json, wait_
 @cli_util.option('--device', help=u"""The device name.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it cannot be changed. Avoid entering confidential information.""")
 @cli_util.option('--is-read-only', type=click.BOOL, help=u"""Whether the attachment was created in read-only mode.""")
+@cli_util.option('--is-shareable', type=click.BOOL, help=u"""Whether the attachment should be created in shareable mode. If an attachment is created in shareable mode, then other instances can attach the same volume, provided that they also create their attachments in shareable mode. Only certain volume types can be attached in shareable mode. Defaults to false if not specified.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ATTACHING", "ATTACHED", "DETACHING", "DETACHED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -478,7 +487,7 @@ def attach_volume_attach_service_determined_volume_details(ctx, from_json, wait_
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'VolumeAttachment'})
 @cli_util.wrap_exceptions
-def attach_volume_attach_emulated_volume_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_id, volume_id, device, display_name, is_read_only):
+def attach_volume_attach_emulated_volume_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_id, volume_id, device, display_name, is_read_only, is_shareable):
 
     kwargs = {}
 
@@ -494,6 +503,9 @@ def attach_volume_attach_emulated_volume_details(ctx, from_json, wait_for_state,
 
     if is_read_only is not None:
         details['isReadOnly'] = is_read_only
+
+    if is_shareable is not None:
+        details['isShareable'] = is_shareable
 
     details['type'] = 'emulated'
 
@@ -533,6 +545,7 @@ def attach_volume_attach_emulated_volume_details(ctx, from_json, wait_for_state,
 @cli_util.option('--device', help=u"""The device name.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it cannot be changed. Avoid entering confidential information.""")
 @cli_util.option('--is-read-only', type=click.BOOL, help=u"""Whether the attachment was created in read-only mode.""")
+@cli_util.option('--is-shareable', type=click.BOOL, help=u"""Whether the attachment should be created in shareable mode. If an attachment is created in shareable mode, then other instances can attach the same volume, provided that they also create their attachments in shareable mode. Only certain volume types can be attached in shareable mode. Defaults to false if not specified.""")
 @cli_util.option('--use-chap', type=click.BOOL, help=u"""Whether to use CHAP authentication for the volume attachment. Defaults to false.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ATTACHING", "ATTACHED", "DETACHING", "DETACHED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -542,7 +555,7 @@ def attach_volume_attach_emulated_volume_details(ctx, from_json, wait_for_state,
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'VolumeAttachment'})
 @cli_util.wrap_exceptions
-def attach_volume_attach_i_scsi_volume_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_id, volume_id, device, display_name, is_read_only, use_chap):
+def attach_volume_attach_i_scsi_volume_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_id, volume_id, device, display_name, is_read_only, is_shareable, use_chap):
 
     kwargs = {}
 
@@ -558,6 +571,9 @@ def attach_volume_attach_i_scsi_volume_details(ctx, from_json, wait_for_state, m
 
     if is_read_only is not None:
         details['isReadOnly'] = is_read_only
+
+    if is_shareable is not None:
+        details['isShareable'] = is_shareable
 
     if use_chap is not None:
         details['useChap'] = use_chap
@@ -600,6 +616,7 @@ def attach_volume_attach_i_scsi_volume_details(ctx, from_json, wait_for_state, m
 @cli_util.option('--device', help=u"""The device name.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it cannot be changed. Avoid entering confidential information.""")
 @cli_util.option('--is-read-only', type=click.BOOL, help=u"""Whether the attachment was created in read-only mode.""")
+@cli_util.option('--is-shareable', type=click.BOOL, help=u"""Whether the attachment should be created in shareable mode. If an attachment is created in shareable mode, then other instances can attach the same volume, provided that they also create their attachments in shareable mode. Only certain volume types can be attached in shareable mode. Defaults to false if not specified.""")
 @cli_util.option('--is-pv-encryption-in-transit-enabled', type=click.BOOL, help=u"""Whether to enable in-transit encryption for the data volume's paravirtualized attachment. The default value is false.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ATTACHING", "ATTACHED", "DETACHING", "DETACHED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -609,7 +626,7 @@ def attach_volume_attach_i_scsi_volume_details(ctx, from_json, wait_for_state, m
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'VolumeAttachment'})
 @cli_util.wrap_exceptions
-def attach_volume_attach_paravirtualized_volume_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_id, volume_id, device, display_name, is_read_only, is_pv_encryption_in_transit_enabled):
+def attach_volume_attach_paravirtualized_volume_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_id, volume_id, device, display_name, is_read_only, is_shareable, is_pv_encryption_in_transit_enabled):
 
     kwargs = {}
 
@@ -625,6 +642,9 @@ def attach_volume_attach_paravirtualized_volume_details(ctx, from_json, wait_for
 
     if is_read_only is not None:
         details['isReadOnly'] = is_read_only
+
+    if is_shareable is not None:
+        details['isShareable'] = is_shareable
 
     if is_pv_encryption_in_transit_enabled is not None:
         details['isPvEncryptionInTransitEnabled'] = is_pv_encryption_in_transit_enabled
