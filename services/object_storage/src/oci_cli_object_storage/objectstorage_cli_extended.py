@@ -29,6 +29,7 @@ from mimetypes import guess_type
 import oci_cli.cli_root as cli_root
 import oci_cli.final_command_processor as final_command_processor
 from oci_cli import cli_exceptions
+from oci.retry import RetryStrategyBuilder
 
 
 # For namespace parameter within object storage commands, if not explicitly provided we make a SDK API call to
@@ -289,11 +290,13 @@ def object_list(ctx, from_json, namespace, bucket_name, prefix, start, end, limi
 @cli_util.option('--name',
                  help='The name of the object. Default value is the filename excluding the path. Required if reading object from STDIN.')
 @cli_util.option('--if-match', help='The entity tag to match.')
-@cli_util.option('--content-md5', help='The base-64 encoded MD5 hash of the body.')
+@cli_util.option('--content-md5', help=u"""The optional base-64 header that defines the encoded MD5 hash of the body. If the optional Content-MD5 header is present, Object Storage performs an integrity check on the body of the HTTP request by computing the MD5 hash for the body and comparing it to the MD5 hash supplied in the header. If the two hashes do not match, the object is rejected and an HTTP-400 Unmatched Content MD5 error is returned with the message:
+     "The computed MD5 of the request body (ACTUAL_MD5) does not match the Content-MD5 header (HEADER_MD5)"
+""")
 @cli_util.option('--metadata', help='Arbitrary string keys and values for user-defined metadata. Must be in JSON format. Example: \'{"key1":"value1","key2":"value2"}\'')
-@cli_util.option('--content-type', help='The content type of the object. If content type is set to auto, then the CLI will guess the content type of the file.')
-@cli_util.option('--content-language', help='The content language of the object.')
-@cli_util.option('--content-encoding', help='The content encoding of the object.')
+@cli_util.option('--content-type', help=u"""The optional Content-Type header that defines the standard MIME type format of the object. Content type defaults to \'application/octet-stream\' if not specified in the PutObject call. Specifying values for this header has no effect on Object Storage behavior. Programs that read the object determine what to do based on the value provided. For example, you could use this header to identify and perform special operations on text only objects.""")
+@cli_util.option('--content-language', help=u"""The optional Content-Language header that defines the content language of the object to upload. Specifying values for this header has no effect on Object Storage behavior. Programs that read the object determine what to do based on the value provided. For example, you could use this header to identify and differentiate objects based on a particular language.""")
+@cli_util.option('--content-encoding', help=u"""The optional Content-Encoding header that defines the content encodings that were applied to the object to upload. Specifying values for this header has no effect on Object Storage behavior. Programs that read the object determine what to do based on the value provided. For example, you could use this header to determine what decoding mechanisms need to be applied to obtain the media-type specified by the Content-Type header of the object.""")
 @cli_util.option('--force', is_flag=True, help='If the object name already exists, overwrite the existing object without a confirmation prompt.')
 @cli_util.option('--no-overwrite', is_flag=True, help='If the object name already exists, do not overwrite the existing object.')
 @cli_util.option('--no-multipart', is_flag=True,
@@ -305,12 +308,14 @@ def object_list(ctx, from_json, namespace, bucket_name, prefix, start, end, limi
 @cli_util.option('--parallel-upload-count', type=click.IntRange(1, 1000), default=None,
                  help='If the object will be uploaded in multiple parts, this option allows you to specify the maximum number of parts that can be uploaded in parallel. This option cannot be used with --disable-parallel-uploads or --no-multipart. Defaults to 3 and the maximum is 1000.')
 @cli_util.option('--verify-checksum', is_flag=True, help='Verify the checksum of the uploaded object with the local file.')
+@cli_util.option('--content-disposition', help=u"""The optional Content-Disposition header that defines presentational information for the object to be returned in GetObject and HeadObject responses. Specifying values for this header has no effect on Object Storage behavior. Programs that read the object determine what to do based on the value provided. For example, you could use this header to let users download objects with custom filenames in a browser.""")
+@cli_util.option('--cache-control', help=u"""The optional Cache-Control header that defines the caching behavior value to be returned in GetObject and HeadObject responses. Specifying values for this header has no effect on Object Storage behavior. Programs that read the object determine what to do based on the value provided. For example, you could use this header to identify objects that require caching restrictions.""")
 @json_skeleton_utils.get_cli_json_input_option({'metadata': {'module': 'object_storage', 'class': 'dict(str, str)'}})
 @help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'metadata': {'module': 'object_storage', 'class': 'dict(str, str)'}}, output_type={'module': 'object_storage', 'class': 'ObjectSummary'})
 @wrap_exceptions
-def object_put(ctx, from_json, namespace, bucket_name, name, file, if_match, content_md5, metadata, content_type, content_language, content_encoding, force, no_overwrite, no_multipart, part_size, disable_parallel_uploads, parallel_upload_count, verify_checksum):
+def object_put(ctx, from_json, namespace, bucket_name, name, file, if_match, content_md5, metadata, content_type, content_language, content_encoding, force, no_overwrite, no_multipart, part_size, disable_parallel_uploads, parallel_upload_count, verify_checksum, content_disposition, cache_control):
     """
     Creates a new object or overwrites an existing one.
 
@@ -393,6 +398,12 @@ def object_put(ctx, from_json, namespace, bucket_name, name, file, if_match, con
     if part_size is not None:
         kwargs['part_size'] = part_size * MEBIBYTE
         part_size_mib = part_size * MEBIBYTE
+
+    if content_disposition is not None:
+        kwargs['content_disposition'] = content_disposition
+
+    if cache_control is not None:
+        kwargs['cache_control'] = cache_control
 
     total_size = os.fstat(file.fileno()).st_size
 
@@ -479,15 +490,22 @@ def object_put(ctx, from_json, namespace, bucket_name, name, file, if_match, con
         click.echo('Upload ID: {}'.format(ma.manifest["uploadId"]), file=sys.stderr)
         ma.add_parts_from_file(file.name)
         click.echo('Split file into {} parts for upload.'.format(len(ma.manifest["parts"])), file=sys.stderr)
+
+        # 60 retries - with exponential sleep time and a max wait of 60 secs.
+        retry_strategy = RetryStrategyBuilder(retry_max_wait_between_calls_seconds=60).add_max_attempts(60)\
+            .no_total_elapsed_time() \
+            .add_service_error_check() \
+            .get_retry_strategy()
+
         with ProgressBar(total_size, 'Uploading object') as bar:
             try:
-                ma.upload(progress_callback=bar.update)
+                ma.upload(retry_strategy=retry_strategy, progress_callback=bar.update)
             except RuntimeError as re:
                 if 'thread' in str(re) or 'Thread' in str(re):
                     raise Exception('Cannot start that many threads, please reduce the parallel-upload-count. The default is 3.')
                 else:
                     raise re
-        response = ma.commit()
+        response = ma.commit(retry_strategy=retry_strategy)
 
     display_headers = filter_object_headers(response.headers, OBJECT_PUT_DISPLAY_HEADERS)
     render(None, display_headers, ctx, display_all_headers=True)

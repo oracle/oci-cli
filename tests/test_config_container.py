@@ -172,6 +172,7 @@ def vcr_path_matcher(r1, r2):
 
     r1_path = r1.path.split('/')
     r2_path = r2.path.split('/')
+
     r1_updated_path = list(r1_path)
     r2_updated_path = list(r2_path)
 
@@ -183,6 +184,11 @@ def vcr_path_matcher(r1, r2):
             if s in s1 and s in s2:
                 r1_updated_path.remove(s1)
                 r2_updated_path.remove(s2)
+
+    while '' in r1_updated_path:
+        r1_updated_path.remove('')
+    while '' in r2_updated_path:
+        r2_updated_path.remove('')
 
     return r1_updated_path == r2_updated_path
 
