@@ -37,6 +37,14 @@ def zone_group():
     pass
 
 
+@click.command(cli_util.override('dns.tsig_key_group.command_name', 'tsig-key'), cls=CommandGroupWithAlias, help="""A TSIG key.
+
+**Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
+@cli_util.help_option_group
+def tsig_key_group():
+    pass
+
+
 @click.command(cli_util.override('dns.rr_set_group.command_name', 'rr-set'), cls=CommandGroupWithAlias, help="""A collection of DNS records of the same domain and type. For more information about record types, see [Resource Record (RR) TYPEs].""")
 @cli_util.help_option_group
 def rr_set_group():
@@ -71,6 +79,7 @@ def zones_group():
 
 dns_root_group.add_command(steering_policy_attachment_group)
 dns_root_group.add_command(zone_group)
+dns_root_group.add_command(tsig_key_group)
 dns_root_group.add_command(rr_set_group)
 dns_root_group.add_command(record_collection_group)
 dns_root_group.add_command(steering_policy_group)
@@ -78,7 +87,7 @@ dns_root_group.add_command(records_group)
 dns_root_group.add_command(zones_group)
 
 
-@steering_policy_group.command(name=cli_util.override('dns.change_steering_policy_compartment.command_name', 'change-compartment'), help=u"""Moves a steering policy into a different compartment. When provided, If-Match is checked against ETag values of the resource.""")
+@steering_policy_group.command(name=cli_util.override('dns.change_steering_policy_compartment.command_name', 'change-compartment'), help=u"""Moves a steering policy into a different compartment.""")
 @cli_util.option('--steering-policy-id', required=True, help=u"""The OCID of the target steering policy.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the steering policy should be moved.""")
 @cli_util.option('--if-match', help=u"""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
@@ -95,6 +104,7 @@ def change_steering_policy_compartment(ctx, from_json, steering_policy_id, compa
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     details = {}
     details['compartmentId'] = compartment_id
@@ -108,7 +118,38 @@ def change_steering_policy_compartment(ctx, from_json, steering_policy_id, compa
     cli_util.render_response(result, ctx)
 
 
-@zone_group.command(name=cli_util.override('dns.change_zone_compartment.command_name', 'change-compartment'), help=u"""Moves a zone into a different compartment. When provided, If-Match is checked against ETag values of the resource. **Note:** All SteeringPolicyAttachment objects associated with this zone will also be moved into the provided compartment.""")
+@tsig_key_group.command(name=cli_util.override('dns.change_tsig_key_compartment.command_name', 'change-compartment'), help=u"""Moves a TSIG key into a different compartment.""")
+@cli_util.option('--tsig-key-id', required=True, help=u"""The OCID of the target TSIG key.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the TSIG key should be moved.""")
+@cli_util.option('--if-match', help=u"""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_tsig_key_compartment(ctx, from_json, tsig_key_id, compartment_id, if_match):
+
+    if isinstance(tsig_key_id, six.string_types) and len(tsig_key_id.strip()) == 0:
+        raise click.UsageError('Parameter --tsig-key-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    details = {}
+    details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('dns', ctx)
+    result = client.change_tsig_key_compartment(
+        tsig_key_id=tsig_key_id,
+        change_tsig_key_compartment_details=details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@zone_group.command(name=cli_util.override('dns.change_zone_compartment.command_name', 'change-compartment'), help=u"""Moves a zone into a different compartment. **Note:** All SteeringPolicyAttachment objects associated with this zone will also be moved into the provided compartment.""")
 @cli_util.option('--zone-id', required=True, help=u"""The OCID of the target zone.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the zone should be moved.""")
 @cli_util.option('--if-match', help=u"""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
@@ -125,6 +166,7 @@ def change_zone_compartment(ctx, from_json, zone_id, compartment_id, if_match):
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     details = {}
     details['compartmentId'] = compartment_id
@@ -191,6 +233,7 @@ This option is a JSON list with items of type SteeringPolicyRule.  For documenta
 def create_steering_policy(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, template, ttl, health_check_monitor_id, freeform_tags, defined_tags, answers, rules):
 
     kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     details = {}
     details['compartmentId'] = compartment_id
@@ -263,6 +306,7 @@ For the purposes of access control, the attachment is automatically placed into 
 def create_steering_policy_attachment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, steering_policy_id, zone_id, domain_name, display_name):
 
     kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     details = {}
     details['steeringPolicyId'] = steering_policy_id
@@ -302,6 +346,72 @@ def create_steering_policy_attachment(ctx, from_json, wait_for_state, max_wait_s
     cli_util.render_response(result, ctx)
 
 
+@tsig_key_group.command(name=cli_util.override('dns.create_tsig_key.command_name', 'create'), help=u"""Creates a new TSIG key in the specified compartment. There is no `opc-retry-token` header since TSIG key names must be globally unique.""")
+@cli_util.option('--algorithm', required=True, help=u"""TSIG key algorithms are encoded as domain names, but most consist of only one non-empty label, which is not required to be explicitly absolute. Applicable algorithms include: hmac-sha1, hmac-sha224, hmac-sha256, hmac-sha512. For more information on these algorithms, see [RFC 4635].""")
+@cli_util.option('--name', required=True, help=u"""A globally unique domain name identifying the key for a given pair of hosts.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment containing the TSIG key.""")
+@cli_util.option('--secret', required=True, help=u"""A base64 string encoding the binary shared secret.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+ **Example:** `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+ **Example:** `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'dns', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'dns', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'dns', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'dns', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'dns', 'class': 'TsigKey'})
+@cli_util.wrap_exceptions
+def create_tsig_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, algorithm, name, compartment_id, secret, freeform_tags, defined_tags):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    details = {}
+    details['algorithm'] = algorithm
+    details['name'] = name
+    details['compartmentId'] = compartment_id
+    details['secret'] = secret
+
+    if freeform_tags is not None:
+        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('dns', ctx)
+    result = client.create_tsig_key(
+        create_tsig_key_details=details,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_tsig_key') and callable(getattr(client, 'get_tsig_key')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_tsig_key(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @zone_group.command(name=cli_util.override('dns.create_zone.command_name', 'create'), help=u"""Creates a new zone in the specified compartment. The `compartmentId` query parameter is required if the `Content-Type` header for the request is `text/dns`.""")
 @cli_util.option('--name', required=True, help=u"""The name of the zone.""")
 @cli_util.option('--migration-source', type=custom_types.CliCaseInsensitiveChoice(["NONE", "DYNECT"]), help=u"""Discriminator that is used to determine whether to create a new zone (NONE) or to migrate an existing DynECT zone (DYNECT).""")
@@ -325,6 +435,7 @@ def create_zone(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
     kwargs = {}
     if compartment_id is not None:
         kwargs['compartment_id'] = compartment_id
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     details = {}
     details['name'] = name
@@ -395,6 +506,7 @@ def create_zone_create_zone_details(ctx, from_json, wait_for_state, max_wait_sec
     kwargs = {}
     if compartment_id is not None:
         kwargs['compartment_id'] = compartment_id
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     details = {}
     details['name'] = name
@@ -467,6 +579,7 @@ def create_zone_create_migrated_dynect_zone_details(ctx, from_json, wait_for_sta
     kwargs = {}
     if compartment_id is not None:
         kwargs['compartment_id'] = compartment_id
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     details = {}
     details['name'] = name
@@ -540,6 +653,7 @@ def delete_domain_records(ctx, from_json, zone_name_or_id, domain, if_match, if_
         kwargs['if_unmodified_since'] = if_unmodified_since
     if compartment_id is not None:
         kwargs['compartment_id'] = compartment_id
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('dns', ctx)
     result = client.delete_domain_records(
         zone_name_or_id=zone_name_or_id,
@@ -580,6 +694,7 @@ def delete_rr_set(ctx, from_json, zone_name_or_id, domain, rtype, if_match, if_u
         kwargs['if_unmodified_since'] = if_unmodified_since
     if compartment_id is not None:
         kwargs['compartment_id'] = compartment_id
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('dns', ctx)
     result = client.delete_rr_set(
         zone_name_or_id=zone_name_or_id,
@@ -613,6 +728,7 @@ def delete_steering_policy(ctx, from_json, wait_for_state, max_wait_seconds, wai
         kwargs['if_match'] = if_match
     if if_unmodified_since is not None:
         kwargs['if_unmodified_since'] = if_unmodified_since
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('dns', ctx)
     result = client.delete_steering_policy(
         steering_policy_id=steering_policy_id,
@@ -678,6 +794,7 @@ def delete_steering_policy_attachment(ctx, from_json, wait_for_state, max_wait_s
         kwargs['if_match'] = if_match
     if if_unmodified_since is not None:
         kwargs['if_unmodified_since'] = if_unmodified_since
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('dns', ctx)
     result = client.delete_steering_policy_attachment(
         steering_policy_attachment_id=steering_policy_attachment_id,
@@ -694,6 +811,72 @@ def delete_steering_policy_attachment(ctx, from_json, wait_for_state, max_wait_s
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 oci.wait_until(client, client.get_steering_policy_attachment(steering_policy_attachment_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except oci.exceptions.ServiceError as e:
+                # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
+                # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
+                # will result in an exception that reflects a HTTP 404. In this case, we can exit with success (rather than raising
+                # the exception) since this would have been the behaviour in the waiter anyway (as for delete we provide the argument
+                # succeed_on_not_found=True to the waiter).
+                #
+                # Any non-404 should still result in the exception being thrown.
+                if e.status == 404:
+                    pass
+                else:
+                    raise
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@tsig_key_group.command(name=cli_util.override('dns.delete_tsig_key.command_name', 'delete'), help=u"""Deletes the specified TSIG key.""")
+@cli_util.option('--tsig-key-id', required=True, help=u"""The OCID of the target TSIG key.""")
+@cli_util.option('--if-match', help=u"""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
+@cli_util.option('--if-unmodified-since', help=u"""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_tsig_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, tsig_key_id, if_match, if_unmodified_since):
+
+    if isinstance(tsig_key_id, six.string_types) and len(tsig_key_id.strip()) == 0:
+        raise click.UsageError('Parameter --tsig-key-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    if if_unmodified_since is not None:
+        kwargs['if_unmodified_since'] = if_unmodified_since
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('dns', ctx)
+    result = client.delete_tsig_key(
+        tsig_key_id=tsig_key_id,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_tsig_key') and callable(getattr(client, 'get_tsig_key')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                oci.wait_until(client, client.get_tsig_key(tsig_key_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
             except oci.exceptions.ServiceError as e:
                 # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
                 # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
@@ -746,6 +929,7 @@ def delete_zone(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
         kwargs['if_unmodified_since'] = if_unmodified_since
     if compartment_id is not None:
         kwargs['compartment_id'] = compartment_id
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('dns', ctx)
     result = client.delete_zone(
         zone_name_or_id=zone_name_or_id,
@@ -837,6 +1021,7 @@ def get_domain_records(ctx, from_json, all_pages, page_size, zone_name_or_id, do
         kwargs['sort_order'] = sort_order
     if compartment_id is not None:
         kwargs['compartment_id'] = compartment_id
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('dns', ctx)
     if all_pages:
         if page_size:
@@ -910,6 +1095,7 @@ def get_rr_set(ctx, from_json, all_pages, page_size, zone_name_or_id, domain, rt
         kwargs['zone_version'] = zone_version
     if compartment_id is not None:
         kwargs['compartment_id'] = compartment_id
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('dns', ctx)
     if all_pages:
         if page_size:
@@ -961,6 +1147,7 @@ def get_steering_policy(ctx, from_json, steering_policy_id, if_none_match, if_mo
         kwargs['if_none_match'] = if_none_match
     if if_modified_since is not None:
         kwargs['if_modified_since'] = if_modified_since
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('dns', ctx)
     result = client.get_steering_policy(
         steering_policy_id=steering_policy_id,
@@ -988,9 +1175,38 @@ def get_steering_policy_attachment(ctx, from_json, steering_policy_attachment_id
         kwargs['if_none_match'] = if_none_match
     if if_modified_since is not None:
         kwargs['if_modified_since'] = if_modified_since
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('dns', ctx)
     result = client.get_steering_policy_attachment(
         steering_policy_attachment_id=steering_policy_attachment_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@tsig_key_group.command(name=cli_util.override('dns.get_tsig_key.command_name', 'get'), help=u"""Gets information about the specified TSIG key.""")
+@cli_util.option('--tsig-key-id', required=True, help=u"""The OCID of the target TSIG key.""")
+@cli_util.option('--if-none-match', help=u"""The `If-None-Match` header field makes the request method conditional on the absence of any current representation of the target resource, when the field-value is `*`, or having a selected representation with an entity-tag that does not match any of those listed in the field-value.""")
+@cli_util.option('--if-modified-since', help=u"""The `If-Modified-Since` header field makes a GET or HEAD request method conditional on the selected representation's modification date being more recent than the date provided in the field-value.  Transfer of the selected representation's data is avoided if that data has not changed.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'dns', 'class': 'TsigKey'})
+@cli_util.wrap_exceptions
+def get_tsig_key(ctx, from_json, tsig_key_id, if_none_match, if_modified_since):
+
+    if isinstance(tsig_key_id, six.string_types) and len(tsig_key_id.strip()) == 0:
+        raise click.UsageError('Parameter --tsig-key-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_none_match is not None:
+        kwargs['if_none_match'] = if_none_match
+    if if_modified_since is not None:
+        kwargs['if_modified_since'] = if_modified_since
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('dns', ctx)
+    result = client.get_tsig_key(
+        tsig_key_id=tsig_key_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -1018,6 +1234,7 @@ def get_zone(ctx, from_json, zone_name_or_id, if_none_match, if_modified_since, 
         kwargs['if_modified_since'] = if_modified_since
     if compartment_id is not None:
         kwargs['compartment_id'] = compartment_id
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('dns', ctx)
     result = client.get_zone(
         zone_name_or_id=zone_name_or_id,
@@ -1077,6 +1294,7 @@ def get_zone_records(ctx, from_json, all_pages, page_size, zone_name_or_id, if_n
         kwargs['sort_order'] = sort_order
     if compartment_id is not None:
         kwargs['compartment_id'] = compartment_id
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('dns', ctx)
     if all_pages:
         if page_size:
@@ -1154,6 +1372,7 @@ def list_steering_policies(ctx, from_json, all_pages, page_size, compartment_id,
         kwargs['sort_by'] = sort_by
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('dns', ctx)
     if all_pages:
         if page_size:
@@ -1234,6 +1453,7 @@ def list_steering_policy_attachments(ctx, from_json, all_pages, page_size, compa
         kwargs['sort_by'] = sort_by
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('dns', ctx)
     if all_pages:
         if page_size:
@@ -1254,6 +1474,69 @@ def list_steering_policy_attachments(ctx, from_json, all_pages, page_size, compa
         )
     else:
         result = client.list_steering_policy_attachments(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@tsig_key_group.command(name=cli_util.override('dns.list_tsig_keys.command_name', 'list'), help=u"""Gets a list of all TSIG keys in the specified compartment.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment the resource belongs to.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a page of the collection.""")
+@cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@cli_util.option('--id', help=u"""The OCID of a resource.""")
+@cli_util.option('--name', help=u"""The name of a resource.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING"]), help=u"""The state of a resource.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["name", "timeCreated"]), help=u"""The field by which to sort TSIG keys. If unspecified, defaults to `timeCreated`.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The order to sort the resources.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'dns', 'class': 'list[TsigKeySummary]'})
+@cli_util.wrap_exceptions
+def list_tsig_keys(ctx, from_json, all_pages, page_size, compartment_id, limit, page, id, name, lifecycle_state, sort_by, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if id is not None:
+        kwargs['id'] = id
+    if name is not None:
+        kwargs['name'] = name
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('dns', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_tsig_keys,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_tsig_keys,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_tsig_keys(
             compartment_id=compartment_id,
             **kwargs
         )
@@ -1305,6 +1588,7 @@ def list_zones(ctx, from_json, all_pages, page_size, compartment_id, limit, page
         kwargs['sort_by'] = sort_by
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('dns', ctx)
     if all_pages:
         if page_size:
@@ -1360,6 +1644,7 @@ def patch_domain_records(ctx, from_json, zone_name_or_id, domain, items, if_matc
         kwargs['if_unmodified_since'] = if_unmodified_since
     if compartment_id is not None:
         kwargs['compartment_id'] = compartment_id
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     details = {}
 
@@ -1409,6 +1694,7 @@ def patch_rr_set(ctx, from_json, zone_name_or_id, domain, rtype, items, if_match
         kwargs['if_unmodified_since'] = if_unmodified_since
     if compartment_id is not None:
         kwargs['compartment_id'] = compartment_id
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     details = {}
 
@@ -1451,6 +1737,7 @@ def patch_zone_records(ctx, from_json, zone_name_or_id, items, if_match, if_unmo
         kwargs['if_unmodified_since'] = if_unmodified_since
     if compartment_id is not None:
         kwargs['compartment_id'] = compartment_id
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     details = {}
 
@@ -1500,6 +1787,7 @@ def update_domain_records(ctx, from_json, force, zone_name_or_id, domain, items,
         kwargs['if_unmodified_since'] = if_unmodified_since
     if compartment_id is not None:
         kwargs['compartment_id'] = compartment_id
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     details = {}
 
@@ -1554,6 +1842,7 @@ def update_rr_set(ctx, from_json, force, zone_name_or_id, domain, rtype, items, 
         kwargs['if_unmodified_since'] = if_unmodified_since
     if compartment_id is not None:
         kwargs['compartment_id'] = compartment_id
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     details = {}
 
@@ -1638,6 +1927,7 @@ def update_steering_policy(ctx, from_json, force, wait_for_state, max_wait_secon
         kwargs['if_match'] = if_match
     if if_unmodified_since is not None:
         kwargs['if_unmodified_since'] = if_unmodified_since
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     details = {}
 
@@ -1719,6 +2009,7 @@ def update_steering_policy_attachment(ctx, from_json, wait_for_state, max_wait_s
         kwargs['if_match'] = if_match
     if if_unmodified_since is not None:
         kwargs['if_unmodified_since'] = if_unmodified_since
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     details = {}
 
@@ -1742,6 +2033,80 @@ def update_steering_policy_attachment(ctx, from_json, wait_for_state, max_wait_s
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 result = oci.wait_until(client, client.get_steering_policy_attachment(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@tsig_key_group.command(name=cli_util.override('dns.update_tsig_key.command_name', 'update'), help=u"""Updates the specified TSIG key.""")
+@cli_util.option('--tsig-key-id', required=True, help=u"""The OCID of the target TSIG key.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+ **Example:** `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+ **Example:** `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
+@cli_util.option('--if-unmodified-since', help=u"""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'dns', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'dns', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'dns', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'dns', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'dns', 'class': 'TsigKey'})
+@cli_util.wrap_exceptions
+def update_tsig_key(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, tsig_key_id, freeform_tags, defined_tags, if_match, if_unmodified_since):
+
+    if isinstance(tsig_key_id, six.string_types) and len(tsig_key_id.strip()) == 0:
+        raise click.UsageError('Parameter --tsig-key-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    if if_unmodified_since is not None:
+        kwargs['if_unmodified_since'] = if_unmodified_since
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    details = {}
+
+    if freeform_tags is not None:
+        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('dns', ctx)
+    result = client.update_tsig_key(
+        tsig_key_id=tsig_key_id,
+        update_tsig_key_details=details,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_tsig_key') and callable(getattr(client, 'get_tsig_key')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_tsig_key(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except oci.exceptions.MaximumWaitTimeExceeded as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -1795,6 +2160,7 @@ def update_zone(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_in
         kwargs['if_unmodified_since'] = if_unmodified_since
     if compartment_id is not None:
         kwargs['compartment_id'] = compartment_id
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     details = {}
 
@@ -1868,6 +2234,7 @@ def update_zone_records(ctx, from_json, force, zone_name_or_id, items, if_match,
         kwargs['if_unmodified_since'] = if_unmodified_since
     if compartment_id is not None:
         kwargs['compartment_id'] = compartment_id
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     details = {}
 

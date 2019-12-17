@@ -18,6 +18,7 @@ from datetime import datetime, timedelta
 DEFAULT_KUBECONFIG_LOCATION = os.path.join('~', '.kube', 'config')
 cli_util.rename_command(containerengine_cli, containerengine_cli.work_request_log_entry_group, containerengine_cli.list_work_request_logs,
                         "list")
+containerengine_cli.node_pool_group.commands.pop(containerengine_cli.create_node_pool_node_source_via_image_details.name)
 
 
 @containerengine_cli.cluster_group.command(name=cli_util.override('generate_token.command_name', 'generate-token'),
@@ -141,9 +142,10 @@ def create_cluster(ctx, **kwargs):
 
 
 @cli_util.copy_params_from_generated_command(containerengine_cli.create_node_pool,
-                                             params_to_exclude=['node_config_details'], copy_from_json=False)
+                                             params_to_exclude=['node_config_details', 'node_source_details'], copy_from_json=False)
 @containerengine_cli.node_pool_group.command(name=cli_util.override('create_node_pool.command_name', 'create'),
                                              help="""Create a new node pool.""")
+@cli_util.option('--node-image-id', help="""The OCID of the image used to launch the node.""")
 @cli_util.option('--size', type=click.INT, help="""The number of nodes spread across placement configurations.""")
 @cli_util.option('--placement-configs', type=custom_types.CLI_COMPLEX_TYPE,
                  help="""The placement configurations that determine where the nodes will be placed.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -170,6 +172,12 @@ def create_node_pool(ctx, **kwargs):
         kwargs['node_config_details']['placementConfigs'] = cli_util.parse_json_parameter("placement_configs",
                                                                                           kwargs['placement_configs'])
     kwargs.pop('placement_configs', None)
+
+    kwargs['node_source_details'] = {}
+    if 'node_image_id' in kwargs and kwargs['node_image_id'] is not None:
+        kwargs['node_source_details']['sourceType'] = 'IMAGE'
+        kwargs['node_source_details']['imageId'] = kwargs['node_image_id']
+    kwargs.pop('node_image_id', None)
 
     ctx.invoke(containerengine_cli.create_node_pool, **kwargs)
 
@@ -222,7 +230,7 @@ def update_node_pool(ctx, **kwargs):
                                            help="""Create the Kubeconfig YAML for a cluster.""")
 @cli_util.option('--file', type=click.Path(), default=DEFAULT_KUBECONFIG_LOCATION, show_default=True,
                  help="The name of the file that will be updated with response data, or '-' to write to STDOUT.")
-@cli_util.option('--token-version', default="2.0.0", help=u"""The version of the kubeconfig token. Supported values 1.0.0 and 2.0.0""", type=custom_types.CliCaseInsensitiveChoice(['1.0.0', '2.0.0']))
+@cli_util.option('--token-version', default="2.0.0", help=u"""The version of the kubeconfig token. Supported value is 2.0.0""", type=custom_types.CliCaseInsensitiveChoice(['2.0.0']))
 @cli_util.option('--overwrite', is_flag=True, help="""Overwrites the contents of kubeconfig file specified using --file\
  option or kubeconfig file at default location if --file is not used.""")
 @click.pass_context

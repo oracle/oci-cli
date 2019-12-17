@@ -29,7 +29,7 @@ with open_relative("README.rst") as f:
     readme = f.read()
 
 requires = [
-    'oci==2.7.1',
+    'oci==2.8.0',
     'arrow==0.10.0',
     'certifi',
     'click==6.7',
@@ -100,7 +100,6 @@ setup(
         "Intended Audience :: Developers",
         "License :: OSI Approved :: Apache Software License",
         "License :: OSI Approved :: Universal Permissive License (UPL)",
-        "Programming Language :: Python :: 2.7",
         "Programming Language :: Python :: 3.5",
         "Programming Language :: Python :: 3.6",
     ]

@@ -11,6 +11,7 @@ import click
 # oci oce work-request list --compartment-id, --all-pages, --resource-id
 # oci oce work-request-error list --work-request-id, --all-pages
 # oci oce work-request-log-entry list --work-request-id, --all-pages
+oceinstance_cli.oce_root_group.short_help = "Oracle Content and Experience"
 oceinstance_cli.oce_instance_group.commands.pop(oceinstance_cli.list_oce_instances.name)
 oceinstance_cli.work_request_group.commands.pop(oceinstance_cli.list_work_requests.name)
 oceinstance_cli.work_request_error_group.commands.pop(oceinstance_cli.list_work_request_errors.name)

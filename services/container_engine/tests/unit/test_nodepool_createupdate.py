@@ -16,3 +16,7 @@ class TestNodePoolCreateUpdate(unittest.TestCase):
     def test_nodepool_update(self):
         result = util.invoke_command(['ce', 'node-pool', 'update', '--size', '1', '--placement-configs', 'config'])
         assert 'Error: Missing option(s) --node-pool-id.' in result.output
+
+    def test_nodepool_create_via_imageId(self):
+        result = util.invoke_command(['ce', 'node-pool', 'create', '--node-image-id', 'id'])
+        assert 'Error: Missing option(s)' in result.output

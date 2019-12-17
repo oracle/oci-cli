@@ -9,10 +9,11 @@
 
 set -e
 
-ORIGINAL_INSTANCE_SHAPE='VM.Standard2.2'
+ORIGINAL_INSTANCE_SHAPE='VM.Standard2.1'
 INSTANCE_DISPLAY_NAME='AgentVmInstance'
-INSTANCE_AGENT_CONFIG_ENABLE_MONITORING='{"isMonitoringDisabled":false}'
-INSTANCE_AGENT_CONFIG_DISABLE_MONITORING='{"isMonitoringDisabled":true}'
+
+INSTANCE_AGENT_CONFIG_ENABLE_MONITORING_MANAGEMENT='{"isMonitoringDisabled":false,"isManagementDisabled":false}'
+INSTANCE_AGENT_CONFIG_DISABLE_MONITORING_MANAGEMENT='{"isMonitoringDisabled":true,"isManagementDisabled":true}'
 
 # dynamically select image so it is for the correct region
 ORACLE_LINUX_IMAGE_ID=$(oci compute image list -c $COMPARTMENT_ID --operating-system 'Oracle Linux' --operating-system-version '7.6' --shape $ORIGINAL_INSTANCE_SHAPE --query 'data[0].id' --raw-output)
@@ -37,7 +38,7 @@ INSTANCE_ID=`oci compute instance launch \
     --shape $ORIGINAL_INSTANCE_SHAPE \
     --ssh-authorized-keys-file $SSH_AUTHORIZED_KEYS_FILE \
     --subnet-id $SUBNET_ID \
-    --agent-config $INSTANCE_AGENT_CONFIG_ENABLE_MONITORING \
+    --agent-config $INSTANCE_AGENT_CONFIG_ENABLE_MONITORING_MANAGEMENT \
     --assign-public-ip true \
     --wait-for-state RUNNING \
     --query 'data.id' \
@@ -49,7 +50,7 @@ INSTANCE_AGENT_CONFIG=`oci compute instance get --instance-id $INSTANCE_ID --que
 
 echo "Instance agent configuration after launch: $INSTANCE_AGENT_CONFIG"
 
-oci compute instance update --agent-config $INSTANCE_AGENT_CONFIG_DISABLE_MONITORING --instance-id $INSTANCE_ID --force
+oci compute instance update --agent-config $INSTANCE_AGENT_CONFIG_DISABLE_MONITORING_MANAGEMENT --instance-id $INSTANCE_ID --force
 
 INSTANCE_AGENT_CONFIG=`oci compute instance get --instance-id $INSTANCE_ID --query 'data."agent-config"'`
 

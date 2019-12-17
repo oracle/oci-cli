@@ -216,7 +216,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED", "UPDATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'streaming', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'streaming', 'class': 'dict(str, dict(str, object))'}})
@@ -417,7 +417,7 @@ def create_stream_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 @cli_util.option('--connect-harness-id', required=True, help=u"""The OCID of the connect harness.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED", "UPDATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -698,7 +698,7 @@ def get_stream_pool(ctx, from_json, stream_pool_id):
 @cli_util.option('--page', help=u"""The page at which to start retrieving results.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["NAME", "TIMECREATED"]), help=u"""The field to sort by. You can provide no more than one sort order. By default, `TIMECREATED` sorts results in descending order and `NAME` sorts results in ascending order.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to only return resources that match the given lifecycle state. The state value is case-insensitive.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED", "UPDATING"]), help=u"""A filter to only return resources that match the given lifecycle state. The state value is case-insensitive.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -754,7 +754,7 @@ def list_connect_harnesses(ctx, from_json, all_pages, page_size, compartment_id,
 
 
 @stream_pool_group.command(name=cli_util.override('stream_admin.list_stream_pools.command_name', 'list'), help=u"""List the stream pools for a given compartment ID.""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
 @cli_util.option('--id', help=u"""A filter to return only resources that match the given ID exactly.""")
 @cli_util.option('--name', help=u"""A filter to return only resources that match the given name exactly.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return. The value must be between 1 and 50. The default is 10.""")
@@ -775,8 +775,6 @@ def list_stream_pools(ctx, from_json, all_pages, page_size, compartment_id, id, 
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
     kwargs = {}
-    if compartment_id is not None:
-        kwargs['compartment_id'] = compartment_id
     if id is not None:
         kwargs['id'] = id
     if name is not None:
@@ -799,6 +797,7 @@ def list_stream_pools(ctx, from_json, all_pages, page_size, compartment_id, id, 
 
         result = cli_util.list_call_get_all_results(
             client.list_stream_pools,
+            compartment_id=compartment_id,
             **kwargs
         )
     elif limit is not None:
@@ -806,18 +805,20 @@ def list_stream_pools(ctx, from_json, all_pages, page_size, compartment_id, id, 
             client.list_stream_pools,
             limit,
             page_size,
+            compartment_id=compartment_id,
             **kwargs
         )
     else:
         result = client.list_stream_pools(
+            compartment_id=compartment_id,
             **kwargs
         )
     cli_util.render_response(result, ctx)
 
 
 @stream_group.command(name=cli_util.override('stream_admin.list_streams.command_name', 'list'), help=u"""Lists the streams in the given compartment id. If the compartment id is specified, it will list streams in the compartment, regardless of their stream pool. If the stream pool id is specified, the action will be scoped to that stream pool. The compartment id and stream pool id cannot be specified at the same time.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
-@cli_util.option('--stream-pool-id', help=u"""The OCID of the stream pool.""")
+@cli_util.option('--compartment-id', help=u"""The OCID of the compartment. Is exclusive with the `streamPoolId` parameter. One of them is required.""")
+@cli_util.option('--stream-pool-id', help=u"""The OCID of the stream pool. Is exclusive with the `compartmentId` parameter. One of them is required.""")
 @cli_util.option('--id', help=u"""A filter to return only resources that match the given ID exactly.""")
 @cli_util.option('--name', help=u"""A filter to return only resources that match the given name exactly.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return. The value must be between 1 and 50. The default is 10.""")
@@ -838,6 +839,8 @@ def list_streams(ctx, from_json, all_pages, page_size, compartment_id, stream_po
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
     kwargs = {}
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
     if stream_pool_id is not None:
         kwargs['stream_pool_id'] = stream_pool_id
     if id is not None:
@@ -862,7 +865,6 @@ def list_streams(ctx, from_json, all_pages, page_size, compartment_id, stream_po
 
         result = cli_util.list_call_get_all_results(
             client.list_streams,
-            compartment_id=compartment_id,
             **kwargs
         )
     elif limit is not None:
@@ -870,12 +872,10 @@ def list_streams(ctx, from_json, all_pages, page_size, compartment_id, stream_po
             client.list_streams,
             limit,
             page_size,
-            compartment_id=compartment_id,
             **kwargs
         )
     else:
         result = client.list_streams(
-            compartment_id=compartment_id,
             **kwargs
         )
     cli_util.render_response(result, ctx)
@@ -1065,7 +1065,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "FAILED", "UPDATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'streaming', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'streaming', 'class': 'dict(str, dict(str, object))'}})
@@ -1203,6 +1203,7 @@ def update_stream(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_
 
 @stream_pool_group.command(name=cli_util.override('stream_admin.update_stream_pool.command_name', 'update'), help=u"""Updates the specified stream pool.""")
 @cli_util.option('--stream-pool-id', required=True, help=u"""The OCID of the stream pool.""")
+@cli_util.option('--name', help=u"""""")
 @cli_util.option('--kafka-settings', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair that is applied with no predefined name, type, or namespace. Exists for cross-compatibility only. For more information, see [Resource Tags].
 
@@ -1220,7 +1221,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'kafka-settings': {'module': 'streaming', 'class': 'KafkaSettings'}, 'freeform-tags': {'module': 'streaming', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'streaming', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'streaming', 'class': 'StreamPool'})
 @cli_util.wrap_exceptions
-def update_stream_pool(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, stream_pool_id, kafka_settings, freeform_tags, defined_tags, if_match):
+def update_stream_pool(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, stream_pool_id, name, kafka_settings, freeform_tags, defined_tags, if_match):
 
     if isinstance(stream_pool_id, six.string_types) and len(stream_pool_id.strip()) == 0:
         raise click.UsageError('Parameter --stream-pool-id cannot be whitespace or empty string')
@@ -1235,6 +1236,9 @@ def update_stream_pool(ctx, from_json, force, wait_for_state, max_wait_seconds, 
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     details = {}
+
+    if name is not None:
+        details['name'] = name
 
     if kafka_settings is not None:
         details['kafkaSettings'] = cli_util.parse_json_parameter("kafka_settings", kafka_settings)

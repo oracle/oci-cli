@@ -844,44 +844,32 @@ def change_instance_compartment(ctx, from_json, instance_id, compartment_id, if_
 
 
 @app_catalog_subscription_group.command(name=cli_util.override('compute.create_app_catalog_subscription.command_name', 'create'), help=u"""Create a subscription for listing resource version for a compartment. It will take some time to propagate to all regions.""")
-@cli_util.option('--compartment-id', help=u"""The compartmentID for the subscription.""")
-@cli_util.option('--listing-id', help=u"""The OCID of the listing.""")
-@cli_util.option('--listing-resource-version', help=u"""Listing resource version.""")
-@cli_util.option('--oracle-terms-of-use-link', help=u"""Oracle TOU link""")
+@cli_util.option('--compartment-id', required=True, help=u"""The compartmentID for the subscription.""")
+@cli_util.option('--listing-id', required=True, help=u"""The OCID of the listing.""")
+@cli_util.option('--listing-resource-version', required=True, help=u"""Listing resource version.""")
+@cli_util.option('--oracle-terms-of-use-link', required=True, help=u"""Oracle TOU link""")
+@cli_util.option('--time-retrieved', required=True, type=custom_types.CLI_DATETIME, help=u"""Date and time the agreements were retrieved, in RFC3339 format. Example: `2018-03-20T12:32:53.532Z`""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--signature', required=True, help=u"""A generated signature for this listing resource version retrieved the agreements API.""")
 @cli_util.option('--eula-link', help=u"""EULA link""")
-@cli_util.option('--time-retrieved', type=custom_types.CLI_DATETIME, help=u"""Date and time the agreements were retrieved, in RFC3339 format. Example: `2018-03-20T12:32:53.532Z`""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--signature', help=u"""A generated signature for this listing resource version retrieved the agreements API.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'AppCatalogSubscription'})
 @cli_util.wrap_exceptions
-def create_app_catalog_subscription(ctx, from_json, compartment_id, listing_id, listing_resource_version, oracle_terms_of_use_link, eula_link, time_retrieved, signature):
+def create_app_catalog_subscription(ctx, from_json, compartment_id, listing_id, listing_resource_version, oracle_terms_of_use_link, time_retrieved, signature, eula_link):
 
     kwargs = {}
 
     details = {}
-
-    if compartment_id is not None:
-        details['compartmentId'] = compartment_id
-
-    if listing_id is not None:
-        details['listingId'] = listing_id
-
-    if listing_resource_version is not None:
-        details['listingResourceVersion'] = listing_resource_version
-
-    if oracle_terms_of_use_link is not None:
-        details['oracleTermsOfUseLink'] = oracle_terms_of_use_link
+    details['compartmentId'] = compartment_id
+    details['listingId'] = listing_id
+    details['listingResourceVersion'] = listing_resource_version
+    details['oracleTermsOfUseLink'] = oracle_terms_of_use_link
+    details['timeRetrieved'] = time_retrieved
+    details['signature'] = signature
 
     if eula_link is not None:
         details['eulaLink'] = eula_link
-
-    if time_retrieved is not None:
-        details['timeRetrieved'] = time_retrieved
-
-    if signature is not None:
-        details['signature'] = signature
 
     client = cli_util.build_client('compute', ctx)
     result = client.create_app_catalog_subscription(
@@ -4280,6 +4268,9 @@ Both the 'user_data' and 'ssh_authorized_keys' fields cannot be changed after an
 They are distinguished from 'metadata' fields in that these can be nested JSON objects (whereas 'metadata' fields are string/string maps only).
 
 Both the 'user_data' and 'ssh_authorized_keys' fields cannot be changed after an instance has launched. Any request which updates, removes, or adds either of these fields will be rejected. You must provide the same values for 'user_data' and 'ssh_authorized_keys' that already exist on the instance.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--shape', help=u"""The shape of the instance. The shape determines the number of CPUs and the amount of memory allocated to the instance. You can enumerate all available shapes by calling [ListShapes].
+
+Example: `VM.Standard1.1`""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["MOVING", "PROVISIONING", "RUNNING", "STARTING", "STOPPING", "STOPPED", "CREATING_IMAGE", "TERMINATING", "TERMINATED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -4290,7 +4281,7 @@ Both the 'user_data' and 'ssh_authorized_keys' fields cannot be changed after an
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'UpdateInstanceAgentConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def update_instance(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_id, defined_tags, display_name, freeform_tags, agent_config, metadata, extended_metadata, if_match):
+def update_instance(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_id, defined_tags, display_name, freeform_tags, agent_config, metadata, extended_metadata, shape, if_match):
 
     if isinstance(instance_id, six.string_types) and len(instance_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-id cannot be whitespace or empty string')
@@ -4322,6 +4313,9 @@ def update_instance(ctx, from_json, force, wait_for_state, max_wait_seconds, wai
 
     if extended_metadata is not None:
         details['extendedMetadata'] = cli_util.parse_json_parameter("extended_metadata", extended_metadata)
+
+    if shape is not None:
+        details['shape'] = shape
 
     client = cli_util.build_client('compute', ctx)
     result = client.update_instance(

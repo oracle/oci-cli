@@ -32,7 +32,7 @@ from . import cli_constants
 # important security information.
 logging.basicConfig(level=logging.WARN)
 
-PYTHON2_DEPRECATION_NOTICE = """WARNING: Python 2 support is ending on December 31, 2019. Future versions of OCI CLI after January 2020, will not be compatible with Python 2. To avoid interruption at that time, please install OCI CLI in a compatible Python 3 environment."""
+PYTHON2_DEPRECATION_NOTICE = """WARNING: OCI CLI now requires Python 3.5+. Please install or upgrade your version of Python to 3.5+ before February 13, 2020 to avoid interruption to CLI usage."""
 
 OCI_CLI_AUTH_CHOICES = [cli_constants.OCI_CLI_AUTH_API_KEY, cli_constants.OCI_CLI_AUTH_INSTANCE_PRINCIPAL, cli_constants.OCI_CLI_AUTH_SESSION_TOKEN, cli_constants.OCI_CLI_AUTH_INSTANCE_OBO_USER, cli_constants.OCI_CLI_AUTH_RESOURCE_PRINCIPAL]
 
@@ -245,8 +245,8 @@ When passed the name of an option which takes complex input, this will print out
 @click.option('-d', '--debug', is_flag=True, help='Show additional debug information.')
 @click.option('-?', '-h', '--help', is_flag=True, help='For detailed help on the individual OCI CLI command, enter <command> --help.')
 @click.pass_context
-def cli(ctx, config_file, profile, defaults_file, request_id, region, endpoint, cert_bundle, output, query, raw_output, auth, generate_full_command_json_input, generate_param_json_input, no_retry, debug, help):
-    if sys.version_info[0] < 3 and not os.environ.get("SUPPRESS_PYTHON2_WARNING"):
+def cli(ctx, config_file, profile, defaults_file, request_id, region, endpoint, cert_bundle, output, query, raw_output, auth, no_retry, generate_full_command_json_input, generate_param_json_input, debug, help):
+    if sys.version_info < (3, 5, 0) and not os.environ.get("SUPPRESS_PYTHON2_WARNING"):
         click.echo(click.style(PYTHON2_DEPRECATION_NOTICE, fg='red'), file=sys.stderr)
 
     # Show help in any case if there are no subcommands, or if the help option
