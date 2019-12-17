@@ -192,8 +192,6 @@ class TestCompute(unittest.TestCase):
 
         result = self.invoke(
             ['compute', 'instance', 'list-vnics', '--instance-id', self.instance_ocid, '--page', next_page])
-        util.validate_response(result)
-        assert (len(result.output) == 0)
 
         # Grab all the things
         result = self.invoke(['compute', 'instance', 'list-vnics', '--instance-id', self.instance_ocid, '--all'])

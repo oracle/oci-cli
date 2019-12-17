@@ -42,3 +42,15 @@ class TestBatch(unittest.TestCase):
         result = util.invoke_command(['kms', 'management', 'key', 'cancel-deletion'])
         assert 'Error: Missing option(s)' in result.output
         assert 'key-id' in result.output
+
+    def test_kms_management_key_version_cancel_deletion(self):
+        result = util.invoke_command(['kms', 'management', 'key-version', 'cancel-deletion'])
+        assert 'Error: Missing option(s)' in result.output
+        assert 'key-id' in result.output
+
+    def test_kms_management_key_version_schedule_deletion(self):
+        result = util.invoke_command(['kms', 'management', 'key-version', 'schedule-deletion'])
+        assert 'Error: Missing option(s)' in result.output
+        assert 'key-id' in result.output
+        result = util.invoke_command(['kms', 'management', 'key-version', 'schedule-deletion', '--time-of-deletion'])
+        assert 'Error: --time-of-deletion option requires an argument' in result.output

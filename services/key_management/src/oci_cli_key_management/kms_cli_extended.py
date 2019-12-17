@@ -17,6 +17,9 @@ cli_util.rename_command(kmsvault_cli, kmsvault_cli.vault_group, kmsvault_cli.sch
 cli_util.rename_command(kmscrypto_cli, kms_service_cli.kms_service_group, kmscrypto_cli.kms_crypto_root_group, "crypto")
 cli_util.rename_command(kmsmanagement_cli, kms_service_cli.kms_service_group, kmsmanagement_cli.kms_management_root_group, "management")
 
+cli_util.rename_command(kmsmanagement_cli, kmsmanagement_cli.key_version_group, kmsmanagement_cli.cancel_key_version_deletion, 'cancel-deletion')
+cli_util.rename_command(kmsmanagement_cli, kmsmanagement_cli.key_version_group, kmsmanagement_cli.schedule_key_version_deletion, 'schedule-deletion')
+
 # remove one nested layer from crypto commands (e.g. kms crypto encrypted-data encrypt -> kms crypto encrypt)
 kmscrypto_cli.kms_crypto_root_group.commands.pop(kmscrypto_cli.encrypted_data_group.name)
 kmscrypto_cli.kms_crypto_root_group.commands.pop(kmscrypto_cli.decrypted_data_group.name)

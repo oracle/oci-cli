@@ -115,17 +115,18 @@ def change_oce_instance_compartment(ctx, from_json, wait_for_state, max_wait_sec
 @cli_util.option('--object-storage-namespace', required=True, help=u"""Object Storage Namespace of Tenancy""")
 @cli_util.option('--admin-email', required=True, help=u"""Admin Email for Notification""")
 @cli_util.option('--description', help=u"""OceInstance description""")
+@cli_util.option('--identity-stripe', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Usage of predefined tag keys. These predefined keys are scoped to namespaces. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'oce', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'oce', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'identity-stripe': {'module': 'oce', 'class': 'IdentityStripeDetails'}, 'freeform-tags': {'module': 'oce', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'oce', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'oce', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'oce', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'identity-stripe': {'module': 'oce', 'class': 'IdentityStripeDetails'}, 'freeform-tags': {'module': 'oce', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'oce', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def create_oce_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, name, tenancy_id, idcs_access_token, tenancy_name, object_storage_namespace, admin_email, description, freeform_tags, defined_tags):
+def create_oce_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, name, tenancy_id, idcs_access_token, tenancy_name, object_storage_namespace, admin_email, description, identity_stripe, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -141,6 +142,9 @@ def create_oce_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 
     if description is not None:
         details['description'] = description
+
+    if identity_stripe is not None:
+        details['identityStripe'] = cli_util.parse_json_parameter("identity_stripe", identity_stripe)
 
     if freeform_tags is not None:
         details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -180,7 +184,6 @@ def create_oce_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 
 @oce_instance_group.command(name=cli_util.override('oce.delete_oce_instance.command_name', 'delete'), help=u"""Deletes a OceInstance resource by identifier""")
 @cli_util.option('--oce-instance-id', required=True, help=u"""unique OceInstance identifier""")
-@cli_util.option('--idcs-access-token', required=True, help=u"""IDCS access token identifying a stripe and service administrator user""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -191,7 +194,7 @@ def create_oce_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def delete_oce_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, oce_instance_id, idcs_access_token, if_match):
+def delete_oce_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, oce_instance_id, if_match):
 
     if isinstance(oce_instance_id, six.string_types) and len(oce_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --oce-instance-id cannot be whitespace or empty string')
@@ -200,14 +203,9 @@ def delete_oce_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-
-    details = {}
-    details['idcsAccessToken'] = idcs_access_token
-
     client = cli_util.build_client('oce_instance', ctx)
     result = client.delete_oce_instance(
         oce_instance_id=oce_instance_id,
-        delete_oce_instance_details=details,
         **kwargs
     )
     if wait_for_state:

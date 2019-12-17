@@ -24,7 +24,7 @@ def blockstorage_root_group():
     pass
 
 
-@click.command(cli_util.override('blockstorage.boot_volume_kms_key_group.command_name', 'boot-volume-kms-key'), cls=CommandGroupWithAlias, help="""Kms key id associated with this volume.""")
+@click.command(cli_util.override('blockstorage.boot_volume_kms_key_group.command_name', 'boot-volume-kms-key'), cls=CommandGroupWithAlias, help="""The Key Management master encryption key associated with this volume.""")
 @cli_util.help_option_group
 def boot_volume_kms_key_group():
     pass
@@ -78,7 +78,9 @@ def volume_group_backup_group():
     pass
 
 
-@click.command(cli_util.override('blockstorage.volume_backup_policy_assignment_group.command_name', 'volume-backup-policy-assignment'), cls=CommandGroupWithAlias, help="""Specifies that a particular volume backup policy is assigned to an asset such as a volume.""")
+@click.command(cli_util.override('blockstorage.volume_backup_policy_assignment_group.command_name', 'volume-backup-policy-assignment'), cls=CommandGroupWithAlias, help="""Specifies the volume that the volume backup policy is assigned to.
+
+For more information about Oracle defined backup policies and custom backup policies, see [Policy-Based Backups].""")
 @cli_util.help_option_group
 def volume_backup_policy_assignment_group():
     pass
@@ -100,7 +102,7 @@ def volume_backup_policy_group():
     pass
 
 
-@click.command(cli_util.override('blockstorage.volume_kms_key_group.command_name', 'volume-kms-key'), cls=CommandGroupWithAlias, help="""The KMS key OCID associated with this volume.""")
+@click.command(cli_util.override('blockstorage.volume_kms_key_group.command_name', 'volume-kms-key'), cls=CommandGroupWithAlias, help="""The Key Management master encryption key associated with this volume.""")
 @cli_util.help_option_group
 def volume_kms_key_group():
     pass
@@ -287,13 +289,78 @@ def change_volume_group_compartment(ctx, from_json, volume_group_id, compartment
     cli_util.render_response(result, ctx)
 
 
+@boot_volume_backup_group.command(name=cli_util.override('blockstorage.copy_boot_volume_backup.command_name', 'copy'), help=u"""Creates a boot volume backup copy in specified region. For general information about volume backups, see [Overview of Boot Volume Backups]""")
+@cli_util.option('--boot-volume-backup-id', required=True, help=u"""The OCID of the boot volume backup.""")
+@cli_util.option('--destination-region', required=True, help=u"""The name of the destination region.
+
+Example: `us-ashburn-1`""")
+@cli_util.option('--display-name', help=u"""A user-friendly name for the boot volume backup. Does not have to be unique and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--kms-key-id', help=u"""The OCID of the Key Management key in the destination region which will be the master encryption key for the copied boot volume backup. If you do not specify this attribute the boot volume backup will be encrypted with the Oracle-provided encryption key when it is copied to the destination region.
+
+ For more information about the Key Management service and encryption keys, see [Overview of Key Management] and [Using Keys].""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY", "REQUEST_RECEIVED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'BootVolumeBackup'})
+@cli_util.wrap_exceptions
+def copy_boot_volume_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, boot_volume_backup_id, destination_region, display_name, kms_key_id):
+
+    if isinstance(boot_volume_backup_id, six.string_types) and len(boot_volume_backup_id.strip()) == 0:
+        raise click.UsageError('Parameter --boot-volume-backup-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    details = {}
+    details['destinationRegion'] = destination_region
+
+    if display_name is not None:
+        details['displayName'] = display_name
+
+    if kms_key_id is not None:
+        details['kmsKeyId'] = kms_key_id
+
+    client = cli_util.build_client('blockstorage', ctx)
+    result = client.copy_boot_volume_backup(
+        boot_volume_backup_id=boot_volume_backup_id,
+        copy_boot_volume_backup_details=details,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_boot_volume_backup') and callable(getattr(client, 'get_boot_volume_backup')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_boot_volume_backup(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @volume_backup_group.command(name=cli_util.override('blockstorage.copy_volume_backup.command_name', 'copy'), help=u"""Creates a volume backup copy in specified region. For general information about volume backups, see [Overview of Block Volume Service Backups]""")
 @cli_util.option('--volume-backup-id', required=True, help=u"""The OCID of the volume backup.""")
 @cli_util.option('--destination-region', required=True, help=u"""The name of the destination region.
 
 Example: `us-ashburn-1`""")
 @cli_util.option('--display-name', help=u"""A user-friendly name for the volume backup. Does not have to be unique and it's changeable. Avoid entering confidential information.""")
-@cli_util.option('--kms-key-id', help=u"""The OCID of the KMS key in the destination region which will be the master encryption key for the copied volume backup. If you do not specify this attribute the volume backup will be encrypted with the Oracle-provided encryption key when it is copied to the destination region.
+@cli_util.option('--kms-key-id', help=u"""The OCID of the Key Management key in the destination region which will be the master encryption key for the copied volume backup. If you do not specify this attribute the volume backup will be encrypted with the Oracle-provided encryption key when it is copied to the destination region.
 
  For more information about the Key Management service and encryption keys, see [Overview of Key Management] and [Using Keys].""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY", "REQUEST_RECEIVED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -366,9 +433,15 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--kms-key-id', help=u"""The OCID of the KMS key to be used as the master encryption key for the boot volume.""")
+@cli_util.option('--kms-key-id', help=u"""The OCID of the Key Management key to assign as the master encryption key for the boot volume.""")
 @cli_util.option('--size-in-gbs', type=click.INT, help=u"""The size of the volume in GBs.""")
-@cli_util.option('--vpus-per-gb', type=click.INT, help=u"""The number of Volume Performance Units that will be applied to this boot volume per GB.""")
+@cli_util.option('--vpus-per-gb', type=click.INT, help=u"""The number of volume performance units (VPUs) that will be applied to this volume per GB, representing the Block Volume service's elastic performance options. See [Block Volume Elastic Performance] for more information.
+
+Allowed values:
+
+  * `10`: Represents Balanced option.
+
+  * `20`: Represents Higher Performance option.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "RESTORING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -451,9 +524,15 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--kms-key-id', help=u"""The OCID of the KMS key to be used as the master encryption key for the boot volume.""")
+@cli_util.option('--kms-key-id', help=u"""The OCID of the Key Management key to assign as the master encryption key for the boot volume.""")
 @cli_util.option('--size-in-gbs', type=click.INT, help=u"""The size of the volume in GBs.""")
-@cli_util.option('--vpus-per-gb', type=click.INT, help=u"""The number of Volume Performance Units that will be applied to this boot volume per GB.""")
+@cli_util.option('--vpus-per-gb', type=click.INT, help=u"""The number of volume performance units (VPUs) that will be applied to this volume per GB, representing the Block Volume service's elastic performance options. See [Block Volume Elastic Performance] for more information.
+
+Allowed values:
+
+  * `10`: Represents Balanced option.
+
+  * `20`: Represents Higher Performance option.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "RESTORING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -539,9 +618,15 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--kms-key-id', help=u"""The OCID of the KMS key to be used as the master encryption key for the boot volume.""")
+@cli_util.option('--kms-key-id', help=u"""The OCID of the Key Management key to assign as the master encryption key for the boot volume.""")
 @cli_util.option('--size-in-gbs', type=click.INT, help=u"""The size of the volume in GBs.""")
-@cli_util.option('--vpus-per-gb', type=click.INT, help=u"""The number of Volume Performance Units that will be applied to this boot volume per GB.""")
+@cli_util.option('--vpus-per-gb', type=click.INT, help=u"""The number of volume performance units (VPUs) that will be applied to this volume per GB, representing the Block Volume service's elastic performance options. See [Block Volume Elastic Performance] for more information.
+
+Allowed values:
+
+  * `10`: Represents Balanced option.
+
+  * `20`: Represents Higher Performance option.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "RESTORING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -699,8 +784,16 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--kms-key-id', help=u"""The OCID of the KMS key to be used as the master encryption key for the volume.""")
-@cli_util.option('--vpus-per-gb', type=click.INT, help=u"""The number of Volume Performance Units that will be applied to this volume per GB.""")
+@cli_util.option('--kms-key-id', help=u"""The OCID of the Key Management key to assign as the master encryption key for the volume.""")
+@cli_util.option('--vpus-per-gb', type=click.INT, help=u"""The number of volume performance units (VPUs) that will be applied to this volume per GB, representing the Block Volume service's elastic performance options. See [Block Volume Elastic Performance] for more information.
+
+Allowed values:
+
+  * `0`: Represents Lower Cost option.
+
+  * `10`: Represents Balanced option.
+
+  * `20`: Represents Higher Performance option.""")
 @cli_util.option('--size-in-gbs', type=click.INT, help=u"""The size of the volume in GBs.""")
 @cli_util.option('--size-in-mbs', type=click.INT, help=u"""The size of the volume in MBs. The value must be a multiple of 1024. This field is deprecated. Use sizeInGBs instead.""")
 @cli_util.option('--source-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Specifies the volume source details for a new Block volume. The volume source is either another Block volume in the same availability domain or a Block volume backup. This is an optional field. If not specified or set to null, the new Block volume will be empty. When specified, the new Block volume will contain data from the source volume or backup.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -799,8 +892,16 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--kms-key-id', help=u"""The OCID of the KMS key to be used as the master encryption key for the volume.""")
-@cli_util.option('--vpus-per-gb', type=click.INT, help=u"""The number of Volume Performance Units that will be applied to this volume per GB.""")
+@cli_util.option('--kms-key-id', help=u"""The OCID of the Key Management key to assign as the master encryption key for the volume.""")
+@cli_util.option('--vpus-per-gb', type=click.INT, help=u"""The number of volume performance units (VPUs) that will be applied to this volume per GB, representing the Block Volume service's elastic performance options. See [Block Volume Elastic Performance] for more information.
+
+Allowed values:
+
+  * `0`: Represents Lower Cost option.
+
+  * `10`: Represents Balanced option.
+
+  * `20`: Represents Higher Performance option.""")
 @cli_util.option('--size-in-gbs', type=click.INT, help=u"""The size of the volume in GBs.""")
 @cli_util.option('--size-in-mbs', type=click.INT, help=u"""The size of the volume in MBs. The value must be a multiple of 1024. This field is deprecated. Use sizeInGBs instead.""")
 @cli_util.option('--volume-backup-id', help=u"""The OCID of the volume backup from which the data should be restored on the newly created volume. This field is deprecated. Use the sourceDetails field instead to specify the backup for the volume.""")
@@ -899,8 +1000,16 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--kms-key-id', help=u"""The OCID of the KMS key to be used as the master encryption key for the volume.""")
-@cli_util.option('--vpus-per-gb', type=click.INT, help=u"""The number of Volume Performance Units that will be applied to this volume per GB.""")
+@cli_util.option('--kms-key-id', help=u"""The OCID of the Key Management key to assign as the master encryption key for the volume.""")
+@cli_util.option('--vpus-per-gb', type=click.INT, help=u"""The number of volume performance units (VPUs) that will be applied to this volume per GB, representing the Block Volume service's elastic performance options. See [Block Volume Elastic Performance] for more information.
+
+Allowed values:
+
+  * `0`: Represents Lower Cost option.
+
+  * `10`: Represents Balanced option.
+
+  * `20`: Represents Higher Performance option.""")
 @cli_util.option('--size-in-gbs', type=click.INT, help=u"""The size of the volume in GBs.""")
 @cli_util.option('--size-in-mbs', type=click.INT, help=u"""The size of the volume in MBs. The value must be a multiple of 1024. This field is deprecated. Use sizeInGBs instead.""")
 @cli_util.option('--volume-backup-id', help=u"""The OCID of the volume backup from which the data should be restored on the newly created volume. This field is deprecated. Use the sourceDetails field instead to specify the backup for the volume.""")
@@ -1050,10 +1159,12 @@ def create_volume_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_
     cli_util.render_response(result, ctx)
 
 
-@volume_backup_policy_group.command(name=cli_util.override('blockstorage.create_volume_backup_policy.command_name', 'create'), help=u"""Creates a new backup policy for the caller.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the backup policy.""")
+@volume_backup_policy_group.command(name=cli_util.override('blockstorage.create_volume_backup_policy.command_name', 'create'), help=u"""Creates a new user defined backup policy.
+
+For more information about Oracle defined backup policies and user defined backup policies, see [Policy-Based Backups].""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name for the volume backup policy. Does not have to be unique and it's changeable. Avoid entering confidential information.""")
-@cli_util.option('--schedules', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The collection of schedules that this policy will apply.
+@cli_util.option('--schedules', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The collection of schedules for the volume backup policy. See see [Schedules] in [Policy-Based Backups] for more information.
 
 This option is a JSON list with items of type VolumeBackupSchedule.  For documentation on VolumeBackupSchedule please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/VolumeBackupSchedule.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
@@ -1095,9 +1206,9 @@ def create_volume_backup_policy(ctx, from_json, compartment_id, display_name, sc
     cli_util.render_response(result, ctx)
 
 
-@volume_backup_policy_assignment_group.command(name=cli_util.override('blockstorage.create_volume_backup_policy_assignment.command_name', 'create'), help=u"""Assigns a policy to the specified asset, such as a volume. Note that a given asset can only have one policy assigned to it; if this method is called for an asset that previously has a different policy assigned, the prior assignment will be silently deleted.""")
-@cli_util.option('--asset-id', required=True, help=u"""The OCID of the asset (e.g. a volume) to which to assign the policy.""")
-@cli_util.option('--policy-id', required=True, help=u"""The OCID of the volume backup policy to assign to an asset.""")
+@volume_backup_policy_assignment_group.command(name=cli_util.override('blockstorage.create_volume_backup_policy_assignment.command_name', 'create'), help=u"""Assigns a volume backup policy to the specified volume. Note that a given volume can only have one backup policy assigned to it. If this operation is used for a volume that already has a different backup policy assigned, the prior backup policy will be silently unassigned.""")
+@cli_util.option('--asset-id', required=True, help=u"""The OCID of the volume to assign the policy to.""")
+@cli_util.option('--policy-id', required=True, help=u"""The OCID of the volume backup policy to assign to the volume.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -1599,7 +1710,7 @@ def delete_boot_volume_backup(ctx, from_json, wait_for_state, max_wait_seconds, 
     cli_util.render_response(result, ctx)
 
 
-@boot_volume_kms_key_group.command(name=cli_util.override('blockstorage.delete_boot_volume_kms_key.command_name', 'delete'), help=u"""Removes the KMS key for the specified boot volume.""")
+@boot_volume_kms_key_group.command(name=cli_util.override('blockstorage.delete_boot_volume_kms_key.command_name', 'delete'), help=u"""Removes the specified boot volume's assigned Key Management encryption key.""")
 @cli_util.option('--boot-volume-id', required=True, help=u"""The OCID of the boot volume.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -1748,7 +1859,9 @@ def delete_volume_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_
     cli_util.render_response(result, ctx)
 
 
-@volume_backup_policy_group.command(name=cli_util.override('blockstorage.delete_volume_backup_policy.command_name', 'delete'), help=u"""Deletes the specified scheduled backup policy.""")
+@volume_backup_policy_group.command(name=cli_util.override('blockstorage.delete_volume_backup_policy.command_name', 'delete'), help=u"""Deletes a user defined backup policy.  For more information about user defined backup policies,  see [Policy-Based Backups].
+
+ Avoid entering confidential information.""")
 @cli_util.option('--policy-id', required=True, help=u"""The OCID of the volume backup policy.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -1774,7 +1887,7 @@ def delete_volume_backup_policy(ctx, from_json, policy_id, if_match):
     cli_util.render_response(result, ctx)
 
 
-@volume_backup_policy_assignment_group.command(name=cli_util.override('blockstorage.delete_volume_backup_policy_assignment.command_name', 'delete'), help=u"""Deletes a volume backup policy assignment (i.e. unassigns the policy from an asset).""")
+@volume_backup_policy_assignment_group.command(name=cli_util.override('blockstorage.delete_volume_backup_policy_assignment.command_name', 'delete'), help=u"""Deletes a volume backup policy assignment.""")
 @cli_util.option('--policy-assignment-id', required=True, help=u"""The OCID of the volume backup policy assignment.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -1923,7 +2036,7 @@ def delete_volume_group_backup(ctx, from_json, wait_for_state, max_wait_seconds,
     cli_util.render_response(result, ctx)
 
 
-@volume_kms_key_group.command(name=cli_util.override('blockstorage.delete_volume_kms_key.command_name', 'delete'), help=u"""Removes the KMS key for the specified volume.""")
+@volume_kms_key_group.command(name=cli_util.override('blockstorage.delete_volume_kms_key.command_name', 'delete'), help=u"""Removes the specified volume's assigned Key Management encryption key.""")
 @cli_util.option('--volume-id', required=True, help=u"""The OCID of the volume.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -1990,7 +2103,7 @@ def get_boot_volume_backup(ctx, from_json, boot_volume_backup_id):
     cli_util.render_response(result, ctx)
 
 
-@boot_volume_kms_key_group.command(name=cli_util.override('blockstorage.get_boot_volume_kms_key.command_name', 'get'), help=u"""Gets the KMS key ID for the specified boot volume.""")
+@boot_volume_kms_key_group.command(name=cli_util.override('blockstorage.get_boot_volume_kms_key.command_name', 'get'), help=u"""Gets the Key Management encryption key assigned to the specified boot volume.""")
 @cli_util.option('--boot-volume-id', required=True, help=u"""The OCID of the boot volume.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2077,7 +2190,7 @@ def get_volume_backup_policy(ctx, from_json, policy_id):
     cli_util.render_response(result, ctx)
 
 
-@volume_backup_policy_assignment_group.command(name=cli_util.override('blockstorage.get_volume_backup_policy_asset_assignment.command_name', 'get-volume-backup-policy-asset-assignment'), help=u"""Gets the volume backup policy assignment for the specified asset. Note that the assetId query parameter is required, and that the returned list will contain at most one item (since any given asset can only have one policy assigned to it).""")
+@volume_backup_policy_assignment_group.command(name=cli_util.override('blockstorage.get_volume_backup_policy_asset_assignment.command_name', 'get-volume-backup-policy-asset-assignment'), help=u"""Gets the volume backup policy assignment for the specified volume. The `assetId` query parameter is required, and the returned list will contain at most one item, since volume can only have one volume backup policy assigned at a time.""")
 @cli_util.option('--asset-id', required=True, help=u"""The OCID of an asset (e.g. a volume).""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
@@ -2166,7 +2279,7 @@ def get_volume_group_backup(ctx, from_json, volume_group_backup_id):
     cli_util.render_response(result, ctx)
 
 
-@volume_kms_key_group.command(name=cli_util.override('blockstorage.get_volume_kms_key.command_name', 'get'), help=u"""Gets the KMS key ID for the specified volume.""")
+@volume_kms_key_group.command(name=cli_util.override('blockstorage.get_volume_kms_key.command_name', 'get'), help=u"""Gets the Key Management encryption key assigned to the specified volume.""")
 @cli_util.option('--volume-id', required=True, help=u"""The OCID of the volume.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2198,6 +2311,7 @@ def get_volume_kms_key(ctx, from_json, volume_id, if_match):
 Example: `50`""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
+@cli_util.option('--source-boot-volume-backup-id', help=u"""A filter to return only resources that originated from the given source boot volume backup.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.
 
 **Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by availability domain if the scope of the resource type is within a single availability domain. If you call one of these \"List\" operations without specifying an availability domain, the resources are grouped by availability domain, then sorted.""")
@@ -2210,7 +2324,7 @@ Example: `50`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[BootVolumeBackup]'})
 @cli_util.wrap_exceptions
-def list_boot_volume_backups(ctx, from_json, all_pages, page_size, compartment_id, boot_volume_id, limit, page, display_name, sort_by, sort_order, lifecycle_state):
+def list_boot_volume_backups(ctx, from_json, all_pages, page_size, compartment_id, boot_volume_id, limit, page, display_name, source_boot_volume_backup_id, sort_by, sort_order, lifecycle_state):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -2224,6 +2338,8 @@ def list_boot_volume_backups(ctx, from_json, all_pages, page_size, compartment_i
         kwargs['page'] = page
     if display_name is not None:
         kwargs['display_name'] = display_name
+    if source_boot_volume_backup_id is not None:
+        kwargs['source_boot_volume_backup_id'] = source_boot_volume_backup_id
     if sort_by is not None:
         kwargs['sort_by'] = sort_by
     if sort_order is not None:
@@ -2314,12 +2430,14 @@ def list_boot_volumes(ctx, from_json, all_pages, page_size, availability_domain,
     cli_util.render_response(result, ctx)
 
 
-@volume_backup_policy_group.command(name=cli_util.override('blockstorage.list_volume_backup_policies.command_name', 'list'), help=u"""Lists all volume backup policies available to the caller.""")
+@volume_backup_policy_group.command(name=cli_util.override('blockstorage.list_volume_backup_policies.command_name', 'list'), help=u"""Lists all the volume backup policies available in the specified compartment.
+
+For more information about Oracle defined backup policies and user defined backup policies, see [Policy-Based Backups].""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
-@cli_util.option('--compartment-id', help=u"""The OCID of the compartment to list. If no compartment is specified, list the predefined (Gold, Silver, Bronze) backup policies.""")
+@cli_util.option('--compartment-id', help=u"""The OCID of the compartment. If no compartment is specified, the Oracle defined backup policies are listed.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2647,7 +2765,13 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--size-in-gbs', type=click.INT, help=u"""The size to resize the volume to in GBs. Has to be larger than the current size.""")
-@cli_util.option('--vpus-per-gb', type=click.INT, help=u"""The number of Volume Performance Units that will be applied to this boot volume per GB.""")
+@cli_util.option('--vpus-per-gb', type=click.INT, help=u"""The number of volume performance units (VPUs) that will be applied to this volume per GB, representing the Block Volume service's elastic performance options. See [Block Volume Elastic Performance] for more information.
+
+Allowed values:
+
+  * `10`: Represents Balanced option.
+
+  * `20`: Represents Higher Performance option.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "RESTORING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -2793,9 +2917,9 @@ def update_boot_volume_backup(ctx, from_json, force, wait_for_state, max_wait_se
     cli_util.render_response(result, ctx)
 
 
-@boot_volume_kms_key_group.command(name=cli_util.override('blockstorage.update_boot_volume_kms_key.command_name', 'update'), help=u"""Updates the KMS key ID for the specified volume.""")
+@boot_volume_kms_key_group.command(name=cli_util.override('blockstorage.update_boot_volume_kms_key.command_name', 'update'), help=u"""Updates the specified volume with a new Key Management master encryption key.""")
 @cli_util.option('--boot-volume-id', required=True, help=u"""The OCID of the boot volume.""")
-@cli_util.option('--kms-key-id', help=u"""The OCID of the new KMS key which will be used to protect the specified volume. This key has to be a valid KMS key OCID, and the user must have key delegation policy to allow them to access this key. Even if the new KMS key is the same as the previous KMS key ID, the Block Volume service will use it to regenerate a new volume encryption key.""")
+@cli_util.option('--kms-key-id', help=u"""The OCID of the new Key Management key to assign to protect the specified volume. This key has to be a valid Key Management key, and policies must exist to allow the user and the Block Volume service to access this key. If you specify the same OCID as the previous key's OCID, the Block Volume service will use it to regenerate a volume encryption key.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -2834,7 +2958,15 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--vpus-per-gb', type=click.INT, help=u"""The number of Volume Performance Units that will be applied to this volume per GB.""")
+@cli_util.option('--vpus-per-gb', type=click.INT, help=u"""The number of volume performance units (VPUs) that will be applied to this volume per GB, representing the Block Volume service's elastic performance options. See [Block Volume Elastic Performance] for more information.
+
+Allowed values:
+
+  * `0`: Represents Lower Cost option.
+
+  * `10`: Represents Balanced option.
+
+  * `20`: Represents Higher Performance option.""")
 @cli_util.option('--size-in-gbs', type=click.INT, help=u"""The size to resize the volume to in GBs. Has to be larger than the current size.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
@@ -2981,10 +3113,12 @@ def update_volume_backup(ctx, from_json, force, wait_for_state, max_wait_seconds
     cli_util.render_response(result, ctx)
 
 
-@volume_backup_policy_group.command(name=cli_util.override('blockstorage.update_volume_backup_policy.command_name', 'update'), help=u"""Updates a volume backup policy. Avoid entering confidential information.""")
+@volume_backup_policy_group.command(name=cli_util.override('blockstorage.update_volume_backup_policy.command_name', 'update'), help=u"""Updates a user defined backup policy.  For more information about user defined backup policies,  see [Policy-Based Backups].
+
+ Avoid entering confidential information.""")
 @cli_util.option('--policy-id', required=True, help=u"""The OCID of the volume backup policy.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name for the volume backup policy. Does not have to be unique and it's changeable. Avoid entering confidential information.""")
-@cli_util.option('--schedules', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The collection of schedules that this policy will apply.
+@cli_util.option('--schedules', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The collection of schedules for the volume backup policy. See see [Schedules] in [Policy-Based Backups] for more information.
 
 This option is a JSON list with items of type VolumeBackupSchedule.  For documentation on VolumeBackupSchedule please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/VolumeBackupSchedule.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
@@ -3191,9 +3325,9 @@ def update_volume_group_backup(ctx, from_json, force, wait_for_state, max_wait_s
     cli_util.render_response(result, ctx)
 
 
-@volume_kms_key_group.command(name=cli_util.override('blockstorage.update_volume_kms_key.command_name', 'update'), help=u"""Updates the KMS key ID for the specified volume.""")
+@volume_kms_key_group.command(name=cli_util.override('blockstorage.update_volume_kms_key.command_name', 'update'), help=u"""Updates the specified volume with a new Key Management master encryption key.""")
 @cli_util.option('--volume-id', required=True, help=u"""The OCID of the volume.""")
-@cli_util.option('--kms-key-id', help=u"""The OCID of the new KMS key which will be used to protect the specified volume. This key has to be a valid KMS key OCID, and the user must have key delegation policy to allow them to access this key. Even if the new KMS key is the same as the previous KMS key ID, the Block Volume service will use it to regenerate a new volume encryption key.""")
+@cli_util.option('--kms-key-id', help=u"""The OCID of the new Key Management key to assign to protect the specified volume. This key has to be a valid Key Management key, and policies must exist to allow the user and the Block Volume service to access this key. If you specify the same OCID as the previous key's OCID, the Block Volume service will use it to regenerate a volume encryption key.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option

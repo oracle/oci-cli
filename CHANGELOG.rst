@@ -6,6 +6,78 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.6.16 - 2019-12-17
+-------------------
+Added
+~~~~~
+
+* Support for Oracle Cloud Infrastructure API Gateway service
+
+  * ``oci apigateway``
+
+* Boot volumes support for cross-region backups in Block Volume Service
+
+  * ``oci bv boot-volume-backup copy``
+  * ``oci bv boot-volume-backup list --source-boot-volume-backup-id``
+
+* Support for managing TSIG Key resources in the DNS service.
+
+  * ``oci dns tsig-key``
+
+* Support for referencing TSIG Key resources by OCID within Zone resources in the DNS service.
+
+  * ``oci dns zone create --external-masters``
+  * ``oci dns zone update --external-masters``
+
+* Removed Identity Cloud service(idcs) access token requirement for Container Engine delete operation. Also, support secondary idcs stripe for Container Engine creation.
+
+  * ``oci oce oce-instance delete``
+  * ``oci oce oce-instance create --identity-stripe``
+
+* Support to resize compute virtual machine instance to a different shape in Compute Service.
+
+  * ``oci compute instance update --id <id> [--shape <shape>]``
+
+* Support for OS Management Service.
+
+  * ``oci os-management``
+
+* Improve nodepool creation, specify the image of the nodes by the image OCID in the Container Engine Service.
+
+  * ``oci ce node-pool create --node-image-id``
+
+* Add management configuration for oracle-cloud-agent in Compute Service
+
+  * ``oci compute instance launch --agent-config``
+
+* Support for Marketplace Service.
+
+  * ``oci marketplace``
+
+* Allow customers to bring their own keys to Key Management Service.
+
+  * ``oci kms management get-wrapping-key``
+  * ``oci kms management import-key``
+  * ``oci kms management import-key-version``
+
+* Allow customers to create and use new vault with "DEFAULT" as type in Key Management Service
+
+  * ``oci kms management key-version cancel-key-version-deletion --key-id, --key-version-id``
+  * ``oci kms management key-version schedule-key-version-deletion --key-id, --key-version-id, --time-of-deletion``
+
+Changed
+~~~~~~~
+
+* [Breaking] Removed support for v1 auth tokens (1.0.0) in kubeconfig files in Container Engine Service.
+
+  * ``oci ce cluster create-kubeconfig --token-version``
+
+* Enable updating a stream pool name and modified existing commands in Streaming Service.
+
+  * ``oci streaming admin stream list --compartment-id (required to optional)``
+  * [Breaking] `` oci streaming admin stream-pool list --compartment-id (optional to required)``
+  * ``oci streaming admin stream-pool update --name (new param added)``
+
 2.6.15 - 2019-12-10
 -------------------
 Added
