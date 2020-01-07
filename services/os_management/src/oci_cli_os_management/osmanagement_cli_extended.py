@@ -151,14 +151,3 @@ work_request_group.add_command(osmanagement_cli.list_work_requests)
 
 # remove the work request summary command from the top-level
 osmanagement_cli.os_management_root_group.commands.pop(work_request_summary_group.name)
-
-
-# enforce that the compartment-id is passed in.
-@cli_util.copy_params_from_generated_command(osmanagement_cli.list_work_requests)
-@cli_util.option('--compartment-id', required=True, help="""Compartment of the work requests""")
-@osmanagement_cli.work_request_group.command(name='list', help=osmanagement_cli.work_request_summary_group.help)
-@click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
-@cli_util.wrap_exceptions
-def list_work_requests(ctx, **kwargs):
-    ctx.invoke(osmanagement_cli.list_work_requests, **kwargs)

@@ -37,7 +37,7 @@ from cryptography.hazmat.primitives import serialization
 from . import cli_exceptions
 from .cli_clients import CLIENT_MAP, MODULE_TO_TYPE_MAPPINGS
 
-from oci import exceptions, config, dns, Response
+from oci import exceptions, config, Response
 from oci._vendor import requests
 
 from .version import __version__
@@ -1630,8 +1630,7 @@ def list_call_get_up_to_limit(list_func_ref, record_limit, page_size, **func_kwa
     remaining_items_to_fetch = record_limit
     call_result = None
     aggregated_results = []
-    is_dns_record_collection = False
-    dns_record_collection_class = None
+    wrapped_array_pagination = False
 
     # if the user explicitly sets limit to 0 we will still call the service once with limit=0
     fetched_at_least_once = False
@@ -1645,9 +1644,8 @@ def list_call_get_up_to_limit(list_func_ref, record_limit, page_size, **func_kwa
 
         call_result = list_func_ref(**func_kwargs)
 
-        if isinstance(call_result.data, dns.models.RecordCollection) or isinstance(call_result.data, dns.models.RRSet):
-            is_dns_record_collection = True
-            dns_record_collection_class = call_result.data.__class__
+        if not isinstance(call_result.data, list) and hasattr(call_result.data, 'items'):
+            wrapped_array_pagination = True
             aggregated_results.extend(call_result.data.items)
             remaining_items_to_fetch -= len(call_result.data.items)
         else:
@@ -1660,11 +1658,11 @@ def list_call_get_up_to_limit(list_func_ref, record_limit, page_size, **func_kwa
         keep_paginating = call_result.has_next_page
 
     # Truncate the list to the first limit items, as potentially we could have gotten more than what the caller asked for
-    if is_dns_record_collection:
+    if wrapped_array_pagination:
         final_response = Response(
             call_result.status,
             call_result.headers,
-            dns_record_collection_class(items=aggregated_results[:record_limit]),
+            {"items": aggregated_results[:record_limit]},
             call_result.request
         )
     else:
@@ -1677,8 +1675,7 @@ def list_call_get_all_results(list_func_ref, ctx=None, is_json=False, stream_out
     keep_paginating = True
     call_result = None
     aggregated_results = []
-    is_dns_record_collection = False
-    dns_record_collection_class = None
+    wrapped_array_pagination = False
 
     page_index = 1
     has_stream_data = False
@@ -1692,9 +1689,8 @@ def list_call_get_all_results(list_func_ref, ctx=None, is_json=False, stream_out
         while keep_paginating:
             call_result = list_func_ref(**func_kwargs)
             start = timer()
-            if isinstance(call_result.data, dns.models.RecordCollection) or isinstance(call_result.data, dns.models.RRSet):
-                is_dns_record_collection = True
-                dns_record_collection_class = call_result.data.__class__
+            if not isinstance(call_result.data, list) and hasattr(call_result.data, 'items'):
+                wrapped_array_pagination = True
                 aggregated_results.extend(call_result.data.items)
             else:
                 if stream_output:
@@ -1754,17 +1750,15 @@ def list_call_get_all_results(list_func_ref, ctx=None, is_json=False, stream_out
                 post_processed_results = sorted(aggregated_results, key=lambda r: retrieve_attribute_for_sort(r, 'time_created'), reverse=(sort_direction == 'DESC'))
 
     # Most of this is just dummy since we're discarding the intermediate requests
-    if is_dns_record_collection:
-        final_response = Response(
-            call_result.status,
-            call_result.headers,
-            dns_record_collection_class(items=post_processed_results),
-            call_result.request
-        )
-    else:
-        final_response = Response(call_result.status, call_result.headers, post_processed_results, call_result.request)
 
-    return final_response
+    return Response(call_result.status,
+                    call_result.headers,
+                    {"items": post_processed_results},
+                    call_result.request) if wrapped_array_pagination \
+        else Response(call_result.status,
+                      call_result.headers,
+                      post_processed_results,
+                      call_result.request)
 
 
 # Called by stream_page to execute a jmes query against a page of data.

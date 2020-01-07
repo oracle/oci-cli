@@ -6,7 +6,36 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
-2.6.16 - 2019-12-17
+2.8.0 - 2020-01-07
+-------------------
+Added
+~~~~~
+
+* Improved configuration of the maintenance window details for Autonomous Container Database by adding the option in the Database Service
+
+  * ``oci db autonomous-container-database create --maintenance-window-details``
+  * ``oci db autonomous-container-database update --maintenance-window-details``
+
+Changed
+~~~~~~~
+
+* Corporate proxy field is now optional when a creating exadata infrastructure.
+
+  * ``oci db exadata-infrastructure create --corporate-proxy``
+
+* [Breaking] Hostname field within Node details which is part of VM Networks field is now required
+
+  * ``oci db vm-cluster-network update --vm-networks``
+
+Fixed
+~~~~~
+
+* `--all` option for ``api-gateway`` list commands
+
+  * ``oci api-gateway deployment list``
+  * ``oci api-gateway gateway list``
+
+2.7.0 - 2019-12-17
 -------------------
 Added
 ~~~~~
