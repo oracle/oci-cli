@@ -1,5 +1,5 @@
 # coding: utf-8
-# Copyright (c) 2016, 2019, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2020, Oracle and/or its affiliates. All rights reserved.
 
 from __future__ import print_function
 import click
@@ -554,6 +554,7 @@ def complete_external_backup_job(ctx, from_json, backup_id, tde_wallet_path, cf_
 @cli_util.option('--patch-model', required=True, type=custom_types.CliCaseInsensitiveChoice(["RELEASE_UPDATES", "RELEASE_UPDATE_REVISIONS"]), help=u"""Database Patch model preference.""")
 @cli_util.option('--service-level-agreement-type', type=custom_types.CliCaseInsensitiveChoice(["STANDARD"]), help=u"""The service level agreement type of the Autonomous Container Database. The default is STANDARD. For a mission critical Autonomous Container Database, the specified Autonomous Exadata Infrastructure must be associated with a remote Autonomous Exadata Infrastructure.""")
 @cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment containing the Autonomous Container Database.""")
+@cli_util.option('--maintenance-window-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -562,12 +563,12 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED", "BACKUP_IN_PROGRESS", "RESTORING", "RESTORE_FAILED", "RESTARTING", "MAINTENANCE_IN_PROGRESS"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'backup-config': {'module': 'database', 'class': 'AutonomousContainerDatabaseBackupConfig'}})
+@json_skeleton_utils.get_cli_json_input_option({'maintenance-window-details': {'module': 'database', 'class': 'MaintenanceWindow'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'backup-config': {'module': 'database', 'class': 'AutonomousContainerDatabaseBackupConfig'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'backup-config': {'module': 'database', 'class': 'AutonomousContainerDatabaseBackupConfig'}}, output_type={'module': 'database', 'class': 'AutonomousContainerDatabase'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'maintenance-window-details': {'module': 'database', 'class': 'MaintenanceWindow'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'backup-config': {'module': 'database', 'class': 'AutonomousContainerDatabaseBackupConfig'}}, output_type={'module': 'database', 'class': 'AutonomousContainerDatabase'})
 @cli_util.wrap_exceptions
-def create_autonomous_container_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, autonomous_exadata_infrastructure_id, patch_model, service_level_agreement_type, compartment_id, freeform_tags, defined_tags, backup_config):
+def create_autonomous_container_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, autonomous_exadata_infrastructure_id, patch_model, service_level_agreement_type, compartment_id, maintenance_window_details, freeform_tags, defined_tags, backup_config):
 
     kwargs = {}
 
@@ -581,6 +582,9 @@ def create_autonomous_container_database(ctx, from_json, wait_for_state, max_wai
 
     if compartment_id is not None:
         details['compartmentId'] = compartment_id
+
+    if maintenance_window_details is not None:
+        details['maintenanceWindowDetails'] = cli_util.parse_json_parameter("maintenance_window_details", maintenance_window_details)
 
     if freeform_tags is not None:
         details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -1622,8 +1626,8 @@ def create_data_guard_association_create_data_guard_association_to_existing_db_s
     cli_util.render_response(result, ctx)
 
 
-@db_home_group.command(name=cli_util.override('db.create_db_home.command_name', 'create'), help=u"""Creates a new database home in the specified DB system based on the request parameters you provide.""")
-@cli_util.option('--display-name', help=u"""The user-provided name of the database home.""")
+@db_home_group.command(name=cli_util.override('db.create_db_home.command_name', 'create'), help=u"""Creates a new Database Home in the specified DB system based on the request parameters you provide. Applies only to bare metal and Exadata DB systems.""")
+@cli_util.option('--display-name', help=u"""The user-provided name of the Database Home.""")
 @cli_util.option('--source', type=custom_types.CliCaseInsensitiveChoice(["NONE", "DB_BACKUP", "VM_CLUSTER_NEW"]), help=u"""The source of database: NONE for creating a new database. DB_BACKUP for creating a new database by restoring from a database backup.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -1675,10 +1679,10 @@ def create_db_home(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
     cli_util.render_response(result, ctx)
 
 
-@db_home_group.command(name=cli_util.override('db.create_db_home_create_db_home_with_db_system_id_from_backup_details.command_name', 'create-db-home-create-db-home-with-db-system-id-from-backup-details'), help=u"""Creates a new database home in the specified DB system based on the request parameters you provide.""")
+@db_home_group.command(name=cli_util.override('db.create_db_home_create_db_home_with_db_system_id_from_backup_details.command_name', 'create-db-home-create-db-home-with-db-system-id-from-backup-details'), help=u"""Creates a new Database Home in the specified DB system based on the request parameters you provide. Applies only to bare metal and Exadata DB systems.""")
 @cli_util.option('--db-system-id', required=True, help=u"""The [OCID] of the DB system.""")
 @cli_util.option('--database', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--display-name', help=u"""The user-provided name of the database home.""")
+@cli_util.option('--display-name', help=u"""The user-provided name of the Database Home.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -1730,11 +1734,11 @@ def create_db_home_create_db_home_with_db_system_id_from_backup_details(ctx, fro
     cli_util.render_response(result, ctx)
 
 
-@db_home_group.command(name=cli_util.override('db.create_db_home_create_db_home_with_db_system_id_details.command_name', 'create-db-home-create-db-home-with-db-system-id-details'), help=u"""Creates a new database home in the specified DB system based on the request parameters you provide.""")
+@db_home_group.command(name=cli_util.override('db.create_db_home_create_db_home_with_db_system_id_details.command_name', 'create-db-home-create-db-home-with-db-system-id-details'), help=u"""Creates a new Database Home in the specified DB system based on the request parameters you provide. Applies only to bare metal and Exadata DB systems.""")
 @cli_util.option('--db-system-id', required=True, help=u"""The [OCID] of the DB system.""")
 @cli_util.option('--db-version', required=True, help=u"""A valid Oracle Database version. To get a list of supported versions, use the [ListDbVersions] operation.""")
 @cli_util.option('--database', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--display-name', help=u"""The user-provided name of the database home.""")
+@cli_util.option('--display-name', help=u"""The user-provided name of the Database Home.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -1787,11 +1791,11 @@ def create_db_home_create_db_home_with_db_system_id_details(ctx, from_json, wait
     cli_util.render_response(result, ctx)
 
 
-@db_home_group.command(name=cli_util.override('db.create_db_home_create_db_home_with_vm_cluster_id_details.command_name', 'create-db-home-create-db-home-with-vm-cluster-id-details'), help=u"""Creates a new database home in the specified DB system based on the request parameters you provide.""")
+@db_home_group.command(name=cli_util.override('db.create_db_home_create_db_home_with_vm_cluster_id_details.command_name', 'create-db-home-create-db-home-with-vm-cluster-id-details'), help=u"""Creates a new Database Home in the specified DB system based on the request parameters you provide. Applies only to bare metal and Exadata DB systems.""")
 @cli_util.option('--vm-cluster-id', required=True, help=u"""The [OCID] of the VM cluster.""")
 @cli_util.option('--db-version', required=True, help=u"""A valid Oracle Database version. To get a list of supported versions, use the [ListDbVersions] operation.""")
 @cli_util.option('--database', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--display-name', help=u"""The user-provided name of the database home.""")
+@cli_util.option('--display-name', help=u"""The user-provided name of the Database Home.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -1855,9 +1859,9 @@ def create_db_home_create_db_home_with_vm_cluster_id_details(ctx, from_json, wai
 @cli_util.option('--gateway', required=True, help=u"""The gateway for the control plane network.""")
 @cli_util.option('--admin-network-cidr', required=True, help=u"""The CIDR block for the Exadata administration network.""")
 @cli_util.option('--infini-band-network-cidr', required=True, help=u"""The CIDR block for the Exadata InfiniBand interconnect.""")
-@cli_util.option('--corporate-proxy', required=True, help=u"""The corporate network proxy for access to the control plane network.""")
 @cli_util.option('--dns-server', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of DNS server IP addresses. Maximum of 3 allowed.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--ntp-server', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of NTP server IP addresses. Maximum of 3 allowed.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--corporate-proxy', help=u"""The corporate network proxy for access to the control plane network.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1870,7 +1874,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'dns-server': {'module': 'database', 'class': 'list[string]'}, 'ntp-server': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'ExadataInfrastructure'})
 @cli_util.wrap_exceptions
-def create_exadata_infrastructure(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, shape, time_zone, cloud_control_plane_server1, cloud_control_plane_server2, netmask, gateway, admin_network_cidr, infini_band_network_cidr, corporate_proxy, dns_server, ntp_server, freeform_tags, defined_tags):
+def create_exadata_infrastructure(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, shape, time_zone, cloud_control_plane_server1, cloud_control_plane_server2, netmask, gateway, admin_network_cidr, infini_band_network_cidr, dns_server, ntp_server, corporate_proxy, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -1886,9 +1890,11 @@ def create_exadata_infrastructure(ctx, from_json, wait_for_state, max_wait_secon
     details['gateway'] = gateway
     details['adminNetworkCIDR'] = admin_network_cidr
     details['infiniBandNetworkCIDR'] = infini_band_network_cidr
-    details['corporateProxy'] = corporate_proxy
     details['dnsServer'] = cli_util.parse_json_parameter("dns_server", dns_server)
     details['ntpServer'] = cli_util.parse_json_parameter("ntp_server", ntp_server)
+
+    if corporate_proxy is not None:
+        details['corporateProxy'] = corporate_proxy
 
     if freeform_tags is not None:
         details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -2442,10 +2448,12 @@ def delete_backup_destination(ctx, from_json, wait_for_state, max_wait_seconds, 
     cli_util.render_response(result, ctx)
 
 
-@db_home_group.command(name=cli_util.override('db.delete_db_home.command_name', 'delete'), help=u"""Deletes a DB Home. The DB Home and its database data are local to the DB system and will be lost when it is deleted. Oracle recommends that you back up any data in the DB system prior to deleting it.""")
-@cli_util.option('--db-home-id', required=True, help=u"""The database home [OCID].""")
+@db_home_group.command(name=cli_util.override('db.delete_db_home.command_name', 'delete'), help=u"""Deletes a Database Home. The Database Home and its database data are local to the DB system and are lost when you delete the Database Home. Oracle recommends that you back up any data on the DB system before you delete it.""")
+@cli_util.option('--db-home-id', required=True, help=u"""The Database Home [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--perform-final-backup', type=click.BOOL, help=u"""Whether to perform a final backup of the database or not. Default is false. If you previously used RMAN or dbcli to configure backups and then you switch to using the Console or the API for backups, a new backup configuration is created and associated with your database. This means that you can no longer rely on your previously configured unmanaged backups to work.""")
+@cli_util.option('--perform-final-backup', type=click.BOOL, help=u"""Whether to perform a final backup of the database or not. Default is false.
+
+If you previously used RMAN or dbcli to configure backups and then you switch to using the Console or the API for backups, a new backup configuration is created and associated with your database. This means that you can no longer rely on your previously configured unmanaged backups to work.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -3256,8 +3264,8 @@ def get_database(ctx, from_json, database_id):
     cli_util.render_response(result, ctx)
 
 
-@db_home_group.command(name=cli_util.override('db.get_db_home.command_name', 'get'), help=u"""Gets information about the specified database home.""")
-@cli_util.option('--db-home-id', required=True, help=u"""The database home [OCID].""")
+@db_home_group.command(name=cli_util.override('db.get_db_home.command_name', 'get'), help=u"""Gets information about the specified Database Home.""")
+@cli_util.option('--db-home-id', required=True, help=u"""The Database Home [OCID].""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -3278,7 +3286,7 @@ def get_db_home(ctx, from_json, db_home_id):
 
 
 @patch_group.command(name=cli_util.override('db.get_db_home_patch.command_name', 'get-db-home'), help=u"""Gets information about a specified patch package.""")
-@cli_util.option('--db-home-id', required=True, help=u"""The database home [OCID].""")
+@cli_util.option('--db-home-id', required=True, help=u"""The Database Home [OCID].""")
 @cli_util.option('--patch-id', required=True, help=u"""The [OCID] of the patch.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -3304,7 +3312,7 @@ def get_db_home_patch(ctx, from_json, db_home_id, patch_id):
 
 
 @patch_history_entry_group.command(name=cli_util.override('db.get_db_home_patch_history_entry.command_name', 'get-db-home'), help=u"""Gets the patch history details for the specified patchHistoryEntryId""")
-@cli_util.option('--db-home-id', required=True, help=u"""The database home [OCID].""")
+@cli_util.option('--db-home-id', required=True, help=u"""The Database Home [OCID].""")
 @cli_util.option('--patch-history-entry-id', required=True, help=u"""The [OCID] of the patch history entry.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -4794,9 +4802,9 @@ def list_data_guard_associations(ctx, from_json, all_pages, page_size, database_
     cli_util.render_response(result, ctx)
 
 
-@database_group.command(name=cli_util.override('db.list_databases.command_name', 'list'), help=u"""Gets a list of the databases in the specified database home.""")
+@database_group.command(name=cli_util.override('db.list_databases.command_name', 'list'), help=u"""Gets a list of the databases in the specified Database Home.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
-@cli_util.option('--db-home-id', required=True, help=u"""A database home [OCID].""")
+@cli_util.option('--db-home-id', required=True, help=u"""A Database Home [OCID].""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["DBNAME", "TIMECREATED"]), help=u"""The field to sort by.  You can provide one sort order (`sortOrder`).  Default order for TIMECREATED is descending.  Default order for DBNAME is ascending. The DBNAME sort order is case sensitive.""")
@@ -4857,8 +4865,8 @@ def list_databases(ctx, from_json, all_pages, page_size, compartment_id, db_home
     cli_util.render_response(result, ctx)
 
 
-@patch_history_entry_group.command(name=cli_util.override('db.list_db_home_patch_history_entries.command_name', 'list-db-home'), help=u"""Gets history of the actions taken for patches for the specified database home.""")
-@cli_util.option('--db-home-id', required=True, help=u"""The database home [OCID].""")
+@patch_history_entry_group.command(name=cli_util.override('db.list_db_home_patch_history_entries.command_name', 'list-db-home'), help=u"""Gets history of the actions taken for patches for the specified Database Home.""")
+@cli_util.option('--db-home-id', required=True, help=u"""The Database Home [OCID].""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -4907,8 +4915,8 @@ def list_db_home_patch_history_entries(ctx, from_json, all_pages, page_size, db_
     cli_util.render_response(result, ctx)
 
 
-@patch_group.command(name=cli_util.override('db.list_db_home_patches.command_name', 'list-db-home'), help=u"""Lists patches applicable to the requested database home.""")
-@cli_util.option('--db-home-id', required=True, help=u"""The database home [OCID].""")
+@patch_group.command(name=cli_util.override('db.list_db_home_patches.command_name', 'list-db-home'), help=u"""Lists patches applicable to the requested Database Home.""")
+@cli_util.option('--db-home-id', required=True, help=u"""The Database Home [OCID].""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
@@ -4957,7 +4965,7 @@ def list_db_home_patches(ctx, from_json, all_pages, page_size, db_home_id, limit
     cli_util.render_response(result, ctx)
 
 
-@db_home_group.command(name=cli_util.override('db.list_db_homes.command_name', 'list'), help=u"""Gets a list of database homes in the specified DB system and compartment. A database home is a directory where Oracle Database software is installed.""")
+@db_home_group.command(name=cli_util.override('db.list_db_homes.command_name', 'list'), help=u"""Gets a list of Database Homes in the specified DB system and compartment. A Database Home is a directory where Oracle Database software is installed.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
 @cli_util.option('--db-system-id', help=u"""The DB system [OCID]. If provided, filters the results to the set of database versions which are supported for the DB system.""")
 @cli_util.option('--vm-cluster-id', help=u"""The [OCID] of the VM cluster.""")
@@ -5480,7 +5488,7 @@ def list_gi_versions(ctx, from_json, all_pages, page_size, compartment_id, limit
 
 **Note:** If you do not include the availability domain filter, the resources are grouped by availability domain, then sorted.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["SCHEDULED", "IN_PROGRESS", "SUCCEEDED", "SKIPPED", "FAILED", "UPDATING"]), help=u"""A filter to return only resources that match the given lifecycle state exactly.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["SCHEDULED", "IN_PROGRESS", "SUCCEEDED", "SKIPPED", "FAILED", "UPDATING", "DELETING", "DELETED"]), help=u"""A filter to return only resources that match the given lifecycle state exactly.""")
 @cli_util.option('--availability-domain', help=u"""A filter to return only resources that match the given availability domain exactly.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -6435,6 +6443,7 @@ def terminate_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 @cli_util.option('--autonomous-container-database-id', required=True, help=u"""The Autonomous Container Database [OCID].""")
 @cli_util.option('--display-name', help=u"""The display name for the Autonomous Container Database.""")
 @cli_util.option('--patch-model', type=custom_types.CliCaseInsensitiveChoice(["RELEASE_UPDATES", "RELEASE_UPDATE_REVISIONS"]), help=u"""Database Patch model preference.""")
+@cli_util.option('--maintenance-window-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -6445,18 +6454,18 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED", "BACKUP_IN_PROGRESS", "RESTORING", "RESTORE_FAILED", "RESTARTING", "MAINTENANCE_IN_PROGRESS"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'backup-config': {'module': 'database', 'class': 'AutonomousContainerDatabaseBackupConfig'}})
+@json_skeleton_utils.get_cli_json_input_option({'maintenance-window-details': {'module': 'database', 'class': 'MaintenanceWindow'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'backup-config': {'module': 'database', 'class': 'AutonomousContainerDatabaseBackupConfig'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'backup-config': {'module': 'database', 'class': 'AutonomousContainerDatabaseBackupConfig'}}, output_type={'module': 'database', 'class': 'AutonomousContainerDatabase'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'maintenance-window-details': {'module': 'database', 'class': 'MaintenanceWindow'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'backup-config': {'module': 'database', 'class': 'AutonomousContainerDatabaseBackupConfig'}}, output_type={'module': 'database', 'class': 'AutonomousContainerDatabase'})
 @cli_util.wrap_exceptions
-def update_autonomous_container_database(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_container_database_id, display_name, patch_model, freeform_tags, defined_tags, backup_config, if_match):
+def update_autonomous_container_database(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, autonomous_container_database_id, display_name, patch_model, maintenance_window_details, freeform_tags, defined_tags, backup_config, if_match):
 
     if isinstance(autonomous_container_database_id, six.string_types) and len(autonomous_container_database_id.strip()) == 0:
         raise click.UsageError('Parameter --autonomous-container-database-id cannot be whitespace or empty string')
     if not force:
-        if freeform_tags or defined_tags or backup_config:
-            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags and backup-config will replace any existing values. Are you sure you want to continue?"):
+        if maintenance_window_details or freeform_tags or defined_tags or backup_config:
+            if not click.confirm("WARNING: Updates to maintenance-window-details and freeform-tags and defined-tags and backup-config will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -6470,6 +6479,9 @@ def update_autonomous_container_database(ctx, from_json, force, wait_for_state, 
 
     if patch_model is not None:
         details['patchModel'] = patch_model
+
+    if maintenance_window_details is not None:
+        details['maintenanceWindowDetails'] = cli_util.parse_json_parameter("maintenance_window_details", maintenance_window_details)
 
     if freeform_tags is not None:
         details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -6989,7 +7001,7 @@ def update_database(ctx, from_json, force, wait_for_state, max_wait_seconds, wai
 
 
 @db_home_group.command(name=cli_util.override('db.update_db_home.command_name', 'update'), help=u"""Patches the specified dbHome.""")
-@cli_util.option('--db-home-id', required=True, help=u"""The database home [OCID].""")
+@cli_util.option('--db-home-id', required=True, help=u"""The Database Home [OCID].""")
 @cli_util.option('--db-version', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
@@ -7324,7 +7336,7 @@ def update_exadata_iorm_config(ctx, from_json, force, wait_for_state, max_wait_s
 @cli_util.option('--maintenance-run-id', required=True, help=u"""The Maintenance Run OCID.""")
 @cli_util.option('--is-enabled', type=click.BOOL, help=u"""If set to false, skips the Maintenance Run.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["SCHEDULED", "IN_PROGRESS", "SUCCEEDED", "SKIPPED", "FAILED", "UPDATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["SCHEDULED", "IN_PROGRESS", "SUCCEEDED", "SKIPPED", "FAILED", "UPDATING", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
