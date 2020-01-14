@@ -6,6 +6,45 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.8.1 - 2020-01-14
+-------------------
+Added
+~~~~~
+
+* Support for description field to Route rule and Security rules.
+ 
+  * ``oci route-table create``
+  * ``oci route-table update``
+  * ``oci security-list create``
+  * ``oci security-list update``
+
+* Support for create, get, delete, list commands for db-home command 
+
+  * ``oci db db-home create --db-system-id <Db System OCID> --db-version <Database Version>``
+  * ``oci db db-home get --db-home-id <Db Home OCID>``
+  * ``oci db db-home delete --db-home-id <Db Home OCID>``
+  * ``oci db db-home list --compartment-id <compartment OCID>``
+
+* Support for stopping and starting Digital Assistant Instances
+
+  * ``oci oda instance start``
+  * ``oci oda instance stop``
+
+* Support for specifying db home when a creating database.
+
+  * ``oci db database create --db-home-id <Db Home OCID>``
+
+* Support for --backup-id parameter in the list database command
+
+  * ``oci db database list --backup-id <backup OCID>``
+
+Fixed
+~~~~~
+
+* Crytography package requirement bumped to version 2.8 to fix a compatibility issue with Python 3.8
+
+* OCI CLI installation now works with virtualenv or venv name as "oci_cli" (`Issue 213 <https://github.com/oracle/oci-cli/issues/213>`__)
+
 2.8.0 - 2020-01-07
 -------------------
 Added

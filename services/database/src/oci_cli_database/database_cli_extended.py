@@ -254,6 +254,7 @@ def launch_db_system_backup_extended(ctx, **kwargs):
 @cli_util.copy_params_from_generated_command(database_cli.create_db_home, params_to_exclude=['database', 'display_name', 'db_version'])
 @database_cli.database_group.command(name='create', help="""Creates a new database in the given DB System.""")
 @cli_util.option('--admin-password', required=True, help="""A strong password for SYS, SYSTEM, and PDB Admin. The password must be at least nine characters and contain at least two uppercase, two lowercase, two numbers, and two special characters. The special characters must be _, #, or -.""")
+@cli_util.option('--db-home-id', required=False, help="""The Db Home Id to create this database under.""")
 @cli_util.option('--db-system-id', required=False, help="""The Db System Id to create this database under. Either --db-system-id or --vm-cluster-id must be specified, but if both are passed, --vm-cluster-id will be ignored.""")
 @cli_util.option('--vm-cluster-id', required=False, help="""The Vm Cluster Id to create this database under. Either --db-system-id or --vm-cluster-id must be specified, but if both are passed, --vm-cluster-id will be ignored.""")
 @cli_util.option('--character-set', help="""The character set for the database. The default is AL32UTF8. Allowed values are: AL32UTF8, AR8ADOS710, AR8ADOS720, AR8APTEC715, AR8ARABICMACS, AR8ASMO8X, AR8ISO8859P6, AR8MSWIN1256, AR8MUSSAD768, AR8NAFITHA711, AR8NAFITHA721, AR8SAKHR706, AR8SAKHR707, AZ8ISO8859P9E, BG8MSWIN, BG8PC437S, BLT8CP921, BLT8ISO8859P13, BLT8MSWIN1257, BLT8PC775, BN8BSCII, CDN8PC863, CEL8ISO8859P14, CL8ISO8859P5, CL8ISOIR111, CL8KOI8R, CL8KOI8U, CL8MACCYRILLICS, CL8MSWIN1251, EE8ISO8859P2, EE8MACCES, EE8MACCROATIANS, EE8MSWIN1250, EE8PC852, EL8DEC, EL8ISO8859P7, EL8MACGREEKS, EL8MSWIN1253, EL8PC437S, EL8PC851, EL8PC869, ET8MSWIN923, HU8ABMOD, HU8CWI2, IN8ISCII, IS8PC861, IW8ISO8859P8, IW8MACHEBREWS, IW8MSWIN1255, IW8PC1507, JA16EUC, JA16EUCTILDE, JA16SJIS, JA16SJISTILDE, JA16VMS, KO16KSC5601, KO16KSCCS, KO16MSWIN949, LA8ISO6937, LA8PASSPORT, LT8MSWIN921, LT8PC772, LT8PC774, LV8PC1117, LV8PC8LR, LV8RST104090, N8PC865, NE8ISO8859P10, NEE8ISO8859P4, RU8BESTA, RU8PC855, RU8PC866, SE8ISO8859P3, TH8MACTHAIS, TH8TISASCII, TR8DEC, TR8MACTURKISHS, TR8MSWIN1254, TR8PC857, US7ASCII, US8PC437, UTF8, VN8MSWIN1258, VN8VN3, WE8DEC, WE8DG, WE8ISO8859P1, WE8ISO8859P15, WE8ISO8859P9, WE8MACROMAN8S, WE8MSWIN1252, WE8NCR4970, WE8NEXTSTEP, WE8PC850, WE8PC858, WE8PC860, WE8ROMAN8, ZHS16CGB231280, ZHS16GBK, ZHT16BIG5, ZHT16CCDC, ZHT16DBT, ZHT16HKSCS, ZHT16MSWIN950, ZHT32EUC, ZHT32SOPS, ZHT32TRIS.""")
@@ -262,7 +263,7 @@ def launch_db_system_backup_extended(ctx, **kwargs):
 @cli_util.option('--db-workload', type=custom_types.CliCaseInsensitiveChoice(["OLTP", "DSS"]), help="""Database workload type. Allowed values are: OLTP, DSS""")
 @cli_util.option('--ncharacter-set', help="""National character set for the database. The default is AL16UTF16. Allowed values are: AL16UTF16 or UTF8.""")
 @cli_util.option('--pdb-name', help="""Pluggable database name. It must begin with an alphabetic character and can contain a maximum of eight alphanumeric characters. Special characters are not permitted. Pluggable database should not be same as database name.""")
-@cli_util.option('--db-version', required=True, help="""A valid Oracle database version. To get a list of supported versions, use the command 'oci db version list'.""")
+@cli_util.option('--db-version', required=False, help="""A valid Oracle database version. To get a list of supported versions, use the command 'oci db version list'.""")
 @cli_util.option('--auto-backup-enabled', type=click.BOOL, help="""If set to true, schedules backups automatically. Default is false.""")
 @cli_util.option('--recovery-window-in-days', type=click.IntRange(1, 60), help="""The number of days between the current and the earliest point of recoverability covered by automatic backups (1 to 60).""")
 @cli_util.option('--auto-backup-window', required=False, help="""Specifying a two hour slot when the backup should kick in eg:- SLOT_ONE,SLOT_TWO. Default is anytime""")
@@ -271,6 +272,10 @@ def launch_db_system_backup_extended(ctx, **kwargs):
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'backup-destination': {'module': 'database', 'class': 'list[BackupDestinationDetails]'}}, output_type={'module': 'database', 'class': 'DatabaseSummary'})
 @cli_util.wrap_exceptions
 def create_database(ctx, **kwargs):
+    if kwargs['db_home_id'] is None and kwargs['db_version'] is None:
+        click.echo(message="Missing a required parameter. Either --db-home-id or --db-version must be specified.", file=sys.stderr)
+        sys.exit(1)
+
     if 'db_system_id' in kwargs and kwargs['db_system_id']:
         create_db_home_details = oci.database.models.CreateDbHomeWithDbSystemIdDetails()
         create_db_home_details.db_system_id = kwargs['db_system_id']
@@ -330,10 +335,17 @@ def create_database(ctx, **kwargs):
 
     client = cli_util.build_client('database', ctx)
 
-    result = client.create_db_home(create_db_home_details)
-
-    db_home_id = result.data.id
-    compartment_id = result.data.compartment_id
+    create_new_database_details = oci.database.models.CreateNewDatabaseDetails()
+    if kwargs['db_home_id'] is not None:
+        create_new_database_details.db_home_id = kwargs['db_home_id']
+        create_new_database_details.database = create_database_details
+        result = client.create_database(create_new_database_details)
+        db_home_id = kwargs['db_home_id']
+        compartment_id = result.data.compartment_id
+    else:
+        result = client.create_db_home(create_db_home_details)
+        db_home_id = result.data.id
+        compartment_id = result.data.compartment_id
 
     # result is now the DbHome that was created, so we need to get the
     # corresponding database and print that out for the user
@@ -491,17 +503,25 @@ def delete_database(ctx, **kwargs):
     # available deletes the entire db-home, so check to make sure
     # this is the only database in the db-home before deleting
     response = client.get_db_home(db_home_id)
-    response = client.list_databases(compartment_id, db_home_id)
-    if len(response.data) != 1:
-        click.echo(message="Cannot delete a DB Home which contains multiple databases through the CLI. Please use the console to delete this database.", file=sys.stderr)
-        sys.exit(1)
 
-    # delete DbHome
-    response = client.delete_db_home(db_home_id)
+    db_system_id = response.data.db_system_id
+    get_db_system_response = client.get_db_system(db_system_id)
+    db_system_shape = get_db_system_response.data.shape
+    response = client.list_databases(db_home_id=db_home_id, compartment_id=compartment_id)
+
+    # For Exadata systems delete database is called
+    if "Exadata." in db_system_shape:
+        response = client.delete_database(kwargs['database_id'])
+    else:
+        if len(response.data) != 1:
+            click.echo(message="Cannot delete a DB Home which contains multiple databases through the CLI. Please use the console to delete this database.", file=sys.stderr)
+            sys.exit(1)
+        # delete DbHome
+        response = client.delete_db_home(db_home_id)
     cli_util.render_response(response, ctx)
 
 
-@cli_util.copy_params_from_generated_command(database_cli.list_db_homes, params_to_exclude=['db_home_id', 'page', 'all_pages', 'page_size'])
+@cli_util.copy_params_from_generated_command(database_cli.list_db_homes, params_to_exclude=['db_home_id', 'page', 'all_pages', 'page_size', 'db_system_id'])
 @database_cli.database_group.command(name='list', help="""Lists all databases in a given DB System.""")
 @click.pass_context
 @cli_util.option('--db-system-id', help="""The OCID of the db system to list within.""")
@@ -546,7 +566,7 @@ def list_databases(ctx, **kwargs):
         if 'limit' in kwargs and kwargs['limit'] is not None and len(databases) >= int(kwargs['limit']):
             break
 
-        response = client.list_databases(compartment_id, db_home.id, **list_db_kw_args)
+        response = client.list_databases(compartment_id=compartment_id, db_home_id=db_home.id, **list_db_kw_args)
         if response.data is not None:
             for database in response.data:
                 if 'limit' in kwargs and kwargs['limit'] is not None and len(databases) >= int(kwargs['limit']):
@@ -830,7 +850,45 @@ def list_patch_history_entries_by_database(ctx, **kwargs):
     ctx.invoke(database_cli.list_db_home_patch_history_entries, **kwargs)
 
 
-database_cli.db_root_group.commands.pop(database_cli.db_home_group.name)
+@cli_util.copy_params_from_generated_command(database_cli.create_db_home, params_to_exclude=['database', 'db_version'])
+@database_cli.db_home_group.command(name='create', help="""Creates a new database in the given DB System.""")
+@cli_util.option('--db-system-id', required=True, help="""The Db System Id to create this Db Home under.""")
+@cli_util.option('--db-version', required=True, help="""A valid Oracle database version. To get a list of supported versions, use the command 'oci db version list'.""")
+@cli_util.option('--display-name', help=u"""The user-provided name of the database home.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'backup-destination': {'module': 'database', 'class': 'list[BackupDestinationDetails]'}}, output_type={'module': 'database', 'class': 'DatabaseSummary'})
+@cli_util.wrap_exceptions
+def create_db_home(ctx, **kwargs):
+    db_home_details = oci.database.models.CreateDbHomeWithDbSystemIdDetails()
+    db_home_details.db_system_id = kwargs['db_system_id']
+    db_home_details.db_version = kwargs['db_version']
+    if kwargs['display_name'] is not None:
+        db_home_details.display_name = kwargs['display_name']
+    client = cli_util.build_client('database', ctx)
+    get_db_system_response = client.get_db_system(kwargs['db_system_id'])
+    db_system_shape = get_db_system_response.data.shape
+    # For Exadata systems create db home is called
+    if "Exadata." in db_system_shape:
+        response = client.create_db_home(db_home_details)
+        cli_util.render_response(response, ctx)
+    else:
+        click.echo(message="Cannot create a DB Home for Db systems with non Exadata shapes.", file=sys.stderr)
+        sys.exit(1)
+
+
+# db-home group is exposed to the customers now
+# database_cli.db_root_group.commands.pop(database_cli.db_home_group.name)
+
+# db-home update is excluded from the db-home command group
+database_cli.db_home_group.commands.pop(database_cli.update_db_home.name)
+database_cli.db_home_group.commands.pop(database_cli.create_db_home.name)
+database_cli.db_home_group.commands.pop(database_cli.create_db_home_create_db_home_with_db_system_id_from_backup_details.name)
+database_cli.db_home_group.commands.pop(database_cli.create_db_home_create_db_home_with_db_system_id_details.name)
+database_cli.db_home_group.commands.pop(database_cli.create_db_home_create_db_home_with_vm_cluster_id_details.name)
+
+# This is simulated via oci cli create database --db-home-id
+database_cli.database_group.commands.pop(database_cli.create_database_create_new_database_details.name)
+
 
 database_cli.database_group.commands.pop(database_cli.list_databases.name)
 database_cli.db_node_group.commands.pop(database_cli.db_node_action.name)
@@ -854,6 +912,7 @@ database_cli.database_group.add_command(list_databases)
 database_cli.db_system_group.add_command(launch_db_system_extended)
 database_cli.db_system_group.add_command(launch_db_system_backup_extended)
 database_cli.db_system_group.add_command(update_db_system_extended)
+database_cli.db_home_group.add_command(create_db_home)
 
 database_cli.patch_group.commands.pop(database_cli.get_db_home_patch.name)
 database_cli.patch_group.commands.pop(database_cli.list_db_home_patches.name)

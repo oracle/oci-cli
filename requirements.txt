@@ -9,14 +9,14 @@ cffi>=1.9.1
 click==6.7
 configparser==3.5.0
 coverage==4.5.1
-cryptography==2.4.2
+cryptography==2.8
 httpsig-cffi==15.0.0
 idna>=2.5,<2.7
 Jinja2==2.10.1
 jmespath==0.9.3
 ndg-httpsclient==0.4.2
 mock==2.0.0
-oci==2.9.0
+oci==2.10.0
 packaging==16.8
 pluggy==0.4.0
 py==1.4.33

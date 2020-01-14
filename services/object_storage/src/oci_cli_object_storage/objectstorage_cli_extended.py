@@ -302,7 +302,7 @@ def object_list(ctx, from_json, namespace, bucket_name, prefix, start, end, limi
 @cli_util.option('--no-multipart', is_flag=True,
                  help='Do not use multipart uploads to upload the file in parts. By default files above 128 MiB will be uploaded in multiple parts, then combined server-side.')
 @cli_util.option('--part-size', type=click.INT,
-                 help='Part size (in MiB) to use if uploading via multipart upload operations')
+                 help='Part size (in MiB) to use when uploading objects using multipart upload operations. The default part size is 128 MiB.')
 @cli_util.option('--disable-parallel-uploads', is_flag=True,
                  help='If the object will be uploaded in multiple parts, this option disables those parts from being uploaded in parallel.')
 @cli_util.option('--parallel-upload-count', type=click.IntRange(1, 1000), default=None,
@@ -325,7 +325,7 @@ def object_put(ctx, from_json, namespace, bucket_name, name, file, if_match, con
 
         * If the --no-multipart flag is specified, the object will be uploaded as a single part regardless of size (specifying --no-multipart when uploading from STDIN will result in an error)
 
-        * If the object is larger than --part-size, it will be uploaded as multiple parts (the default part size is 128 MiB)
+        * If the object is larger than --part-size, it will be uploaded as multiple parts
 
         * If the object is empty it will be uploaded as a single part
 
