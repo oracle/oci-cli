@@ -1626,6 +1626,116 @@ def create_data_guard_association_create_data_guard_association_to_existing_db_s
     cli_util.render_response(result, ctx)
 
 
+@database_group.command(name=cli_util.override('db.create_database.command_name', 'create'), help=u"""Creates a new database in the specified Database Home. If the database version is provided, it must match the version of the Database Home. Applies only to Exadata DB systems.""")
+@cli_util.option('--db-home-id', required=True, help=u"""The [OCID] of the Database Home.""")
+@cli_util.option('--source', required=True, type=custom_types.CliCaseInsensitiveChoice(["NONE"]), help=u"""The source of the database: Use `NONE` for creating a new database. The default is `NONE`.""")
+@cli_util.option('--db-version', help=u"""A valid Oracle Database version. To get a list of supported versions, use the [ListDbVersions] operation.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "BACKUP_IN_PROGRESS", "TERMINATING", "TERMINATED", "RESTORE_FAILED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'Database'})
+@cli_util.wrap_exceptions
+def create_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_home_id, source, db_version):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    details = {}
+    details['dbHomeId'] = db_home_id
+    details['source'] = source
+
+    if db_version is not None:
+        details['dbVersion'] = db_version
+
+    client = cli_util.build_client('database', ctx)
+    result = client.create_database(
+        create_new_database_details=details,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_database') and callable(getattr(client, 'get_database')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_database(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@database_group.command(name=cli_util.override('db.create_database_create_new_database_details.command_name', 'create-database-create-new-database-details'), help=u"""Creates a new database in the specified Database Home. If the database version is provided, it must match the version of the Database Home. Applies only to Exadata DB systems.""")
+@cli_util.option('--db-home-id', required=True, help=u"""The [OCID] of the Database Home.""")
+@cli_util.option('--database', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--db-version', help=u"""A valid Oracle Database version. To get a list of supported versions, use the [ListDbVersions] operation.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "BACKUP_IN_PROGRESS", "TERMINATING", "TERMINATED", "RESTORE_FAILED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'database': {'module': 'database', 'class': 'CreateDatabaseDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database': {'module': 'database', 'class': 'CreateDatabaseDetails'}}, output_type={'module': 'database', 'class': 'Database'})
+@cli_util.wrap_exceptions
+def create_database_create_new_database_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_home_id, database, db_version):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    details = {}
+    details['dbHomeId'] = db_home_id
+    details['database'] = cli_util.parse_json_parameter("database", database)
+
+    if db_version is not None:
+        details['dbVersion'] = db_version
+
+    details['source'] = 'NONE'
+
+    client = cli_util.build_client('database', ctx)
+    result = client.create_database(
+        create_new_database_details=details,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_database') and callable(getattr(client, 'get_database')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_database(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @db_home_group.command(name=cli_util.override('db.create_db_home.command_name', 'create'), help=u"""Creates a new Database Home in the specified DB system based on the request parameters you provide. Applies only to bare metal and Exadata DB systems.""")
 @cli_util.option('--display-name', help=u"""The user-provided name of the Database Home.""")
 @cli_util.option('--source', type=custom_types.CliCaseInsensitiveChoice(["NONE", "DB_BACKUP", "VM_CLUSTER_NEW"]), help=u"""The source of database: NONE for creating a new database. DB_BACKUP for creating a new database by restoring from a database backup.""")
@@ -1737,8 +1847,8 @@ def create_db_home_create_db_home_with_db_system_id_from_backup_details(ctx, fro
 @db_home_group.command(name=cli_util.override('db.create_db_home_create_db_home_with_db_system_id_details.command_name', 'create-db-home-create-db-home-with-db-system-id-details'), help=u"""Creates a new Database Home in the specified DB system based on the request parameters you provide. Applies only to bare metal and Exadata DB systems.""")
 @cli_util.option('--db-system-id', required=True, help=u"""The [OCID] of the DB system.""")
 @cli_util.option('--db-version', required=True, help=u"""A valid Oracle Database version. To get a list of supported versions, use the [ListDbVersions] operation.""")
-@cli_util.option('--database', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""The user-provided name of the Database Home.""")
+@cli_util.option('--database', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -1747,17 +1857,19 @@ def create_db_home_create_db_home_with_db_system_id_from_backup_details(ctx, fro
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database': {'module': 'database', 'class': 'CreateDatabaseDetails'}}, output_type={'module': 'database', 'class': 'DbHome'})
 @cli_util.wrap_exceptions
-def create_db_home_create_db_home_with_db_system_id_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_system_id, db_version, database, display_name):
+def create_db_home_create_db_home_with_db_system_id_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_system_id, db_version, display_name, database):
 
     kwargs = {}
 
     details = {}
     details['dbSystemId'] = db_system_id
     details['dbVersion'] = db_version
-    details['database'] = cli_util.parse_json_parameter("database", database)
 
     if display_name is not None:
         details['displayName'] = display_name
+
+    if database is not None:
+        details['database'] = cli_util.parse_json_parameter("database", database)
 
     details['source'] = 'NONE'
 
@@ -2448,12 +2560,90 @@ def delete_backup_destination(ctx, from_json, wait_for_state, max_wait_seconds, 
     cli_util.render_response(result, ctx)
 
 
-@db_home_group.command(name=cli_util.override('db.delete_db_home.command_name', 'delete'), help=u"""Deletes a Database Home. The Database Home and its database data are local to the DB system and are lost when you delete the Database Home. Oracle recommends that you back up any data on the DB system before you delete it.""")
+@database_group.command(name=cli_util.override('db.delete_database.command_name', 'delete'), help=u"""Deletes the database. Applies only to Exadata DB systems.
+
+The data in this database is local to the DB system and will be lost when the database is deleted. Oracle recommends that you back up any data in the DB system prior to deleting it. You can use the `performFinalBackup` parameter to have the Exadata DB system database backed up before it is deleted.""")
+@cli_util.option('--database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--perform-final-backup', type=click.BOOL, help=u"""Whether to perform a final backup of the database or not. Default is false.
+
+If you previously used RMAN or dbcli to configure backups and then you switch to using the Console or the API for backups, a new backup configuration is created and associated with your database. This means that you can no longer rely on your previously configured unmanaged backups to work.
+
+This parameter is used in multiple APIs. Refer to the API description for details on how the operation uses it.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "BACKUP_IN_PROGRESS", "TERMINATING", "TERMINATED", "RESTORE_FAILED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, if_match, perform_final_backup):
+
+    if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
+        raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    if perform_final_backup is not None:
+        kwargs['perform_final_backup'] = perform_final_backup
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database', ctx)
+    result = client.delete_database(
+        database_id=database_id,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_database') and callable(getattr(client, 'get_database')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                oci.wait_until(client, client.get_database(database_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except oci.exceptions.ServiceError as e:
+                # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
+                # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
+                # will result in an exception that reflects a HTTP 404. In this case, we can exit with success (rather than raising
+                # the exception) since this would have been the behaviour in the waiter anyway (as for delete we provide the argument
+                # succeed_on_not_found=True to the waiter).
+                #
+                # Any non-404 should still result in the exception being thrown.
+                if e.status == 404:
+                    pass
+                else:
+                    raise
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@db_home_group.command(name=cli_util.override('db.delete_db_home.command_name', 'delete'), help=u"""Deletes a Database Home. Applies only to bare metal and Exadata DB systems.
+
+The Database Home and its database data are local to the DB system, and on a bare metal DB system, both are lost when you delete the Database Home. Oracle recommends that you back up any data on the DB system before you delete it. You can use the `performFinalBackup` parameter with this operation on bare metal DB systems.
+
+On an Exadata DB system, the delete request is rejected if the Database Home is not empty. You must terminate all databases in the Database Home before you delete the home. The `performFinalBackup` parameter is not used with this operation on Exadata DB systems.""")
 @cli_util.option('--db-home-id', required=True, help=u"""The Database Home [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--perform-final-backup', type=click.BOOL, help=u"""Whether to perform a final backup of the database or not. Default is false.
 
-If you previously used RMAN or dbcli to configure backups and then you switch to using the Console or the API for backups, a new backup configuration is created and associated with your database. This means that you can no longer rely on your previously configured unmanaged backups to work.""")
+If you previously used RMAN or dbcli to configure backups and then you switch to using the Console or the API for backups, a new backup configuration is created and associated with your database. This means that you can no longer rely on your previously configured unmanaged backups to work.
+
+This parameter is used in multiple APIs. Refer to the API description for details on how the operation uses it.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -4804,7 +4994,8 @@ def list_data_guard_associations(ctx, from_json, all_pages, page_size, database_
 
 @database_group.command(name=cli_util.override('db.list_databases.command_name', 'list'), help=u"""Gets a list of the databases in the specified Database Home.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
-@cli_util.option('--db-home-id', required=True, help=u"""A Database Home [OCID].""")
+@cli_util.option('--db-home-id', help=u"""A Database Home [OCID].""")
+@cli_util.option('--system-id', help=u"""The [OCID] of the Exadata DB system that you want to filter the database results by. Applies only to Exadata DB systems.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["DBNAME", "TIMECREATED"]), help=u"""The field to sort by.  You can provide one sort order (`sortOrder`).  Default order for TIMECREATED is descending.  Default order for DBNAME is ascending. The DBNAME sort order is case sensitive.""")
@@ -4818,12 +5009,16 @@ def list_data_guard_associations(ctx, from_json, all_pages, page_size, database_
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'list[DatabaseSummary]'})
 @cli_util.wrap_exceptions
-def list_databases(ctx, from_json, all_pages, page_size, compartment_id, db_home_id, limit, page, sort_by, sort_order, lifecycle_state, db_name):
+def list_databases(ctx, from_json, all_pages, page_size, compartment_id, db_home_id, system_id, limit, page, sort_by, sort_order, lifecycle_state, db_name):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
     kwargs = {}
+    if db_home_id is not None:
+        kwargs['db_home_id'] = db_home_id
+    if system_id is not None:
+        kwargs['system_id'] = system_id
     if limit is not None:
         kwargs['limit'] = limit
     if page is not None:
@@ -4844,7 +5039,6 @@ def list_databases(ctx, from_json, all_pages, page_size, compartment_id, db_home
         result = cli_util.list_call_get_all_results(
             client.list_databases,
             compartment_id=compartment_id,
-            db_home_id=db_home_id,
             **kwargs
         )
     elif limit is not None:
@@ -4853,13 +5047,11 @@ def list_databases(ctx, from_json, all_pages, page_size, compartment_id, db_home
             limit,
             page_size,
             compartment_id=compartment_id,
-            db_home_id=db_home_id,
             **kwargs
         )
     else:
         result = client.list_databases(
             compartment_id=compartment_id,
-            db_home_id=db_home_id,
             **kwargs
         )
     cli_util.render_response(result, ctx)
@@ -4969,6 +5161,7 @@ def list_db_home_patches(ctx, from_json, all_pages, page_size, db_home_id, limit
 @cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
 @cli_util.option('--db-system-id', help=u"""The DB system [OCID]. If provided, filters the results to the set of database versions which are supported for the DB system.""")
 @cli_util.option('--vm-cluster-id', help=u"""The [OCID] of the VM cluster.""")
+@cli_util.option('--backup-id', help=u"""The [OCID] of the backup. Specify a backupId to list only the DB systems or DB homes that support creating a database using this backup in this compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by.  You can provide one sort order (`sortOrder`).  Default order for TIMECREATED is descending.  Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.""")
@@ -4982,7 +5175,7 @@ def list_db_home_patches(ctx, from_json, all_pages, page_size, db_home_id, limit
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'list[DbHomeSummary]'})
 @cli_util.wrap_exceptions
-def list_db_homes(ctx, from_json, all_pages, page_size, compartment_id, db_system_id, vm_cluster_id, limit, page, sort_by, sort_order, lifecycle_state, display_name):
+def list_db_homes(ctx, from_json, all_pages, page_size, compartment_id, db_system_id, vm_cluster_id, backup_id, limit, page, sort_by, sort_order, lifecycle_state, display_name):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -4992,6 +5185,8 @@ def list_db_homes(ctx, from_json, all_pages, page_size, compartment_id, db_syste
         kwargs['db_system_id'] = db_system_id
     if vm_cluster_id is not None:
         kwargs['vm_cluster_id'] = vm_cluster_id
+    if backup_id is not None:
+        kwargs['backup_id'] = backup_id
     if limit is not None:
         kwargs['limit'] = limit
     if page is not None:

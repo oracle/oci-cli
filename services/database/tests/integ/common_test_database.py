@@ -170,7 +170,6 @@ def vm_db_system(runner, config_file, config_profile, networking, network_client
         result = invoke(runner, config_file, config_profile, params)
         util.validate_response(result)
         print(str(result.output))
-
         json_result = json.loads(result.output)
         db_system_id_1 = json_result['data']['id']
 
@@ -350,6 +349,88 @@ def db_systems_cleanup(runner, config_file, config_profile, db_system_id_1, db_s
         state = json.loads(result.output)['data']['lifecycle-state']
         assert "TERMINAT" in state
         util.wait_until(['db', 'system', 'get', '--db-system-id', db_system_id_2], 'TERMINATED',
+                        max_wait_seconds=DB_SYSTEM_PROVISIONING_TIME_SEC, succeed_if_not_found=True)
+    except Exception as error:
+        util.print_latest_exception(error)
+        success_terminating_db_systems = False
+
+    assert success_terminating_db_systems
+
+
+def exa_db_system(runner, config_file, config_profile, networking, network_client, request):
+    DB_SYSTEM_SHAPE = "Exadata.Quarter1.84"
+    DB_SYSTEM_CPU_CORE_COUNT = '22'
+    if EXISTING_DB_SYSTEM_1:
+        return [EXISTING_DB_SYSTEM_1]
+    else:
+        subnet_response = network_client.get_subnet(networking['subnet_ocid_1'])
+        print("Using subnet's AD", subnet_response.data.availability_domain)
+        # provision DB systems
+        params = [
+            'system', 'launch',
+            '--admin-password', ADMIN_PASSWORD,
+            '--availability-domain', subnet_response.data.availability_domain,
+            '--compartment-id', util.COMPARTMENT_ID,
+            '--cpu-core-count', DB_SYSTEM_CPU_CORE_COUNT,
+            '--database-edition', DB_SYSTEM_DB_EXTREME_EDITION,
+            '--db-name', 'clibmdb',
+            '--db-version', DB_VERSION,
+            '--display-name', 'CliDbSysDisplayNameExa',
+            '--hostname', 'cli-bm-host',
+            '--shape', DB_SYSTEM_SHAPE,
+            '--ssh-authorized-keys-file', util.SSH_AUTHORIZED_KEYS_FILE,
+            '--subnet-id', networking['subnet_ocid_1'],
+            '--backup-subnet-id', networking['subnet_ocid_2'],
+            '--license-model', 'LICENSE_INCLUDED',
+            '--node-count', '1',
+            '--initial-data-storage-size-in-gb', '256'
+        ]
+
+        result = invoke(runner, config_file, config_profile, params)
+        util.validate_response(result)
+        print(str(result.output))
+
+        json_result = json.loads(result.output)
+        db_system_id_1 = json_result['data']['id']
+
+        print("Wating for DB System to complete provisioning...")
+
+        # create db system and wait to finish
+        util.wait_until(['db', 'system', 'get', '--db-system-id', db_system_id_1], 'AVAILABLE', max_wait_seconds=DB_SYSTEM_PROVISIONING_TIME_SEC)
+        print("exa_db_system: DB System provisioned successfully!")
+        return db_system_id_1
+
+
+def exa_db_system_cleanup(runner, config_file, config_profile, db_system_id_1):
+    if SKIP_CLEAN_UP_RESOURCES:
+        print("Skipping clean up of DB systems and dependent resources.")
+        return
+
+    success_terminating_db_systems = True
+
+    try:
+        # terminate db system 1
+        params = [
+            'system', 'terminate',
+            '--db-system-id', db_system_id_1,
+            '--force'
+        ]
+
+        result = invoke(runner, config_file, config_profile, params)
+        util.validate_response(result)
+
+        # validate that it goes into terminating state
+        params = [
+            'system', 'get',
+            '--db-system-id', db_system_id_1
+        ]
+
+        result = invoke(runner, config_file, config_profile, params)
+        util.validate_response(result)
+
+        state = json.loads(result.output)['data']['lifecycle-state']
+        assert "TERMINAT" in state
+        util.wait_until(['db', 'system', 'get', '--db-system-id', db_system_id_1], 'TERMINATED',
                         max_wait_seconds=DB_SYSTEM_PROVISIONING_TIME_SEC, succeed_if_not_found=True)
     except Exception as error:
         util.print_latest_exception(error)
