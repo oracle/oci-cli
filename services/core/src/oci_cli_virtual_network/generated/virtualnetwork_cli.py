@@ -382,6 +382,12 @@ def cross_connect_group_group():
     pass
 
 
+@click.command(cli_util.override('virtual_network.drg_redundancy_status_group.command_name', 'drg-redundancy-status'), cls=CommandGroupWithAlias, help="""Redundancy status of the DRG object identified by ID""")
+@cli_util.help_option_group
+def drg_redundancy_status_group():
+    pass
+
+
 @click.command(cli_util.override('virtual_network.security_list_group.command_name', 'security-list'), cls=CommandGroupWithAlias, help="""A set of virtual firewall rules for your VCN. Security lists are configured at the subnet level, but the rules are applied to the ingress and egress traffic for the individual instances in the subnet. The rules can be stateful or stateless. For more information, see [Security Lists]. **Note:** Compare security lists to [NetworkSecurityGroup]s, which let you apply a set of security rules to a *specific set of VNICs* instead of an entire subnet. Oracle recommends using network security groups instead of security lists, although you can use either or both together.
 
 **Important:** Oracle Cloud Infrastructure Compute service images automatically include firewall rules (for example, Linux iptables, Windows firewall). If there are issues with some type of access to an instance, make sure both the security lists associated with the instance's subnet and the instance's firewall rules are set correctly.
@@ -432,6 +438,7 @@ virtual_network_root_group.add_command(ip_sec_connection_group)
 virtual_network_root_group.add_command(service_group)
 virtual_network_root_group.add_command(network_security_group_group)
 virtual_network_root_group.add_command(cross_connect_group_group)
+virtual_network_root_group.add_command(drg_redundancy_status_group)
 virtual_network_root_group.add_command(security_list_group)
 
 
@@ -4296,6 +4303,28 @@ def get_drg_attachment(ctx, from_json, drg_attachment_id):
     client = cli_util.build_client('virtual_network', ctx)
     result = client.get_drg_attachment(
         drg_attachment_id=drg_attachment_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@drg_redundancy_status_group.command(name=cli_util.override('virtual_network.get_drg_redundancy_status.command_name', 'get'), help=u"""Get redundancy status of single DRG object on Oracle side.""")
+@cli_util.option('--drg-id', required=True, help=u"""The OCID of the DRG.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'DrgRedundancyStatus'})
+@cli_util.wrap_exceptions
+def get_drg_redundancy_status(ctx, from_json, drg_id):
+
+    if isinstance(drg_id, six.string_types) and len(drg_id.strip()) == 0:
+        raise click.UsageError('Parameter --drg-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('virtual_network', ctx)
+    result = client.get_drg_redundancy_status(
+        drg_id=drg_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)

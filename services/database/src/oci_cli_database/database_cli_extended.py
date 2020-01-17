@@ -48,6 +48,10 @@ database_cli.ocp_us_group.commands.pop(database_cli.get_exadata_infrastructure_o
 cli_util.rename_command(database_cli, database_cli.exadata_infrastructure_group, database_cli.get_exadata_infrastructure_ocpus, "get-compute-units")
 database_cli.db_root_group.commands.pop(database_cli.ocp_us_group.name)
 
+# Clone from Backup Rename for ADB
+cli_util.rename_command(database_cli, database_cli.autonomous_database_group, database_cli.create_autonomous_database_create_autonomous_database_from_backup_details, "create-from-backup-id")
+cli_util.rename_command(database_cli, database_cli.autonomous_database_group, database_cli.create_autonomous_database_create_autonomous_database_from_backup_timestamp_details, "create-from-backup-timestamp")
+
 
 # wallet commands
 
