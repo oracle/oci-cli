@@ -6,6 +6,21 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.8.2 - 2020-01-21
+-------------------
+
+Added
+~~~~~
+
+* Support for getting DRG redundancy status in the Networking service 
+ 
+  * ``oci network drg-redundancy-status get --drg-id``
+
+* Support for cloning autonomous databases from backups in the Database service
+
+  * ``oci db autonomous-database create-from-backup-id``
+  * ``oci db autonomous-database create-from-backup-timestamp``
+
 2.8.1 - 2020-01-14
 -------------------
 Added

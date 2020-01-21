@@ -172,9 +172,13 @@ def vcr_path_matcher(r1, r2):
 
     r1_path = r1.path.split('/')
     r2_path = r2.path.split('/')
+    if r2_path[-1] == '':
+        r2_path.pop()
 
     r1_updated_path = list(r1_path)
     r2_updated_path = list(r2_path)
+    if r2_updated_path[-1] == '':
+        r2_updated_path.pop()
 
     if len(r1_path) != len(r2_path):
         return False
