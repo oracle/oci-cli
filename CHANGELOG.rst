@@ -6,6 +6,37 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.9.0 - 2020-01-28
+-------------------
+
+Added
+~~~~~
+
+* Support for Data Catalog Service
+
+    * ``oci data-catalog``
+
+* Support for Data Flow Service
+
+    * ``oci data-flow``
+
+* Support for Application Migration Service
+
+    * ``oci application-migration``
+
+* Support for offline data export in the Data Transfer Service
+
+    * ``oci dts export``
+
+* Support for cross shape Data Guard. Customer to provide shape information when setting up Data Guard association.
+
+    * ``oci db data-guard-association create with-new-db-system --shape``
+
+Changed
+~~~~~~~
+
+* [Breaking] ``oci oce cluster create --dashboard-enabled`` is now disabled by default.
+
 2.8.2 - 2020-01-21
 -------------------
 

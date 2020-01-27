@@ -33,10 +33,11 @@ class IntegTestDTS(unittest.TestCase):
         self.config = {
             "$COMPARTMENT": os.environ["OCI_CLI_COMPARTMENT_ID"],
             "$PROFILE": "DESKTOP",
-            "$CERT_BUNDLE_PATH": "~/SDK/dts-oci-cli-env/dts-oci-cli-config/combined_r1.crt",
+            "$CERT_BUNDLE_PATH": "~/.oci/combined_r1.crt",
             "$BUCKET": "production_bucket",
             "$JOB_ID": "NOT_POPULATED",
             "$APPLIANCE_LABEL": "NOT_POPULATED",
+            "$EXPORT_JOB_ID": "NOT_POPULATED",
         }
 
         self.commands = [
@@ -79,6 +80,16 @@ class IntegTestDTS(unittest.TestCase):
             {"verb": "delete",
              "command_data":
                 ["job", "delete", "--force", "--job-id", "$JOB_ID"]},
+            {"verb": "export-job-create",
+             "command_data":
+                 ["export", "create",
+                  "--compartment-id", "$COMPARTMENT", "--bucket-name", "$BUCKET", "--display-name", "oci-cli-test-export-job-1",
+                  "--addressee", "John New Doe", "--care-of", "Oracle New", "--address1", "4110 Network Circle New",
+                  "--city-or-locality", "Santa Clara New", "--state-province-region", "CA", "--country", "US", "--zip-postal-code",
+                  "95057", "--phone-number", "123-456-7999", "--email", "john.doe.new@or.com"], "extract_from_output": {"id": "$EXPORT_JOB_ID"}},
+            {"verb": "export-job-delete",
+             "command_data":
+                ["export", "delete", "--job-id", "$EXPORT_JOB_ID", "--force"]}
         ]
 
     def test_dts(self):
@@ -91,9 +102,9 @@ class IntegTestDTS(unittest.TestCase):
             if REGION == "DESKTOP":
                 command_data.append("--endpoint")
                 command_data.append("http://localhost:19000")
-            else:
-                command_data.append("--cert-bundle")
-                command_data.append("$CERT_BUNDLE_PATH")
+
+            command_data.append("--cert-bundle")
+            command_data.append("$CERT_BUNDLE_PATH")
             command_data.append("--profile")
             command_data.append("$PROFILE")
             for i, val in enumerate(command_data):
@@ -123,13 +134,13 @@ class IntegTestDTS(unittest.TestCase):
         ret = 0
         try:
             command = self.command_prefix + command
-            click.echo("command=%s" % (command))
+            click.echo("command=%s" % command)
             result = util.invoke_command(command)
             s = result.output
             print("Output=%s" % (s))
             if len(s) > 0:
                 try:
-                    j_out = json.loads(s)
+                    j_out = json.loads(s.split('\n\n')[0])
                 except Exception as e:
                     j_out = None
         except Exception as e:
