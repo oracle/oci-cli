@@ -54,7 +54,15 @@ IGNORED_COMMANDS = [
     ['dts', 'physical-appliance', 'initialize-authentication'],
     ['dts', 'physical-appliance', 'unlock'],
     ['dts', 'job', 'verify-upload-user-credentials'],
-    ['dts', 'appliance', 'show-entitlement']
+    ['dts', 'appliance', 'show-entitlement'],
+    ['dts', 'export', 'configure-physical-appliance'],
+    ['dts', 'export', 'generate-manifest'],
+    ['dts', 'export', 'request-appliance'],
+    ['dts', 'export', 'create-policy'],
+    ['dts', 'export', 'setup-notifications'],
+    ['dts', 'appliance', 'show-entitlement'],
+    ['data-flow', 'application', 'create'],
+    ['data-flow', 'application', 'update']
 ]
 
 
@@ -111,7 +119,6 @@ COMMANDS_WITH_NO_PARAMS = sorted(command for command, _, _ in
 COMMANDS_WITH_ALL_OPTIONAL_PARAMS = sorted(command for command, _, _ in
                                            filter(lambda x: x[2] == 0 and x[0] not in IGNORED_COMMANDS,
                                                   util.collect_leaf_commands_with_counts(oci_cli.cli)))
-
 commands_list = [cmd for cmd in sorted(util.collect_commands(oci_cli.cli, leaf_commands_only=True))
                  if cmd not in IGNORED_COMMANDS]
 

@@ -94,9 +94,9 @@ containerengine_cli.cluster_group.add_command(generate_token)
 @cli_util.option('--service-lb-subnet-ids', type=custom_types.CLI_COMPLEX_TYPE, help="""The two subnets\
  configured to host load balancers in a Kubernetes cluster.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--dashboard-enabled', type=click.BOOL, help="""Select if you want to use the Kubernetes Dashboard to\
- deploy and troubleshoot containerized applications, and to manage Kubernetes resources. Default value is true.""")
+ deploy and troubleshoot containerized applications, and to manage Kubernetes resources. Default value is false.""")
 @cli_util.option('--tiller-enabled', type=click.BOOL, help="""Select if you want Tiller (the server portion of Helm)\
- to run in the Kubernetes cluster. Default value is true.""")
+ to run in the Kubernetes cluster. Default value is false.""")
 @cli_util.option('--pods-cidr', help="""The available group of network addresses that can be allocated to pods running\
  in the cluster, expressed as a single, contiguous IPv4 CIDR block. For example, 10.244.0.0/16.""")
 @cli_util.option('--services-cidr', help="""The available group of network addresses that can be exposed as Kubernetes\

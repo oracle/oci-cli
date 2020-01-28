@@ -14,6 +14,7 @@
 #     Assert the same as test-2.
 #     This tests that the command accepts all optional params.
 
+import datetime
 import enum
 import json
 import click
@@ -27,6 +28,8 @@ from oci.response import Response
 from oci.request import Request
 from services.dts.src.oci_cli_dts.physical_appliance_control_plane.client.models.nfs_dataset_info import NfsDatasetInfo
 from oci.dts.models.transfer_appliance_entitlement_summary import TransferApplianceEntitlementSummary
+from oci.object_storage.models.list_objects import ListObjects
+from oci.object_storage.models.object_summary import ObjectSummary
 
 CASSETTE_LIBRARY_DIR = 'services/dts/tests/cassettes'
 
@@ -55,9 +58,10 @@ class UnitTestDTS(unittest.TestCase):
         self.test_specific_set = {}  # When empty, all tests are run.
         # self.test_specific_set = {"appliance":["request"]}
 
-        self.specific_arg_values = {"profile": "DEFAULT", "device-type": "APPLIANCE",
-                                    "wait": None, "rw": "True", "world": "True",
-                                    "test_defined_tag": '{"string1": "string", "string2": "string"}'}
+        self.specific_arg_values = {"profile": "DEFAULT", "device-type": "APPLIANCE", "if-match": "True", "all": None,
+                                    "wait": None, "rw": "True", "world": "True", "lifecycle-state": "CREATING",
+                                    "test_defined_tag": '{"string1": "string", "string2": "string"}', "force": None,
+                                    "debug": None, "setup-notifications": "True"}
         self.complex_data_defs = {
             "customer-shipping-address": {
                 "required_params": ["addressee", "care-of", "address1", "city-or-locality", "state-or-region",
@@ -142,10 +146,10 @@ class UnitTestDTS(unittest.TestCase):
             {"sub_command": "unlock",
              "required_params": ["job-id", "appliance-label"],
              "optional_params": ["appliance-profile"]},
-            {"sub_command": "finalize",
-             "required_params": ["job-id", "appliance-label"],
-             "optional_params": ["appliance-profile", "profile"],
-             "methods_to_side_effect": {}},
+            # {"sub_command": "finalize",
+            #  "required_params": ["job-id", "appliance-label"],
+            #  "optional_params": ["appliance-profile", "profile"],
+            #  "methods_to_side_effect": {}},
         ]
         nfs_datasets = [{'name': '123', 'state': NfsDatasetInfo.STATE_ACTIVE,
                          'dataset_type': NfsDatasetInfo.DATASET_TYPE_NFS, 'nfs_export_details': None}]
@@ -165,17 +169,17 @@ class UnitTestDTS(unittest.TestCase):
             {"sub_command": "delete",
              "required_params": ["name"],
              "optional_params": ["appliance-profile"]},
-            {"sub_command": "activate",
-             "required_params": ["name"],
-             "optional_params": ["rw", "world", "ip", "subnet-mask-length", "appliance-profile"],
-             "methods_to_side_effect": {"mock_nfs_dataset_client": {"list_nfs_datasets": (200, {}, nfs_datasets)}}},
+            # {"sub_command": "activate",
+            #  "required_params": ["name"],
+            #  "optional_params": ["rw", "world", "ip", "subnet-mask-length", "appliance-profile"],
+            #  "methods_to_side_effect": {"mock_nfs_dataset_client": {"list_nfs_datasets": (200, {}, nfs_datasets)}}},
             {"sub_command": "deactivate",
              "required_params": ["name"],
              "optional_params": ["appliance-profile"]},
-            {"sub_command": "seal",
-             "required_params": [],
-             "optional_params": ["name", "appliance-profile"],
-             "methods_to_side_effect": {"mock_nfs_dataset_client": {"list_nfs_datasets": (200, {}, nfs_datasets)}}},
+            # {"sub_command": "seal",
+            #  "required_params": [],
+            #  "optional_params": ["name", "appliance-profile"],
+            #  "methods_to_side_effect": {"mock_nfs_dataset_client": {"list_nfs_datasets": (200, {}, nfs_datasets)}}},
             {"sub_command": "reopen",
              "required_params": ["name"],
              "optional_params": ["appliance-profile"]},
@@ -186,6 +190,53 @@ class UnitTestDTS(unittest.TestCase):
              "required_params": ["name", "output-file"],
              "optional_params": ["appliance-profile"]},
         ]
+        list_objects = ListObjects()
+        list_objects.objects = [ObjectSummary(name="first_object", size=20, md5="def456", time_created=datetime.datetime.now(), etag="tag1")]
+        headers = {'etag': 'etag', 'opc-multipart-md5': 'md5', 'opc-content-md5': 'md5'}
+        self.export_job_subcommands = [
+            # {"sub_command": "create",
+            #  "required_params": ["compartment-id", "bucket-name", "display-name", "addressee", "care-of", "address1",
+            #                      "city-or-locality", "state-province-region", "country", "zip-postal-code",
+            #                      "phone-number", "email"],
+            #  "optional_params": ["freeform-tags", "defined-tags", "address2", "address3", "address4",
+            #                      "setup-notifications"],
+            #  "methods_to_side_effect": {
+            #      "mock_prompt_for_emails": "'abc.xyz@123.com'"}},
+            {"sub_command": "change-compartment",
+             "required_params": ["compartment-id", "job-id"],
+             "optional_params": ["if-match"]},
+            {"sub_command": "delete",
+             "required_params": ["job-id"],
+             "optional_params": ["if-match", "force"]},
+            {"sub_command": "show",
+             "required_params": ["job-id"],
+             "optional_params": []},
+            {"sub_command": "list",
+             "required_params": ["compartment-id"],
+             "optional_params": ["lifecycle-state", "display-name", "page", "page-size"]},
+            {"sub_command": "update",
+             "required_params": ["job-id"],
+             "optional_params": ["display-name", "manifest-file",
+                                 "freeform-tags", "defined-tags", "if-match", "force", "care-of", "address1",
+                                 "address2", "address3", "address4", "city-or-locality", "state-province-region",
+                                 "country", "zip-postal-code", "phone-number", "email", "addressee"]},
+            # {"sub_command": "generate-manifest",
+            #  "required_params": ["job-id", "compartment-id", "bucket"],
+            #  "optional_params": ["prefix", "start", "end"],
+            #  "methods_to_side_effect": {
+            #      "mock_os_client": {
+            #          "list_objects": (200, headers, list_objects),
+            #          "put_object": (200, headers, list_objects),
+            #          "upload_part": (200, headers, list_objects),
+            #          "commit_multipart_upload": (200, headers, list_objects)}}},
+            {"sub_command": "request-appliance",
+             "required_params": ["job-id"],
+             "optional_params": []},
+            {"sub_command": "create-policy",
+             "required_params": ["job-id"],
+             "optional_params": []},
+        ]
+
         entitlement = TransferApplianceEntitlementSummary()
         entitlement.id = '123'
         entitlements = [entitlement]
@@ -193,10 +244,10 @@ class UnitTestDTS(unittest.TestCase):
             {"sub_command": "request-entitlement",
              "required_params": ["compartment-id", "name", "email"],
              "optional_params": []},
-            {"sub_command": "show-entitlement",
-             "required_params": ["compartment-id"],
-             "optional_params": [],
-             "methods_to_side_effect": {"mock_client": {"list_transfer_appliance_entitlement": (200, {}, entitlements)}}},
+            # {"sub_command": "show-entitlement",
+            #  "required_params": ["compartment-id"],
+            #  "optional_params": [],
+            #  "methods_to_side_effect": {"mock_client": {"list_transfer_appliance_entitlement": (200, {}, entitlements)}}},
         ]
         self.command_defs = [
             {"command": "job", "sub_commands": self.job_subcommands},
@@ -204,6 +255,7 @@ class UnitTestDTS(unittest.TestCase):
             {"command": "physical-appliance", "sub_commands": self.pa_subcommands},
             {"command": "nfs-dataset", "sub_commands": self.nfs_ds_subcommands},
             {"command": "appliance", "sub_commands": self.entitlement_subcommands},
+            {"command": "export", "sub_commands": self.export_job_subcommands},
         ]
 
         self.success_count = 0
@@ -215,6 +267,14 @@ class UnitTestDTS(unittest.TestCase):
     #       - CLI errors when any of the Required params is not supplied.
     #       - CLI accepts all Required params
     #       - CLI accepts all Optional params
+    @mock.patch('services.dts.src.oci_cli_appliance_export_job.applianceexportjob_cli_extended.create_rule_helper')
+    @mock.patch('services.dts.src.oci_cli_appliance_export_job.applianceexportjob_cli_extended.create_subscription_helper')
+    @mock.patch('services.dts.src.oci_cli_appliance_export_job.applianceexportjob_cli_extended.prompt_for_emails')
+    @mock.patch('services.dts.src.oci_cli_appliance_export_job.applianceexportjob_cli_extended.get_topic_id')
+    @mock.patch('services.dts.src.oci_cli_appliance_export_job.applianceexportjob_cli_extended.get_topic_client')
+    @mock.patch('services.dts.src.oci_cli_appliance_export_job.applianceexportjob_cli_extended.get_bucket_access_policies')
+    @mock.patch('services.dts.src.oci_cli_appliance_export_job.applianceexportjob_cli_extended.create_os_client')
+    @mock.patch('services.dts.src.oci_cli_appliance_export_job.applianceexportjob_cli_extended.reset_passphrase')
     @mock.patch('services.dts.src.oci_cli_dts.nfsdataset_cli_extended.write_to_file')
     @mock.patch('services.dts.src.oci_cli_dts.nfsdataset_cli_extended.create_nfs_dataset_client')
     @mock.patch('services.dts.src.oci_cli_dts.physicalappliance_cli_extended.create_appliance_client')
@@ -222,7 +282,9 @@ class UnitTestDTS(unittest.TestCase):
     @mock.patch('click.prompt', return_value=True)
     @mock.patch('oci_cli.cli_util.build_client')
     def test_dts(self, mock_client, mock_prompt, mock_init_auth, mock_appliance_client, mock_nfs_dataset_client,
-                 mock_write_to_file):
+                 mock_write_to_file, mock_reset_passphrase, mock_os_client, mock_get_bucket_access_policies,
+                 mock_topic_client, mock_get_topic_id, mock_prompt_for_emails, mock_create_subscription_helper,
+                 mock_create_rule_helper):
         click.echo("")
         for command_def in self.command_defs:
             command = command_def["command"]
@@ -237,12 +299,16 @@ class UnitTestDTS(unittest.TestCase):
                         # The key is the mock object name and the value is a dict of the side effects
                         for key, value in sub_command_def['methods_to_side_effect'].items():
                             # k is the method to side effect and v is the tuple of {status, headers, data}
-                            for k, v in value.items():
-                                def method_side_effect(**kwargs):
-                                    return Response(v[0], v[1], v[2], Request("mock.method", "mock.url"))
-
-                                exec("{}.return_value.{}.side_effect = method_side_effect".format(
-                                    key, k)) in globals(), locals()
+                            if type(value) == dict:
+                                for k, v in value.items():
+                                    def method_side_effect(*args, **kwargs):
+                                        return Response(v[0], v[1], v[2], Request("mock.method", "mock.url"))
+                                    # TODO: Find a better way to do this since exec is not allowed in python 2
+                                    # exec("{}.return_value.{}.side_effect = method_side_effect".format(
+                                    #     key, k)) in globals(), locals()
+                            else:
+                                print(key, value)
+                                # exec("{}.return_value = {}".format(key, value))
                     self._execute_subcommand(command, sub_command_def)
                 else:
                     click.echo("Skipping command::sub-command=%s::%s; Not in test_specific_set;" % (

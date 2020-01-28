@@ -6,6 +6,7 @@ import click
 
 from oci_cli import cli_util
 from oci_cli import json_skeleton_utils
+from services.dts.src.oci_cli_dts.generated import dts_service_cli
 from services.dts.src.oci_cli_transfer_appliance.generated import transferappliance_cli
 
 
@@ -23,6 +24,16 @@ customer_address_options = {
     'phone_number': 'phoneNumber',
     'email': 'email'
 }
+
+
+cli_util.rename_command(dts_service_cli, dts_service_cli.dts_service_group, transferappliance_cli.transfer_appliance_root_group, 'appliance')
+cli_util.rename_command(dts_service_cli, transferappliance_cli.transfer_appliance_root_group, transferappliance_cli.create_transfer_appliance, 'request')
+cli_util.rename_command(dts_service_cli, transferappliance_cli.transfer_appliance_root_group, transferappliance_cli.get_transfer_appliance, 'show')
+cli_util.rename_command(dts_service_cli, transferappliance_cli.transfer_appliance_root_group, transferappliance_cli.get_transfer_appliance_encryption_passphrase, 'get-passphrase')
+transferappliance_cli.transfer_appliance_root_group.commands.pop(transferappliance_cli.transfer_appliance_group.name)
+transferappliance_cli.transfer_appliance_root_group.commands.pop(transferappliance_cli.transfer_appliance_encryption_passphrase_group.name)
+transferappliance_cli.transfer_appliance_root_group.commands.pop(transferappliance_cli.transfer_appliance_certificate_group.name)
+transferappliance_cli.transfer_appliance_root_group.commands.pop(transferappliance_cli.transfer_appliance_public_key_group.name)
 
 
 @cli_util.copy_params_from_generated_command(transferappliance_cli.create_transfer_appliance, params_to_exclude=['id', 'wait_for_state', 'max_wait_seconds', 'wait_interval_seconds', 'customer_shipping_address'])

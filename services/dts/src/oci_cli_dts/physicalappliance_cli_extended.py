@@ -86,6 +86,12 @@ def pa_initialize_authentication(ctx, from_json, job_id, appliance_label, applia
         **kwargs
     )
     serial_number = result.data.serial_number
+    pa_init_auth_helper(ctx, appliance_profile, appliance_cert_fingerprint, appliance_ip, appliance_port,
+                        serial_number, access_token)
+
+
+def pa_init_auth_helper(ctx, appliance_profile, appliance_cert_fingerprint, appliance_ip, appliance_port,
+                        serial_number, access_token):
     auth_spec = InitAuthSpec(cert_fingerprint=appliance_cert_fingerprint, appliance_ip=appliance_ip,
                              appliance_port=appliance_port, appliance_profile=appliance_profile,
                              serial_id=serial_number, access_token=access_token)
@@ -212,6 +218,10 @@ def pa_unlock(ctx, from_json, appliance_profile, job_id, appliance_label):
             id=job_id,
             transfer_appliance_label=appliance_label
         ).data.encryption_passphrase
+    pa_unlock_helper(ctx, appliance_profile, passphrase)
+
+
+def pa_unlock_helper(ctx, appliance_profile, passphrase):
     appliance_client = create_appliance_client(ctx, appliance_profile)
     appliance_client.unlock_appliance(details={'passphrase': passphrase})
     appliance_info = appliance_client.get_physical_transfer_appliance()

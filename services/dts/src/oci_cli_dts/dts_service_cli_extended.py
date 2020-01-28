@@ -51,14 +51,9 @@ group_help_override_list = [
 # RENAME COMMANDS #####
 rename_command_list = [
     {"group": dts_service_cli.dts_service_group, "old": transferjob_cli.transfer_job_root_group, "new": "job"},
-    {"group": dts_service_cli.dts_service_group, "old": transferappliance_cli.transfer_appliance_root_group, "new": "appliance"},
 
     {"group": transferjob_cli.transfer_job_root_group, "old": transferjob_cli.get_transfer_job, "new": "show"},
 
-    {"group": transferappliance_cli.transfer_appliance_root_group, "old": transferappliance_cli.get_transfer_appliance, "new": "show"},
-    {"group": transferappliance_cli.transfer_appliance_root_group, "old": transferappliance_cli.create_transfer_appliance, "new": "request"},
-    {"group": transferappliance_cli.transfer_appliance_encryption_passphrase_group, "old": transferappliance_cli.get_transfer_appliance_encryption_passphrase, "new": "get-passphrase"},
-    {"group": transferappliance_cli.transfer_appliance_root_group, "old": transferappliance_cli.list_transfer_appliances, "new": "list"},
     {"group": transferapplianceentitlement_cli.transfer_appliance_entitlement_root_group, "old": transferapplianceentitlement_cli.create_transfer_appliance_entitlement, "new": "request-entitlement"},
     {"group": transferapplianceentitlement_cli.transfer_appliance_entitlement_root_group, "old": transferapplianceentitlement_cli.get_transfer_appliance_entitlement, "new": "show-entitlement"},
 
@@ -75,13 +70,6 @@ relocate_command_list = [
     {"group": transferjob_cli.transfer_job_root_group, "command": transferjob_cli.list_transfer_jobs},
     {"group": transferjob_cli.transfer_job_root_group, "command": transferjob_cli.update_transfer_job},
 
-    # dts appliance commands
-    {"group": transferappliance_cli.transfer_appliance_root_group, "command": transferappliance_cli.create_transfer_appliance},
-    {"group": transferappliance_cli.transfer_appliance_root_group, "command": transferappliance_cli.delete_transfer_appliance},
-    {"group": transferappliance_cli.transfer_appliance_root_group, "command": transferappliance_cli.list_transfer_appliances},
-    {"group": transferappliance_cli.transfer_appliance_root_group, "command": transferappliance_cli.get_transfer_appliance},
-    {"group": transferappliance_cli.transfer_appliance_root_group, "command": transferappliance_cli.get_transfer_appliance_encryption_passphrase},
-
 ]
 #
 
@@ -95,12 +83,6 @@ pop_command_list = [
 
     # dts job
     {"group": transferjob_cli.transfer_job_root_group, "command": transferjob_cli.transfer_job_group.name},
-
-    # dts appliance
-    {"group": transferappliance_cli.transfer_appliance_root_group, "command": transferappliance_cli.transfer_appliance_group.name},
-    {"group": transferappliance_cli.transfer_appliance_root_group, "command": transferappliance_cli.transfer_appliance_encryption_passphrase_group.name},
-    {"group": transferappliance_cli.transfer_appliance_root_group, "command": transferappliance_cli.transfer_appliance_certificate_group.name},
-    {"group": transferappliance_cli.transfer_appliance_root_group, "command": transferappliance_cli.transfer_appliance_public_key_group.name},
 
 ]
 ####
