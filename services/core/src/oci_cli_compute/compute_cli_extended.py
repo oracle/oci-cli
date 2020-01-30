@@ -368,7 +368,7 @@ def list_vnics(ctx, from_json, instance_id, limit, page, all_pages, page_size):
                     raise
     # if no result, just show error message
     if not result or not len(result):
-        click.echo('No vnics found for this instance, Please check that the instance is not terminated', file=sys.stderr)
+        click.echo('No VNICs found for this instance. Please check that the instance is in RUNNING state.', file=sys.stderr)
     cli_util.render(result, vnic_attachments_result.headers, ctx=ctx)
 
 
