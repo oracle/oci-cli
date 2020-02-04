@@ -62,7 +62,9 @@ IGNORED_COMMANDS = [
     ['dts', 'export', 'setup-notifications'],
     ['dts', 'appliance', 'show-entitlement'],
     ['data-flow', 'application', 'create'],
-    ['data-flow', 'application', 'update']
+    ['data-flow', 'application', 'update'],
+    # input requires a valid file to upload
+    ['data-science', 'model', 'create-model-artifact']
 ]
 
 

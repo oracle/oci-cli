@@ -6,6 +6,18 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.9.1 - 2020-02-04
+-------------------
+
+Added
+~~~~~
+
+* Support for Data Science Service
+
+    * ``oci data-science``
+
+* Support for new OCI regions ``ap-osaka-1`` and ``ap-melbourne-1``.
+
 2.9.0 - 2020-01-28
 -------------------
 

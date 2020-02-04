@@ -311,6 +311,9 @@ def create_config_and_signer_based_on_click_context(ctx):
         # config file is not required to be present for instance principal auth
         if not instance_principal_auth:
             sys.exit("ERROR: " + str(e))
+        client_config["additional_user_agent"] = 'Oracle-PythonCLI/{}'.format(__version__)
+        if ctx.obj['debug']:
+            client_config["log_requests"] = True
 
     if instance_principal_auth or delegation_token_auth:
         signer = get_instance_principal_signer(ctx, client_config, delegation_token_auth)

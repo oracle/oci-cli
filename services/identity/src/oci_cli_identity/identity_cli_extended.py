@@ -58,7 +58,7 @@ def set_iam_default_tenancy_help():
                                 # Add help text
                                 param.help = param.help + \
                                     " If not provided, this parameter will use the " + \
-                                    "tenancy from the config file."
+                                    "tenancy's OCID (root compartment's OCID) from the config file."
 
 
 cli_util.SERVICE_FUNCTIONS_TO_EXECUTE['iam'] = cli_util_func
