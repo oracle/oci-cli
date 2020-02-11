@@ -355,7 +355,11 @@ def list_subscriptions(ctx, from_json, all_pages, page_size, compartment_id, top
     cli_util.render_response(result, ctx)
 
 
-@notification_topic_group.command(name=cli_util.override('notification_data_plane.publish_message.command_name', 'publish-message'), help=u"""Publishes a message to the specified topic. Limits information follows.
+@notification_topic_group.command(name=cli_util.override('notification_data_plane.publish_message.command_name', 'publish-message'), help=u"""Publishes a message to the specified topic.
+
+The topic endpoint is required for this operation. To get the topic endpoint, use [GetTopic] and review the `apiEndpoint` value in the response ([NotificationTopic]).
+
+Limits information follows.
 
 Message size limit per request: 64KB.
 

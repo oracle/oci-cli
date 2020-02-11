@@ -40,6 +40,11 @@ def is_windows():
     return sys.platform == 'win32'
 
 
+def is_ubuntu_or_debian():
+    curr_platform = platform.platform().lower()
+    return any(x in curr_platform for x in ['ubuntu', 'debian'])
+
+
 optional_feature_list = ['db (will install cx_Oracle)']
 
 ACCEPT_ALL_DEFAULTS = False
@@ -128,10 +133,7 @@ def is_valid_sha256sum(a_file, expected_sum):
     return expected_sum == computed_hash
 
 
-def create_virtualenv(tmp_dir, install_dir):
-    if DRY_RUN:
-        print_status('dry-run: Skipping virtualenv setup')
-        return
+def download_and_create_virtualenv(tmp_dir, install_dir):
     download_location = os.path.join(tmp_dir, VIRTUALENV_ARCHIVE)
     print_status('Downloading virtualenv package from {}.'.format(VIRTUALENV_DOWNLOAD_URL))
 
@@ -169,9 +171,46 @@ def create_virtualenv(tmp_dir, install_dir):
         for dll in glob.glob(os.path.join(src_dir, '*.dll')):
             print_status('Copying {} to {}'.format(dll, dest_dir))
             shutil.copy(dll, dest_dir)
-
     cmd = [sys.executable, 'virtualenv.py', '--python', sys.executable, install_dir]
     exec_command(cmd, cwd=working_dir)
+
+
+def install_python3_venv():
+    cmd = ['sudo', 'apt-get', 'update']
+    exec_command(cmd)
+    print_status('Installing python3-venv.')
+    cmd = ['sudo', 'apt-get', 'install', 'python3-venv', '-y']
+    exec_command(cmd)
+
+
+def install_missed_packages(tmp_dir, install_dir):
+    path_to_pip = os.path.join(install_dir, 'bin', 'pip')
+    cmd = [path_to_pip, 'install', '--upgrade', 'pip']
+    exec_command(cmd)
+    cmd = [path_to_pip, 'install', '--cache-dir', tmp_dir, 'wheel', '--upgrade']
+    exec_command(cmd)
+
+
+def create_virtualenv(tmp_dir, install_dir):
+    # Try to create virtaulenv using python3 venv, if venv is not installed or is having any issue, call download_and_create_virtualenv
+    if DRY_RUN:
+        print_status('dry-run: Skipping virtualenv setup')
+        return
+    try:
+        # Since Ubuntu and Debian are having issues with python3 venv (mising ensurepip module), install python3-venv
+        # package
+        if is_ubuntu_or_debian():
+            install_python3_venv()
+        print_status('Trying to use python3 venv.')
+        cmd = [sys.executable, '-m', 'venv', install_dir]
+        exec_command(cmd)
+
+        # Known issue with Ubuntu/Debian python3-venv:  error "Failed building wheel..."
+        if is_ubuntu_or_debian():
+            install_missed_packages(tmp_dir, install_dir)
+    except Exception:
+        print_status('System was unable to use venv, is going to download and create virtualenv.')
+        download_and_create_virtualenv(tmp_dir, install_dir)
 
 
 def install_cli(install_dir, tmp_dir, version, optional_features):

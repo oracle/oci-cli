@@ -70,3 +70,13 @@ class TestCompute(unittest.TestCase):
 
         result = util.invoke_command(['compute', 'dedicated-vm-host', 'instance-shape', 'list'])
         assert 'Error: Missing option(s)' in result.output
+
+    def test_list_volume_attachment(self):
+        result = util.invoke_command(['compute', 'volume-attachment', 'list'])
+        assert 'UsageError' in result.output
+        assert '--compartment-id' in result.output
+        assert '--instance-id' in result.output
+
+        result = util.invoke_command(['compute', 'volume-attachment', 'list', '--compartment-id', 'dummy',
+                                      '--instance-id', 'dummy'])
+        assert 'ServiceError' in result.output

@@ -6,6 +6,33 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.9.2 - 2020-02-11
+-------------------
+
+Added
+~~~~~
+
+* Installer now uses Python3 venv if installed instead of downloading Virtualenv
+
+* Support for list Database versions command for Autonomous Database Serverless.
+
+  * ``oci db autonomous-db-version list``
+
+* Support for ``--db-version`` when provisioning Autonomous Database Serverless.
+
+  * ``oci db autonomous-database create --db-version``
+  * ``oci db autonomous-database create-from-clone --db-version``
+  * ``oci db autonomous-database create-from-backup-id --db-version``
+  * ``oci db autonomous-database create-from-backup-timestamp --db-version``
+  * ``oci db autonomous-database list --db-version``
+
+Changed
+~~~~~~~
+
+* Compute Volume Attachment list now can get compartment-id by instance-id.
+
+  * ``oci compute volume-attachment list --compartment-id (required to optional)``
+
 2.9.1 - 2020-02-04
 -------------------
 
@@ -14,7 +41,7 @@ Added
 
 * Support for Data Science Service
 
-    * ``oci data-science``
+  * ``oci data-science``
 
 * Support for new OCI regions ``ap-osaka-1`` and ``ap-melbourne-1``.
 
@@ -26,23 +53,23 @@ Added
 
 * Support for Data Catalog Service
 
-    * ``oci data-catalog``
+  * ``oci data-catalog``
 
 * Support for Data Flow Service
 
-    * ``oci data-flow``
+  * ``oci data-flow``
 
 * Support for Application Migration Service
 
-    * ``oci application-migration``
+  * ``oci application-migration``
 
 * Support for offline data export in the Data Transfer Service
 
-    * ``oci dts export``
+  * ``oci dts export``
 
 * Support for cross shape Data Guard. Customer to provide shape information when setting up Data Guard association.
 
-    * ``oci db data-guard-association create with-new-db-system --shape``
+  * ``oci db data-guard-association create with-new-db-system --shape``
 
 Changed
 ~~~~~~~
