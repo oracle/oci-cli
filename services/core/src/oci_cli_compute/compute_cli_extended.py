@@ -741,3 +741,24 @@ def change_instance_compartment(ctx, instance_id, compartment_id, if_match, from
             click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
 
     cli_util.render_response(result, ctx)
+
+
+# Change the required field compartment_id to be optional and make sure either compartment_id or instance_id is
+# provided.
+@cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--instance-id', help=u"""The OCID of the instance. If --compartment-id is not provided, then --instance-id must be provided.""")
+@cli_util.copy_params_from_generated_command(compute_cli.list_volume_attachments, params_to_exclude=['compartment_id', 'instance_id'])
+@compute_cli.volume_attachment_group.command(name=cli_util.override('compute.list_volume_attachments.command_name', 'list'), help=compute_cli.list_volume_attachments.help)
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[VolumeAttachment]'})
+@cli_util.wrap_exceptions
+def list_volume_attachments_extended(ctx, **kwargs):
+
+    if not kwargs['compartment_id'] and not kwargs['instance_id']:
+        raise click.UsageError('Either --compartment-id or --instance-id has to be provided')
+
+    if not kwargs['compartment_id']:
+        # Use instance_id to get compartment_id
+        client = cli_util.build_client('compute', ctx)
+        kwargs['compartment_id'] = client.get_instance(instance_id=kwargs['instance_id']).data.compartment_id
+    ctx.invoke(compute_cli.list_volume_attachments, **kwargs)

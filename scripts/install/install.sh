@@ -263,7 +263,7 @@ if [ "$need_to_install_python" = true ]; then
     # Many docker containers won't have sudo installed since they are already run as root.
     if command -v yum
     then
-        echo "Attempting to install Python."
+        echo "Attempting to install Python 3."
         $sudo_cmd yum $yum_opts check-update
         $sudo_cmd yum $yum_opts install gcc libffi-devel python-devel openssl-devel
         $sudo_cmd yum $yum_opts install make
@@ -285,16 +285,16 @@ if [ "$need_to_install_python" = true ]; then
         cd ..
     elif command -v apt-get
     then
-        echo "Attempting to install Python."
+        echo "Attempting to install Python 3."
         $sudo_cmd apt-get $apt_get_opts update
         $sudo_cmd apt-get $apt_get_opts install python3-pip
         if [ $? -ne 0 ]; then
-            echo "ERROR: Python was not installed, exiting install script. If you did not receive a prompt to install python please ensure you are not piping the script into bash and are instead using the following command: bash -c \"\$(curl -L $SHELL_INSTALL_SCRIPT_URL)\""
+            echo "ERROR: Python 3 was not installed, exiting install script. If you did not receive a prompt to install python please ensure you are not piping the script into bash and are instead using the following command: bash -c \"\$(curl -L $SHELL_INSTALL_SCRIPT_URL)\""
             exit 1
         fi
         python_exe=python3
     else
-        echo "ERROR: Could not install Python based on operating system. Please install Python manually and re-run this script."
+        echo "ERROR: Could not install Python 3 based on operating system. Please install Python 3.5+ manually and re-run this script."
         exit 1
     fi
 fi

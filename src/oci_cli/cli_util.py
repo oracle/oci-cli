@@ -556,7 +556,7 @@ def render(data, headers, ctx, display_all_headers=False, nest_data_in_data_attr
                 print(pretty_print_format(display_data))
                 if ctx.obj['debug']:
                     end_format = timer()
-                    logger.debug(oci.base_client.utc_now() + 'Time elapsed printing response data: {}'.format(str(end_format - start_format)))
+                    logger.debug(oci.base_client.utc_now() + 'Time elapsed printing response data: {}'.format(convert_time_elapsed(end_format - start_format)))
         elif ctx.obj['output'] == 'table':
             table_data = display_data
 
@@ -570,7 +570,7 @@ def render(data, headers, ctx, display_all_headers=False, nest_data_in_data_attr
             print_table(table_data)
             if ctx.obj['debug']:
                 end_format = timer()
-                logger.debug(oci.base_client.utc_now() + 'Time elapsed printing response data: {}'.format(str(end_format - start_format)))
+                logger.debug(oci.base_client.utc_now() + 'Time elapsed printing response data: {}'.format(convert_time_elapsed(end_format - start_format)))
 
             # if there were any additional headers in the response, print them out here, below the table
             # if there is no 'data' in the display dictionary (i.e. oci os object put) then all we have is headers
@@ -945,6 +945,13 @@ def get_param(command, param_name):
             return param
 
     raise RuntimeError('Could not find param {!r}.'.format(param_name))
+
+
+def copy_help_from_generated_code(command, param_name, remove_required=False):
+    help_text = get_param(command, param_name).help
+    if remove_required:
+        help_text = help_text.replace('[required]', '')
+    return help_text
 
 
 def update_param_help(command, param_name, updated_help, append=False, example=None):
@@ -1991,6 +1998,12 @@ def get_checksum_message(response_headers, checksum):
     server_hash = response_headers['opc-content-md5' if 'opc-content-md5' in response_headers else 'opc-multipart-md5']
     match_string = "matches" if checksum == server_hash else "does not match"
     return "md5 checksum %s [Local: %s]" % (match_string, checksum), checksum == server_hash
+
+
+def convert_time_elapsed(time_elapsed):
+    if time_elapsed < 0.001:
+        return "<1ms"
+    return str(time_elapsed)
 
 
 class CommandExample:
