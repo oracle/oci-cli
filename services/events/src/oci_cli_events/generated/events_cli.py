@@ -21,7 +21,7 @@ def events_root_group():
     pass
 
 
-@click.command(cli_util.override('events.rule_group.command_name', 'rule'), cls=CommandGroupWithAlias, help="""The configuration details of an Events rule. For more information, see [Managing Rules for Events]""")
+@click.command(cli_util.override('events.rule_group.command_name', 'rule'), cls=CommandGroupWithAlias, help="""The configuration details of an Events rule. For more information, see [Managing Rules for Events].""")
 @cli_util.help_option_group
 def rule_group():
     pass
@@ -70,9 +70,9 @@ Example: `true`""")
 
 * Fields not mentioned in the condition are ignored. You can create a valid filter that matches all events with two curly brackets: `{}`
 
-  For more examples, see [Matching Events with Filters]. * For a condition with fileds to match an event, the event must contain all the field names listed in the condition. Field names must appear in the condition with the same nesting structure used in the event.
+  For more examples, see [Matching Events with Filters]. * For a condition with fields to match an event, the event must contain all the field names listed in the condition. Field names must appear in the condition with the same nesting structure used in the event.
 
-  For a list of reference events, see [Services that Produce Events]. * Rules apply to events in the compartment in which you create them and any child compartments. This means that a condition specified by a rule only matches events emitted from resources in the compartment or any of its child compartments. * The condition is a string value in a JSON object, but numbers in conditions are converted from strings to numbers before they are evaluated for matches. This means that 100, 100.0 or 1.0e2 are all considered equal. * Boolean values are converted to numbers and then evaluated. This means true and True are considered equal, as are False and false. * Wildcard matching is supported with the asterisk (*) character.
+  For a list of reference events, see [Services that Produce Events]. * Rules apply to events in the compartment in which you create them and any child compartments. This means that a condition specified by a rule only matches events emitted from resources in the compartment or any of its child compartments. * Wildcard matching is supported with the asterisk (*) character.
 
   For examples of wildcard matching, see [Matching Events with Filters]
 
@@ -311,9 +311,9 @@ Example: `true`""")
 
 * Fields not mentioned in the condition are ignored. You can create a valid filter that matches all events with two curly brackets: `{}`
 
-  For more examples, see [Matching Events with Filters]. * For a condition with fileds to match an event, the event must contain all the field names listed in the condition. Field names must appear in the condition with the same nesting structure used in the event.
+  For more examples, see [Matching Events with Filters]. * For a condition with fields to match an event, the event must contain all the field names listed in the condition. Field names must appear in the condition with the same nesting structure used in the event.
 
-  For a list of reference events, see [Services that Produce Events]. * Rules apply to events in the compartment in which you create them and any child compartments. This means that a condition specified by a rule only matches events emitted from resources in the compartment or any of its child compartments. * The condition is a string value in a JSON object, but numbers in conditions are converted from strings to numbers before they are evaluated for matches. This means that 100, 100.0 or 1.0e2 are all considered equal. * Boolean values are converted to numbers and then evaluated. This means true and True are considered equal, as are False and false. * Wildcard matching is supported with the asterisk (*) character.
+  For a list of reference events, see [Services that Produce Events]. * Rules apply to events in the compartment in which you create them and any child compartments. This means that a condition specified by a rule only matches events emitted from resources in the compartment or any of its child compartments. * Wildcard matching is supported with the asterisk (*) character.
 
   For examples of wildcard matching, see [Matching Events with Filters]
 

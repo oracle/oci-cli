@@ -6,6 +6,32 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+
+2.9.3 - 2020-02-18
+-------------------
+
+Added
+~~~~~
+
+* Support for Oracle NoSQL Database Cloud (``nosql``)
+
+    * ``oci nosql``
+
+* List Db version by storage management type.
+
+    * ``oci db version list --storage-management``
+
+* Added instance type param for create operation to specify whether instance will be primary or non-primary.
+
+    * ``oci oce oce-instance create --instance-usage-type``
+
+Changed
+~~~~~~~
+
+* The `isEnabled` flag is returned for the Actions that are added to a Rule resource
+
+    * ``oci events rule``
+
 2.9.2 - 2020-02-11
 -------------------
 

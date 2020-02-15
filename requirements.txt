@@ -16,7 +16,7 @@ Jinja2==2.10.1
 jmespath==0.9.3
 ndg-httpsclient==0.4.2
 mock==2.0.0
-oci==2.10.4
+oci==2.10.5
 packaging==16.8
 pluggy==0.4.0
 py==1.4.33

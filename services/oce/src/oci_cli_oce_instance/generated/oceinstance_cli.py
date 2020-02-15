@@ -14,7 +14,7 @@ from oci_cli import custom_types  # noqa: F401
 from oci_cli.aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('oce.oce_root_group.command_name', 'oce'), cls=CommandGroupWithAlias, help=cli_util.override('oce.oce_root_group.help', """Oracle Content and Experience is a cloud-based content hub to drive omni-channel content management and accelerate experience delivery"""), short_help=cli_util.override('oce.oce_root_group.short_help', """OceInstance API"""))
+@cli.command(cli_util.override('oce.oce_root_group.command_name', 'oce'), cls=CommandGroupWithAlias, help=cli_util.override('oce.oce_root_group.help', """Oracle Content and Experience is a cloud-based content hub to drive omni-channel content management and accelerate experience delivery"""), short_help=cli_util.override('oce.oce_root_group.short_help', """Oracle Content and Experience API"""))
 @cli_util.help_option_group
 def oce_root_group():
     pass
@@ -116,6 +116,7 @@ def change_oce_instance_compartment(ctx, from_json, wait_for_state, max_wait_sec
 @cli_util.option('--admin-email', required=True, help=u"""Admin Email for Notification""")
 @cli_util.option('--description', help=u"""OceInstance description""")
 @cli_util.option('--identity-stripe', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--instance-usage-type', type=custom_types.CliCaseInsensitiveChoice(["PRIMARY", "NONPRIMARY"]), help=u"""Instance type based on its usage""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Usage of predefined tag keys. These predefined keys are scoped to namespaces. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -126,7 +127,7 @@ def change_oce_instance_compartment(ctx, from_json, wait_for_state, max_wait_sec
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'identity-stripe': {'module': 'oce', 'class': 'IdentityStripeDetails'}, 'freeform-tags': {'module': 'oce', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'oce', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def create_oce_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, name, tenancy_id, idcs_access_token, tenancy_name, object_storage_namespace, admin_email, description, identity_stripe, freeform_tags, defined_tags):
+def create_oce_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, name, tenancy_id, idcs_access_token, tenancy_name, object_storage_namespace, admin_email, description, identity_stripe, instance_usage_type, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -145,6 +146,9 @@ def create_oce_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 
     if identity_stripe is not None:
         details['identityStripe'] = cli_util.parse_json_parameter("identity_stripe", identity_stripe)
+
+    if instance_usage_type is not None:
+        details['instanceUsageType'] = instance_usage_type
 
     if freeform_tags is not None:
         details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
