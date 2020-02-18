@@ -5822,6 +5822,7 @@ def list_db_systems(ctx, from_json, all_pages, page_size, compartment_id, limit,
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
 @cli_util.option('--db-system-shape', help=u"""If provided, filters the results to the set of database versions which are supported for the given shape.""")
 @cli_util.option('--db-system-id', help=u"""The DB system [OCID]. If provided, filters the results to the set of database versions which are supported for the DB system.""")
+@cli_util.option('--storage-management', type=custom_types.CliCaseInsensitiveChoice(["ASM", "LVM"]), help=u"""The storage option used in DB system to list database versions for that storage manager. ASM - Automatic storage management LVM - Logical Volume management""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -5829,7 +5830,7 @@ def list_db_systems(ctx, from_json, all_pages, page_size, compartment_id, limit,
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'list[DbVersionSummary]'})
 @cli_util.wrap_exceptions
-def list_db_versions(ctx, from_json, all_pages, page_size, compartment_id, limit, page, db_system_shape, db_system_id):
+def list_db_versions(ctx, from_json, all_pages, page_size, compartment_id, limit, page, db_system_shape, db_system_id, storage_management):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -5843,6 +5844,8 @@ def list_db_versions(ctx, from_json, all_pages, page_size, compartment_id, limit
         kwargs['db_system_shape'] = db_system_shape
     if db_system_id is not None:
         kwargs['db_system_id'] = db_system_id
+    if storage_management is not None:
+        kwargs['storage_management'] = storage_management
     client = cli_util.build_client('database', ctx)
     if all_pages:
         if page_size:

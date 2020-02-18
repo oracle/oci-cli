@@ -206,6 +206,7 @@ def oce_cluster(runner, config_file, config_profile):
 
 
 @util.slow
+@pytest.mark.skip
 def test_oce_node_pool(runner, config_file, config_profile, oce_cluster):
     # Set-up of cross-connect group
     node_pool_id = None
@@ -307,6 +308,7 @@ def test_oce_node_pool(runner, config_file, config_profile, oce_cluster):
 # Default kubeconfig file (~/.kube/config) does NOT exist
 # OUTPUT:
 # New kubeconfig file created at default location with command returned contents.
+@pytest.mark.skip
 def test_create_kubeconfig_1(runner, config_file, config_profile, oce_cluster, request):
     with test_config_container.create_vcr(cassette_library_dir=CASSETTE_LIBRARY_DIR).use_cassette('test_oce_create_kubeconfig_test1.yml'):
         config_file_path = os.path.expandvars(os.path.expanduser(DEFAULT_KUBECONFIG_LOCATION))
@@ -358,6 +360,7 @@ def test_create_kubeconfig_1(runner, config_file, config_profile, oce_cluster, r
 # OUTPUT:
 # Merge new contents with old contents to the default kubeconfig file. Since the contents are same, merged kubeconfig
 # still has same number of clusters, users and context. However, the user now has new token for the cluster.
+@pytest.mark.skip
 def test_create_kubeconfig_2(runner, config_file, config_profile, oce_cluster, request):
     with test_config_container.create_vcr(cassette_library_dir=CASSETTE_LIBRARY_DIR).use_cassette('test_oce_create_kubeconfig_test2.yml'):
 
@@ -415,6 +418,7 @@ def test_create_kubeconfig_2(runner, config_file, config_profile, oce_cluster, r
 # Kubeconfig file does NOT exist at user provided file path.
 # OUTPUT:
 # New kubeconfig file created at user provided file location with command returned contents.
+@pytest.mark.skip
 def test_create_kubeconfig_3(runner, config_file, config_profile, oce_cluster, request):
     with test_config_container.create_vcr(cassette_library_dir=CASSETTE_LIBRARY_DIR).use_cassette('test_oce_create_kubeconfig_test3.yml'):
         config_file_path = os.path.expandvars(os.path.expanduser(USER_KUBECONFIG_LOCATION + "_" + request.function.__name__))
@@ -450,6 +454,7 @@ def test_create_kubeconfig_3(runner, config_file, config_profile, oce_cluster, r
 # Kubeconfig file contents are EMPTY.
 # OUTPUT:
 # Existing kubeconfig file at user provided file location populated with command returned contents.
+@pytest.mark.skip
 def test_create_kubeconfig_4(runner, config_file, config_profile, oce_cluster, request):
     with test_config_container.create_vcr(cassette_library_dir=CASSETTE_LIBRARY_DIR).use_cassette('test_oce_create_kubeconfig_test4.yml'):
         # There should be an EMPTY kubeconfig file at user provided location for this test.
@@ -488,6 +493,7 @@ def test_create_kubeconfig_4(runner, config_file, config_profile, oce_cluster, r
 # Default kubeconfig file has pre-populated kubeconfig contents.
 # OUTPUT:
 # Default kubeconfig file at user provided file location should be overwritten with command returned contents.
+@pytest.mark.skip
 def test_create_kubeconfig_5(runner, config_file, config_profile, oce_cluster, request):
     with test_config_container.create_vcr(cassette_library_dir=CASSETTE_LIBRARY_DIR).use_cassette('test_oce_create_kubeconfig_test5.yml'):
         # There should be a pre-populated kubeconfig file at default location for this test.
@@ -533,6 +539,7 @@ def test_create_kubeconfig_5(runner, config_file, config_profile, oce_cluster, r
 # File DOES NOT exist at user provided file path.
 # OUTPUT:
 # New kubeconfig file created at user provided file location populated with command returned contents.
+@pytest.mark.skip
 def test_create_kubeconfig_6(runner, config_file, config_profile, oce_cluster, request):
     with test_config_container.create_vcr(cassette_library_dir=CASSETTE_LIBRARY_DIR).use_cassette('test_oce_create_kubeconfig_test6.yml'):
         config_file_path = os.path.expandvars(os.path.expanduser(USER_KUBECONFIG_LOCATION + "_" + request.function.__name__))

@@ -177,18 +177,36 @@ def download_and_create_virtualenv(tmp_dir, install_dir):
 
 def install_python3_venv():
     cmd = ['sudo', 'apt-get', 'update']
-    exec_command(cmd)
+    if DRY_RUN:
+        print_status('dry-run: Skipping apt-get update, cmd=' + str(cmd))
+    else:
+        exec_command(cmd)
+
     print_status('Installing python3-venv.')
     cmd = ['sudo', 'apt-get', 'install', 'python3-venv', '-y']
-    exec_command(cmd)
+    if DRY_RUN:
+        print_status('dry-run: Skipping apt-get install python3-venv, cmd=' + str(cmd))
+    else:
+        exec_command(cmd)
 
 
-def install_missed_packages(tmp_dir, install_dir):
-    path_to_pip = os.path.join(install_dir, 'bin', 'pip')
+def upgrade_pip_wheel(tmp_dir, install_dir):
+    if is_windows():
+        path_to_pip = os.path.join(install_dir, 'Scripts', 'pip')
+    else:
+        path_to_pip = os.path.join(install_dir, 'bin', 'pip')
+
     cmd = [path_to_pip, 'install', '--upgrade', 'pip']
-    exec_command(cmd)
+    if DRY_RUN:
+        print_status('dry-run: Skipping pip upgrade, cmd=' + str(cmd))
+    else:
+        exec_command(cmd)
+
     cmd = [path_to_pip, 'install', '--cache-dir', tmp_dir, 'wheel', '--upgrade']
-    exec_command(cmd)
+    if DRY_RUN:
+        print_status('dry-run: Skipping wheel upgrade, cmd=' + str(cmd))
+    else:
+        exec_command(cmd)
 
 
 def create_virtualenv(tmp_dir, install_dir):
@@ -205,9 +223,8 @@ def create_virtualenv(tmp_dir, install_dir):
         cmd = [sys.executable, '-m', 'venv', install_dir]
         exec_command(cmd)
 
-        # Known issue with Ubuntu/Debian python3-venv:  error "Failed building wheel..."
-        if is_ubuntu_or_debian():
-            install_missed_packages(tmp_dir, install_dir)
+        if not is_windows():
+            upgrade_pip_wheel(tmp_dir, install_dir)
     except Exception:
         print_status('System was unable to use venv, is going to download and create virtualenv.')
         download_and_create_virtualenv(tmp_dir, install_dir)
