@@ -49,6 +49,7 @@ def pytest_addoption(parser):
     add_test_option(parser, "--config-profile", "store", oci.config.DEFAULT_PROFILE, "profile to use from the config file")
     add_test_option(parser, "--vcr-record-mode", "store", 'once', "Record mode option for VCRpy library.")
     add_test_option(parser, "--run-recordable-tests-only", "store", False, "Skip tests where we don't want to record their output.")
+    add_test_option(parser, "--instance-principals", "store_true", False, "Enables tests for instance principals")
 
 
 def add_test_option(parser, option, action, default, help):

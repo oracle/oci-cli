@@ -50,6 +50,12 @@ def compartment_group():
     pass
 
 
+@click.command(cli_util.override('iam.network_sources_group.command_name', 'network-sources'), cls=CommandGroupWithAlias, help="""A network source defines a list of source IPs that are allowed to make auth requests More info needed here""")
+@cli_util.help_option_group
+def network_sources_group():
+    pass
+
+
 @click.command(cli_util.override('iam.authentication_policy_group.command_name', 'authentication-policy'), cls=CommandGroupWithAlias, help="""Authentication policy, currently set for the given compartment""")
 @cli_util.help_option_group
 def authentication_policy_group():
@@ -292,6 +298,7 @@ iam_root_group.add_command(fault_domain_group)
 iam_root_group.add_command(work_request_group)
 iam_root_group.add_command(tagging_work_request_log_group)
 iam_root_group.add_command(compartment_group)
+iam_root_group.add_command(network_sources_group)
 iam_root_group.add_command(authentication_policy_group)
 iam_root_group.add_command(smtp_credential_group)
 iam_root_group.add_command(scim_client_credentials_group)
@@ -983,6 +990,93 @@ def create_mfa_totp_device(ctx, from_json, wait_for_state, max_wait_seconds, wai
                 raise
         else:
             click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@network_sources_group.command(name=cli_util.override('iam.create_network_source.command_name', 'create'), help=u"""Creates a new network source in your tenancy.
+
+You must specify your tenancy's OCID as the compartment ID in the request object (remember that the tenancy is simply the root compartment). Notice that IAM resources (users, groups, compartments, and some policies) reside within the tenancy itself, unlike cloud resources such as compute instances, which typically reside within compartments inside the tenancy. For information about OCIDs, see [Resource Identifiers].
+
+You must also specify a *name* for the network source, which must be unique across all network sources in your tenancy, and cannot be changed. You can use this name or the OCID when writing policies that apply to the network source. For more information about policies, see [How Policies Work].
+
+You must also specify a *description* for the network source (although it can be an empty string). It does not have to be unique, and you can change it anytime with [UpdateNetworkSource].
+
+After you send your request, the new object's `lifecycleState` will temporarily be CREATING. Before using the object, first make sure its `lifecycleState` has changed to ACTIVE.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the tenancy containing the network source object.""")
+@cli_util.option('--name', required=True, help=u"""The name you assign to the network source during creation. The name must be unique across all groups in the tenancy and cannot be changed.""")
+@cli_util.option('--description', required=True, help=u"""The description you assign to the network source during creation. Does not have to be unique, and it's changeable.""")
+@cli_util.option('--public-source-list', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of allowed public IPs and CIDR ranges""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--virtual-source-list', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of allowed VCN ocid/IP range pairs
+
+This option is a JSON list with items of type NetworkSourcesVirtualSourceList.  For documentation on NetworkSources_virtualSourceList please see our API reference: https://docs.cloud.oracle.com/api/#/en/identity/20160918/datatypes/NetworkSourcesVirtualSourceList.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--services', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of OCIservices allowed to make on behalf of requests which may have different source ips. At this time only the values of all or none are supported.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'public-source-list': {'module': 'identity', 'class': 'list[string]'}, 'virtual-source-list': {'module': 'identity', 'class': 'list[NetworkSourcesVirtualSourceList]'}, 'services': {'module': 'identity', 'class': 'list[string]'}, 'freeform-tags': {'module': 'identity', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'identity', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'public-source-list': {'module': 'identity', 'class': 'list[string]'}, 'virtual-source-list': {'module': 'identity', 'class': 'list[NetworkSourcesVirtualSourceList]'}, 'services': {'module': 'identity', 'class': 'list[string]'}, 'freeform-tags': {'module': 'identity', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'identity', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'identity', 'class': 'NetworkSources'})
+@cli_util.wrap_exceptions
+def create_network_source(ctx, from_json, compartment_id, name, description, public_source_list, virtual_source_list, services, freeform_tags, defined_tags):
+
+    kwargs = {}
+
+    details = {}
+    details['compartmentId'] = compartment_id
+    details['name'] = name
+    details['description'] = description
+
+    if public_source_list is not None:
+        details['publicSourceList'] = cli_util.parse_json_parameter("public_source_list", public_source_list)
+
+    if virtual_source_list is not None:
+        details['virtualSourceList'] = cli_util.parse_json_parameter("virtual_source_list", virtual_source_list)
+
+    if services is not None:
+        details['services'] = cli_util.parse_json_parameter("services", services)
+
+    if freeform_tags is not None:
+        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('identity', ctx)
+    result = client.create_network_source(
+        create_network_source_details=details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@user_group.command(name=cli_util.override('iam.create_o_auth_client_credential.command_name', 'create-o-auth-client-credential'), help=u"""Creates Oauth token for the user""")
+@cli_util.option('--user-id', required=True, help=u"""The OCID of the user.""")
+@cli_util.option('--name', required=True, help=u"""Name of the oauth credential to help user differentiate them.""")
+@cli_util.option('--description', required=True, help=u"""Description of the oauth credential to help user differentiate them.""")
+@cli_util.option('--scopes', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Allowed scopes for the given oauth credential.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'scopes': {'module': 'identity', 'class': 'list[FullyQualifiedScope]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'scopes': {'module': 'identity', 'class': 'list[FullyQualifiedScope]'}}, output_type={'module': 'identity', 'class': 'OAuth2ClientCredential'})
+@cli_util.wrap_exceptions
+def create_o_auth_client_credential(ctx, from_json, user_id, name, description, scopes):
+
+    if isinstance(user_id, six.string_types) and len(user_id.strip()) == 0:
+        raise click.UsageError('Parameter --user-id cannot be whitespace or empty string')
+
+    kwargs = {}
+
+    details = {}
+    details['name'] = name
+    details['description'] = description
+    details['scopes'] = cli_util.parse_json_parameter("scopes", scopes)
+
+    client = cli_util.build_client('identity', ctx)
+    result = client.create_o_auth_client_credential(
+        user_id=user_id,
+        create_o_auth2_client_credential_details=details,
+        **kwargs
+    )
     cli_util.render_response(result, ctx)
 
 
@@ -2031,6 +2125,61 @@ def delete_mfa_totp_device(ctx, from_json, user_id, mfa_totp_device_id, if_match
     cli_util.render_response(result, ctx)
 
 
+@network_sources_group.command(name=cli_util.override('iam.delete_network_source.command_name', 'delete'), help=u"""Deletes the specified network source""")
+@cli_util.option('--network-source-id', required=True, help=u"""The OCID of the network source.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_network_source(ctx, from_json, network_source_id, if_match):
+
+    if isinstance(network_source_id, six.string_types) and len(network_source_id.strip()) == 0:
+        raise click.UsageError('Parameter --network-source-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    client = cli_util.build_client('identity', ctx)
+    result = client.delete_network_source(
+        network_source_id=network_source_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@user_group.command(name=cli_util.override('iam.delete_o_auth_client_credential.command_name', 'delete-o-auth-client-credential'), help=u"""Delete Oauth token for the user""")
+@cli_util.option('--user-id', required=True, help=u"""The OCID of the user.""")
+@cli_util.option('--oauth2-client-credential-id', required=True, help=u"""The ID of the Oauth credential.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_o_auth_client_credential(ctx, from_json, user_id, oauth2_client_credential_id, if_match):
+
+    if isinstance(user_id, six.string_types) and len(user_id.strip()) == 0:
+        raise click.UsageError('Parameter --user-id cannot be whitespace or empty string')
+
+    if isinstance(oauth2_client_credential_id, six.string_types) and len(oauth2_client_credential_id.strip()) == 0:
+        raise click.UsageError('Parameter --oauth2-client-credential-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    client = cli_util.build_client('identity', ctx)
+    result = client.delete_o_auth_client_credential(
+        user_id=user_id,
+        oauth2_client_credential_id=oauth2_client_credential_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @policy_group.command(name=cli_util.override('iam.delete_policy.command_name', 'delete'), help=u"""Deletes the specified policy. The deletion takes effect typically within 10 seconds.""")
 @cli_util.option('--policy-id', required=True, help=u"""The OCID of the policy.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -2616,6 +2765,27 @@ def get_mfa_totp_device(ctx, from_json, user_id, mfa_totp_device_id):
     result = client.get_mfa_totp_device(
         user_id=user_id,
         mfa_totp_device_id=mfa_totp_device_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@network_sources_group.command(name=cli_util.override('iam.get_network_source.command_name', 'get'), help=u"""Gets the specified network source's information.""")
+@cli_util.option('--network-source-id', required=True, help=u"""The OCID of the network source.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'NetworkSources'})
+@cli_util.wrap_exceptions
+def get_network_source(ctx, from_json, network_source_id):
+
+    if isinstance(network_source_id, six.string_types) and len(network_source_id.strip()) == 0:
+        raise click.UsageError('Parameter --network-source-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    client = cli_util.build_client('identity', ctx)
+    result = client.get_network_source(
+        network_source_id=network_source_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -3351,6 +3521,106 @@ def list_mfa_totp_devices(ctx, from_json, all_pages, page_size, user_id, page, l
         )
     else:
         result = client.list_mfa_totp_devices(
+            user_id=user_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@network_sources_group.command(name=cli_util.override('iam.list_network_sources.command_name', 'list'), help=u"""Lists the network sources in your tenancy. You must specify your tenancy's OCID as the value for the compartment ID (remember that the tenancy is simply the root compartment). See [Where to Get the Tenancy's OCID and User's OCID].""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment (remember that the tenancy is simply the root compartment).""")
+@cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'list[NetworkSourcesSummary]'})
+@cli_util.wrap_exceptions
+def list_network_sources(ctx, from_json, all_pages, page_size, compartment_id, page, limit):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    client = cli_util.build_client('identity', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_network_sources,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_network_sources,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_network_sources(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@user_group.command(name=cli_util.override('iam.list_o_auth_client_credentials.command_name', 'list-o-auth-client-credentials'), help=u"""List of Oauth tokens for the user""")
+@cli_util.option('--user-id', required=True, help=u"""The OCID of the user.""")
+@cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED"]), help=u"""A filter to only return resources that match the given lifecycle state.  The state value is case-insensitive.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'list[OAuth2ClientCredentialSummary]'})
+@cli_util.wrap_exceptions
+def list_o_auth_client_credentials(ctx, from_json, all_pages, page_size, user_id, page, limit, lifecycle_state):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(user_id, six.string_types) and len(user_id.strip()) == 0:
+        raise click.UsageError('Parameter --user-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    client = cli_util.build_client('identity', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_o_auth_client_credentials,
+            user_id=user_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_o_auth_client_credentials,
+            limit,
+            page_size,
+            user_id=user_id,
+            **kwargs
+        )
+    else:
+        result = client.list_o_auth_client_credentials(
             user_id=user_id,
             **kwargs
         )
@@ -4667,6 +4937,111 @@ def update_idp_group_mapping(ctx, from_json, wait_for_state, max_wait_seconds, w
     cli_util.render_response(result, ctx)
 
 
+@network_sources_group.command(name=cli_util.override('iam.update_network_source.command_name', 'update'), help=u"""Updates the specified network source.""")
+@cli_util.option('--network-source-id', required=True, help=u"""The OCID of the network source.""")
+@cli_util.option('--description', help=u"""The description you assign to the network source. Does not have to be unique, and it's changeable.""")
+@cli_util.option('--public-source-list', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of allowed public IPs and CIDR ranges""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--virtual-source-list', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of allowed VCN ocid/IP range pairs
+
+This option is a JSON list with items of type NetworkSourcesVirtualSourceList.  For documentation on NetworkSources_virtualSourceList please see our API reference: https://docs.cloud.oracle.com/api/#/en/identity/20160918/datatypes/NetworkSourcesVirtualSourceList.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--services', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of OCIservices allowed to make on behalf of requests which may have different source ips. At this time only the values of all or none are supported.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@json_skeleton_utils.get_cli_json_input_option({'public-source-list': {'module': 'identity', 'class': 'list[string]'}, 'virtual-source-list': {'module': 'identity', 'class': 'list[NetworkSourcesVirtualSourceList]'}, 'services': {'module': 'identity', 'class': 'list[string]'}, 'freeform-tags': {'module': 'identity', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'identity', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'public-source-list': {'module': 'identity', 'class': 'list[string]'}, 'virtual-source-list': {'module': 'identity', 'class': 'list[NetworkSourcesVirtualSourceList]'}, 'services': {'module': 'identity', 'class': 'list[string]'}, 'freeform-tags': {'module': 'identity', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'identity', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'identity', 'class': 'NetworkSources'})
+@cli_util.wrap_exceptions
+def update_network_source(ctx, from_json, force, network_source_id, description, public_source_list, virtual_source_list, services, freeform_tags, defined_tags, if_match):
+
+    if isinstance(network_source_id, six.string_types) and len(network_source_id.strip()) == 0:
+        raise click.UsageError('Parameter --network-source-id cannot be whitespace or empty string')
+    if not force:
+        if public_source_list or virtual_source_list or services or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to public-source-list and virtual-source-list and services and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+
+    details = {}
+
+    if description is not None:
+        details['description'] = description
+
+    if public_source_list is not None:
+        details['publicSourceList'] = cli_util.parse_json_parameter("public_source_list", public_source_list)
+
+    if virtual_source_list is not None:
+        details['virtualSourceList'] = cli_util.parse_json_parameter("virtual_source_list", virtual_source_list)
+
+    if services is not None:
+        details['services'] = cli_util.parse_json_parameter("services", services)
+
+    if freeform_tags is not None:
+        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('identity', ctx)
+    result = client.update_network_source(
+        network_source_id=network_source_id,
+        update_network_source_details=details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@user_group.command(name=cli_util.override('iam.update_o_auth_client_credential.command_name', 'update-o-auth-client-credential'), help=u"""Updates Oauth token for the user""")
+@cli_util.option('--user-id', required=True, help=u"""The OCID of the user.""")
+@cli_util.option('--oauth2-client-credential-id', required=True, help=u"""The ID of the Oauth credential.""")
+@cli_util.option('--description', required=True, help=u"""Description of the oauth credential to help user differentiate them.""")
+@cli_util.option('--scopes', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Allowed scopes for the given oauth credential.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-reset-password', type=click.BOOL, help=u"""Indicate if the password to be reset or not in the update.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@json_skeleton_utils.get_cli_json_input_option({'scopes': {'module': 'identity', 'class': 'list[FullyQualifiedScope]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'scopes': {'module': 'identity', 'class': 'list[FullyQualifiedScope]'}}, output_type={'module': 'identity', 'class': 'OAuth2ClientCredential'})
+@cli_util.wrap_exceptions
+def update_o_auth_client_credential(ctx, from_json, force, user_id, oauth2_client_credential_id, description, scopes, is_reset_password, if_match):
+
+    if isinstance(user_id, six.string_types) and len(user_id.strip()) == 0:
+        raise click.UsageError('Parameter --user-id cannot be whitespace or empty string')
+
+    if isinstance(oauth2_client_credential_id, six.string_types) and len(oauth2_client_credential_id.strip()) == 0:
+        raise click.UsageError('Parameter --oauth2-client-credential-id cannot be whitespace or empty string')
+    if not force:
+        if scopes:
+            if not click.confirm("WARNING: Updates to scopes will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+
+    details = {}
+    details['description'] = description
+    details['scopes'] = cli_util.parse_json_parameter("scopes", scopes)
+
+    if is_reset_password is not None:
+        details['isResetPassword'] = is_reset_password
+
+    client = cli_util.build_client('identity', ctx)
+    result = client.update_o_auth_client_credential(
+        user_id=user_id,
+        oauth2_client_credential_id=oauth2_client_credential_id,
+        update_o_auth2_client_credential_details=details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @policy_group.command(name=cli_util.override('iam.update_policy.command_name', 'update'), help=u"""Updates the specified policy. You can update the description or the policy statements themselves.
 
 Policy changes take effect typically within 10 seconds.""")
@@ -5336,6 +5711,7 @@ def update_user(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_in
 @cli_util.option('--can-use-auth-tokens', type=click.BOOL, help=u"""Indicates if the user can use SWIFT passwords / auth tokens.""")
 @cli_util.option('--can-use-smtp-credentials', type=click.BOOL, help=u"""Indicates if the user can use SMTP passwords.""")
 @cli_util.option('--can-use-customer-secret-keys', type=click.BOOL, help=u"""Indicates if the user can use SigV4 symmetric keys.""")
+@cli_util.option('--can-use-o-auth2-client-credentials', type=click.BOOL, help=u"""Indicates if the user can use OAuth2 credentials and tokens.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -5345,7 +5721,7 @@ def update_user(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_in
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'User'})
 @cli_util.wrap_exceptions
-def update_user_capabilities(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, user_id, can_use_console_password, can_use_api_keys, can_use_auth_tokens, can_use_smtp_credentials, can_use_customer_secret_keys, if_match):
+def update_user_capabilities(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, user_id, can_use_console_password, can_use_api_keys, can_use_auth_tokens, can_use_smtp_credentials, can_use_customer_secret_keys, can_use_o_auth2_client_credentials, if_match):
 
     if isinstance(user_id, six.string_types) and len(user_id.strip()) == 0:
         raise click.UsageError('Parameter --user-id cannot be whitespace or empty string')
@@ -5370,6 +5746,9 @@ def update_user_capabilities(ctx, from_json, wait_for_state, max_wait_seconds, w
 
     if can_use_customer_secret_keys is not None:
         details['canUseCustomerSecretKeys'] = can_use_customer_secret_keys
+
+    if can_use_o_auth2_client_credentials is not None:
+        details['canUseOAuth2ClientCredentials'] = can_use_o_auth2_client_credentials
 
     client = cli_util.build_client('identity', ctx)
     result = client.update_user_capabilities(

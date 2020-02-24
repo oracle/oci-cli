@@ -189,6 +189,16 @@ def skip_while_rerecording(func):
     return pytest.mark.skip_while_rerecording(internal(func))
 
 
+def instance_principals(func):
+    def internal(function):
+        return pytest.mark.skipif(
+            not pytest.config.getoption("--instance-principals"),
+            reason="These tests are only run with the instance-principals option."
+        )(function)
+
+    return pytest.mark.instance_principals(internal(func))
+
+
 def random_name(prefix, insert_underscore=True):
     if test_config_container.using_vcr_with_mock_responses():
         return prefix + ('_' if insert_underscore else '') + 'vcr'
@@ -332,6 +342,30 @@ def invoke_command_with_overrides(command, profile_override, ** args):
 
     while num_tries < NUM_INVOKE_COMMAND_RETRIES:
         command_output = runner().invoke(oci_cli.cli, command, ** args)
+
+        if command_output.exception:
+            output_to_test = str(command_output.exception)
+        else:
+            output_to_test = command_output.output
+
+        if should_retry(output_to_test):
+            num_tries += 1
+            if num_tries >= NUM_INVOKE_COMMAND_RETRIES:
+                return command_output
+            else:
+                time.sleep(2 ** num_tries)  # Backoff
+                time.sleep(random.random() * 2)  # Jitter
+        else:
+            return command_output
+
+    return command_output
+
+
+def invoke_command_with_auth(command, ** args):
+    num_tries = 0
+
+    while num_tries < NUM_INVOKE_COMMAND_RETRIES:
+        command_output = runner().invoke(oci_cli.cli, ['--auth', os.environ['OCI_CLI_AUTH']] + command, **args)
 
         if command_output.exception:
             output_to_test = str(command_output.exception)

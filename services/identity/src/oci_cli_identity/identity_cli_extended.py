@@ -13,6 +13,7 @@ from oci_cli import cli_util
 from oci_cli.cli_util import get_tenancy_from_config
 import oci_cli.cli_root as cli_root
 import oci_cli.final_command_processor as final_command_processor
+from oci_cli.aliasing import CommandGroupWithAlias
 
 
 def get_iam_commands_that_use_tenancy_defaults():
@@ -501,3 +502,36 @@ def upload_api_key(ctx, **kwargs):
     kwargs.pop('key_file')
 
     ctx.invoke(identity_cli.upload_api_key, **kwargs)
+
+
+# move oauth2 commands under new subcommand (e.g. oci iam user create-o-auth-client-credential -> oci iam user oauth2-credential create)
+@click.command('oauth2-credential', cls=CommandGroupWithAlias, help="""The *OAuth 2.0 Client Credentials* grant type is used by clients to obtain an access token outside of the context of a user.
+
+For more information about OAuth 2.0 client credentials, see [User Credentials].""")
+@cli_util.help_option_group
+def oauth2_credential_group():
+    pass
+
+
+# create new sub command oauth2-credential
+identity_cli.user_group.add_command(oauth2_credential_group)
+
+# move create-o-auth-client-credential under oauth2-credential and rename to create
+identity_cli.user_group.commands.pop(identity_cli.create_o_auth_client_credential.name)
+oauth2_credential_group.add_command(identity_cli.create_o_auth_client_credential)
+cli_util.rename_command(identity_cli, oauth2_credential_group, identity_cli.create_o_auth_client_credential, "create")
+
+# move delete-o-auth-client-credential under oauth2-credential and rename to delete
+identity_cli.user_group.commands.pop(identity_cli.delete_o_auth_client_credential.name)
+oauth2_credential_group.add_command(identity_cli.delete_o_auth_client_credential)
+cli_util.rename_command(identity_cli, oauth2_credential_group, identity_cli.delete_o_auth_client_credential, "delete")
+
+# move list-o-auth-client-credential under oauth2-credential and rename to list
+identity_cli.user_group.commands.pop(identity_cli.list_o_auth_client_credentials.name)
+oauth2_credential_group.add_command(identity_cli.list_o_auth_client_credentials)
+cli_util.rename_command(identity_cli, oauth2_credential_group, identity_cli.list_o_auth_client_credentials, "list")
+
+# move update-o-auth-client-credential under oauth2-credential and rename to update
+identity_cli.user_group.commands.pop(identity_cli.update_o_auth_client_credential.name)
+oauth2_credential_group.add_command(identity_cli.update_o_auth_client_credential)
+cli_util.rename_command(identity_cli, oauth2_credential_group, identity_cli.update_o_auth_client_credential, "update")

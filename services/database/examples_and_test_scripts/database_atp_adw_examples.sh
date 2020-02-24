@@ -5,6 +5,16 @@
 
 # Please fill the following env variables
 # COMPARTMENT_ID
+# Please fill the following env variables for ADB Create with PrivateEndpoint and Updating NSGId
+#
+# SUBNETID
+# NSGID
+# UPDATENSGID
+#
+#export SUBNETID=subnetID
+#export NSGID='["nsgID"]'
+#export UPDATENSGID='["nsgID2"]'
+
 
 set -e
 
@@ -16,8 +26,10 @@ fi
 # Below are sample values. Please update if needed.
 DISPLAY_NAME1="displayName"
 DISPLAY_NAME2="newDisplayName"
+DISPLAY_NAME3="cliDisplayName3"
 DB_NAME1="cliTest1"
 DB_NAME2="cliTest2"
+DB_NAME3="cliTest3"
 PASSWORD1="DBaaS12345_#"
 CPU="1"
 SCALED_CPU="2"
@@ -28,7 +40,9 @@ AUTO_SCALE=true
 PREVIEW=true
 FREETIER=true
 FREE_DB_NAME=freedb
-
+SUBNETID="subnetID"
+NSGID="["nsgID1"]"
+UPDATENSGID="["nsgID2","nsgID3"]"
 
 ##############################################################################AutonomousDataWarehouse##############################################################################
 
@@ -91,8 +105,8 @@ CREATE_ATP=$(oci db autonomous-database create -c $COMPARTMENT_ID --db-name $DB_
 
 echo 'Create Free Autonomous Transaction Processing...'
 CREATE_FREE_ATP=$(oci db autonomous-database create -c $COMPARTMENT_ID --db-name $FREE_DB_NAME --admin-password $PASSWORD1 --cpu-core-count $CPU \
-                    --data-storage-size-in-tbs $STORAGE --display-name $DISPLAY_NAME1 --license-model $LICENSE_TYPE \
-                    --wait-for-state AVAILABLE --is-free-tier $FREETIER )
+                    --data-storage-size-in-tbs $STORAGE --display-name $DISPLAY_NAME1 --license-model $LICENSE_TYPE --is-free-tier $FREETIER \
+                    --wait-for-state AVAILABLE)
 
 
 echo 'Create Autonomous Transaction Processing Preview...'
@@ -100,9 +114,15 @@ CREATE_ATP_PREVIEW=$(oci db autonomous-database create -c $COMPARTMENT_ID --db-n
                     --data-storage-size-in-tbs $STORAGE --display-name $DISPLAY_NAME1 --license-model $LICENSE_TYPE --is-preview-version-with-service-terms-accepted $PREVIEW \
                     --wait-for-state AVAILABLE)
 
+echo 'Create Autonomous Transaction Processing PrivateEndpoint...'
+CREATE_ATP_PRIVATEENDPOINT=$(oci db autonomous-database create -c $COMPARTMENT_ID --db-name $DB_NAME3 --admin-password $PASSWORD1 --cpu-core-count $CPU \
+                    --data-storage-size-in-tbs $STORAGE --display-name $DISPLAY_NAME3 --license-model $LICENSE_TYPE \
+                    --subnet-id $SUBNETID --nsg-ids $NSGID
+                    --wait-for-state AVAILABLE)
+
 ADB_ID=$(jq -r '.data.id' <<< "$CREATE_ATP")
 ADB_ID_PREVIEW=$(jq -r '.data.id' <<< "$CREATE_ATP_PREVIEW")
-
+ADB_ID_PE=$(jq -r '.data.id' <<< "$CREATE_ATP_PRIVATEENDPOINT")
 echo "Created Autonomous Transaction Processing with OCID:"
 echo $CREATE_ATP
 
@@ -139,12 +159,20 @@ oci db autonomous-database update --autonomous-database-id $ADB_ID --data-storag
                 --cpu-core-count $SCALED_CPU --wait-for-state AVAILABLE
 echo 'Updated Autonomous Transaction Processing cpuCoreCount, storageSize and auto scale'
 
+echo 'Update Autonomous Transaction Processing PRIVATEENDPOINT NSGID'
+oci db autonomous-database update --autonomous-database-id $ADB_ID_PREVIEW --nsg-ids NSGID $UPDATENSGID
+echo 'Updated Autonomous Transaction Processing PRIVATEENDPOINT NSGID'
+
 echo 'Generate and download AutonomousDatabase wallet'
 oci db autonomous-database generate-wallet --autonomous-database-id $ADB_ID --password $PASSWORD1 --file  wallet_adb.zip
 
 echo 'Delete Autonomous Transaction Processing'
 oci db autonomous-database delete --autonomous-database-id $ADB_ID --force --wait-for-state TERMINATED
-echo 'Deleted Autonomous Transaction Processing'
+echo 'Delete Autonomous Transaction Processing'
+
+echo 'Delete Autonomous Transaction Database PE Processing'
+oci db autonomous-database delete --autonomous-database-id $ADB_ID_PE --force --wait-for-state TERMINATED
+echo 'Delete Autonomous Transaction Processing'
 
 echo 'Trying to Get Deleted Autonomous Transaction Processing. Should not find it.'
 oci db autonomous-database get --autonomous-database-id $ADB_ID
@@ -160,12 +188,32 @@ if [[ ! -z "$CONTAINER_DB_ID" ]]; then
                         --wait-for-state AVAILABLE)
 
     ADB_D_ID=$(jq -r '.data.id' <<< "ATP_DEDICATED")
-    
+
     echo 'Created Dedicated Autonomous Database with OCID:'
     echo ADB_D_ID
 
     echo 'Delete Autonomous Dedicated Transaction Processing'
     oci db autonomous-database delete --autonomous-database-id $ADB_D_ID --force --wait-for-state TERMINATED
     echo 'Deleted Autonomous Dedicated Transaction Processing'
+
+fi
+
+if [[ ! -z "$SUBNETID" && ! -z "$NSGID" ]];then
+
+echo 'Create Autonomous Transaction Processing PrivateEndpoint...'
+CREATE_ATP_PRIVATEENDPOINT=$(oci db autonomous-database create -c $COMPARTMENT_ID --db-name $DB_NAME3 --admin-password $PASSWORD1 --cpu-core-count $CPU \
+                    --data-storage-size-in-tbs $STORAGE --display-name $DISPLAY_NAME3 --license-model $LICENSE_TYPE \
+                    --subnet-id $SUBNETID --nsg-ids $NSGID \
+                    --wait-for-state AVAILABLE)
+ADB_ID_PE=$(jq -r '.data.id' <<< "$CREATE_ATP_PRIVATEENDPOINT")
+if [[ ! -z "UPDATENSGID"]];then
+echo 'Update Autonomous Transaction Processing PRIVATEENDPOINT NSGID'
+oci db autonomous-database update --autonomous-database-id $ADB_ID_PE --nsg-ids NSGID $UPDATENSGID
+echo 'Updated Autonomous Transaction Processing PRIVATEENDPOINT NSGID'
+fi
+
+echo 'Delete Autonomous Transaction Processing'
+oci db autonomous-database delete --autonomous-database-id $ADB_ID_PE --force --wait-for-state TERMINATED
+echo 'Delete Autonomous Transaction Processing'
 
 fi

@@ -6,6 +6,34 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.9.4 - 2020-02-25
+-------------------
+
+Added
+~~~~~
+
+* Support for OAuth 2.0 Client Credentials features as a part of the Identity User Service
+ 
+  * ``oci iam user oauth2-credential create | delete | list | update``
+  * ``oci iam user update-user-capabilities --can-use-o-auth2-client-credentials``
+
+* Support for Private Endpoint Database service for Autonomous Databases
+
+  * ``oci db autonomous-database create | create-from-backup-id | create-from-backup-timestamp | create-from-clone --nsg-ids --private-endpoint-label --subnet-id``
+  * ``oci db autonomous-database update --nsg-ids``
+
+* Support for restarting autonomous Database as part of Database service
+
+  * ``oci db autonomous-database restart``
+
+* Support for Identity IP Based Policy feature
+
+  * ``oci iam network-sources create | delete | get | list | update``
+
+* Support for Functions as a subscription of the Notifications service
+ 
+  * ``oci ons subscription create --protocol ORACLE_FUNCTIONS``
+
 
 2.9.3 - 2020-02-18
 -------------------
@@ -15,22 +43,22 @@ Added
 
 * Support for Oracle NoSQL Database Cloud (``nosql``)
 
-    * ``oci nosql``
+  * ``oci nosql``
 
 * List Db version by storage management type.
 
-    * ``oci db version list --storage-management``
+  * ``oci db version list --storage-management``
 
 * Added instance type param for create operation to specify whether instance will be primary or non-primary.
 
-    * ``oci oce oce-instance create --instance-usage-type``
+  * ``oci oce oce-instance create --instance-usage-type``
 
 Changed
 ~~~~~~~
 
 * The `isEnabled` flag is returned for the Actions that are added to a Rule resource
 
-    * ``oci events rule``
+  * ``oci events rule``
 
 2.9.2 - 2020-02-11
 -------------------

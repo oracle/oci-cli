@@ -78,7 +78,7 @@ Transactions Per Minute (TPM) per-tenancy limit for this operation: 60.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment for the subscription.""")
 @cli_util.option('--protocol', required=True, help=u"""The protocol used for the subscription.
 
-Allowed values:   * `CUSTOM_HTTPS`   * `EMAIL`   * `HTTPS` (deprecated; for PagerDuty endpoints, use `PAGERDUTY`)   * `PAGERDUTY`   * `SLACK`
+Allowed values:   * `CUSTOM_HTTPS`   * `EMAIL`   * `HTTPS` (deprecated; for PagerDuty endpoints, use `PAGERDUTY`)   * `PAGERDUTY`   * `SLACK`   * `ORACLE_FUNCTIONS`
 
 For information about subscription protocols, see [To create a subscription].""")
 @cli_util.option('--endpoint', required=True, help=u"""A locator that corresponds to the subscription protocol. For example, an email address for a subscription that uses the `EMAIL` protocol, or a URL for a subscription that uses an HTTP-based protocol. HTTP-based protocols use URL endpoints that begin with \"http:\" or \"https:\". A URL cannot exceed 512 characters. Avoid entering confidential information.
@@ -221,7 +221,7 @@ Transactions Per Minute (TPM) per-tenancy limit for this operation: 60.""")
 @cli_util.option('--token', required=True, help=u"""The subscription confirmation token.""")
 @cli_util.option('--protocol', required=True, help=u"""The protocol used for the subscription.
 
-Allowed values:   * `CUSTOM_HTTPS`   * `EMAIL`   * `HTTPS` (deprecated; for PagerDuty endpoints, use `PAGERDUTY`)   * `PAGERDUTY`   * `SLACK`
+Allowed values:   * `CUSTOM_HTTPS`   * `EMAIL`   * `HTTPS` (deprecated; for PagerDuty endpoints, use `PAGERDUTY`)   * `PAGERDUTY`   * `SLACK`   * `ORACLE_FUNCTIONS`
 
 For information about subscription protocols, see [To create a subscription].""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -277,7 +277,7 @@ Transactions Per Minute (TPM) per-tenancy limit for this operation: 60.""")
 @cli_util.option('--token', required=True, help=u"""The subscription confirmation token.""")
 @cli_util.option('--protocol', required=True, help=u"""The protocol used for the subscription.
 
-Allowed values:   * `CUSTOM_HTTPS`   * `EMAIL`   * `HTTPS` (deprecated; for PagerDuty endpoints, use `PAGERDUTY`)   * `PAGERDUTY`   * `SLACK`
+Allowed values:   * `CUSTOM_HTTPS`   * `EMAIL`   * `HTTPS` (deprecated; for PagerDuty endpoints, use `PAGERDUTY`)   * `PAGERDUTY`   * `SLACK`   * `ORACLE_FUNCTIONS`
 
 For information about subscription protocols, see [To create a subscription].""")
 @json_skeleton_utils.get_cli_json_input_option({})
