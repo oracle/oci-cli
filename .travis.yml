@@ -1,0 +1,13 @@
+matrix:
+  include:
+    - name: "OCI CLI Installation testing"
+      os: osx
+      osx_image:
+        - xcode11.3 #10.14
+        - xcode10.1 #10.13
+        - xcode9.4 #10.13
+      language: shell
+      before_script:
+        - export -f travis_fold
+      script:
+        - source $TRAVIS_BUILD_DIR/scripts/travisci/mac_installation_tests.sh
