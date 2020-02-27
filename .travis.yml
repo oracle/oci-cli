@@ -1,0 +1,9 @@
+language: python
+jobs:
+  include:
+    - name: "Python 3.8.0 on macOS"
+      os: osx
+      osx_image: xcode11.3
+      language: shell
+install: pip3 install --upgrade pip
+script: bash -c "$(curl -L https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/install/install.sh --accept-all-defaults)"
