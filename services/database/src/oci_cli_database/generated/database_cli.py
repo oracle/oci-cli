@@ -7713,6 +7713,9 @@ def update_db_home(ctx, from_json, force, wait_for_state, max_wait_seconds, wait
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--shape', help=u"""The shape of the DB system. The shape determines resources allocated to the DB system. - For virtual machine shapes, the number of CPU cores and memory
+
+To get a list of shapes, use the [ListDbSystemShapes] operation.""")
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of the [OCIDs] of the network security groups (NSGs) that this DB system belongs to. Setting this to an empty array after the list is created removes the resource from all NSGs. For more information about NSGs, see [Security Rules].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--backup-network-nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of the [OCIDs] of the network security groups (NSGs) that the backup network of this DB system belongs to. Setting this to an empty array after the list is created removes the resource from all NSGs. For more information about NSGs, see [Security Rules]. Applicable only to Exadata DB systems.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -7725,7 +7728,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'version': {'module': 'database', 'class': 'PatchDetails'}, 'ssh-public-keys': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'backup-network-nsg-ids': {'module': 'database', 'class': 'list[string]'}}, output_type={'module': 'database', 'class': 'DbSystem'})
 @cli_util.wrap_exceptions
-def update_db_system(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, db_system_id, cpu_core_count, version, ssh_public_keys, data_storage_size_in_gbs, freeform_tags, defined_tags, nsg_ids, backup_network_nsg_ids, if_match):
+def update_db_system(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, db_system_id, cpu_core_count, version, ssh_public_keys, data_storage_size_in_gbs, freeform_tags, defined_tags, shape, nsg_ids, backup_network_nsg_ids, if_match):
 
     if isinstance(db_system_id, six.string_types) and len(db_system_id.strip()) == 0:
         raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
@@ -7757,6 +7760,9 @@ def update_db_system(ctx, from_json, force, wait_for_state, max_wait_seconds, wa
 
     if defined_tags is not None:
         details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if shape is not None:
+        details['shape'] = shape
 
     if nsg_ids is not None:
         details['nsgIds'] = cli_util.parse_json_parameter("nsg_ids", nsg_ids)

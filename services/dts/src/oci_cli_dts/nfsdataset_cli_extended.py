@@ -317,3 +317,26 @@ def nfs_dataset_reopen(ctx, from_json, name, appliance_profile):
 
 def create_nfs_dataset_client(ctx, appliance_profile):
     return NfsDatasetClientProxy(ctx, appliance_profile)
+
+
+def nfs_dataset_deactivate_helper(ctx, **nfs_deactivate_kwargs):
+    ctx.invoke(nfs_dataset_deactivate, **nfs_deactivate_kwargs)
+
+
+def deactivate_nfs_dataset(ctx, appliance_profile, **nfs_dataset):
+    '''
+    This method checks the state of NFS_dataset and deactivates if the state is active
+    :param ctx
+    :param appliance_profile: str
+    :param nfs_dataset: dict {'name': <dataset_name>, 'state':<state of dataset>}
+    :return:
+    '''
+    nfs_deactivate_kwargs = {
+        'name': nfs_dataset['name'],
+        'appliance_profile': appliance_profile
+    }
+    if nfs_dataset['state'] == NfsDatasetInfo.STATE_ACTIVE:
+        click.echo("Deactivating the dataset {}".format(nfs_dataset['name']))
+        nfs_dataset_deactivate_helper(ctx, **nfs_deactivate_kwargs)
+    else:
+        click.echo("NFS-Dataset: {} is in NOT_ACTIVE state".format(nfs_dataset['name']))

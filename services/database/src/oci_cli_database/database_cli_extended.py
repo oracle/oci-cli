@@ -671,7 +671,7 @@ def patch_db_system(ctx, **kwargs):
     patch_details.patch_id = kwargs['patch_id']
 
     update_db_system_details = oci.database.models.UpdateDbSystemDetails()
-    update_db_system_details.db_version = patch_details
+    update_db_system_details.version = patch_details
 
     result = client.update_db_system(kwargs['db_system_id'], update_db_system_details)
     db_system = result.data

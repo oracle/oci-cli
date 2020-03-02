@@ -3,10 +3,13 @@
 
 from __future__ import print_function
 import click
+import oci
+import sys
 
 from oci_cli import cli_util
 from oci_cli import json_skeleton_utils
 from oci_cli import custom_types
+from services.dts.src.oci_cli_dts.cli_utils import setup_notifications_helper
 from services.dts.src.oci_cli_transfer_job.generated import transferjob_cli
 from services.dts.src.oci_cli_dts.physicalappliance_cli_extended import validate_upload_user_credentials
 
@@ -46,16 +49,70 @@ def verify_upload_user_credentials_extended(ctx, from_json, bucket, **kwargs):
 @cli_util.option('--device-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["DISK", "APPLIANCE"]), help=u"""Transfer device type""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Usage of predefined tag keys. These predefined keys are scoped to namespaces. Example: `{\"foo-namespace\": {\"bar-key\": \"foo-value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--setup-notifications', is_flag=True, help=u"""Setup notifications for the transfer appliance""")
 @json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'dts', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'dts', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'dts', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'dts', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'dts', 'class': 'TransferJob'})
 @cli_util.wrap_exceptions
-def create_transfer_job_extended(ctx, **kwargs):
-    if 'bucket' in kwargs:
-        kwargs['upload_bucket_name'] = kwargs['bucket']
-        kwargs.pop('bucket')
-    ctx.invoke(transferjob_cli.create_transfer_job, **kwargs)
+def create_transfer_job_extended(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, bucket, display_name, device_type, freeform_tags, defined_tags, setup_notifications):
+
+    # Copied the generated command because the result is needed to setup notifications
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    details = {}
+
+    if compartment_id is not None:
+        details['compartmentId'] = compartment_id
+
+    if bucket is not None:
+        details['uploadBucketName'] = bucket
+
+    if display_name is not None:
+        details['displayName'] = display_name
+
+    if device_type is not None:
+        details['deviceType'] = device_type
+
+    if freeform_tags is not None:
+        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('transfer_job', ctx)
+    result = client.create_transfer_job(
+        create_transfer_job_details=details,
+        **kwargs
+    )
+    if wait_for_state:
+        if hasattr(client, 'get_transfer_job') and callable(getattr(client, 'get_transfer_job')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_transfer_job(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+
+    cli_util.render_response(result, ctx)
+
+    if setup_notifications:
+        setup_import_notifications(ctx, result.data.id)
 
 
 @cli_util.copy_params_from_generated_command(transferjob_cli.get_transfer_job, params_to_exclude=['id'])
@@ -117,3 +174,43 @@ def change_transfer_job_compartment_extended(ctx, **kwargs):
         kwargs['transfer_job_id'] = kwargs['job_id']
         kwargs.pop('job_id')
     ctx.invoke(transferjob_cli.change_transfer_job_compartment, **kwargs)
+
+
+@transferjob_cli.transfer_job_root_group.command(name='setup-notifications', help=u"""Setup notifications for import job""")
+@cli_util.option('--job-id', required=True, help=u"""OCID of the transfer job""")
+@click.pass_context
+@cli_util.help_option
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={},
+                                                      output_type={'module': 'dts', 'class': 'TransferAppliance'})
+@cli_util.wrap_exceptions
+def setup_import_notifications_for_job_extended(ctx, job_id):
+    setup_import_notifications(ctx, job_id)
+
+
+def setup_import_notifications(ctx, job_id):
+    # Create the topic, subscriptions and rule in the root compartment so that everything trickles down
+    config = oci.config.from_file(file_location=ctx.obj['config_file'], profile_name=ctx.obj['profile'])
+    root_compartment = config['tenancy']
+
+    create_topic_details = {
+        'name': 'DTSImportJobTopic_{}'.format(job_id[-6:]),
+        'description': 'Topic for data transfer service import job with OCID {}'.format(job_id),
+        'compartmentId': root_compartment
+    }
+    create_rule_kwargs = {
+        'display_name': 'DTSImportJobRule_{}'.format(job_id[-6:]),
+        'compartment_id': root_compartment,
+        'description': 'Rule for data transfer service to send notifications for an import job with OCID {}'.format(job_id),
+        'is_enabled': True,
+        'condition': '{"eventType":"com.oraclecloud.datatransferservice.*transferjob","data":{"resourceId":"%s"}}' % job_id,
+        'actions': {
+            'actions': [
+                {
+                    'actionType': 'ONS',
+                    'topicId': None,
+                    'isEnabled': True
+                }
+            ]
+        }
+    }
+    setup_notifications_helper(ctx, create_topic_details, create_rule_kwargs)

@@ -12,23 +12,23 @@ from oci import exceptions
 from oci.dts.models.update_appliance_export_job_details import UpdateApplianceExportJobDetails
 from oci_cli import cli_util
 from oci_cli import json_skeleton_utils
+
+from services.dts.src.oci_cli_dts.appliance_constants import APPLIANCE_STATE_LOCKED, APPLIANCE_STATUS_NA
+from services.dts.src.oci_cli_dts.cli_utils import setup_notifications_helper
 from services.dts.src.oci_cli_dts.generated import dts_service_cli
 from services.dts.src.oci_cli_appliance_export_job.generated import applianceexportjob_cli
 from services.dts.src.oci_cli_transfer_appliance.transferappliance_cli_extended import customer_address_options
-from services.dts.src.oci_cli_dts.physicalappliance_cli_extended import pa_init_auth_helper, pa_unlock_helper
-from services.dts.src.oci_cli_dts.nfsdataset_cli_extended import create_nfs_dataset_client, nfs_dataset_set_export, \
-    nfs_dataset_deactivate
+from services.dts.src.oci_cli_dts.physicalappliance_cli_extended import pa_init_auth_helper, pa_unlock_helper, \
+    pa_show_helper
+from services.dts.src.oci_cli_dts.nfsdataset_cli_extended import create_nfs_dataset_client, nfs_dataset_set_export, deactivate_nfs_dataset
 from services.dts.src.oci_cli_appliance_export_job.manifest.manifest_iterator import CasperListIterator
 from services.dts.src.oci_cli_appliance_export_job.manifest.manifest_stats_consumer import ManifestStatsConsumer
 from services.dts.src.oci_cli_appliance_export_job.manifest.manifest_writer import ManifestWriter
 from services.dts.src.oci_cli_appliance_export_job.manifest.object_uploader import ObjectUploader
 from services.dts.src.oci_cli_appliance_export_job.applianceexportjob_constants import \
     LIFECYCLE_STATE_DETAILS_PENDING_SUBMISSION, LIFECYCLE_STATE_DETAILS_PENDING_APPROVAL, \
-    LIFECYCLE_STATE_DETAILS_CUSTOMER_PROCESSING
-
-from services.ons.src.oci_cli_notification_data_plane.generated.notificationdataplane_cli import create_subscription
-from services.events.src.oci_cli_events.generated.events_cli import create_rule
-
+    LIFECYCLE_STATE_DETAILS_CUSTOMER_PROCESSING, OBJECT_STORAGE_BUCKET_TYPE_ARCHIVE, \
+    LIFECYCLE_STATE_DETAILS_ORACLE_SHIPPED, LIFECYCLE_STATE_DETAILS_CUSTOMER_RECEIVED
 
 cli_util.rename_command(dts_service_cli, dts_service_cli.dts_service_group, applianceexportjob_cli.appliance_export_job_root_group, 'export')
 cli_util.rename_command(dts_service_cli, applianceexportjob_cli.appliance_export_job_root_group, applianceexportjob_cli.get_appliance_export_job, 'show')
@@ -41,7 +41,7 @@ applianceexportjob_cli.appliance_export_job_root_group.add_command(applianceexpo
 @cli_util.help_option
 @cli_util.wrap_exceptions
 def setup_notifications_extended(ctx):
-    setup_notifications_for_export(ctx)
+    setup_export_notifications(ctx)
 
 
 @cli_util.copy_params_from_generated_command(applianceexportjob_cli.create_appliance_export_job, params_to_exclude=['customer_shipping_address', 'compartment_id', 'bucket_name', 'display_name', 'prefix', 'range_start', 'range_end'])
@@ -74,104 +74,44 @@ def create_appliance_export_job_extended(ctx, **kwargs):
 
     if kwargs['setup_notifications'] is None:
         if click.confirm("It is a pre-requisite to setup notifications for export. Do you want to setup notifications?"):
-            setup_notifications_for_export(ctx)
+            setup_export_notifications(ctx)
         else:
             click.echo("Continuing without setting up notifications. Please make sure that you have set it up")
     elif kwargs['setup_notifications']:
-        setup_notifications_for_export(ctx)
+        setup_export_notifications(ctx)
     kwargs.pop('setup_notifications')
     ctx.invoke(applianceexportjob_cli.create_appliance_export_job, **kwargs)
 
 
-def setup_notifications_for_export(ctx):
+def setup_export_notifications(ctx):
     # Create the topic, subscriptions and rule in the root compartment so that everything trickles down
     config = oci.config.from_file(file_location=ctx.obj['config_file'], profile_name=ctx.obj['profile'])
     root_compartment = config['tenancy']
 
-    # In case the user doesn't have the right credentials to do events and notifications, print the commands that
-    # they can run with the right user
-    click.echo('If the commands fail to run, you can use the OCI CLI to do the setup manually:')
-    click.echo('export ROOT_COMPARTMENT_OCID={}'.format(root_compartment))
-    click.echo('oci ons topic create --compartment-id $ROOT_COMPARTMENT_OCID --name DTSExportTopic --description "Topic for data transfer service export jobs"')
-    click.echo('oci ons subscription create --protocol EMAIL --compartment-id $ROOT_COMPARTMENT_OCID --topic-id $TOPIC_OCID --endpoint $EMAIL_ID')
-    click.echo('oci events rule create --display-name DTSExportRule --is-enabled true --compartment-id $ROOT_COMPARTMENT_OCID '
-               '--actions \'{"actions":[{"actionType":"ONS","topicId":"$TOPIC_OCID","isEnabled":true}]}\' '
-               '--condition \'{"eventType":["com.oraclecloud.datatransferservice.addapplianceexportjob","com.oraclecloud.datatransferservice.deleteapplianceexportjob",'
-               '"com.oraclecloud.datatransferservice.updateapplianceexportjob","com.oraclecloud.datatransferservice.moveapplianceexportjob"]}\' '
-               '--description "Rule for data transfer service to send notifications for export jobs"')
-    # Create a topic
     create_topic_details = {
         'name': 'DTSExportTopic',
         'description': 'Topic for data transfer service export jobs',
         'compartmentId': root_compartment
     }
-    create_topic_kwargs = {
-        'opc_request_id': cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    }
 
-    create_topic_client = get_topic_client(ctx)
-    click.echo('Creating topic for export')
-    create_topic_result = create_topic_client.create_topic(
-        create_topic_details=create_topic_details,
-        **create_topic_kwargs
-    )
-    cli_util.render_response(create_topic_result, ctx)
-
-    # Create multiple subscriptions to the topic
-    emails = prompt_for_emails()
-    for email in emails.split(','):
-        create_subscription_kwargs = {
-            'protocol': 'EMAIL',
-            'compartment_id': root_compartment,
-            'topic_id': get_topic_id(create_topic_result),
-            'endpoint': email
-        }
-        click.echo('Creating subscription for ' + email + ' export')
-        create_subscription_helper(ctx, create_subscription_kwargs)
-
-    # Create a rule based on the topic for export
     create_rule_kwargs = {
         'display_name': 'DTSExportRule',
         'compartment_id': root_compartment,
         'description': 'Rule for data transfer service to send notifications for export jobs',
         'is_enabled': True,
-        'condition': '{"eventType":["com.oraclecloud.datatransferservice.addapplianceexportjob",'
-                     '"com.oraclecloud.datatransferservice.deleteapplianceexportjob",'
-                     '"com.oraclecloud.datatransferservice.updateapplianceexportjob",'
-                     '"com.oraclecloud.datatransferservice.moveapplianceexportjob"]}',
+        'condition': '{"eventType":"com.oraclecloud.datatransferservice.*applianceexportjob"}',
         'actions': {
             'actions': [
                 {
                     'actionType': 'ONS',
-                    'topicId': get_topic_id(create_topic_result),
+                    'topicId': None,
                     'isEnabled': True
                 }
             ]
         }
     }
-    click.echo('Creating rule for export notifications')
-    create_rule_helper(ctx, create_rule_kwargs)
 
-
-# All these methods are meant solely for mock testing
-def get_topic_client(ctx):
-    return cli_util.build_client('notification_control_plane', ctx)
-
-
-def get_topic_id(result):
-    return result.data.topic_id
-
-
-def prompt_for_emails():
-    return click.prompt("Enter email addresses to subscribe to as a comma separated list. Example: joe.dan@oracle.com,july.den@xyz.com ")
-
-
-def create_subscription_helper(ctx, create_subscription_kwargs):
-    ctx.invoke(create_subscription, **create_subscription_kwargs)
-
-
-def create_rule_helper(ctx, create_rule_kwargs):
-    ctx.invoke(create_rule, **create_rule_kwargs)
+    setup_notifications_helper(ctx, create_topic_details, create_rule_kwargs)
 
 
 def policy_printer(policy_name, bucket_access_policies):
@@ -291,12 +231,20 @@ def generate_manifest_appliance_export_job_extended(ctx, **kwargs):
     if isinstance(kwargs['bucket'], six.string_types) and len(kwargs['bucket'].strip()) == 0:
         raise click.UsageError('Parameter --bucket cannot be whitespace or empty string')
 
-    click.echo("Starting manifest generation on bucket {}. This may take few minutes, please wait until it is completed ...".format(kwargs['bucket']))
-
     ctx_endpoint_dts = ctx.obj['endpoint']
     ctx.obj['endpoint'] = None
     os_client = create_os_client(ctx)
     namespace = os_client.get_namespace().data
+
+    result = os_client.get_bucket(
+        namespace_name=namespace,
+        bucket_name=kwargs['bucket']
+    )
+
+    if result.data.storage_tier == OBJECT_STORAGE_BUCKET_TYPE_ARCHIVE:
+        raise click.UsageError('Export for Archive buckets is currently not supported')
+
+    click.echo("Starting manifest generation on bucket {}. This may take few minutes, please wait until it is completed ...".format(kwargs['bucket']))
 
     iterator = CasperListIterator(os_client, namespace, kwargs['bucket'], kwargs['prefix'], kwargs['start'], kwargs['end'])
     consumer = ManifestStatsConsumer()
@@ -414,15 +362,65 @@ def request_appliance_export_job_extended(ctx, **kwargs):
     ctx.invoke(applianceexportjob_cli.update_appliance_export_job, **kwargs_update)
 
 
+def appliance_state_update(appliance_lifecycle_state, appliance_lifecycle_state_details, **kwargs):
+    '''
+    Changes the state of the appliance if not already in IN_PROCESSING
+    :param appliance_lifecycle_state: str
+    :param kwargs: appliance details
+    :return: updated kwargs with target-state
+    '''
+    if appliance_lifecycle_state == UpdateApplianceExportJobDetails.LIFECYCLE_STATE_INPROGRESS:
+        if appliance_lifecycle_state_details is not LIFECYCLE_STATE_DETAILS_CUSTOMER_PROCESSING:
+            kwargs_update = {'appliance_export_job_id': kwargs['job_id']}
+            if appliance_lifecycle_state_details in [LIFECYCLE_STATE_DETAILS_ORACLE_SHIPPED, LIFECYCLE_STATE_DETAILS_CUSTOMER_RECEIVED]:
+                kwargs_update.update({'lifecycle_state': appliance_lifecycle_state, 'lifecycle_state_details': LIFECYCLE_STATE_DETAILS_CUSTOMER_PROCESSING})
+                click.echo("Updating the state of the job from {} to {}".format(appliance_lifecycle_state_details, LIFECYCLE_STATE_DETAILS_CUSTOMER_PROCESSING))
+                return kwargs_update
+            else:
+                raise click.ClickException("The Appliance is not in state for export. Contact Oracle Support")
+        else:
+            click.echo("Appliance lifecycle_state_details is already in {}.".format(LIFECYCLE_STATE_DETAILS_CUSTOMER_PROCESSING))
+            return None
+    else:
+        click.echo("Appliance lifecycle-state is NOT {}.".format(UpdateApplianceExportJobDetails.LIFECYCLE_STATE_INPROGRESS))
+        return None
+
+
+def appliance_unlock(ctx, appliance_profile, passphrase, appliance_lock_status):
+    '''
+    Unlocks appliance if the lockStatus is LOCKED or NA
+    :param ctx:
+    :param appliance_profile: str
+    :param passphrase: str
+    :param appliance_lock_status: <state of appliance>
+    :return: None if already in Unlocked state
+    '''
+    if appliance_lock_status in [APPLIANCE_STATE_LOCKED, APPLIANCE_STATUS_NA]:
+        click.echo("Unlocking the appliance")
+        pa_unlock_helper(ctx, appliance_profile, passphrase)
+    else:
+        click.echo("Appliance is already in UNLOCKED status")
+        return None
+
+
+def appliance_encryption_check(encryptionConfigured):
+    '''
+    :param encryptionConfigured: bool
+    :return: raises exception if the encryptionConfigured is False
+    '''
+    if encryptionConfigured == 'False':
+        raise exceptions.ClientError("The Appliance is not configured for export. Contact Oracle Support")
+    else:
+        click.echo("Appliance encryption is configured")
+
+
 @applianceexportjob_cli.appliance_export_job_root_group.command(name="configure-physical-appliance", help=u"""Configure the physical appliance to copy data""")
 @cli_util.option('--job-id', required=True, help=u"""OCID of the Export Job""")
-@cli_util.option('--appliance-cert-fingerprint', required=True,
-                 help=u"""The transfer appliance X.509/SSL certificate fingerprint.""")
+@cli_util.option('--appliance-cert-fingerprint', required=True, help=u"""The transfer appliance X.509/SSL certificate fingerprint.""")
 @cli_util.option('--appliance-ip', required=True, help=u"""AThe IP address of the transfer appliance.""")
 @cli_util.option('--appliance-port', required=False, type=click.INT, default=443, help=u"""Appliance label.""")
 @cli_util.option('--appliance-profile', required=False, default="DEFAULT", help=u"""Appliance profile""")
-@cli_util.option('--access-token', required=False,
-                 help=u"""the access token to authenticate with the transfer appliance.""")
+@cli_util.option('--access-token', required=False, help=u"""the access token to authenticate with the transfer appliance.""")
 @cli_util.option('--rw', required=True, type=click.BOOL, help=u"""Read/Write option on export of dataset""")
 @cli_util.option('--world', required=True, type=click.BOOL, help=u"""World option on export of dataset""")
 @cli_util.option('--ip', help=u"""IP address to export dataset to""")
@@ -443,48 +441,48 @@ def configure_physical_appliance_export_job_extended(ctx, **kwargs):
     #   - oci dts nfs-dataset activate
     if isinstance(kwargs['job_id'], six.string_types) and len(kwargs['job_id'].strip()) == 0:
         raise click.UsageError('Parameter --appliance-export-job-id cannot be whitespace or empty string')
-
-    click.echo("Updating the state of the job to customer processing")
-    kwargs_update = {
-        'appliance_export_job_id': kwargs['job_id'],
-        'lifecycle_state': UpdateApplianceExportJobDetails.LIFECYCLE_STATE_INPROGRESS,
-        'lifecycle_state_details': LIFECYCLE_STATE_DETAILS_CUSTOMER_PROCESSING
-    }
-    ctx.invoke(applianceexportjob_cli.update_appliance_export_job, **kwargs_update)
-
-    kwargs_request = {
-        'opc_request_id': cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    }
     client = cli_util.build_client('appliance_export_job', ctx)
+
+    kwargs_request = {'opc_request_id': cli_util.use_or_generate_request_id(ctx.obj['request_id'])}
+    result = client.get_appliance_export_job(appliance_export_job_id=kwargs['job_id'], **kwargs_request)
+
+    # Appliance state change
+    appliance_lifecycle_state = result.data.lifecycle_state
+    appliance_lifecycle_state_details = result.data.lifecycle_state_details
+    kwargs_update = appliance_state_update(appliance_lifecycle_state, appliance_lifecycle_state_details, **kwargs)
+    if kwargs_update:
+        ctx.invoke(applianceexportjob_cli.update_appliance_export_job, **kwargs_update)
+
     click.echo("Getting the serial number and passphrase of the appliance")
-    result = client.get_appliance_export_job(
-        appliance_export_job_id=kwargs['job_id'],
-        **kwargs_request
-    )
     serial_number = result.data.appliance_serial_number
     passphrase = result.data.appliance_decryption_passphrase
     appliance_profile = kwargs['appliance_profile']
+
+    # Initialize authentication with XA
     click.echo("Initializing authentication with the appliance")
     pa_init_auth_helper(ctx, appliance_profile, kwargs['appliance_cert_fingerprint'], kwargs['appliance_ip'],
                         kwargs['appliance_port'], serial_number, kwargs['access_token'])
-    click.echo("Unlocking the appliance")
-    pa_unlock_helper(ctx, appliance_profile, passphrase)
+
+    # Get appliance info
+    appliance_info = pa_show_helper(ctx=ctx, appliance_profile=appliance_profile, from_json=None)
+    appliance_encryption_check(appliance_info.data['encryptionConfigured'])
+    appliance_unlock(ctx, appliance_profile, passphrase, appliance_info.data['lockStatus'])
 
     # There is only one dataset. Get the name of that dataset and use it to set exports and activate it
     nfs_dataset_client = create_nfs_dataset_client(ctx, appliance_profile)
     click.echo("Getting the NFS dataset on the appliance")
 
     nfs_datasets = nfs_dataset_client.list_nfs_datasets()
+
     if len(nfs_datasets.data) != 1:
         raise exceptions.ClientError("No/multiple datasets exist on the appliance. Contact Oracle Support")
     nfs_dataset_name = nfs_datasets.data[0]['name']
-
+    nfs_dataset = nfs_datasets.data[0]
+    # Check if the dataset is ACTIVE, if INACTIVE, do nothing
     # Deactivate the dataset before setting the exports
-    nfs_deactivate_kwargs = {
-        'name': nfs_dataset_name,
-        'appliance_profile': appliance_profile
-    }
-    ctx.invoke(nfs_dataset_deactivate, **nfs_deactivate_kwargs)
+    deactivate_nfs_dataset(ctx, appliance_profile, **nfs_dataset)
+
+    # Set the exports
     nfs_kwargs = {
         'rw': kwargs['rw'],
         'world': kwargs['world'],

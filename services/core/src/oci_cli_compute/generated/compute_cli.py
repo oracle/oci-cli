@@ -2249,7 +2249,7 @@ def get_volume_attachment(ctx, from_json, volume_attachment_id):
     cli_util.render_response(result, ctx)
 
 
-@instance_credentials_group.command(name=cli_util.override('compute.get_windows_instance_initial_credentials.command_name', 'get-windows-instance-initial-credentials'), help=u"""Gets the generated credentials for the instance. Only works for instances that require password to log in (E.g. Windows). For certain OS'es, users will be forced to change the initial credentials.""")
+@instance_credentials_group.command(name=cli_util.override('compute.get_windows_instance_initial_credentials.command_name', 'get-windows-instance-initial-credentials'), help=u"""Gets the generated credentials for the instance. Only works for instances that require a password to log in, such as Windows. For certain operating systems, users will be forced to change the initial credentials.""")
 @cli_util.option('--instance-id', required=True, help=u"""The OCID of the instance.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -2276,13 +2276,13 @@ def get_windows_instance_initial_credentials(ctx, from_json, instance_id):
 
 - **STOP** - Powers off the instance.
 
-- **SOFTRESET** - Gracefully reboots instance by sending a shutdown command to the operating system and then powers the instance back on.
-
-- **SOFTSTOP** - Gracefully shuts down instance by sending a shutdown command to the operating system.
-
 - **RESET** - Powers off the instance and then powers it back on.
 
-For more information see [Stopping and Starting an Instance].""")
+- **SOFTSTOP** - Gracefully shuts down the instance by sending a shutdown command to the operating system. If the applications that run on the instance take a long time to shut down, they could be improperly stopped, resulting in data corruption. To avoid this, shut down the instance using the commands available in the OS before you softstop the instance.
+
+- **SOFTRESET** - Gracefully reboots the instance by sending a shutdown command to the operating system, and then powers the instance back on.
+
+For more information, see [Stopping and Starting an Instance].""")
 @cli_util.option('--instance-id', required=True, help=u"""The OCID of the instance.""")
 @cli_util.option('--action', required=True, help=u"""The action to perform on the instance. Allowed values are: STOP, START, SOFTRESET, RESET, SOFTSTOP""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -4268,9 +4268,15 @@ Both the 'user_data' and 'ssh_authorized_keys' fields cannot be changed after an
 They are distinguished from 'metadata' fields in that these can be nested JSON objects (whereas 'metadata' fields are string/string maps only).
 
 Both the 'user_data' and 'ssh_authorized_keys' fields cannot be changed after an instance has launched. Any request which updates, removes, or adds either of these fields will be rejected. You must provide the same values for 'user_data' and 'ssh_authorized_keys' that already exist on the instance.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--shape', help=u"""The shape of the instance. The shape determines the number of CPUs and the amount of memory allocated to the instance. You can enumerate all available shapes by calling [ListShapes].
+@cli_util.option('--shape', help=u"""The shape of the instance. The shape determines the number of CPUs and the amount of memory allocated to the instance. For more information about how to change shapes, and a list of shapes that are supported, see [Changing the Shape of an Instance].
 
-Example: `VM.Standard1.1`""")
+For details about the CPUs, memory, and other properties of each shape, see [Compute Shapes].
+
+The new shape must be compatible with the image that was used to launch the instance. You can enumerate all available shapes and determine image compatibility by calling [ListShapes].
+
+If the instance is running when you change the shape, the instance is rebooted.
+
+Example: `VM.Standard2.1`""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["MOVING", "PROVISIONING", "RUNNING", "STARTING", "STOPPING", "STOPPED", "CREATING_IMAGE", "TERMINATING", "TERMINATED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
