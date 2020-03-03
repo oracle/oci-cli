@@ -18,18 +18,31 @@ import datetime
 import enum
 import json
 import click
+import oci
 import pytest
 import unittest
+
+from oci.dts.models import UpdateApplianceExportJobDetails
+
+from services.dts.src.oci_cli_dts.appliance_constants import APPLIANCE_STATE_NOT_LOCKED, APPLIANCE_STATE_LOCKED, \
+    APPLIANCE_STATUS_NA
 from tests import test_config_container
 from tests import util
 
 import mock
+from oci.object_storage.models import Bucket
 from oci.response import Response
 from oci.request import Request
 from services.dts.src.oci_cli_dts.physical_appliance_control_plane.client.models.nfs_dataset_info import NfsDatasetInfo
 from oci.dts.models.transfer_appliance_entitlement_summary import TransferApplianceEntitlementSummary
 from oci.object_storage.models.list_objects import ListObjects
 from oci.object_storage.models.object_summary import ObjectSummary
+from services.dts.src.oci_cli_appliance_export_job.applianceexportjob_constants import \
+    OBJECT_STORAGE_BUCKET_TYPE_ARCHIVE, LIFECYCLE_STATE_DETAILS_CUSTOMER_RECEIVED, \
+    LIFECYCLE_STATE_DETAILS_CUSTOMER_PROCESSING, LIFECYCLE_STATE_DETAILS_ORACLE_SHIPPED, \
+    LIFECYCLE_STATE_DETAILS_PENDING_APPROVAL
+from services.dts.src.oci_cli_appliance_export_job.applianceexportjob_cli_extended import appliance_state_update, \
+    appliance_encryption_check, appliance_unlock, deactivate_nfs_dataset
 
 CASSETTE_LIBRARY_DIR = 'services/dts/tests/cassettes'
 
@@ -101,6 +114,9 @@ class UnitTestDTS(unittest.TestCase):
             {"sub_command": "change-compartment",
              "required_params": ["job-id", "compartment-id"],
              "optional_params": []},
+            {"sub_command": "setup-notifications",
+             "required_params": ["job-id"],
+             "optional_params": []}
         ]
         self.appliance_subcommands = [
             {"sub_command": "request",
@@ -128,7 +144,10 @@ class UnitTestDTS(unittest.TestCase):
             {"sub_command": "update-shipping-address",
              "required_params": ["job-id", "appliance-label", "addressee"],
              "optional_params": ["address2", "address3", "address4", "care-of", "address1", "city-or-locality",
-                                 "state-province-region", "country", "zip-postal-code", "phone-number", "email"]}
+                                 "state-province-region", "country", "zip-postal-code", "phone-number", "email"]},
+            {"sub_command": "setup-notifications",
+             "required_params": ["appliance-label"],
+             "optional_params": []}
         ]
         self.pa_subcommands = [
             {"sub_command": "initialize-authentication",
@@ -191,17 +210,20 @@ class UnitTestDTS(unittest.TestCase):
              "optional_params": ["appliance-profile"]},
         ]
         list_objects = ListObjects()
-        list_objects.objects = [ObjectSummary(name="first_object", size=20, md5="def456", time_created=datetime.datetime.now(), etag="tag1")]
+        list_objects.objects = [
+            ObjectSummary(name="first_object", size=20, md5="def456", time_created=datetime.datetime.now(),
+                          etag="tag1")]
         headers = {'etag': 'etag', 'opc-multipart-md5': 'md5', 'opc-content-md5': 'md5'}
+
         self.export_job_subcommands = [
-            # {"sub_command": "create",
-            #  "required_params": ["compartment-id", "bucket-name", "display-name", "addressee", "care-of", "address1",
-            #                      "city-or-locality", "state-province-region", "country", "zip-postal-code",
-            #                      "phone-number", "email"],
-            #  "optional_params": ["freeform-tags", "defined-tags", "address2", "address3", "address4",
-            #                      "setup-notifications"],
-            #  "methods_to_side_effect": {
-            #      "mock_prompt_for_emails": "'abc.xyz@123.com'"}},
+            {"sub_command": "create",
+             "required_params": ["compartment-id", "bucket-name", "display-name", "addressee", "care-of", "address1",
+                                 "city-or-locality", "state-province-region", "country", "zip-postal-code",
+                                 "phone-number", "email"],
+             "optional_params": ["freeform-tags", "defined-tags", "address2", "address3", "address4",
+                                 "setup-notifications"],
+             "methods_to_side_effect": {
+                 "mock_prompt_for_emails": "'abc.xyz@123.com'"}},
             {"sub_command": "change-compartment",
              "required_params": ["compartment-id", "job-id"],
              "optional_params": ["if-match"]},
@@ -244,10 +266,11 @@ class UnitTestDTS(unittest.TestCase):
             {"sub_command": "request-entitlement",
              "required_params": ["compartment-id", "name", "email"],
              "optional_params": []},
-            # {"sub_command": "show-entitlement",
-            #  "required_params": ["compartment-id"],
-            #  "optional_params": [],
-            #  "methods_to_side_effect": {"mock_client": {"list_transfer_appliance_entitlement": (200, {}, entitlements)}}},
+            {"sub_command": "show-entitlement",
+             "required_params": ["compartment-id"],
+             "optional_params": [],
+             "methods_to_side_effect": {
+                 "mock_client": {"list_transfer_appliance_entitlement": (200, {}, entitlements)}}},
         ]
         self.command_defs = [
             {"command": "job", "sub_commands": self.job_subcommands},
@@ -267,11 +290,11 @@ class UnitTestDTS(unittest.TestCase):
     #       - CLI errors when any of the Required params is not supplied.
     #       - CLI accepts all Required params
     #       - CLI accepts all Optional params
-    @mock.patch('services.dts.src.oci_cli_appliance_export_job.applianceexportjob_cli_extended.create_rule_helper')
-    @mock.patch('services.dts.src.oci_cli_appliance_export_job.applianceexportjob_cli_extended.create_subscription_helper')
-    @mock.patch('services.dts.src.oci_cli_appliance_export_job.applianceexportjob_cli_extended.prompt_for_emails')
-    @mock.patch('services.dts.src.oci_cli_appliance_export_job.applianceexportjob_cli_extended.get_topic_id')
-    @mock.patch('services.dts.src.oci_cli_appliance_export_job.applianceexportjob_cli_extended.get_topic_client')
+    @mock.patch('services.dts.src.oci_cli_dts.cli_utils.create_rule_helper')
+    @mock.patch('services.dts.src.oci_cli_dts.cli_utils.create_subscription_helper')
+    @mock.patch('services.dts.src.oci_cli_dts.cli_utils.prompt_for_emails')
+    @mock.patch('services.dts.src.oci_cli_dts.cli_utils.get_topic_id')
+    @mock.patch('services.dts.src.oci_cli_dts.cli_utils.get_topic_client')
     @mock.patch('services.dts.src.oci_cli_appliance_export_job.applianceexportjob_cli_extended.get_bucket_access_policies')
     @mock.patch('services.dts.src.oci_cli_appliance_export_job.applianceexportjob_cli_extended.create_os_client')
     @mock.patch('services.dts.src.oci_cli_appliance_export_job.applianceexportjob_cli_extended.reset_passphrase')
@@ -281,10 +304,10 @@ class UnitTestDTS(unittest.TestCase):
     @mock.patch('services.dts.src.oci_cli_dts.physicalappliance_cli_extended.create_init_auth')
     @mock.patch('click.prompt', return_value=True)
     @mock.patch('oci_cli.cli_util.build_client')
-    def test_dts(self, mock_client, mock_prompt, mock_init_auth, mock_appliance_client, mock_nfs_dataset_client,
-                 mock_write_to_file, mock_reset_passphrase, mock_os_client, mock_get_bucket_access_policies,
-                 mock_topic_client, mock_get_topic_id, mock_prompt_for_emails, mock_create_subscription_helper,
-                 mock_create_rule_helper):
+    def test_dts(self, mock_client, mock_prompt, mock_init_auth, mock_appliance_client,
+                 mock_nfs_dataset_client, mock_write_to_file, mock_reset_passphrase, mock_os_client,
+                 mock_get_bucket_access_policies, mock_topic_client, mock_get_topic_id, mock_prompt_for_emails,
+                 mock_create_subscription_helper, mock_create_rule_helper):
         click.echo("")
         for command_def in self.command_defs:
             command = command_def["command"]
@@ -367,7 +390,7 @@ class UnitTestDTS(unittest.TestCase):
                 and command not in ['physical-appliance', 'nfs-dataset']:
             c_list.append("--force")
         c_arg_list = []
-        if (test_type == self.TestType.OnlyRequiredArgs):
+        if test_type == self.TestType.OnlyRequiredArgs:
             c_arg_list += sub_command_def["required_params"]
         elif test_type == self.TestType.AllArgs:
             c_arg_list += sub_command_def["required_params"] + sub_command_def["optional_params"]
@@ -451,3 +474,99 @@ class UnitTestDTS(unittest.TestCase):
                 return UnitTestDTS.TestResult.Failed
             else:
                 return UnitTestDTS.TestResult.Success
+
+    @mock.patch('services.dts.src.oci_cli_appliance_export_job.applianceexportjob_cli_extended.create_os_client')
+    def test_archive_bucket_export_prevention(self, mock_os_client):
+
+        def mock_get_namespace():
+            return Response(200, {}, "test-namespace", Request("mock.method", "mock.url"))
+
+        def mock_get_bucket(namespace_name, bucket_name):
+            return Response(200, {}, Bucket(namespace="test-namespace", compartment_id="compartment_id",
+                                            name="test-bucket-name", storage_tier=OBJECT_STORAGE_BUCKET_TYPE_ARCHIVE),
+                            Request("mock.method", "mock.url")
+                            )
+
+        mock_os_client.return_value.get_namespace.side_effect = mock_get_namespace
+        mock_os_client.return_value.get_bucket.side_effect = mock_get_bucket
+
+        args_list = ['dts', 'export', 'generate-manifest', '--compartment-id', "compartment_id", '--job-id',
+                     "job_id", '--bucket', 'test-bucket-name']
+        result = util.invoke_command(args_list)
+        assert (isinstance(result.exception, SystemExit))
+        assert "Export for Archive buckets is currently not supported" in result.exception.__str__()
+
+    def test_appliance_state_update(self):
+
+        target_appliance_state = appliance_state_update(UpdateApplianceExportJobDetails.LIFECYCLE_STATE_ACTIVE, LIFECYCLE_STATE_DETAILS_ORACLE_SHIPPED, **{'job_id': '123'})
+        assert target_appliance_state is None
+
+        target_appliance_state = appliance_state_update(UpdateApplianceExportJobDetails.LIFECYCLE_STATE_INPROGRESS, LIFECYCLE_STATE_DETAILS_CUSTOMER_PROCESSING, **{'job_id': '123'})
+        assert target_appliance_state is None
+
+        target_appliance_state = appliance_state_update(UpdateApplianceExportJobDetails.LIFECYCLE_STATE_INPROGRESS, LIFECYCLE_STATE_DETAILS_ORACLE_SHIPPED, **{'job_id': '123'})
+        assert target_appliance_state['lifecycle_state_details'] is LIFECYCLE_STATE_DETAILS_CUSTOMER_PROCESSING
+
+        target_appliance_state = appliance_state_update(UpdateApplianceExportJobDetails.LIFECYCLE_STATE_INPROGRESS, LIFECYCLE_STATE_DETAILS_CUSTOMER_RECEIVED, **{'job_id': '123'})
+        assert target_appliance_state['lifecycle_state_details'] is LIFECYCLE_STATE_DETAILS_CUSTOMER_PROCESSING
+
+        with pytest.raises(click.ClickException):
+            target_appliance_state = appliance_state_update(UpdateApplianceExportJobDetails.LIFECYCLE_STATE_INPROGRESS, LIFECYCLE_STATE_DETAILS_PENDING_APPROVAL, **{'job_id': '123'})
+            assert target_appliance_state is None
+
+    def test_appliance_encryption_check(self):
+
+        result = appliance_encryption_check(encryptionConfigured='True')
+        assert result is None
+
+        with pytest.raises(oci.exceptions.ClientError):
+            appliance_encryption_check(encryptionConfigured='False')
+
+    @mock.patch('services.dts.src.oci_cli_appliance_export_job.applianceexportjob_cli_extended.pa_unlock_helper')
+    def test_appliance_unlock(self, mocker_pa):
+        appliance_profile = 'test'
+        passphrase = '123'
+        ctx_obj = '123'
+
+        def mock_pa_unlock_helper(ctx_obj, appliance_profile, passphrase):
+            # do nothing
+            pass
+
+        mocker_pa.side_effect = mock_pa_unlock_helper
+
+        # Test case #1, Appliance state = NOT_LOCKED, do nothing
+        appliance_unlock(ctx=ctx_obj, appliance_profile=appliance_profile, passphrase=passphrase,
+                         appliance_lock_status=APPLIANCE_STATE_NOT_LOCKED)
+        mocker_pa.assert_not_called()
+
+        # Test case #2, Appliance state = LOCKED, invoke unlock()
+        appliance_unlock(ctx=ctx_obj, appliance_profile=appliance_profile, passphrase=passphrase,
+                         appliance_lock_status=APPLIANCE_STATE_LOCKED)
+        mocker_pa.assert_called_with(ctx_obj, appliance_profile, passphrase)
+
+        # Test case #3, Appliance state = NA, invoke unlock()
+        appliance_unlock(ctx=ctx_obj, appliance_profile=appliance_profile, passphrase=passphrase,
+                         appliance_lock_status=APPLIANCE_STATUS_NA)
+        mocker_pa.assert_called_with(ctx_obj, appliance_profile, passphrase)
+
+    @mock.patch('services.dts.src.oci_cli_dts.nfsdataset_cli_extended.nfs_dataset_deactivate_helper')
+    def test_deactivate_nfs_dataset(self, mocker_nfs_dataset_deactivate):
+        appliance_profile = 'test'
+        ctx_obj = '123'
+
+        def mock_nfs_dataset_deactivate_helper(ctx_obj, **kwargs):
+            # do nothing
+            pass
+
+        mocker_nfs_dataset_deactivate.side_effect = mock_nfs_dataset_deactivate_helper
+
+        deactivate_nfs_dataset(ctx_obj, appliance_profile, **{'name': 'test-dataset', 'state':
+                               NfsDatasetInfo.STATE_INACTIVE, 'dataset_type': 'NFS', 'nfs_export_details':
+                               'NfsExportDetails'})
+        mocker_nfs_dataset_deactivate.assert_not_called()
+
+        deactivate_nfs_dataset(ctx_obj, appliance_profile, **{'name': 'test-dataset', 'state':
+                               NfsDatasetInfo.STATE_ACTIVE, 'dataset_type': 'NFS', 'nfs_export_details':
+                               'NfsExportDetails'})
+        mocker_nfs_dataset_deactivate.assert_called_with(ctx_obj, **{'name': 'test-dataset',
+                                                         'appliance_profile': appliance_profile})

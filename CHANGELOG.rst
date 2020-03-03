@@ -6,6 +6,53 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.9.5 - 2020-03-03
+-------------------
+
+Added
+~~~~~
+
+* Support for updating the shape of a Database System in the Database service
+
+  * ``oci db system update --shape``
+
+* Support for generating CPE Configuration for customer to download in the Networking service
+ 
+  * ``oci network cpe get-cpe-device-config-content``
+  * ``oci network cpe-device-shape list``
+  * ``oci network cpe-device-shape-detail get-cpe-device-shape``
+  * ``oci network tunnel-cpe-device-config``
+  * ``oci network cpe create --cpe-device-shape-id``
+  * ``oci network cpe update --cpe-device-shape-id``
+  * ``oci network ip-sec-connection get-ipsec-cpe-device-config-content``
+
+* Private IP and Fault Domain for Kubernetes cluster nodes in the NodePool response
+
+* Support for calling Oracle Cloud Infrastructure services in the Montreal region (``--region  ca-montreal-1``)
+
+Changed
+~~~~~~~
+
+* The following for the Data Transfer service
+
+  * Notifications setup
+  
+    * ``oci dts job create`` has a new option called ``--setup-notificaitons``
+    * ``oci dts appliance request`` has a new option called ``--setup-notificaitons``
+
+  * Bug fixes in ``oci dts export configure-physical-appliance``
+
+  * Prevent archive buckets for DTS export
+
+* Upgraded dependencies for arrow, jmespath, python-dateutil, pytz, six.
+
+Fixed 
+~~~~~
+
+* Bug found in DB system patch command for Database Service. (`Issue 223 <https://github.com/oracle/oci-cli/issues/223>`__)
+
+  * ``oci db system patch``
+
 2.9.4 - 2020-02-25
 -------------------
 

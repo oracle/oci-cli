@@ -34,7 +34,7 @@ def remote_peering_connection_group():
     pass
 
 
-@click.command(cli_util.override('virtual_network.subnet_group.command_name', 'subnet'), cls=CommandGroupWithAlias, help="""A logical subdivision of a VCN. Each subnet exists in a single availability domain and consists of a contiguous range of IP addresses that do not overlap with other subnets in the VCN. Example: 172.16.1.0/24. For more information, see [Overview of the Networking Service] and [VCNs and Subnets].
+@click.command(cli_util.override('virtual_network.subnet_group.command_name', 'subnet'), cls=CommandGroupWithAlias, help="""A logical subdivision of a VCN. Each subnet consists of a contiguous range of IP addresses that do not overlap with other subnets in the VCN. Example: 172.16.1.0/24. For more information, see [Overview of the Networking Service] and [VCNs and Subnets].
 
 To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].
 
@@ -154,13 +154,21 @@ def local_peering_gateway_group():
     pass
 
 
+@click.command(cli_util.override('virtual_network.tunnel_cpe_device_config_group.command_name', 'tunnel-cpe-device-config'), cls=CommandGroupWithAlias, help="""The set of CPE configuration answers for the tunnel, which the customer provides in [UpdateTunnelCpeDeviceConfig]. The answers correlate to the questions that are specific to the CPE device type (see the `parameters` attribute of [CpeDeviceShapeDetail]).
+
+See these related operations:
+
+  * [GetTunnelCpeDeviceConfig]   * [GetTunnelCpeDeviceConfigContent]   * [GetIpsecCpeDeviceConfigContent]   * [GetCpeDeviceConfigContent]""")
+@cli_util.help_option_group
+def tunnel_cpe_device_config_group():
+    pass
+
+
 @click.command(cli_util.override('virtual_network.ipv6_group.command_name', 'ipv6'), cls=CommandGroupWithAlias, help="""An *IPv6* is a conceptual term that refers to an IPv6 address and related properties. The `IPv6` object is the API representation of an IPv6.
 
 You can create and assign an IPv6 to any VNIC that is in an IPv6-enabled subnet in an IPv6-enabled VCN.
 
-**Note:** IPv6 addressing is currently supported only in the Government Cloud.
-
-For important details about IPv6 addressing in a VCN, see [IPv6 Addresses].""")
+**Note:** IPv6 addressing is currently supported only in certain regions. For important details about IPv6 addressing in a VCN, see [IPv6 Addresses].""")
 @cli_util.help_option_group
 def ipv6_group():
     pass
@@ -244,6 +252,12 @@ def vcn_group():
     pass
 
 
+@click.command(cli_util.override('virtual_network.cpe_device_shape_group.command_name', 'cpe-device-shape'), cls=CommandGroupWithAlias, help="""A summary of information about a particular CPE device type. Compare with [CpeDeviceShapeDetail].""")
+@cli_util.help_option_group
+def cpe_device_shape_group():
+    pass
+
+
 @click.command(cli_util.override('virtual_network.ip_sec_connection_device_status_group.command_name', 'ip-sec-connection-device-status'), cls=CommandGroupWithAlias, help="""Deprecated. For tunnel information, instead see [IPSecConnectionTunnel].""")
 @cli_util.help_option_group
 def ip_sec_connection_device_status_group():
@@ -265,6 +279,12 @@ To use any of the API operations, you must be authorized in an IAM policy. If yo
 **Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
 @cli_util.help_option_group
 def vnic_group():
+    pass
+
+
+@click.command(cli_util.override('virtual_network.cpe_device_shape_detail_group.command_name', 'cpe-device-shape-detail'), cls=CommandGroupWithAlias, help="""The detailed information about a particular CPE device type. Compare with [CpeDeviceShapeSummary].""")
+@cli_util.help_option_group
+def cpe_device_shape_detail_group():
     pass
 
 
@@ -382,7 +402,7 @@ def cross_connect_group_group():
     pass
 
 
-@click.command(cli_util.override('virtual_network.drg_redundancy_status_group.command_name', 'drg-redundancy-status'), cls=CommandGroupWithAlias, help="""Redundancy status of the DRG object identified by ID""")
+@click.command(cli_util.override('virtual_network.drg_redundancy_status_group.command_name', 'drg-redundancy-status'), cls=CommandGroupWithAlias, help="""The redundancy status of the DRG. For more information, see [Redundancy Remedies].""")
 @cli_util.help_option_group
 def drg_redundancy_status_group():
     pass
@@ -415,6 +435,7 @@ virtual_network_root_group.add_command(private_ip_group)
 virtual_network_root_group.add_command(ip_sec_connection_tunnel_shared_secret_group)
 virtual_network_root_group.add_command(virtual_circuit_group)
 virtual_network_root_group.add_command(local_peering_gateway_group)
+virtual_network_root_group.add_command(tunnel_cpe_device_config_group)
 virtual_network_root_group.add_command(ipv6_group)
 virtual_network_root_group.add_command(cross_connect_port_speed_shape_group)
 virtual_network_root_group.add_command(drg_group)
@@ -425,9 +446,11 @@ virtual_network_root_group.add_command(letter_of_authority_group)
 virtual_network_root_group.add_command(cross_connect_status_group)
 virtual_network_root_group.add_command(security_rule_group)
 virtual_network_root_group.add_command(vcn_group)
+virtual_network_root_group.add_command(cpe_device_shape_group)
 virtual_network_root_group.add_command(ip_sec_connection_device_status_group)
 virtual_network_root_group.add_command(network_security_group_vnic_group)
 virtual_network_root_group.add_command(vnic_group)
+virtual_network_root_group.add_command(cpe_device_shape_detail_group)
 virtual_network_root_group.add_command(fast_connect_provider_service_key_group)
 virtual_network_root_group.add_command(dhcp_options_group)
 virtual_network_root_group.add_command(virtual_circuit_bandwidth_shape_group)
@@ -1170,12 +1193,17 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--cpe-device-shape-id', help=u"""The [OCID] of the CPE device type. You can provide a value if you want to later generate CPE device configuration content for IPSec connections that use this CPE. You can also call [UpdateCpe] later to provide a value. For a list of possible values, see [ListCpeDeviceShapes].
+
+For more information about generating CPE device configuration content, see:
+
+  * [GetCpeDeviceConfigContent]   * [GetIpsecCpeDeviceConfigContent]   * [GetTunnelCpeDeviceConfigContent]   * [GetTunnelCpeDeviceConfig]""")
 @json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'Cpe'})
 @cli_util.wrap_exceptions
-def create_cpe(ctx, from_json, compartment_id, ip_address, defined_tags, display_name, freeform_tags):
+def create_cpe(ctx, from_json, compartment_id, ip_address, defined_tags, display_name, freeform_tags, cpe_device_shape_id):
 
     kwargs = {}
 
@@ -1191,6 +1219,9 @@ def create_cpe(ctx, from_json, compartment_id, ip_address, defined_tags, display
 
     if freeform_tags is not None:
         details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if cpe_device_shape_id is not None:
+        details['cpeDeviceShapeId'] = cpe_device_shape_id
 
     client = cli_util.build_client('virtual_network', ctx)
     result = client.create_cpe(
@@ -1664,7 +1695,7 @@ For each tunnel, you need the IP address of Oracle's VPN headend and the shared 
 
 Used for routing a given IPSec tunnel's traffic only if the tunnel is using static routing. If you configure at least one tunnel to use static routing, then you must provide at least one valid static route. If you configure both tunnels to use BGP dynamic routing, you can provide an empty list for the static routes. For more information, see the important note in [IPSecConnection].
 
-The CIDR can be either IPv4 or IPv6. Note that IPv6 addressing is currently supported only in the Government Cloud.
+The CIDR can be either IPv4 or IPv6. Note that IPv6 addressing is currently supported only in certain regions. See [IPv6 Addresses].
 
 Example: `10.0.1.0/24`
 
@@ -4161,6 +4192,81 @@ def get_cpe(ctx, from_json, cpe_id):
     cli_util.render_response(result, ctx)
 
 
+@cpe_group.command(name=cli_util.override('virtual_network.get_cpe_device_config_content.command_name', 'get-cpe-device-config-content'), help=u"""Renders a set of CPE configuration content that can help a network engineer configure the actual CPE device (for example, a hardware router) represented by the specified [Cpe] object.
+
+The rendered content is specific to the type of CPE device (for example, Cisco ASA). Therefore the [Cpe] must have the CPE's device type specified by the `cpeDeviceShapeId` attribute. The content optionally includes answers that the customer provides (see [UpdateTunnelCpeDeviceConfig]), merged with a template of other information specific to the CPE device type.
+
+The operation returns configuration information for *all* of the [IPSecConnection] objects that use the specified CPE. Here are similar operations:
+
+  * [GetIpsecCpeDeviceConfigContent]   returns CPE configuration content for all tunnels in a single IPSec connection.   * [GetTunnelCpeDeviceConfigContent]   returns CPE configuration content for a specific tunnel within an IPSec connection.""")
+@cli_util.option('--cpe-id', required=True, help=u"""The OCID of the CPE.""")
+@cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def get_cpe_device_config_content(ctx, from_json, file, cpe_id):
+
+    if isinstance(cpe_id, six.string_types) and len(cpe_id.strip()) == 0:
+        raise click.UsageError('Parameter --cpe-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('virtual_network', ctx)
+    result = client.get_cpe_device_config_content(
+        cpe_id=cpe_id,
+        **kwargs
+    )
+
+    # If outputting to stdout we don't want to print a progress bar because it will get mixed up with the output
+    # Also we need a non-zero Content-Length in order to display a meaningful progress bar
+    bar = None
+    if hasattr(file, 'name') and file.name != '<stdout>' and 'Content-Length' in result.headers:
+        content_length = int(result.headers['Content-Length'])
+        if content_length > 0:
+            bar = click.progressbar(length=content_length, label='Downloading file')
+
+    try:
+        if bar:
+            bar.__enter__()
+
+        # TODO: Make the download size a configurable option
+        # use decode_content=True to automatically unzip service responses (this should be overridden for object storage)
+        for chunk in result.data.raw.stream(cli_constants.MEBIBYTE, decode_content=True):
+            if bar:
+                bar.update(len(chunk))
+            file.write(chunk)
+    finally:
+        if bar:
+            bar.render_finish()
+        file.close()
+
+
+@cpe_device_shape_detail_group.command(name=cli_util.override('virtual_network.get_cpe_device_shape.command_name', 'get-cpe-device-shape'), help=u"""Gets the detailed information about the specified CPE device type. This might include a set of questions that are specific to the particular CPE device type. The customer must supply answers to those questions (see [UpdateTunnelCpeDeviceConfig]). The service merges the answers with a template of other information for the CPE device type. The following operations return the merged content:
+
+  * [GetCpeDeviceConfigContent]   * [GetIpsecCpeDeviceConfigContent]   * [GetTunnelCpeDeviceConfigContent]""")
+@cli_util.option('--cpe-device-shape-id', required=True, help=u"""The [OCID] of the CPE device shape.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'CpeDeviceShapeDetail'})
+@cli_util.wrap_exceptions
+def get_cpe_device_shape(ctx, from_json, cpe_device_shape_id):
+
+    if isinstance(cpe_device_shape_id, six.string_types) and len(cpe_device_shape_id.strip()) == 0:
+        raise click.UsageError('Parameter --cpe-device-shape-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('virtual_network', ctx)
+    result = client.get_cpe_device_shape(
+        cpe_device_shape_id=cpe_device_shape_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @cross_connect_group.command(name=cli_util.override('virtual_network.get_cross_connect.command_name', 'get'), help=u"""Gets the specified cross-connect's information.""")
 @cli_util.option('--cross-connect-id', required=True, help=u"""The OCID of the cross-connect.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -4308,7 +4414,7 @@ def get_drg_attachment(ctx, from_json, drg_attachment_id):
     cli_util.render_response(result, ctx)
 
 
-@drg_redundancy_status_group.command(name=cli_util.override('virtual_network.get_drg_redundancy_status.command_name', 'get'), help=u"""Get redundancy status of single DRG object on Oracle side.""")
+@drg_redundancy_status_group.command(name=cli_util.override('virtual_network.get_drg_redundancy_status.command_name', 'get'), help=u"""Gets the redundancy status for the specified DRG. For more information, see [Redundancy Remedies].""")
 @cli_util.option('--drg-id', required=True, help=u"""The OCID of the DRG.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -4513,6 +4619,57 @@ def get_ip_sec_connection_tunnel_shared_secret(ctx, from_json, ipsc_id, tunnel_i
         **kwargs
     )
     cli_util.render_response(result, ctx)
+
+
+@ip_sec_connection_group.command(name=cli_util.override('virtual_network.get_ipsec_cpe_device_config_content.command_name', 'get-ipsec-cpe-device-config-content'), help=u"""Renders a set of CPE configuration content for the specified IPSec connection (for all the tunnels in the connection). The content helps a network engineer configure the actual CPE device (for example, a hardware router) that the specified IPSec connection terminates on.
+
+The rendered content is specific to the type of CPE device (for example, Cisco ASA). Therefore the [Cpe] used by the specified [IPSecConnection] must have the CPE's device type specified by the `cpeDeviceShapeId` attribute. The content optionally includes answers that the customer provides (see [UpdateTunnelCpeDeviceConfig]), merged with a template of other information specific to the CPE device type.
+
+The operation returns configuration information for all tunnels in the single specified [IPSecConnection] object. Here are other similar operations:
+
+  * [GetTunnelCpeDeviceConfigContent]   returns CPE configuration content for a specific tunnel within an IPSec connection.   * [GetCpeDeviceConfigContent]   returns CPE configuration content for *all* IPSec connections that use a specific CPE.""")
+@cli_util.option('--ipsc-id', required=True, help=u"""The OCID of the IPSec connection.""")
+@cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def get_ipsec_cpe_device_config_content(ctx, from_json, file, ipsc_id):
+
+    if isinstance(ipsc_id, six.string_types) and len(ipsc_id.strip()) == 0:
+        raise click.UsageError('Parameter --ipsc-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('virtual_network', ctx)
+    result = client.get_ipsec_cpe_device_config_content(
+        ipsc_id=ipsc_id,
+        **kwargs
+    )
+
+    # If outputting to stdout we don't want to print a progress bar because it will get mixed up with the output
+    # Also we need a non-zero Content-Length in order to display a meaningful progress bar
+    bar = None
+    if hasattr(file, 'name') and file.name != '<stdout>' and 'Content-Length' in result.headers:
+        content_length = int(result.headers['Content-Length'])
+        if content_length > 0:
+            bar = click.progressbar(length=content_length, label='Downloading file')
+
+    try:
+        if bar:
+            bar.__enter__()
+
+        # TODO: Make the download size a configurable option
+        # use decode_content=True to automatically unzip service responses (this should be overridden for object storage)
+        for chunk in result.data.raw.stream(cli_constants.MEBIBYTE, decode_content=True):
+            if bar:
+                bar.update(len(chunk))
+            file.write(chunk)
+    finally:
+        if bar:
+            bar.render_finish()
+        file.close()
 
 
 @ipv6_group.command(name=cli_util.override('virtual_network.get_ipv6.command_name', 'get'), help=u"""Gets the specified IPv6. You must specify the object's OCID. Alternatively, you can get the object by using [ListIpv6s] with the IPv6 address (for example, 2001:0db8:0123:1111:98fe:dcba:9876:4321) and subnet OCID.""")
@@ -4826,6 +4983,89 @@ def get_subnet(ctx, from_json, subnet_id):
     cli_util.render_response(result, ctx)
 
 
+@tunnel_cpe_device_config_group.command(name=cli_util.override('virtual_network.get_tunnel_cpe_device_config.command_name', 'get'), help=u"""Gets the set of CPE configuration answers for the tunnel, which the customer provided in [UpdateTunnelCpeDeviceConfig]. To get the full set of content for the tunnel (any answers merged with the template of other information specific to the CPE device type), use [GetTunnelCpeDeviceConfigContent].""")
+@cli_util.option('--ipsc-id', required=True, help=u"""The OCID of the IPSec connection.""")
+@cli_util.option('--tunnel-id', required=True, help=u"""The [OCID] of the tunnel.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'TunnelCpeDeviceConfig'})
+@cli_util.wrap_exceptions
+def get_tunnel_cpe_device_config(ctx, from_json, ipsc_id, tunnel_id):
+
+    if isinstance(ipsc_id, six.string_types) and len(ipsc_id.strip()) == 0:
+        raise click.UsageError('Parameter --ipsc-id cannot be whitespace or empty string')
+
+    if isinstance(tunnel_id, six.string_types) and len(tunnel_id.strip()) == 0:
+        raise click.UsageError('Parameter --tunnel-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('virtual_network', ctx)
+    result = client.get_tunnel_cpe_device_config(
+        ipsc_id=ipsc_id,
+        tunnel_id=tunnel_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@tunnel_cpe_device_config_group.command(name=cli_util.override('virtual_network.get_tunnel_cpe_device_config_content.command_name', 'get-tunnel-cpe-device-config-content'), help=u"""Renders a set of CPE configuration content for the specified IPSec tunnel. The content helps a network engineer configure the actual CPE device (for example, a hardware router) that the specified IPSec tunnel terminates on.
+
+The rendered content is specific to the type of CPE device (for example, Cisco ASA). Therefore the [Cpe] used by the specified [IPSecConnection] must have the CPE's device type specified by the `cpeDeviceShapeId` attribute. The content optionally includes answers that the customer provides (see [UpdateTunnelCpeDeviceConfig]), merged with a template of other information specific to the CPE device type.
+
+The operation returns configuration information for only the specified IPSec tunnel. Here are other similar operations:
+
+  * [GetIpsecCpeDeviceConfigContent]   returns CPE configuration content for all tunnels in a single IPSec connection.   * [GetCpeDeviceConfigContent]   returns CPE configuration content for *all* IPSec connections that use a specific CPE.""")
+@cli_util.option('--ipsc-id', required=True, help=u"""The OCID of the IPSec connection.""")
+@cli_util.option('--tunnel-id', required=True, help=u"""The [OCID] of the tunnel.""")
+@cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def get_tunnel_cpe_device_config_content(ctx, from_json, file, ipsc_id, tunnel_id):
+
+    if isinstance(ipsc_id, six.string_types) and len(ipsc_id.strip()) == 0:
+        raise click.UsageError('Parameter --ipsc-id cannot be whitespace or empty string')
+
+    if isinstance(tunnel_id, six.string_types) and len(tunnel_id.strip()) == 0:
+        raise click.UsageError('Parameter --tunnel-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('virtual_network', ctx)
+    result = client.get_tunnel_cpe_device_config_content(
+        ipsc_id=ipsc_id,
+        tunnel_id=tunnel_id,
+        **kwargs
+    )
+
+    # If outputting to stdout we don't want to print a progress bar because it will get mixed up with the output
+    # Also we need a non-zero Content-Length in order to display a meaningful progress bar
+    bar = None
+    if hasattr(file, 'name') and file.name != '<stdout>' and 'Content-Length' in result.headers:
+        content_length = int(result.headers['Content-Length'])
+        if content_length > 0:
+            bar = click.progressbar(length=content_length, label='Downloading file')
+
+    try:
+        if bar:
+            bar.__enter__()
+
+        # TODO: Make the download size a configurable option
+        # use decode_content=True to automatically unzip service responses (this should be overridden for object storage)
+        for chunk in result.data.raw.stream(cli_constants.MEBIBYTE, decode_content=True):
+            if bar:
+                bar.update(len(chunk))
+            file.write(chunk)
+    finally:
+        if bar:
+            bar.render_finish()
+        file.close()
+
+
 @vcn_group.command(name=cli_util.override('virtual_network.get_vcn.command_name', 'get'), help=u"""Gets the specified VCN's information.""")
 @cli_util.option('--vcn-id', required=True, help=u"""The [OCID] of the VCN.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -4903,6 +5143,58 @@ def list_allowed_peer_regions_for_remote_peering(ctx, from_json, all_pages, ):
     result = client.list_allowed_peer_regions_for_remote_peering(
         **kwargs
     )
+    cli_util.render_response(result, ctx)
+
+
+@cpe_device_shape_group.command(name=cli_util.override('virtual_network.list_cpe_device_shapes.command_name', 'list'), help=u"""Lists the CPE device types that the Networking service provides CPE configuration content for (example: Cisco ASA). The content helps a network engineer configure the actual CPE device represented by a [Cpe] object.
+
+If you want to generate CPE configuration content for one of the returned CPE device types, ensure that the [Cpe] object's `cpeDeviceShapeId` attribute is set to the CPE device type's OCID (returned by this operation).
+
+For information about generating CPE configuration content, see these operations:
+
+  * [GetCpeDeviceConfigContent]   * [GetIpsecCpeDeviceConfigContent]   * [GetTunnelCpeDeviceConfigContent]""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
+
+Example: `50`""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[CpeDeviceShapeSummary]'})
+@cli_util.wrap_exceptions
+def list_cpe_device_shapes(ctx, from_json, all_pages, page_size, limit, page):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('virtual_network', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_cpe_device_shapes,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_cpe_device_shapes,
+            limit,
+            page_size,
+            **kwargs
+        )
+    else:
+        result = client.list_cpe_device_shapes(
+            **kwargs
+        )
     cli_util.render_response(result, ctx)
 
 
@@ -6725,6 +7017,11 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--cpe-device-shape-id', help=u"""The [OCID] of the CPE device type. You can provide a value if you want to generate CPE device configuration content for IPSec connections that use this CPE. For a list of possible values, see [ListCpeDeviceShapes].
+
+For more information about generating CPE device configuration content, see:
+
+  * [GetCpeDeviceConfigContent]   * [GetIpsecCpeDeviceConfigContent]   * [GetTunnelCpeDeviceConfigContent]   * [GetTunnelCpeDeviceConfig]""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}})
@@ -6732,7 +7029,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'Cpe'})
 @cli_util.wrap_exceptions
-def update_cpe(ctx, from_json, force, cpe_id, defined_tags, display_name, freeform_tags, if_match):
+def update_cpe(ctx, from_json, force, cpe_id, defined_tags, display_name, freeform_tags, cpe_device_shape_id, if_match):
 
     if isinstance(cpe_id, six.string_types) and len(cpe_id.strip()) == 0:
         raise click.UsageError('Parameter --cpe-id cannot be whitespace or empty string')
@@ -6755,6 +7052,9 @@ def update_cpe(ctx, from_json, force, cpe_id, defined_tags, display_name, freefo
 
     if freeform_tags is not None:
         details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if cpe_device_shape_id is not None:
+        details['cpeDeviceShapeId'] = cpe_device_shape_id
 
     client = cli_util.build_client('virtual_network', ctx)
     result = client.update_cpe(
@@ -7247,7 +7547,7 @@ Example IP address: `10.0.3.3`
 
 Example hostname: `cpe.example.com`""")
 @cli_util.option('--cpe-local-identifier-type', type=custom_types.CliCaseInsensitiveChoice(["IP_ADDRESS", "HOSTNAME"]), help=u"""The type of identifier for your CPE device. The value you provide here must correspond to the value for `cpeLocalIdentifier`.""")
-@cli_util.option('--static-routes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Static routes to the CPE. If you provide this attribute, it replaces the entire current set of static routes. A static route's CIDR must not be a multicast address or class E address. The CIDR can be either IPv4 or IPv6. Note that IPv6 addressing is currently supported only in the Government Cloud.
+@cli_util.option('--static-routes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Static routes to the CPE. If you provide this attribute, it replaces the entire current set of static routes. A static route's CIDR must not be a multicast address or class E address. The CIDR can be either IPv4 or IPv6. Note that IPv6 addressing is currently supported only in certain regions. See [IPv6 Addresses].
 
 Example: `10.0.1.0/24`
 
@@ -8396,6 +8696,51 @@ def update_subnet(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_
     cli_util.render_response(result, ctx)
 
 
+@tunnel_cpe_device_config_group.command(name=cli_util.override('virtual_network.update_tunnel_cpe_device_config.command_name', 'update'), help=u"""Creates or updates the set of CPE configuration answers for the specified tunnel. The answers correlate to the questions that are specific to the CPE device type (see the `parameters` attribute of [CpeDeviceShapeDetail]).""")
+@cli_util.option('--ipsc-id', required=True, help=u"""The OCID of the IPSec connection.""")
+@cli_util.option('--tunnel-id', required=True, help=u"""The [OCID] of the tunnel.""")
+@cli_util.option('--tunnel-cpe-device-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The set of configuration answers for a CPE device.
+
+This option is a JSON list with items of type CpeDeviceConfigAnswer.  For documentation on CpeDeviceConfigAnswer please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/CpeDeviceConfigAnswer.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@json_skeleton_utils.get_cli_json_input_option({'tunnel-cpe-device-config': {'module': 'core', 'class': 'list[CpeDeviceConfigAnswer]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'tunnel-cpe-device-config': {'module': 'core', 'class': 'list[CpeDeviceConfigAnswer]'}}, output_type={'module': 'core', 'class': 'TunnelCpeDeviceConfig'})
+@cli_util.wrap_exceptions
+def update_tunnel_cpe_device_config(ctx, from_json, force, ipsc_id, tunnel_id, tunnel_cpe_device_config, if_match):
+
+    if isinstance(ipsc_id, six.string_types) and len(ipsc_id.strip()) == 0:
+        raise click.UsageError('Parameter --ipsc-id cannot be whitespace or empty string')
+
+    if isinstance(tunnel_id, six.string_types) and len(tunnel_id.strip()) == 0:
+        raise click.UsageError('Parameter --tunnel-id cannot be whitespace or empty string')
+    if not force:
+        if tunnel_cpe_device_config:
+            if not click.confirm("WARNING: Updates to tunnel-cpe-device-config will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    details = {}
+
+    if tunnel_cpe_device_config is not None:
+        details['tunnelCpeDeviceConfig'] = cli_util.parse_json_parameter("tunnel_cpe_device_config", tunnel_cpe_device_config)
+
+    client = cli_util.build_client('virtual_network', ctx)
+    result = client.update_tunnel_cpe_device_config(
+        ipsc_id=ipsc_id,
+        tunnel_id=tunnel_id,
+        update_tunnel_cpe_device_config_details=details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @vcn_group.command(name=cli_util.override('virtual_network.update_vcn.command_name', 'update'), help=u"""Updates the specified VCN.""")
 @cli_util.option('--vcn-id', required=True, help=u"""The [OCID] of the VCN.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
@@ -8610,10 +8955,12 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--hostname-label', help=u"""The hostname for the VNIC's primary private IP. Used for DNS. The value is the hostname portion of the primary private IP's fully qualified domain name (FQDN) (for example, `bminstance-1` in FQDN `bminstance-1.subnet123.vcn1.oraclevcn.com`). Must be unique across all VNICs in the subnet and comply with [RFC 952] and [RFC 1123]. The value appears in the [Vnic] object and also the [PrivateIp] object returned by [ListPrivateIps] and [GetPrivateIp].
 
 For more information, see [DNS in Your Virtual Cloud Network].""")
-@cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of the OCIDs of the network security groups (NSGs) to add the VNIC to. Setting this as an empty array removes the VNIC from all network security groups.
+@cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of the OCIDs of the network security groups (NSGs) to add the VNIC to. Setting this as an empty array removes the VNIC from all network security groups. If the VNIC contains an vlanId, the value of this field will be ignored.
 
 For more information about NSGs, see [NetworkSecurityGroup].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--skip-source-dest-check', type=click.BOOL, help=u"""Whether the source/destination check is disabled on the VNIC. Defaults to `false`, which means the check is performed. For information about why you would skip the source/destination check, see [Using a Private IP as a Route Target].
+@cli_util.option('--skip-source-dest-check', type=click.BOOL, help=u"""Whether the source/destination check is disabled on the VNIC. Defaults to `false`, which means the check is performed. If the VNIC contains an vlanId, the value of this field will be ignored.
+
+For information about why you would skip the source/destination check, see [Using a Private IP as a Route Target].
 
 Example: `true`""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")

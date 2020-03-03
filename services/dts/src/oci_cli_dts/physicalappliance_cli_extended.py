@@ -243,6 +243,13 @@ def pa_show(ctx, from_json, appliance_profile):
     cli_util.render_response(user_friendly_appliance_info, ctx)
 
 
+def pa_show_helper(ctx, from_json, appliance_profile):
+    appliance_client = create_appliance_client(ctx, appliance_profile)
+    appliance_info = appliance_client.get_physical_transfer_appliance()
+    user_friendly_appliance_info = convert_to_user_friendly(appliance_info)
+    return user_friendly_appliance_info
+
+
 @physical_appliance_group.command('finalize', help=u"""Finalizes the appliance.""")
 @cli_util.option('--appliance-profile', required=False, default="DEFAULT", help=u"""Appliance Profile""")
 @cli_util.option('--job-id', required=True, help=u"""Transfer job OCID.""")

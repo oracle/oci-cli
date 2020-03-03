@@ -52,7 +52,6 @@ class TestBudget(unittest.TestCase):
         assert '--budget-id' in result.output
         assert '--type' in result.output
         assert '--threshold-type' in result.output
-        assert '--recipients' in result.output
 
     def test_budgets_alert_rule_delete(self):
         result = util.invoke_command(['budgets', 'alert-rule', 'delete'])
