@@ -30,7 +30,7 @@ generate_oci_config_instructions = """
 
     The following links explain where to find the information required by this script:
 
-    User OCID and Tenancy OCID:
+    User API Signing Key, OCID and Tenancy OCID:
 
 
     \b
@@ -55,7 +55,7 @@ generate_oci_config_instructions = """
 
 upload_public_key_instructions = """
     \n
-    If you haven't already uploaded your public key through the console, follow the instructions on the page linked below in the section 'How to upload the public key':
+    If you haven't already uploaded your API Signing public key through the console, follow the instructions on the page linked below in the section 'How to upload the public key':
 
     \b
     https://docs.cloud.oracle.com/Content/API/Concepts/apisigningkey.htm#How2
@@ -141,11 +141,11 @@ def setup_group():
     pass
 
 
-@setup_group.command('keys', help="""Generates an RSA key pair. A passphrase for the private key can be provided using either the 'passphrase' or 'passphrase-file' option. If neither option is provided, the user will be prompted for a passphrase via stdin.""")
-@cli_util.option('--key-name', default=DEFAULT_KEY_NAME, help="""A name for the key. Generated key files will be {key-name}.pem and {key-name}_public.pem""")
-@cli_util.option('--output-dir', default=DEFAULT_DIRECTORY, help="""An optional directory to output the generated keys.""", type=click.Path())
-@cli_util.option('--passphrase', help="""An optional passphrase to encrypt the private key.""")
-@cli_util.option('--passphrase-file', help="""An optional file with the first line specifying a passphrase to encrypt the private key (or '-' to read from stdin).""", type=click.File(mode='r'))
+@setup_group.command('keys', help="""Generates an API Signing RSA key pair. A passphrase for the private key can be provided using either the 'passphrase' or 'passphrase-file' option. If neither option is provided, the user will be prompted for a passphrase via stdin.""")
+@cli_util.option('--key-name', default=DEFAULT_KEY_NAME, help="""A name for the API Signing key. Generated key files will be {key-name}.pem and {key-name}_public.pem""")
+@cli_util.option('--output-dir', default=DEFAULT_DIRECTORY, help="""An optional directory to output the generated API Signing keys.""", type=click.Path())
+@cli_util.option('--passphrase', help="""An optional passphrase to encrypt the private API Signing key.""")
+@cli_util.option('--passphrase-file', help="""An optional file with the first line specifying a passphrase to encrypt the API Signing private key (or '-' to read from stdin).""", type=click.File(mode='r'))
 @cli_util.option('--overwrite', default=False, help="""An option to overwrite existing files without a confirmation prompt.""", is_flag=True)
 @cli_util.help_option
 def generate_key_pair(key_name, output_dir, passphrase, passphrase_file, overwrite):
@@ -191,7 +191,7 @@ def generate_oci_config():
 
     region = prompt_for_region()
 
-    if click.confirm("Do you want to generate a new RSA key pair? (If you decline you will be asked to supply the path to an existing key.)", default=True):
+    if click.confirm("Do you want to generate a new API Signing RSA key pair? (If you decline you will be asked to supply the path to an existing key.)", default=True):
         key_location = os.path.abspath(os.path.expanduser(click.prompt(text='Enter a directory for your keys to be created', default=DEFAULT_DIRECTORY)))
         if not os.path.exists(key_location):
             create_directory(key_location)
@@ -213,7 +213,7 @@ def generate_oci_config():
         fingerprint = public_key_to_fingerprint(public_key)
         click.echo("Fingerprint: {}".format(fingerprint))
     else:
-        private_key_file, has_passphrase, private_key = click.prompt(text='Enter the location of your private key file', value_proc=validate_private_key_file)
+        private_key_file, has_passphrase, private_key = click.prompt(text='Enter the location of your API Signing private key file', value_proc=validate_private_key_file)
         private_key_file = os.path.abspath(private_key_file)
 
         key_passphrase = None
