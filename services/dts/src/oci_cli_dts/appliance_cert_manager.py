@@ -23,7 +23,7 @@ class ApplianceCertManager:
         :param cert_file: The String path to the cert file
         :return: None
         """
-        ssl_cert = ssl.get_server_certificate(self.appliance_endpoint, ssl_version=ssl.PROTOCOL_SSLv23)
+        ssl_cert = ssl.get_server_certificate(self.appliance_endpoint)
         with open(cert_file, 'w') as f:
             f.write(ssl_cert)
 

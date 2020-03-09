@@ -29,3 +29,24 @@ class TestLoadBalancer(unittest.TestCase):
         assert 'display-name' in result.output
         assert 'shape-name' in result.output
         assert 'subnet-ids' in result.output
+
+    def test_connection_config_support(self):
+        result = util.invoke_command(
+            ['lb', 'listener', 'create', '--connection-configuration-backend-tcp-proxy-protocol-version', '1',
+             '--connection-configuration-idle-timeout', '1'])
+        assert 'Error: Missing option(s)' in result.output
+        assert 'default-backend-set-name' in result.output
+        assert 'port' in result.output
+        assert 'protocol' in result.output
+        assert 'load-balancer-id' in result.output
+        assert 'name' in result.output
+
+        result = util.invoke_command(
+            ['lb', 'listener', 'update', '--connection-configuration-backend-tcp-proxy-protocol-version', '1',
+             '--connection-configuration-idle-timeout', '1'])
+        assert 'Error: Missing option(s)' in result.output
+        assert 'default-backend-set-name' in result.output
+        assert 'port' in result.output
+        assert 'protocol' in result.output
+        assert 'load-balancer-id' in result.output
+        assert 'listener-name' in result.output

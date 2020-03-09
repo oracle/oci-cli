@@ -41,9 +41,9 @@ budgets_root_group.add_command(budget_group)
 @cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["ACTUAL", "FORECAST"]), help=u"""Type of alert. Valid values are ACTUAL (the alert will trigger based on actual usage) or FORECAST (the alert will trigger based on predicted usage).""")
 @cli_util.option('--threshold', required=True, type=click.FLOAT, help=u"""The threshold for triggering the alert expressed as a whole number or decimal value. If thresholdType is ABSOLUTE, threshold can have at most 12 digits before the decimal point and up to 2 digits after the decimal point. If thresholdType is PERCENTAGE, the maximum value is 10000 and can have up to 2 digits after the decimal point.""")
 @cli_util.option('--threshold-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["PERCENTAGE", "ABSOLUTE"]), help=u"""The type of threshold.""")
-@cli_util.option('--recipients', required=True, help=u"""The audience that will received the alert when it triggers.""")
 @cli_util.option('--display-name', help=u"""The name of the alert rule.""")
 @cli_util.option('--description', help=u"""The description of the alert rule.""")
+@cli_util.option('--recipients', help=u"""The audience that will receive the alert when it triggers. An empty string is interpreted as null.""")
 @cli_util.option('--message', help=u"""The message to be sent to the recipients when alert rule is triggered.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
@@ -59,7 +59,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'budget', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'budget', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'budget', 'class': 'AlertRule'})
 @cli_util.wrap_exceptions
-def create_alert_rule(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, budget_id, type, threshold, threshold_type, recipients, display_name, description, message, freeform_tags, defined_tags):
+def create_alert_rule(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, budget_id, type, threshold, threshold_type, display_name, description, recipients, message, freeform_tags, defined_tags):
 
     if isinstance(budget_id, six.string_types) and len(budget_id.strip()) == 0:
         raise click.UsageError('Parameter --budget-id cannot be whitespace or empty string')
@@ -71,13 +71,15 @@ def create_alert_rule(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
     details['type'] = type
     details['threshold'] = threshold
     details['thresholdType'] = threshold_type
-    details['recipients'] = recipients
 
     if display_name is not None:
         details['displayName'] = display_name
 
     if description is not None:
         details['description'] = description
+
+    if recipients is not None:
+        details['recipients'] = recipients
 
     if message is not None:
         details['message'] = message
@@ -127,7 +129,7 @@ def create_alert_rule(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 @cli_util.option('--display-name', help=u"""The displayName of the budget.""")
 @cli_util.option('--description', help=u"""The description of the budget.""")
 @cli_util.option('--target-type', type=custom_types.CliCaseInsensitiveChoice(["COMPARTMENT", "TAG"]), help=u"""The type of target on which the budget is applied.""")
-@cli_util.option('--targets', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of targets on which the budget is applied.   If targetType is \"COMPARTMENT\", targets contains list of compartment OCIDs.   If targetType is \"TAG\", targets contains list of tag identifiers in the form of \"{tagNamespace}.{tagKey}.{tagValue}\". Curerntly, the array should contain EXACT ONE item.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--targets', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of targets on which the budget is applied.   If targetType is \"COMPARTMENT\", targets contains list of compartment OCIDs.   If targetType is \"TAG\", targets contains list of cost tracking tag identifiers in the form of \"{tagNamespace}.{tagKey}.{tagValue}\". Curerntly, the array should contain EXACT ONE item.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -351,8 +353,8 @@ def get_budget(ctx, from_json, budget_id):
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
-@cli_util.option('--sort-by', help=u"""The field to sort by. If not specified, the default is timeCreated. The default sort order for timeCreated is DESC. The default sort order for displayName is ASC in alphanumeric order.""")
-@cli_util.option('--lifecycle-state', help=u"""The current state of the resource to filter by.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. If not specified, the default is timeCreated. The default sort order for timeCreated is DESC. The default sort order for displayName is ASC in alphanumeric order.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE"]), help=u"""The current state of the resource to filter by.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable.
 
 Example: `My new resource`""")
@@ -422,8 +424,8 @@ Additional targetTypes would be available in future releases. Clients should ign
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
-@cli_util.option('--sort-by', help=u"""The field to sort by. If not specified, the default is timeCreated. The default sort order for timeCreated is DESC. The default sort order for displayName is ASC in alphanumeric order.""")
-@cli_util.option('--lifecycle-state', help=u"""The current state of the resource to filter by.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "displayName"]), help=u"""The field to sort by. If not specified, the default is timeCreated. The default sort order for timeCreated is DESC. The default sort order for displayName is ASC in alphanumeric order.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE"]), help=u"""The current state of the resource to filter by.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable.
 
 Example: `My new resource`""")
@@ -489,7 +491,7 @@ def list_budgets(ctx, from_json, all_pages, page_size, compartment_id, limit, pa
 @cli_util.option('--type', type=custom_types.CliCaseInsensitiveChoice(["ACTUAL", "FORECAST"]), help=u"""Type of alert. Valid values are ACTUAL (the alert will trigger based on actual usage) or FORECAST (the alert will trigger based on predicted usage).""")
 @cli_util.option('--threshold', type=click.FLOAT, help=u"""The threshold for triggering the alert expressed as a whole number or decimal value. If thresholdType is ABSOLUTE, threshold can have at most 12 digits before the decimal point and up to 2 digits after the decimal point. If thresholdType is PERCENTAGE, the maximum value is 10000 and can have up to 2 digits after the decimal point.""")
 @cli_util.option('--threshold-type', type=custom_types.CliCaseInsensitiveChoice(["PERCENTAGE", "ABSOLUTE"]), help=u"""The type of threshold.""")
-@cli_util.option('--recipients', help=u"""The audience that will received the alert when it triggers.""")
+@cli_util.option('--recipients', help=u"""The audience that will receive the alert when it triggers. If you need to clear out this value, please pass in an empty string instead of null.""")
 @cli_util.option('--description', help=u"""The description of the alert rule""")
 @cli_util.option('--message', help=u"""The message to be delivered to the recipients when alert is triggered""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].

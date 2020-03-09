@@ -6,6 +6,32 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.9.6 - 2020-03-10
+-------------------
+
+Added
+~~~~~
+
+* New option for load balancer listener create/update.
+
+  * ``oci lb listener create --connection-configuration-backend-tcp-proxy-protocol-version``
+  * ``oci lb listener update --connection-configuration-backend-tcp-proxy-protocol-version``
+
+* COMMON_ISSUES.rst file: includes common user installation issues and how to fix them.
+
+Changed
+~~~~~~~
+
+* Bulk VNIC Data Fetch by compartment-id.
+
+  *  ``--instance-id`` is optional for ``oci compute instance list-vnics --compartment-id``
+
+* Creating a budgets alert rule.
+
+  * ``--recipients`` is optional for ``oci budgets alert-rule create``
+
+* Improved Installation experience by checking if Curl and Python are working in the system before using them.
+
 2.9.5 - 2020-03-03
 -------------------
 
