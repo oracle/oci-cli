@@ -176,6 +176,11 @@ class TestCompute(unittest.TestCase):
 
     @util.log_test
     def subtest_list_vnics(self):
+        result = self.invoke(['compute', 'instance', 'list-vnics', '--compartment-id', util.COMPARTMENT_ID])
+        util.validate_response(result)
+        json_data = json.loads(result.output)
+        assert (len(json_data['data']) > 0)
+
         result = self.invoke(['compute', 'instance', 'list-vnics', '--instance-id', self.instance_ocid])
         util.validate_response(result)
         json_data = json.loads(result.output)

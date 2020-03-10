@@ -211,7 +211,10 @@ if [ "${install_script}" == "" ];then
     curl -# -f $INSTALL_SCRIPT_URL > $install_script
     if [ $? -ne 0 ]; then
         INSTALL_SCRIPT_URL=$FALLBACK_INSTALL_SCRIPT_URL
-        curl -# -f $INSTALL_SCRIPT_URL > $install_script || exit
+        curl -# -f $INSTALL_SCRIPT_URL > $install_script
+        if [ $? -ne 0 ]; then
+          echo "Could not download Oracle Cloud Infrastructure CLI install script from $INSTALL_SCRIPT_URL. Please read common errors https://github.com/oracle/oci-cli/blob/master/COMMON-ISSUES.rst." && exit
+        fi
         echo "Falling back to previous install.py script URL - $INSTALL_SCRIPT_URL"
     fi
 fi
@@ -297,6 +300,19 @@ if [ "$need_to_install_python" = true ]; then
         echo "ERROR: Could not install Python 3 based on operating system. Please install Python 3.5+ manually and re-run this script."
         exit 1
     fi
+fi
+
+# Check if Python installation is correct
+# This python command returns an exit code of 1 if there is an exception, otherwise 0
+$python_exe - << EOF
+import sys;
+try:
+  import argparse;
+except:
+  sys.exit(1)
+EOF
+if [ $? -ne 0 ]; then
+  echo "Python is not working correctly. Please read common errors in the following link. https://github.com/oracle/oci-cli/blob/master/COMMON-ISSUES.rst" && exit
 fi
 
 # In the future native dependency setup will be done in this script.

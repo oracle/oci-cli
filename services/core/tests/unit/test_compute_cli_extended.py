@@ -80,3 +80,9 @@ class TestCompute(unittest.TestCase):
         result = util.invoke_command(['compute', 'volume-attachment', 'list', '--compartment-id', 'dummy',
                                       '--instance-id', 'dummy'])
         assert 'ServiceError' in result.output
+
+    def test_list_vnics(self):
+        result = util.invoke_command(['compute', 'instance', 'list-vnics'])
+        assert 'UsageError' in result.output
+        assert '--compartment-id' in result.output
+        assert '--instance-id' in result.output

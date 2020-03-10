@@ -73,11 +73,17 @@ def process_ssl_configuration_kwargs(kwargs):
 
 
 def process_connection_configuration_kwargs(kwargs):
+    connection_configuration = {}
     if 'connection_configuration_idle_timeout' in kwargs and kwargs['connection_configuration_idle_timeout'] is not None:
-        connection_configuration = {'idleTimeout': kwargs['connection_configuration_idle_timeout']}
+        connection_configuration['idleTimeout'] = kwargs['connection_configuration_idle_timeout']
+    if 'connection_configuration_backend_tcp_proxy_protocol_version' in kwargs and kwargs['connection_configuration_backend_tcp_proxy_protocol_version'] is not None:
+        connection_configuration['backendTcpProxyProtocolVersion'] = kwargs['connection_configuration_backend_tcp_proxy_protocol_version']
+
+    if len(connection_configuration):
         kwargs['connection_configuration'] = json.dumps(connection_configuration)
 
     kwargs.pop('connection_configuration_idle_timeout', None)
+    kwargs.pop('connection_configuration_backend_tcp_proxy_protocol_version', None)
 
 
 def process_session_persistence_configuration_kwargs(kwargs):
@@ -236,6 +242,7 @@ def update_backend_set(ctx, **kwargs):
 @cli_util.option('--ssl-certificate-name', type=click.STRING, help="""A friendly name for the certificate bundle. It must be unique and it cannot be changed. Valid certificate bundle names include only alphanumeric characters, dashes, and underscores. Certificate bundle names cannot contain spaces. Avoid entering confidential information.""")
 @cli_util.option('--ssl-verify-depth', type=click.INT, help="""The maximum depth for peer certificate chain verification.""")
 @cli_util.option('--ssl-verify-peer-certificate', type=click.BOOL, help="""Whether the load balancer listener should verify peer certificates.""")
+@cli_util.option('--connection-configuration-backend-tcp-proxy-protocol-version', type=click.INT, help="""Connection Configuration Backend TCP Proxy Protocol Version.""")
 @cli_util.option('--connection-configuration-idle-timeout', type=click.INT, help="""The maximum idle time, in seconds, allowed between two successive receive or two successive send operations between the client and backend servers.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'hostname-names': {'module': 'load_balancer', 'class': 'list[string]'}, 'rule-set-names': {'module': 'load_balancer', 'class': 'list[string]'}})
@@ -252,6 +259,7 @@ def create_listener(ctx, **kwargs):
 @cli_util.option('--ssl-certificate-name', type=click.STRING, help="""A friendly name for the certificate bundle. It must be unique and it cannot be changed. Valid certificate bundle names include only alphanumeric characters, dashes, and underscores. Certificate bundle names cannot contain spaces. Avoid entering confidential information.""")
 @cli_util.option('--ssl-verify-depth', type=click.INT, help="""The maximum depth for peer certificate chain verification.""")
 @cli_util.option('--ssl-verify-peer-certificate', type=click.BOOL, help="""Whether the load balancer listener should verify peer certificates.""")
+@cli_util.option('--connection-configuration-backend-tcp-proxy-protocol-version', type=click.INT, help="""Connection Configuration Backend TCP Proxy Protocol Version.""")
 @cli_util.option('--connection-configuration-idle-timeout', type=click.INT, help="""The maximum idle time, in seconds, allowed between two successive receive or two successive send operations between the client and backend servers.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'hostname-names': {'module': 'load_balancer', 'class': 'list[string]'}, 'rule-set-names': {'module': 'load_balancer', 'class': 'list[string]'}})

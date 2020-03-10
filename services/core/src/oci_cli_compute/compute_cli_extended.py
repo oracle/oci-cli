@@ -302,7 +302,8 @@ def import_image_internal(ctx, compartment_id, display_name, import_image_detail
 
 
 @compute_cli.instance_group.command(name='list-vnics', help="""Lists the VNICs that are attached to the specified instance. VNICs that are in the process of attaching or detaching will not be returned.""")
-@cli_util.option('--instance-id', required=True, help="""The OCID of the instance.""")
+@cli_util.option('--compartment-id', help="""The OCID of the compartment.""")
+@cli_util.option('--instance-id', help="""The OCID of the instance.""")
 @cli_util.option('--limit', type=click.INT, help="""The maximum number of items to return in a paginated \"List\" call.
 
 Example: `500`""")
@@ -314,12 +315,16 @@ Example: `500`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[Vnic]'})
 @cli_util.wrap_exceptions
-def list_vnics(ctx, from_json, instance_id, limit, page, all_pages, page_size):
+def list_vnics(ctx, from_json, compartment_id, instance_id, limit, page, all_pages, page_size):
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
+    if not compartment_id and not instance_id:
+        raise click.UsageError('--compartment-id or --instance-id must be provided')
+
     client = cli_util.build_client('compute', ctx)
-    compartment_id = client.get_instance(instance_id=instance_id).data.compartment_id
+    if not compartment_id:
+        compartment_id = client.get_instance(instance_id=instance_id).data.compartment_id
 
     kwargs = {}
     if limit is not None:
@@ -368,7 +373,13 @@ def list_vnics(ctx, from_json, instance_id, limit, page, all_pages, page_size):
                     raise
     # if no result, just show error message
     if not result or not len(result):
-        click.echo('No VNICs found for this instance. Please check that the instance is in RUNNING state.', file=sys.stderr)
+        if instance_id:
+            click.echo('No VNICs found for this instance. Please check that the instance is in RUNNING state.',
+                       file=sys.stderr)
+        else:
+            click.echo(
+                'No VNICs found under this compartment. Please check that the compartment has instances in RUNNING state.',
+                file=sys.stderr)
     cli_util.render(result, vnic_attachments_result.headers, ctx=ctx)
 
 
