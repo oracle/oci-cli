@@ -164,7 +164,7 @@ cli_util.rename_command(datacatalog_cli, datacatalog_cli.data_catalog_root_group
 datacatalog_cli.search_result_group.commands.pop(datacatalog_cli.search_criteria.name)
 
 
-@cli_util.copy_params_from_generated_command(datacatalog_cli.search_criteria, params_to_exclude=['query'])
+@cli_util.copy_params_from_generated_command(datacatalog_cli.search_criteria, params_to_exclude=['query_parameterconflict'])
 @datacatalog_cli.search_result_group.command(name='query', help=u"""Returns a list of search results within a data catalog.""")
 @cli_util.option('--query-text', help=u"""Search query dsl that defines the query components including fields and predicates.""")
 @click.pass_context
@@ -172,6 +172,6 @@ datacatalog_cli.search_result_group.commands.pop(datacatalog_cli.search_criteria
 @cli_util.wrap_exceptions
 def search_criteria_extended(ctx, **kwargs):
     if 'query_text' in kwargs and kwargs['query_text']:
-        kwargs['query'] = kwargs['query_text']
+        kwargs['query_parameterconflict'] = kwargs['query_text']
     kwargs.pop('query_text')
     ctx.invoke(datacatalog_cli.search_criteria, **kwargs)

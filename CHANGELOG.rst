@@ -6,6 +6,25 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.9.7 - 2020-03-17
+------------------
+Added
+~~~~~
+
+* Support for connecting to database system via terminal
+
+  * ``oci db console-connection create --db-node-id --public-key``
+  * ``oci db console-connection delete --console-connection-id --db-node-id --force``
+  * ``oci db console-connection get --console-connection-id --db-node-id``
+  * ``oci db console-connection list --db-node-id --all-pages``
+
+Changed
+~~~~~~~
+
+* Upgraded dependency for configparser.
+
+* ``--verify-native-dependencies`` option within install.py script is being deprecated.
+
 2.9.6 - 2020-03-10
 -------------------
 

@@ -628,7 +628,7 @@ def main():
     parser.add_argument('--oci-cli-version', help='The pip version of CLI to install.')
     parser.add_argument('--dry-run', action='store_true', help='Do not install virtualenv or CLI but go through the motions.')
     parser.add_argument('--verify-native-dependencies', action='store_true',
-                        help='Check whether linux native dependencies are available to compile modules like cryptography.')
+                        help='Check whether linux native dependencies are available to compile modules like cryptography. This option is deprecated in version 2.9.7 and will be removed soon.')
     args = parser.parse_args()
     global ACCEPT_ALL_DEFAULTS
     ACCEPT_ALL_DEFAULTS = args.accept_all_defaults

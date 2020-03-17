@@ -128,7 +128,7 @@ Example: `High CPU Utilization`""")
 @cli_util.option('--namespace', required=True, help=u"""The source service or application emitting the metric that is evaluated by the alarm.
 
 Example: `oci_computeagent`""")
-@cli_util.option('--query', required=True, help=u"""The Monitoring Query Language (MQL) expression to evaluate for the alarm. The Alarms feature of the Monitoring service interprets results for each returned time series as Boolean values, where zero represents false and a non-zero value represents true. A true value means that the trigger rule condition has been met. The query must specify a metric, statistic, interval, and trigger rule (threshold or absence). Supported values for interval: `1m`-`60m` (also `1h`). You can optionally specify dimensions and grouping functions. Supported grouping functions: `grouping()`, `groupBy()`. For details about Monitoring Query Language (MQL), see [Monitoring Query Language (MQL) Reference]. For available dimensions, review the metric definition for the supported service. See [Supported Services].
+@cli_util.option('--query-parameterconflict', required=True, help=u"""The Monitoring Query Language (MQL) expression to evaluate for the alarm. The Alarms feature of the Monitoring service interprets results for each returned time series as Boolean values, where zero represents false and a non-zero value represents true. A true value means that the trigger rule condition has been met. The query must specify a metric, statistic, interval, and trigger rule (threshold or absence). Supported values for interval: `1m`-`60m` (also `1h`). You can optionally specify dimensions and grouping functions. Supported grouping functions: `grouping()`, `groupBy()`. For details about Monitoring Query Language (MQL), see [Monitoring Query Language (MQL) Reference]. For available dimensions, review the metric definition for the supported service. See [Supported Services].
 
 Example of threshold alarm:
 
@@ -187,7 +187,7 @@ Example: `PT2H`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'destinations': {'module': 'monitoring', 'class': 'list[string]'}, 'suppression': {'module': 'monitoring', 'class': 'Suppression'}, 'freeform-tags': {'module': 'monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'monitoring', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'monitoring', 'class': 'Alarm'})
 @cli_util.wrap_exceptions
-def create_alarm(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, metric_compartment_id, namespace, query, severity, destinations, is_enabled, metric_compartment_id_in_subtree, resource_group, resolution, pending_duration, body, repeat_notification_duration, suppression, freeform_tags, defined_tags):
+def create_alarm(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, metric_compartment_id, namespace, query_parameterconflict, severity, destinations, is_enabled, metric_compartment_id_in_subtree, resource_group, resolution, pending_duration, body, repeat_notification_duration, suppression, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -197,7 +197,7 @@ def create_alarm(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
     details['compartmentId'] = compartment_id
     details['metricCompartmentId'] = metric_compartment_id
     details['namespace'] = namespace
-    details['query'] = query
+    details['query'] = query_parameterconflict
     details['severity'] = severity
     details['destinations'] = cli_util.parse_json_parameter("destinations", destinations)
     details['isEnabled'] = is_enabled
@@ -726,7 +726,7 @@ Example: `ocid1.compartment.oc1..exampleuniqueID`""")
 @cli_util.option('--namespace', required=True, help=u"""The source service or application to use when searching for metric data points to aggregate.
 
 Example: `oci_computeagent`""")
-@cli_util.option('--query', required=True, help=u"""The Monitoring Query Language (MQL) expression to use when searching for metric data points to aggregate. The query must specify a metric, statistic, and interval. Supported values for interval: `1m`-`60m` (also `1h`). You can optionally specify dimensions and grouping functions. Supported grouping functions: `grouping()`, `groupBy()`.
+@cli_util.option('--query-parameterconflict', required=True, help=u"""The Monitoring Query Language (MQL) expression to use when searching for metric data points to aggregate. The query must specify a metric, statistic, and interval. Supported values for interval: `1m`-`60m` (also `1h`). You can optionally specify dimensions and grouping functions. Supported grouping functions: `grouping()`, `groupBy()`.
 
 Construct your query to avoid exceeding limits on returned data. See [MetricData Reference].
 
@@ -751,7 +751,7 @@ Example: `5m`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'monitoring', 'class': 'list[MetricData]'})
 @cli_util.wrap_exceptions
-def summarize_metrics_data(ctx, from_json, compartment_id, namespace, query, resource_group, start_time, end_time, resolution, compartment_id_in_subtree):
+def summarize_metrics_data(ctx, from_json, compartment_id, namespace, query_parameterconflict, resource_group, start_time, end_time, resolution, compartment_id_in_subtree):
 
     kwargs = {}
     if compartment_id_in_subtree is not None:
@@ -760,7 +760,7 @@ def summarize_metrics_data(ctx, from_json, compartment_id, namespace, query, res
 
     details = {}
     details['namespace'] = namespace
-    details['query'] = query
+    details['query'] = query_parameterconflict
 
     if resource_group is not None:
         details['resourceGroup'] = resource_group
@@ -803,7 +803,7 @@ Example: `oci_computeagent`""")
 @cli_util.option('--resource-group', help=u"""Resource group that you want to use as a filter. The alarm retrieves metric data associated with the specified resource group only. Only one resource group can be applied per metric. A valid resourceGroup value starts with an alphabetical character and includes only alphanumeric characters, periods (.), underscores (_), hyphens (-), and dollar signs ($). Avoid entering confidential information.
 
 Example: `frontend-fleet`""")
-@cli_util.option('--query', help=u"""The Monitoring Query Language (MQL) expression to evaluate for the alarm. The Alarms feature of the Monitoring service interprets results for each returned time series as Boolean values, where zero represents false and a non-zero value represents true. A true value means that the trigger rule condition has been met. The query must specify a metric, statistic, interval, and trigger rule (threshold or absence). Supported values for interval: `1m`-`60m` (also `1h`). You can optionally specify dimensions and grouping functions. Supported grouping functions: `grouping()`, `groupBy()`. For details about Monitoring Query Language (MQL), see [Monitoring Query Language (MQL) Reference]. For available dimensions, review the metric definition for the supported service. See [Supported Services].
+@cli_util.option('--query-parameterconflict', help=u"""The Monitoring Query Language (MQL) expression to evaluate for the alarm. The Alarms feature of the Monitoring service interprets results for each returned time series as Boolean values, where zero represents false and a non-zero value represents true. A true value means that the trigger rule condition has been met. The query must specify a metric, statistic, interval, and trigger rule (threshold or absence). Supported values for interval: `1m`-`60m` (also `1h`). You can optionally specify dimensions and grouping functions. Supported grouping functions: `grouping()`, `groupBy()`. For details about Monitoring Query Language (MQL), see [Monitoring Query Language (MQL) Reference]. For available dimensions, review the metric definition for the supported service. See [Supported Services].
 
 Example of threshold alarm:
 
@@ -858,7 +858,7 @@ Example: `true`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'destinations': {'module': 'monitoring', 'class': 'list[string]'}, 'suppression': {'module': 'monitoring', 'class': 'Suppression'}, 'freeform-tags': {'module': 'monitoring', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'monitoring', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'monitoring', 'class': 'Alarm'})
 @cli_util.wrap_exceptions
-def update_alarm(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, alarm_id, display_name, compartment_id, metric_compartment_id, metric_compartment_id_in_subtree, namespace, resource_group, query, resolution, pending_duration, severity, body, destinations, repeat_notification_duration, suppression, is_enabled, freeform_tags, defined_tags, if_match):
+def update_alarm(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, alarm_id, display_name, compartment_id, metric_compartment_id, metric_compartment_id_in_subtree, namespace, resource_group, query_parameterconflict, resolution, pending_duration, severity, body, destinations, repeat_notification_duration, suppression, is_enabled, freeform_tags, defined_tags, if_match):
 
     if isinstance(alarm_id, six.string_types) and len(alarm_id.strip()) == 0:
         raise click.UsageError('Parameter --alarm-id cannot be whitespace or empty string')
@@ -892,8 +892,8 @@ def update_alarm(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_i
     if resource_group is not None:
         details['resourceGroup'] = resource_group
 
-    if query is not None:
-        details['query'] = query
+    if query_parameterconflict is not None:
+        details['query'] = query_parameterconflict
 
     if resolution is not None:
         details['resolution'] = resolution
