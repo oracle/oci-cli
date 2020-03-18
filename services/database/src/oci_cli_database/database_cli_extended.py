@@ -621,7 +621,7 @@ def db_node_reset(ctx, **kwargs):
     ctx.invoke(database_cli.db_node_action, **kwargs)
 
 
-@cli_util.copy_params_from_generated_command(database_cli.update_db_system, params_to_exclude=['ssh_public_keys', 'version'])
+@cli_util.copy_params_from_generated_command(database_cli.update_db_system, params_to_exclude=['ssh_public_keys', 'version_parameterconflict'])
 @database_cli.db_system_group.command(name='update', help=database_cli.update_db_system.help)
 @cli_util.option('--patch-action', help="""The action to perform on the patch.""")
 @cli_util.option('--patch-id', help="""The OCID of the patch.""")
@@ -641,7 +641,7 @@ def update_db_system_extended(ctx, **kwargs):
     elif patch_id and not patch_action:
         raise click.UsageError('--patch-action is required if --patch-id is specified')
     elif patch_id and patch_action:
-        kwargs['version'] = {
+        kwargs['version_parameterconflict'] = {
             "action": patch_action,
             "patchId": patch_id
         }

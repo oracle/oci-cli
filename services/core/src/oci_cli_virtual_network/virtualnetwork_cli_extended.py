@@ -451,3 +451,12 @@ def update_network_security_group_security_rules_extended(ctx, **kwargs):
     if 'nsg_id' in kwargs:
         kwargs = swap_nsg_id_value(kwargs)
     ctx.invoke(virtualnetwork_cli.update_network_security_group_security_rules, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(virtualnetwork_cli.create_virtual_circuit, params_to_exclude=['region_parameterconflict'])
+@virtualnetwork_cli.virtual_circuit_group.command(name=cli_util.override('create_virtual_circuit.command_name', 'create'), help=virtualnetwork_cli.create_virtual_circuit.help)
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'cross-connect-mappings': {'module': 'core', 'class': 'list[CrossConnectMapping]'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'public-prefixes': {'module': 'core', 'class': 'list[CreateVirtualCircuitPublicPrefixDetails]'}}, output_type={'module': 'core', 'class': 'VirtualCircuit'})
+@cli_util.wrap_exceptions
+def create_virtual_circuit_extended(ctx, **kwargs):
+    ctx.invoke(virtualnetwork_cli.create_virtual_circuit, **kwargs)

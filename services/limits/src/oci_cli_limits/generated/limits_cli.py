@@ -49,6 +49,12 @@ limits_root_group.add_command(service_group)
 limits_root_group.add_command(limit_value_group)
 limits_root_group.add_command(limit_definition_group)
 limits_root_group.add_command(resource_availability_group)
+# oci limits limits --> oci limits
+limits_service_cli.limits_service_group.commands.pop(limits_root_group.name)
+limits_service_cli.limits_service_group.add_command(service_group)
+limits_service_cli.limits_service_group.add_command(limit_value_group)
+limits_service_cli.limits_service_group.add_command(limit_definition_group)
+limits_service_cli.limits_service_group.add_command(resource_availability_group)
 
 
 @resource_availability_group.command(name=cli_util.override('limits.get_resource_availability.command_name', 'get'), help=u"""For a given compartmentId, resource limit name, and scope, returns the following:   - the number of available resources associated with the given limit   - the usage in the selected compartment for the given limit   Note: not all resource limits support this API. If the value is not available, the API will return 404.""")

@@ -74,12 +74,12 @@ cli_util.rename_command(notificationcontrolplane_cli, notificationcontrolplane_c
 
 # Rename the endpoint parameter to --subscription-endpoint since it conflicts with the --endpoint parameter that CLI
 # provides for all its commands
-@cli_util.copy_params_from_generated_command(notificationdataplane_cli.create_subscription, params_to_exclude=['endpoint'])
+@cli_util.copy_params_from_generated_command(notificationdataplane_cli.create_subscription, params_to_exclude=['endpoint_parameterconflict'])
 @notificationdataplane_cli.subscription_group.command(name=cli_util.override('create_subscription.command_name', 'create'), help=notificationdataplane_cli.create_subscription.help)
 @cli_util.option('--subscription-endpoint', required=True, help="""The endpoint of the subscription. Valid values depend on the protocol. For EMAIL, only an email address is valid. For HTTPS, only a PagerDuty URL is valid. A URL cannot exceed 512 characters. Avoid entering confidential information.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'ons', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ons', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'ons', 'class': 'Subscription'})
 @cli_util.wrap_exceptions
 def create_subscription(ctx, subscription_endpoint, **kwargs):
-    kwargs['endpoint'] = subscription_endpoint
+    kwargs['endpoint_parameterconflict'] = subscription_endpoint
     ctx.invoke(notificationdataplane_cli.create_subscription, **kwargs)

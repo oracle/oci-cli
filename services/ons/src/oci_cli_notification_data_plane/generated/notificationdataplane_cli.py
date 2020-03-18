@@ -81,7 +81,7 @@ Transactions Per Minute (TPM) per-tenancy limit for this operation: 60.""")
 Allowed values:   * `CUSTOM_HTTPS`   * `EMAIL`   * `HTTPS` (deprecated; for PagerDuty endpoints, use `PAGERDUTY`)   * `PAGERDUTY`   * `SLACK`   * `ORACLE_FUNCTIONS`
 
 For information about subscription protocols, see [To create a subscription].""")
-@cli_util.option('--endpoint', required=True, help=u"""A locator that corresponds to the subscription protocol. For example, an email address for a subscription that uses the `EMAIL` protocol, or a URL for a subscription that uses an HTTP-based protocol. HTTP-based protocols use URL endpoints that begin with \"http:\" or \"https:\". A URL cannot exceed 512 characters. Avoid entering confidential information.
+@cli_util.option('--endpoint-parameterconflict', required=True, help=u"""A locator that corresponds to the subscription protocol. For example, an email address for a subscription that uses the `EMAIL` protocol, or a URL for a subscription that uses an HTTP-based protocol. HTTP-based protocols use URL endpoints that begin with \"http:\" or \"https:\". A URL cannot exceed 512 characters. Avoid entering confidential information.
 
 For protocol-specific endpoint formats and steps to get or create endpoints, see [To create a subscription].""")
 @cli_util.option('--metadata', help=u"""Metadata for the subscription.""")
@@ -99,7 +99,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'ons', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ons', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'ons', 'class': 'Subscription'})
 @cli_util.wrap_exceptions
-def create_subscription(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, topic_id, compartment_id, protocol, endpoint, metadata, freeform_tags, defined_tags):
+def create_subscription(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, topic_id, compartment_id, protocol, endpoint_parameterconflict, metadata, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -108,7 +108,7 @@ def create_subscription(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     details['topicId'] = topic_id
     details['compartmentId'] = compartment_id
     details['protocol'] = protocol
-    details['endpoint'] = endpoint
+    details['endpoint'] = endpoint_parameterconflict
 
     if metadata is not None:
         details['metadata'] = metadata

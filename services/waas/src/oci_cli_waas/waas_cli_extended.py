@@ -14,14 +14,11 @@ from oci_cli.aliasing import CommandGroupWithAlias
 
 from oci_cli.cli_root import cli
 
-cli.commands.pop(waas_service_cli.waas_service_group.name)
-cli.add_command(waas_cli.waas_root_group)
-
 # oci waas purge-cache purge-cache --waas-policy-id, --resources
 # to
 # oci waas purge-cache --waas-policy-id, --resources
-waas_cli.waas_root_group.commands.pop(waas_cli.purge_cache_group.name)
-waas_cli.waas_root_group.add_command(waas_cli.purge_cache)
+waas_service_cli.waas_service_group.commands.pop(waas_cli.purge_cache_group.name)
+waas_service_cli.waas_service_group.add_command(waas_cli.purge_cache)
 
 # oci waas custom-protection-rule update-waas-policy --update-custom-protection-rules-details, --waas-policy-id
 # to
@@ -62,7 +59,7 @@ cli_util.rename_command(waas_cli, waas_cli.waas_policy_group, waas_policy_custom
 
 
 # Rename caching-rules to caching-rule
-cli_util.rename_command(cli, waas_cli.waas_root_group, waas_cli.caching_rules_group, 'caching-rule')
+cli_util.rename_command(cli, waas_service_cli.waas_service_group, waas_cli.caching_rules_group, 'caching-rule')
 
 
 # Add update-address-list to certificate group
