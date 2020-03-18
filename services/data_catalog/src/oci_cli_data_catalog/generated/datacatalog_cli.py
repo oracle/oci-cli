@@ -4652,7 +4652,7 @@ def parse_connection(ctx, from_json, catalog_id, data_asset_key, connection_deta
 
 @search_result_group.command(name=cli_util.override('data_catalog.search_criteria.command_name', 'search-criteria'), help=u"""Returns a list of search results within a data catalog.""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
-@cli_util.option('--query', help=u"""Search query dsl that defines the query components including fields and predicates.""")
+@cli_util.option('--query-parameterconflict', help=u"""Search query dsl that defines the query components including fields and predicates.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given. The match is not case sensitive.""")
 @cli_util.option('--name', help=u"""Immutable resource name.""")
 @cli_util.option('--lifecycle-state', help=u"""A filter to return only resources that match the specified lifecycle state. The value is case insensitive.""")
@@ -4666,7 +4666,7 @@ def parse_connection(ctx, from_json, catalog_id, data_asset_key, connection_deta
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_catalog', 'class': 'SearchResultCollection'})
 @cli_util.wrap_exceptions
-def search_criteria(ctx, from_json, catalog_id, query, display_name, name, lifecycle_state, timeout, sort_by, sort_order, limit, page):
+def search_criteria(ctx, from_json, catalog_id, query_parameterconflict, display_name, name, lifecycle_state, timeout, sort_by, sort_order, limit, page):
 
     if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
@@ -4692,8 +4692,8 @@ def search_criteria(ctx, from_json, catalog_id, query, display_name, name, lifec
 
     details = {}
 
-    if query is not None:
-        details['query'] = query
+    if query_parameterconflict is not None:
+        details['query'] = query_parameterconflict
 
     client = cli_util.build_client('data_catalog', ctx)
     result = client.search_criteria(
