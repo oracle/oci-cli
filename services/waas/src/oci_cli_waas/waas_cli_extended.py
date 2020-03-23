@@ -12,8 +12,6 @@ import oci  # noqa: F401
 from oci_cli import json_skeleton_utils
 from oci_cli.aliasing import CommandGroupWithAlias
 
-from oci_cli.cli_root import cli
-
 # oci waas purge-cache purge-cache --waas-policy-id, --resources
 # to
 # oci waas purge-cache --waas-policy-id, --resources
@@ -26,6 +24,11 @@ waas_service_cli.waas_service_group.add_command(waas_cli.purge_cache)
 # waas_cli.waas_root_group.commands.pop(waas_cli.custom_protection_rule_setting_group.name)
 
 waas_cli.custom_protection_rule_group.commands.pop(waas_cli.update_waas_policy_custom_protection_rules.name)
+
+# removing oci waas policy-config update-policy-config-sticky-cookie-load-balancing-method, update-policy-config-round-robin-load-balancing-method, policy-config update-policy-config-ip-hash-load-balancing-method
+waas_cli.policy_config_group.commands.pop(waas_cli.update_policy_config_sticky_cookie_load_balancing_method.name)
+waas_cli.policy_config_group.commands.pop(waas_cli.update_policy_config_round_robin_load_balancing_method.name)
+waas_cli.policy_config_group.commands.pop(waas_cli.update_policy_config_ip_hash_load_balancing_method.name)
 
 
 @cli_util.copy_params_from_generated_command(waas_cli.update_waas_policy_custom_protection_rules, params_to_exclude=['update_custom_protection_rules_details'])
@@ -56,10 +59,6 @@ waas_policy_custom_protection_rule_group.add_command(waas_cli.list_waas_policy_c
 cli_util.rename_command(waas_cli, waas_policy_custom_protection_rule_group, waas_cli.list_waas_policy_custom_protection_rules, 'list')
 waas_cli.waas_policy_group.add_command(waas_policy_custom_protection_rule_group)
 cli_util.rename_command(waas_cli, waas_cli.waas_policy_group, waas_policy_custom_protection_rule_group, "custom-protection-rule")
-
-
-# Rename caching-rules to caching-rule
-cli_util.rename_command(cli, waas_service_cli.waas_service_group, waas_cli.caching_rules_group, 'caching-rule')
 
 
 # Add update-address-list to certificate group

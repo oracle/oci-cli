@@ -163,18 +163,20 @@ def create_cluster(ctx, **kwargs):
                                                          'class': 'list[NodePoolPlacementConfigDetails]'}})
 @cli_util.wrap_exceptions
 def create_node_pool(ctx, **kwargs):
-    kwargs['node_config_details'] = {}
     if 'size' in kwargs and kwargs['size'] is not None:
+        kwargs['node_config_details'] = {}
         kwargs['node_config_details']['size'] = kwargs['size']
     kwargs.pop('size', None)
 
     if 'placement_configs' in kwargs and kwargs['placement_configs'] is not None:
+        if 'node_config_details' not in kwargs:
+            kwargs['node_config_details'] = {}
         kwargs['node_config_details']['placementConfigs'] = cli_util.parse_json_parameter("placement_configs",
                                                                                           kwargs['placement_configs'])
     kwargs.pop('placement_configs', None)
 
-    kwargs['node_source_details'] = {}
     if 'node_image_id' in kwargs and kwargs['node_image_id'] is not None:
+        kwargs['node_source_details'] = {}
         kwargs['node_source_details']['sourceType'] = 'IMAGE'
         kwargs['node_source_details']['imageId'] = kwargs['node_image_id']
     kwargs.pop('node_image_id', None)
@@ -201,12 +203,14 @@ def create_node_pool(ctx, **kwargs):
                                                          'class': 'list[NodePoolPlacementConfigDetails]'}})
 @cli_util.wrap_exceptions
 def update_node_pool(ctx, **kwargs):
-    kwargs['node_config_details'] = {}
     if 'size' in kwargs and kwargs['size'] is not None:
+        kwargs['node_config_details'] = {}
         kwargs['node_config_details']['size'] = kwargs['size']
     kwargs.pop('size', None)
 
     if 'placement_configs' in kwargs and kwargs['placement_configs'] is not None:
+        if 'node_config_details' not in kwargs:
+            kwargs['node_config_details'] = {}
         kwargs['node_config_details']['placementConfigs'] = cli_util.parse_json_parameter("placement_configs",
                                                                                           kwargs['placement_configs'])
     kwargs.pop('placement_configs', None)

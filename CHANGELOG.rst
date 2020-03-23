@@ -6,6 +6,37 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.9.8 - 2020-03-24
+------------------
+Added
+~~~~~
+
+* Support for conditions in the JavaScript Challenge
+
+  * ``oci waas js-challenge update``
+
+* Support for new settings in Policy Config
+
+  * ``oci waas policy-config update --load-balancing-method``
+  * ``oci waas policy-config update --websocket-path-prefixes``
+  * ``oci waas policy-config update --health-checks``
+
+* Support for exclusions in Custom Protection Rules
+
+  * ``oci waas custom-protection-rule list``
+
+* Support for IP Address List in IP Whitelist
+
+  * ``oci waas whitelist update``
+
+* Support for WAF configuration for existing OCE instances
+
+  * ``oci oce oce-instance update --waf-primary-domain``
+
+* Support for Exacs database creation from backup
+
+  * ``oci db database create-database-from-backup``
+
 2.9.7 - 2020-03-17
 ------------------
 Added
@@ -62,7 +93,7 @@ Added
   * ``oci db system update --shape``
 
 * Support for generating CPE Configuration for customer to download in the Networking service
- 
+
   * ``oci network cpe get-cpe-device-config-content``
   * ``oci network cpe-device-shape list``
   * ``oci network cpe-device-shape-detail get-cpe-device-shape``
@@ -81,7 +112,7 @@ Changed
 * The following for the Data Transfer service
 
   * Notifications setup
-  
+
     * ``oci dts job create`` has a new option called ``--setup-notificaitons``
     * ``oci dts appliance request`` has a new option called ``--setup-notificaitons``
 
@@ -91,7 +122,7 @@ Changed
 
 * Upgraded dependencies for arrow, jmespath, python-dateutil, pytz, six.
 
-Fixed 
+Fixed
 ~~~~~
 
 * Bug found in DB system patch command for Database Service. (`Issue 223 <https://github.com/oracle/oci-cli/issues/223>`__)
@@ -105,7 +136,7 @@ Added
 ~~~~~
 
 * Support for OAuth 2.0 Client Credentials features as a part of the Identity User Service
- 
+
   * ``oci iam user oauth2-credential create | delete | list | update``
   * ``oci iam user update-user-capabilities --can-use-o-auth2-client-credentials``
 
@@ -123,7 +154,7 @@ Added
   * ``oci iam network-sources create | delete | get | list | update``
 
 * Support for Functions as a subscription of the Notifications service
- 
+
   * ``oci ons subscription create --protocol ORACLE_FUNCTIONS``
 
 
@@ -228,8 +259,8 @@ Changed
 Added
 ~~~~~
 
-* Support for getting DRG redundancy status in the Networking service 
- 
+* Support for getting DRG redundancy status in the Networking service
+
   * ``oci network drg-redundancy-status get --drg-id``
 
 * Support for cloning autonomous databases from backups in the Database service
@@ -243,13 +274,13 @@ Added
 ~~~~~
 
 * Support for description field to Route rule and Security rules.
- 
+
   * ``oci route-table create``
   * ``oci route-table update``
   * ``oci security-list create``
   * ``oci security-list update``
 
-* Support for create, get, delete, list commands for db-home command 
+* Support for create, get, delete, list commands for db-home command
 
   * ``oci db db-home create --db-system-id <Db System OCID> --db-version <Database Version>``
   * ``oci db db-home get --db-home-id <Db Home OCID>``
@@ -439,7 +470,7 @@ Added
 * Support for Four Byte ASN support for Fast-Connect.
 
 * Ability to choose fault domains when creating instance pools.
- 
+
   * ``oci compute-management instance-pool create``
 
 Fixed
@@ -453,7 +484,7 @@ Added
 * Support to register and deregister an autonomous data warehouse, or autonomous transaction processing, database with Data Safe.
 
   * ``oci db autonomous-database data-safe register --autonomous-database-id <autonomous database OCID>``
-  * ``oci db autonomous-database data-safe deregister --autonomous-database-id <autonomous database OCID>`` 
+  * ``oci db autonomous-database data-safe deregister --autonomous-database-id <autonomous database OCID>``
 
 * Add capability to redirect an input HTTP/HTTPS request URI to a different URI in Load Balancer service.
 
@@ -479,7 +510,7 @@ Added
 
 Changed
 ~~~~~~~
-* Removed deprecated ``bmcs`` entry point for CLI. Now only ``oci`` is supported.  
+* Removed deprecated ``bmcs`` entry point for CLI. Now only ``oci`` is supported.
 
 2.6.11 - 2019-11-5
 -------------------
@@ -637,7 +668,7 @@ Added
 
   * ``oci dns zone migrate-from-dynect``
 * Support for resource principal authorization type, ``--auth resource_principal``.
-* New field added to Tag Default object ``isRequired`` to designate that a value must be provided for the tag upon resource creation. 
+* New field added to Tag Default object ``isRequired`` to designate that a value must be provided for the tag upon resource creation.
 * New API ``assembleEffectiveTagSet`` added to conveniently get all tags that must be applied to a resource in a given compartment.
 * Add new API to list work requests for tagging, as well as APIs to list logs and errors for those work requests.
 
@@ -772,7 +803,7 @@ Added
   * ``oci db autonomous-exadata-infrastructure update --nsg-ids``
 
 * Support for Oracle Content and Experience service.
- 
+
   * ``oci oce``
 
 * New read-only `system-tags` parameter for Load Balancer object.
@@ -1014,9 +1045,9 @@ Added
 
 Changed
 ~~~~~~~
-* Examples have been distributed into subdirectories under the services directory. 
+* Examples have been distributed into subdirectories under the services directory.
 
-  * For example, database examples will now be found under `services/database/examples_and_test_scripts` and so on for other services. 
+  * For example, database examples will now be found under `services/database/examples_and_test_scripts` and so on for other services.
   * `services/core/examples_and_test_scripts` will contain examples for compute, networking, block volume, etc.
 
 
@@ -1078,7 +1109,7 @@ Added
 
   * ``oci dns steering-policy change-compartment --steering-policy-id --compartment-id``
 
-* Support for moving Load Balancers between compartments 
+* Support for moving Load Balancers between compartments
 
   * ``oci lb load-balancer change-compartment``
 
@@ -1184,7 +1215,7 @@ Added
 
 Changed
 ~~~~~~~
-* Updated the Oracle Streaming Service' regional endpoints template for new regions. 
+* Updated the Oracle Streaming Service' regional endpoints template for new regions.
 
 2.5.16 - 2019-06-25
 -------------------
@@ -1423,9 +1454,9 @@ Fixed
 ------------------
 Fixed
 ~~~~~~
-* Fixed inconsistencies in SDK and CLI for Compute's create app catalog subscription. All the options are made optional to make it consistent with the SDK. 
+* Fixed inconsistencies in SDK and CLI for Compute's create app catalog subscription. All the options are made optional to make it consistent with the SDK.
 
-* Use of ``--region`` option with instance principal auth 
+* Use of ``--region`` option with instance principal auth
 
 2.5.6 - 2019-04-02
 ------------------
@@ -1656,10 +1687,10 @@ Added
 
 * Support for Health Check Service (``oci health-checks``)
 
-  * Ability to create and manage http health check 
-  * Ability to create and manage ping health check 
+  * Ability to create and manage http health check
+  * Ability to create and manage ping health check
   * Ability to list available vantage points
-  * Ability to create on demand http probe 
+  * Ability to create on demand http probe
 
 * Support for tagging Approved Senders in the Email Service.
 
@@ -2372,9 +2403,9 @@ Fixed
 
 Added
 ~~~~~
-- Subcommands to 'bmcs compute image import / export' to allow specifying 
+- Subcommands to 'bmcs compute image import / export' to allow specifying
   source / destination in multiple formats.
-- Secondary IP operations ('bmcs network private-ip', 'bmcs network vnic 
+- Secondary IP operations ('bmcs network private-ip', 'bmcs network vnic
   assign/unassign-private-ip').
 - '-h' alias for global '--help' option (https://github.com/oracle/bmcs-cli/issues/6)
 
@@ -2386,7 +2417,7 @@ Fixed
 Changed
 ~~~~~~~
 - Upgraded cryptography dependency to 1.8.2 (https://github.com/oracle/bmcs-cli/issues/5)
-- Deprecated --image-source-details param of 'bmcs compute image create' in 
+- Deprecated --image-source-details param of 'bmcs compute image create' in
   favor of subcommands (see Added section).
 
 2.4.5 - 2017-07-20
