@@ -20,7 +20,7 @@ def redirect_root_group():
     pass
 
 
-@click.command(cli_util.override('redirect.http_redirect_group.command_name', 'http-redirect'), cls=CommandGroupWithAlias, help="""The details of a HTTP Redirect configuration to allow redirecting HTTP traffic to allow redirecting HTTP traffic from a request domain to a new target.
+@click.command(cli_util.override('redirect.http_redirect_group.command_name', 'http-redirect'), cls=CommandGroupWithAlias, help="""The details of a HTTP Redirect configuration to allow redirecting HTTP traffic from a request domain to a new target.
 
 **Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
 @cli_util.help_option_group
@@ -68,7 +68,7 @@ def change_http_redirect_compartment(ctx, from_json, http_redirect_id, compartme
 @cli_util.option('--domain', required=True, help=u"""The domain from which traffic will be redirected.""")
 @cli_util.option('--target', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The redirect target object including all the redirect data.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""The user-friendly name of the HTTP Redirect. The name can be changed and does not need to be unique.""")
-@cli_util.option('--response-code', type=click.INT, help=u"""The response code returned for the redirect to the client. reference - https://tools.ietf.org/html/rfc7231#section-6.4""")
+@cli_util.option('--response-code', type=click.INT, help=u"""The response code returned for the redirect to the client. For more information, see [RFC 7231].""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -210,7 +210,7 @@ def get_http_redirect(ctx, from_json, http_redirect_id):
 
 @http_redirect_group.command(name=cli_util.override('redirect.list_http_redirects.command_name', 'list'), help=u"""Gets a list of HTTP Redirects.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment. This number is generated when the compartment is created.""")
-@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated call. In unspecified, defaults to `10`.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated call. If unspecified, defaults to `10`.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous paginated call.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The value of the sorting direction of resources in a paginated 'List' call. If unspecified, defaults to `DESC`.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["id", "domain", "target", "displayName"]), help=u"""The field to sort the results of the List query.""")
@@ -281,7 +281,7 @@ def list_http_redirects(ctx, from_json, all_pages, page_size, compartment_id, li
 @cli_util.option('--http-redirect-id', required=True, help=u"""The [OCID] of the HTTP Redirect.""")
 @cli_util.option('--display-name', help=u"""The user-friendly name of the HTTP Redirect. The name can be changed and does not need to be unique.""")
 @cli_util.option('--target', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The redirect target object including all the redirect data.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--response-code', type=click.INT, help=u"""The response code returned for the redirect to the client. reference - https://tools.ietf.org/html/rfc7231#section-6.4""")
+@cli_util.option('--response-code', type=click.INT, help=u"""The response code returned for the redirect to the client. For more information, see [RFC 7231].""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)

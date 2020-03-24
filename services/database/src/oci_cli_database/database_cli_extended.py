@@ -19,6 +19,8 @@ cli_util.rename_command(database_cli, database_cli.db_root_group, database_cli.d
 cli_util.rename_command(database_cli, database_cli.db_root_group, database_cli.db_version_group, "version")
 cli_util.rename_command(database_cli, database_cli.db_root_group, database_cli.patch_history_entry_group, "patch-history")
 
+cli_util.rename_command(database_cli, database_cli.database_group, database_cli.create_database_create_database_from_backup, "create-database-from-backup")
+
 database_cli.patch_group.commands.pop("get-db-system")
 database_cli.patch_group.commands.pop("list-db-system")
 database_cli.patch_history_entry_group.commands.pop("get-db-system")
@@ -59,6 +61,10 @@ cli_util.rename_command(database_cli, database_cli.autonomous_database_wallet_gr
 cli_util.rename_command(database_cli, database_cli.autonomous_database_wallet_group, database_cli.get_autonomous_database_regional_wallet, "get-regional-wallet-metadata")
 cli_util.rename_command(database_cli, database_cli.autonomous_database_wallet_group, database_cli.update_autonomous_database_wallet, "rotate")
 cli_util.rename_command(database_cli, database_cli.autonomous_database_wallet_group, database_cli.update_autonomous_database_regional_wallet, "rotate-regional-wallet")
+
+# Exadata shape prefix.
+# Example for Exadata shapes: Exadata.Quarter1.84, Exadata.Half1.168, ExadataCC.Base3.48, ExadataCC.Quarter3.100
+EXADATA_SHAPE_PREFIX = 'Exadata'
 
 
 @cli_util.copy_params_from_generated_command(database_cli.get_autonomous_database_wallet, params_to_exclude=['autonomous_database_id'])
@@ -512,9 +518,8 @@ def delete_database(ctx, **kwargs):
     get_db_system_response = client.get_db_system(db_system_id)
     db_system_shape = get_db_system_response.data.shape
     response = client.list_databases(db_home_id=db_home_id, compartment_id=compartment_id)
-
     # For Exadata systems delete database is called
-    if "Exadata." in db_system_shape:
+    if EXADATA_SHAPE_PREFIX in db_system_shape:
         response = client.delete_database(kwargs['database_id'])
     else:
         if len(response.data) != 1:
@@ -876,7 +881,7 @@ def create_db_home(ctx, **kwargs):
     get_db_system_response = client.get_db_system(kwargs['db_system_id'])
     db_system_shape = get_db_system_response.data.shape
     # For Exadata systems create db home is called
-    if "Exadata." in db_system_shape:
+    if EXADATA_SHAPE_PREFIX in db_system_shape:
         response = client.create_db_home(db_home_details)
         cli_util.render_response(response, ctx)
     else:
