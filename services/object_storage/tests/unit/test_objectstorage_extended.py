@@ -68,3 +68,70 @@ class TestObjectStorage(unittest.TestCase):
 
         print(result.output)
         assert "Missing option(s)" in result.output
+
+    def test_create_replication_policy(self):
+        result = util.invoke_command(['os', 'replication', 'create-replication-policy'])
+        assert "Error: Missing option(s)" in result.output
+        assert "bucket-name" in result.output
+        assert "destination-bucket" in result.output
+        assert "destination-region" in result.output
+        assert "name" in result.output
+
+    def test_retention_rule_params(self):
+        """ Checks whether the time-amount and time-unit params are present for the relevant retention-rule commands """
+        # Sorted lists of commands that should support --time-amount and --time-unit
+        retention_duration_cmd_list = sorted([
+            'retention-rule create', 'retention-rule update'
+        ])
+
+        retention_time_amount_param_results = {}
+        retention_time_unit_param_results = {}
+        retention_duration_param_results = {}
+
+        commands = oci_cli.cli_util.collect_commands(oci_cli.cli_root.cli.commands.get('os'))
+        for command in commands:
+            key = command.parent.name + ' ' + command.name
+            if key in retention_duration_cmd_list:
+                for param in command.params:
+                    if '--time-amount' in param.opts:
+                        retention_time_amount_param_results[key] = True
+                    if '--time-unit' in param.opts:
+                        retention_time_unit_param_results[key] = True
+                    if '--duration' in param.opts:
+                        retention_duration_param_results[key] = True
+        assert sorted(list(retention_time_amount_param_results.keys())) == retention_duration_cmd_list
+        assert sorted(list(retention_time_unit_param_results.keys())) == retention_duration_cmd_list
+        assert len(retention_duration_param_results) == 0
+
+    def test_create_retention_rule(self):
+        result = util.invoke_command(['os', 'retention-rule', 'create'])
+        assert "Error: Missing option(s)" in result.output
+        assert "--bucket-name" in result.output
+
+        result = util.invoke_command(['os', 'retention-rule', 'create', '--bucket-name', 'b001', '--namespace-name', 'n001', '--time-amount', '1'])
+        assert "UsageError: Parameter --time-unit is required" in result.output
+
+        result = util.invoke_command(['os', 'retention-rule', 'create', '--bucket-name', 'b001', '--namespace-name', 'n001', '--time-amount', '1', '--time-unit', 'INVALID_UNIT'])
+        assert "Error: Invalid value" in result.output
+        assert "invalid choice: INVALID_UNIT" in result.output
+
+    def test_update_retention_rule(self):
+        result = util.invoke_command(['os', 'retention-rule', 'update'])
+        assert "Error: Missing option(s)" in result.output
+        assert "--bucket-name" in result.output
+        assert "--retention-rule-id" in result.output
+
+        result = util.invoke_command(['os', 'retention-rule', 'update', '--bucket-name', 'b001', '--namespace-name', 'n001', '--retention-rule-id', 'r001', '--time-amount', '1'])
+        assert "UsageError: Parameter --time-unit is required" in result.output
+
+        result = util.invoke_command(['os', 'retention-rule', 'update', '--bucket-name', 'b001', '--namespace-name', 'n001', '--retention-rule-id', 'r001', '--time-amount', '1', '--time-unit', 'INVALID_UNIT'])
+        assert "Error: Invalid value" in result.output
+        assert "invalid choice: INVALID_UNIT" in result.output
+
+        result = util.invoke_command(['os', 'retention-rule', 'update', '--bucket-name', 'b001', '--namespace-name', 'n001', '--retention-rule-id', 'r001', '--time-amount', 'abc'])
+        assert "BadParameter:" in result.output
+        assert "is not a valid integer" in result.output
+
+        result = util.invoke_command(['os', 'retention-rule', 'update', '--bucket-name', 'b001', '--namespace-name', 'n001', '--retention-rule-id', 'r001', '--time-rule-locked', 'abc'])
+        assert "BadParameter:" in result.output
+        assert "is not in a supported datetime format" in result.output

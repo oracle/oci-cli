@@ -645,6 +645,10 @@ def list_runs(ctx, from_json, all_pages, page_size, compartment_id, application_
 
 @application_group.command(name=cli_util.override('data_flow.update_application.command_name', 'update'), help=u"""Updates an application using an `applicationId`.""")
 @cli_util.option('--application-id', required=True, help=u"""The unique ID for an application.""")
+@cli_util.option('--class-name', help=u"""The class for the application.""")
+@cli_util.option('--file-uri', help=u"""An Oracle Cloud Infrastructure URI of the file containing the application to execute. See https://docs.cloud.oracle.com/iaas/Content/API/SDKDocs/hdfsconnector.htm#uriformat""")
+@cli_util.option('--spark-version', help=u"""The Spark version utilized to run the application.""")
+@cli_util.option('--language', type=custom_types.CliCaseInsensitiveChoice(["SCALA", "JAVA", "PYTHON", "SQL"]), help=u"""The Spark language.""")
 @cli_util.option('--arguments', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The arguments passed to the running application as command line arguments.  An argument is either a plain text or a placeholder. Placeholders are replaced using values from the parameters map.  Each placeholder specified must be represented in the parameters map else the request (POST or PUT) will fail with a HTTP 400 status code.  Placeholders are specified as `Service Api Spec`, where `name` is the name of the parameter. Example:  `[ \"--input\", \"${input_file}\", \"--name\", \"John Doe\" ]` If \"input_file\" has a value of \"mydata.xml\", then the value above will be translated to `--input mydata.xml --name \"John Doe\"`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The Spark configuration passed to the running process. See https://spark.apache.org/docs/latest/configuration.html#available-properties Example: { \"spark.app.name\" : \"My App Name\", \"spark.shuffle.io.maxRetries\" : \"4\" } Note: Not all Spark properties are permitted to be set.  Attempting to set a property that is not allowed to be overwritten will cause a 400 status to be returned.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -669,7 +673,7 @@ This option is a JSON list with items of type ApplicationParameter.  For documen
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'arguments': {'module': 'data_flow', 'class': 'list[string]'}, 'configuration': {'module': 'data_flow', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'data_flow', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'data_flow', 'class': 'dict(str, string)'}, 'parameters': {'module': 'data_flow', 'class': 'list[ApplicationParameter]'}}, output_type={'module': 'data_flow', 'class': 'Application'})
 @cli_util.wrap_exceptions
-def update_application(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, application_id, arguments, configuration, defined_tags, description, display_name, driver_shape, executor_shape, freeform_tags, logs_bucket_uri, num_executors, parameters, warehouse_bucket_uri, if_match):
+def update_application(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, application_id, class_name, file_uri, spark_version, language, arguments, configuration, defined_tags, description, display_name, driver_shape, executor_shape, freeform_tags, logs_bucket_uri, num_executors, parameters, warehouse_bucket_uri, if_match):
 
     if isinstance(application_id, six.string_types) and len(application_id.strip()) == 0:
         raise click.UsageError('Parameter --application-id cannot be whitespace or empty string')
@@ -684,6 +688,18 @@ def update_application(ctx, from_json, force, wait_for_state, max_wait_seconds, 
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     details = {}
+
+    if class_name is not None:
+        details['className'] = class_name
+
+    if file_uri is not None:
+        details['fileUri'] = file_uri
+
+    if spark_version is not None:
+        details['sparkVersion'] = spark_version
+
+    if language is not None:
+        details['language'] = language
 
     if arguments is not None:
         details['arguments'] = cli_util.parse_json_parameter("arguments", arguments)

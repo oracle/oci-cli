@@ -122,6 +122,18 @@ def create_transfer_appliance_extended(ctx, **kwargs):
         setup_import_notifications(ctx, result.data.label)
 
 
+def get_transfer_appliance_helper(ctx, from_json, id, transfer_appliance_label):
+
+    kwargs = {}
+    client = cli_util.build_client('transfer_appliance', ctx)
+    result = client.get_transfer_appliance(
+        id=id,
+        transfer_appliance_label=transfer_appliance_label,
+        **kwargs
+    )
+    return result
+
+
 @cli_util.copy_params_from_generated_command(transferappliance_cli.get_transfer_appliance, params_to_exclude=['id', 'transfer_appliance_label'])
 @transferappliance_cli.transfer_appliance_root_group.command(name=transferappliance_cli.get_transfer_appliance.name, help=transferappliance_cli.get_transfer_appliance.help)
 @cli_util.option('--job-id', required=True, help=u"""OCID of the Transfer Job""")

@@ -321,6 +321,31 @@ def test_bucket_options(vcr_fixture, runner, config_file, config_profile, test_i
     validate_response(result)
 
 
+def test_create_replication_policy(vcr_fixture, runner, config_file, config_profile, test_id):
+    source_bucket = 'cli_test_create_replication_policy_source_' + test_id
+    dest_bucket = 'cli_test_create_replication_policy_dest_' + test_id
+
+    # bucket create
+    result = invoke(runner, config_file, config_profile, ['bucket', 'create', '-ns', util.NAMESPACE, '--compartment-id', util.COMPARTMENT_ID, '--name', source_bucket, '--public-access-type', 'ObjectRead'])
+    validate_response(result)
+    # bucket create
+    result = invoke(runner, config_file, config_profile, ['bucket', 'create', '-ns', util.NAMESPACE, '--compartment-id', util.COMPARTMENT_ID, '--name', dest_bucket, '--public-access-type', 'ObjectRead'])
+    validate_response(result)
+    # create policy
+    result = invoke(runner, config_file, config_profile, ['replication', 'create-replication-policy', '-ns', util.NAMESPACE, '--name', 'replication-test-policy', '-bn', source_bucket, '--destination-bucket', dest_bucket, '--destination-region', util.OS_REPLICATION_DESTINATION_REGION])
+    validate_response(result)
+    response = json.loads(result.output)
+    replication_id = response['data']['id']
+    # delete policy
+    result = invoke(runner, config_file, config_profile, ['replication', 'delete-replication-policy', '-ns', util.NAMESPACE, '--replication-id', replication_id, '--bucket-name', source_bucket, '--force'])
+    validate_response(result)
+    # bucket delete
+    result = invoke(runner, config_file, config_profile, ['bucket', 'delete', '-ns', util.NAMESPACE, '--name', source_bucket, '--force'])
+    validate_response(result)
+    result = invoke(runner, config_file, config_profile, ['bucket', 'delete', '-ns', util.NAMESPACE, '--name', dest_bucket, '--force'])
+    validate_response(result)
+
+
 @util.skip_while_rerecording
 def test_object_put_confirmation_prompt(runner, config_file, config_profile, content_input_file, test_id, multipart):
     bucket_name = util.bucket_regional_prefix() + 'CliReadOnlyTestBucket7'

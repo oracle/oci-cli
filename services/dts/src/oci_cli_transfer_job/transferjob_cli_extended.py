@@ -9,10 +9,12 @@ import sys
 from oci_cli import cli_util
 from oci_cli import json_skeleton_utils
 from oci_cli import custom_types
+
+from services.dts.src.oci_cli_appliance_export_job.applianceexportjob_cli_extended import create_os_client
 from services.dts.src.oci_cli_dts.cli_utils import setup_notifications_helper
+from services.dts.src.oci_cli_transfer_appliance.transferappliance_cli_extended import get_transfer_appliance_helper
 from services.dts.src.oci_cli_transfer_job.generated import transferjob_cli
 from services.dts.src.oci_cli_dts.physicalappliance_cli_extended import validate_upload_user_credentials
-
 
 close_exclude_list = ['id', 'lifecycle_state', 'device_type', 'if_match', 'wait_for_state', 'max_wait_seconds', 'wait_interval_seconds', 'freeform_tags', 'defined_tags', 'display_name', 'force']
 
@@ -31,6 +33,10 @@ def close_transfer_job_extended(ctx, **kwargs):
     ctx.invoke(transferjob_cli.update_transfer_job, **kwargs)
 
 
+def create_transfer_job_client(ctx):
+    return cli_util.build_client('transfer_job', ctx)
+
+
 @cli_util.copy_params_from_generated_command(transferjob_cli.get_transfer_job, params_to_exclude=['id'])
 @transferjob_cli.transfer_job_root_group.command(name='verify-upload-user-credentials', help="""Verifies the transfer disk or appliance upload user credentials.""")
 @cli_util.option('--bucket', required=True, help=u"""Upload bucket name""")
@@ -39,6 +45,18 @@ def close_transfer_job_extended(ctx, **kwargs):
 @cli_util.wrap_exceptions
 def verify_upload_user_credentials_extended(ctx, from_json, bucket, **kwargs):
     validate_upload_user_credentials(ctx, bucket)
+
+
+def validate_bucket_belongs_to_compartment(ctx, bucket, compartment_id):
+    os_client = create_os_client(ctx)
+    namespace = os_client.get_namespace().data
+
+    bucket_obj = os_client.get_bucket(
+        namespace_name=namespace,
+        bucket_name=bucket
+    )
+    if bucket_obj.data.compartment_id != compartment_id:
+        raise oci.exceptions.ClientError("The bucket {0} does not belong to compartment {1}".format(bucket, compartment_id))
 
 
 @cli_util.copy_params_from_generated_command(transferjob_cli.create_transfer_job, params_to_exclude=['compartment_id', "upload_bucket_name", "display_name", "device_type", "freeform_tags", "defined_tags"])
@@ -50,12 +68,14 @@ def verify_upload_user_credentials_extended(ctx, from_json, bucket, **kwargs):
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Usage of predefined tag keys. These predefined keys are scoped to namespaces. Example: `{\"foo-namespace\": {\"bar-key\": \"foo-value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--setup-notifications', is_flag=True, help=u"""Setup notifications for the transfer appliance""")
+@cli_util.option('--skip-upload-user-check', required=False, is_flag=True,
+                 help=u"""Skip checking whether the upload user has the right credentials""")
 @json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'dts', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'dts', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'dts', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'dts', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'dts', 'class': 'TransferJob'})
 @cli_util.wrap_exceptions
-def create_transfer_job_extended(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, bucket, display_name, device_type, freeform_tags, defined_tags, setup_notifications):
+def create_transfer_job_extended(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, bucket, display_name, device_type, freeform_tags, defined_tags, setup_notifications, skip_upload_user_check):
 
     # Copied the generated command because the result is needed to setup notifications
     kwargs = {}
@@ -82,6 +102,10 @@ def create_transfer_job_extended(ctx, from_json, wait_for_state, max_wait_second
         details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     client = cli_util.build_client('transfer_job', ctx)
+    if not skip_upload_user_check:
+        validate_bucket_belongs_to_compartment(ctx, bucket, compartment_id)
+        validate_upload_user_credentials(ctx, bucket)
+
     result = client.create_transfer_job(
         create_transfer_job_details=details,
         **kwargs
@@ -115,6 +139,34 @@ def create_transfer_job_extended(ctx, from_json, wait_for_state, max_wait_second
         setup_import_notifications(ctx, result.data.id)
 
 
+def get_transfer_job_helper(ctx, from_json, id):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('transfer_job', ctx)
+    result = client.get_transfer_job(
+        id=id,
+        **kwargs
+    )
+    return result
+
+
+def show_transfer_job_with_details(ctx, **kwargs):
+    result = get_transfer_job_helper(ctx, kwargs['from_json'], kwargs['id'])
+    transfer_job_obj = result.data
+    # Embed appliance details in response_data
+    appliances_list = []
+    if transfer_job_obj.device_type == "APPLIANCE":
+        if transfer_job_obj.attached_transfer_appliance_labels:
+            for each_appliance_lbl in transfer_job_obj.attached_transfer_appliance_labels:
+                appliance_obj = get_transfer_appliance_helper(ctx, kwargs['from_json'], kwargs['id'], each_appliance_lbl).data
+                appliances_list.append({'label': each_appliance_lbl, 'serialNumber': appliance_obj.serial_number,
+                                        'status': appliance_obj.lifecycle_state, 'uploadStatusLogURL': appliance_obj.upload_status_log_uri})
+
+    result.data.attached_transfer_appliance_labels = appliances_list
+    return result
+
+
 @cli_util.copy_params_from_generated_command(transferjob_cli.get_transfer_job, params_to_exclude=['id'])
 @transferjob_cli.transfer_job_root_group.command(name=transferjob_cli.get_transfer_job.name, help=transferjob_cli.get_transfer_job.help)
 @cli_util.option('--job-id', required=True, help=u"""OCID of the Transfer Job""")
@@ -125,7 +177,10 @@ def show_transfer_job_extended(ctx, **kwargs):
     if 'job_id' in kwargs:
         kwargs['id'] = kwargs['job_id']
         kwargs.pop('job_id')
-    ctx.invoke(transferjob_cli.get_transfer_job, **kwargs)
+
+    result = show_transfer_job_with_details(ctx, **kwargs)
+
+    cli_util.render_response(result, ctx)
 
 
 update_exclude_list = ['id', 'lifecycle_state', 'device_type', 'if_match', 'wait_for_state', 'max_wait_seconds', 'wait_interval_seconds', "freeform_tags", "defined_tags"]

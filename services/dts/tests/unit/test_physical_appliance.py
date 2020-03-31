@@ -21,8 +21,10 @@ from services.dts.src.oci_cli_dts.appliance_cert_manager import ApplianceCertMan
 from services.dts.src.oci_cli_dts.appliance_config_manager import ApplianceConfigManager
 from services.dts.src.oci_cli_dts.appliance_config_spec import ApplianceConfigSpec
 from services.dts.src.oci_cli_dts.appliance_constants import APPLIANCE_CERT_FILE_NAME
-from oci import exceptions
+from services.dts.src.oci_cli_dts.physicalappliance_cli_extended import validate_upload_user_credentials
+from oci import exceptions, Response, Request
 
+from test_unit_test_dts_extended import get_mock_context
 
 APPLIANCE_CONFIG_FOLDER = "appliance_config_test"
 CERT_FINGERPRINT = "AB:CD:EF:GH"
@@ -236,3 +238,26 @@ class PhysicalApplianceTest(unittest.TestCase):
         assert not os.path.exists(config_manager.get_config_dir(appliance_profile_to_del))
         for i in range(1, len(specs)):
             assert config_manager.is_config_present(specs[i].appliance_config_spec.get_profile())
+
+    @mock.patch('services.dts.src.oci_cli_dts.physicalappliance_cli_extended.get_upload_user_region')
+    @mock.patch('services.dts.src.oci_cli_dts.physicalappliance_cli_extended.get_user')
+    def test_validate_upload_user_credentials(self, user, region):
+
+        def mock_get_upload_user_region():
+            return "test-region"
+
+        def mock_get_user():
+            return Response(200, {}, "test-user", Request("mock.method", "mock.url"))
+
+        auth_spec = self._get_test_auth_spec(self._get_config_manager(), "1.2.3.4", 443)
+        self._test_init_auth(auth_spec)
+
+        mock_context = get_mock_context()
+        user.return_value = mock_get_user()
+        region.return_value = mock_get_upload_user_region()
+
+        with self.assertRaises(SystemExit):
+            with mock.patch('click.confirm', return_value=False):
+                validate_upload_user_credentials(mock_context, 'fake-bucket')
+        mock_context.obj['config']['region'] = 'test-region'
+        validate_upload_user_credentials(mock_context, 'fake-bucket')

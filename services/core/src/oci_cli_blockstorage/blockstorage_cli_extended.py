@@ -160,7 +160,7 @@ def create_boot_volume_extended(ctx, **kwargs):
 
 
 @cli_util.copy_params_from_generated_command(blockstorage_cli.copy_volume_backup, params_to_exclude=[])
-@blockstorage_cli.volume_backup_group.command(name=cli_util.override('copy_volume_backup.command_name', 'copy'), help=u"""Creates a volume backup copy in specified region. For general information about volume backups, see [Overview of Block Volume Service Backups]""")
+@blockstorage_cli.volume_backup_group.command(name=cli_util.override('copy_volume_backup.command_name', 'copy'), help=blockstorage_cli.copy_volume_backup.help)
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'VolumeBackup'})
 @cli_util.wrap_exceptions
@@ -209,6 +209,69 @@ def copy_volume_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
                 sys.exit(2)
             except Exception:
                 click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@cli_util.copy_params_from_generated_command(blockstorage_cli.copy_boot_volume_backup, params_to_exclude=[])
+@blockstorage_cli.boot_volume_backup_group.command(name=cli_util.override('copy_boot_volume_backup.command_name', 'copy'), help=blockstorage_cli.copy_boot_volume_backup.help)
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'BootVolumeBackup'})
+@cli_util.wrap_exceptions
+def copy_boot_volume_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, boot_volume_backup_id, destination_region, display_name, kms_key_id):
+
+    if isinstance(boot_volume_backup_id, six.string_types) and len(boot_volume_backup_id.strip()) == 0:
+        raise click.UsageError('Parameter --boot-volume-backup-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    details = {}
+    details['destinationRegion'] = destination_region
+
+    if display_name is not None:
+        details['displayName'] = display_name
+
+    if kms_key_id is not None:
+        details['kmsKeyId'] = kms_key_id
+
+    client = cli_util.build_client('blockstorage', ctx)
+    result = client.copy_boot_volume_backup(
+        boot_volume_backup_id=boot_volume_backup_id,
+        copy_boot_volume_backup_details=details,
+        **kwargs
+    )
+    # Newly created Resource will be in a different region from the origin region.
+    # We should build the client for destination region
+    ctx.obj['region'] = destination_region
+    client = cli_util.build_client('blockstorage', ctx)
+    if wait_for_state:
+        if hasattr(client, 'get_boot_volume_backup') and callable(getattr(client, 'get_boot_volume_backup')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state),
+                           file=sys.stderr)
+                result = oci.wait_until(client, client.get_boot_volume_backup(result.data.id), 'lifecycle_state',
+                                        wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo(
+                    'Failed to wait until the resource entered the specified state. Outputting last known resource state',
+                    file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo(
+                    'Encountered error while waiting for resource to enter the specified state. Outputting last known resource state',
+                    file=sys.stderr)
                 cli_util.render_response(result, ctx)
                 raise
         else:

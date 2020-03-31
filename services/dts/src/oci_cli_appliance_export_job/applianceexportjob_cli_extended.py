@@ -114,6 +114,10 @@ def setup_export_notifications(ctx):
     setup_notifications_helper(ctx, create_topic_details, create_rule_kwargs)
 
 
+def create_os_client(ctx):
+    return cli_util.build_client('object_storage', ctx)
+
+
 def policy_printer(policy_name, bucket_access_policies):
     click.echo('NOTE: Sometimes you will need to replace a single quote with \'\"\'\"\'')
     create_policy_command = 'oci iam policy create --name {} --compartment-id $ROOT_COMPARTMENT ' \
@@ -278,10 +282,6 @@ def generate_manifest_appliance_export_job_extended(ctx, **kwargs):
     }
     ctx.invoke(applianceexportjob_cli.update_appliance_export_job, **kwargs_update)
     click.echo("\n*** Export Job updated with above manifest details.")
-
-
-def create_os_client(ctx):
-    return cli_util.build_client('object_storage', ctx)
 
 
 @applianceexportjob_cli.appliance_export_job_root_group.command(name="create-policy", help=u"""Create the IAM policy for the export job""")
