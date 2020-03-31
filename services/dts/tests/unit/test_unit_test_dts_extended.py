@@ -22,10 +22,12 @@ import oci
 import pytest
 import unittest
 
-from oci.dts.models import UpdateApplianceExportJobDetails
+from oci.dts.models import UpdateApplianceExportJobDetails, TransferJob, TransferAppliance
 
 from services.dts.src.oci_cli_dts.appliance_constants import APPLIANCE_STATE_NOT_LOCKED, APPLIANCE_STATE_LOCKED, \
     APPLIANCE_STATUS_NA
+from services.dts.src.oci_cli_transfer_job.transferjob_cli_extended import show_transfer_job_with_details, \
+    validate_bucket_belongs_to_compartment
 from tests import test_config_container
 from tests import util
 
@@ -53,6 +55,17 @@ def vcr_fixture(request):
         yield
 
 
+def get_mock_context():
+    context_obj = {'config': {'log_requests': False, 'additional_user_agent': '', 'pass_phrase': None,
+                              'user': 'ocid1.user.oc1..test-user', 'fingerprint': '00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00',
+                              'key_file': '/Users/test-user/.oci/oci_api_key.pem', 'tenancy': 'ocid1.tenancy.oc1..tenancy-id',
+                              'region': 'us-phoenix-1'},
+                   'region': 'us-phoenix-1'}
+    return click.Context(click.Command('unit-test-command', params={}), parent=None,
+                         info_name='unit-test',
+                         obj=context_obj)
+
+
 class UnitTestDTS(unittest.TestCase):
     class TestResult(enum.Enum):
         Success = 1
@@ -74,7 +87,7 @@ class UnitTestDTS(unittest.TestCase):
         self.specific_arg_values = {"profile": "DEFAULT", "device-type": "APPLIANCE", "if-match": "True", "all": None,
                                     "wait": None, "rw": "True", "world": "True", "lifecycle-state": "CREATING",
                                     "test_defined_tag": '{"string1": "string", "string2": "string"}', "force": None,
-                                    "debug": None, "setup-notifications": "True"}
+                                    "debug": None, "setup-notifications": "True", "skip-upload-user-check": None}
         self.complex_data_defs = {
             "customer-shipping-address": {
                 "required_params": ["addressee", "care-of", "address1", "city-or-locality", "state-or-region",
@@ -95,7 +108,7 @@ class UnitTestDTS(unittest.TestCase):
         self.job_subcommands = [
             {"sub_command": "create",
              "required_params": ["compartment-id", "bucket", "display-name", "device-type"],
-             "optional_params": ["defined-tags", "freeform-tags", "profile"]},
+             "optional_params": ["defined-tags", "freeform-tags", "profile", "skip-upload-user-check"]},
             {"sub_command": "show",
              "required_params": ["job-id"],
              "optional_params": []},
@@ -290,6 +303,11 @@ class UnitTestDTS(unittest.TestCase):
     #       - CLI errors when any of the Required params is not supplied.
     #       - CLI accepts all Required params
     #       - CLI accepts all Optional params
+
+    @mock.patch('services.dts.src.oci_cli_dts.physicalappliance_cli_extended.validate_upload_user_credentials', return_value=None)
+    @mock.patch('services.dts.src.oci_cli_transfer_job.transferjob_cli_extended.validate_bucket_belongs_to_compartment', return_value=None)
+    @mock.patch('services.dts.src.oci_cli_transfer_job.transferjob_cli_extended.validate_upload_user_credentials', return_value=None)
+    @mock.patch('services.dts.src.oci_cli_transfer_job.transferjob_cli_extended.create_transfer_job_client')
     @mock.patch('services.dts.src.oci_cli_dts.cli_utils.create_rule_helper')
     @mock.patch('services.dts.src.oci_cli_dts.cli_utils.create_subscription_helper')
     @mock.patch('services.dts.src.oci_cli_dts.cli_utils.prompt_for_emails')
@@ -307,7 +325,9 @@ class UnitTestDTS(unittest.TestCase):
     def test_dts(self, mock_client, mock_prompt, mock_init_auth, mock_appliance_client,
                  mock_nfs_dataset_client, mock_write_to_file, mock_reset_passphrase, mock_os_client,
                  mock_get_bucket_access_policies, mock_topic_client, mock_get_topic_id, mock_prompt_for_emails,
-                 mock_create_subscription_helper, mock_create_rule_helper):
+                 mock_create_subscription_helper, mock_create_rule_helper, mock_transfer_job_client, mock_transferjobj_validate_upload_user,
+                 mock_validate_bucket_compartment, mock_pa_validate_upload_user):
+
         click.echo("")
         for command_def in self.command_defs:
             command = command_def["command"]
@@ -570,3 +590,55 @@ class UnitTestDTS(unittest.TestCase):
                                'NfsExportDetails'})
         mocker_nfs_dataset_deactivate.assert_called_with(ctx_obj, **{'name': 'test-dataset',
                                                          'appliance_profile': appliance_profile})
+
+    @mock.patch('services.dts.src.oci_cli_transfer_job.transferjob_cli_extended.get_transfer_appliance_helper')
+    @mock.patch('services.dts.src.oci_cli_transfer_job.transferjob_cli_extended.get_transfer_job_helper')
+    def test_show_transfer_job(self, mock_get_transfer_job, mock_get_transfer_appliance):
+
+        def mock_get_transfer_job_helper(ctx, from_json, id):
+            return Response(200, {}, TransferJob(id='test-job-id', compartment_id='test-compartment-id', label='test-transfer-job',
+                                                 device_type='APPLIANCE', lifecycle_state='PREPARING', attached_transfer_appliance_labels=['XA-test-1', 'XA_test-2'],
+                                                 upload_bucket_name='test-bucket'),
+                            Request("mock.method", "mock.url")
+                            )
+
+        def mock_get_transfer_appliance_helper(ctx, from_json, id, appliance_lbl):
+            if appliance_lbl == 'XA-test-1':
+                return Response(200, {}, TransferAppliance(transfer_job_id='test-job-id', label='XA-test-1', serial_number='test-serial-no-1',
+                                                           lifecycle_state='PREPARING', upload_status_log_uri='fakepath/upload_summary1.txt'), Request("mock.method", "mock.url"))
+            else:
+                return Response(200, {}, TransferAppliance(transfer_job_id='test-job-id', label='XA-test-2', serial_number='test-serial-no-2',
+                                                           lifecycle_state='PREPARING', upload_status_log_uri='fakepath/upload_summary2.txt'), Request("mock.method", "mock.url"))
+
+        mock_context = get_mock_context()
+
+        mock_get_transfer_job.side_effect = mock_get_transfer_job_helper
+        mock_get_transfer_appliance.side_effect = mock_get_transfer_appliance_helper
+
+        result = show_transfer_job_with_details(mock_context, **{"id": 'test-job-id', 'from_json': None})
+
+        appliance_details_1 = {'label': 'XA-test-1', 'serialNumber': 'test-serial-no-1', 'status': 'PREPARING', 'uploadStatusLogURL': 'fakepath/upload_summary1.txt'}
+        appliance_details_2 = {'label': 'XA_test-2', 'serialNumber': 'test-serial-no-2', 'status': 'PREPARING', 'uploadStatusLogURL': 'fakepath/upload_summary2.txt'}
+        assert result.data.id == 'test-job-id'
+        assert len(result.data.attached_transfer_appliance_labels) == 2
+        assert appliance_details_1 in result.data.attached_transfer_appliance_labels
+        assert appliance_details_2 in result.data.attached_transfer_appliance_labels
+
+    @mock.patch('services.dts.src.oci_cli_transfer_job.transferjob_cli_extended.create_os_client')
+    def test_validate_bucket_belongs_to_compartment(self, mock_os_client):
+
+        def mock_get_namespace():
+            return Response(200, {}, "test-namespace", Request("mock.method", "mock.url"))
+
+        def mock_get_bucket(namespace_name, bucket_name):
+            return Response(200, {}, Bucket(namespace="test-namespace", compartment_id="test-compartment-id",
+                                            name="test-bucket-name", storage_tier=OBJECT_STORAGE_BUCKET_TYPE_ARCHIVE),
+                            Request("mock.method", "mock.url")
+                            )
+
+        mock_os_client.return_value.get_namespace.side_effect = mock_get_namespace
+        mock_os_client.return_value.get_bucket.side_effect = mock_get_bucket
+
+        with pytest.raises(oci.exceptions.ClientError):
+            validate_bucket_belongs_to_compartment(ctx='123', bucket="test-bucket", compartment_id="compartment-id")
+        assert validate_bucket_belongs_to_compartment(ctx='123', bucket="test-bucket", compartment_id="test-compartment-id") is None

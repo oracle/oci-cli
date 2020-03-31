@@ -27,7 +27,7 @@ from services.dts.src.oci_cli_dts.physical_appliance_control_plane.client.models
 
 from services.dts.src.oci_cli_dts.appliance_config_manager import ApplianceConfigManager
 from services.dts.src.oci_cli_dts.appliance_constants import APPLIANCE_CONFIGS_BASE_DIR, ENDPOINT, APPLIANCE_PROFILE, \
-    KEY_FILE_KEY, APPLIANCE_UPLOAD_USER_CONFIG_PATH, TEST_OBJECT, DEFAULT_PROFILE
+    KEY_FILE_KEY, APPLIANCE_UPLOAD_USER_CONFIG_PATH, TEST_OBJECT, DEFAULT_PROFILE, CONFIG_DIR
 
 
 """
@@ -317,6 +317,19 @@ def pa_finalize(ctx, from_json, appliance_profile, job_id, appliance_label, skip
     cli_util.render_response(user_friendly_appliance_info, ctx)
 
 
+def get_upload_user_region():
+    try:
+        config = configparser.ConfigParser()
+        config.read(APPLIANCE_UPLOAD_USER_CONFIG_PATH)
+        return config.get(DEFAULT_PROFILE, 'region')
+    except IOError as e:
+        click.FileError('Unable to parse the appliance config file %s: %s' % (APPLIANCE_UPLOAD_USER_CONFIG_PATH, e))
+
+
+def get_user(ctx):
+    return oci_config.from_file(ctx.obj['config_file'])['user']
+
+
 def validate_upload_user_credentials(ctx, upload_bucket):
     """
     There are two users, the admin user and the upload user
@@ -341,7 +354,7 @@ def validate_upload_user_credentials(ctx, upload_bucket):
     :param upload_bucket: The bucket to upload to
     :return: None
     """
-    admin_user = oci_config.from_file(ctx.obj['config_file'])['user']
+    admin_user = get_user(ctx)
     # Overriding any endpoint that was set. Need to get to the endpoint based on the config file, not based on the
     # override parameter
     ctx.endpoint = None
@@ -350,66 +363,76 @@ def validate_upload_user_credentials(ctx, upload_bucket):
     # For example, let's say the config file had us-phoenix-1 as the region and config_upload_user had us-ashburn-1
     # If the region is not changed in the context, the admin client would be talking to us-phoenix-1 whereas the
     # upload client would be talking to us-ashburn-1. That's not what we want.
-    try:
-        config = configparser.ConfigParser()
-        config.read(APPLIANCE_UPLOAD_USER_CONFIG_PATH)
-        region = config.get(DEFAULT_PROFILE, 'region')
-    except IOError as e:
-        click.FileError('Unable to parse the appliance config file %s: %s' % (APPLIANCE_UPLOAD_USER_CONFIG_PATH, e))
-    ctx.obj['region'] = region
-    object_storage_admin_client = cli_util.build_client('object_storage', ctx)
-    # A bit hacky but gets the job done. Only two parameters need to be changed to get the upload user context,
-    # the profile and the config file. All other parameters remain the same
-    upload_user_ctx = ctx
-    upload_user_ctx.obj['profile'] = 'DEFAULT'
-    upload_user_ctx.obj['config_file'] = APPLIANCE_UPLOAD_USER_CONFIG_PATH
-    # Overriding any endpoint that was set. Need to get to the endpoint based on the config_upload_user file
-    upload_user_ctx.endpoint = None
-    object_storage_upload_client = cli_util.build_client('object_storage', upload_user_ctx)
-    namespace = object_storage_admin_client.get_namespace().data
-    try:
-        try:
-            object_storage_admin_client.head_object(namespace, upload_bucket, TEST_OBJECT)
-            click.echo("Found test object in bucket. Deleting  it...")
-            object_storage_admin_client.delete_object(namespace, upload_bucket, TEST_OBJECT)
-        except exceptions.ServiceError as se:
-            if se.status != 404:
-                raise se
-    except Exception as e:
-        raise exceptions.RequestException(
-            "Admin user {} failed to delete the test object {}: {}".format(admin_user, TEST_OBJECT, str(e)))
 
-    test_object_content = "Bulk Data Transfer Test"
-
-    operation = None
-    test_object_exists = False
-    try:
-        operation = "Create object {} in bucket {} using upload user".format(TEST_OBJECT, upload_bucket)
-        object_storage_upload_client.put_object(namespace, upload_bucket, TEST_OBJECT, test_object_content)
-        click.echo(operation)
-        test_object_exists = True
-
-        operation = "Overwrite object {} in bucket {} using upload user".format(TEST_OBJECT, upload_bucket)
-        object_storage_upload_client.put_object(namespace, upload_bucket, TEST_OBJECT, test_object_content)
-        click.echo(operation)
-
-        operation = "Inspect object {} in bucket {} using upload user".format(TEST_OBJECT, upload_bucket)
-        object_storage_upload_client.head_object(namespace, upload_bucket, TEST_OBJECT)
-        click.echo(operation)
-
-        operation = "Read bucket metadata {} using upload user".format(upload_bucket)
-        metadata = object_storage_upload_client.get_bucket(namespace, upload_bucket).data.metadata
-        click.echo(operation)
-    except exceptions.ServiceError as se:
-        raise exceptions.RequestException(
-            "Failed to {} in tenancy {} as upload user: {}".format(operation, namespace, se.message))
-    finally:
-        if test_object_exists:
+    region = get_upload_user_region()
+    if 'config' in ctx.obj and 'region' in ctx.obj['config'] and ctx.obj['config']['region']:
+        if ctx.obj['config']['region'].strip() != region.strip():
+            confirm_prompt = "WARNING: The config file under {config_path}: '{config_region}' has different region than "\
+                             "{upload_user_path}: '{upload_user_region}'. Are you sure you want to continue with "  \
+                             "'{upload_user_region}'?".format(config_path=CONFIG_DIR,
+                                                              upload_user_path=APPLIANCE_UPLOAD_USER_CONFIG_PATH,
+                                                              config_region=ctx.obj['config']['region'], upload_user_region=region)
+            if not click.confirm(confirm_prompt):
+                click.echo("Exiting...")
+                sys.exit(-1)
+            ctx.obj['region'] = region
+            ctx.obj['config']['region'] = region
+            object_storage_admin_client = cli_util.build_client('object_storage', ctx)
+            # A bit hacky but gets the job done. Only two parameters need to be changed to get the upload user context,
+            # the profile and the config file. All other parameters remain the same
+            upload_user_ctx = ctx
+            upload_user_ctx.obj['profile'] = 'DEFAULT'
+            upload_user_ctx.obj['config_file'] = APPLIANCE_UPLOAD_USER_CONFIG_PATH
+            # Overriding any endpoint that was set. Need to get to the endpoint based on the config_upload_user file
+            upload_user_ctx.endpoint = None
+            object_storage_upload_client = cli_util.build_client('object_storage', upload_user_ctx)
+            namespace = object_storage_admin_client.get_namespace().data
             try:
-                object_storage_admin_client.delete_object(namespace, upload_bucket, TEST_OBJECT)
+                try:
+                    object_storage_admin_client.head_object(namespace, upload_bucket, TEST_OBJECT)
+                    click.echo("Found test object in bucket. Deleting  it...")
+                    object_storage_admin_client.delete_object(namespace, upload_bucket, TEST_OBJECT)
+                except exceptions.ServiceError as se:
+                    if se.status != 404:
+                        raise se
+            except Exception as e:
+                raise exceptions.RequestException(
+                    "Admin user {} failed to delete the test object {}: {}".format(admin_user, TEST_OBJECT, str(e)))
+
+            test_object_content = "Bulk Data Transfer Test"
+
+            operation = None
+            test_object_exists = False
+            try:
+                operation = "Create object {} in bucket {} using upload user".format(TEST_OBJECT, upload_bucket)
+                object_storage_upload_client.put_object(namespace, upload_bucket, TEST_OBJECT, test_object_content)
+                click.echo(operation)
+                test_object_exists = True
+
+                operation = "Overwrite object {} in bucket {} using upload user".format(TEST_OBJECT, upload_bucket)
+                object_storage_upload_client.put_object(namespace, upload_bucket, TEST_OBJECT, test_object_content)
+                click.echo(operation)
+
+                operation = "Inspect object {} in bucket {} using upload user".format(TEST_OBJECT, upload_bucket)
+                object_storage_upload_client.head_object(namespace, upload_bucket, TEST_OBJECT)
+                click.echo(operation)
+
+                operation = "Read bucket metadata {} using upload user".format(upload_bucket)
+                metadata = object_storage_upload_client.get_bucket(namespace, upload_bucket).data.metadata
+                click.echo(operation)
             except exceptions.ServiceError as se:
-                raise exceptions.ServiceError(
-                    "Failed to delete test object {} as admin user {}: {}".format(TEST_OBJECT, admin_user, se.message))
+                raise exceptions.RequestException(
+                    "Failed to {} in tenancy {} as upload user: {}".format(operation, namespace, se.message))
+            finally:
+                if test_object_exists:
+                    try:
+                        object_storage_admin_client.delete_object(namespace, upload_bucket, TEST_OBJECT)
+                    except exceptions.ServiceError as se:
+                        raise exceptions.ServiceError(
+                            "Failed to delete test object {} as admin user {}: {}".format(TEST_OBJECT, admin_user, se.message))
+    else:
+        click.echo("Exiting. Please provide 'region' in config file under {}".format(CONFIG_DIR))
+        sys.exit(-1)
 
 
 def convert_to_user_friendly(appliance_info):

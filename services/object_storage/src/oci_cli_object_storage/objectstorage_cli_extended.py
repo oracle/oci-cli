@@ -9,10 +9,11 @@ import os
 import os.path
 import stat
 import sys
+import six  # noqa: F401
 import services.object_storage.src.oci_cli_object_storage.object_storage_transfer_manager  # noqa: F401,E402
 from oci import exceptions
 from oci.object_storage.transfer import constants
-from oci_cli.cli_util import render, render_response, parse_json_parameter, help_option, help_option_group, build_client, wrap_exceptions, filter_object_headers, get_param
+from oci_cli.cli_util import render, render_response, parse_json_parameter, help_option, help_option_group, build_client, wrap_exceptions, filter_object_headers, get_param, copy_help_from_generated_code
 from oci.object_storage import UploadManager, MultipartObjectAssembler
 from oci_cli.file_filters import BaseFileFilterCollection
 from oci_cli.file_filters import SingleTypeFileFilterCollection
@@ -135,18 +136,28 @@ get_param(objectstorage_cli.copy_object, 'bucket_name').opts.extend(['-bn'])
 get_param(objectstorage_cli.reencrypt_bucket, 'namespace_name').opts.extend(['--namespace', '-ns'])
 get_param(objectstorage_cli.reencrypt_bucket, 'bucket_name').opts.extend(['-bn'])
 
-objectstorage_cli.object_group.commands.pop(objectstorage_cli.abort_multipart_upload.name)
 objectstorage_cli.object_group.commands.pop(objectstorage_cli.copy_object.name)
-objectstorage_cli.object_group.commands.pop(objectstorage_cli.create_multipart_upload.name)
-objectstorage_cli.object_group.commands.pop(objectstorage_cli.commit_multipart_upload.name)
 objectstorage_cli.object_group.commands.pop(objectstorage_cli.get_object.name)
 objectstorage_cli.object_group.commands.pop(objectstorage_cli.head_object.name)
 objectstorage_cli.object_group.commands.pop(objectstorage_cli.list_objects.name)
-objectstorage_cli.object_group.commands.pop(objectstorage_cli.list_multipart_upload_parts.name)
-objectstorage_cli.object_group.commands.pop(objectstorage_cli.list_multipart_uploads.name)
 objectstorage_cli.object_group.commands.pop(objectstorage_cli.put_object.name)
 objectstorage_cli.object_group.commands.pop(objectstorage_cli.restore_objects.name)
-objectstorage_cli.object_group.commands.pop(objectstorage_cli.upload_part.name)
+objectstorage_cli.os_root_group.commands.pop(objectstorage_cli.multipart_upload_group.name)
+
+get_param(objectstorage_cli.make_bucket_writable, 'namespace_name').opts.extend(['--namespace', '-ns'])
+get_param(objectstorage_cli.make_bucket_writable, 'bucket_name').opts.extend(['--bucket', '-bn'])
+
+get_param(objectstorage_cli.create_replication_policy, 'namespace_name').opts.extend(['--namespace', '-ns'])
+get_param(objectstorage_cli.create_replication_policy, 'bucket_name').opts.extend(['--bucket', '-bn'])
+get_param(objectstorage_cli.delete_replication_policy, 'namespace_name').opts.extend(['--namespace', '-ns'])
+get_param(objectstorage_cli.delete_replication_policy, 'bucket_name').opts.extend(['--bucket', '-bn'])
+get_param(objectstorage_cli.get_replication_policy, 'namespace_name').opts.extend(['--namespace', '-ns'])
+get_param(objectstorage_cli.get_replication_policy, 'bucket_name').opts.extend(['--bucket', '-bn'])
+get_param(objectstorage_cli.list_replication_policies, 'namespace_name').opts.extend(['--namespace', '-ns'])
+get_param(objectstorage_cli.list_replication_policies, 'bucket_name').opts.extend(['--bucket', '-bn'])
+get_param(objectstorage_cli.list_replication_sources, 'namespace_name').opts.extend(['--namespace', '-ns'])
+get_param(objectstorage_cli.list_replication_sources, 'bucket_name').opts.extend(['--bucket', '-bn'])
+
 get_param(objectstorage_cli.delete_object, 'bucket_name').opts.extend(['-bn'])
 get_param(objectstorage_cli.delete_object, 'namespace_name').opts.extend(['--namespace', '-ns'])
 get_param(objectstorage_cli.delete_object, 'object_name').opts.extend(['--name'])
@@ -166,6 +177,17 @@ get_param(objectstorage_cli.get_preauthenticated_request, 'bucket_name').opts.ex
 get_param(objectstorage_cli.get_preauthenticated_request, 'namespace_name').opts.extend(['--namespace', '-ns'])
 get_param(objectstorage_cli.list_preauthenticated_requests, 'bucket_name').opts.extend(['-bn'])
 get_param(objectstorage_cli.list_preauthenticated_requests, 'namespace_name').opts.extend(['--namespace', '-ns'])
+
+get_param(objectstorage_cli.create_retention_rule, 'namespace_name').opts.extend(['--namespace', '-ns'])
+get_param(objectstorage_cli.create_retention_rule, 'bucket_name').opts.extend(['--bucket', '-bn'])
+get_param(objectstorage_cli.update_retention_rule, 'namespace_name').opts.extend(['--namespace', '-ns'])
+get_param(objectstorage_cli.update_retention_rule, 'bucket_name').opts.extend(['--bucket', '-bn'])
+get_param(objectstorage_cli.get_retention_rule, 'namespace_name').opts.extend(['--namespace', '-ns'])
+get_param(objectstorage_cli.get_retention_rule, 'bucket_name').opts.extend(['--bucket', '-bn'])
+get_param(objectstorage_cli.list_retention_rules, 'namespace_name').opts.extend(['--namespace', '-ns'])
+get_param(objectstorage_cli.list_retention_rules, 'bucket_name').opts.extend(['--bucket', '-bn'])
+get_param(objectstorage_cli.delete_retention_rule, 'namespace_name').opts.extend(['--namespace', '-ns'])
+get_param(objectstorage_cli.delete_retention_rule, 'bucket_name').opts.extend(['--bucket', '-bn'])
 
 cli_util.rename_command(objectstorage_cli, objectstorage_cli.os_root_group, objectstorage_cli.namespace_group, "ns")
 cli_util.rename_command(objectstorage_cli, objectstorage_cli.namespace_group, objectstorage_cli.get_namespace_metadata, "get-metadata")
@@ -1631,12 +1653,140 @@ def copy_object(ctx, **kwargs):
     ctx.invoke(objectstorage_cli.copy_object, **kwargs)
 
 
+objectstorage_cli.replication_group.commands.pop(objectstorage_cli.create_replication_policy.name)
+
+
+@cli_util.copy_params_from_generated_command(objectstorage_cli.create_replication_policy, params_to_exclude=['destination_region_name', 'destination_bucket_name'])
+@objectstorage_cli.replication_group.command(name='create-replication-policy', help=objectstorage_cli.create_replication_policy.help)
+@cli_util.option('--destination-region', required=True, help=copy_help_from_generated_code(objectstorage_cli.create_replication_policy, 'destination_region_name', remove_required=True))
+@cli_util.option('--destination-bucket', required=True, help=copy_help_from_generated_code(objectstorage_cli.create_replication_policy, 'destination_bucket_name', remove_required=True))
+@click.pass_context
+def create_replication_policy(ctx, **kwargs):
+    if 'destination_bucket' in kwargs:
+        kwargs['destination_bucket_name'] = kwargs['destination_bucket']
+        kwargs.pop('destination_bucket')
+    if 'destination_region' in kwargs:
+        kwargs['destination_region_name'] = kwargs['destination_region']
+        kwargs.pop('destination_region')
+    ctx.invoke(objectstorage_cli.create_replication_policy, **kwargs)
+
+
+objectstorage_cli.make_bucket_writable.help += " If you are replicating to a destination bucket in a different region, you must specify the --region parameter."
+objectstorage_cli.list_replication_sources.help += " If you are replicating to a destination bucket in a different region, you must specify the --region parameter."
+
+
 objectstorage_cli.os_root_group.add_command(multipart)
 objectstorage_cli.list_multipart_uploads.name = 'list'
 get_param(objectstorage_cli.list_multipart_uploads, 'bucket_name').opts.extend(['-bn'])
 get_param(objectstorage_cli.list_multipart_uploads, 'namespace_name').opts.extend(['--namespace', '-ns'])
 multipart.add_command(objectstorage_cli.list_multipart_uploads)
 multipart.add_command(multipart_abort)
+
+
+# Overriding the generated command to simplify the --duration complex type parameter to it's simple constituent parts
+# of --time-amount (int) and --time-unit (string enum)
+@cli_util.copy_params_from_generated_command(objectstorage_cli.create_retention_rule, params_to_exclude=['duration'])
+@objectstorage_cli.retention_rule_group.command(name=cli_util.override('create_retention_rule.command_name', 'create'), help=objectstorage_cli.create_retention_rule.help)
+@cli_util.option('--time-amount', type=click.INT, help="""The amount of time that objects in the bucket should be preserved for and which is calculated in relation to each object's Last-Modified timestamp. If time-amount is not specified, then there is no time limit and the objects in the bucket will be preserved indefinitely.""")
+@cli_util.option('--time-unit', type=custom_types.CliCaseInsensitiveChoice(["DAYS", "YEARS"]), help="""The unit that should be used to interpret time-amount""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def create_retention_rule(ctx, **kwargs):
+    if kwargs['time_amount'] is not None:
+        kwargs['duration'] = {'timeAmount': kwargs['time_amount']}
+        if kwargs['time_unit'] is not None:
+            kwargs['duration']['timeUnit'] = str(kwargs['time_unit']).upper()
+        else:
+            raise click.UsageError('Parameter --time-unit is required when --time-amount is specified')
+
+    del kwargs['time_amount']
+    del kwargs['time_unit']
+
+    ctx.invoke(objectstorage_cli.create_retention_rule, **kwargs)
+
+
+# Overriding the generated command and reimplement it. We can't use the generated command because of the following reason:
+#   - We need a way to unset/remove the value of a field (--duration and --time-rule-locked) effectively
+#     setting it to null
+#     This was not possible with the generated command, it'll never allow a None to be passed to the backend
+#   - Overriding the generated command to simplify the --duration complex type parameter to it's simple constituent parts
+#     of --time-amount (int) and --time-unit (string enum)
+@cli_util.copy_params_from_generated_command(objectstorage_cli.update_retention_rule, params_to_exclude=['duration', 'force', 'time_rule_locked'])
+@objectstorage_cli.retention_rule_group.command(name='update', help=objectstorage_cli.update_retention_rule.help)
+@cli_util.option('--time-amount', help="""The amount of time that objects in the bucket should be preserved for and which is calculated in relation to each object's Last-Modified timestamp. To unset it, specify an empty string.""")
+@cli_util.option('--time-unit', type=custom_types.CliCaseInsensitiveChoice(["DAYS", "YEARS"]), help="""The unit that should be used to interpret time-amount""")
+@cli_util.option('--time-rule-locked', help=u"""The date and time as per [RFC 3339] after which this rule is locked and can only be deleted by deleting the bucket. Once a rule is locked, only increases in the duration are allowed and no other properties can be changed. Specifying it when a duration is not specified is considered an error. This property cannot be updated for rules that are in a locked state. Before time-rule-locked has elapsed, it can be unset by specifying an empty string.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def update_retention_rule(ctx, **kwargs):
+    namespace_name = kwargs['namespace_name']
+    bucket_name = kwargs['bucket_name']
+    retention_rule_id = kwargs['retention_rule_id']
+
+    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+        raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
+
+    if isinstance(bucket_name, six.string_types) and len(bucket_name.strip()) == 0:
+        raise click.UsageError('Parameter --bucket-name cannot be whitespace or empty string')
+
+    if isinstance(retention_rule_id, six.string_types) and len(retention_rule_id.strip()) == 0:
+        raise click.UsageError('Parameter --retention-rule-id cannot be whitespace or empty string')
+
+    # Gather the values to be sent to the API as the body (UpdateRetentionRuleDetails)
+    details = {}
+
+    if kwargs['display_name'] is not None:
+        details['displayName'] = kwargs['display_name']
+
+    # Check if --time-amount option is provided
+    if kwargs['time_amount'] is not None:
+        # If --time-amount is provided and is either --time-amount= or --time-amount='', then the duration must be unset effectively
+        # making it infinite duration
+        if kwargs['time_amount'] == '':
+            details['duration'] = None
+        else:
+            # convert the --time-amount value to an integer
+            try:
+                timeAmount = int(kwargs['time_amount'])
+            except ValueError:
+                raise click.BadParameter(kwargs['time_amount'] + ' is not a valid integer')
+
+            duration = {'timeAmount': timeAmount}
+            if kwargs['time_unit'] is not None:
+                duration['timeUnit'] = str(kwargs['time_unit']).upper()
+            else:
+                raise click.UsageError('Parameter --time-unit is required when --time-amount is specified')
+
+            # construct the duration field that will be sent to the backend handlers
+            details['duration'] = cli_util.parse_json_parameter("duration", duration)
+
+    # Check if --time-rule-locked option is provided
+    if kwargs['time_rule_locked'] is not None:
+        # Check if a value is provided for --time-rule-locked
+        if kwargs['time_rule_locked'] == '':
+            details['timeRuleLocked'] = None
+        else:
+            # CliDatetime.convert will throw a click.BadParameter exception if the value is not a valid datetime
+            details['timeRuleLocked'] = custom_types.cli_datetime.CliDatetime().convert(kwargs['time_rule_locked'], None, ctx)
+
+    # Extra arguments to be passed in to the client for making the API invocation
+    args = {}
+    if kwargs['if_match'] is not None:
+        args['if_match'] = kwargs['if_match']
+    args['opc_client_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    # Invoke the API and handle the response
+    client = cli_util.build_client('object_storage', ctx)
+    result = client.update_retention_rule(
+        namespace_name=namespace_name,
+        bucket_name=bucket_name,
+        retention_rule_id=retention_rule_id,
+        update_retention_rule_details=details,
+        **args
+    )
+    cli_util.render_response(result, ctx)
 
 
 # Retrieves a single page of objects, retrying the call if we received a retryable exception. This will return the

@@ -6,6 +6,68 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.9.9 - 2020-03-31
+------------------
+Added
+~~~~~
+
+* Support to allow update of class name, file URI, language and spark version of an existing application in the Data Flow service
+
+  * ``oci data-flow application update --class-name, --file-uri, --language, --spark-version``
+
+* Support for enabling and disabling the pod security policy admission controller in the Container Engine Service 
+
+  * ``oci ce cluster create | update --options '{"admissionControllerOptions": {"isPodSecurityPolicyEnabled": true}}'``
+
+* Support for Cross Region Replication in the Object Storage Service
+
+  * ``oci os replication create-replication-policy``
+  * ``oci os replication delete-replication-policy``
+  * ``oci os replication get-replication-policy``
+  * ``oci os replication list-replication-policies``
+  * ``oci os replication list-replication-sources``
+  * ``oci os replication make-bucket-writable``
+
+* Support for Retention Rules in the Object Storage Service
+
+  * ``oci os retention-rule``
+
+* Support for Big Data service
+
+  * ``oci bds``
+
+* Support for Secrets and Vault service
+
+  * ``oci secrets``
+  * ``oci vault``
+
+Fixed
+~~~~~
+
+* Bug where checking the status of the boot volume backup copy operation would fail
+
+  * ``oci bv boot-volume-backup copy``
+
+Changed
+~~~~~~~
+
+* The following operations within the Data Transfer Service 
+
+  * ``oci dts export configure-physical-appliance`` is now idempotent
+
+  *  Prompt requiring user confirmation when region values are different in config and config_upload_user in the following commands
+
+    * ``oci dts job create``
+    * ``oci dts physical-appliance finalize``
+
+  * Perform deep-search and return additional appliance information instead of only appliance-label
+
+    * ``oci dts job show``
+
+  * User credentials validation step and check to determine if the specified bucket belongs to the specified compartment. Introduced new optional argument.
+
+    * ``oci dts job create --skip-upload-user-check``
+
 2.9.8 - 2020-03-24
 ------------------
 Added
