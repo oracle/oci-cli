@@ -54,3 +54,12 @@ class TestBatch(unittest.TestCase):
         assert 'key-id' in result.output
         result = util.invoke_command(['kms', 'management', 'key-version', 'schedule-deletion', '--time-of-deletion'])
         assert 'Error: --time-of-deletion option requires an argument' in result.output
+
+    def test_kms_vault_usage_get(self):
+        result = util.invoke_command(['kms', 'management', 'vault-usage'])
+        assert 'Error: No such command "vault-usage"' in result.output
+        result = util.invoke_command(['kms', 'management', 'vault', 'usage'])
+        assert 'Usage: oci kms management vault usage' in result.output
+        result = util.invoke_command(['kms', 'management', 'vault', 'usage', 'get'])
+        assert 'Error: Missing option(s)' in result.output
+        assert 'vault-id' in result.output

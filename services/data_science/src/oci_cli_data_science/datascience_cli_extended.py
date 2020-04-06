@@ -95,7 +95,7 @@ def create_model_artifact_extended(ctx, model_id, from_json, **kwargs):
     kwargs['retry_strategy'] = oci.retry.NoneRetryStrategy()
 
     client = cli_util.build_client('data_science', ctx)
-    with open(model_artifact_file, 'r') as file:
+    with open(model_artifact_file, 'rb') as file:
         result = client.create_model_artifact(
             model_id=model_id,
             model_artifact=file.read(),

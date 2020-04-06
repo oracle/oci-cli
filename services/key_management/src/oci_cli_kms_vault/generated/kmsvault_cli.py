@@ -20,6 +20,12 @@ def kms_vault_root_group():
     pass
 
 
+@click.command(cli_util.override('kms_vault.vault_usage_group.command_name', 'vault-usage'), cls=CommandGroupWithAlias, help="""""")
+@cli_util.help_option_group
+def vault_usage_group():
+    pass
+
+
 @click.command(cli_util.override('kms_vault.vault_group.command_name', 'vault'), cls=CommandGroupWithAlias, help="""""")
 @cli_util.help_option_group
 def vault_group():
@@ -27,6 +33,7 @@ def vault_group():
 
 
 kms_service_cli.kms_service_group.add_command(kms_vault_root_group)
+kms_vault_root_group.add_command(vault_usage_group)
 kms_vault_root_group.add_command(vault_group)
 
 
@@ -197,6 +204,28 @@ def get_vault(ctx, from_json, vault_id):
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('kms_vault', ctx)
     result = client.get_vault(
+        vault_id=vault_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@vault_usage_group.command(name=cli_util.override('kms_vault.get_vault_usage.command_name', 'get'), help=u"""Gets the count of keys and key versions in the specified vault to calculate usage against service limits.""")
+@cli_util.option('--vault-id', required=True, help=u"""The OCID of the vault.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'key_management', 'class': 'VaultUsage'})
+@cli_util.wrap_exceptions
+def get_vault_usage(ctx, from_json, vault_id):
+
+    if isinstance(vault_id, six.string_types) and len(vault_id.strip()) == 0:
+        raise click.UsageError('Parameter --vault-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('kms_vault', ctx)
+    result = client.get_vault_usage(
         vault_id=vault_id,
         **kwargs
     )

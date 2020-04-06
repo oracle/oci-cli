@@ -43,8 +43,70 @@ data_flow_root_group.add_command(run_log_summary_group)
 data_flow_root_group.add_command(run_group)
 
 
+@application_group.command(name=cli_util.override('data_flow.change_application_compartment.command_name', 'change-compartment'), help=u"""Moves an application into a different compartment. When provided, If-Match is checked against ETag values of the resource. Associated resources, like runs, will not be automatically moved.""")
+@cli_util.option('--application-id', required=True, help=u"""The unique ID for an application.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of a compartment.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_application_compartment(ctx, from_json, application_id, compartment_id, if_match):
+
+    if isinstance(application_id, six.string_types) and len(application_id.strip()) == 0:
+        raise click.UsageError('Parameter --application-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    details = {}
+    details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('data_flow', ctx)
+    result = client.change_application_compartment(
+        application_id=application_id,
+        change_application_compartment_details=details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@run_group.command(name=cli_util.override('data_flow.change_run_compartment.command_name', 'change-compartment'), help=u"""Moves a run into a different compartment. When provided, If-Match is checked against ETag values of the resource. Associated resources, like historical metrics, will not be automatically moved. The run must be in a terminal state (CANCELED, FAILED, SUCCEEDED) in order for it to be moved to a different compartment""")
+@cli_util.option('--run-id', required=True, help=u"""The unique ID for the run""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of a compartment.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_run_compartment(ctx, from_json, run_id, compartment_id, if_match):
+
+    if isinstance(run_id, six.string_types) and len(run_id.strip()) == 0:
+        raise click.UsageError('Parameter --run-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    details = {}
+    details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('data_flow', ctx)
+    result = client.change_run_compartment(
+        run_id=run_id,
+        change_run_compartment_details=details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @application_group.command(name=cli_util.override('data_flow.create_application.command_name', 'create'), help=u"""Creates an application.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains this application.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of a compartment.""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name. It does not have to be unique. Avoid entering confidential information.""")
 @cli_util.option('--driver-shape', required=True, help=u"""The VM shape for the driver. Sets the driver cores and memory.""")
 @cli_util.option('--executor-shape', required=True, help=u"""The VM shape for the executors. Sets the executor cores and memory.""")
@@ -145,7 +207,7 @@ def create_application(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
 @run_group.command(name=cli_util.override('data_flow.create_run.command_name', 'create'), help=u"""Creates a run for an application.""")
 @cli_util.option('--application-id', required=True, help=u"""The application ID.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains this application.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of a compartment.""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name. It does not have to be unique. Avoid entering confidential information.""")
 @cli_util.option('--arguments', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The arguments passed to the running application as command line arguments.  An argument is either a plain text or a placeholder. Placeholders are replaced using values from the parameters map.  Each placeholder specified must be represented in the parameters map else the request (POST or PUT) will fail with a HTTP 400 status code.  Placeholders are specified as `Service Api Spec`, where `name` is the name of the parameter. Example:  `[ \"--input\", \"${input_file}\", \"--name\", \"John Doe\" ]` If \"input_file\" has a value of \"mydata.xml\", then the value above will be translated to `--input mydata.xml --name \"John Doe\"`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--configuration', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The Spark configuration passed to the running process. See https://spark.apache.org/docs/latest/configuration.html#available-properties Example: { \"spark.app.name\" : \"My App Name\", \"spark.shuffle.io.maxRetries\" : \"4\" } Note: Not all Spark properties are permitted to be set.  Attempting to set a property that is not allowed to be overwritten will cause a 400 status to be returned.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
