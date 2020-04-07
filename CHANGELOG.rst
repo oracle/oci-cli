@@ -6,6 +6,32 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.9.10 - 2020-04-07
+------------------
+Added
+~~~~~
+
+* Support for getting usage of Vault in KMS Management Service.
+
+  * ``oci kms management vault usage get``
+
+* The ability to change the compartment of Runs and Applications in Data Flow Service.
+
+  * ``oci data-flow application change-compartment``
+  * ``oci data-flow run change-compartment``
+
+* New options for stream-pool create/update in Streaming Service.
+
+  * ``oci streaming admin stream-pool create --custom-encryption-key-details, --private-endpoint-details``
+  * ``oci streaming admin stream-pool update --custom-encryption-key-details``
+
+Fixed
+~~~~~~~~
+
+* Bug where uploading the zip file to model-artifact would fail
+
+  * ``oci data-science model create-model-artifact --model-artifact-file --model-id ``
+
 2.9.9 - 2020-03-31
 ------------------
 Added
