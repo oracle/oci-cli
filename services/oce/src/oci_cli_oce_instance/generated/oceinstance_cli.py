@@ -117,7 +117,9 @@ def change_oce_instance_compartment(ctx, from_json, wait_for_state, max_wait_sec
 @cli_util.option('--description', help=u"""OceInstance description""")
 @cli_util.option('--identity-stripe', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--instance-usage-type', type=custom_types.CliCaseInsensitiveChoice(["PRIMARY", "NONPRIMARY"]), help=u"""Instance type based on its usage""")
+@cli_util.option('--upgrade-schedule', help=u"""Upgrade schedule type representing service to be upgraded immediately whenever latest version is released or delay upgrade of the service to previous released version""")
 @cli_util.option('--waf-primary-domain', help=u"""Web Application Firewall(WAF) primary domain""")
+@cli_util.option('--instance-access-type', type=custom_types.CliCaseInsensitiveChoice(["PUBLIC", "PRIVATE"]), help=u"""Flag indicating whether the instance access is private or public""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Usage of predefined tag keys. These predefined keys are scoped to namespaces. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -128,7 +130,7 @@ def change_oce_instance_compartment(ctx, from_json, wait_for_state, max_wait_sec
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'identity-stripe': {'module': 'oce', 'class': 'IdentityStripeDetails'}, 'freeform-tags': {'module': 'oce', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'oce', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def create_oce_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, name, tenancy_id, idcs_access_token, tenancy_name, object_storage_namespace, admin_email, description, identity_stripe, instance_usage_type, waf_primary_domain, freeform_tags, defined_tags):
+def create_oce_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, name, tenancy_id, idcs_access_token, tenancy_name, object_storage_namespace, admin_email, description, identity_stripe, instance_usage_type, upgrade_schedule, waf_primary_domain, instance_access_type, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -151,8 +153,14 @@ def create_oce_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     if instance_usage_type is not None:
         details['instanceUsageType'] = instance_usage_type
 
+    if upgrade_schedule is not None:
+        details['upgradeSchedule'] = upgrade_schedule
+
     if waf_primary_domain is not None:
         details['wafPrimaryDomain'] = waf_primary_domain
+
+    if instance_access_type is not None:
+        details['instanceAccessType'] = instance_access_type
 
     if freeform_tags is not None:
         details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)

@@ -20,20 +20,20 @@ def search_root_group():
     pass
 
 
-@click.command(cli_util.override('search.resource_summary_collection_group.command_name', 'resource-summary-collection'), cls=CommandGroupWithAlias, help="""Summary representation of resources that matched the search criteria.""")
-@cli_util.help_option_group
-def resource_summary_collection_group():
-    pass
-
-
 @click.command(cli_util.override('search.resource_type_group.command_name', 'resource-type'), cls=CommandGroupWithAlias, help="""Defines a type of resource that you can find with a search or query.""")
 @cli_util.help_option_group
 def resource_type_group():
     pass
 
 
-search_root_group.add_command(resource_summary_collection_group)
+@click.command(cli_util.override('search.resource_summary_group.command_name', 'resource-summary'), cls=CommandGroupWithAlias, help="""A resource that exists in the cloud network that you're querying.""")
+@cli_util.help_option_group
+def resource_summary_group():
+    pass
+
+
 search_root_group.add_command(resource_type_group)
+search_root_group.add_command(resource_summary_group)
 
 
 @resource_type_group.command(name=cli_util.override('search.get_resource_type.command_name', 'get'), help=u"""Gets detailed information about a resource type by using the resource type name.""")
@@ -102,9 +102,9 @@ def list_resource_types(ctx, from_json, all_pages, page_size, limit, page):
     cli_util.render_response(result, ctx)
 
 
-@resource_summary_collection_group.command(name=cli_util.override('search.search_resources.command_name', 'search-resources'), help=u"""Queries any and all compartments in the tenancy to find resources that match the specified criteria. Results include resources that you have permission to view and can span different resource types. You can also sort results based on a specified resource attribute.""")
+@resource_summary_group.command(name=cli_util.override('search.search_resources.command_name', 'search-resources'), help=u"""Queries any and all compartments in the tenancy to find resources that match the specified criteria. Results include resources that you have permission to view and can span different resource types. You can also sort results based on a specified resource attribute.""")
 @cli_util.option('--type', required=True, help=u"""The type of SearchDetails, whether `FreeText` or `Structured`.""")
-@cli_util.option('--matching-context-type', type=custom_types.CliCaseInsensitiveChoice(["NONE", "HIGHLIGHTS"]), help=u"""The type of matching context returned in the response. If you specify `HIGHLIGHTS`, then the service will highlight fragments in its response. (See ResourceSummary.searchContext and SearchContext for more information.) The default setting is `NONE`.""")
+@cli_util.option('--matching-context-type', type=custom_types.CliCaseInsensitiveChoice(["NONE", "HIGHLIGHTS"]), help=u"""The type of matching context returned in the response. If you specify `HIGHLIGHTS`, then the service will highlight fragments in its response. (For more information, see ResourceSummary.searchContext and SearchContext.) The default setting is `NONE`.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return. The value must be between 1 and 1000.""")
 @cli_util.option('--page', help=u"""The page at which to start retrieving results.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -135,9 +135,9 @@ def search_resources(ctx, from_json, type, matching_context_type, limit, page):
     cli_util.render_response(result, ctx)
 
 
-@resource_summary_collection_group.command(name=cli_util.override('search.search_resources_structured_search_details.command_name', 'search-resources-structured-search-details'), help=u"""Queries any and all compartments in the tenancy to find resources that match the specified criteria. Results include resources that you have permission to view and can span different resource types. You can also sort results based on a specified resource attribute.""")
+@resource_summary_group.command(name=cli_util.override('search.search_resources_structured_search_details.command_name', 'search-resources-structured-search-details'), help=u"""Queries any and all compartments in the tenancy to find resources that match the specified criteria. Results include resources that you have permission to view and can span different resource types. You can also sort results based on a specified resource attribute.""")
 @cli_util.option('--query-parameterconflict', required=True, help=u"""The structured query describing which resources to search for.""")
-@cli_util.option('--matching-context-type', type=custom_types.CliCaseInsensitiveChoice(["NONE", "HIGHLIGHTS"]), help=u"""The type of matching context returned in the response. If you specify `HIGHLIGHTS`, then the service will highlight fragments in its response. (See ResourceSummary.searchContext and SearchContext for more information.) The default setting is `NONE`.""")
+@cli_util.option('--matching-context-type', type=custom_types.CliCaseInsensitiveChoice(["NONE", "HIGHLIGHTS"]), help=u"""The type of matching context returned in the response. If you specify `HIGHLIGHTS`, then the service will highlight fragments in its response. (For more information, see ResourceSummary.searchContext and SearchContext.) The default setting is `NONE`.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return. The value must be between 1 and 1000.""")
 @cli_util.option('--page', help=u"""The page at which to start retrieving results.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -170,9 +170,9 @@ def search_resources_structured_search_details(ctx, from_json, query_parameterco
     cli_util.render_response(result, ctx)
 
 
-@resource_summary_collection_group.command(name=cli_util.override('search.search_resources_free_text_search_details.command_name', 'search-resources-free-text-search-details'), help=u"""Queries any and all compartments in the tenancy to find resources that match the specified criteria. Results include resources that you have permission to view and can span different resource types. You can also sort results based on a specified resource attribute.""")
+@resource_summary_group.command(name=cli_util.override('search.search_resources_free_text_search_details.command_name', 'search-resources-free-text-search-details'), help=u"""Queries any and all compartments in the tenancy to find resources that match the specified criteria. Results include resources that you have permission to view and can span different resource types. You can also sort results based on a specified resource attribute.""")
 @cli_util.option('--text', required=True, help=u"""The text to search for.""")
-@cli_util.option('--matching-context-type', type=custom_types.CliCaseInsensitiveChoice(["NONE", "HIGHLIGHTS"]), help=u"""The type of matching context returned in the response. If you specify `HIGHLIGHTS`, then the service will highlight fragments in its response. (See ResourceSummary.searchContext and SearchContext for more information.) The default setting is `NONE`.""")
+@cli_util.option('--matching-context-type', type=custom_types.CliCaseInsensitiveChoice(["NONE", "HIGHLIGHTS"]), help=u"""The type of matching context returned in the response. If you specify `HIGHLIGHTS`, then the service will highlight fragments in its response. (For more information, see ResourceSummary.searchContext and SearchContext.) The default setting is `NONE`.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return. The value must be between 1 and 1000.""")
 @cli_util.option('--page', help=u"""The page at which to start retrieving results.""")
 @json_skeleton_utils.get_cli_json_input_option({})

@@ -7,7 +7,6 @@ import pytest
 import oci_cli
 from tests import util
 from tests import test_config_container
-import random
 import json
 
 CASSETTE_LIBRARY_DIR = 'services/object_storage/tests/cassettes'
@@ -38,10 +37,7 @@ def setup_module():
 
 
 def get_random_suffix():
-    if test_config_container.using_vcr_with_mock_responses():
-        return '1000000'
-    else:
-        return str(random.randint(0, 1000000))
+    return '1000000'
 
 
 def test_run_all_operations(vcr_fixture, runner, config_file, config_profile, debug):

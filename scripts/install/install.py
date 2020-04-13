@@ -407,12 +407,12 @@ def get_rc_file_path():
     default_rc_file = _get_default_rc_file()
     if not default_rc_file:
         rc_file = _default_rc_file_creation_step()
-    rc_file = rc_file or prompt_input_with_default('Enter a path to an rc file to update', default_rc_file)
+    rc_file = rc_file or prompt_input_with_default('Enter a path to an rc file to update (file will be created if it does not exist)', default_rc_file)
     if rc_file:
         rc_file_path = os.path.realpath(os.path.expanduser(rc_file))
-        if os.path.isfile(rc_file_path):
-            return rc_file_path
-        print_status("The file '{}' could not be found.".format(rc_file_path))
+        if not os.path.isfile(rc_file_path):
+            print_status("Automatically created rc file at '{}'".format(rc_file_path))
+        return rc_file_path
     return None
 
 
