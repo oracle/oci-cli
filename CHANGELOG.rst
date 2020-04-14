@@ -6,6 +6,25 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.9.11 - 2020-04-14
+------------------
+Added
+~~~~~~
+
+* Instance Access Type support for OCE instances
+
+  * ``oci oce oce-instance create --instance-access-type --upgrade-schedule``
+
+Fixed
+~~~~~~~~
+
+* Use client specific endpoint for clock skew check instead of always Compute
+
+Changed
+~~~~~~~
+
+* Custom bashrc file is created on user input when default rc file is not found during CLI installation.
+
 2.9.10 - 2020-04-07
 ------------------
 Added
