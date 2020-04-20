@@ -1,6 +1,7 @@
 # coding: utf-8
 # Copyright (c) 2016, 2019, Oracle and/or its affiliates. All rights reserved.
 
+import base64
 import hashlib
 import json
 import os
@@ -16,6 +17,7 @@ CONTENT_OUTPUT_FILE = 'tests/resources/content_output.txt'
 LARGE_CONTENT_FILE_SIZE_IN_MEBIBYTES = 100
 DEFAULT_TEST_PART_SIZE = 1
 CASSETTE_LIBRARY_DIR = 'services/object_storage/tests/cassettes'
+GENERATED_ENC_KEY_FILE = 'tests/temp/generated_enc_key.txt'
 
 
 @pytest.fixture
@@ -51,6 +53,11 @@ def temp_bucket(runner, config_file, config_profile):
     result = invoke(runner, config_file, config_profile, ['bucket', 'create', '-ns', util.NAMESPACE, '--compartment-id', util.COMPARTMENT_ID, '--name', bucket_name])
     validate_response(result)
 
+    # create the SSE-C encryption key
+    enc_key_str = generate_aes256_key_str()
+    with open(GENERATED_ENC_KEY_FILE, 'w') as f:
+        f.write(enc_key_str)
+
     yield bucket_name
 
     # clean up, delete bucket
@@ -78,19 +85,32 @@ def temp_bucket(runner, config_file, config_profile):
 
     assert 0 == error_count
 
+    # remove the SSE-C key file
+    if os.path.exists(GENERATED_ENC_KEY_FILE):
+        os.remove(GENERATED_ENC_KEY_FILE)
+
+
+@pytest.fixture(params=[False, True])
+def customer_key(request):
+    return request.param
+
 
 def setup_function():
     if os.path.exists(CONTENT_OUTPUT_FILE):
         os.remove(CONTENT_OUTPUT_FILE)
 
 
-def test_multipart_put_object(runner, config_file, config_profile, temp_bucket, content_input_file):
+def test_multipart_put_object(runner, config_file, config_profile, temp_bucket, content_input_file, customer_key):
     object_name = 'a'
+
+    ssec_params = []
+    if customer_key:
+        ssec_params = ['--encryption-key-file', GENERATED_ENC_KEY_FILE]
 
     # object put (large file so multipart is used)
     result = invoke(runner, config_file, config_profile, ['object', 'put', '-ns', util.NAMESPACE, '-bn', temp_bucket,
                                                           '--name', object_name, '--file', content_input_file,
-                                                          '--part-size', str(DEFAULT_TEST_PART_SIZE)])
+                                                          '--part-size', str(DEFAULT_TEST_PART_SIZE)] + ssec_params)
 
     validate_response(result, json_response_expected=False)
 
@@ -104,7 +124,9 @@ def test_multipart_put_object(runner, config_file, config_profile, temp_bucket, 
     assert upload_id
 
     # object get (confirm object exists)
-    result = invoke(runner, config_file, config_profile, ['object', 'get', '-ns', util.NAMESPACE, '-bn', temp_bucket, '--name', object_name, '--file', CONTENT_OUTPUT_FILE])
+    result = invoke(runner, config_file, config_profile, ['object', 'get', '-ns', util.NAMESPACE, '-bn', temp_bucket,
+                                                          '--name', object_name,
+                                                          '--file', CONTENT_OUTPUT_FILE] + ssec_params)
     validate_response(result, json_response_expected=False)
 
     assert checksum_md5(content_input_file) == checksum_md5(CONTENT_OUTPUT_FILE)
@@ -115,7 +137,7 @@ def test_multipart_put_object(runner, config_file, config_profile, temp_bucket, 
                                                           '--name', object_name, '--file', content_input_file,
                                                           '--part-size', str(DEFAULT_TEST_PART_SIZE),
                                                           '--force',
-                                                          '--verify-checksum'])
+                                                          '--verify-checksum'] + ssec_params)
     validate_response(result, json_response_expected=False)
     assert "md5 checksum matches" in result.output
 
@@ -182,11 +204,18 @@ def test_abort_multipart_upload(runner, config_file, config_profile, temp_bucket
     assert result.output == ''
 
 
-def test_multipart_upload_with_metadata(runner, config_file, config_profile, temp_bucket, content_input_file):
+def test_multipart_upload_with_metadata(runner, config_file, config_profile, temp_bucket, content_input_file, customer_key):
     object_name = 'a_metadata'
 
+    ssec_params = []
+    if customer_key:
+        ssec_params = ['--encryption-key-file', GENERATED_ENC_KEY_FILE]
+
     # object put (large file so multipart is used)
-    result = invoke(runner, config_file, config_profile, ['object', 'put', '-ns', util.NAMESPACE, '-bn', temp_bucket, '--name', object_name, '--file', content_input_file, '--part-size', str(DEFAULT_TEST_PART_SIZE), '--metadata', '{"foo1":"bar1","key_with_underscore":"value_with_underscore"}'])
+    result = invoke(runner, config_file, config_profile, ['object', 'put', '-ns', util.NAMESPACE, '-bn', temp_bucket,
+                                                          '--name', object_name, '--file', content_input_file,
+                                                          '--part-size', str(DEFAULT_TEST_PART_SIZE),
+                                                          '--metadata', '{"foo1":"bar1","key_with_underscore":"value_with_underscore"}'] + ssec_params)
 
     # TODO: we dont expect JSON because there are print statements from the SDK right now
     validate_response(result, json_response_expected=False)
@@ -198,14 +227,17 @@ def test_multipart_upload_with_metadata(runner, config_file, config_profile, tem
     assert response["opc-multipart-md5"]
 
     # object get (confirm object exists)
-    result = invoke(runner, config_file, config_profile, ['object', 'get', '-ns', util.NAMESPACE, '-bn', temp_bucket, '--name', object_name, '--file', CONTENT_OUTPUT_FILE])
+    result = invoke(runner, config_file, config_profile, ['object', 'get', '-ns', util.NAMESPACE, '-bn', temp_bucket,
+                                                          '--name', object_name,
+                                                          '--file', CONTENT_OUTPUT_FILE] + ssec_params)
     validate_response(result, json_response_expected=False)
 
     assert checksum_md5(content_input_file) == checksum_md5(CONTENT_OUTPUT_FILE)
     assert os.stat(content_input_file).st_size == os.stat(CONTENT_OUTPUT_FILE).st_size
 
     # object head to confirm metadata
-    result = invoke(runner, config_file, config_profile, ['object', 'head', '-ns', util.NAMESPACE, '-bn', temp_bucket, '--name', object_name])
+    result = invoke(runner, config_file, config_profile, ['object', 'head', '-ns', util.NAMESPACE, '-bn', temp_bucket,
+                                                          '--name', object_name] + ssec_params)
     validate_response(result, json_response_expected=False)
     assert 'foo1' in result.output
     assert 'key_with_underscore' in result.output
@@ -216,12 +248,12 @@ def test_multipart_upload_with_metadata(runner, config_file, config_profile, tem
 
 
 @util.skip_while_rerecording
-def test_resume_with_unknown_upload_id(vcr_fixture, runner, config_file, config_profile, content_input_file):
+def test_resume_with_unknown_upload_id(vcr_fixture, runner, config_file, config_profile, content_input_file, test_id):
     object_name = 'a'
     upload_id = 'UNKNOWN_UPLOAD_ID'
 
     # resume multipart upload
-    result = invoke(runner, config_file, config_profile, ['object', 'resume-put', '-ns', util.NAMESPACE, '-bn', "cli_temp_multipart_bucket_10000", '--name', object_name, '--file', content_input_file, '--upload-id', upload_id])
+    result = invoke(runner, config_file, config_profile, ['object', 'resume-put', '-ns', util.NAMESPACE, '-bn', "cli_temp_multipart_bucket_" + test_id, '--name', object_name, '--file', content_input_file, '--upload-id', upload_id])
     util.validate_service_error(result, error_message='No such upload')
 
 
@@ -297,3 +329,8 @@ def parse_upload_id_from_multipart_output(output):
             raise ValueError("Failed to find '{}' in output: {}".format(token, output))
     except IndexError:
         raise ValueError('Failed to parse upload id from output: {}'.format(output))
+
+
+def generate_aes256_key_str():
+    key = os.urandom(32)
+    return base64.b64encode(key).decode('utf-8')

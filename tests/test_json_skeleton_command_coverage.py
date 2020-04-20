@@ -69,6 +69,8 @@ IGNORED_COMMANDS = [
     ['os', 'replication', 'delete-replication-policy'],
     ['os', 'replication', 'create-replication-policy'],
     ['os', 'replication', 'make-bucket-writable'],
+    ['os', 'object', 'copy'],
+    ['os', 'object', 'head'],
     ['os', 'retention-rule', 'create'],
     ['os', 'retention-rule', 'get'],
     ['os', 'retention-rule', 'list'],

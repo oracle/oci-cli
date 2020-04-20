@@ -84,14 +84,14 @@ def update_address_list_extended(ctx, **kwargs):
 
 Enabled TLS protocols must go in a row. For example if `TLS_v1_1` and `TLS_V1_3` are enabled, `TLS_V1_2` must be enabled too.""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'load-balancing-method': {'module': 'waas', 'class': 'LoadBalancingMethod'}, 'websocket-path-prefixes': {'module': 'waas', 'class': 'list[string]'}, 'health-checks': {'module': 'waas', 'class': 'HealthCheck'}})
 @cli_util.wrap_exceptions
-def update_policy_config(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, waas_policy_id, certificate_id, is_https_enabled, is_https_forced, tls_protocols, is_origin_compression_enabled, is_behind_cdn, client_address_header, is_cache_control_respected, is_response_buffering_enabled, cipher_group, if_match):
+def update_policy_config(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, waas_policy_id, certificate_id, is_https_enabled, is_https_forced, tls_protocols, is_origin_compression_enabled, is_behind_cdn, client_address_header, is_cache_control_respected, is_response_buffering_enabled, cipher_group, load_balancing_method, websocket_path_prefixes, is_sni_enabled, health_checks, if_match):
     if isinstance(waas_policy_id, six.string_types) and len(waas_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --waas-policy-id cannot be whitespace or empty string')
     if not force:
-        if tls_protocols:
-            if not click.confirm("WARNING: Updates to tls-protocols will replace any existing values. Are you sure you want to continue?"):
+        if tls_protocols or load_balancing_method or websocket_path_prefixes or health_checks:
+            if not click.confirm("WARNING: Updates to tls-protocols, load-balancing-method, websocket-path-prefixes and health-checks will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -131,6 +131,19 @@ def update_policy_config(ctx, from_json, force, wait_for_state, max_wait_seconds
 
     if cipher_group is not None:
         details['cipherGroup'] = cipher_group
+
+    if load_balancing_method is not None:
+        details['loadBalancingMethod'] = cli_util.parse_json_parameter("load_balancing_method", load_balancing_method)
+
+    if websocket_path_prefixes is not None:
+        details['websocketPathPrefixes'] = cli_util.parse_json_parameter("websocket_path_prefixes",
+                                                                         websocket_path_prefixes)
+
+    if is_sni_enabled is not None:
+        details['isSniEnabled'] = is_sni_enabled
+
+    if health_checks is not None:
+        details['healthChecks'] = cli_util.parse_json_parameter("health_checks", health_checks)
 
     client = cli_util.build_client('waas', ctx)
     result = client.update_policy_config(

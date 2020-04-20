@@ -6,8 +6,93 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.10.0 - 2020-04-21
+-------------------
+Added
+~~~~~
+* Support for Data Safe service
+
+  * ``oci data-safe``
+
+* Support for Incident Management and Creation service
+
+ * ``oci support``
+
+* Support for object versions in Object Storage
+
+  * ``oci os object list-object-versions``
+  * ``oci os bucket create --versioning``
+  * ``oci os bucket update --versioning``
+  * ``oci os object copy --source-version-id``
+  * ``oci os object copy-part --source-version-id``
+  * ``oci os object delete --version-id``
+  * ``oci os object restore --version-id``
+  * ``oci os object get --version-id``
+  * ``oci os object head --version-id``
+  * ``oci os object list --start-after``
+
+* Support for user-provided encryption keys in Object Storage, by introducing optional parameters to specify a file containing the encryption key
+
+  * ``oci os object put --encryption-key-file``
+  * ``oci os object get --encryption-key-file``
+  * ``oci os object head --encryption-key-file``
+  * ``oci os object bulk-download --encryption-key-file``
+  * ``oci os object bulk-upload --encryption-key-file``
+  * ``oci os object copy --encryption-key-file --source-encryption-key-file``
+
+* Support for managing shape compatibility entries for Compute images.
+
+  * ``oci compute image-shape-compatibility-entry``
+
+* Support for maintenance preferences while launching and updating an Exadata DB System.
+
+  * ``oci db system launch --maintenance-window-details``
+  * ``oci db system update --maintenance-window-details``
+
+* Added new parameter ``--shape-config`` to specify number of cores when launching or updating a Compute instance.
+
+  * ``oci compute instance launch``
+  * ``oci compute instance update``
+
+* Added new parameter ``--destination-region`` to support scheduled cross region backups for Boot Volumes
+
+  * ``oci bv volume-backup-policy create``
+  * ``oci bv volume-backup-policy update``
+
+* New Attribute isFreeTierEnabled is included in the response of
+
+  * ``oci db autonomous-db-version-list``
+
+* New json input parameters are now available for ``oci compute-management instance-configuration create``
+
+  * createVnicDetails
+
+    * definedTags
+    * freeformTags
+
+  * instanceDetails.blockVolumes.createDetails
+
+    * kmsKeyId
+    * vpusPerGB
+
+  * instanceDetails.launchDetails
+
+    * shapeConfig
+    * dedicatedVmHostId
+    * launchMode
+    * launchOptions
+    * agentConfig
+    * isPvEncryptionInTransitEnabled
+    * preferredMaintenanceAction
+
+Changed
+~~~~~~~
+* [BREAKING] Removed Stream Archiving
+
+  * ``oci streaming admin archiver``
+
 2.9.11 - 2020-04-14
-------------------
+-------------------
 Added
 ~~~~~~
 
@@ -26,7 +111,7 @@ Changed
 * Custom bashrc file is created on user input when default rc file is not found during CLI installation.
 
 2.9.10 - 2020-04-07
-------------------
+-------------------
 Added
 ~~~~~
 
@@ -49,7 +134,7 @@ Fixed
 
 * Bug where uploading the zip file to model-artifact would fail
 
-  * ``oci data-science model create-model-artifact --model-artifact-file --model-id ``
+  * ``oci data-science model create-model-artifact --model-artifact-file --model-id``
 
 2.9.9 - 2020-03-31
 ------------------

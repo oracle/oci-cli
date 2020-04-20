@@ -1,10 +1,14 @@
 # coding: utf-8
 # Copyright (c) 2016, 2019, Oracle and/or its affiliates. All rights reserved.
 
+import base64
+import hashlib
 import mock
 import unittest
 from services.object_storage.src.oci_cli_object_storage.objectstorage_cli_extended import time_delta
 from services.object_storage.src.oci_cli_object_storage.objectstorage_cli_extended import _get_progress_bar_label
+from services.object_storage.src.oci_cli_object_storage.objectstorage_cli_extended import _get_encryption_key_params
+from services.object_storage.src.oci_cli_object_storage.objectstorage_cli_extended import _get_source_encryption_key_params
 import oci_cli
 from tests import util
 import tempfile
@@ -63,11 +67,110 @@ class TestObjectStorage(unittest.TestCase):
                     assert '-bn' in param.opts
                     assert '--bucket-name' in param.opts
 
+    def test_verify_encryption_key_autogen_params_hidden(self):
+        """ Checks whether the auto generated sse encryption key params are masked out """
+        sse_param_suffixes = ['sse-customer-algorithm', 'sse-customer-key', 'sse-customer-key-sha256']
+        encryption_key_params = ['opc-' + p for p in sse_param_suffixes] + \
+                                ['opc-source-' + p for p in sse_param_suffixes]
+        results = {}
+        commands = oci_cli.cli_util.collect_commands(oci_cli.cli_root.cli.commands.get('os'))
+        for command in commands:
+            for param in command.params:
+                if any(p in param.opts for p in encryption_key_params):
+                    key = command.parent.name + ' ' + command.name
+                    results[key] = True
+        assert list(results.keys()) == []
+
+    def test_verify_encryption_key_file_params(self):
+        """ Checks whether the encryption-key-file params are present for the relevant object commands """
+        # Sorted lists of commands that should support --encryption-key-file and --source-encryption-file respectively
+        encryption_key_file_cmd_list = sorted([
+            'object put', 'object bulk-upload', 'object get', 'object bulk-download', 'object head', 'object copy'
+        ])
+        source_encryption_key_file_cmd_list = sorted(['object copy'])
+
+        # dictionary that holds the result of parsing the various commands looking for --encryption-key-file
+        encryption_key_file_results = {}
+        # dictionary that holds the result of parsing the various commands looking for --source-encryption-key-file
+        source_encryption_key_file_results = {}
+        commands = oci_cli.cli_util.collect_commands(oci_cli.cli_root.cli.commands.get('os'))
+        for command in commands:
+            key = command.parent.name + ' ' + command.name
+            for param in command.params:
+                if '--encryption-key-file' in param.opts:
+                    encryption_key_file_results[key] = True
+                if '--source-encryption-key-file' in param.opts:
+                    source_encryption_key_file_results[key] = True
+        assert sorted(list(encryption_key_file_results.keys())) == encryption_key_file_cmd_list
+        assert sorted(list(source_encryption_key_file_results.keys())) == source_encryption_key_file_cmd_list
+
+    def test_object_get(self):
+        result = util.invoke_command(['os', 'object', 'get', '--version-id'])
+        assert "requires an argument" in result.output
+
+    def test_object_head(self):
+        result = util.invoke_command(['os', 'object', 'head', '--version-id'])
+        assert "requires an argument" in result.output
+
     def test_object_put(self):
         result = util.invoke_command(['os', 'object', 'put', '--content-disposition', 'dummy-value', '--cache-control', 'dummy-value'])
 
         print(result.output)
         assert "Missing option(s)" in result.output
+
+    def test_get_encryption_key_params(self):
+        # create a random 32 byte array to represent an AES256 key and compute its SHA256 checksum
+        test_key_bytes = os.urandom(32)
+        test_key_b64_str = base64.b64encode(test_key_bytes).decode("utf-8")
+        test_key_sha256 = base64.b64encode(hashlib.sha256(test_key_bytes).digest()).decode("utf-8")
+        # Write the base64-encoded key into a file
+        td = tempfile.mkdtemp()
+        tf = tempfile.NamedTemporaryFile(mode="w", dir=td, delete=False)
+        tmp_file_name = tf.name
+        tf.write(test_key_b64_str)
+        tf.close()
+
+        tf = open(tmp_file_name, 'r')
+        params = _get_encryption_key_params(tf)
+
+        # Verify that the required key/value pairs are present
+        assert len(params) == 3
+        assert 'opc_sse_customer_key_sha256' in params
+        assert 'opc_sse_customer_key' in params
+        assert 'opc_sse_customer_algorithm' in params
+        assert params['opc_sse_customer_algorithm'] == 'AES256'
+        assert params['opc_sse_customer_key'] == test_key_b64_str
+        assert params['opc_sse_customer_key_sha256'] == test_key_sha256
+        tf.close()
+        os.unlink(tmp_file_name)
+        shutil.rmtree(td)
+
+    def test_get_source_encryption_key_params(self):
+        # create a random 32 byte array to represent an AES256 key and compute its SHA256 checksum
+        test_key_bytes = os.urandom(32)
+        test_key_b64_str = base64.b64encode(test_key_bytes).decode("utf-8")
+        test_key_sha256 = base64.b64encode(hashlib.sha256(test_key_bytes).digest()).decode("utf-8")
+        # Write the base64-encoded key into a file
+        td = tempfile.mkdtemp()
+        tf = tempfile.NamedTemporaryFile(mode="w", dir=td, delete=False)
+        tmp_file_name = tf.name
+        tf.write(test_key_b64_str)
+        tf.close()
+
+        tf = open(tmp_file_name, 'r')
+        params = _get_source_encryption_key_params(tf)
+
+        # Verify that the required key/value pairs are present
+        assert len(params) == 3
+        assert 'opc_source_sse_customer_key_sha256' in params
+        assert 'opc_source_sse_customer_key' in params
+        assert 'opc_source_sse_customer_algorithm' in params
+        assert params['opc_source_sse_customer_algorithm'] == 'AES256'
+        assert params['opc_source_sse_customer_key'] == test_key_b64_str
+        assert params['opc_source_sse_customer_key_sha256'] == test_key_sha256
+        tf.close()
+        os.unlink(tmp_file_name)
+        shutil.rmtree(td)
 
     def test_create_replication_policy(self):
         result = util.invoke_command(['os', 'replication', 'create-replication-policy'])
