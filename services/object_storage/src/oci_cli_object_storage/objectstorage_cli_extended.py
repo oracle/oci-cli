@@ -3,7 +3,9 @@
 
 from __future__ import division
 import arrow
+import base64
 import click
+import hashlib
 import math
 import os
 import os.path
@@ -80,6 +82,7 @@ cli_util.SERVICE_FUNCTIONS_TO_EXECUTE['os'] = cli_util_func
 final_command_processor.SERVICE_FUNCTIONS_TO_EXECUTE.append(remove_namespace_required_objectstorage)
 
 OBJECT_LIST_PAGE_SIZE = 100
+OBJECT_VERSION_LIST_PAGE_SIZE = 100
 OBJECT_LIST_PAGE_SIZE_BULK_OPERATIONS = 1000
 
 MAX_MULTIPART_SIZE = 10000
@@ -93,6 +96,10 @@ OBJECT_PUT_DISPLAY_HEADERS = {
     "last-modified",
     "opc-multipart-md5"
 }
+
+SSE_PARAMS = ['opc_sse_customer_algorithm', 'opc_sse_customer_key', 'opc_sse_customer_key_sha256']
+SOURCE_SSE_PARAMS = [hdr.replace('opc_', 'opc_source_') for hdr in SSE_PARAMS]
+SSE_ALGORITHM = "AES256"
 
 
 INCLUDE_EXCLUDE_PATTERN = r"""
@@ -197,6 +204,115 @@ cli_util.rename_command(objectstorage_cli, objectstorage_cli.work_request_log_en
 
 objectstorage_cli.os_root_group.help = "Object Storage Service CLI"
 objectstorage_cli.os_root_group.short_help = "Object Storage Service"
+
+objectstorage_cli.object_group.commands.pop(objectstorage_cli.list_object_versions.name)
+
+
+@objectstorage_cli.object_group.command(name='list-object-versions', help=u"""Lists the object versions in a bucket.
+
+To use this and other API operations, you must be authorized in an IAM policy. If you are not authorized, talk to an administrator. If you are an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
+@cli_util.option('--namespace', '--namespace-name', '-ns', required=True, help=u"""The Object Storage namespace used for the request.""")
+@cli_util.option('--bucket', '--bucket-name', '-bn', required=True, help=u"""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")
+@cli_util.option('--prefix', help=u"""The string to use for matching against the start of object names in a list query.""")
+@cli_util.option('--start', help=u"""Object names returned by a list query must be greater or equal to this parameter.""")
+@cli_util.option('--end', help=u"""Object names returned by a list query must be strictly less than this parameter.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--delimiter', help=u"""When this parameter is set, only objects whose names do not contain the delimiter character (after an optionally specified prefix) are returned in the objects key of the response body. Scanned objects whose names contain the delimiter have the part of their name up to the first occurrence of the delimiter (including the optional prefix) returned as a set of prefixes. Note that only '/' is a supported delimiter character at this time.""")
+@cli_util.option('--fields', default='name,size,timeCreated,md5', show_default=True, help=u"""Object summary in list of objects includes the 'name' field. This parameter can also include 'size' (object size in bytes), 'etag', 'md5', 'timeCreated' (object creation date and time) and 'timeModified' (object modification date and time). Value of this parameter should be a comma-separated, case-insensitive list of those field names. For example 'name,etag,timeCreated,md5,timeModified' Allowed values are: name, size, etag, timeCreated, md5, timeModified""")
+@cli_util.option('--start-after', help=u"""Object names returned by a list query must be greater than this parameter.""")
+@cli_util.option('--page', help=u"""The page at which to start retrieving results.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'object_storage', 'class': 'ObjectVersionCollection'})
+@cli_util.wrap_exceptions
+def list_object_versions(ctx, from_json, all_pages, page_size, namespace_name, bucket_name, prefix, start, end, limit, delimiter, fields, start_after, page):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+    elif not all_pages and limit is None:
+        limit = 100
+
+    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+        raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
+
+    if isinstance(bucket_name, six.string_types) and len(bucket_name.strip()) == 0:
+        raise click.UsageError('Parameter --bucket-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    if prefix is not None:
+        kwargs['prefix'] = prefix
+    if start is not None:
+        kwargs['start'] = start
+    if end is not None:
+        kwargs['end'] = end
+    if limit is not None:
+        kwargs['limit'] = limit
+    if delimiter is not None:
+        kwargs['delimiter'] = delimiter
+    if fields is not None:
+        kwargs['fields'] = fields
+    if start_after is not None:
+        kwargs['start_after'] = start_after
+    if page is not None:
+        kwargs['page'] = page
+    kwargs['opc_client_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    client = cli_util.build_client('object_storage', ctx)
+
+    all_items = []
+    prefixes = list()
+
+    remaining_item_count = limit
+    keep_paginating_for_all = True
+
+    # if the user explicitly sets limit to 0 we will still call the service once with limit=0
+    fetched_at_least_once = False
+    while (not all_pages and (remaining_item_count > 0 or not fetched_at_least_once)) or (all_pages and keep_paginating_for_all):
+        fetched_at_least_once = True
+
+        if all_pages:
+            if page_size:
+                kwargs['limit'] = page_size
+            else:
+                kwargs['limit'] = OBJECT_VERSION_LIST_PAGE_SIZE
+        else:
+            if page_size:
+                kwargs['limit'] = min(page_size, remaining_item_count)
+            else:
+                kwargs['limit'] = min(remaining_item_count, OBJECT_VERSION_LIST_PAGE_SIZE)
+
+        response = client.list_object_versions(
+            namespace_name=namespace_name,
+            bucket_name=bucket_name,
+            **kwargs
+        )
+
+        if response.data.prefixes is not None:
+            for prefix in response.data.prefixes:
+                if prefix not in prefixes:
+                    prefixes.append(prefix)
+
+        items = response.data.items
+        next_page = response.headers.get('opc-next-page')
+        all_items.extend(items)
+
+        if next_page:
+            if remaining_item_count:
+                remaining_item_count -= len(items)
+            kwargs['page'] = next_page
+        else:
+            keep_paginating_for_all = False
+            remaining_item_count = 0
+
+    metadata = {'prefixes': prefixes}
+
+    if response.headers.get('opc-next-page'):
+        metadata['opc-next-page'] = response.headers.get('opc-next-page')
+
+    render(all_items, metadata, ctx, display_all_headers=True)
 
 
 @objectstorage_cli.object_group.command(name='list')
@@ -332,12 +448,14 @@ def object_list(ctx, from_json, namespace, bucket_name, prefix, start, end, limi
 @cli_util.option('--verify-checksum', is_flag=True, help='Verify the checksum of the uploaded object with the local file.')
 @cli_util.option('--content-disposition', help=u"""The optional Content-Disposition header that defines presentational information for the object to be returned in GetObject and HeadObject responses. Specifying values for this header has no effect on Object Storage behavior. Programs that read the object determine what to do based on the value provided. For example, you could use this header to let users download objects with custom filenames in a browser.""")
 @cli_util.option('--cache-control', help=u"""The optional Cache-Control header that defines the caching behavior value to be returned in GetObject and HeadObject responses. Specifying values for this header has no effect on Object Storage behavior. Programs that read the object determine what to do based on the value provided. For example, you could use this header to identify objects that require caching restrictions.""")
+@cli_util.option('--encryption-key-file', type=click.File(mode='r'),
+                 help="""A file containing the base64-encoded string of the AES-256 encryption key associated with the object.""")
 @json_skeleton_utils.get_cli_json_input_option({'metadata': {'module': 'object_storage', 'class': 'dict(str, str)'}})
 @help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'metadata': {'module': 'object_storage', 'class': 'dict(str, str)'}}, output_type={'module': 'object_storage', 'class': 'ObjectSummary'})
 @wrap_exceptions
-def object_put(ctx, from_json, namespace, bucket_name, name, file, if_match, content_md5, metadata, content_type, content_language, content_encoding, force, no_overwrite, no_multipart, part_size, disable_parallel_uploads, parallel_upload_count, verify_checksum, content_disposition, cache_control):
+def object_put(ctx, from_json, namespace, bucket_name, name, file, if_match, content_md5, metadata, content_type, content_language, content_encoding, force, no_overwrite, no_multipart, part_size, disable_parallel_uploads, parallel_upload_count, verify_checksum, content_disposition, cache_control, encryption_key_file):
     """
     Creates a new object or overwrites an existing one.
 
@@ -428,6 +546,11 @@ def object_put(ctx, from_json, namespace, bucket_name, name, file, if_match, con
         kwargs['cache_control'] = cache_control
 
     total_size = os.fstat(file.fileno()).st_size
+
+    if encryption_key_file:
+        sse_args = _get_encryption_key_params(encryption_key_file)
+        if sse_args:
+            kwargs.update(sse_args)
 
     if math.ceil(total_size / part_size_mib) > MAX_MULTIPART_SIZE:
         part_size = math.ceil(math.ceil(total_size / MAX_MULTIPART_SIZE) / MEBIBYTE)
@@ -570,12 +693,14 @@ Specifying this flag will also allow for faster uploads as the CLI will not init
 \b
 {}
 """.format(INCLUDE_EXCLUDE_PATTERN))
+@cli_util.option('--encryption-key-file', type=click.File(mode='r'),
+                 help="""A file containing the base64-encoded string of the AES-256 encryption key associated with the object.""")
 @json_skeleton_utils.get_cli_json_input_option({'metadata': {'module': 'object_storage', 'class': 'dict(str, str)'}})
 @help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'metadata': {'module': 'object_storage', 'class': 'dict(str, str)'}})
 @wrap_exceptions
-def object_bulk_put(ctx, from_json, namespace, bucket_name, src_dir, object_prefix, metadata, content_type, content_language, content_encoding, overwrite, no_overwrite, no_multipart, part_size, disable_parallel_uploads, parallel_upload_count, verify_checksum, include, exclude):
+def object_bulk_put(ctx, from_json, namespace, bucket_name, src_dir, object_prefix, metadata, content_type, content_language, content_encoding, overwrite, no_overwrite, no_multipart, part_size, disable_parallel_uploads, parallel_upload_count, verify_checksum, include, exclude, encryption_key_file):
     """
     Uploads all files in a given directory and all subdirectories.
 
@@ -654,6 +779,11 @@ def object_bulk_put(ctx, from_json, namespace, bucket_name, src_dir, object_pref
         base_kwargs['content_encoding'] = content_encoding
     if part_size is not None:
         base_kwargs['part_size'] = part_size * MEBIBYTE
+
+    if encryption_key_file:
+        sse_args = _get_encryption_key_params(encryption_key_file)
+        if sse_args:
+            base_kwargs.update(sse_args)
 
     output = BulkPutOperationOutput()
 
@@ -812,6 +942,7 @@ def get_object_etag(client, namespace, bucket_name, name, client_request_id, if_
 @cli_util.option('--name', required=True, help='The name of the object.')
 @cli_util.option('--file', type=click.File(mode='wb', lazy=False), required=True,
                  help="The name of the file that will receive the object content, or '-' to write to STDOUT.")
+@cli_util.option('--version-id', help=u"""VersionId used to identify a particular version of the object""")
 @cli_util.option('--if-match', help='The entity tag to match.')
 @cli_util.option('--if-none-match', help='The entity tag to avoid matching.')
 @cli_util.option('--range',
@@ -820,12 +951,14 @@ def get_object_etag(client, namespace, bucket_name, name, client_request_id, if_
 @cli_util.option('--part-size', type=click.IntRange(128, None), help='Part size (in MiB) to use when downloading an object in multiple parts. The minimum allowable size is 128 MiB.')
 @cli_util.option('--parallel-download-count', type=click.INT, default=10, show_default=True,
                  help='The number of parallel operations to perform when downloading an object in multiple parts. Decreasing this value will make multipart downloads less resource intensive but they may take longer. Increasing this value may improve download times, but the download process will consume more system resources and network bandwidth.')
+@cli_util.option('--encryption-key-file', type=click.File(mode='r'),
+                 help="""A file containing the base64-encoded string of the AES-256 encryption key associated with the object.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @wrap_exceptions
-def object_get(ctx, from_json, namespace, bucket_name, name, file, if_match, if_none_match, range, multipart_download_threshold, part_size, parallel_download_count):
+def object_get(ctx, from_json, namespace, bucket_name, name, file, version_id, if_match, if_none_match, range, multipart_download_threshold, part_size, parallel_download_count, encryption_key_file):
     """
     Gets the metadata and body of an object.
 
@@ -836,9 +969,16 @@ def object_get(ctx, from_json, namespace, bucket_name, name, file, if_match, if_
     if range and multipart_download_threshold:
         raise click.UsageError("Cannot specify both the --range and --multipart-download-threshold parameters")
 
+    encryption_key_params = {}
+    if encryption_key_file:
+        sse_args = _get_encryption_key_params(encryption_key_file)
+        if sse_args:
+            encryption_key_params = sse_args
+
     client = build_client('object_storage', ctx)
 
-    head_object = client.head_object(namespace, bucket_name, name, opc_client_request_id=ctx.obj['request_id'])
+    head_object = client.head_object(namespace, bucket_name, name, opc_client_request_id=ctx.obj['request_id'],
+                                     **encryption_key_params)
     if not head_object:
         raise click.ClickException('The specified object does not exist')
 
@@ -865,8 +1005,9 @@ def object_get(ctx, from_json, namespace, bucket_name, name, file, if_match, if_
             if_match=if_match,
             if_none_match=if_none_match,
             range=range,
-            opc_client_request_id=ctx.obj['request_id']
-        )
+            opc_client_request_id=ctx.obj['request_id'],
+            version_id=version_id,
+            **encryption_key_params)
 
         # Stream using the raw urllib3.HTTPResponse, since using the Requests response
         # will automatically try to decode.
@@ -887,8 +1028,10 @@ def object_get(ctx, from_json, namespace, bucket_name, name, file, if_match, if_
             'request_id': ctx.obj['request_id'],
             'part_size': part_size,
             'multipart_download_threshold': multipart_download_threshold,
-            'total_size': object_size_bytes
+            'total_size': object_size_bytes,
+            'version_id': version_id
         }
+        get_object_multipart_kwargs.update(encryption_key_params)
 
         if not ctx.obj['debug'] and bar:
             get_object_multipart_kwargs['chunk_written_callback'] = bar.update
@@ -927,12 +1070,14 @@ def object_get(ctx, from_json, namespace, bucket_name, name, file, if_match, if_
 \b
 {}
 """.format(INCLUDE_EXCLUDE_PATTERN))
+@cli_util.option('--encryption-key-file', type=click.File(mode='r'),
+                 help="""A file containing the base64-encoded string of the AES-256 encryption key associated with the object.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @wrap_exceptions
-def object_bulk_get(ctx, from_json, namespace, bucket_name, prefix, delimiter, download_dir, overwrite, no_overwrite, include, exclude, parallel_operations_count, multipart_download_threshold, part_size):
+def object_bulk_get(ctx, from_json, namespace, bucket_name, prefix, delimiter, download_dir, overwrite, no_overwrite, include, exclude, parallel_operations_count, multipart_download_threshold, part_size, encryption_key_file):
     """
     Downloads all objects which match the given prefix to a given directory.
 
@@ -1019,6 +1164,12 @@ def object_bulk_get(ctx, from_json, namespace, bucket_name, prefix, delimiter, d
     keep_paginating = True
     ask_overwrite = True
 
+    encryption_key_params = {}
+    if encryption_key_file:
+        sse_args = _get_encryption_key_params(encryption_key_file)
+        if sse_args:
+            encryption_key_params = sse_args
+
     output = BulkGetOperationOutput()
 
     # Progress bar which we can reuse over and over again
@@ -1090,6 +1241,7 @@ def object_bulk_get(ctx, from_json, namespace, bucket_name, prefix, delimiter, d
                     'full_file_path': full_file_path,
                     'request_id': ctx.obj['request_id']
                 }
+                get_object_kwargs.update(encryption_key_params)
 
                 if ctx.obj['debug']:
                     update_progress_kwargs = {'message': 'Downloaded {}'.format(object_name)}
@@ -1159,20 +1311,29 @@ def object_bulk_get(ctx, from_json, namespace, bucket_name, prefix, delimiter, d
 @cli_util.option('-ns', '--namespace', '--namespace-name', 'namespace', required=True, help='The top-level namespace used for the request.')
 @cli_util.option('-bn', '--bucket-name', required=True, help='The name of the bucket.')
 @cli_util.option('--name', required=True, help='The name of the object.')
+@cli_util.option('--version-id', help=u"""VersionId used to identify a particular version of the object""")
 @cli_util.option('--if-match', help='The entity tag to match.')
 @cli_util.option('--if-none-match', help='The entity tag to avoid matching.')
+@cli_util.option('--encryption-key-file', type=click.File(mode='r'),
+                 help="""A file containing the base64-encoded string of the AES-256 encryption key associated with the object.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @wrap_exceptions
-def object_head(ctx, from_json, namespace, bucket_name, name, if_match, if_none_match):
+def object_head(ctx, from_json, namespace, bucket_name, name, version_id, if_match, if_none_match, encryption_key_file):
     """
     Gets the user-defined metadata and entity tag for an object.
 
     Example:
         oci os object head -ns mynamespace -bn mybucket --name myfile.txt
     """
+    encryption_key_params = {}
+    if encryption_key_file:
+        sse_args = _get_encryption_key_params(encryption_key_file)
+        if sse_args:
+            encryption_key_params = sse_args
+
     client = build_client('object_storage', ctx)
     response = client.head_object(
         namespace,
@@ -1180,7 +1341,9 @@ def object_head(ctx, from_json, namespace, bucket_name, name, if_match, if_none_
         name,
         if_match=if_match,
         if_none_match=if_none_match,
-        opc_client_request_id=ctx.obj['request_id'])
+        opc_client_request_id=ctx.obj['request_id'],
+        version_id=version_id,
+        **encryption_key_params)
 
     render(None, response.headers, ctx, display_all_headers=True)
 
@@ -1634,11 +1797,15 @@ def multipart_abort(ctx, from_json, namespace, bucket_name, object_name, upload_
     render_response(client.abort_multipart_upload(namespace, bucket_name, object_name, upload_id), ctx)
 
 
-@cli_util.copy_params_from_generated_command(objectstorage_cli.copy_object, params_to_exclude=['destination_object_name', 'destination_region', 'destination_namespace'])
+@cli_util.copy_params_from_generated_command(objectstorage_cli.copy_object, params_to_exclude=['destination_object_name', 'destination_region', 'destination_namespace'] + SSE_PARAMS + SOURCE_SSE_PARAMS)
 @objectstorage_cli.object_group.command(name='copy', help=objectstorage_cli.copy_object.help)
 @cli_util.option('--destination-region', help="""The destination region object will be copied to.""")
 @cli_util.option('--destination-namespace', help="""The destination namespace object will be copied to.""")
 @cli_util.option('--destination-object-name', help="""The destination name for the copy object.""")
+@cli_util.option('--encryption-key-file', type=click.File(mode='r'),
+                 help="""A file containing the base64-encoded string of the AES-256 encryption key associated with the object.""")
+@cli_util.option('--source-encryption-key-file', type=click.File(mode='r'),
+                 help="""A file containing the base64-encoded string of the AES-256 encryption key associated with the source object.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler({'destination-object-metadata': {'module': 'object_storage', 'class': 'dict(str, string)'}})
 @cli_util.wrap_exceptions
@@ -1650,6 +1817,16 @@ def copy_object(ctx, **kwargs):
         kwargs['destination_namespace'] = client.get_namespace().data
     if 'destination_region' not in kwargs or kwargs['destination_region'] is None:
         kwargs['destination_region'] = ctx.obj['config']['region']
+    if 'encryption_key_file' in kwargs:
+        sse_args = _get_encryption_key_params(kwargs['encryption_key_file'])
+        if sse_args:
+            kwargs.update(sse_args)
+        del kwargs['encryption_key_file']
+    if 'source_encryption_key_file' in kwargs:
+        sse_args = _get_source_encryption_key_params(kwargs['source_encryption_key_file'])
+        if sse_args:
+            kwargs.update(sse_args)
+        del kwargs['source_encryption_key_file']
     ctx.invoke(objectstorage_cli.copy_object, **kwargs)
 
 
@@ -1945,6 +2122,33 @@ def _get_file_filter_collection(base_directory, include, exclude, object_prefix)
             file_filter_collection.add_filter(e)
 
     return file_filter_collection
+
+
+# Returns a dictionary containing information about the customer-provided encryption key that is to be sent
+# along with the request
+def _get_encryption_key_params(encryption_key_file):
+    return _get_sse_params(encryption_key_file, SSE_PARAMS)
+
+
+# Returns a dictionary containing information about the customer-provided encryption key for the source object
+# (of a copy operation). This information is sent via HTTP headers.
+def _get_source_encryption_key_params(source_encryption_key_file):
+    return _get_sse_params(source_encryption_key_file, SOURCE_SSE_PARAMS)
+
+
+# Reads the base64-encoded AES key data from the specified file and computes its SHA256 checksum
+# and returns a dictionary of key/value pairs that are sent as HTTP headers
+def _get_sse_params(data_file, param_names):
+    if data_file:
+        key_data_base64_str = data_file.read()
+        key_sha256 = hashlib.sha256(base64.b64decode(key_data_base64_str)).digest()
+        key_sha256_base64_str = base64.b64encode(key_sha256).decode('utf-8')
+        return {
+            param_names[0]: SSE_ALGORITHM,
+            param_names[1]: key_data_base64_str,
+            param_names[2]: key_sha256_base64_str
+        }
+    return None
 
 
 class FileReadCallbackStream:

@@ -1,6 +1,6 @@
 # coding: utf-8
 # Copyright (c) 2016, 2019, Oracle and/or its affiliates. All rights reserved.
-
+import base64
 import filecmp
 import json
 import pytest
@@ -21,6 +21,7 @@ OBJECTS_TO_CREATE_IN_FOLDER_FOR_BULK_PUT = 20
 CONTENT_STRING_LENGTH = 5000
 MID_SIZED_FILE_IN_MEBIBTYES = 20
 LARGE_CONTENT_FILE_SIZE_IN_MEBIBYTES = 150  # Default multipart is 128MiB
+GENERATED_ENC_KEY_FILE = 'tests/temp/generated_enc_key.txt'
 
 
 # Holds the objects we create and their content so that we can verify results
@@ -52,12 +53,12 @@ def vcr_fixture(request):
 #    Bulk Put: create a folder structure containing small and large files, then tear it all down afterwards
 #    Bulk Delete: uses the folders and files generated for bulk put
 @pytest.fixture(scope='module', autouse=True)
-def generate_test_data(object_storage_client):
+def generate_test_data(object_storage_client, test_id):
     global bulk_get_object_to_content, bulk_get_bucket_name, root_bulk_put_folder, bulk_put_large_files, bulk_put_mid_sized_files, bulk_put_bucket_name
 
     # Create a test bucket
     create_bucket_request = oci.object_storage.models.CreateBucketDetails()
-    create_bucket_request.name = 'ObjectStorageBulkGetTest_{}'.format(util.random_number_string())
+    create_bucket_request.name = 'ObjectStorageBulkGetTest_{}'.format(test_id)
     create_bucket_request.compartment_id = util.COMPARTMENT_ID
     util.clear_test_data(object_storage_client, util.NAMESPACE, util.COMPARTMENT_ID, create_bucket_request.name)
     object_storage_client.create_bucket(util.NAMESPACE, create_bucket_request)
@@ -89,13 +90,13 @@ def generate_test_data(object_storage_client):
         bulk_get_object_to_content[object_name] = object_content
 
     # makedirs creates all subfolders recursively
-    root_bulk_put_folder = 'tests/temp/bulk_put_{}'.format(util.random_number_string())
+    root_bulk_put_folder = 'tests/temp/bulk_put_{}'.format(test_id)
     bulk_put_folder_leaf = '{}/subfolder1/subfolder2/subfolder3'.format(root_bulk_put_folder)
     if not os.path.exists(bulk_put_folder_leaf):
         os.makedirs(bulk_put_folder_leaf)
 
     create_bucket_request = oci.object_storage.models.CreateBucketDetails()
-    create_bucket_request.name = 'ObjectStorageBulkPutTest_{}'.format(util.random_number_string())
+    create_bucket_request.name = 'ObjectStorageBulkPutTest_{}'.format(test_id)
     create_bucket_request.compartment_id = util.COMPARTMENT_ID
     util.clear_test_data(object_storage_client, util.NAMESPACE, util.COMPARTMENT_ID, create_bucket_request.name)
     object_storage_client.create_bucket(util.NAMESPACE, create_bucket_request)
@@ -123,14 +124,28 @@ def generate_test_data(object_storage_client):
                 with open(file_path, 'w') as f:
                     f.write(generate_random_string(CONTENT_STRING_LENGTH))
 
+    # create the SSE-C encryption key
+    enc_key_str = generate_aes256_key_str()
+    with open(GENERATED_ENC_KEY_FILE, 'w') as f:
+        f.write(enc_key_str)
+
     yield
 
     # Tear down stuff by deleting all the things and then deleting the buckets
     delete_bucket_and_all_items(object_storage_client, bulk_get_bucket_name)
     delete_bucket_and_all_items(object_storage_client, bulk_put_bucket_name)
 
+    # remove the SSE-C key file
+    if os.path.exists(GENERATED_ENC_KEY_FILE):
+        os.remove(GENERATED_ENC_KEY_FILE)
+
     # Remove all directories recursively
     shutil.rmtree(root_bulk_put_folder)
+
+
+@pytest.fixture(params=[False, True])
+def customer_key(request):
+    return request.param
 
 
 @util.skip_while_rerecording
@@ -252,9 +267,9 @@ def test_get_no_objects(vcr_fixture):
 
 
 @util.skip_while_rerecording
-def test_get_multipart(object_storage_client):
+def test_get_multipart(object_storage_client, test_id):
     create_bucket_request = oci.object_storage.models.CreateBucketDetails()
-    create_bucket_request.name = 'ObjectStorageBulkGetMultipartsTest_{}'.format(util.random_number_string())
+    create_bucket_request.name = 'ObjectStorageBulkGetMultipartsTest_{}'.format(test_id)
     create_bucket_request.compartment_id = util.COMPARTMENT_ID
     util.clear_test_data(object_storage_client, util.NAMESPACE, util.COMPARTMENT_ID, create_bucket_request.name)
     object_storage_client.create_bucket(util.NAMESPACE, create_bucket_request)
@@ -320,8 +335,13 @@ def test_list_all_objects_operations(vcr_fixture):
 
 # Bulk puts objects, uses multipart where appropriate (when we breach the default of 128MiB)
 @util.skip_while_rerecording
-def test_bulk_put_default_options():
-    result = invoke(['os', 'object', 'bulk-upload', '--namespace', util.NAMESPACE, '--bucket-name', bulk_put_bucket_name, '--src-dir', root_bulk_put_folder])
+def test_bulk_put_default_options(customer_key):
+    ssec_params = []
+    if customer_key:
+        ssec_params = ['--encryption-key-file', GENERATED_ENC_KEY_FILE]
+
+    result = invoke(['os', 'object', 'bulk-upload', '--namespace', util.NAMESPACE, '--bucket-name', bulk_put_bucket_name,
+                     '--src-dir', root_bulk_put_folder] + ssec_params)
 
     # No failures or skips and we uploaded everything
     parsed_result = parse_json_response_from_mixed_output(result.output)
@@ -331,7 +351,8 @@ def test_bulk_put_default_options():
 
     # Pull everything down and verify that the files match (everything in source appears in destination and they are equal)
     download_folder = 'tests/temp/verify_files_{}'.format(bulk_put_bucket_name)
-    invoke(['os', 'object', 'bulk-download', '--namespace', util.NAMESPACE, '--bucket-name', bulk_put_bucket_name, '--download-dir', download_folder])
+    invoke(['os', 'object', 'bulk-download', '--namespace', util.NAMESPACE, '--bucket-name', bulk_put_bucket_name,
+            '--download-dir', download_folder] + ssec_params)
     object_name_set = set()
     for dir_name, subdir_list, file_list in os.walk(root_bulk_put_folder):
         for file in file_list:
@@ -346,7 +367,8 @@ def test_bulk_put_default_options():
             object_name_set.add(get_object_name_from_path(root_bulk_put_folder, source_file_path))
 
     # If we try and put it in the same bucket without --overwrite then everything should be skipped. There should be prompts
-    result = invoke(['os', 'object', 'bulk-upload', '--namespace', util.NAMESPACE, '--bucket-name', bulk_put_bucket_name, '--src-dir', root_bulk_put_folder])
+    result = invoke(['os', 'object', 'bulk-upload', '--namespace', util.NAMESPACE, '--bucket-name', bulk_put_bucket_name,
+                     '--src-dir', root_bulk_put_folder] + ssec_params)
     parsed_result = parse_json_response_from_mixed_output(result.output)
     assert 'Are you sure you want to overwrite it?' in result.output
     assert set(parsed_result['skipped-objects']) == object_name_set
@@ -354,7 +376,8 @@ def test_bulk_put_default_options():
     assert parsed_result['uploaded-objects'] == {}
 
     # If we say to --no-overwrite then everything should be skipped. There should be no prompts
-    result = invoke(['os', 'object', 'bulk-upload', '--namespace', util.NAMESPACE, '--bucket-name', bulk_put_bucket_name, '--src-dir', root_bulk_put_folder, '--no-overwrite'])
+    result = invoke(['os', 'object', 'bulk-upload', '--namespace', util.NAMESPACE, '--bucket-name', bulk_put_bucket_name,
+                     '--src-dir', root_bulk_put_folder, '--no-overwrite'] + ssec_params)
     parsed_result = parse_json_response_from_mixed_output(result.output)
     assert 'Are you sure you want to overwrite it?' not in result.output
     assert set(parsed_result['skipped-objects']) == object_name_set
@@ -362,7 +385,8 @@ def test_bulk_put_default_options():
     assert parsed_result['uploaded-objects'] == {}
 
     # Now we force it
-    result = invoke(['os', 'object', 'bulk-upload', '--namespace', util.NAMESPACE, '--bucket-name', bulk_put_bucket_name, '--src-dir', root_bulk_put_folder, '--overwrite'])
+    result = invoke(['os', 'object', 'bulk-upload', '--namespace', util.NAMESPACE, '--bucket-name', bulk_put_bucket_name,
+                     '--src-dir', root_bulk_put_folder, '--overwrite'] + ssec_params)
     parsed_result = parse_json_response_from_mixed_output(result.output)
     assert parsed_result['skipped-objects'] == []
     assert parsed_result['upload-failures'] == {}
@@ -370,7 +394,8 @@ def test_bulk_put_default_options():
     for object_name in object_name_set:
         assert object_name in parsed_result['uploaded-objects']
 
-    result = invoke(['os', 'object', 'bulk-upload', '--namespace', util.NAMESPACE, '--bucket-name', bulk_put_bucket_name, '--src-dir', root_bulk_put_folder, '--overwrite', '--verify-checksum'])
+    result = invoke(['os', 'object', 'bulk-upload', '--namespace', util.NAMESPACE, '--bucket-name', bulk_put_bucket_name,
+                     '--src-dir', root_bulk_put_folder, '--overwrite', '--verify-checksum'] + ssec_params)
 
     # No failures or skips and we uploaded everything
     parsed_result = parse_json_response_from_mixed_output(result.output)
@@ -433,9 +458,9 @@ def test_bulk_put_auto_content_type():
 #   - Try to upload with a part size of 10MiB (this will force the large and mid-sized files to be multipart uploaded)
 #   - Try to upload with multipart disabled
 @util.skip_while_rerecording
-def test_bulk_put_with_multipart_params(object_storage_client):
+def test_bulk_put_with_multipart_params(object_storage_client, test_id):
     create_bucket_request = oci.object_storage.models.CreateBucketDetails()
-    create_bucket_request.name = 'ObjectStorageBulkPutMultipartsTest_{}'.format(util.random_number_string())
+    create_bucket_request.name = 'ObjectStorageBulkPutMultipartsTest_{}'.format(test_id)
     create_bucket_request.compartment_id = util.COMPARTMENT_ID
     util.clear_test_data(object_storage_client, util.NAMESPACE, util.COMPARTMENT_ID, create_bucket_request.name)
     object_storage_client.create_bucket(util.NAMESPACE, create_bucket_request)
@@ -821,9 +846,9 @@ def test_bulk_put_get_delete_with_exclusions(object_storage_client):
 
 
 @util.skip_while_rerecording
-def test_delete_when_no_objects_in_bucket(vcr_fixture, object_storage_client):
+def test_delete_when_no_objects_in_bucket(vcr_fixture, object_storage_client, test_id):
     create_bucket_request = oci.object_storage.models.CreateBucketDetails()
-    create_bucket_request.name = 'ObjectStorageBulkDelete_{}'.format(util.random_number_string())
+    create_bucket_request.name = 'ObjectStorageBulkDelete_{}'.format(test_id)
     create_bucket_request.compartment_id = util.COMPARTMENT_ID
     object_storage_client.create_bucket(util.NAMESPACE, create_bucket_request)
 
@@ -885,9 +910,9 @@ def test_delete(object_storage_client):
 
 
 @util.skip_while_rerecording
-def test_bulk_operation_table_output_query(object_storage_client):
+def test_bulk_operation_table_output_query(object_storage_client, test_id):
     create_bucket_request = oci.object_storage.models.CreateBucketDetails()
-    create_bucket_request.name = 'ObjectStorageTableOutput_{}'.format(util.random_number_string())
+    create_bucket_request.name = 'ObjectStorageTableOutput_{}'.format(test_id)
     create_bucket_request.compartment_id = util.COMPARTMENT_ID
     util.clear_test_data(object_storage_client, util.NAMESPACE, util.COMPARTMENT_ID, create_bucket_request.name)
     object_storage_client.create_bucket(util.NAMESPACE, create_bucket_request)
@@ -1027,3 +1052,8 @@ def verify_downloaded_folders_for_inclusion_exclusion_tests(expected_uploaded_fi
     assert files_compared == len(expected_uploaded_files)
 
     shutil.rmtree(actual_download_folder)
+
+
+def generate_aes256_key_str():
+    key = os.urandom(32)
+    return base64.b64encode(key).decode('utf-8')

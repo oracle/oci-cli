@@ -224,9 +224,16 @@ def commit_multipart_upload(ctx, from_json, namespace_name, bucket_name, object_
 @cli_util.option('--destination-bucket', required=True, help=u"""The destination bucket the object will be copied to.""")
 @cli_util.option('--destination-object-name', required=True, help=u"""The name of the destination object resulting from the copy operation.""")
 @cli_util.option('--source-object-if-match-e-tag', help=u"""The entity tag (ETag) to match against that of the source object. Used to confirm that the source object with a given name is the version of that object storing a specified ETag.""")
+@cli_util.option('--source-version-id', help=u"""VersionId of the object to copy. If not provided then current version is copied by default.""")
 @cli_util.option('--destination-object-if-match-e-tag', help=u"""The entity tag (ETag) to match against that of the destination object (an object intended to be overwritten). Used to confirm that the destination object stored under a given name is the version of that object storing a specified entity tag.""")
 @cli_util.option('--destination-object-if-none-match-e-tag', help=u"""The entity tag (ETag) to avoid matching. The only valid value is '*', which indicates that the request should fail if the object already exists in the destination bucket.""")
 @cli_util.option('--destination-object-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Arbitrary string keys and values for the user-defined metadata for the object. Keys must be in \"opc-meta-*\" format. Avoid entering confidential information. Metadata key-value pairs entered in this field are assigned to the destination object. If you enter no metadata values, the destination object will inherit any existing metadata values associated with the source object.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--opc-sse-customer-algorithm', help=u"""The optional header that specifies \"AES256\" as the encryption algorithm. For more information, see [Using Your Own Keys for Server-Side Encryption].""")
+@cli_util.option('--opc-sse-customer-key', help=u"""The optional header that specifies the base64-encoded 256-bit encryption key to use to encrypt or decrypt the data. For more information, see [Using Your Own Keys for Server-Side Encryption].""")
+@cli_util.option('--opc-sse-customer-key-sha256', help=u"""The optional header that specifies the base64-encoded SHA256 hash of the encryption key. This value is used to check the integrity of the encryption key. For more information, see [Using Your Own Keys for Server-Side Encryption].""")
+@cli_util.option('--opc-source-sse-customer-algorithm', help=u"""The optional header that specifies \"AES256\" as the encryption algorithm to use to decrypt the source object. For more information, see [Using Your Own Keys for Server-Side Encryption].""")
+@cli_util.option('--opc-source-sse-customer-key', help=u"""The optional header that specifies the base64-encoded 256-bit encryption key to use to decrypt the source object. For more information, see [Using Your Own Keys for Server-Side Encryption].""")
+@cli_util.option('--opc-source-sse-customer-key-sha256', help=u"""The optional header that specifies the base64-encoded SHA256 hash of the encryption key used to decrypt the source object. This value is used to check the integrity of the encryption key. For more information, see [Using Your Own Keys for Server-Side Encryption].""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "COMPLETED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -235,7 +242,7 @@ def commit_multipart_upload(ctx, from_json, namespace_name, bucket_name, object_
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'destination-object-metadata': {'module': 'object_storage', 'class': 'dict(str, string)'}})
 @cli_util.wrap_exceptions
-def copy_object(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, namespace_name, bucket_name, source_object_name, destination_region, destination_namespace, destination_bucket, destination_object_name, source_object_if_match_e_tag, destination_object_if_match_e_tag, destination_object_if_none_match_e_tag, destination_object_metadata):
+def copy_object(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, namespace_name, bucket_name, source_object_name, destination_region, destination_namespace, destination_bucket, destination_object_name, source_object_if_match_e_tag, source_version_id, destination_object_if_match_e_tag, destination_object_if_none_match_e_tag, destination_object_metadata, opc_sse_customer_algorithm, opc_sse_customer_key, opc_sse_customer_key_sha256, opc_source_sse_customer_algorithm, opc_source_sse_customer_key, opc_source_sse_customer_key_sha256):
 
     if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
@@ -244,6 +251,18 @@ def copy_object(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
         raise click.UsageError('Parameter --bucket-name cannot be whitespace or empty string')
 
     kwargs = {}
+    if opc_sse_customer_algorithm is not None:
+        kwargs['opc_sse_customer_algorithm'] = opc_sse_customer_algorithm
+    if opc_sse_customer_key is not None:
+        kwargs['opc_sse_customer_key'] = opc_sse_customer_key
+    if opc_sse_customer_key_sha256 is not None:
+        kwargs['opc_sse_customer_key_sha256'] = opc_sse_customer_key_sha256
+    if opc_source_sse_customer_algorithm is not None:
+        kwargs['opc_source_sse_customer_algorithm'] = opc_source_sse_customer_algorithm
+    if opc_source_sse_customer_key is not None:
+        kwargs['opc_source_sse_customer_key'] = opc_source_sse_customer_key
+    if opc_source_sse_customer_key_sha256 is not None:
+        kwargs['opc_source_sse_customer_key_sha256'] = opc_source_sse_customer_key_sha256
     kwargs['opc_client_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     details = {}
@@ -255,6 +274,9 @@ def copy_object(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 
     if source_object_if_match_e_tag is not None:
         details['sourceObjectIfMatchETag'] = source_object_if_match_e_tag
+
+    if source_version_id is not None:
+        details['sourceVersionId'] = source_version_id
 
     if destination_object_if_match_e_tag is not None:
         details['destinationObjectIfMatchETag'] = destination_object_if_match_e_tag
@@ -308,12 +330,13 @@ def copy_object(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--kms-key-id', help=u"""The [OCID] of a master encryption key used to call the Key Management service to generate a data encryption key or to encrypt or decrypt a data encryption key.""")
+@cli_util.option('--versioning', type=custom_types.CliCaseInsensitiveChoice(["Enabled", "Disabled"]), help=u"""Set the versioning status on the bucket. By default, a bucket is created with versioning `Disabled`. Use this option to enable versioning during bucket creation. Objects in a version enabled bucket are protected from overwrites and deletions. Previous versions of the same object will be available in the bucket.""")
 @json_skeleton_utils.get_cli_json_input_option({'metadata': {'module': 'object_storage', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'object_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'object_storage', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'metadata': {'module': 'object_storage', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'object_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'object_storage', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'object_storage', 'class': 'Bucket'})
 @cli_util.wrap_exceptions
-def create_bucket(ctx, from_json, namespace_name, name, compartment_id, metadata, public_access_type, storage_tier, object_events_enabled, freeform_tags, defined_tags, kms_key_id):
+def create_bucket(ctx, from_json, namespace_name, name, compartment_id, metadata, public_access_type, storage_tier, object_events_enabled, freeform_tags, defined_tags, kms_key_id, versioning):
 
     if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
@@ -346,6 +369,9 @@ def create_bucket(ctx, from_json, namespace_name, name, compartment_id, metadata
     if kms_key_id is not None:
         details['kmsKeyId'] = kms_key_id
 
+    if versioning is not None:
+        details['versioning'] = versioning
+
     client = cli_util.build_client('object_storage', ctx)
     result = client.create_bucket(
         namespace_name=namespace_name,
@@ -367,12 +393,15 @@ def create_bucket(ctx, from_json, namespace_name, name, compartment_id, metadata
 @cli_util.option('--metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Arbitrary string keys and values for the user-defined metadata for the object. Keys must be in \"opc-meta-*\" format. Avoid entering confidential information.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""The entity tag (ETag) to match. For creating and committing a multipart upload to an object, this is the entity tag of the target object. For uploading a part, this is the entity tag of the target part.""")
 @cli_util.option('--if-none-match', help=u"""The entity tag (ETag) to avoid matching. The only valid value is '*', which indicates that the request should fail if the object already exists. For creating and committing a multipart upload, this is the entity tag of the target object. For uploading a part, this is the entity tag of the target part.""")
+@cli_util.option('--opc-sse-customer-algorithm', help=u"""The optional header that specifies \"AES256\" as the encryption algorithm. For more information, see [Using Your Own Keys for Server-Side Encryption].""")
+@cli_util.option('--opc-sse-customer-key', help=u"""The optional header that specifies the base64-encoded 256-bit encryption key to use to encrypt or decrypt the data. For more information, see [Using Your Own Keys for Server-Side Encryption].""")
+@cli_util.option('--opc-sse-customer-key-sha256', help=u"""The optional header that specifies the base64-encoded SHA256 hash of the encryption key. This value is used to check the integrity of the encryption key. For more information, see [Using Your Own Keys for Server-Side Encryption].""")
 @json_skeleton_utils.get_cli_json_input_option({'metadata': {'module': 'object_storage', 'class': 'dict(str, string)'}})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'metadata': {'module': 'object_storage', 'class': 'dict(str, string)'}}, output_type={'module': 'object_storage', 'class': 'MultipartUpload'})
 @cli_util.wrap_exceptions
-def create_multipart_upload(ctx, from_json, namespace_name, bucket_name, object, content_type, content_language, content_encoding, content_disposition, cache_control, metadata, if_match, if_none_match):
+def create_multipart_upload(ctx, from_json, namespace_name, bucket_name, object, content_type, content_language, content_encoding, content_disposition, cache_control, metadata, if_match, if_none_match, opc_sse_customer_algorithm, opc_sse_customer_key, opc_sse_customer_key_sha256):
 
     if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
@@ -385,6 +414,12 @@ def create_multipart_upload(ctx, from_json, namespace_name, bucket_name, object,
         kwargs['if_match'] = if_match
     if if_none_match is not None:
         kwargs['if_none_match'] = if_none_match
+    if opc_sse_customer_algorithm is not None:
+        kwargs['opc_sse_customer_algorithm'] = opc_sse_customer_algorithm
+    if opc_sse_customer_key is not None:
+        kwargs['opc_sse_customer_key'] = opc_sse_customer_key
+    if opc_sse_customer_key_sha256 is not None:
+        kwargs['opc_sse_customer_key_sha256'] = opc_sse_customer_key_sha256
     kwargs['opc_client_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     details = {}
@@ -575,13 +610,14 @@ def delete_bucket(ctx, from_json, namespace_name, bucket_name, if_match):
 @cli_util.option('--bucket-name', required=True, help=u"""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")
 @cli_util.option('--object-name', required=True, help=u"""The name of the object. Avoid entering confidential information. Example: `test/object1.log`""")
 @cli_util.option('--if-match', help=u"""The entity tag (ETag) to match. For creating and committing a multipart upload to an object, this is the entity tag of the target object. For uploading a part, this is the entity tag of the target part.""")
+@cli_util.option('--version-id', help=u"""VersionId used to identify a particular version of the object""")
 @cli_util.confirm_delete_option
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def delete_object(ctx, from_json, namespace_name, bucket_name, object_name, if_match):
+def delete_object(ctx, from_json, namespace_name, bucket_name, object_name, if_match, version_id):
 
     if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
@@ -595,6 +631,8 @@ def delete_object(ctx, from_json, namespace_name, bucket_name, object_name, if_m
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
+    if version_id is not None:
+        kwargs['version_id'] = version_id
     kwargs['opc_client_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('object_storage', ctx)
     result = client.delete_object(
@@ -826,15 +864,19 @@ def get_namespace_metadata(ctx, from_json, namespace_name):
 @cli_util.option('--bucket-name', required=True, help=u"""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")
 @cli_util.option('--object-name', required=True, help=u"""The name of the object. Avoid entering confidential information. Example: `test/object1.log`""")
 @cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
+@cli_util.option('--version-id', help=u"""VersionId used to identify a particular version of the object""")
 @cli_util.option('--if-match', help=u"""The entity tag (ETag) to match. For creating and committing a multipart upload to an object, this is the entity tag of the target object. For uploading a part, this is the entity tag of the target part.""")
 @cli_util.option('--if-none-match', help=u"""The entity tag (ETag) to avoid matching. The only valid value is '*', which indicates that the request should fail if the object already exists. For creating and committing a multipart upload, this is the entity tag of the target object. For uploading a part, this is the entity tag of the target part.""")
 @cli_util.option('--range', help=u"""Optional byte range to fetch, as described in [RFC 7233]. Note that only a single range of bytes is supported.""")
+@cli_util.option('--opc-sse-customer-algorithm', help=u"""The optional header that specifies \"AES256\" as the encryption algorithm. For more information, see [Using Your Own Keys for Server-Side Encryption].""")
+@cli_util.option('--opc-sse-customer-key', help=u"""The optional header that specifies the base64-encoded 256-bit encryption key to use to encrypt or decrypt the data. For more information, see [Using Your Own Keys for Server-Side Encryption].""")
+@cli_util.option('--opc-sse-customer-key-sha256', help=u"""The optional header that specifies the base64-encoded SHA256 hash of the encryption key. This value is used to check the integrity of the encryption key. For more information, see [Using Your Own Keys for Server-Side Encryption].""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def get_object(ctx, from_json, file, namespace_name, bucket_name, object_name, if_match, if_none_match, range):
+def get_object(ctx, from_json, file, namespace_name, bucket_name, object_name, version_id, if_match, if_none_match, range, opc_sse_customer_algorithm, opc_sse_customer_key, opc_sse_customer_key_sha256):
 
     if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
@@ -846,12 +888,20 @@ def get_object(ctx, from_json, file, namespace_name, bucket_name, object_name, i
         raise click.UsageError('Parameter --object-name cannot be whitespace or empty string')
 
     kwargs = {}
+    if version_id is not None:
+        kwargs['version_id'] = version_id
     if if_match is not None:
         kwargs['if_match'] = if_match
     if if_none_match is not None:
         kwargs['if_none_match'] = if_none_match
     if range is not None:
         kwargs['range'] = range
+    if opc_sse_customer_algorithm is not None:
+        kwargs['opc_sse_customer_algorithm'] = opc_sse_customer_algorithm
+    if opc_sse_customer_key is not None:
+        kwargs['opc_sse_customer_key'] = opc_sse_customer_key
+    if opc_sse_customer_key_sha256 is not None:
+        kwargs['opc_sse_customer_key_sha256'] = opc_sse_customer_key_sha256
     kwargs['opc_client_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('object_storage', ctx)
     result = client.get_object(
@@ -1067,14 +1117,18 @@ def head_bucket(ctx, from_json, namespace_name, bucket_name, if_match, if_none_m
 @cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
 @cli_util.option('--bucket-name', required=True, help=u"""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")
 @cli_util.option('--object-name', required=True, help=u"""The name of the object. Avoid entering confidential information. Example: `test/object1.log`""")
+@cli_util.option('--version-id', help=u"""VersionId used to identify a particular version of the object""")
 @cli_util.option('--if-match', help=u"""The entity tag (ETag) to match. For creating and committing a multipart upload to an object, this is the entity tag of the target object. For uploading a part, this is the entity tag of the target part.""")
 @cli_util.option('--if-none-match', help=u"""The entity tag (ETag) to avoid matching. The only valid value is '*', which indicates that the request should fail if the object already exists. For creating and committing a multipart upload, this is the entity tag of the target object. For uploading a part, this is the entity tag of the target part.""")
+@cli_util.option('--opc-sse-customer-algorithm', help=u"""The optional header that specifies \"AES256\" as the encryption algorithm. For more information, see [Using Your Own Keys for Server-Side Encryption].""")
+@cli_util.option('--opc-sse-customer-key', help=u"""The optional header that specifies the base64-encoded 256-bit encryption key to use to encrypt or decrypt the data. For more information, see [Using Your Own Keys for Server-Side Encryption].""")
+@cli_util.option('--opc-sse-customer-key-sha256', help=u"""The optional header that specifies the base64-encoded SHA256 hash of the encryption key. This value is used to check the integrity of the encryption key. For more information, see [Using Your Own Keys for Server-Side Encryption].""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def head_object(ctx, from_json, namespace_name, bucket_name, object_name, if_match, if_none_match):
+def head_object(ctx, from_json, namespace_name, bucket_name, object_name, version_id, if_match, if_none_match, opc_sse_customer_algorithm, opc_sse_customer_key, opc_sse_customer_key_sha256):
 
     if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
@@ -1086,10 +1140,18 @@ def head_object(ctx, from_json, namespace_name, bucket_name, object_name, if_mat
         raise click.UsageError('Parameter --object-name cannot be whitespace or empty string')
 
     kwargs = {}
+    if version_id is not None:
+        kwargs['version_id'] = version_id
     if if_match is not None:
         kwargs['if_match'] = if_match
     if if_none_match is not None:
         kwargs['if_none_match'] = if_none_match
+    if opc_sse_customer_algorithm is not None:
+        kwargs['opc_sse_customer_algorithm'] = opc_sse_customer_algorithm
+    if opc_sse_customer_key is not None:
+        kwargs['opc_sse_customer_key'] = opc_sse_customer_key
+    if opc_sse_customer_key_sha256 is not None:
+        kwargs['opc_sse_customer_key_sha256'] = opc_sse_customer_key_sha256
     kwargs['opc_client_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('object_storage', ctx)
     result = client.head_object(
@@ -1288,7 +1350,7 @@ def list_multipart_uploads(ctx, from_json, all_pages, page_size, namespace_name,
     cli_util.render_response(result, ctx)
 
 
-@object_group.command(name=cli_util.override('os.list_objects.command_name', 'list'), help=u"""Lists the objects in a bucket.
+@object_group.command(name=cli_util.override('os.list_object_versions.command_name', 'list-object-versions'), help=u"""Lists the object versions in a bucket.
 
 To use this and other API operations, you must be authorized in an IAM policy. If you are not authorized, talk to an administrator. If you are an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
@@ -1298,14 +1360,20 @@ To use this and other API operations, you must be authorized in an IAM policy. I
 @cli_util.option('--end', help=u"""Object names returned by a list query must be strictly less than this parameter.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--delimiter', help=u"""When this parameter is set, only objects whose names do not contain the delimiter character (after an optionally specified prefix) are returned in the objects key of the response body. Scanned objects whose names contain the delimiter have the part of their name up to the first occurrence of the delimiter (including the optional prefix) returned as a set of prefixes. Note that only '/' is a supported delimiter character at this time.""")
-@cli_util.option('--fields', help=u"""Object summary in list of objects includes the 'name' field. This parameter can also include 'size' (object size in bytes), 'etag', 'md5', and 'timeCreated' (object creation date and time) fields. Value of this parameter should be a comma-separated, case-insensitive list of those field names. For example 'name,etag,timeCreated,md5'. Allowed values are: name, size, etag, timeCreated, md5""")
+@cli_util.option('--fields', help=u"""Object summary in list of objects includes the 'name' field. This parameter can also include 'size' (object size in bytes), 'etag', 'md5', 'timeCreated' (object creation date and time) and 'timeModified' (object modification date and time). Value of this parameter should be a comma-separated, case-insensitive list of those field names. For example 'name,etag,timeCreated,md5,timeModified' Allowed values are: name, size, etag, timeCreated, md5, timeModified""")
+@cli_util.option('--start-after', help=u"""Object names returned by a list query must be greater than this parameter.""")
+@cli_util.option('--page', help=u"""The page at which to start retrieving results.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'object_storage', 'class': 'ListObjects'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'object_storage', 'class': 'ObjectVersionCollection'})
 @cli_util.wrap_exceptions
-def list_objects(ctx, from_json, all_pages, namespace_name, bucket_name, prefix, start, end, limit, delimiter, fields):
+def list_object_versions(ctx, from_json, all_pages, page_size, namespace_name, bucket_name, prefix, start, end, limit, delimiter, fields, start_after, page):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
     if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
@@ -1326,6 +1394,81 @@ def list_objects(ctx, from_json, all_pages, namespace_name, bucket_name, prefix,
         kwargs['delimiter'] = delimiter
     if fields is not None:
         kwargs['fields'] = fields
+    if start_after is not None:
+        kwargs['start_after'] = start_after
+    if page is not None:
+        kwargs['page'] = page
+    kwargs['opc_client_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('object_storage', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_object_versions,
+            namespace_name=namespace_name,
+            bucket_name=bucket_name,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_object_versions,
+            limit,
+            page_size,
+            namespace_name=namespace_name,
+            bucket_name=bucket_name,
+            **kwargs
+        )
+    else:
+        result = client.list_object_versions(
+            namespace_name=namespace_name,
+            bucket_name=bucket_name,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@object_group.command(name=cli_util.override('os.list_objects.command_name', 'list'), help=u"""Lists the objects in a bucket.
+
+To use this and other API operations, you must be authorized in an IAM policy. If you are not authorized, talk to an administrator. If you are an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
+@cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
+@cli_util.option('--bucket-name', required=True, help=u"""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")
+@cli_util.option('--prefix', help=u"""The string to use for matching against the start of object names in a list query.""")
+@cli_util.option('--start', help=u"""Object names returned by a list query must be greater or equal to this parameter.""")
+@cli_util.option('--end', help=u"""Object names returned by a list query must be strictly less than this parameter.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--delimiter', help=u"""When this parameter is set, only objects whose names do not contain the delimiter character (after an optionally specified prefix) are returned in the objects key of the response body. Scanned objects whose names contain the delimiter have the part of their name up to the first occurrence of the delimiter (including the optional prefix) returned as a set of prefixes. Note that only '/' is a supported delimiter character at this time.""")
+@cli_util.option('--fields', help=u"""Object summary in list of objects includes the 'name' field. This parameter can also include 'size' (object size in bytes), 'etag', 'md5', 'timeCreated' (object creation date and time) and 'timeModified' (object modification date and time). Value of this parameter should be a comma-separated, case-insensitive list of those field names. For example 'name,etag,timeCreated,md5,timeModified' Allowed values are: name, size, etag, timeCreated, md5, timeModified""")
+@cli_util.option('--start-after', help=u"""Object names returned by a list query must be greater than this parameter.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'object_storage', 'class': 'ListObjects'})
+@cli_util.wrap_exceptions
+def list_objects(ctx, from_json, all_pages, namespace_name, bucket_name, prefix, start, end, limit, delimiter, fields, start_after):
+
+    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+        raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
+
+    if isinstance(bucket_name, six.string_types) and len(bucket_name.strip()) == 0:
+        raise click.UsageError('Parameter --bucket-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    if prefix is not None:
+        kwargs['prefix'] = prefix
+    if start is not None:
+        kwargs['start'] = start
+    if end is not None:
+        kwargs['end'] = end
+    if limit is not None:
+        kwargs['limit'] = limit
+    if delimiter is not None:
+        kwargs['delimiter'] = delimiter
+    if fields is not None:
+        kwargs['fields'] = fields
+    if start_after is not None:
+        kwargs['start_after'] = start_after
     kwargs['opc_client_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('object_storage', ctx)
     result = client.list_objects(
@@ -1747,13 +1890,16 @@ See [Special Instructions for Object Storage PUT] for request signature requirem
 @cli_util.option('--content-encoding', help=u"""The optional Content-Encoding header that defines the content encodings that were applied to the object to upload. Specifying values for this header has no effect on Object Storage behavior. Programs that read the object determine what to do based on the value provided. For example, you could use this header to determine what decoding mechanisms need to be applied to obtain the media-type specified by the Content-Type header of the object.""")
 @cli_util.option('--content-disposition', help=u"""The optional Content-Disposition header that defines presentational information for the object to be returned in GetObject and HeadObject responses. Specifying values for this header has no effect on Object Storage behavior. Programs that read the object determine what to do based on the value provided. For example, you could use this header to let users download objects with custom filenames in a browser.""")
 @cli_util.option('--cache-control', help=u"""The optional Cache-Control header that defines the caching behavior value to be returned in GetObject and HeadObject responses. Specifying values for this header has no effect on Object Storage behavior. Programs that read the object determine what to do based on the value provided. For example, you could use this header to identify objects that require caching restrictions.""")
+@cli_util.option('--opc-sse-customer-algorithm', help=u"""The optional header that specifies \"AES256\" as the encryption algorithm. For more information, see [Using Your Own Keys for Server-Side Encryption].""")
+@cli_util.option('--opc-sse-customer-key', help=u"""The optional header that specifies the base64-encoded 256-bit encryption key to use to encrypt or decrypt the data. For more information, see [Using Your Own Keys for Server-Side Encryption].""")
+@cli_util.option('--opc-sse-customer-key-sha256', help=u"""The optional header that specifies the base64-encoded SHA256 hash of the encryption key. This value is used to check the integrity of the encryption key. For more information, see [Using Your Own Keys for Server-Side Encryption].""")
 @cli_util.option('--opc-meta-', help=u"""Optional user-defined metadata key and value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def put_object(ctx, from_json, namespace_name, bucket_name, object_name, put_object_body, content_length, if_match, if_none_match, expect, content_md5, content_type, content_language, content_encoding, content_disposition, cache_control, opc_meta_):
+def put_object(ctx, from_json, namespace_name, bucket_name, object_name, put_object_body, content_length, if_match, if_none_match, expect, content_md5, content_type, content_language, content_encoding, content_disposition, cache_control, opc_sse_customer_algorithm, opc_sse_customer_key, opc_sse_customer_key_sha256, opc_meta_):
 
     if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
@@ -1785,6 +1931,12 @@ def put_object(ctx, from_json, namespace_name, bucket_name, object_name, put_obj
         kwargs['content_disposition'] = content_disposition
     if cache_control is not None:
         kwargs['cache_control'] = cache_control
+    if opc_sse_customer_algorithm is not None:
+        kwargs['opc_sse_customer_algorithm'] = opc_sse_customer_algorithm
+    if opc_sse_customer_key is not None:
+        kwargs['opc_sse_customer_key'] = opc_sse_customer_key
+    if opc_sse_customer_key_sha256 is not None:
+        kwargs['opc_sse_customer_key_sha256'] = opc_sse_customer_key_sha256
     if opc_meta_ is not None:
         kwargs['opc_meta_'] = opc_meta_
     kwargs['opc_client_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -1853,7 +2005,7 @@ def put_object_lifecycle_policy(ctx, from_json, force, namespace_name, bucket_na
 
 @bucket_group.command(name=cli_util.override('os.reencrypt_bucket.command_name', 'reencrypt'), help=u"""Re-encrypts the unique data encryption key that encrypts each object written to the bucket by using the most recent version of the master encryption key assigned to the bucket. (All data encryption keys are encrypted by a master encryption key. Master encryption keys are assigned to buckets and managed by Oracle by default, but you can assign a key that you created and control through the Oracle Cloud Infrastructure Key Management service.) The kmsKeyId property of the bucket determines which master encryption key is assigned to the bucket. If you assigned a different Key Management master encryption key to the bucket, you can call this API to re-encrypt all data encryption keys with the newly assigned key. Similarly, you might want to re-encrypt all data encryption keys if the assigned key has been rotated to a new key version since objects were last added to the bucket. If you call this API and there is no kmsKeyId associated with the bucket, the call will fail.
 
-Calling this API starts a work request task to re-encrypt the data encryption key of all objects in the bucket. Only objects created before the time of the API call will be re-encrypted. The call can take a long time, depending on how many objects are in the bucket and how big they are. This API returns a work request ID that you can use to retrieve the status of the work request task.""")
+Calling this API starts a work request task to re-encrypt the data encryption key of all objects in the bucket. Only objects created before the time of the API call will be re-encrypted. The call can take a long time, depending on how many objects are in the bucket and how big they are. This API returns a work request ID that you can use to retrieve the status of the work request task. All the versions of objects will be re-encrypted whether versioning is enabled or suspended at the bucket.""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
 @cli_util.option('--bucket-name', required=True, help=u"""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "COMPLETED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -1957,12 +2109,13 @@ def rename_object(ctx, from_json, namespace_name, bucket_name, source_name, new_
 @cli_util.option('--bucket-name', required=True, help=u"""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")
 @cli_util.option('--object-name', required=True, help=u"""An object that is in an archive storage tier and needs to be restored.""")
 @cli_util.option('--hours', type=click.INT, help=u"""The number of hours for which this object will be restored. By default objects will be restored for 24 hours. You can instead configure the duration using the hours parameter.""")
+@cli_util.option('--version-id', help=u"""The versionId of the object to restore. Current object version is used by default.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def restore_objects(ctx, from_json, namespace_name, bucket_name, object_name, hours):
+def restore_objects(ctx, from_json, namespace_name, bucket_name, object_name, hours, version_id):
 
     if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
@@ -1978,6 +2131,9 @@ def restore_objects(ctx, from_json, namespace_name, bucket_name, object_name, ho
 
     if hours is not None:
         details['hours'] = hours
+
+    if version_id is not None:
+        details['versionId'] = version_id
 
     client = cli_util.build_client('object_storage', ctx)
     result = client.restore_objects(
@@ -2001,13 +2157,14 @@ Use UpdateBucket to move a bucket from one compartment to another within the sam
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--kms-key-id', help=u"""The [OCID] of the Key Management master encryption key to associate with the specified bucket. If this value is empty, the Update operation will remove the associated key, if there is one, from the bucket. (The bucket will continue to be encrypted, but with an encryption key managed by Oracle.)""")
+@cli_util.option('--versioning', type=custom_types.CliCaseInsensitiveChoice(["Enabled", "Suspended"]), help=u"""The versioning status on the bucket. If in state `Enabled`, multiple versions of the same object can be kept in the bucket. When the object is overwritten or deleted, previous versions will still be available. When versioning is `Suspended`, the previous versions will still remain but new versions will no longer be created when overwitten or deleted. Versioning cannot be disabled on a bucket once enabled.""")
 @cli_util.option('--if-match', help=u"""The entity tag (ETag) to match. For creating and committing a multipart upload to an object, this is the entity tag of the target object. For uploading a part, this is the entity tag of the target part.""")
 @json_skeleton_utils.get_cli_json_input_option({'metadata': {'module': 'object_storage', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'object_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'object_storage', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'metadata': {'module': 'object_storage', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'object_storage', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'object_storage', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'object_storage', 'class': 'Bucket'})
 @cli_util.wrap_exceptions
-def update_bucket(ctx, from_json, namespace_name, bucket_name, compartment_id, metadata, public_access_type, object_events_enabled, freeform_tags, defined_tags, kms_key_id, if_match):
+def update_bucket(ctx, from_json, namespace_name, bucket_name, compartment_id, metadata, public_access_type, object_events_enabled, freeform_tags, defined_tags, kms_key_id, versioning, if_match):
 
     if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
@@ -2045,6 +2202,9 @@ def update_bucket(ctx, from_json, namespace_name, bucket_name, compartment_id, m
 
     if kms_key_id is not None:
         details['kmsKeyId'] = kms_key_id
+
+    if versioning is not None:
+        details['versioning'] = versioning
 
     client = cli_util.build_client('object_storage', ctx)
     result = client.update_bucket(
@@ -2162,12 +2322,15 @@ def update_retention_rule(ctx, from_json, force, namespace_name, bucket_name, re
 @cli_util.option('--content-md5', help=u"""The optional base-64 header that defines the encoded MD5 hash of the body. If the optional Content-MD5 header is present, Object Storage performs an integrity check on the body of the HTTP request by computing the MD5 hash for the body and comparing it to the MD5 hash supplied in the header. If the two hashes do not match, the object is rejected and an HTTP-400 Unmatched Content MD5 error is returned with the message:
 
 \"The computed MD5 of the request body (ACTUAL_MD5) does not match the Content-MD5 header (HEADER_MD5)\"""")
+@cli_util.option('--opc-sse-customer-algorithm', help=u"""The optional header that specifies \"AES256\" as the encryption algorithm. For more information, see [Using Your Own Keys for Server-Side Encryption].""")
+@cli_util.option('--opc-sse-customer-key', help=u"""The optional header that specifies the base64-encoded 256-bit encryption key to use to encrypt or decrypt the data. For more information, see [Using Your Own Keys for Server-Side Encryption].""")
+@cli_util.option('--opc-sse-customer-key-sha256', help=u"""The optional header that specifies the base64-encoded SHA256 hash of the encryption key. This value is used to check the integrity of the encryption key. For more information, see [Using Your Own Keys for Server-Side Encryption].""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def upload_part(ctx, from_json, namespace_name, bucket_name, object_name, upload_id, upload_part_num, upload_part_body, content_length, if_match, if_none_match, expect, content_md5):
+def upload_part(ctx, from_json, namespace_name, bucket_name, object_name, upload_id, upload_part_num, upload_part_body, content_length, if_match, if_none_match, expect, content_md5, opc_sse_customer_algorithm, opc_sse_customer_key, opc_sse_customer_key_sha256):
 
     if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
@@ -2189,6 +2352,12 @@ def upload_part(ctx, from_json, namespace_name, bucket_name, object_name, upload
         kwargs['expect'] = expect
     if content_md5 is not None:
         kwargs['content_md5'] = content_md5
+    if opc_sse_customer_algorithm is not None:
+        kwargs['opc_sse_customer_algorithm'] = opc_sse_customer_algorithm
+    if opc_sse_customer_key is not None:
+        kwargs['opc_sse_customer_key'] = opc_sse_customer_key
+    if opc_sse_customer_key_sha256 is not None:
+        kwargs['opc_sse_customer_key_sha256'] = opc_sse_customer_key_sha256
     kwargs['opc_client_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     # do not automatically retry operations with binary inputs

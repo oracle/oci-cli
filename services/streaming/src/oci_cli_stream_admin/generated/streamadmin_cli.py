@@ -20,12 +20,6 @@ def stream_admin_root_group():
     pass
 
 
-@click.command(cli_util.override('stream_admin.archiver_group.command_name', 'archiver'), cls=CommandGroupWithAlias, help="""Represents the current state of the stream archiver.""")
-@cli_util.help_option_group
-def archiver_group():
-    pass
-
-
 @click.command(cli_util.override('stream_admin.stream_pool_group.command_name', 'stream-pool'), cls=CommandGroupWithAlias, help="""The details of a stream pool.""")
 @cli_util.help_option_group
 def stream_pool_group():
@@ -45,7 +39,6 @@ def connect_harness_group():
 
 
 streaming_service_cli.streaming_service_group.add_command(stream_admin_root_group)
-stream_admin_root_group.add_command(archiver_group)
 stream_admin_root_group.add_command(stream_pool_group)
 stream_admin_root_group.add_command(stream_group)
 stream_admin_root_group.add_command(connect_harness_group)
@@ -141,67 +134,6 @@ def change_stream_pool_compartment(ctx, from_json, stream_pool_id, compartment_i
         change_stream_pool_compartment_details=details,
         **kwargs
     )
-    cli_util.render_response(result, ctx)
-
-
-@archiver_group.command(name=cli_util.override('stream_admin.create_archiver.command_name', 'create'), help=u"""Starts the provisioning of a new stream archiver. To track the progress of the provisioning, you can periodically call [GetArchiver]. In the response, the `lifecycleState` parameter of the [Stream] object tells you its current state.""")
-@cli_util.option('--stream-id', required=True, help=u"""The OCID of the stream.""")
-@cli_util.option('--bucket-name', required=True, help=u"""The name of the bucket.""")
-@cli_util.option('--use-existing-bucket', required=True, type=click.BOOL, help=u"""The flag to create a new bucket or use existing one.""")
-@cli_util.option('--start-position', required=True, type=custom_types.CliCaseInsensitiveChoice(["LATEST", "TRIM_HORIZON"]), help=u"""The start message.""")
-@cli_util.option('--batch-rollover-size-in-mbs', required=True, type=click.INT, help=u"""The batch rollover size in megabytes.""")
-@cli_util.option('--batch-rollover-time-in-seconds', required=True, type=click.INT, help=u"""The rollover time in seconds.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "STOPPED", "STARTING", "RUNNING", "STOPPING", "UPDATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
-@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
-@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({})
-@cli_util.help_option
-@click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'streaming', 'class': 'Archiver'})
-@cli_util.wrap_exceptions
-def create_archiver(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, stream_id, bucket_name, use_existing_bucket, start_position, batch_rollover_size_in_mbs, batch_rollover_time_in_seconds):
-
-    if isinstance(stream_id, six.string_types) and len(stream_id.strip()) == 0:
-        raise click.UsageError('Parameter --stream-id cannot be whitespace or empty string')
-
-    kwargs = {}
-    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-
-    details = {}
-    details['bucketName'] = bucket_name
-    details['useExistingBucket'] = use_existing_bucket
-    details['startPosition'] = start_position
-    details['batchRolloverSizeInMBs'] = batch_rollover_size_in_mbs
-    details['batchRolloverTimeInSeconds'] = batch_rollover_time_in_seconds
-
-    client = cli_util.build_client('stream_admin', ctx)
-    result = client.create_archiver(
-        stream_id=stream_id,
-        create_archiver_details=details,
-        **kwargs
-    )
-    if wait_for_state:
-        if hasattr(client, 'get_archiver') and callable(getattr(client, 'get_archiver')):
-            try:
-                wait_period_kwargs = {}
-                if max_wait_seconds is not None:
-                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
-                if wait_interval_seconds is not None:
-                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
-
-                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, client.get_archiver(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
-            except oci.exceptions.MaximumWaitTimeExceeded as e:
-                # If we fail, we should show an error, but we should still provide the information to the customer
-                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
-                cli_util.render_response(result, ctx)
-                sys.exit(2)
-            except Exception:
-                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
-                cli_util.render_response(result, ctx)
-                raise
-        else:
-            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -610,28 +542,6 @@ def delete_stream_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     cli_util.render_response(result, ctx)
 
 
-@archiver_group.command(name=cli_util.override('stream_admin.get_archiver.command_name', 'get'), help=u"""Returns the current state of the stream archiver.""")
-@cli_util.option('--stream-id', required=True, help=u"""The OCID of the stream.""")
-@json_skeleton_utils.get_cli_json_input_option({})
-@cli_util.help_option
-@click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'streaming', 'class': 'Archiver'})
-@cli_util.wrap_exceptions
-def get_archiver(ctx, from_json, stream_id):
-
-    if isinstance(stream_id, six.string_types) and len(stream_id.strip()) == 0:
-        raise click.UsageError('Parameter --stream-id cannot be whitespace or empty string')
-
-    kwargs = {}
-    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('stream_admin', ctx)
-    result = client.get_archiver(
-        stream_id=stream_id,
-        **kwargs
-    )
-    cli_util.render_response(result, ctx)
-
-
 @connect_harness_group.command(name=cli_util.override('stream_admin.get_connect_harness.command_name', 'get'), help=u"""Gets detailed information about a connect harness.""")
 @cli_util.option('--connect-harness-id', required=True, help=u"""The OCID of the connect harness.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -886,180 +796,6 @@ def list_streams(ctx, from_json, all_pages, page_size, compartment_id, stream_po
         result = client.list_streams(
             **kwargs
         )
-    cli_util.render_response(result, ctx)
-
-
-@archiver_group.command(name=cli_util.override('stream_admin.start_archiver.command_name', 'start'), help=u"""Start the archiver for the specified stream.""")
-@cli_util.option('--stream-id', required=True, help=u"""The OCID of the stream.""")
-@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "STOPPED", "STARTING", "RUNNING", "STOPPING", "UPDATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
-@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
-@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({})
-@cli_util.help_option
-@click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'streaming', 'class': 'Archiver'})
-@cli_util.wrap_exceptions
-def start_archiver(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, stream_id, if_match):
-
-    if isinstance(stream_id, six.string_types) and len(stream_id.strip()) == 0:
-        raise click.UsageError('Parameter --stream-id cannot be whitespace or empty string')
-
-    kwargs = {}
-    if if_match is not None:
-        kwargs['if_match'] = if_match
-    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('stream_admin', ctx)
-    result = client.start_archiver(
-        stream_id=stream_id,
-        **kwargs
-    )
-    if wait_for_state:
-        if hasattr(client, 'get_archiver') and callable(getattr(client, 'get_archiver')):
-            try:
-                wait_period_kwargs = {}
-                if max_wait_seconds is not None:
-                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
-                if wait_interval_seconds is not None:
-                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
-
-                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, client.get_archiver(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
-            except oci.exceptions.MaximumWaitTimeExceeded as e:
-                # If we fail, we should show an error, but we should still provide the information to the customer
-                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
-                cli_util.render_response(result, ctx)
-                sys.exit(2)
-            except Exception:
-                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
-                cli_util.render_response(result, ctx)
-                raise
-        else:
-            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
-    cli_util.render_response(result, ctx)
-
-
-@archiver_group.command(name=cli_util.override('stream_admin.stop_archiver.command_name', 'stop'), help=u"""Stop the archiver for the specified stream.""")
-@cli_util.option('--stream-id', required=True, help=u"""The OCID of the stream.""")
-@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "STOPPED", "STARTING", "RUNNING", "STOPPING", "UPDATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
-@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
-@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({})
-@cli_util.help_option
-@click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'streaming', 'class': 'Archiver'})
-@cli_util.wrap_exceptions
-def stop_archiver(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, stream_id, if_match):
-
-    if isinstance(stream_id, six.string_types) and len(stream_id.strip()) == 0:
-        raise click.UsageError('Parameter --stream-id cannot be whitespace or empty string')
-
-    kwargs = {}
-    if if_match is not None:
-        kwargs['if_match'] = if_match
-    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('stream_admin', ctx)
-    result = client.stop_archiver(
-        stream_id=stream_id,
-        **kwargs
-    )
-    if wait_for_state:
-        if hasattr(client, 'get_archiver') and callable(getattr(client, 'get_archiver')):
-            try:
-                wait_period_kwargs = {}
-                if max_wait_seconds is not None:
-                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
-                if wait_interval_seconds is not None:
-                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
-
-                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, client.get_archiver(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
-            except oci.exceptions.MaximumWaitTimeExceeded as e:
-                # If we fail, we should show an error, but we should still provide the information to the customer
-                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
-                cli_util.render_response(result, ctx)
-                sys.exit(2)
-            except Exception:
-                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
-                cli_util.render_response(result, ctx)
-                raise
-        else:
-            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
-    cli_util.render_response(result, ctx)
-
-
-@archiver_group.command(name=cli_util.override('stream_admin.update_archiver.command_name', 'update'), help=u"""Update the stream archiver parameters.""")
-@cli_util.option('--stream-id', required=True, help=u"""The OCID of the stream.""")
-@cli_util.option('--bucket-name', help=u"""The name of the bucket.""")
-@cli_util.option('--use-existing-bucket', type=click.BOOL, help=u"""The flag to create a new bucket or use existing one.""")
-@cli_util.option('--start-position', type=custom_types.CliCaseInsensitiveChoice(["LATEST", "TRIM_HORIZON"]), help=u"""The start message.""")
-@cli_util.option('--batch-rollover-size-in-mbs', type=click.INT, help=u"""The batch rollover size in megabytes.""")
-@cli_util.option('--batch-rollover-time-in-seconds', type=click.INT, help=u"""The rollover time in seconds.""")
-@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "STOPPED", "STARTING", "RUNNING", "STOPPING", "UPDATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
-@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
-@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({})
-@cli_util.help_option
-@click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'streaming', 'class': 'Archiver'})
-@cli_util.wrap_exceptions
-def update_archiver(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, stream_id, bucket_name, use_existing_bucket, start_position, batch_rollover_size_in_mbs, batch_rollover_time_in_seconds, if_match):
-
-    if isinstance(stream_id, six.string_types) and len(stream_id.strip()) == 0:
-        raise click.UsageError('Parameter --stream-id cannot be whitespace or empty string')
-
-    kwargs = {}
-    if if_match is not None:
-        kwargs['if_match'] = if_match
-    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-
-    details = {}
-
-    if bucket_name is not None:
-        details['bucketName'] = bucket_name
-
-    if use_existing_bucket is not None:
-        details['useExistingBucket'] = use_existing_bucket
-
-    if start_position is not None:
-        details['startPosition'] = start_position
-
-    if batch_rollover_size_in_mbs is not None:
-        details['batchRolloverSizeInMBs'] = batch_rollover_size_in_mbs
-
-    if batch_rollover_time_in_seconds is not None:
-        details['batchRolloverTimeInSeconds'] = batch_rollover_time_in_seconds
-
-    client = cli_util.build_client('stream_admin', ctx)
-    result = client.update_archiver(
-        stream_id=stream_id,
-        update_archiver_details=details,
-        **kwargs
-    )
-    if wait_for_state:
-        if hasattr(client, 'get_archiver') and callable(getattr(client, 'get_archiver')):
-            try:
-                wait_period_kwargs = {}
-                if max_wait_seconds is not None:
-                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
-                if wait_interval_seconds is not None:
-                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
-
-                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, client.get_archiver(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
-            except oci.exceptions.MaximumWaitTimeExceeded as e:
-                # If we fail, we should show an error, but we should still provide the information to the customer
-                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
-                cli_util.render_response(result, ctx)
-                sys.exit(2)
-            except Exception:
-                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
-                cli_util.render_response(result, ctx)
-                raise
-        else:
-            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 

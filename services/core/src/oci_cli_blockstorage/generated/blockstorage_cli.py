@@ -1164,6 +1164,7 @@ def create_volume_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 For more information about Oracle defined backup policies and user defined backup policies, see [Policy-Based Backups].""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name for the volume backup policy. Does not have to be unique and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--destination-region', help=u"""The paired destination region (pre-defined by oracle) for scheduled cross region backup calls. Example: `us-ashburn-1`""")
 @cli_util.option('--schedules', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The collection of schedules for the volume backup policy. See see [Schedules] in [Policy-Based Backups] for more information.
 
 This option is a JSON list with items of type VolumeBackupSchedule.  For documentation on VolumeBackupSchedule please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/VolumeBackupSchedule.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1178,7 +1179,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schedules': {'module': 'core', 'class': 'list[VolumeBackupSchedule]'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'VolumeBackupPolicy'})
 @cli_util.wrap_exceptions
-def create_volume_backup_policy(ctx, from_json, compartment_id, display_name, schedules, defined_tags, freeform_tags):
+def create_volume_backup_policy(ctx, from_json, compartment_id, display_name, destination_region, schedules, defined_tags, freeform_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -1188,6 +1189,9 @@ def create_volume_backup_policy(ctx, from_json, compartment_id, display_name, sc
 
     if display_name is not None:
         details['displayName'] = display_name
+
+    if destination_region is not None:
+        details['destinationRegion'] = destination_region
 
     if schedules is not None:
         details['schedules'] = cli_util.parse_json_parameter("schedules", schedules)
@@ -3118,6 +3122,7 @@ def update_volume_backup(ctx, from_json, force, wait_for_state, max_wait_seconds
  Avoid entering confidential information.""")
 @cli_util.option('--policy-id', required=True, help=u"""The OCID of the volume backup policy.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name for the volume backup policy. Does not have to be unique and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--destination-region', help=u"""The paired destination region (pre-defined by oracle) for scheduled cross region backup calls. Example: `us-ashburn-1`""")
 @cli_util.option('--schedules', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The collection of schedules for the volume backup policy. See see [Schedules] in [Policy-Based Backups] for more information.
 
 This option is a JSON list with items of type VolumeBackupSchedule.  For documentation on VolumeBackupSchedule please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/VolumeBackupSchedule.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -3134,7 +3139,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'schedules': {'module': 'core', 'class': 'list[VolumeBackupSchedule]'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'VolumeBackupPolicy'})
 @cli_util.wrap_exceptions
-def update_volume_backup_policy(ctx, from_json, force, policy_id, display_name, schedules, defined_tags, freeform_tags, if_match):
+def update_volume_backup_policy(ctx, from_json, force, policy_id, display_name, destination_region, schedules, defined_tags, freeform_tags, if_match):
 
     if isinstance(policy_id, six.string_types) and len(policy_id.strip()) == 0:
         raise click.UsageError('Parameter --policy-id cannot be whitespace or empty string')
@@ -3152,6 +3157,9 @@ def update_volume_backup_policy(ctx, from_json, force, policy_id, display_name, 
 
     if display_name is not None:
         details['displayName'] = display_name
+
+    if destination_region is not None:
+        details['destinationRegion'] = destination_region
 
     if schedules is not None:
         details['schedules'] = cli_util.parse_json_parameter("schedules", schedules)

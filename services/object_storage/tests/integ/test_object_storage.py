@@ -580,6 +580,19 @@ def subtest_object_list_preserves_prefixes_order(runner, config_file, config_pro
     assertListEqual(prefixes, ["a/", "b/", "f/", "s/"])
 
 
+def subtest_object_list_versions_preserves_prefixes_order(runner, config_file, config_profile):
+    bucket_name = util.bucket_regional_prefix() + 'CliReadOnlyTestBucket8'
+
+    # object list
+    result = invoke(runner, config_file, config_profile, ['object', 'list-object-versions', '-ns', util.NAMESPACE, '-bn', bucket_name, '--delimiter', '/', '--limit', '3'])
+    validate_response(result)
+
+    prefixes = json.loads(result.output)['prefixes']
+
+    # check that they are ordered
+    assertListEqual(prefixes, ["a/", "b/", "f/", "s/"])
+
+
 @util.skip_while_rerecording
 def test_object_put_default_name(runner, config_file, config_profile, test_id):
     bucket_name = util.bucket_regional_prefix() + "CliReadOnlyTestBucket7"
@@ -784,6 +797,9 @@ def test_list_options(vcr_fixture, runner, config_file, config_profile, object_s
     subtest_object_list(runner, config_file, config_profile)
     subtest_object_list_preserves_prefixes_order(runner, config_file, config_profile)
     subtest_object_list_paging(runner, config_file, config_profile)
+    subtest_object_list_versions(runner, config_file, config_profile)
+    subtest_object_list_versions_preserves_prefixes_order(runner, config_file, config_profile)
+    subtest_object_list_versions_paging(runner, config_file, config_profile)
 
 
 def test_bucket_list_with_tags(vcr_fixture, runner, config_file, config_profile):
@@ -821,12 +837,12 @@ def subtest_bucket_list(runner, config_file, config_profile):
 
     result = invoke(runner, config_file, config_profile, ['bucket', 'list', '-ns', util.NAMESPACE, '--compartment-id', util.COMPARTMENT_ID, '--limit', '1000'])
     validate_response(result)
-    assert result.output.count('"namespace"') > 100
+    assert result.output.count('"namespace"') > 30
     assert result.output.count('"namespace"') <= 1000
 
-    result = invoke(runner, config_file, config_profile, ['bucket', 'list', '-ns', util.NAMESPACE, '--compartment-id', util.COMPARTMENT_ID, '--limit', '100'])
+    result = invoke(runner, config_file, config_profile, ['bucket', 'list', '-ns', util.NAMESPACE, '--compartment-id', util.COMPARTMENT_ID, '--limit', '20'])
     validate_response(result)
-    assertEqual(100, result.output.count('"namespace"'))
+    assertEqual(20, result.output.count('"namespace"'))
     assert 'opc-next-page' in result.output
 
     # Test that --page option works
@@ -879,7 +895,7 @@ def subtest_object_list(runner, config_file, config_profile):
     assertEqual(2, result.output.count('"name"'))
     assert 'next-start-with' not in result.output
 
-    # Same as previous, but with a limit of 1. We should now get a         next_start_with token.
+    # Same as previous, but with a limit of 1. We should now get a next_start_with token.
     result = invoke(runner, config_file, config_profile, ['object', 'list', '-ns', util.NAMESPACE, '-bn', bucket_name, '--start', 'ob102', '--end', 'ob104', '--limit', '1'])
     validate_response(result)
     assertEqual(1, result.output.count('"name"'))
@@ -922,6 +938,80 @@ def subtest_object_list(runner, config_file, config_profile):
     assert '"time-created": null' not in result.output
 
 
+def subtest_object_list_versions(runner, config_file, config_profile):
+    """Tests all optional parameters for oci object list-object-versions."""
+    bucket_name = util.bucket_regional_prefix() + 'CliReadOnlyTestBucket6'
+    result = invoke(runner, config_file, config_profile, ['object', 'list-object-versions', '-ns', util.NAMESPACE, '-bn', bucket_name, '--limit', '1'])
+    validate_response(result)
+    assertEqual(1, result.output.count('"name"'))
+
+    result = invoke(runner, config_file, config_profile, ['object', 'list-object-versions', '-ns', util.NAMESPACE, '-bn', bucket_name, '--limit', '10000'])
+    validate_response(result)
+    assert result.output.count('"name"') > 100
+    assert result.output.count('"name"') < 10000
+    assert 'opc-next-page' not in result.output
+
+    result = invoke(runner, config_file, config_profile, ['object', 'list-object-versions', '-ns', util.NAMESPACE, '-bn', bucket_name, '--limit', '105'])
+    validate_response(result)
+    assertEqual(105, result.output.count('"name"'))
+    # Ensure next_start is shown when limit is less than total number of objects, but greater than
+    # the page sized used internally by object list.
+    assert 'opc-next-page' in result.output
+
+    # Should get 100..109, 10.
+    result = invoke(runner, config_file, config_profile, ['object', 'list-object-versions', '-ns', util.NAMESPACE, '-bn', bucket_name, '--prefix', 'ob10'])
+    validate_response(result)
+    assertEqual(11, result.output.count('"name"'))
+
+    # Should get 102, 103
+    result = invoke(runner, config_file, config_profile, ['object', 'list-object-versions', '-ns', util.NAMESPACE, '-bn', bucket_name, '--start', 'ob102', '--end', 'ob104'])
+    validate_response(result)
+    assertEqual(2, result.output.count('"name"'))
+    assert 'opc-next-page' not in result.output
+
+    # Same as previous, but with a limit of 1. We should now get a opc-next-page token.
+    result = invoke(runner, config_file, config_profile, ['object', 'list-object-versions', '-ns', util.NAMESPACE, '-bn', bucket_name, '--start', 'ob102', '--end', 'ob104', '--limit', '1'])
+    validate_response(result)
+    assertEqual(1, result.output.count('"name"'))
+    assert 'opc-next-page' in result.output
+
+    # Should get 102, 103
+    result = invoke(runner, config_file, config_profile, ['object', 'list-object-versions', '-ns', util.NAMESPACE, '-bn', bucket_name, '--limit', '1'])
+    validate_response(result)
+    assertEqual(1, result.output.count('"name"'))
+    assert 'opc-next-page' in result.output
+
+    result = invoke(runner, config_file, config_profile, ['object', 'list-object-versions', '-ns', util.NAMESPACE, '-bn', bucket_name, '--limit', '2'])
+    validate_response(result)
+    assertEqual(2, result.output.count('"name"'))
+    assert 'opc-next-page' in result.output
+
+    result = invoke(runner, config_file, config_profile, ['object', 'list-object-versions', '-ns', util.NAMESPACE, '-bn', bucket_name, '--start', 'ob2', '--limit', '1'])
+    validate_response(result)
+    assertEqual(1, result.output.count('"name"'))
+    assert 'opc-next-page' in result.output
+
+    bucket_name = util.bucket_regional_prefix() + 'CliReadOnlyTestBucket2'
+    # Should return objects "a/b/object4", "a/b/object5", and prefixe "a/b/c/".
+    result = invoke(runner, config_file, config_profile, ['object', 'list-object-versions', '-ns', util.NAMESPACE, '-bn', bucket_name, '--delimiter', '/', '--prefix', 'a/b/'])
+    validate_response(result)
+    assert "a/b/object4" in result.output
+    assert "a/b/object5" in result.output
+    assert "a/b/c/" in result.output
+
+    result = invoke(runner, config_file, config_profile, ['object', 'list-object-versions', '-ns', util.NAMESPACE, '-bn', bucket_name, '--limit', '1', '--fields', ''])
+    validate_response(result)
+    assert '"md5": null' in result.output
+    assert '"size": null' in result.output
+    assert '"time-created": null' in result.output
+
+    result = invoke(runner, config_file, config_profile, ['object', 'list-object-versions', '-ns', util.NAMESPACE, '-bn', bucket_name, '--limit', '1', '--fields', 'md5,size,timeCreated'])
+    validate_response(result)
+    assert '"md5": null' not in result.output
+    assert '"size": null' not in result.output
+    assert '"time-created": null' not in result.output
+
+
 def subtest_object_list_paging(runner, config_file, config_profile):
     bucket_name = util.bucket_regional_prefix() + 'CliReadOnlyTestBucket6'
 
@@ -947,6 +1037,38 @@ def subtest_object_list_paging(runner, config_file, config_profile):
         assert (pages < 30)
 
         next_start = json.loads(result.output).get('next-start-with', None)
+        if not next_start:
+            break
+
+    assertEqual(list_size, count)
+    assert (pages == math.ceil(float(list_size) / page_size))
+
+
+def subtest_object_list_versions_paging(runner, config_file, config_profile):
+    bucket_name = util.bucket_regional_prefix() + 'CliReadOnlyTestBucket6'
+
+    result = invoke(runner, config_file, config_profile, ['object', 'list-object-versions', '-ns', util.NAMESPACE, '-bn', bucket_name, '--limit', '10000'])
+    validate_response(result)
+    list_size = result.output.count('"name"')
+
+    page_size = 15
+    pages = 0
+    count = 0
+    next_start = None
+    while True:
+        args = ['object', 'list-object-versions', '-ns', util.NAMESPACE, '-bn', bucket_name, '--limit', str(page_size)]
+        if next_start:
+            args.extend(['--page', next_start])
+        result = invoke(runner, config_file, config_profile, args)
+
+        validate_response(result)
+        count = count + result.output.count('"name"')
+        pages = pages + 1
+
+        # Safety check to make sure we don't end up in an infinite loop.
+        assert (pages < 30)
+
+        next_start = json.loads(result.output).get('opc-next-page', None)
         if not next_start:
             break
 

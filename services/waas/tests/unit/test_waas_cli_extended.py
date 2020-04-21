@@ -34,3 +34,29 @@ class TestWaas(unittest.TestCase):
     def test_update_policy_config(self):
         result = util.invoke_command(['waas', 'policy-config', 'update', '--tls-protocols', 'TLS_V1_3', '--tls-protocols', 'TLS_V1_2'])
         assert 'Missing option(s)' in result.output
+        assert 'waas-policy-id' in result.output
+
+        result = util.invoke_command(['waas', 'policy-config', 'update', '--load-balancing-method'])
+        assert 'option requires an argument' in result.output
+
+        result = util.invoke_command(['waas', 'policy-config', 'update', '--websocket-path-prefixes'])
+        assert 'option requires an argument' in result.output
+
+        result = util.invoke_command(['waas', 'policy-config', 'update', '--health-checks'])
+        assert 'option requires an argument' in result.output
+
+        result = util.invoke_command(
+            ['waas', 'policy-config', 'update', '--waas-policy-id', 'dummy', '--tls-protocols', 'TLS_V1_3'])
+        assert 'Updates to tls-protocols, load-balancing-method, websocket-path-prefixes and health-checks will replace any existing values.' in result.output
+
+        result = util.invoke_command(
+            ['waas', 'policy-config', 'update', '--waas-policy-id', 'dummy', '--load-balancing-method', 'dummy'])
+        assert 'Updates to tls-protocols, load-balancing-method, websocket-path-prefixes and health-checks will replace any existing values.' in result.output
+
+        result = util.invoke_command(
+            ['waas', 'policy-config', 'update', '--waas-policy-id', 'dummy', '--websocket-path-prefixes', 'dummy'])
+        assert 'Updates to tls-protocols, load-balancing-method, websocket-path-prefixes and health-checks will replace any existing values.' in result.output
+
+        result = util.invoke_command(
+            ['waas', 'policy-config', 'update', '--waas-policy-id', 'dummy', '--health-checks', 'dummy'])
+        assert 'Updates to tls-protocols, load-balancing-method, websocket-path-prefixes and health-checks will replace any existing values.' in result.output

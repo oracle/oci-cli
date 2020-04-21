@@ -28,7 +28,10 @@ def _make_retrying_get_call(object_storage_client, **kwargs):
         if_match=kwargs.get('if_match'),
         if_none_match=kwargs.get('if_none_match'),
         range=kwargs.get('range'),
-        opc_client_request_id=kwargs.get('request_id')
+        opc_client_request_id=kwargs.get('request_id'),
+        opc_sse_customer_algorithm=kwargs.get('opc_sse_customer_algorithm'),
+        opc_sse_customer_key=kwargs.get('opc_sse_customer_key'),
+        opc_sse_customer_key_sha256=kwargs.get('opc_sse_customer_key_sha256')
     )
 
 
@@ -220,7 +223,11 @@ class GetObjectMultipartTask(WorkPoolTask):
                 object_name=self.kwargs['object_name'],
                 if_match=self.kwargs.get('if_match'),
                 if_none_match=self.kwargs.get('if_none_match'),
-                opc_client_request_id=self.kwargs.get('request_id')
+                opc_client_request_id=self.kwargs.get('request_id'),
+                opc_sse_customer_algorithm=self.kwargs.get('opc_sse_customer_algorithm'),
+                opc_sse_customer_key=self.kwargs.get('opc_sse_customer_key'),
+                opc_sse_customer_key_sha256=self.kwargs.get('opc_sse_customer_key_sha256')
+
             )
         except oci.exceptions.ServiceError as e:
             if e.status == 404:
