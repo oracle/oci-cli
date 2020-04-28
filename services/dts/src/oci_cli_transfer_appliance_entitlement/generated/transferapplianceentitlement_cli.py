@@ -1,5 +1,6 @@
 # coding: utf-8
-# Copyright (c) 2016, 2020, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2020, Oracle and/or its affiliates.  All rights reserved.
+# This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 from __future__ import print_function
 import click
@@ -54,32 +55,33 @@ def create_transfer_appliance_entitlement(ctx, from_json, wait_for_state, max_wa
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if compartment_id is not None:
-        details['compartmentId'] = compartment_id
+        _details['compartmentId'] = compartment_id
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if requestor_name is not None:
-        details['requestorName'] = requestor_name
+        _details['requestorName'] = requestor_name
 
     if requestor_email is not None:
-        details['requestorEmail'] = requestor_email
+        _details['requestorEmail'] = requestor_email
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('transfer_appliance_entitlement', ctx)
+    client = cli_util.build_client('dts', 'transfer_appliance_entitlement', ctx)
     result = client.create_transfer_appliance_entitlement(
-        create_transfer_appliance_entitlement_details=details,
+        create_transfer_appliance_entitlement_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_transfer_appliance_entitlement') and callable(getattr(client, 'get_transfer_appliance_entitlement')):
             try:
                 wait_period_kwargs = {}
@@ -118,7 +120,7 @@ def get_transfer_appliance_entitlement(ctx, from_json, id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('transfer_appliance_entitlement', ctx)
+    client = cli_util.build_client('dts', 'transfer_appliance_entitlement', ctx)
     result = client.get_transfer_appliance_entitlement(
         id=id,
         **kwargs
@@ -144,7 +146,7 @@ def list_transfer_appliance_entitlement(ctx, from_json, all_pages, compartment_i
     if display_name is not None:
         kwargs['display_name'] = display_name
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('transfer_appliance_entitlement', ctx)
+    client = cli_util.build_client('dts', 'transfer_appliance_entitlement', ctx)
     result = client.list_transfer_appliance_entitlement(
         compartment_id=compartment_id,
         **kwargs

@@ -1,5 +1,6 @@
 # coding: utf-8
-# Copyright (c) 2016, 2020, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2020, Oracle and/or its affiliates.  All rights reserved.
+# This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 from __future__ import print_function
 import click
@@ -61,16 +62,19 @@ def change_deployment_compartment(ctx, from_json, wait_for_state, max_wait_secon
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
 
-    client = cli_util.build_client('deployment', ctx)
+    client = cli_util.build_client('apigateway', 'deployment', ctx)
     result = client.change_deployment_compartment(
         deployment_id=deployment_id,
-        change_deployment_compartment_details=details,
+        change_deployment_compartment_details=_details,
         **kwargs
     )
     if wait_for_state:
+
+        client = cli_util.build_client('apigateway', 'work_requests', ctx)
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -122,27 +126,30 @@ def create_deployment(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['gatewayId'] = gateway_id
-    details['compartmentId'] = compartment_id
-    details['pathPrefix'] = path_prefix
-    details['specification'] = cli_util.parse_json_parameter("specification", specification)
+    _details = {}
+    _details['gatewayId'] = gateway_id
+    _details['compartmentId'] = compartment_id
+    _details['pathPrefix'] = path_prefix
+    _details['specification'] = cli_util.parse_json_parameter("specification", specification)
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('deployment', ctx)
+    client = cli_util.build_client('apigateway', 'deployment', ctx)
     result = client.create_deployment(
-        create_deployment_details=details,
+        create_deployment_details=_details,
         **kwargs
     )
     if wait_for_state:
+
+        client = cli_util.build_client('apigateway', 'work_requests', ctx)
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -188,12 +195,15 @@ def delete_deployment(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('deployment', ctx)
+    client = cli_util.build_client('apigateway', 'deployment', ctx)
     result = client.delete_deployment(
         deployment_id=deployment_id,
         **kwargs
     )
     if wait_for_state:
+
+        client = cli_util.build_client('apigateway', 'work_requests', ctx)
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -232,7 +242,7 @@ def get_deployment(ctx, from_json, deployment_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('deployment', ctx)
+    client = cli_util.build_client('apigateway', 'deployment', ctx)
     result = client.get_deployment(
         deployment_id=deployment_id,
         **kwargs
@@ -281,7 +291,7 @@ def list_deployments(ctx, from_json, all_pages, page_size, compartment_id, gatew
     if sort_by is not None:
         kwargs['sort_by'] = sort_by
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('deployment', ctx)
+    client = cli_util.build_client('apigateway', 'deployment', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -343,27 +353,30 @@ def update_deployment(ctx, from_json, force, wait_for_state, max_wait_seconds, w
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if specification is not None:
-        details['specification'] = cli_util.parse_json_parameter("specification", specification)
+        _details['specification'] = cli_util.parse_json_parameter("specification", specification)
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('deployment', ctx)
+    client = cli_util.build_client('apigateway', 'deployment', ctx)
     result = client.update_deployment(
         deployment_id=deployment_id,
-        update_deployment_details=details,
+        update_deployment_details=_details,
         **kwargs
     )
     if wait_for_state:
+
+        client = cli_util.build_client('apigateway', 'work_requests', ctx)
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}

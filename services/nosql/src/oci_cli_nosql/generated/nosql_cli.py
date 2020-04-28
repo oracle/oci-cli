@@ -1,5 +1,6 @@
 # coding: utf-8
-# Copyright (c) 2016, 2020, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2020, Oracle and/or its affiliates.  All rights reserved.
+# This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 from __future__ import print_function
 import click
@@ -83,19 +84,20 @@ def change_table_compartment(ctx, from_json, wait_for_state, max_wait_seconds, w
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['toCompartmentId'] = to_compartment_id
+    _details = {}
+    _details['toCompartmentId'] = to_compartment_id
 
     if from_compartment_id is not None:
-        details['fromCompartmentId'] = from_compartment_id
+        _details['fromCompartmentId'] = from_compartment_id
 
-    client = cli_util.build_client('nosql', ctx)
+    client = cli_util.build_client('nosql', 'nosql', ctx)
     result = client.change_table_compartment(
         table_name_or_id=table_name_or_id,
-        change_table_compartment_details=details,
+        change_table_compartment_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -142,23 +144,24 @@ def create_index(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['name'] = name
-    details['keys'] = cli_util.parse_json_parameter("keys", keys)
+    _details = {}
+    _details['name'] = name
+    _details['keys'] = cli_util.parse_json_parameter("keys", keys)
 
     if compartment_id is not None:
-        details['compartmentId'] = compartment_id
+        _details['compartmentId'] = compartment_id
 
     if is_if_not_exists is not None:
-        details['isIfNotExists'] = is_if_not_exists
+        _details['isIfNotExists'] = is_if_not_exists
 
-    client = cli_util.build_client('nosql', ctx)
+    client = cli_util.build_client('nosql', 'nosql', ctx)
     result = client.create_index(
         table_name_or_id=table_name_or_id,
-        create_index_details=details,
+        create_index_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -203,24 +206,25 @@ def create_table(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['name'] = name
-    details['compartmentId'] = compartment_id
-    details['ddlStatement'] = ddl_statement
-    details['tableLimits'] = cli_util.parse_json_parameter("table_limits", table_limits)
+    _details = {}
+    _details['name'] = name
+    _details['compartmentId'] = compartment_id
+    _details['ddlStatement'] = ddl_statement
+    _details['tableLimits'] = cli_util.parse_json_parameter("table_limits", table_limits)
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('nosql', ctx)
+    client = cli_util.build_client('nosql', 'nosql', ctx)
     result = client.create_table(
-        create_table_details=details,
+        create_table_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -276,13 +280,14 @@ def delete_index(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('nosql', ctx)
+    client = cli_util.build_client('nosql', 'nosql', ctx)
     result = client.delete_index(
         table_name_or_id=table_name_or_id,
         index_name=index_name,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -335,7 +340,7 @@ def delete_row(ctx, from_json, table_name_or_id, key, compartment_id, is_get_ret
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('nosql', ctx)
+    client = cli_util.build_client('nosql', 'nosql', ctx)
     result = client.delete_row(
         table_name_or_id=table_name_or_id,
         key=key,
@@ -371,12 +376,13 @@ def delete_table(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('nosql', ctx)
+    client = cli_util.build_client('nosql', 'nosql', ctx)
     result = client.delete_table(
         table_name_or_id=table_name_or_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -422,12 +428,13 @@ def delete_work_request(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('nosql', ctx)
+    client = cli_util.build_client('nosql', 'nosql', ctx)
     result = client.delete_work_request(
         work_request_id=work_request_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -473,7 +480,7 @@ def get_index(ctx, from_json, table_name_or_id, index_name, compartment_id):
     if compartment_id is not None:
         kwargs['compartment_id'] = compartment_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('nosql', ctx)
+    client = cli_util.build_client('nosql', 'nosql', ctx)
     result = client.get_index(
         table_name_or_id=table_name_or_id,
         index_name=index_name,
@@ -506,7 +513,7 @@ def get_row(ctx, from_json, table_name_or_id, key, compartment_id, consistency, 
     if timeout_in_ms is not None:
         kwargs['timeout_in_ms'] = timeout_in_ms
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('nosql', ctx)
+    client = cli_util.build_client('nosql', 'nosql', ctx)
     result = client.get_row(
         table_name_or_id=table_name_or_id,
         key=key,
@@ -532,7 +539,7 @@ def get_table(ctx, from_json, table_name_or_id, compartment_id):
     if compartment_id is not None:
         kwargs['compartment_id'] = compartment_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('nosql', ctx)
+    client = cli_util.build_client('nosql', 'nosql', ctx)
     result = client.get_table(
         table_name_or_id=table_name_or_id,
         **kwargs
@@ -554,7 +561,7 @@ def get_work_request(ctx, from_json, work_request_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('nosql', ctx)
+    client = cli_util.build_client('nosql', 'nosql', ctx)
     result = client.get_work_request(
         work_request_id=work_request_id,
         **kwargs
@@ -602,7 +609,7 @@ def list_indexes(ctx, from_json, all_pages, page_size, table_name_or_id, compart
     if sort_by is not None:
         kwargs['sort_by'] = sort_by
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('nosql', ctx)
+    client = cli_util.build_client('nosql', 'nosql', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -662,7 +669,7 @@ def list_table_usage(ctx, from_json, all_pages, page_size, table_name_or_id, com
     if page is not None:
         kwargs['page'] = page
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('nosql', ctx)
+    client = cli_util.build_client('nosql', 'nosql', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -722,7 +729,7 @@ def list_tables(ctx, from_json, all_pages, page_size, compartment_id, name, limi
     if lifecycle_state is not None:
         kwargs['lifecycle_state'] = lifecycle_state
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('nosql', ctx)
+    client = cli_util.build_client('nosql', 'nosql', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -773,7 +780,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     if limit is not None:
         kwargs['limit'] = limit
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('nosql', ctx)
+    client = cli_util.build_client('nosql', 'nosql', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -824,7 +831,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     if limit is not None:
         kwargs['limit'] = limit
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('nosql', ctx)
+    client = cli_util.build_client('nosql', 'nosql', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -872,7 +879,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, pag
     if limit is not None:
         kwargs['limit'] = limit
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('nosql', ctx)
+    client = cli_util.build_client('nosql', 'nosql', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -910,7 +917,7 @@ def prepare_statement(ctx, from_json, compartment_id, statement):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('nosql', ctx)
+    client = cli_util.build_client('nosql', 'nosql', ctx)
     result = client.prepare_statement(
         compartment_id=compartment_id,
         statement=statement,
@@ -943,28 +950,28 @@ def query(ctx, from_json, compartment_id, statement, is_prepared, consistency, m
         kwargs['page'] = page
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
-    details['statement'] = statement
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['statement'] = statement
 
     if is_prepared is not None:
-        details['isPrepared'] = is_prepared
+        _details['isPrepared'] = is_prepared
 
     if consistency is not None:
-        details['consistency'] = consistency
+        _details['consistency'] = consistency
 
     if max_read_in_k_bs is not None:
-        details['maxReadInKBs'] = max_read_in_k_bs
+        _details['maxReadInKBs'] = max_read_in_k_bs
 
     if variables is not None:
-        details['variables'] = cli_util.parse_json_parameter("variables", variables)
+        _details['variables'] = cli_util.parse_json_parameter("variables", variables)
 
     if timeout_in_ms is not None:
-        details['timeoutInMs'] = timeout_in_ms
+        _details['timeoutInMs'] = timeout_in_ms
 
-    client = cli_util.build_client('nosql', ctx)
+    client = cli_util.build_client('nosql', 'nosql', ctx)
     result = client.query(
-        query_details=details,
+        query_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -982,7 +989,7 @@ def summarize_statement(ctx, from_json, compartment_id, statement):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('nosql', ctx)
+    client = cli_util.build_client('nosql', 'nosql', ctx)
     result = client.summarize_statement(
         compartment_id=compartment_id,
         statement=statement,
@@ -1023,37 +1030,37 @@ def update_row(ctx, from_json, force, table_name_or_id, value, compartment_id, o
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['value'] = cli_util.parse_json_parameter("value", value)
+    _details = {}
+    _details['value'] = cli_util.parse_json_parameter("value", value)
 
     if compartment_id is not None:
-        details['compartmentId'] = compartment_id
+        _details['compartmentId'] = compartment_id
 
     if option is not None:
-        details['option'] = option
+        _details['option'] = option
 
     if is_get_return_row is not None:
-        details['isGetReturnRow'] = is_get_return_row
+        _details['isGetReturnRow'] = is_get_return_row
 
     if timeout_in_ms is not None:
-        details['timeoutInMs'] = timeout_in_ms
+        _details['timeoutInMs'] = timeout_in_ms
 
     if ttl is not None:
-        details['ttl'] = ttl
+        _details['ttl'] = ttl
 
     if is_ttl_use_table_default is not None:
-        details['isTtlUseTableDefault'] = is_ttl_use_table_default
+        _details['isTtlUseTableDefault'] = is_ttl_use_table_default
 
     if identity_cache_size is not None:
-        details['identityCacheSize'] = identity_cache_size
+        _details['identityCacheSize'] = identity_cache_size
 
     if is_exact_match is not None:
-        details['isExactMatch'] = is_exact_match
+        _details['isExactMatch'] = is_exact_match
 
-    client = cli_util.build_client('nosql', ctx)
+    client = cli_util.build_client('nosql', 'nosql', ctx)
     result = client.update_row(
         table_name_or_id=table_name_or_id,
-        update_row_details=details,
+        update_row_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -1090,30 +1097,31 @@ def update_table(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_i
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if compartment_id is not None:
-        details['compartmentId'] = compartment_id
+        _details['compartmentId'] = compartment_id
 
     if ddl_statement is not None:
-        details['ddlStatement'] = ddl_statement
+        _details['ddlStatement'] = ddl_statement
 
     if table_limits is not None:
-        details['tableLimits'] = cli_util.parse_json_parameter("table_limits", table_limits)
+        _details['tableLimits'] = cli_util.parse_json_parameter("table_limits", table_limits)
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('nosql', ctx)
+    client = cli_util.build_client('nosql', 'nosql', ctx)
     result = client.update_table(
         table_name_or_id=table_name_or_id,
-        update_table_details=details,
+        update_table_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}

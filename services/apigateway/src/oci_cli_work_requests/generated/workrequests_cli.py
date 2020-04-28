@@ -1,5 +1,6 @@
 # coding: utf-8
-# Copyright (c) 2016, 2020, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2020, Oracle and/or its affiliates.  All rights reserved.
+# This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 from __future__ import print_function
 import click
@@ -71,7 +72,7 @@ def cancel_work_request(ctx, from_json, work_request_id, if_match):
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('work_requests', ctx)
+    client = cli_util.build_client('apigateway', 'work_requests', ctx)
     result = client.cancel_work_request(
         work_request_id=work_request_id,
         **kwargs
@@ -93,7 +94,7 @@ def get_work_request(ctx, from_json, work_request_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('work_requests', ctx)
+    client = cli_util.build_client('apigateway', 'work_requests', ctx)
     result = client.get_work_request(
         work_request_id=work_request_id,
         **kwargs
@@ -132,7 +133,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     if sort_by is not None:
         kwargs['sort_by'] = sort_by
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('work_requests', ctx)
+    client = cli_util.build_client('apigateway', 'work_requests', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -189,7 +190,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     if sort_by is not None:
         kwargs['sort_by'] = sort_by
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('work_requests', ctx)
+    client = cli_util.build_client('apigateway', 'work_requests', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -246,7 +247,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, res
     if sort_by is not None:
         kwargs['sort_by'] = sort_by
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('work_requests', ctx)
+    client = cli_util.build_client('apigateway', 'work_requests', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size

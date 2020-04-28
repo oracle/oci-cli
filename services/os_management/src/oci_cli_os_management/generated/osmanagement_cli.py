@@ -1,5 +1,6 @@
 # coding: utf-8
-# Copyright (c) 2016, 2020, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2020, Oracle and/or its affiliates.  All rights reserved.
+# This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 from __future__ import print_function
 import click
@@ -14,7 +15,8 @@ from oci_cli import custom_types  # noqa: F401
 from oci_cli.aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('os_management.os_management_root_group.command_name', 'os-management'), cls=CommandGroupWithAlias, help=cli_util.override('os_management.os_management_root_group.help', """OS Management as a Service API definition"""), short_help=cli_util.override('os_management.os_management_root_group.short_help', """OSMS"""))
+@cli.command(cli_util.override('os_management.os_management_root_group.command_name', 'os-management'), cls=CommandGroupWithAlias, help=cli_util.override('os_management.os_management_root_group.help', """API for the OS Management service. Use these API operations for working
+with Managed instances and Managed instance groups."""), short_help=cli_util.override('os_management.os_management_root_group.short_help', """OS Management API"""))
 @cli_util.help_option_group
 def os_management_root_group():
     pass
@@ -50,6 +52,12 @@ def scheduled_job_group():
     pass
 
 
+@click.command(cli_util.override('os_management.windows_update_group.command_name', 'windows-update'), cls=CommandGroupWithAlias, help="""An update available for a Windows managed instance.""")
+@cli_util.help_option_group
+def windows_update_group():
+    pass
+
+
 @click.command(cli_util.override('os_management.work_request_summary_group.command_name', 'work-request-summary'), cls=CommandGroupWithAlias, help="""A work request summary""")
 @cli_util.help_option_group
 def work_request_summary_group():
@@ -67,6 +75,7 @@ os_management_root_group.add_command(erratum_group)
 os_management_root_group.add_command(managed_instance_group_group)
 os_management_root_group.add_command(managed_instance_group)
 os_management_root_group.add_command(scheduled_job_group)
+os_management_root_group.add_command(windows_update_group)
 os_management_root_group.add_command(work_request_summary_group)
 os_management_root_group.add_command(work_request_group)
 
@@ -87,13 +96,13 @@ def add_packages_to_software_source(ctx, from_json, software_source_id, package_
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['packageNames'] = cli_util.parse_json_parameter("package_names", package_names)
+    _details = {}
+    _details['packageNames'] = cli_util.parse_json_parameter("package_names", package_names)
 
-    client = cli_util.build_client('os_management', ctx)
+    client = cli_util.build_client('os_management', 'os_management', ctx)
     result = client.add_packages_to_software_source(
         software_source_id=software_source_id,
-        add_packages_to_software_source_details=details,
+        add_packages_to_software_source_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -115,13 +124,13 @@ def attach_child_software_source_to_managed_instance(ctx, from_json, managed_ins
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['softwareSourceId'] = software_source_id
+    _details = {}
+    _details['softwareSourceId'] = software_source_id
 
-    client = cli_util.build_client('os_management', ctx)
+    client = cli_util.build_client('os_management', 'os_management', ctx)
     result = client.attach_child_software_source_to_managed_instance(
         managed_instance_id=managed_instance_id,
-        attach_child_software_source_to_managed_instance_details=details,
+        attach_child_software_source_to_managed_instance_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -142,7 +151,7 @@ def attach_managed_instance_to_managed_instance_group(ctx, from_json, managed_in
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('os_management', ctx)
+    client = cli_util.build_client('os_management', 'os_management', ctx)
     result = client.attach_managed_instance_to_managed_instance_group(
         managed_instance_group_id=managed_instance_group_id,
         managed_instance_id=managed_instance_id,
@@ -167,13 +176,13 @@ def attach_parent_software_source_to_managed_instance(ctx, from_json, managed_in
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['softwareSourceId'] = software_source_id
+    _details = {}
+    _details['softwareSourceId'] = software_source_id
 
-    client = cli_util.build_client('os_management', ctx)
+    client = cli_util.build_client('os_management', 'os_management', ctx)
     result = client.attach_parent_software_source_to_managed_instance(
         managed_instance_id=managed_instance_id,
-        attach_parent_software_source_to_managed_instance_details=details,
+        attach_parent_software_source_to_managed_instance_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -198,15 +207,15 @@ def change_managed_instance_group_compartment(ctx, from_json, managed_instance_g
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if compartment_id is not None:
-        details['compartmentId'] = compartment_id
+        _details['compartmentId'] = compartment_id
 
-    client = cli_util.build_client('os_management', ctx)
+    client = cli_util.build_client('os_management', 'os_management', ctx)
     result = client.change_managed_instance_group_compartment(
         managed_instance_group_id=managed_instance_group_id,
-        change_managed_instance_group_compartment_details=details,
+        change_managed_instance_group_compartment_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -231,15 +240,15 @@ def change_scheduled_job_compartment(ctx, from_json, scheduled_job_id, compartme
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if compartment_id is not None:
-        details['compartmentId'] = compartment_id
+        _details['compartmentId'] = compartment_id
 
-    client = cli_util.build_client('os_management', ctx)
+    client = cli_util.build_client('os_management', 'os_management', ctx)
     result = client.change_scheduled_job_compartment(
         scheduled_job_id=scheduled_job_id,
-        change_scheduled_job_compartment_details=details,
+        change_scheduled_job_compartment_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -264,15 +273,15 @@ def change_software_source_compartment(ctx, from_json, software_source_id, compa
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if compartment_id is not None:
-        details['compartmentId'] = compartment_id
+        _details['compartmentId'] = compartment_id
 
-    client = cli_util.build_client('os_management', ctx)
+    client = cli_util.build_client('os_management', 'os_management', ctx)
     result = client.change_software_source_compartment(
         software_source_id=software_source_id,
-        change_software_source_compartment_details=details,
+        change_software_source_compartment_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -284,6 +293,7 @@ def change_software_source_compartment(ctx, from_json, software_source_id, compa
 @cli_util.option('--description', help=u"""Information specified by the user about the managed instance group""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--os-family', type=custom_types.CliCaseInsensitiveChoice(["LINUX", "WINDOWS", "ALL"]), help=u"""The Operating System type of the managed instance(s) on which this scheduled job will operate. If not specified, this defaults to Linux.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -292,30 +302,34 @@ def change_software_source_compartment(ctx, from_json, software_source_id, compa
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'os_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'os_management', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'os_management', 'class': 'ManagedInstanceGroup'})
 @cli_util.wrap_exceptions
-def create_managed_instance_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, description, freeform_tags, defined_tags):
+def create_managed_instance_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, description, freeform_tags, defined_tags, os_family):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['displayName'] = display_name
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['displayName'] = display_name
+    _details['compartmentId'] = compartment_id
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('os_management', ctx)
+    if os_family is not None:
+        _details['osFamily'] = os_family
+
+    client = cli_util.build_client('os_management', 'os_management', ctx)
     result = client.create_managed_instance_group(
-        create_managed_instance_group_details=details,
+        create_managed_instance_group_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_managed_instance_group') and callable(getattr(client, 'get_managed_instance_group')):
             try:
                 wait_period_kwargs = {}
@@ -355,65 +369,74 @@ This option is a JSON list with items of type Id.  For documentation on Id pleas
 @cli_util.option('--managed-instance-groups', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of managed instance groups this scheduled job operates on (mutually exclusive with managedInstances). Either this or managedInstances must be supplied.
 
 This option is a JSON list with items of type Id.  For documentation on Id please see our API reference: https://docs.cloud.oracle.com/api/#/en/osmanagement/20190801/datatypes/Id.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--update-type', type=custom_types.CliCaseInsensitiveChoice(["SECURITY", "BUGFIX", "ENHANCEMENT", "ALL"]), help=u"""Type of the update (only if operation type is UPDATE_ALL_PACKAGES)""")
-@cli_util.option('--package-names', type=custom_types.CLI_COMPLEX_TYPE, help=u"""the id of the package (only if operation type is INSTALL/UPDATE/REMOVE_PACKAGE)
+@cli_util.option('--update-type', type=custom_types.CliCaseInsensitiveChoice(["SECURITY", "BUGFIX", "ENHANCEMENT", "ALL"]), help=u"""Type of the update (only if operation type is UPDATEALL)""")
+@cli_util.option('--package-names', type=custom_types.CLI_COMPLEX_TYPE, help=u"""the id of the package (only if operation type is INSTALL/UPDATE/REMOVE)
 
 This option is a JSON list with items of type PackageName.  For documentation on PackageName please see our API reference: https://docs.cloud.oracle.com/api/#/en/osmanagement/20190801/datatypes/PackageName.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--update-names', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The unique names of the Windows Updates (only if operation type is INSTALL). This is only applicable when the osFamily is for Windows managed instances.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--os-family', type=custom_types.CliCaseInsensitiveChoice(["LINUX", "WINDOWS", "ALL"]), help=u"""The Operating System type of the managed instance(s) on which this scheduled job will operate. If not specified, this defaults to Linux.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'managed-instances': {'module': 'os_management', 'class': 'list[Id]'}, 'managed-instance-groups': {'module': 'os_management', 'class': 'list[Id]'}, 'package-names': {'module': 'os_management', 'class': 'list[PackageName]'}, 'freeform-tags': {'module': 'os_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'os_management', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'managed-instances': {'module': 'os_management', 'class': 'list[Id]'}, 'managed-instance-groups': {'module': 'os_management', 'class': 'list[Id]'}, 'package-names': {'module': 'os_management', 'class': 'list[PackageName]'}, 'freeform-tags': {'module': 'os_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'os_management', 'class': 'dict(str, dict(str, object))'}, 'update-names': {'module': 'os_management', 'class': 'list[string]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'managed-instances': {'module': 'os_management', 'class': 'list[Id]'}, 'managed-instance-groups': {'module': 'os_management', 'class': 'list[Id]'}, 'package-names': {'module': 'os_management', 'class': 'list[PackageName]'}, 'freeform-tags': {'module': 'os_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'os_management', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'os_management', 'class': 'ScheduledJob'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'managed-instances': {'module': 'os_management', 'class': 'list[Id]'}, 'managed-instance-groups': {'module': 'os_management', 'class': 'list[Id]'}, 'package-names': {'module': 'os_management', 'class': 'list[PackageName]'}, 'freeform-tags': {'module': 'os_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'os_management', 'class': 'dict(str, dict(str, object))'}, 'update-names': {'module': 'os_management', 'class': 'list[string]'}}, output_type={'module': 'os_management', 'class': 'ScheduledJob'})
 @cli_util.wrap_exceptions
-def create_scheduled_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, schedule_type, time_next_execution, operation_type, description, interval_type, interval_value, managed_instances, managed_instance_groups, update_type, package_names, freeform_tags, defined_tags):
+def create_scheduled_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, schedule_type, time_next_execution, operation_type, description, interval_type, interval_value, managed_instances, managed_instance_groups, update_type, package_names, freeform_tags, defined_tags, update_names, os_family):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
-    details['displayName'] = display_name
-    details['scheduleType'] = schedule_type
-    details['timeNextExecution'] = time_next_execution
-    details['operationType'] = operation_type
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['displayName'] = display_name
+    _details['scheduleType'] = schedule_type
+    _details['timeNextExecution'] = time_next_execution
+    _details['operationType'] = operation_type
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
     if interval_type is not None:
-        details['intervalType'] = interval_type
+        _details['intervalType'] = interval_type
 
     if interval_value is not None:
-        details['intervalValue'] = interval_value
+        _details['intervalValue'] = interval_value
 
     if managed_instances is not None:
-        details['managedInstances'] = cli_util.parse_json_parameter("managed_instances", managed_instances)
+        _details['managedInstances'] = cli_util.parse_json_parameter("managed_instances", managed_instances)
 
     if managed_instance_groups is not None:
-        details['managedInstanceGroups'] = cli_util.parse_json_parameter("managed_instance_groups", managed_instance_groups)
+        _details['managedInstanceGroups'] = cli_util.parse_json_parameter("managed_instance_groups", managed_instance_groups)
 
     if update_type is not None:
-        details['updateType'] = update_type
+        _details['updateType'] = update_type
 
     if package_names is not None:
-        details['packageNames'] = cli_util.parse_json_parameter("package_names", package_names)
+        _details['packageNames'] = cli_util.parse_json_parameter("package_names", package_names)
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('os_management', ctx)
+    if update_names is not None:
+        _details['updateNames'] = cli_util.parse_json_parameter("update_names", update_names)
+
+    if os_family is not None:
+        _details['osFamily'] = os_family
+
+    client = cli_util.build_client('os_management', 'os_management', ctx)
     result = client.create_scheduled_job(
-        create_scheduled_job_details=details,
+        create_scheduled_job_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_scheduled_job') and callable(getattr(client, 'get_scheduled_job')):
             try:
                 wait_period_kwargs = {}
@@ -463,41 +486,42 @@ def create_software_source(ctx, from_json, wait_for_state, max_wait_seconds, wai
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
-    details['displayName'] = display_name
-    details['archType'] = arch_type
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['displayName'] = display_name
+    _details['archType'] = arch_type
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
     if maintainer_name is not None:
-        details['maintainerName'] = maintainer_name
+        _details['maintainerName'] = maintainer_name
 
     if maintainer_email is not None:
-        details['maintainerEmail'] = maintainer_email
+        _details['maintainerEmail'] = maintainer_email
 
     if maintainer_phone is not None:
-        details['maintainerPhone'] = maintainer_phone
+        _details['maintainerPhone'] = maintainer_phone
 
     if checksum_type is not None:
-        details['checksumType'] = checksum_type
+        _details['checksumType'] = checksum_type
 
     if parent_id is not None:
-        details['parentId'] = parent_id
+        _details['parentId'] = parent_id
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('os_management', ctx)
+    client = cli_util.build_client('os_management', 'os_management', ctx)
     result = client.create_software_source(
-        create_software_source_details=details,
+        create_software_source_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_software_source') and callable(getattr(client, 'get_software_source')):
             try:
                 wait_period_kwargs = {}
@@ -543,12 +567,13 @@ def delete_managed_instance_group(ctx, from_json, wait_for_state, max_wait_secon
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('os_management', ctx)
+    client = cli_util.build_client('os_management', 'os_management', ctx)
     result = client.delete_managed_instance_group(
         managed_instance_group_id=managed_instance_group_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_managed_instance_group') and callable(getattr(client, 'get_managed_instance_group')):
             try:
                 wait_period_kwargs = {}
@@ -606,12 +631,13 @@ def delete_scheduled_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('os_management', ctx)
+    client = cli_util.build_client('os_management', 'os_management', ctx)
     result = client.delete_scheduled_job(
         scheduled_job_id=scheduled_job_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_scheduled_job') and callable(getattr(client, 'get_scheduled_job')):
             try:
                 wait_period_kwargs = {}
@@ -669,12 +695,13 @@ def delete_software_source(ctx, from_json, wait_for_state, max_wait_seconds, wai
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('os_management', ctx)
+    client = cli_util.build_client('os_management', 'os_management', ctx)
     result = client.delete_software_source(
         software_source_id=software_source_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_software_source') and callable(getattr(client, 'get_software_source')):
             try:
                 wait_period_kwargs = {}
@@ -727,13 +754,13 @@ def detach_child_software_source_from_managed_instance(ctx, from_json, managed_i
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['softwareSourceId'] = software_source_id
+    _details = {}
+    _details['softwareSourceId'] = software_source_id
 
-    client = cli_util.build_client('os_management', ctx)
+    client = cli_util.build_client('os_management', 'os_management', ctx)
     result = client.detach_child_software_source_from_managed_instance(
         managed_instance_id=managed_instance_id,
-        detach_child_software_source_from_managed_instance_details=details,
+        detach_child_software_source_from_managed_instance_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -754,7 +781,7 @@ def detach_managed_instance_from_managed_instance_group(ctx, from_json, managed_
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('os_management', ctx)
+    client = cli_util.build_client('os_management', 'os_management', ctx)
     result = client.detach_managed_instance_from_managed_instance_group(
         managed_instance_group_id=managed_instance_group_id,
         managed_instance_id=managed_instance_id,
@@ -779,13 +806,13 @@ def detach_parent_software_source_from_managed_instance(ctx, from_json, managed_
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['softwareSourceId'] = software_source_id
+    _details = {}
+    _details['softwareSourceId'] = software_source_id
 
-    client = cli_util.build_client('os_management', ctx)
+    client = cli_util.build_client('os_management', 'os_management', ctx)
     result = client.detach_parent_software_source_from_managed_instance(
         managed_instance_id=managed_instance_id,
-        detach_parent_software_source_from_managed_instance_details=details,
+        detach_parent_software_source_from_managed_instance_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -805,7 +832,7 @@ def get_erratum(ctx, from_json, erratum_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('os_management', ctx)
+    client = cli_util.build_client('os_management', 'os_management', ctx)
     result = client.get_erratum(
         erratum_id=erratum_id,
         **kwargs
@@ -827,7 +854,7 @@ def get_managed_instance(ctx, from_json, managed_instance_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('os_management', ctx)
+    client = cli_util.build_client('os_management', 'os_management', ctx)
     result = client.get_managed_instance(
         managed_instance_id=managed_instance_id,
         **kwargs
@@ -849,7 +876,7 @@ def get_managed_instance_group(ctx, from_json, managed_instance_group_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('os_management', ctx)
+    client = cli_util.build_client('os_management', 'os_management', ctx)
     result = client.get_managed_instance_group(
         managed_instance_group_id=managed_instance_group_id,
         **kwargs
@@ -871,7 +898,7 @@ def get_scheduled_job(ctx, from_json, scheduled_job_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('os_management', ctx)
+    client = cli_util.build_client('os_management', 'os_management', ctx)
     result = client.get_scheduled_job(
         scheduled_job_id=scheduled_job_id,
         **kwargs
@@ -897,7 +924,7 @@ def get_software_package(ctx, from_json, software_source_id, software_package_na
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('os_management', ctx)
+    client = cli_util.build_client('os_management', 'os_management', ctx)
     result = client.get_software_package(
         software_source_id=software_source_id,
         software_package_name=software_package_name,
@@ -920,9 +947,31 @@ def get_software_source(ctx, from_json, software_source_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('os_management', ctx)
+    client = cli_util.build_client('os_management', 'os_management', ctx)
     result = client.get_software_source(
         software_source_id=software_source_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@windows_update_group.command(name=cli_util.override('os_management.get_windows_update.command_name', 'get'), help=u"""Returns a Windows Update object.""")
+@cli_util.option('--windows-update', required=True, help=u"""The Windows Update""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'os_management', 'class': 'WindowsUpdate'})
+@cli_util.wrap_exceptions
+def get_windows_update(ctx, from_json, windows_update):
+
+    if isinstance(windows_update, six.string_types) and len(windows_update.strip()) == 0:
+        raise click.UsageError('Parameter --windows-update cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('os_management', 'os_management', ctx)
+    result = client.get_windows_update(
+        windows_update=windows_update,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -942,7 +991,7 @@ def get_work_request(ctx, from_json, work_request_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('os_management', ctx)
+    client = cli_util.build_client('os_management', 'os_management', ctx)
     result = client.get_work_request(
         work_request_id=work_request_id,
         **kwargs
@@ -967,12 +1016,61 @@ def install_all_package_updates_on_managed_instance(ctx, from_json, wait_for_sta
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('os_management', ctx)
+    client = cli_util.build_client('os_management', 'os_management', ctx)
     result = client.install_all_package_updates_on_managed_instance(
         managed_instance_id=managed_instance_id,
         **kwargs
     )
     if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@managed_instance_group.command(name=cli_util.override('os_management.install_all_windows_updates_on_managed_instance.command_name', 'install-all-windows-updates-on'), help=u"""Install all of the available Windows updates for the managed instance.""")
+@cli_util.option('--managed-instance-id', required=True, help=u"""OCID for the managed instance""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELLING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def install_all_windows_updates_on_managed_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, managed_instance_id):
+
+    if isinstance(managed_instance_id, six.string_types) and len(managed_instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-instance-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('os_management', 'os_management', ctx)
+    result = client.install_all_windows_updates_on_managed_instance(
+        managed_instance_id=managed_instance_id,
+        **kwargs
+    )
+    if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -1015,13 +1113,14 @@ def install_package_on_managed_instance(ctx, from_json, wait_for_state, max_wait
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('os_management', ctx)
+    client = cli_util.build_client('os_management', 'os_management', ctx)
     result = client.install_package_on_managed_instance(
         managed_instance_id=managed_instance_id,
         software_package_name=software_package_name,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -1064,13 +1163,64 @@ def install_package_update_on_managed_instance(ctx, from_json, wait_for_state, m
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('os_management', ctx)
+    client = cli_util.build_client('os_management', 'os_management', ctx)
     result = client.install_package_update_on_managed_instance(
         managed_instance_id=managed_instance_id,
         software_package_name=software_package_name,
         **kwargs
     )
     if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@managed_instance_group.command(name=cli_util.override('os_management.install_windows_update_on_managed_instance.command_name', 'install-windows-update-on'), help=u"""Installs a Windows update on a managed instance.""")
+@cli_util.option('--managed-instance-id', required=True, help=u"""OCID for the managed instance""")
+@cli_util.option('--windows-update-name', required=True, help=u"""Unique identifier for the Windows update. NOTE - This is not an OCID, but is a unique identifier assigned by Microsoft. Example: `6981d463-cd91-4a26-b7c4-ea4ded9183ed`""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELLING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def install_windows_update_on_managed_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, managed_instance_id, windows_update_name):
+
+    if isinstance(managed_instance_id, six.string_types) and len(managed_instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-instance-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('os_management', 'os_management', ctx)
+    result = client.install_windows_update_on_managed_instance(
+        managed_instance_id=managed_instance_id,
+        windows_update_name=windows_update_name,
+        **kwargs
+    )
+    if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -1100,7 +1250,7 @@ def install_package_update_on_managed_instance(ctx, from_json, wait_for_state, m
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable.
 
 Example: `My new resource`""")
-@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources. This parameter is optional and in some cases may have no effect.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
@@ -1134,7 +1284,7 @@ def list_available_packages_for_managed_instance(ctx, from_json, all_pages, page
     if sort_by is not None:
         kwargs['sort_by'] = sort_by
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('os_management', ctx)
+    client = cli_util.build_client('os_management', 'os_management', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -1165,7 +1315,7 @@ def list_available_packages_for_managed_instance(ctx, from_json, all_pages, page
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable.
 
 Example: `My new resource`""")
-@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources. This parameter is optional and in some cases may have no effect.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
@@ -1199,7 +1349,7 @@ def list_available_software_sources_for_managed_instance(ctx, from_json, all_pag
     if sort_by is not None:
         kwargs['sort_by'] = sort_by
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('os_management', ctx)
+    client = cli_util.build_client('os_management', 'os_management', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -1230,7 +1380,7 @@ def list_available_software_sources_for_managed_instance(ctx, from_json, all_pag
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable.
 
 Example: `My new resource`""")
-@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources. This parameter is optional and in some cases may have no effect.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
@@ -1264,7 +1414,7 @@ def list_available_updates_for_managed_instance(ctx, from_json, all_pages, page_
     if sort_by is not None:
         kwargs['sort_by'] = sort_by
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('os_management', ctx)
+    client = cli_util.build_client('os_management', 'os_management', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -1290,6 +1440,74 @@ def list_available_updates_for_managed_instance(ctx, from_json, all_pages, page_
     cli_util.render_response(result, ctx)
 
 
+@managed_instance_group.command(name=cli_util.override('os_management.list_available_windows_updates_for_managed_instance.command_name', 'list-available-windows-updates-for'), help=u"""Returns a list of available Windows updates for a Managed Instance. This is only applicable to Windows instances.""")
+@cli_util.option('--managed-instance-id', required=True, help=u"""OCID for the managed instance""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable.
+
+Example: `My new resource`""")
+@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources. This parameter is optional and in some cases may have no effect.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. If no value is specified TIMECREATED is default.""")
+@cli_util.option('--is-eligible-for-installation', type=custom_types.CliCaseInsensitiveChoice(["INSTALLABLE", "NOT_INSTALLABLE", "UNKNOWN"]), help=u"""Indicator of whether the update can be installed using OSMS.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'os_management', 'class': 'list[AvailableWindowsUpdateSummary]'})
+@cli_util.wrap_exceptions
+def list_available_windows_updates_for_managed_instance(ctx, from_json, all_pages, page_size, managed_instance_id, display_name, compartment_id, limit, page, sort_order, sort_by, is_eligible_for_installation):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(managed_instance_id, six.string_types) and len(managed_instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-instance-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if is_eligible_for_installation is not None:
+        kwargs['is_eligible_for_installation'] = is_eligible_for_installation
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('os_management', 'os_management', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_available_windows_updates_for_managed_instance,
+            managed_instance_id=managed_instance_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_available_windows_updates_for_managed_instance,
+            limit,
+            page_size,
+            managed_instance_id=managed_instance_id,
+            **kwargs
+        )
+    else:
+        result = client.list_available_windows_updates_for_managed_instance(
+            managed_instance_id=managed_instance_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
 @managed_instance_group_group.command(name=cli_util.override('os_management.list_managed_instance_groups.command_name', 'list'), help=u"""Returns a list of all Managed Instance Groups.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable.
@@ -1300,6 +1518,7 @@ Example: `My new resource`""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. If no value is specified TIMECREATED is default.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The current lifecycle state for the object.""")
+@cli_util.option('--os-family', type=custom_types.CliCaseInsensitiveChoice(["LINUX", "WINDOWS", "ALL"]), help=u"""The OS family for which to list resources.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1307,7 +1526,7 @@ Example: `My new resource`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'os_management', 'class': 'list[ManagedInstanceGroupSummary]'})
 @cli_util.wrap_exceptions
-def list_managed_instance_groups(ctx, from_json, all_pages, page_size, compartment_id, display_name, limit, page, sort_order, sort_by, lifecycle_state):
+def list_managed_instance_groups(ctx, from_json, all_pages, page_size, compartment_id, display_name, limit, page, sort_order, sort_by, lifecycle_state, os_family):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -1325,8 +1544,10 @@ def list_managed_instance_groups(ctx, from_json, all_pages, page_size, compartme
         kwargs['sort_by'] = sort_by
     if lifecycle_state is not None:
         kwargs['lifecycle_state'] = lifecycle_state
+    if os_family is not None:
+        kwargs['os_family'] = os_family
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('os_management', ctx)
+    client = cli_util.build_client('os_management', 'os_management', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -1361,6 +1582,7 @@ Example: `My new resource`""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. If no value is specified TIMECREATED is default.""")
+@cli_util.option('--os-family', type=custom_types.CliCaseInsensitiveChoice(["LINUX", "WINDOWS", "ALL"]), help=u"""The OS family for which to list resources.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1368,7 +1590,7 @@ Example: `My new resource`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'os_management', 'class': 'list[ManagedInstanceSummary]'})
 @cli_util.wrap_exceptions
-def list_managed_instances(ctx, from_json, all_pages, page_size, compartment_id, display_name, limit, page, sort_order, sort_by):
+def list_managed_instances(ctx, from_json, all_pages, page_size, compartment_id, display_name, limit, page, sort_order, sort_by, os_family):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -1384,8 +1606,10 @@ def list_managed_instances(ctx, from_json, all_pages, page_size, compartment_id,
         kwargs['sort_order'] = sort_order
     if sort_by is not None:
         kwargs['sort_by'] = sort_by
+    if os_family is not None:
+        kwargs['os_family'] = os_family
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('os_management', ctx)
+    client = cli_util.build_client('os_management', 'os_management', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -1416,7 +1640,7 @@ def list_managed_instances(ctx, from_json, all_pages, page_size, compartment_id,
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable.
 
 Example: `My new resource`""")
-@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources. This parameter is optional and in some cases may have no effect.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
@@ -1450,7 +1674,7 @@ def list_packages_installed_on_managed_instance(ctx, from_json, all_pages, page_
     if sort_by is not None:
         kwargs['sort_by'] = sort_by
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('os_management', ctx)
+    client = cli_util.build_client('os_management', 'os_management', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -1489,6 +1713,7 @@ Example: `My new resource`""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. If no value is specified TIMECREATED is default.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The current lifecycle state for the object.""")
+@cli_util.option('--os-family', type=custom_types.CliCaseInsensitiveChoice(["LINUX", "WINDOWS", "ALL"]), help=u"""The OS family for which to list resources.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1496,7 +1721,7 @@ Example: `My new resource`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'os_management', 'class': 'list[ScheduledJobSummary]'})
 @cli_util.wrap_exceptions
-def list_scheduled_jobs(ctx, from_json, all_pages, page_size, compartment_id, display_name, managed_instance_id, managed_instance_group_id, operation_type, limit, page, sort_order, sort_by, lifecycle_state):
+def list_scheduled_jobs(ctx, from_json, all_pages, page_size, compartment_id, display_name, managed_instance_id, managed_instance_group_id, operation_type, limit, page, sort_order, sort_by, lifecycle_state, os_family):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -1520,8 +1745,10 @@ def list_scheduled_jobs(ctx, from_json, all_pages, page_size, compartment_id, di
         kwargs['sort_by'] = sort_by
     if lifecycle_state is not None:
         kwargs['lifecycle_state'] = lifecycle_state
+    if os_family is not None:
+        kwargs['os_family'] = os_family
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('os_management', ctx)
+    client = cli_util.build_client('os_management', 'os_management', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -1549,7 +1776,7 @@ def list_scheduled_jobs(ctx, from_json, all_pages, page_size, compartment_id, di
 
 @software_source_group.command(name=cli_util.override('os_management.list_software_source_packages.command_name', 'list-software-source-packages'), help=u"""Lists Software Packages in a Software Source""")
 @cli_util.option('--software-source-id', required=True, help=u"""The OCID of the software source.""")
-@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources.""")
+@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources. This parameter is optional and in some cases may have no effect.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable.
 
 Example: `My new resource`""")
@@ -1586,7 +1813,7 @@ def list_software_source_packages(ctx, from_json, all_pages, page_size, software
     if sort_by is not None:
         kwargs['sort_by'] = sort_by
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('os_management', ctx)
+    client = cli_util.build_client('os_management', 'os_management', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -1648,7 +1875,7 @@ def list_software_sources(ctx, from_json, all_pages, page_size, compartment_id, 
     if lifecycle_state is not None:
         kwargs['lifecycle_state'] = lifecycle_state
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('os_management', ctx)
+    client = cli_util.build_client('os_management', 'os_management', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -1689,6 +1916,7 @@ Example: `My new resource`""")
 @cli_util.option('--tag-name', help=u"""The name of the tag.""")
 @cli_util.option('--tag-value', help=u"""The value for the tag.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""The current lifecycle state for the object.""")
+@cli_util.option('--os-family', type=custom_types.CliCaseInsensitiveChoice(["LINUX", "WINDOWS", "ALL"]), help=u"""The OS family for which to list resources.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1696,7 +1924,7 @@ Example: `My new resource`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'os_management', 'class': 'list[ScheduledJobSummary]'})
 @cli_util.wrap_exceptions
-def list_upcoming_scheduled_jobs(ctx, from_json, all_pages, page_size, compartment_id, time_end, display_name, limit, page, sort_order, sort_by, tag_name, tag_value, lifecycle_state):
+def list_upcoming_scheduled_jobs(ctx, from_json, all_pages, page_size, compartment_id, time_end, display_name, limit, page, sort_order, sort_by, tag_name, tag_value, lifecycle_state, os_family):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -1718,8 +1946,10 @@ def list_upcoming_scheduled_jobs(ctx, from_json, all_pages, page_size, compartme
         kwargs['tag_value'] = tag_value
     if lifecycle_state is not None:
         kwargs['lifecycle_state'] = lifecycle_state
+    if os_family is not None:
+        kwargs['os_family'] = os_family
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('os_management', ctx)
+    client = cli_util.build_client('os_management', 'os_management', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -1743,6 +1973,129 @@ def list_upcoming_scheduled_jobs(ctx, from_json, all_pages, page_size, compartme
         result = client.list_upcoming_scheduled_jobs(
             compartment_id=compartment_id,
             time_end=time_end,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@windows_update_group.command(name=cli_util.override('os_management.list_windows_updates.command_name', 'list'), help=u"""Returns a list of Windows Updates.""")
+@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources. This parameter is optional and in some cases may have no effect.""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable.
+
+Example: `My new resource`""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. If no value is specified TIMECREATED is default.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'os_management', 'class': 'list[WindowsUpdateSummary]'})
+@cli_util.wrap_exceptions
+def list_windows_updates(ctx, from_json, all_pages, page_size, compartment_id, display_name, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('os_management', 'os_management', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_windows_updates,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_windows_updates,
+            limit,
+            page_size,
+            **kwargs
+        )
+    else:
+        result = client.list_windows_updates(
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@managed_instance_group.command(name=cli_util.override('os_management.list_windows_updates_installed_on_managed_instance.command_name', 'list-windows-updates-installed-on'), help=u"""Returns a list of installed Windows updates for a Managed Instance. This is only applicable to Windows instances.""")
+@cli_util.option('--managed-instance-id', required=True, help=u"""OCID for the managed instance""")
+@cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable.
+
+Example: `My new resource`""")
+@cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources. This parameter is optional and in some cases may have no effect.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. If no value is specified TIMECREATED is default.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'os_management', 'class': 'list[InstalledWindowsUpdateSummary]'})
+@cli_util.wrap_exceptions
+def list_windows_updates_installed_on_managed_instance(ctx, from_json, all_pages, page_size, managed_instance_id, display_name, compartment_id, limit, page, sort_order, sort_by):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(managed_instance_id, six.string_types) and len(managed_instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --managed-instance-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('os_management', 'os_management', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_windows_updates_installed_on_managed_instance,
+            managed_instance_id=managed_instance_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_windows_updates_installed_on_managed_instance,
+            limit,
+            page_size,
+            managed_instance_id=managed_instance_id,
+            **kwargs
+        )
+    else:
+        result = client.list_windows_updates_installed_on_managed_instance(
+            managed_instance_id=managed_instance_id,
             **kwargs
         )
     cli_util.render_response(result, ctx)
@@ -1779,7 +2132,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     if sort_by is not None:
         kwargs['sort_by'] = sort_by
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('os_management', ctx)
+    client = cli_util.build_client('os_management', 'os_management', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -1836,7 +2189,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     if sort_by is not None:
         kwargs['sort_by'] = sort_by
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('os_management', ctx)
+    client = cli_util.build_client('os_management', 'os_management', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -1872,6 +2225,7 @@ Example: `My new resource`""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. If no value is specified TIMECREATED is default.""")
+@cli_util.option('--os-family', type=custom_types.CliCaseInsensitiveChoice(["LINUX", "WINDOWS", "ALL"]), help=u"""The OS family for which to list resources.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1879,7 +2233,7 @@ Example: `My new resource`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'os_management', 'class': 'list[WorkRequestSummary]'})
 @cli_util.wrap_exceptions
-def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, display_name, managed_instance_id, limit, page, sort_order, sort_by):
+def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, display_name, managed_instance_id, limit, page, sort_order, sort_by, os_family):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -1897,8 +2251,10 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, dis
         kwargs['sort_order'] = sort_order
     if sort_by is not None:
         kwargs['sort_by'] = sort_by
+    if os_family is not None:
+        kwargs['os_family'] = os_family
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('os_management', ctx)
+    client = cli_util.build_client('os_management', 'os_management', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -1942,13 +2298,14 @@ def remove_package_from_managed_instance(ctx, from_json, wait_for_state, max_wai
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('os_management', ctx)
+    client = cli_util.build_client('os_management', 'os_management', ctx)
     result = client.remove_package_from_managed_instance(
         managed_instance_id=managed_instance_id,
         software_package_name=software_package_name,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -1989,13 +2346,13 @@ def remove_packages_from_software_source(ctx, from_json, software_source_id, pac
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['packageNames'] = cli_util.parse_json_parameter("package_names", package_names)
+    _details = {}
+    _details['packageNames'] = cli_util.parse_json_parameter("package_names", package_names)
 
-    client = cli_util.build_client('os_management', ctx)
+    client = cli_util.build_client('os_management', 'os_management', ctx)
     result = client.remove_packages_from_software_source(
         software_source_id=software_source_id,
-        remove_packages_from_software_source_details=details,
+        remove_packages_from_software_source_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -2018,7 +2375,7 @@ def run_scheduled_job_now(ctx, from_json, scheduled_job_id, if_match):
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('os_management', ctx)
+    client = cli_util.build_client('os_management', 'os_management', ctx)
     result = client.run_scheduled_job_now(
         scheduled_job_id=scheduled_job_id,
         **kwargs
@@ -2059,7 +2416,7 @@ def search_software_packages(ctx, from_json, software_package_name, display_name
     if sort_by is not None:
         kwargs['sort_by'] = sort_by
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('os_management', ctx)
+    client = cli_util.build_client('os_management', 'os_management', ctx)
     result = client.search_software_packages(
         **kwargs
     )
@@ -2083,7 +2440,7 @@ def skip_next_scheduled_job_execution(ctx, from_json, scheduled_job_id, if_match
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('os_management', ctx)
+    client = cli_util.build_client('os_management', 'os_management', ctx)
     result = client.skip_next_scheduled_job_execution(
         scheduled_job_id=scheduled_job_id,
         **kwargs
@@ -2121,27 +2478,28 @@ def update_managed_instance_group(ctx, from_json, force, wait_for_state, max_wai
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('os_management', ctx)
+    client = cli_util.build_client('os_management', 'os_management', ctx)
     result = client.update_managed_instance_group(
         managed_instance_group_id=managed_instance_group_id,
-        update_managed_instance_group_details=details,
+        update_managed_instance_group_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_managed_instance_group') and callable(getattr(client, 'get_managed_instance_group')):
             try:
                 wait_period_kwargs = {}
@@ -2175,10 +2533,11 @@ def update_managed_instance_group(ctx, from_json, force, wait_for_state, max_wai
 @cli_util.option('--interval-type', type=custom_types.CliCaseInsensitiveChoice(["HOUR", "DAY", "WEEK", "MONTH"]), help=u"""the interval period for a recurring Scheduled Job (only if schedule type is RECURRING)""")
 @cli_util.option('--interval-value', help=u"""the value for the interval period for a recurring Scheduled Job (only if schedule type is RECURRING)""")
 @cli_util.option('--operation-type', type=custom_types.CliCaseInsensitiveChoice(["INSTALL", "UPDATE", "REMOVE", "UPDATEALL"]), help=u"""the type of operation this Scheduled Job performs""")
-@cli_util.option('--update-type', type=custom_types.CliCaseInsensitiveChoice(["SECURITY", "BUGFIX", "ENHANCEMENT", "ALL"]), help=u"""Type of the update (only if operation type is UPDATE_ALL_PACKAGES)""")
-@cli_util.option('--package-names', type=custom_types.CLI_COMPLEX_TYPE, help=u"""the id of the package (only if operation type is INSTALL/UPDATE/REMOVE_PACKAGE)
+@cli_util.option('--update-type', type=custom_types.CliCaseInsensitiveChoice(["SECURITY", "BUGFIX", "ENHANCEMENT", "ALL"]), help=u"""Type of the update (only if operation type is UPDATEALL)""")
+@cli_util.option('--package-names', type=custom_types.CLI_COMPLEX_TYPE, help=u"""the id of the package (only if operation type is INSTALL/UPDATE/REMOVE)
 
 This option is a JSON list with items of type PackageName.  For documentation on PackageName please see our API reference: https://docs.cloud.oracle.com/api/#/en/osmanagement/20190801/datatypes/PackageName.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--update-names', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The unique names of the Windows Updates (only if operation type is INSTALL). This is only applicable when the osFamily is for Windows managed instances.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -2186,18 +2545,18 @@ This option is a JSON list with items of type PackageName.  For documentation on
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'package-names': {'module': 'os_management', 'class': 'list[PackageName]'}, 'freeform-tags': {'module': 'os_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'os_management', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'package-names': {'module': 'os_management', 'class': 'list[PackageName]'}, 'update-names': {'module': 'os_management', 'class': 'list[string]'}, 'freeform-tags': {'module': 'os_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'os_management', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'package-names': {'module': 'os_management', 'class': 'list[PackageName]'}, 'freeform-tags': {'module': 'os_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'os_management', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'os_management', 'class': 'ScheduledJob'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'package-names': {'module': 'os_management', 'class': 'list[PackageName]'}, 'update-names': {'module': 'os_management', 'class': 'list[string]'}, 'freeform-tags': {'module': 'os_management', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'os_management', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'os_management', 'class': 'ScheduledJob'})
 @cli_util.wrap_exceptions
-def update_scheduled_job(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, scheduled_job_id, display_name, description, schedule_type, time_next_execution, interval_type, interval_value, operation_type, update_type, package_names, freeform_tags, defined_tags, if_match):
+def update_scheduled_job(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, scheduled_job_id, display_name, description, schedule_type, time_next_execution, interval_type, interval_value, operation_type, update_type, package_names, update_names, freeform_tags, defined_tags, if_match):
 
     if isinstance(scheduled_job_id, six.string_types) and len(scheduled_job_id.strip()) == 0:
         raise click.UsageError('Parameter --scheduled-job-id cannot be whitespace or empty string')
     if not force:
-        if package_names or freeform_tags or defined_tags:
-            if not click.confirm("WARNING: Updates to package-names and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+        if package_names or update_names or freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to package-names and update-names and freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -2205,48 +2564,52 @@ def update_scheduled_job(ctx, from_json, force, wait_for_state, max_wait_seconds
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
     if schedule_type is not None:
-        details['scheduleType'] = schedule_type
+        _details['scheduleType'] = schedule_type
 
     if time_next_execution is not None:
-        details['timeNextExecution'] = time_next_execution
+        _details['timeNextExecution'] = time_next_execution
 
     if interval_type is not None:
-        details['intervalType'] = interval_type
+        _details['intervalType'] = interval_type
 
     if interval_value is not None:
-        details['intervalValue'] = interval_value
+        _details['intervalValue'] = interval_value
 
     if operation_type is not None:
-        details['operationType'] = operation_type
+        _details['operationType'] = operation_type
 
     if update_type is not None:
-        details['updateType'] = update_type
+        _details['updateType'] = update_type
 
     if package_names is not None:
-        details['packageNames'] = cli_util.parse_json_parameter("package_names", package_names)
+        _details['packageNames'] = cli_util.parse_json_parameter("package_names", package_names)
+
+    if update_names is not None:
+        _details['updateNames'] = cli_util.parse_json_parameter("update_names", update_names)
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('os_management', ctx)
+    client = cli_util.build_client('os_management', 'os_management', ctx)
     result = client.update_scheduled_job(
         scheduled_job_id=scheduled_job_id,
-        update_scheduled_job_details=details,
+        update_scheduled_job_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_scheduled_job') and callable(getattr(client, 'get_scheduled_job')):
             try:
                 wait_period_kwargs = {}
@@ -2305,39 +2668,40 @@ def update_software_source(ctx, from_json, force, wait_for_state, max_wait_secon
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
     if maintainer_name is not None:
-        details['maintainerName'] = maintainer_name
+        _details['maintainerName'] = maintainer_name
 
     if maintainer_email is not None:
-        details['maintainerEmail'] = maintainer_email
+        _details['maintainerEmail'] = maintainer_email
 
     if maintainer_phone is not None:
-        details['maintainerPhone'] = maintainer_phone
+        _details['maintainerPhone'] = maintainer_phone
 
     if checksum_type is not None:
-        details['checksumType'] = checksum_type
+        _details['checksumType'] = checksum_type
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('os_management', ctx)
+    client = cli_util.build_client('os_management', 'os_management', ctx)
     result = client.update_software_source(
         software_source_id=software_source_id,
-        update_software_source_details=details,
+        update_software_source_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_software_source') and callable(getattr(client, 'get_software_source')):
             try:
                 wait_period_kwargs = {}

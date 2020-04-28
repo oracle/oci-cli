@@ -1,5 +1,6 @@
 # coding: utf-8
-# Copyright (c) 2016, 2020, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2020, Oracle and/or its affiliates.  All rights reserved.
+# This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 from __future__ import print_function
 import click
@@ -82,7 +83,7 @@ def cancel_work_request(ctx, from_json, work_request_id, if_match):
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('application_migration', ctx)
+    client = cli_util.build_client('application_migration', 'application_migration', ctx)
     result = client.cancel_work_request(
         work_request_id=work_request_id,
         **kwargs
@@ -109,13 +110,13 @@ def change_migration_compartment(ctx, from_json, migration_id, compartment_id, i
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
 
-    client = cli_util.build_client('application_migration', ctx)
+    client = cli_util.build_client('application_migration', 'application_migration', ctx)
     result = client.change_migration_compartment(
         migration_id=migration_id,
-        change_migration_compartment_details=details,
+        change_migration_compartment_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -140,13 +141,13 @@ def change_source_compartment(ctx, from_json, source_id, compartment_id, if_matc
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
 
-    client = cli_util.build_client('application_migration', ctx)
+    client = cli_util.build_client('application_migration', 'application_migration', ctx)
     result = client.change_source_compartment(
         source_id=source_id,
-        change_source_compartment_details=details,
+        change_source_compartment_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -177,33 +178,33 @@ def create_migration(ctx, from_json, compartment_id, source_id, application_name
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
-    details['sourceId'] = source_id
-    details['applicationName'] = application_name
-    details['discoveryDetails'] = cli_util.parse_json_parameter("discovery_details", discovery_details)
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['sourceId'] = source_id
+    _details['applicationName'] = application_name
+    _details['discoveryDetails'] = cli_util.parse_json_parameter("discovery_details", discovery_details)
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
     if service_config is not None:
-        details['serviceConfig'] = cli_util.parse_json_parameter("service_config", service_config)
+        _details['serviceConfig'] = cli_util.parse_json_parameter("service_config", service_config)
 
     if application_config is not None:
-        details['applicationConfig'] = cli_util.parse_json_parameter("application_config", application_config)
+        _details['applicationConfig'] = cli_util.parse_json_parameter("application_config", application_config)
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('application_migration', ctx)
+    client = cli_util.build_client('application_migration', 'application_migration', ctx)
     result = client.create_migration(
-        create_migration_details=details,
+        create_migration_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -235,37 +236,37 @@ def create_migration_oic_discovery_details(ctx, from_json, compartment_id, sourc
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['discoveryDetails'] = {}
-    details['compartmentId'] = compartment_id
-    details['sourceId'] = source_id
-    details['applicationName'] = application_name
-    details['discoveryDetails']['serviceInstanceUser'] = discovery_details_service_instance_user
-    details['discoveryDetails']['serviceInstancePassword'] = discovery_details_service_instance_password
+    _details = {}
+    _details['discoveryDetails'] = {}
+    _details['compartmentId'] = compartment_id
+    _details['sourceId'] = source_id
+    _details['applicationName'] = application_name
+    _details['discoveryDetails']['serviceInstanceUser'] = discovery_details_service_instance_user
+    _details['discoveryDetails']['serviceInstancePassword'] = discovery_details_service_instance_password
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
     if service_config is not None:
-        details['serviceConfig'] = cli_util.parse_json_parameter("service_config", service_config)
+        _details['serviceConfig'] = cli_util.parse_json_parameter("service_config", service_config)
 
     if application_config is not None:
-        details['applicationConfig'] = cli_util.parse_json_parameter("application_config", application_config)
+        _details['applicationConfig'] = cli_util.parse_json_parameter("application_config", application_config)
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    details['discoveryDetails']['type'] = 'OIC'
+    _details['discoveryDetails']['type'] = 'OIC'
 
-    client = cli_util.build_client('application_migration', ctx)
+    client = cli_util.build_client('application_migration', 'application_migration', ctx)
     result = client.create_migration(
-        create_migration_details=details,
+        create_migration_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -297,37 +298,37 @@ def create_migration_pcs_discovery_details(ctx, from_json, compartment_id, sourc
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['discoveryDetails'] = {}
-    details['compartmentId'] = compartment_id
-    details['sourceId'] = source_id
-    details['applicationName'] = application_name
-    details['discoveryDetails']['serviceInstanceUser'] = discovery_details_service_instance_user
-    details['discoveryDetails']['serviceInstancePassword'] = discovery_details_service_instance_password
+    _details = {}
+    _details['discoveryDetails'] = {}
+    _details['compartmentId'] = compartment_id
+    _details['sourceId'] = source_id
+    _details['applicationName'] = application_name
+    _details['discoveryDetails']['serviceInstanceUser'] = discovery_details_service_instance_user
+    _details['discoveryDetails']['serviceInstancePassword'] = discovery_details_service_instance_password
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
     if service_config is not None:
-        details['serviceConfig'] = cli_util.parse_json_parameter("service_config", service_config)
+        _details['serviceConfig'] = cli_util.parse_json_parameter("service_config", service_config)
 
     if application_config is not None:
-        details['applicationConfig'] = cli_util.parse_json_parameter("application_config", application_config)
+        _details['applicationConfig'] = cli_util.parse_json_parameter("application_config", application_config)
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    details['discoveryDetails']['type'] = 'PCS'
+    _details['discoveryDetails']['type'] = 'PCS'
 
-    client = cli_util.build_client('application_migration', ctx)
+    client = cli_util.build_client('application_migration', 'application_migration', ctx)
     result = client.create_migration(
-        create_migration_details=details,
+        create_migration_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -359,37 +360,37 @@ def create_migration_ics_discovery_details(ctx, from_json, compartment_id, sourc
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['discoveryDetails'] = {}
-    details['compartmentId'] = compartment_id
-    details['sourceId'] = source_id
-    details['applicationName'] = application_name
-    details['discoveryDetails']['serviceInstanceUser'] = discovery_details_service_instance_user
-    details['discoveryDetails']['serviceInstancePassword'] = discovery_details_service_instance_password
+    _details = {}
+    _details['discoveryDetails'] = {}
+    _details['compartmentId'] = compartment_id
+    _details['sourceId'] = source_id
+    _details['applicationName'] = application_name
+    _details['discoveryDetails']['serviceInstanceUser'] = discovery_details_service_instance_user
+    _details['discoveryDetails']['serviceInstancePassword'] = discovery_details_service_instance_password
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
     if service_config is not None:
-        details['serviceConfig'] = cli_util.parse_json_parameter("service_config", service_config)
+        _details['serviceConfig'] = cli_util.parse_json_parameter("service_config", service_config)
 
     if application_config is not None:
-        details['applicationConfig'] = cli_util.parse_json_parameter("application_config", application_config)
+        _details['applicationConfig'] = cli_util.parse_json_parameter("application_config", application_config)
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    details['discoveryDetails']['type'] = 'ICS'
+    _details['discoveryDetails']['type'] = 'ICS'
 
-    client = cli_util.build_client('application_migration', ctx)
+    client = cli_util.build_client('application_migration', 'application_migration', ctx)
     result = client.create_migration(
-        create_migration_details=details,
+        create_migration_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -421,37 +422,37 @@ def create_migration_oac_discovery_details(ctx, from_json, compartment_id, sourc
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['discoveryDetails'] = {}
-    details['compartmentId'] = compartment_id
-    details['sourceId'] = source_id
-    details['applicationName'] = application_name
-    details['discoveryDetails']['serviceInstanceUser'] = discovery_details_service_instance_user
-    details['discoveryDetails']['serviceInstancePassword'] = discovery_details_service_instance_password
+    _details = {}
+    _details['discoveryDetails'] = {}
+    _details['compartmentId'] = compartment_id
+    _details['sourceId'] = source_id
+    _details['applicationName'] = application_name
+    _details['discoveryDetails']['serviceInstanceUser'] = discovery_details_service_instance_user
+    _details['discoveryDetails']['serviceInstancePassword'] = discovery_details_service_instance_password
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
     if service_config is not None:
-        details['serviceConfig'] = cli_util.parse_json_parameter("service_config", service_config)
+        _details['serviceConfig'] = cli_util.parse_json_parameter("service_config", service_config)
 
     if application_config is not None:
-        details['applicationConfig'] = cli_util.parse_json_parameter("application_config", application_config)
+        _details['applicationConfig'] = cli_util.parse_json_parameter("application_config", application_config)
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    details['discoveryDetails']['type'] = 'OAC'
+    _details['discoveryDetails']['type'] = 'OAC'
 
-    client = cli_util.build_client('application_migration', ctx)
+    client = cli_util.build_client('application_migration', 'application_migration', ctx)
     result = client.create_migration(
-        create_migration_details=details,
+        create_migration_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -483,37 +484,37 @@ def create_migration_jcs_discovery_details(ctx, from_json, compartment_id, sourc
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['discoveryDetails'] = {}
-    details['compartmentId'] = compartment_id
-    details['sourceId'] = source_id
-    details['applicationName'] = application_name
-    details['discoveryDetails']['weblogicUser'] = discovery_details_weblogic_user
-    details['discoveryDetails']['weblogicPassword'] = discovery_details_weblogic_password
+    _details = {}
+    _details['discoveryDetails'] = {}
+    _details['compartmentId'] = compartment_id
+    _details['sourceId'] = source_id
+    _details['applicationName'] = application_name
+    _details['discoveryDetails']['weblogicUser'] = discovery_details_weblogic_user
+    _details['discoveryDetails']['weblogicPassword'] = discovery_details_weblogic_password
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
     if service_config is not None:
-        details['serviceConfig'] = cli_util.parse_json_parameter("service_config", service_config)
+        _details['serviceConfig'] = cli_util.parse_json_parameter("service_config", service_config)
 
     if application_config is not None:
-        details['applicationConfig'] = cli_util.parse_json_parameter("application_config", application_config)
+        _details['applicationConfig'] = cli_util.parse_json_parameter("application_config", application_config)
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    details['discoveryDetails']['type'] = 'JCS'
+    _details['discoveryDetails']['type'] = 'JCS'
 
-    client = cli_util.build_client('application_migration', ctx)
+    client = cli_util.build_client('application_migration', 'application_migration', ctx)
     result = client.create_migration(
-        create_migration_details=details,
+        create_migration_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -545,37 +546,37 @@ def create_migration_soacs_discovery_details(ctx, from_json, compartment_id, sou
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['discoveryDetails'] = {}
-    details['compartmentId'] = compartment_id
-    details['sourceId'] = source_id
-    details['applicationName'] = application_name
-    details['discoveryDetails']['weblogicUser'] = discovery_details_weblogic_user
-    details['discoveryDetails']['weblogicPassword'] = discovery_details_weblogic_password
+    _details = {}
+    _details['discoveryDetails'] = {}
+    _details['compartmentId'] = compartment_id
+    _details['sourceId'] = source_id
+    _details['applicationName'] = application_name
+    _details['discoveryDetails']['weblogicUser'] = discovery_details_weblogic_user
+    _details['discoveryDetails']['weblogicPassword'] = discovery_details_weblogic_password
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
     if service_config is not None:
-        details['serviceConfig'] = cli_util.parse_json_parameter("service_config", service_config)
+        _details['serviceConfig'] = cli_util.parse_json_parameter("service_config", service_config)
 
     if application_config is not None:
-        details['applicationConfig'] = cli_util.parse_json_parameter("application_config", application_config)
+        _details['applicationConfig'] = cli_util.parse_json_parameter("application_config", application_config)
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    details['discoveryDetails']['type'] = 'SOACS'
+    _details['discoveryDetails']['type'] = 'SOACS'
 
-    client = cli_util.build_client('application_migration', ctx)
+    client = cli_util.build_client('application_migration', 'application_migration', ctx)
     result = client.create_migration(
-        create_migration_details=details,
+        create_migration_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -599,28 +600,28 @@ def create_source(ctx, from_json, compartment_id, source_details, display_name, 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
-    details['sourceDetails'] = cli_util.parse_json_parameter("source_details", source_details)
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['sourceDetails'] = cli_util.parse_json_parameter("source_details", source_details)
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
     if authorization_details is not None:
-        details['authorizationDetails'] = cli_util.parse_json_parameter("authorization_details", authorization_details)
+        _details['authorizationDetails'] = cli_util.parse_json_parameter("authorization_details", authorization_details)
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('application_migration', ctx)
+    client = cli_util.build_client('application_migration', 'application_migration', ctx)
     result = client.create_source(
-        create_source_details=details,
+        create_source_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -644,31 +645,31 @@ def create_source_internal_source_details(ctx, from_json, compartment_id, source
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['sourceDetails'] = {}
-    details['compartmentId'] = compartment_id
-    details['sourceDetails']['accountName'] = source_details_account_name
+    _details = {}
+    _details['sourceDetails'] = {}
+    _details['compartmentId'] = compartment_id
+    _details['sourceDetails']['accountName'] = source_details_account_name
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
     if authorization_details is not None:
-        details['authorizationDetails'] = cli_util.parse_json_parameter("authorization_details", authorization_details)
+        _details['authorizationDetails'] = cli_util.parse_json_parameter("authorization_details", authorization_details)
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    details['sourceDetails']['type'] = 'INTERNAL_COMPUTE'
+    _details['sourceDetails']['type'] = 'INTERNAL_COMPUTE'
 
-    client = cli_util.build_client('application_migration', ctx)
+    client = cli_util.build_client('application_migration', 'application_migration', ctx)
     result = client.create_source(
-        create_source_details=details,
+        create_source_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -693,32 +694,32 @@ def create_source_ocic_source_details(ctx, from_json, compartment_id, source_det
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['sourceDetails'] = {}
-    details['compartmentId'] = compartment_id
-    details['sourceDetails']['region'] = source_details_region
-    details['sourceDetails']['computeAccount'] = source_details_compute_account
+    _details = {}
+    _details['sourceDetails'] = {}
+    _details['compartmentId'] = compartment_id
+    _details['sourceDetails']['region'] = source_details_region
+    _details['sourceDetails']['computeAccount'] = source_details_compute_account
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
     if authorization_details is not None:
-        details['authorizationDetails'] = cli_util.parse_json_parameter("authorization_details", authorization_details)
+        _details['authorizationDetails'] = cli_util.parse_json_parameter("authorization_details", authorization_details)
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    details['sourceDetails']['type'] = 'OCIC'
+    _details['sourceDetails']['type'] = 'OCIC'
 
-    client = cli_util.build_client('application_migration', ctx)
+    client = cli_util.build_client('application_migration', 'application_migration', ctx)
     result = client.create_source(
-        create_source_details=details,
+        create_source_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -743,30 +744,30 @@ def create_source_internal_authorization_details(ctx, from_json, compartment_id,
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['authorizationDetails'] = {}
-    details['compartmentId'] = compartment_id
-    details['sourceDetails'] = cli_util.parse_json_parameter("source_details", source_details)
-    details['authorizationDetails']['username'] = authorization_details_username
-    details['authorizationDetails']['password'] = authorization_details_password
+    _details = {}
+    _details['authorizationDetails'] = {}
+    _details['compartmentId'] = compartment_id
+    _details['sourceDetails'] = cli_util.parse_json_parameter("source_details", source_details)
+    _details['authorizationDetails']['username'] = authorization_details_username
+    _details['authorizationDetails']['password'] = authorization_details_password
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    details['authorizationDetails']['type'] = 'INTERNAL_COMPUTE'
+    _details['authorizationDetails']['type'] = 'INTERNAL_COMPUTE'
 
-    client = cli_util.build_client('application_migration', ctx)
+    client = cli_util.build_client('application_migration', 'application_migration', ctx)
     result = client.create_source(
-        create_source_details=details,
+        create_source_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -791,30 +792,30 @@ def create_source_ocic_authorization_details(ctx, from_json, compartment_id, sou
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['authorizationDetails'] = {}
-    details['compartmentId'] = compartment_id
-    details['sourceDetails'] = cli_util.parse_json_parameter("source_details", source_details)
-    details['authorizationDetails']['username'] = authorization_details_username
-    details['authorizationDetails']['password'] = authorization_details_password
+    _details = {}
+    _details['authorizationDetails'] = {}
+    _details['compartmentId'] = compartment_id
+    _details['sourceDetails'] = cli_util.parse_json_parameter("source_details", source_details)
+    _details['authorizationDetails']['username'] = authorization_details_username
+    _details['authorizationDetails']['password'] = authorization_details_password
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    details['authorizationDetails']['type'] = 'OCIC'
+    _details['authorizationDetails']['type'] = 'OCIC'
 
-    client = cli_util.build_client('application_migration', ctx)
+    client = cli_util.build_client('application_migration', 'application_migration', ctx)
     result = client.create_source(
-        create_source_details=details,
+        create_source_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -838,7 +839,7 @@ def delete_migration(ctx, from_json, migration_id, if_match):
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('application_migration', ctx)
+    client = cli_util.build_client('application_migration', 'application_migration', ctx)
     result = client.delete_migration(
         migration_id=migration_id,
         **kwargs
@@ -864,7 +865,7 @@ def delete_source(ctx, from_json, source_id, if_match):
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('application_migration', ctx)
+    client = cli_util.build_client('application_migration', 'application_migration', ctx)
     result = client.delete_source(
         source_id=source_id,
         **kwargs
@@ -886,7 +887,7 @@ def get_migration(ctx, from_json, migration_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('application_migration', ctx)
+    client = cli_util.build_client('application_migration', 'application_migration', ctx)
     result = client.get_migration(
         migration_id=migration_id,
         **kwargs
@@ -908,7 +909,7 @@ def get_source(ctx, from_json, source_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('application_migration', ctx)
+    client = cli_util.build_client('application_migration', 'application_migration', ctx)
     result = client.get_source(
         source_id=source_id,
         **kwargs
@@ -930,7 +931,7 @@ def get_work_request(ctx, from_json, work_request_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('application_migration', ctx)
+    client = cli_util.build_client('application_migration', 'application_migration', ctx)
     result = client.get_work_request(
         work_request_id=work_request_id,
         **kwargs
@@ -975,7 +976,7 @@ def list_migrations(ctx, from_json, all_pages, page_size, compartment_id, id, li
     if lifecycle_state is not None:
         kwargs['lifecycle_state'] = lifecycle_state
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('application_migration', ctx)
+    client = cli_util.build_client('application_migration', 'application_migration', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -1036,7 +1037,7 @@ def list_source_applications(ctx, from_json, all_pages, page_size, source_id, co
     if display_name is not None:
         kwargs['display_name'] = display_name
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('application_migration', ctx)
+    client = cli_util.build_client('application_migration', 'application_migration', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -1102,7 +1103,7 @@ def list_sources(ctx, from_json, all_pages, page_size, compartment_id, id, limit
     if lifecycle_state is not None:
         kwargs['lifecycle_state'] = lifecycle_state
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('application_migration', ctx)
+    client = cli_util.build_client('application_migration', 'application_migration', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -1156,7 +1157,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('application_migration', ctx)
+    client = cli_util.build_client('application_migration', 'application_migration', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -1210,7 +1211,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('application_migration', ctx)
+    client = cli_util.build_client('application_migration', 'application_migration', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -1261,7 +1262,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, res
     if page is not None:
         kwargs['page'] = page
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('application_migration', ctx)
+    client = cli_util.build_client('application_migration', 'application_migration', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -1301,7 +1302,7 @@ def migrate_application(ctx, from_json, migration_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('application_migration', ctx)
+    client = cli_util.build_client('application_migration', 'application_migration', ctx)
     result = client.migrate_application(
         migration_id=migration_id,
         **kwargs
@@ -1343,33 +1344,33 @@ def update_migration(ctx, from_json, force, migration_id, display_name, descript
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
     if discovery_details is not None:
-        details['discoveryDetails'] = cli_util.parse_json_parameter("discovery_details", discovery_details)
+        _details['discoveryDetails'] = cli_util.parse_json_parameter("discovery_details", discovery_details)
 
     if service_config is not None:
-        details['serviceConfig'] = cli_util.parse_json_parameter("service_config", service_config)
+        _details['serviceConfig'] = cli_util.parse_json_parameter("service_config", service_config)
 
     if application_config is not None:
-        details['applicationConfig'] = cli_util.parse_json_parameter("application_config", application_config)
+        _details['applicationConfig'] = cli_util.parse_json_parameter("application_config", application_config)
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('application_migration', ctx)
+    client = cli_util.build_client('application_migration', 'application_migration', ctx)
     result = client.update_migration(
         migration_id=migration_id,
-        update_migration_details=details,
+        update_migration_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -1410,35 +1411,35 @@ def update_migration_oic_discovery_details(ctx, from_json, force, migration_id, 
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['discoveryDetails'] = {}
-    details['discoveryDetails']['serviceInstanceUser'] = discovery_details_service_instance_user
-    details['discoveryDetails']['serviceInstancePassword'] = discovery_details_service_instance_password
+    _details = {}
+    _details['discoveryDetails'] = {}
+    _details['discoveryDetails']['serviceInstanceUser'] = discovery_details_service_instance_user
+    _details['discoveryDetails']['serviceInstancePassword'] = discovery_details_service_instance_password
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
     if service_config is not None:
-        details['serviceConfig'] = cli_util.parse_json_parameter("service_config", service_config)
+        _details['serviceConfig'] = cli_util.parse_json_parameter("service_config", service_config)
 
     if application_config is not None:
-        details['applicationConfig'] = cli_util.parse_json_parameter("application_config", application_config)
+        _details['applicationConfig'] = cli_util.parse_json_parameter("application_config", application_config)
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    details['discoveryDetails']['type'] = 'OIC'
+    _details['discoveryDetails']['type'] = 'OIC'
 
-    client = cli_util.build_client('application_migration', ctx)
+    client = cli_util.build_client('application_migration', 'application_migration', ctx)
     result = client.update_migration(
         migration_id=migration_id,
-        update_migration_details=details,
+        update_migration_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -1479,35 +1480,35 @@ def update_migration_pcs_discovery_details(ctx, from_json, force, migration_id, 
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['discoveryDetails'] = {}
-    details['discoveryDetails']['serviceInstanceUser'] = discovery_details_service_instance_user
-    details['discoveryDetails']['serviceInstancePassword'] = discovery_details_service_instance_password
+    _details = {}
+    _details['discoveryDetails'] = {}
+    _details['discoveryDetails']['serviceInstanceUser'] = discovery_details_service_instance_user
+    _details['discoveryDetails']['serviceInstancePassword'] = discovery_details_service_instance_password
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
     if service_config is not None:
-        details['serviceConfig'] = cli_util.parse_json_parameter("service_config", service_config)
+        _details['serviceConfig'] = cli_util.parse_json_parameter("service_config", service_config)
 
     if application_config is not None:
-        details['applicationConfig'] = cli_util.parse_json_parameter("application_config", application_config)
+        _details['applicationConfig'] = cli_util.parse_json_parameter("application_config", application_config)
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    details['discoveryDetails']['type'] = 'PCS'
+    _details['discoveryDetails']['type'] = 'PCS'
 
-    client = cli_util.build_client('application_migration', ctx)
+    client = cli_util.build_client('application_migration', 'application_migration', ctx)
     result = client.update_migration(
         migration_id=migration_id,
-        update_migration_details=details,
+        update_migration_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -1548,35 +1549,35 @@ def update_migration_ics_discovery_details(ctx, from_json, force, migration_id, 
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['discoveryDetails'] = {}
-    details['discoveryDetails']['serviceInstanceUser'] = discovery_details_service_instance_user
-    details['discoveryDetails']['serviceInstancePassword'] = discovery_details_service_instance_password
+    _details = {}
+    _details['discoveryDetails'] = {}
+    _details['discoveryDetails']['serviceInstanceUser'] = discovery_details_service_instance_user
+    _details['discoveryDetails']['serviceInstancePassword'] = discovery_details_service_instance_password
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
     if service_config is not None:
-        details['serviceConfig'] = cli_util.parse_json_parameter("service_config", service_config)
+        _details['serviceConfig'] = cli_util.parse_json_parameter("service_config", service_config)
 
     if application_config is not None:
-        details['applicationConfig'] = cli_util.parse_json_parameter("application_config", application_config)
+        _details['applicationConfig'] = cli_util.parse_json_parameter("application_config", application_config)
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    details['discoveryDetails']['type'] = 'ICS'
+    _details['discoveryDetails']['type'] = 'ICS'
 
-    client = cli_util.build_client('application_migration', ctx)
+    client = cli_util.build_client('application_migration', 'application_migration', ctx)
     result = client.update_migration(
         migration_id=migration_id,
-        update_migration_details=details,
+        update_migration_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -1617,35 +1618,35 @@ def update_migration_oac_discovery_details(ctx, from_json, force, migration_id, 
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['discoveryDetails'] = {}
-    details['discoveryDetails']['serviceInstanceUser'] = discovery_details_service_instance_user
-    details['discoveryDetails']['serviceInstancePassword'] = discovery_details_service_instance_password
+    _details = {}
+    _details['discoveryDetails'] = {}
+    _details['discoveryDetails']['serviceInstanceUser'] = discovery_details_service_instance_user
+    _details['discoveryDetails']['serviceInstancePassword'] = discovery_details_service_instance_password
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
     if service_config is not None:
-        details['serviceConfig'] = cli_util.parse_json_parameter("service_config", service_config)
+        _details['serviceConfig'] = cli_util.parse_json_parameter("service_config", service_config)
 
     if application_config is not None:
-        details['applicationConfig'] = cli_util.parse_json_parameter("application_config", application_config)
+        _details['applicationConfig'] = cli_util.parse_json_parameter("application_config", application_config)
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    details['discoveryDetails']['type'] = 'OAC'
+    _details['discoveryDetails']['type'] = 'OAC'
 
-    client = cli_util.build_client('application_migration', ctx)
+    client = cli_util.build_client('application_migration', 'application_migration', ctx)
     result = client.update_migration(
         migration_id=migration_id,
-        update_migration_details=details,
+        update_migration_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -1686,35 +1687,35 @@ def update_migration_jcs_discovery_details(ctx, from_json, force, migration_id, 
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['discoveryDetails'] = {}
-    details['discoveryDetails']['weblogicUser'] = discovery_details_weblogic_user
-    details['discoveryDetails']['weblogicPassword'] = discovery_details_weblogic_password
+    _details = {}
+    _details['discoveryDetails'] = {}
+    _details['discoveryDetails']['weblogicUser'] = discovery_details_weblogic_user
+    _details['discoveryDetails']['weblogicPassword'] = discovery_details_weblogic_password
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
     if service_config is not None:
-        details['serviceConfig'] = cli_util.parse_json_parameter("service_config", service_config)
+        _details['serviceConfig'] = cli_util.parse_json_parameter("service_config", service_config)
 
     if application_config is not None:
-        details['applicationConfig'] = cli_util.parse_json_parameter("application_config", application_config)
+        _details['applicationConfig'] = cli_util.parse_json_parameter("application_config", application_config)
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    details['discoveryDetails']['type'] = 'JCS'
+    _details['discoveryDetails']['type'] = 'JCS'
 
-    client = cli_util.build_client('application_migration', ctx)
+    client = cli_util.build_client('application_migration', 'application_migration', ctx)
     result = client.update_migration(
         migration_id=migration_id,
-        update_migration_details=details,
+        update_migration_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -1755,35 +1756,35 @@ def update_migration_soacs_discovery_details(ctx, from_json, force, migration_id
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['discoveryDetails'] = {}
-    details['discoveryDetails']['weblogicUser'] = discovery_details_weblogic_user
-    details['discoveryDetails']['weblogicPassword'] = discovery_details_weblogic_password
+    _details = {}
+    _details['discoveryDetails'] = {}
+    _details['discoveryDetails']['weblogicUser'] = discovery_details_weblogic_user
+    _details['discoveryDetails']['weblogicPassword'] = discovery_details_weblogic_password
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
     if service_config is not None:
-        details['serviceConfig'] = cli_util.parse_json_parameter("service_config", service_config)
+        _details['serviceConfig'] = cli_util.parse_json_parameter("service_config", service_config)
 
     if application_config is not None:
-        details['applicationConfig'] = cli_util.parse_json_parameter("application_config", application_config)
+        _details['applicationConfig'] = cli_util.parse_json_parameter("application_config", application_config)
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    details['discoveryDetails']['type'] = 'SOACS'
+    _details['discoveryDetails']['type'] = 'SOACS'
 
-    client = cli_util.build_client('application_migration', ctx)
+    client = cli_util.build_client('application_migration', 'application_migration', ctx)
     result = client.update_migration(
         migration_id=migration_id,
-        update_migration_details=details,
+        update_migration_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -1818,30 +1819,30 @@ def update_source(ctx, from_json, force, source_id, display_name, description, s
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
     if source_details is not None:
-        details['sourceDetails'] = cli_util.parse_json_parameter("source_details", source_details)
+        _details['sourceDetails'] = cli_util.parse_json_parameter("source_details", source_details)
 
     if authorization_details is not None:
-        details['authorizationDetails'] = cli_util.parse_json_parameter("authorization_details", authorization_details)
+        _details['authorizationDetails'] = cli_util.parse_json_parameter("authorization_details", authorization_details)
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('application_migration', ctx)
+    client = cli_util.build_client('application_migration', 'application_migration', ctx)
     result = client.update_source(
         source_id=source_id,
-        update_source_details=details,
+        update_source_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -1876,31 +1877,31 @@ def update_source_internal_source_details(ctx, from_json, force, source_id, sour
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['sourceDetails'] = {}
-    details['sourceDetails']['accountName'] = source_details_account_name
+    _details = {}
+    _details['sourceDetails'] = {}
+    _details['sourceDetails']['accountName'] = source_details_account_name
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
     if authorization_details is not None:
-        details['authorizationDetails'] = cli_util.parse_json_parameter("authorization_details", authorization_details)
+        _details['authorizationDetails'] = cli_util.parse_json_parameter("authorization_details", authorization_details)
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    details['sourceDetails']['type'] = 'INTERNAL_COMPUTE'
+    _details['sourceDetails']['type'] = 'INTERNAL_COMPUTE'
 
-    client = cli_util.build_client('application_migration', ctx)
+    client = cli_util.build_client('application_migration', 'application_migration', ctx)
     result = client.update_source(
         source_id=source_id,
-        update_source_details=details,
+        update_source_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -1936,32 +1937,32 @@ def update_source_ocic_source_details(ctx, from_json, force, source_id, source_d
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['sourceDetails'] = {}
-    details['sourceDetails']['region'] = source_details_region
-    details['sourceDetails']['computeAccount'] = source_details_compute_account
+    _details = {}
+    _details['sourceDetails'] = {}
+    _details['sourceDetails']['region'] = source_details_region
+    _details['sourceDetails']['computeAccount'] = source_details_compute_account
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
     if authorization_details is not None:
-        details['authorizationDetails'] = cli_util.parse_json_parameter("authorization_details", authorization_details)
+        _details['authorizationDetails'] = cli_util.parse_json_parameter("authorization_details", authorization_details)
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    details['sourceDetails']['type'] = 'OCIC'
+    _details['sourceDetails']['type'] = 'OCIC'
 
-    client = cli_util.build_client('application_migration', ctx)
+    client = cli_util.build_client('application_migration', 'application_migration', ctx)
     result = client.update_source(
         source_id=source_id,
-        update_source_details=details,
+        update_source_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -1997,32 +1998,32 @@ def update_source_internal_authorization_details(ctx, from_json, force, source_i
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['authorizationDetails'] = {}
-    details['authorizationDetails']['username'] = authorization_details_username
-    details['authorizationDetails']['password'] = authorization_details_password
+    _details = {}
+    _details['authorizationDetails'] = {}
+    _details['authorizationDetails']['username'] = authorization_details_username
+    _details['authorizationDetails']['password'] = authorization_details_password
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
     if source_details is not None:
-        details['sourceDetails'] = cli_util.parse_json_parameter("source_details", source_details)
+        _details['sourceDetails'] = cli_util.parse_json_parameter("source_details", source_details)
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    details['authorizationDetails']['type'] = 'INTERNAL_COMPUTE'
+    _details['authorizationDetails']['type'] = 'INTERNAL_COMPUTE'
 
-    client = cli_util.build_client('application_migration', ctx)
+    client = cli_util.build_client('application_migration', 'application_migration', ctx)
     result = client.update_source(
         source_id=source_id,
-        update_source_details=details,
+        update_source_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -2058,32 +2059,32 @@ def update_source_ocic_authorization_details(ctx, from_json, force, source_id, a
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['authorizationDetails'] = {}
-    details['authorizationDetails']['username'] = authorization_details_username
-    details['authorizationDetails']['password'] = authorization_details_password
+    _details = {}
+    _details['authorizationDetails'] = {}
+    _details['authorizationDetails']['username'] = authorization_details_username
+    _details['authorizationDetails']['password'] = authorization_details_password
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
     if source_details is not None:
-        details['sourceDetails'] = cli_util.parse_json_parameter("source_details", source_details)
+        _details['sourceDetails'] = cli_util.parse_json_parameter("source_details", source_details)
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    details['authorizationDetails']['type'] = 'OCIC'
+    _details['authorizationDetails']['type'] = 'OCIC'
 
-    client = cli_util.build_client('application_migration', ctx)
+    client = cli_util.build_client('application_migration', 'application_migration', ctx)
     result = client.update_source(
         source_id=source_id,
-        update_source_details=details,
+        update_source_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)

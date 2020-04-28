@@ -1,5 +1,6 @@
 # coding: utf-8
-# Copyright (c) 2016, 2020, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2020, Oracle and/or its affiliates.  All rights reserved.
+# This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 from __future__ import print_function
 import click
@@ -193,16 +194,17 @@ def change_load_balancer_compartment(ctx, from_json, wait_for_state, max_wait_se
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
 
-    client = cli_util.build_client('load_balancer', ctx)
+    client = cli_util.build_client('load_balancer', 'load_balancer', ctx)
     result = client.change_load_balancer_compartment(
         load_balancer_id=load_balancer_id,
-        change_load_balancer_compartment_details=details,
+        change_load_balancer_compartment_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -271,30 +273,31 @@ def create_backend(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['ipAddress'] = ip_address
-    details['port'] = port
+    _details = {}
+    _details['ipAddress'] = ip_address
+    _details['port'] = port
 
     if weight is not None:
-        details['weight'] = weight
+        _details['weight'] = weight
 
     if backup is not None:
-        details['backup'] = backup
+        _details['backup'] = backup
 
     if drain is not None:
-        details['drain'] = drain
+        _details['drain'] = drain
 
     if offline is not None:
-        details['offline'] = offline
+        _details['offline'] = offline
 
-    client = cli_util.build_client('load_balancer', ctx)
+    client = cli_util.build_client('load_balancer', 'load_balancer', ctx)
     result = client.create_backend(
         load_balancer_id=load_balancer_id,
         backend_set_name=backend_set_name,
-        create_backend_details=details,
+        create_backend_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -352,30 +355,31 @@ def create_backend_set(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['name'] = name
-    details['policy'] = policy
-    details['healthChecker'] = cli_util.parse_json_parameter("health_checker", health_checker)
+    _details = {}
+    _details['name'] = name
+    _details['policy'] = policy
+    _details['healthChecker'] = cli_util.parse_json_parameter("health_checker", health_checker)
 
     if backends is not None:
-        details['backends'] = cli_util.parse_json_parameter("backends", backends)
+        _details['backends'] = cli_util.parse_json_parameter("backends", backends)
 
     if ssl_configuration is not None:
-        details['sslConfiguration'] = cli_util.parse_json_parameter("ssl_configuration", ssl_configuration)
+        _details['sslConfiguration'] = cli_util.parse_json_parameter("ssl_configuration", ssl_configuration)
 
     if session_persistence_configuration is not None:
-        details['sessionPersistenceConfiguration'] = cli_util.parse_json_parameter("session_persistence_configuration", session_persistence_configuration)
+        _details['sessionPersistenceConfiguration'] = cli_util.parse_json_parameter("session_persistence_configuration", session_persistence_configuration)
 
     if lb_cookie_session_persistence_configuration is not None:
-        details['lbCookieSessionPersistenceConfiguration'] = cli_util.parse_json_parameter("lb_cookie_session_persistence_configuration", lb_cookie_session_persistence_configuration)
+        _details['lbCookieSessionPersistenceConfiguration'] = cli_util.parse_json_parameter("lb_cookie_session_persistence_configuration", lb_cookie_session_persistence_configuration)
 
-    client = cli_util.build_client('load_balancer', ctx)
+    client = cli_util.build_client('load_balancer', 'load_balancer', ctx)
     result = client.create_backend_set(
         load_balancer_id=load_balancer_id,
-        create_backend_set_details=details,
+        create_backend_set_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -437,28 +441,29 @@ def create_certificate(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['certificateName'] = certificate_name
+    _details = {}
+    _details['certificateName'] = certificate_name
 
     if passphrase is not None:
-        details['passphrase'] = passphrase
+        _details['passphrase'] = passphrase
 
     if private_key is not None:
-        details['privateKey'] = private_key
+        _details['privateKey'] = private_key
 
     if public_certificate is not None:
-        details['publicCertificate'] = public_certificate
+        _details['publicCertificate'] = public_certificate
 
     if ca_certificate is not None:
-        details['caCertificate'] = ca_certificate
+        _details['caCertificate'] = ca_certificate
 
-    client = cli_util.build_client('load_balancer', ctx)
+    client = cli_util.build_client('load_balancer', 'load_balancer', ctx)
     result = client.create_certificate(
         load_balancer_id=load_balancer_id,
-        create_certificate_details=details,
+        create_certificate_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -507,17 +512,18 @@ def create_hostname(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['name'] = name
-    details['hostname'] = hostname
+    _details = {}
+    _details['name'] = name
+    _details['hostname'] = hostname
 
-    client = cli_util.build_client('load_balancer', ctx)
+    client = cli_util.build_client('load_balancer', 'load_balancer', ctx)
     result = client.create_hostname(
         load_balancer_id=load_balancer_id,
-        create_hostname_details=details,
+        create_hostname_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -581,34 +587,35 @@ def create_listener(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['defaultBackendSetName'] = default_backend_set_name
-    details['port'] = port
-    details['protocol'] = protocol
-    details['name'] = name
+    _details = {}
+    _details['defaultBackendSetName'] = default_backend_set_name
+    _details['port'] = port
+    _details['protocol'] = protocol
+    _details['name'] = name
 
     if hostname_names is not None:
-        details['hostnameNames'] = cli_util.parse_json_parameter("hostname_names", hostname_names)
+        _details['hostnameNames'] = cli_util.parse_json_parameter("hostname_names", hostname_names)
 
     if path_route_set_name is not None:
-        details['pathRouteSetName'] = path_route_set_name
+        _details['pathRouteSetName'] = path_route_set_name
 
     if ssl_configuration is not None:
-        details['sslConfiguration'] = cli_util.parse_json_parameter("ssl_configuration", ssl_configuration)
+        _details['sslConfiguration'] = cli_util.parse_json_parameter("ssl_configuration", ssl_configuration)
 
     if connection_configuration is not None:
-        details['connectionConfiguration'] = cli_util.parse_json_parameter("connection_configuration", connection_configuration)
+        _details['connectionConfiguration'] = cli_util.parse_json_parameter("connection_configuration", connection_configuration)
 
     if rule_set_names is not None:
-        details['ruleSetNames'] = cli_util.parse_json_parameter("rule_set_names", rule_set_names)
+        _details['ruleSetNames'] = cli_util.parse_json_parameter("rule_set_names", rule_set_names)
 
-    client = cli_util.build_client('load_balancer', ctx)
+    client = cli_util.build_client('load_balancer', 'load_balancer', ctx)
     result = client.create_listener(
         load_balancer_id=load_balancer_id,
-        create_listener_details=details,
+        create_listener_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -718,51 +725,52 @@ def create_load_balancer(ctx, from_json, wait_for_state, max_wait_seconds, wait_
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
-    details['displayName'] = display_name
-    details['shapeName'] = shape_name
-    details['subnetIds'] = cli_util.parse_json_parameter("subnet_ids", subnet_ids)
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['displayName'] = display_name
+    _details['shapeName'] = shape_name
+    _details['subnetIds'] = cli_util.parse_json_parameter("subnet_ids", subnet_ids)
 
     if is_private is not None:
-        details['isPrivate'] = is_private
+        _details['isPrivate'] = is_private
 
     if ip_mode is not None:
-        details['ipMode'] = ip_mode
+        _details['ipMode'] = ip_mode
 
     if listeners is not None:
-        details['listeners'] = cli_util.parse_json_parameter("listeners", listeners)
+        _details['listeners'] = cli_util.parse_json_parameter("listeners", listeners)
 
     if hostnames is not None:
-        details['hostnames'] = cli_util.parse_json_parameter("hostnames", hostnames)
+        _details['hostnames'] = cli_util.parse_json_parameter("hostnames", hostnames)
 
     if backend_sets is not None:
-        details['backendSets'] = cli_util.parse_json_parameter("backend_sets", backend_sets)
+        _details['backendSets'] = cli_util.parse_json_parameter("backend_sets", backend_sets)
 
     if network_security_group_ids is not None:
-        details['networkSecurityGroupIds'] = cli_util.parse_json_parameter("network_security_group_ids", network_security_group_ids)
+        _details['networkSecurityGroupIds'] = cli_util.parse_json_parameter("network_security_group_ids", network_security_group_ids)
 
     if certificates is not None:
-        details['certificates'] = cli_util.parse_json_parameter("certificates", certificates)
+        _details['certificates'] = cli_util.parse_json_parameter("certificates", certificates)
 
     if path_route_sets is not None:
-        details['pathRouteSets'] = cli_util.parse_json_parameter("path_route_sets", path_route_sets)
+        _details['pathRouteSets'] = cli_util.parse_json_parameter("path_route_sets", path_route_sets)
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if rule_sets is not None:
-        details['ruleSets'] = cli_util.parse_json_parameter("rule_sets", rule_sets)
+        _details['ruleSets'] = cli_util.parse_json_parameter("rule_sets", rule_sets)
 
-    client = cli_util.build_client('load_balancer', ctx)
+    client = cli_util.build_client('load_balancer', 'load_balancer', ctx)
     result = client.create_load_balancer(
-        create_load_balancer_details=details,
+        create_load_balancer_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -811,17 +819,18 @@ def create_path_route_set(ctx, from_json, wait_for_state, max_wait_seconds, wait
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['name'] = name
-    details['pathRoutes'] = cli_util.parse_json_parameter("path_routes", path_routes)
+    _details = {}
+    _details['name'] = name
+    _details['pathRoutes'] = cli_util.parse_json_parameter("path_routes", path_routes)
 
-    client = cli_util.build_client('load_balancer', ctx)
+    client = cli_util.build_client('load_balancer', 'load_balancer', ctx)
     result = client.create_path_route_set(
         load_balancer_id=load_balancer_id,
-        create_path_route_set_details=details,
+        create_path_route_set_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -868,17 +877,18 @@ def create_rule_set(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['name'] = name
-    details['items'] = cli_util.parse_json_parameter("items", items)
+    _details = {}
+    _details['name'] = name
+    _details['items'] = cli_util.parse_json_parameter("items", items)
 
-    client = cli_util.build_client('load_balancer', ctx)
+    client = cli_util.build_client('load_balancer', 'load_balancer', ctx)
     result = client.create_rule_set(
         load_balancer_id=load_balancer_id,
-        create_rule_set_details=details,
+        create_rule_set_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -933,7 +943,7 @@ def delete_backend(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('load_balancer', ctx)
+    client = cli_util.build_client('load_balancer', 'load_balancer', ctx)
     result = client.delete_backend(
         load_balancer_id=load_balancer_id,
         backend_set_name=backend_set_name,
@@ -941,6 +951,7 @@ def delete_backend(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -991,13 +1002,14 @@ def delete_backend_set(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('load_balancer', ctx)
+    client = cli_util.build_client('load_balancer', 'load_balancer', ctx)
     result = client.delete_backend_set(
         load_balancer_id=load_balancer_id,
         backend_set_name=backend_set_name,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -1046,13 +1058,14 @@ def delete_certificate(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('load_balancer', ctx)
+    client = cli_util.build_client('load_balancer', 'load_balancer', ctx)
     result = client.delete_certificate(
         load_balancer_id=load_balancer_id,
         certificate_name=certificate_name,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -1101,13 +1114,14 @@ def delete_hostname(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('load_balancer', ctx)
+    client = cli_util.build_client('load_balancer', 'load_balancer', ctx)
     result = client.delete_hostname(
         load_balancer_id=load_balancer_id,
         name=name,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -1156,13 +1170,14 @@ def delete_listener(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('load_balancer', ctx)
+    client = cli_util.build_client('load_balancer', 'load_balancer', ctx)
     result = client.delete_listener(
         load_balancer_id=load_balancer_id,
         listener_name=listener_name,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -1205,12 +1220,13 @@ def delete_load_balancer(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('load_balancer', ctx)
+    client = cli_util.build_client('load_balancer', 'load_balancer', ctx)
     result = client.delete_load_balancer(
         load_balancer_id=load_balancer_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -1261,13 +1277,14 @@ def delete_path_route_set(ctx, from_json, wait_for_state, max_wait_seconds, wait
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('load_balancer', ctx)
+    client = cli_util.build_client('load_balancer', 'load_balancer', ctx)
     result = client.delete_path_route_set(
         load_balancer_id=load_balancer_id,
         path_route_set_name=path_route_set_name,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -1318,13 +1335,14 @@ def delete_rule_set(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('load_balancer', ctx)
+    client = cli_util.build_client('load_balancer', 'load_balancer', ctx)
     result = client.delete_rule_set(
         load_balancer_id=load_balancer_id,
         rule_set_name=rule_set_name,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -1375,7 +1393,7 @@ def get_backend(ctx, from_json, load_balancer_id, backend_set_name, backend_name
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('load_balancer', ctx)
+    client = cli_util.build_client('load_balancer', 'load_balancer', ctx)
     result = client.get_backend(
         load_balancer_id=load_balancer_id,
         backend_set_name=backend_set_name,
@@ -1411,7 +1429,7 @@ def get_backend_health(ctx, from_json, load_balancer_id, backend_set_name, backe
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('load_balancer', ctx)
+    client = cli_util.build_client('load_balancer', 'load_balancer', ctx)
     result = client.get_backend_health(
         load_balancer_id=load_balancer_id,
         backend_set_name=backend_set_name,
@@ -1441,7 +1459,7 @@ def get_backend_set(ctx, from_json, load_balancer_id, backend_set_name):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('load_balancer', ctx)
+    client = cli_util.build_client('load_balancer', 'load_balancer', ctx)
     result = client.get_backend_set(
         load_balancer_id=load_balancer_id,
         backend_set_name=backend_set_name,
@@ -1470,7 +1488,7 @@ def get_backend_set_health(ctx, from_json, load_balancer_id, backend_set_name):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('load_balancer', ctx)
+    client = cli_util.build_client('load_balancer', 'load_balancer', ctx)
     result = client.get_backend_set_health(
         load_balancer_id=load_balancer_id,
         backend_set_name=backend_set_name,
@@ -1499,7 +1517,7 @@ def get_health_checker(ctx, from_json, load_balancer_id, backend_set_name):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('load_balancer', ctx)
+    client = cli_util.build_client('load_balancer', 'load_balancer', ctx)
     result = client.get_health_checker(
         load_balancer_id=load_balancer_id,
         backend_set_name=backend_set_name,
@@ -1528,7 +1546,7 @@ def get_hostname(ctx, from_json, load_balancer_id, name):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('load_balancer', ctx)
+    client = cli_util.build_client('load_balancer', 'load_balancer', ctx)
     result = client.get_hostname(
         load_balancer_id=load_balancer_id,
         name=name,
@@ -1551,7 +1569,7 @@ def get_load_balancer(ctx, from_json, load_balancer_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('load_balancer', ctx)
+    client = cli_util.build_client('load_balancer', 'load_balancer', ctx)
     result = client.get_load_balancer(
         load_balancer_id=load_balancer_id,
         **kwargs
@@ -1573,7 +1591,7 @@ def get_load_balancer_health(ctx, from_json, load_balancer_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('load_balancer', ctx)
+    client = cli_util.build_client('load_balancer', 'load_balancer', ctx)
     result = client.get_load_balancer_health(
         load_balancer_id=load_balancer_id,
         **kwargs
@@ -1601,7 +1619,7 @@ def get_path_route_set(ctx, from_json, load_balancer_id, path_route_set_name):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('load_balancer', ctx)
+    client = cli_util.build_client('load_balancer', 'load_balancer', ctx)
     result = client.get_path_route_set(
         load_balancer_id=load_balancer_id,
         path_route_set_name=path_route_set_name,
@@ -1630,7 +1648,7 @@ def get_rule_set(ctx, from_json, load_balancer_id, rule_set_name):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('load_balancer', ctx)
+    client = cli_util.build_client('load_balancer', 'load_balancer', ctx)
     result = client.get_rule_set(
         load_balancer_id=load_balancer_id,
         rule_set_name=rule_set_name,
@@ -1653,7 +1671,7 @@ def get_work_request(ctx, from_json, work_request_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('load_balancer', ctx)
+    client = cli_util.build_client('load_balancer', 'load_balancer', ctx)
     result = client.get_work_request(
         work_request_id=work_request_id,
         **kwargs
@@ -1676,7 +1694,7 @@ def list_backend_sets(ctx, from_json, all_pages, load_balancer_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('load_balancer', ctx)
+    client = cli_util.build_client('load_balancer', 'load_balancer', ctx)
     result = client.list_backend_sets(
         load_balancer_id=load_balancer_id,
         **kwargs
@@ -1705,7 +1723,7 @@ def list_backends(ctx, from_json, all_pages, load_balancer_id, backend_set_name)
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('load_balancer', ctx)
+    client = cli_util.build_client('load_balancer', 'load_balancer', ctx)
     result = client.list_backends(
         load_balancer_id=load_balancer_id,
         backend_set_name=backend_set_name,
@@ -1729,7 +1747,7 @@ def list_certificates(ctx, from_json, all_pages, load_balancer_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('load_balancer', ctx)
+    client = cli_util.build_client('load_balancer', 'load_balancer', ctx)
     result = client.list_certificates(
         load_balancer_id=load_balancer_id,
         **kwargs
@@ -1752,7 +1770,7 @@ def list_hostnames(ctx, from_json, all_pages, load_balancer_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('load_balancer', ctx)
+    client = cli_util.build_client('load_balancer', 'load_balancer', ctx)
     result = client.list_hostnames(
         load_balancer_id=load_balancer_id,
         **kwargs
@@ -1781,7 +1799,7 @@ def list_listener_rules(ctx, from_json, all_pages, load_balancer_id, listener_na
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('load_balancer', ctx)
+    client = cli_util.build_client('load_balancer', 'load_balancer', ctx)
     result = client.list_listener_rules(
         load_balancer_id=load_balancer_id,
         listener_name=listener_name,
@@ -1816,7 +1834,7 @@ def list_load_balancer_healths(ctx, from_json, all_pages, page_size, compartment
     if page is not None:
         kwargs['page'] = page
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('load_balancer', ctx)
+    client = cli_util.build_client('load_balancer', 'load_balancer', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -1889,7 +1907,7 @@ def list_load_balancers(ctx, from_json, all_pages, page_size, compartment_id, li
     if lifecycle_state is not None:
         kwargs['lifecycle_state'] = lifecycle_state
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('load_balancer', ctx)
+    client = cli_util.build_client('load_balancer', 'load_balancer', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -1930,7 +1948,7 @@ def list_path_route_sets(ctx, from_json, all_pages, load_balancer_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('load_balancer', ctx)
+    client = cli_util.build_client('load_balancer', 'load_balancer', ctx)
     result = client.list_path_route_sets(
         load_balancer_id=load_balancer_id,
         **kwargs
@@ -1964,7 +1982,7 @@ def list_policies(ctx, from_json, all_pages, page_size, compartment_id, limit, p
     if page is not None:
         kwargs['page'] = page
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('load_balancer', ctx)
+    client = cli_util.build_client('load_balancer', 'load_balancer', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -2016,7 +2034,7 @@ def list_protocols(ctx, from_json, all_pages, page_size, compartment_id, limit, 
     if page is not None:
         kwargs['page'] = page
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('load_balancer', ctx)
+    client = cli_util.build_client('load_balancer', 'load_balancer', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -2057,7 +2075,7 @@ def list_rule_sets(ctx, from_json, all_pages, load_balancer_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('load_balancer', ctx)
+    client = cli_util.build_client('load_balancer', 'load_balancer', ctx)
     result = client.list_rule_sets(
         load_balancer_id=load_balancer_id,
         **kwargs
@@ -2091,7 +2109,7 @@ def list_shapes(ctx, from_json, all_pages, page_size, compartment_id, limit, pag
     if page is not None:
         kwargs['page'] = page
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('load_balancer', ctx)
+    client = cli_util.build_client('load_balancer', 'load_balancer', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -2146,7 +2164,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, load_balancer_id, l
     if page is not None:
         kwargs['page'] = page
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('load_balancer', ctx)
+    client = cli_util.build_client('load_balancer', 'load_balancer', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -2216,21 +2234,22 @@ def update_backend(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['weight'] = weight
-    details['backup'] = backup
-    details['drain'] = drain
-    details['offline'] = offline
+    _details = {}
+    _details['weight'] = weight
+    _details['backup'] = backup
+    _details['drain'] = drain
+    _details['offline'] = offline
 
-    client = cli_util.build_client('load_balancer', ctx)
+    client = cli_util.build_client('load_balancer', 'load_balancer', ctx)
     result = client.update_backend(
         load_balancer_id=load_balancer_id,
         backend_set_name=backend_set_name,
         backend_name=backend_name,
-        update_backend_details=details,
+        update_backend_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -2292,28 +2311,29 @@ def update_backend_set(ctx, from_json, force, wait_for_state, max_wait_seconds, 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['policy'] = policy
-    details['backends'] = cli_util.parse_json_parameter("backends", backends)
-    details['healthChecker'] = cli_util.parse_json_parameter("health_checker", health_checker)
+    _details = {}
+    _details['policy'] = policy
+    _details['backends'] = cli_util.parse_json_parameter("backends", backends)
+    _details['healthChecker'] = cli_util.parse_json_parameter("health_checker", health_checker)
 
     if ssl_configuration is not None:
-        details['sslConfiguration'] = cli_util.parse_json_parameter("ssl_configuration", ssl_configuration)
+        _details['sslConfiguration'] = cli_util.parse_json_parameter("ssl_configuration", ssl_configuration)
 
     if session_persistence_configuration is not None:
-        details['sessionPersistenceConfiguration'] = cli_util.parse_json_parameter("session_persistence_configuration", session_persistence_configuration)
+        _details['sessionPersistenceConfiguration'] = cli_util.parse_json_parameter("session_persistence_configuration", session_persistence_configuration)
 
     if lb_cookie_session_persistence_configuration is not None:
-        details['lbCookieSessionPersistenceConfiguration'] = cli_util.parse_json_parameter("lb_cookie_session_persistence_configuration", lb_cookie_session_persistence_configuration)
+        _details['lbCookieSessionPersistenceConfiguration'] = cli_util.parse_json_parameter("lb_cookie_session_persistence_configuration", lb_cookie_session_persistence_configuration)
 
-    client = cli_util.build_client('load_balancer', ctx)
+    client = cli_util.build_client('load_balancer', 'load_balancer', ctx)
     result = client.update_backend_set(
         load_balancer_id=load_balancer_id,
         backend_set_name=backend_set_name,
-        update_backend_set_details=details,
+        update_backend_set_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -2386,26 +2406,27 @@ def update_health_checker(ctx, from_json, wait_for_state, max_wait_seconds, wait
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['protocol'] = protocol
-    details['port'] = port
-    details['returnCode'] = return_code
-    details['retries'] = retries
-    details['timeoutInMillis'] = timeout_in_millis
-    details['intervalInMillis'] = interval_in_millis
-    details['responseBodyRegex'] = response_body_regex
+    _details = {}
+    _details['protocol'] = protocol
+    _details['port'] = port
+    _details['returnCode'] = return_code
+    _details['retries'] = retries
+    _details['timeoutInMillis'] = timeout_in_millis
+    _details['intervalInMillis'] = interval_in_millis
+    _details['responseBodyRegex'] = response_body_regex
 
     if url_path is not None:
-        details['urlPath'] = url_path
+        _details['urlPath'] = url_path
 
-    client = cli_util.build_client('load_balancer', ctx)
+    client = cli_util.build_client('load_balancer', 'load_balancer', ctx)
     result = client.update_health_checker(
         load_balancer_id=load_balancer_id,
         backend_set_name=backend_set_name,
-        health_checker=details,
+        health_checker=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -2457,19 +2478,20 @@ def update_hostname(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if hostname is not None:
-        details['hostname'] = hostname
+        _details['hostname'] = hostname
 
-    client = cli_util.build_client('load_balancer', ctx)
+    client = cli_util.build_client('load_balancer', 'load_balancer', ctx)
     result = client.update_hostname(
         load_balancer_id=load_balancer_id,
         name=name,
-        update_hostname_details=details,
+        update_hostname_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -2541,34 +2563,35 @@ def update_listener(ctx, from_json, force, wait_for_state, max_wait_seconds, wai
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['defaultBackendSetName'] = default_backend_set_name
-    details['port'] = port
-    details['protocol'] = protocol
+    _details = {}
+    _details['defaultBackendSetName'] = default_backend_set_name
+    _details['port'] = port
+    _details['protocol'] = protocol
 
     if hostname_names is not None:
-        details['hostnameNames'] = cli_util.parse_json_parameter("hostname_names", hostname_names)
+        _details['hostnameNames'] = cli_util.parse_json_parameter("hostname_names", hostname_names)
 
     if path_route_set_name is not None:
-        details['pathRouteSetName'] = path_route_set_name
+        _details['pathRouteSetName'] = path_route_set_name
 
     if ssl_configuration is not None:
-        details['sslConfiguration'] = cli_util.parse_json_parameter("ssl_configuration", ssl_configuration)
+        _details['sslConfiguration'] = cli_util.parse_json_parameter("ssl_configuration", ssl_configuration)
 
     if connection_configuration is not None:
-        details['connectionConfiguration'] = cli_util.parse_json_parameter("connection_configuration", connection_configuration)
+        _details['connectionConfiguration'] = cli_util.parse_json_parameter("connection_configuration", connection_configuration)
 
     if rule_set_names is not None:
-        details['ruleSetNames'] = cli_util.parse_json_parameter("rule_set_names", rule_set_names)
+        _details['ruleSetNames'] = cli_util.parse_json_parameter("rule_set_names", rule_set_names)
 
-    client = cli_util.build_client('load_balancer', ctx)
+    client = cli_util.build_client('load_balancer', 'load_balancer', ctx)
     result = client.update_listener(
         load_balancer_id=load_balancer_id,
         listener_name=listener_name,
-        update_listener_details=details,
+        update_listener_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -2625,24 +2648,25 @@ def update_load_balancer(ctx, from_json, force, wait_for_state, max_wait_seconds
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('load_balancer', ctx)
+    client = cli_util.build_client('load_balancer', 'load_balancer', ctx)
     result = client.update_load_balancer(
         load_balancer_id=load_balancer_id,
-        update_load_balancer_details=details,
+        update_load_balancer_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -2701,18 +2725,19 @@ def update_network_security_groups(ctx, from_json, force, wait_for_state, max_wa
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if network_security_group_ids is not None:
-        details['networkSecurityGroupIds'] = cli_util.parse_json_parameter("network_security_group_ids", network_security_group_ids)
+        _details['networkSecurityGroupIds'] = cli_util.parse_json_parameter("network_security_group_ids", network_security_group_ids)
 
-    client = cli_util.build_client('load_balancer', ctx)
+    client = cli_util.build_client('load_balancer', 'load_balancer', ctx)
     result = client.update_network_security_groups(
         load_balancer_id=load_balancer_id,
-        update_network_security_groups_details=details,
+        update_network_security_groups_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -2769,17 +2794,18 @@ def update_path_route_set(ctx, from_json, force, wait_for_state, max_wait_second
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['pathRoutes'] = cli_util.parse_json_parameter("path_routes", path_routes)
+    _details = {}
+    _details['pathRoutes'] = cli_util.parse_json_parameter("path_routes", path_routes)
 
-    client = cli_util.build_client('load_balancer', ctx)
+    client = cli_util.build_client('load_balancer', 'load_balancer', ctx)
     result = client.update_path_route_set(
         load_balancer_id=load_balancer_id,
         path_route_set_name=path_route_set_name,
-        update_path_route_set_details=details,
+        update_path_route_set_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -2836,17 +2862,18 @@ def update_rule_set(ctx, from_json, force, wait_for_state, max_wait_seconds, wai
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['items'] = cli_util.parse_json_parameter("items", items)
+    _details = {}
+    _details['items'] = cli_util.parse_json_parameter("items", items)
 
-    client = cli_util.build_client('load_balancer', ctx)
+    client = cli_util.build_client('load_balancer', 'load_balancer', ctx)
     result = client.update_rule_set(
         load_balancer_id=load_balancer_id,
         rule_set_name=rule_set_name,
-        update_rule_set_details=details,
+        update_rule_set_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}

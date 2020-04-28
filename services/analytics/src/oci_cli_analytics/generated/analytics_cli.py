@@ -1,5 +1,6 @@
 # coding: utf-8
-# Copyright (c) 2016, 2020, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2020, Oracle and/or its affiliates.  All rights reserved.
+# This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 from __future__ import print_function
 import click
@@ -72,16 +73,17 @@ def change_analytics_instance_compartment(ctx, from_json, wait_for_state, max_wa
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
 
-    client = cli_util.build_client('analytics', ctx)
+    client = cli_util.build_client('analytics', 'analytics', ctx)
     result = client.change_analytics_instance_compartment(
         analytics_instance_id=analytics_instance_id,
-        change_compartment_details=details,
+        change_compartment_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -134,34 +136,35 @@ def create_analytics_instance(ctx, from_json, wait_for_state, max_wait_seconds, 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['name'] = name
-    details['compartmentId'] = compartment_id
-    details['featureSet'] = feature_set
-    details['capacity'] = cli_util.parse_json_parameter("capacity", capacity)
-    details['licenseType'] = license_type
+    _details = {}
+    _details['name'] = name
+    _details['compartmentId'] = compartment_id
+    _details['featureSet'] = feature_set
+    _details['capacity'] = cli_util.parse_json_parameter("capacity", capacity)
+    _details['licenseType'] = license_type
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
     if email_notification is not None:
-        details['emailNotification'] = email_notification
+        _details['emailNotification'] = email_notification
 
     if idcs_access_token is not None:
-        details['idcsAccessToken'] = idcs_access_token
+        _details['idcsAccessToken'] = idcs_access_token
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
-    client = cli_util.build_client('analytics', ctx)
+    client = cli_util.build_client('analytics', 'analytics', ctx)
     result = client.create_analytics_instance(
-        create_analytics_instance_details=details,
+        create_analytics_instance_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -207,12 +210,13 @@ def delete_analytics_instance(ctx, from_json, wait_for_state, max_wait_seconds, 
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('analytics', ctx)
+    client = cli_util.build_client('analytics', 'analytics', ctx)
     result = client.delete_analytics_instance(
         analytics_instance_id=analytics_instance_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -255,7 +259,7 @@ def delete_work_request(ctx, from_json, work_request_id, if_match):
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('analytics', ctx)
+    client = cli_util.build_client('analytics', 'analytics', ctx)
     result = client.delete_work_request(
         work_request_id=work_request_id,
         **kwargs
@@ -277,7 +281,7 @@ def get_analytics_instance(ctx, from_json, analytics_instance_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('analytics', ctx)
+    client = cli_util.build_client('analytics', 'analytics', ctx)
     result = client.get_analytics_instance(
         analytics_instance_id=analytics_instance_id,
         **kwargs
@@ -299,7 +303,7 @@ def get_work_request(ctx, from_json, work_request_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('analytics', ctx)
+    client = cli_util.build_client('analytics', 'analytics', ctx)
     result = client.get_work_request(
         work_request_id=work_request_id,
         **kwargs
@@ -349,7 +353,7 @@ def list_analytics_instances(ctx, from_json, all_pages, page_size, compartment_i
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('analytics', ctx)
+    client = cli_util.build_client('analytics', 'analytics', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -402,7 +406,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     if page is not None:
         kwargs['page'] = page
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('analytics', ctx)
+    client = cli_util.build_client('analytics', 'analytics', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -455,7 +459,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     if page is not None:
         kwargs['page'] = page
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('analytics', ctx)
+    client = cli_util.build_client('analytics', 'analytics', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -520,7 +524,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, res
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('analytics', ctx)
+    client = cli_util.build_client('analytics', 'analytics', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -568,16 +572,17 @@ def scale_analytics_instance(ctx, from_json, wait_for_state, max_wait_seconds, w
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['capacity'] = cli_util.parse_json_parameter("capacity", capacity)
+    _details = {}
+    _details['capacity'] = cli_util.parse_json_parameter("capacity", capacity)
 
-    client = cli_util.build_client('analytics', ctx)
+    client = cli_util.build_client('analytics', 'analytics', ctx)
     result = client.scale_analytics_instance(
         analytics_instance_id=analytics_instance_id,
-        scale_analytics_instance_details=details,
+        scale_analytics_instance_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -622,12 +627,13 @@ def start_analytics_instance(ctx, from_json, wait_for_state, max_wait_seconds, w
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('analytics', ctx)
+    client = cli_util.build_client('analytics', 'analytics', ctx)
     result = client.start_analytics_instance(
         analytics_instance_id=analytics_instance_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -672,12 +678,13 @@ def stop_analytics_instance(ctx, from_json, wait_for_state, max_wait_seconds, wa
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('analytics', ctx)
+    client = cli_util.build_client('analytics', 'analytics', ctx)
     result = client.stop_analytics_instance(
         analytics_instance_id=analytics_instance_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -737,30 +744,31 @@ def update_analytics_instance(ctx, from_json, force, wait_for_state, max_wait_se
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
     if email_notification is not None:
-        details['emailNotification'] = email_notification
+        _details['emailNotification'] = email_notification
 
     if license_type is not None:
-        details['licenseType'] = license_type
+        _details['licenseType'] = license_type
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
-    client = cli_util.build_client('analytics', ctx)
+    client = cli_util.build_client('analytics', 'analytics', ctx)
     result = client.update_analytics_instance(
         analytics_instance_id=analytics_instance_id,
-        update_analytics_instance_details=details,
+        update_analytics_instance_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_analytics_instance') and callable(getattr(client, 'get_analytics_instance')):
             try:
                 wait_period_kwargs = {}

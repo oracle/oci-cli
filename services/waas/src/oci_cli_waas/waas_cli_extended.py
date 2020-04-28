@@ -1,5 +1,6 @@
 # coding: utf-8
-# Copyright (c) 2016, 2019, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2020, Oracle and/or its affiliates.  All rights reserved.
+# This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 import click
 from services.waas.src.oci_cli_waas.generated import waas_cli
@@ -145,7 +146,7 @@ def update_policy_config(ctx, from_json, force, wait_for_state, max_wait_seconds
     if health_checks is not None:
         details['healthChecks'] = cli_util.parse_json_parameter("health_checks", health_checks)
 
-    client = cli_util.build_client('waas', ctx)
+    client = cli_util.build_client('waas', 'waas', ctx)
     result = client.update_policy_config(
         waas_policy_id=waas_policy_id,
         update_policy_config_details=details,

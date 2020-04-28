@@ -1,5 +1,6 @@
 # coding: utf-8
-# Copyright (c) 2016, 2019, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2020, Oracle and/or its affiliates.  All rights reserved.
+# This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 import sys
 import click
@@ -343,7 +344,7 @@ def create_database(ctx, **kwargs):
     if 'db_version' in kwargs and kwargs['db_version']:
         create_db_home_details.db_version = kwargs['db_version']
 
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
 
     create_new_database_details = oci.database.models.CreateNewDatabaseDetails()
     if kwargs['db_home_id'] is not None:
@@ -408,7 +409,7 @@ def create_database_from_backup(ctx, **kwargs):
 
     create_db_home_with_system_details.source = 'DB_BACKUP'
 
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
 
     result = client.create_db_home(create_db_home_with_system_details)
 
@@ -471,7 +472,7 @@ def update_database_extended(ctx, **kwargs):
 @cli_util.help_option
 @cli_util.wrap_exceptions
 def patch_database(ctx, **kwargs):
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
 
     response = client.get_database(kwargs['database_id'])
     db_home_id = response.data.db_home_id
@@ -502,7 +503,7 @@ def patch_database(ctx, **kwargs):
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
 def delete_database(ctx, **kwargs):
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
 
     # get the db-home for this database
     response = client.get_database(kwargs['database_id'])
@@ -538,7 +539,7 @@ def delete_database(ctx, **kwargs):
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'list[DatabaseSummary]'})
 @cli_util.wrap_exceptions
 def list_databases(ctx, **kwargs):
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
 
     if kwargs['db_system_id'] is not None and kwargs['compartment_id'] is None:
         response = client.get_db_system(kwargs['db_system_id'])
@@ -669,7 +670,7 @@ def update_db_system_extended(ctx, **kwargs):
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'DbSystem'})
 @cli_util.wrap_exceptions
 def patch_db_system(ctx, **kwargs):
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
 
     patch_details = oci.database.models.PatchDetails()
     patch_details.action = kwargs['patch_action']
@@ -710,7 +711,7 @@ def create_data_guard_association_from_existing_db_system(ctx, from_json, databa
     details['transportType'] = transport_type
     details['peerDbSystemId'] = peer_db_system_id
 
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.create_data_guard_association(
         database_id=database_id,
         create_data_guard_association_details=details,
@@ -756,7 +757,7 @@ def create_data_guard_association_with_new_db_system(ctx, from_json, database_id
 
     details['creationType'] = 'NewDbSystem'
 
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.create_data_guard_association(
         database_id=database_id,
         create_data_guard_association_details=details,
@@ -796,7 +797,7 @@ def patch_history_list_group():
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'Patch'})
 @cli_util.wrap_exceptions
 def get_patch_by_database(ctx, **kwargs):
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
 
     # get the db-home for this database
     response = client.get_database(kwargs['database_id'])
@@ -815,7 +816,7 @@ def get_patch_by_database(ctx, **kwargs):
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'list[PatchSummary]'})
 @cli_util.wrap_exceptions
 def list_patch_by_database(ctx, **kwargs):
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
 
     # get the db-home for this database
     response = client.get_database(kwargs['database_id'])
@@ -833,7 +834,7 @@ def list_patch_by_database(ctx, **kwargs):
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'PatchHistoryEntry'})
 @cli_util.wrap_exceptions
 def get_patch_history_entry_by_database(ctx, **kwargs):
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
 
     # get the db-home for this database
     response = client.get_database(kwargs['database_id'])
@@ -852,7 +853,7 @@ def get_patch_history_entry_by_database(ctx, **kwargs):
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'list[PatchHistoryEntrySummary]'})
 @cli_util.wrap_exceptions
 def list_patch_history_entries_by_database(ctx, **kwargs):
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
 
     # get the db-home for this database
     response = client.get_database(kwargs['database_id'])
@@ -877,7 +878,7 @@ def create_db_home(ctx, **kwargs):
     db_home_details.db_version = kwargs['db_version']
     if kwargs['display_name'] is not None:
         db_home_details.display_name = kwargs['display_name']
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     get_db_system_response = client.get_db_system(kwargs['db_system_id'])
     db_system_shape = get_db_system_response.data.shape
     # For Exadata systems create db home is called

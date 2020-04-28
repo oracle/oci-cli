@@ -1,5 +1,6 @@
 # coding: utf-8
-# Copyright (c) 2016, 2020, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2020, Oracle and/or its affiliates.  All rights reserved.
+# This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 from __future__ import print_function
 import click
@@ -61,19 +62,19 @@ def decrypt(ctx, from_json, ciphertext, key_id, associated_data, logging_context
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['ciphertext'] = ciphertext
-    details['keyId'] = key_id
+    _details = {}
+    _details['ciphertext'] = ciphertext
+    _details['keyId'] = key_id
 
     if associated_data is not None:
-        details['associatedData'] = cli_util.parse_json_parameter("associated_data", associated_data)
+        _details['associatedData'] = cli_util.parse_json_parameter("associated_data", associated_data)
 
     if logging_context is not None:
-        details['loggingContext'] = cli_util.parse_json_parameter("logging_context", logging_context)
+        _details['loggingContext'] = cli_util.parse_json_parameter("logging_context", logging_context)
 
-    client = cli_util.build_client('kms_crypto', ctx)
+    client = cli_util.build_client('key_management', 'kms_crypto', ctx)
     result = client.decrypt(
-        decrypt_data_details=details,
+        decrypt_data_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -96,19 +97,19 @@ def encrypt(ctx, from_json, key_id, plaintext, associated_data, logging_context)
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['keyId'] = key_id
-    details['plaintext'] = plaintext
+    _details = {}
+    _details['keyId'] = key_id
+    _details['plaintext'] = plaintext
 
     if associated_data is not None:
-        details['associatedData'] = cli_util.parse_json_parameter("associated_data", associated_data)
+        _details['associatedData'] = cli_util.parse_json_parameter("associated_data", associated_data)
 
     if logging_context is not None:
-        details['loggingContext'] = cli_util.parse_json_parameter("logging_context", logging_context)
+        _details['loggingContext'] = cli_util.parse_json_parameter("logging_context", logging_context)
 
-    client = cli_util.build_client('kms_crypto', ctx)
+    client = cli_util.build_client('key_management', 'kms_crypto', ctx)
     result = client.encrypt(
-        encrypt_data_details=details,
+        encrypt_data_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -132,20 +133,20 @@ def generate_data_encryption_key(ctx, from_json, include_plaintext_key, key_id, 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['includePlaintextKey'] = include_plaintext_key
-    details['keyId'] = key_id
-    details['keyShape'] = cli_util.parse_json_parameter("key_shape", key_shape)
+    _details = {}
+    _details['includePlaintextKey'] = include_plaintext_key
+    _details['keyId'] = key_id
+    _details['keyShape'] = cli_util.parse_json_parameter("key_shape", key_shape)
 
     if associated_data is not None:
-        details['associatedData'] = cli_util.parse_json_parameter("associated_data", associated_data)
+        _details['associatedData'] = cli_util.parse_json_parameter("associated_data", associated_data)
 
     if logging_context is not None:
-        details['loggingContext'] = cli_util.parse_json_parameter("logging_context", logging_context)
+        _details['loggingContext'] = cli_util.parse_json_parameter("logging_context", logging_context)
 
-    client = cli_util.build_client('kms_crypto', ctx)
+    client = cli_util.build_client('key_management', 'kms_crypto', ctx)
     result = client.generate_data_encryption_key(
-        generate_key_details=details,
+        generate_key_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)

@@ -1,5 +1,6 @@
 # coding: utf-8
-# Copyright (c) 2016, 2020, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2020, Oracle and/or its affiliates.  All rights reserved.
+# This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 from __future__ import print_function
 import click
@@ -49,7 +50,7 @@ audit_root_group.add_command(configuration_group)
 def get_configuration(ctx, from_json, compartment_id):
 
     kwargs = {}
-    client = cli_util.build_client('audit', ctx)
+    client = cli_util.build_client('audit', 'audit', ctx)
     result = client.get_configuration(
         compartment_id=compartment_id,
         **kwargs
@@ -78,7 +79,7 @@ def list_events(ctx, from_json, all_pages, compartment_id, start_time, end_time,
     if page is not None:
         kwargs['page'] = page
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('audit', ctx)
+    client = cli_util.build_client('audit', 'audit', ctx)
     if all_pages:
         result = cli_util.list_call_get_all_results(
             client.list_events,
@@ -114,16 +115,17 @@ def update_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 
     kwargs = {}
 
-    details = {}
-    details['retentionPeriodDays'] = retention_period_days
+    _details = {}
+    _details['retentionPeriodDays'] = retention_period_days
 
-    client = cli_util.build_client('audit', ctx)
+    client = cli_util.build_client('audit', 'audit', ctx)
     result = client.update_configuration(
         compartment_id=compartment_id,
-        update_configuration_details=details,
+        update_configuration_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}

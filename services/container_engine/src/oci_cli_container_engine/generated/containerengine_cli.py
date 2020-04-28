@@ -1,5 +1,6 @@
 # coding: utf-8
-# Copyright (c) 2016, 2020, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2020, Oracle and/or its affiliates.  All rights reserved.
+# This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 from __future__ import print_function
 import click
@@ -93,24 +94,25 @@ def create_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['name'] = name
-    details['compartmentId'] = compartment_id
-    details['vcnId'] = vcn_id
-    details['kubernetesVersion'] = kubernetes_version
+    _details = {}
+    _details['name'] = name
+    _details['compartmentId'] = compartment_id
+    _details['vcnId'] = vcn_id
+    _details['kubernetesVersion'] = kubernetes_version
 
     if kms_key_id is not None:
-        details['kmsKeyId'] = kms_key_id
+        _details['kmsKeyId'] = kms_key_id
 
     if options is not None:
-        details['options'] = cli_util.parse_json_parameter("options", options)
+        _details['options'] = cli_util.parse_json_parameter("options", options)
 
-    client = cli_util.build_client('container_engine', ctx)
+    client = cli_util.build_client('container_engine', 'container_engine', ctx)
     result = client.create_cluster(
-        create_cluster_details=details,
+        create_cluster_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -153,18 +155,18 @@ def create_kubeconfig(ctx, from_json, file, cluster_id, token_version, expiratio
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if token_version is not None:
-        details['tokenVersion'] = token_version
+        _details['tokenVersion'] = token_version
 
     if expiration is not None:
-        details['expiration'] = expiration
+        _details['expiration'] = expiration
 
-    client = cli_util.build_client('container_engine', ctx)
+    client = cli_util.build_client('container_engine', 'container_engine', ctx)
     result = client.create_kubeconfig(
         cluster_id=cluster_id,
-        create_cluster_kubeconfig_content_details=details,
+        create_cluster_kubeconfig_content_details=_details,
         **kwargs
     )
 
@@ -221,43 +223,44 @@ def create_node_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
-    details['clusterId'] = cluster_id
-    details['name'] = name
-    details['kubernetesVersion'] = kubernetes_version
-    details['nodeShape'] = node_shape
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['clusterId'] = cluster_id
+    _details['name'] = name
+    _details['kubernetesVersion'] = kubernetes_version
+    _details['nodeShape'] = node_shape
 
     if node_metadata is not None:
-        details['nodeMetadata'] = cli_util.parse_json_parameter("node_metadata", node_metadata)
+        _details['nodeMetadata'] = cli_util.parse_json_parameter("node_metadata", node_metadata)
 
     if node_image_name is not None:
-        details['nodeImageName'] = node_image_name
+        _details['nodeImageName'] = node_image_name
 
     if node_source_details is not None:
-        details['nodeSourceDetails'] = cli_util.parse_json_parameter("node_source_details", node_source_details)
+        _details['nodeSourceDetails'] = cli_util.parse_json_parameter("node_source_details", node_source_details)
 
     if initial_node_labels is not None:
-        details['initialNodeLabels'] = cli_util.parse_json_parameter("initial_node_labels", initial_node_labels)
+        _details['initialNodeLabels'] = cli_util.parse_json_parameter("initial_node_labels", initial_node_labels)
 
     if ssh_public_key is not None:
-        details['sshPublicKey'] = ssh_public_key
+        _details['sshPublicKey'] = ssh_public_key
 
     if quantity_per_subnet is not None:
-        details['quantityPerSubnet'] = quantity_per_subnet
+        _details['quantityPerSubnet'] = quantity_per_subnet
 
     if subnet_ids is not None:
-        details['subnetIds'] = cli_util.parse_json_parameter("subnet_ids", subnet_ids)
+        _details['subnetIds'] = cli_util.parse_json_parameter("subnet_ids", subnet_ids)
 
     if node_config_details is not None:
-        details['nodeConfigDetails'] = cli_util.parse_json_parameter("node_config_details", node_config_details)
+        _details['nodeConfigDetails'] = cli_util.parse_json_parameter("node_config_details", node_config_details)
 
-    client = cli_util.build_client('container_engine', ctx)
+    client = cli_util.build_client('container_engine', 'container_engine', ctx)
     result = client.create_node_pool(
-        create_node_pool_details=details,
+        create_node_pool_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -311,44 +314,45 @@ def create_node_pool_node_source_via_image_details(ctx, from_json, wait_for_stat
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['nodeSourceDetails'] = {}
-    details['compartmentId'] = compartment_id
-    details['clusterId'] = cluster_id
-    details['name'] = name
-    details['kubernetesVersion'] = kubernetes_version
-    details['nodeShape'] = node_shape
-    details['nodeSourceDetails']['imageId'] = node_source_details_image_id
+    _details = {}
+    _details['nodeSourceDetails'] = {}
+    _details['compartmentId'] = compartment_id
+    _details['clusterId'] = cluster_id
+    _details['name'] = name
+    _details['kubernetesVersion'] = kubernetes_version
+    _details['nodeShape'] = node_shape
+    _details['nodeSourceDetails']['imageId'] = node_source_details_image_id
 
     if node_metadata is not None:
-        details['nodeMetadata'] = cli_util.parse_json_parameter("node_metadata", node_metadata)
+        _details['nodeMetadata'] = cli_util.parse_json_parameter("node_metadata", node_metadata)
 
     if node_image_name is not None:
-        details['nodeImageName'] = node_image_name
+        _details['nodeImageName'] = node_image_name
 
     if initial_node_labels is not None:
-        details['initialNodeLabels'] = cli_util.parse_json_parameter("initial_node_labels", initial_node_labels)
+        _details['initialNodeLabels'] = cli_util.parse_json_parameter("initial_node_labels", initial_node_labels)
 
     if ssh_public_key is not None:
-        details['sshPublicKey'] = ssh_public_key
+        _details['sshPublicKey'] = ssh_public_key
 
     if quantity_per_subnet is not None:
-        details['quantityPerSubnet'] = quantity_per_subnet
+        _details['quantityPerSubnet'] = quantity_per_subnet
 
     if subnet_ids is not None:
-        details['subnetIds'] = cli_util.parse_json_parameter("subnet_ids", subnet_ids)
+        _details['subnetIds'] = cli_util.parse_json_parameter("subnet_ids", subnet_ids)
 
     if node_config_details is not None:
-        details['nodeConfigDetails'] = cli_util.parse_json_parameter("node_config_details", node_config_details)
+        _details['nodeConfigDetails'] = cli_util.parse_json_parameter("node_config_details", node_config_details)
 
-    details['nodeSourceDetails']['sourceType'] = 'IMAGE'
+    _details['nodeSourceDetails']['sourceType'] = 'IMAGE'
 
-    client = cli_util.build_client('container_engine', ctx)
+    client = cli_util.build_client('container_engine', 'container_engine', ctx)
     result = client.create_node_pool(
-        create_node_pool_details=details,
+        create_node_pool_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -394,12 +398,13 @@ def delete_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('container_engine', ctx)
+    client = cli_util.build_client('container_engine', 'container_engine', ctx)
     result = client.delete_cluster(
         cluster_id=cluster_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -445,12 +450,13 @@ def delete_node_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('container_engine', ctx)
+    client = cli_util.build_client('container_engine', 'container_engine', ctx)
     result = client.delete_node_pool(
         node_pool_id=node_pool_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -493,7 +499,7 @@ def delete_work_request(ctx, from_json, work_request_id, if_match):
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('container_engine', ctx)
+    client = cli_util.build_client('container_engine', 'container_engine', ctx)
     result = client.delete_work_request(
         work_request_id=work_request_id,
         **kwargs
@@ -515,7 +521,7 @@ def get_cluster(ctx, from_json, cluster_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('container_engine', ctx)
+    client = cli_util.build_client('container_engine', 'container_engine', ctx)
     result = client.get_cluster(
         cluster_id=cluster_id,
         **kwargs
@@ -540,7 +546,7 @@ def get_cluster_options(ctx, from_json, cluster_option_id, compartment_id):
     if compartment_id is not None:
         kwargs['compartment_id'] = compartment_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('container_engine', ctx)
+    client = cli_util.build_client('container_engine', 'container_engine', ctx)
     result = client.get_cluster_options(
         cluster_option_id=cluster_option_id,
         **kwargs
@@ -562,7 +568,7 @@ def get_node_pool(ctx, from_json, node_pool_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('container_engine', ctx)
+    client = cli_util.build_client('container_engine', 'container_engine', ctx)
     result = client.get_node_pool(
         node_pool_id=node_pool_id,
         **kwargs
@@ -587,7 +593,7 @@ def get_node_pool_options(ctx, from_json, node_pool_option_id, compartment_id):
     if compartment_id is not None:
         kwargs['compartment_id'] = compartment_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('container_engine', ctx)
+    client = cli_util.build_client('container_engine', 'container_engine', ctx)
     result = client.get_node_pool_options(
         node_pool_option_id=node_pool_option_id,
         **kwargs
@@ -609,7 +615,7 @@ def get_work_request(ctx, from_json, work_request_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('container_engine', ctx)
+    client = cli_util.build_client('container_engine', 'container_engine', ctx)
     result = client.get_work_request(
         work_request_id=work_request_id,
         **kwargs
@@ -651,7 +657,7 @@ def list_clusters(ctx, from_json, all_pages, page_size, compartment_id, lifecycl
     if sort_by is not None:
         kwargs['sort_by'] = sort_by
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('container_engine', ctx)
+    client = cli_util.build_client('container_engine', 'container_engine', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -711,7 +717,7 @@ def list_node_pools(ctx, from_json, all_pages, page_size, compartment_id, cluste
     if sort_by is not None:
         kwargs['sort_by'] = sort_by
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('container_engine', ctx)
+    client = cli_util.build_client('container_engine', 'container_engine', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -753,7 +759,7 @@ def list_work_request_errors(ctx, from_json, all_pages, compartment_id, work_req
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('container_engine', ctx)
+    client = cli_util.build_client('container_engine', 'container_engine', ctx)
     result = client.list_work_request_errors(
         compartment_id=compartment_id,
         work_request_id=work_request_id,
@@ -778,7 +784,7 @@ def list_work_request_logs(ctx, from_json, all_pages, compartment_id, work_reque
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('container_engine', ctx)
+    client = cli_util.build_client('container_engine', 'container_engine', ctx)
     result = client.list_work_request_logs(
         compartment_id=compartment_id,
         work_request_id=work_request_id,
@@ -827,7 +833,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, clu
     if sort_by is not None:
         kwargs['sort_by'] = sort_by
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('container_engine', ctx)
+    client = cli_util.build_client('container_engine', 'container_engine', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -882,24 +888,25 @@ def update_cluster(ctx, from_json, force, wait_for_state, max_wait_seconds, wait
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if name is not None:
-        details['name'] = name
+        _details['name'] = name
 
     if kubernetes_version is not None:
-        details['kubernetesVersion'] = kubernetes_version
+        _details['kubernetesVersion'] = kubernetes_version
 
     if options is not None:
-        details['options'] = cli_util.parse_json_parameter("options", options)
+        _details['options'] = cli_util.parse_json_parameter("options", options)
 
-    client = cli_util.build_client('container_engine', ctx)
+    client = cli_util.build_client('container_engine', 'container_engine', ctx)
     result = client.update_cluster(
         cluster_id=cluster_id,
-        update_cluster_details=details,
+        update_cluster_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -958,33 +965,34 @@ def update_node_pool(ctx, from_json, force, wait_for_state, max_wait_seconds, wa
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if name is not None:
-        details['name'] = name
+        _details['name'] = name
 
     if kubernetes_version is not None:
-        details['kubernetesVersion'] = kubernetes_version
+        _details['kubernetesVersion'] = kubernetes_version
 
     if initial_node_labels is not None:
-        details['initialNodeLabels'] = cli_util.parse_json_parameter("initial_node_labels", initial_node_labels)
+        _details['initialNodeLabels'] = cli_util.parse_json_parameter("initial_node_labels", initial_node_labels)
 
     if quantity_per_subnet is not None:
-        details['quantityPerSubnet'] = quantity_per_subnet
+        _details['quantityPerSubnet'] = quantity_per_subnet
 
     if subnet_ids is not None:
-        details['subnetIds'] = cli_util.parse_json_parameter("subnet_ids", subnet_ids)
+        _details['subnetIds'] = cli_util.parse_json_parameter("subnet_ids", subnet_ids)
 
     if node_config_details is not None:
-        details['nodeConfigDetails'] = cli_util.parse_json_parameter("node_config_details", node_config_details)
+        _details['nodeConfigDetails'] = cli_util.parse_json_parameter("node_config_details", node_config_details)
 
-    client = cli_util.build_client('container_engine', ctx)
+    client = cli_util.build_client('container_engine', 'container_engine', ctx)
     result = client.update_node_pool(
         node_pool_id=node_pool_id,
-        update_node_pool_details=details,
+        update_node_pool_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}

@@ -1,5 +1,6 @@
 # coding: utf-8
-# Copyright (c) 2016, 2020, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2020, Oracle and/or its affiliates.  All rights reserved.
+# This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 from __future__ import print_function
 import click
@@ -68,12 +69,13 @@ def cancel_key_deletion(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('kms_management', ctx)
+    client = cli_util.build_client('key_management', 'kms_management', ctx)
     result = client.cancel_key_deletion(
         key_id=key_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_key') and callable(getattr(client, 'get_key')):
             try:
                 wait_period_kwargs = {}
@@ -126,13 +128,14 @@ def cancel_key_version_deletion(ctx, from_json, wait_for_state, max_wait_seconds
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('kms_management', ctx)
+    client = cli_util.build_client('key_management', 'kms_management', ctx)
     result = client.cancel_key_version_deletion(
         key_id=key_id,
         key_version_id=key_version_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_key_version') and callable(getattr(client, 'get_key_version')):
             try:
                 wait_period_kwargs = {}
@@ -182,13 +185,13 @@ def change_key_compartment(ctx, from_json, key_id, compartment_id, if_match):
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
 
-    client = cli_util.build_client('kms_management', ctx)
+    client = cli_util.build_client('key_management', 'kms_management', ctx)
     result = client.change_key_compartment(
         key_id=key_id,
-        change_key_compartment_details=details,
+        change_key_compartment_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -217,23 +220,24 @@ def create_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
-    details['displayName'] = display_name
-    details['keyShape'] = cli_util.parse_json_parameter("key_shape", key_shape)
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['displayName'] = display_name
+    _details['keyShape'] = cli_util.parse_json_parameter("key_shape", key_shape)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
-    client = cli_util.build_client('kms_management', ctx)
+    client = cli_util.build_client('key_management', 'kms_management', ctx)
     result = client.create_key(
-        create_key_details=details,
+        create_key_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_key') and callable(getattr(client, 'get_key')):
             try:
                 wait_period_kwargs = {}
@@ -279,12 +283,13 @@ def create_key_version(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('kms_management', ctx)
+    client = cli_util.build_client('key_management', 'kms_management', ctx)
     result = client.create_key_version(
         key_id=key_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_key_version') and callable(getattr(client, 'get_key_version')):
             try:
                 wait_period_kwargs = {}
@@ -333,12 +338,13 @@ def disable_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('kms_management', ctx)
+    client = cli_util.build_client('key_management', 'kms_management', ctx)
     result = client.disable_key(
         key_id=key_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_key') and callable(getattr(client, 'get_key')):
             try:
                 wait_period_kwargs = {}
@@ -387,12 +393,13 @@ def enable_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('kms_management', ctx)
+    client = cli_util.build_client('key_management', 'kms_management', ctx)
     result = client.enable_key(
         key_id=key_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_key') and callable(getattr(client, 'get_key')):
             try:
                 wait_period_kwargs = {}
@@ -435,7 +442,7 @@ def get_key(ctx, from_json, key_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('kms_management', ctx)
+    client = cli_util.build_client('key_management', 'kms_management', ctx)
     result = client.get_key(
         key_id=key_id,
         **kwargs
@@ -465,7 +472,7 @@ def get_key_version(ctx, from_json, key_id, key_version_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('kms_management', ctx)
+    client = cli_util.build_client('key_management', 'kms_management', ctx)
     result = client.get_key_version(
         key_id=key_id,
         key_version_id=key_version_id,
@@ -486,7 +493,7 @@ def get_wrapping_key(ctx, from_json, ):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('kms_management', ctx)
+    client = cli_util.build_client('key_management', 'kms_management', ctx)
     result = client.get_wrapping_key(
         **kwargs
     )
@@ -512,21 +519,21 @@ def import_key(ctx, from_json, compartment_id, display_name, key_shape, wrapped_
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
-    details['displayName'] = display_name
-    details['keyShape'] = cli_util.parse_json_parameter("key_shape", key_shape)
-    details['wrappedImportKey'] = cli_util.parse_json_parameter("wrapped_import_key", wrapped_import_key)
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['displayName'] = display_name
+    _details['keyShape'] = cli_util.parse_json_parameter("key_shape", key_shape)
+    _details['wrappedImportKey'] = cli_util.parse_json_parameter("wrapped_import_key", wrapped_import_key)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
-    client = cli_util.build_client('kms_management', ctx)
+    client = cli_util.build_client('key_management', 'kms_management', ctx)
     result = client.import_key(
-        import_key_details=details,
+        import_key_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -552,19 +559,19 @@ def import_key_version(ctx, from_json, key_id, wrapped_import_key, defined_tags,
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['wrappedImportKey'] = cli_util.parse_json_parameter("wrapped_import_key", wrapped_import_key)
+    _details = {}
+    _details['wrappedImportKey'] = cli_util.parse_json_parameter("wrapped_import_key", wrapped_import_key)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
-    client = cli_util.build_client('kms_management', ctx)
+    client = cli_util.build_client('key_management', 'kms_management', ctx)
     result = client.import_key_version(
         key_id=key_id,
-        import_key_version_details=details,
+        import_key_version_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -605,7 +612,7 @@ def list_key_versions(ctx, from_json, all_pages, page_size, key_id, limit, page,
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('kms_management', ctx)
+    client = cli_util.build_client('key_management', 'kms_management', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -663,7 +670,7 @@ def list_keys(ctx, from_json, all_pages, page_size, compartment_id, limit, page,
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('kms_management', ctx)
+    client = cli_util.build_client('key_management', 'kms_management', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -715,18 +722,19 @@ def schedule_key_deletion(ctx, from_json, wait_for_state, max_wait_seconds, wait
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if time_of_deletion is not None:
-        details['timeOfDeletion'] = time_of_deletion
+        _details['timeOfDeletion'] = time_of_deletion
 
-    client = cli_util.build_client('kms_management', ctx)
+    client = cli_util.build_client('key_management', 'kms_management', ctx)
     result = client.schedule_key_deletion(
         key_id=key_id,
-        schedule_key_deletion_details=details,
+        schedule_key_deletion_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_key') and callable(getattr(client, 'get_key')):
             try:
                 wait_period_kwargs = {}
@@ -781,19 +789,20 @@ def schedule_key_version_deletion(ctx, from_json, wait_for_state, max_wait_secon
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if time_of_deletion is not None:
-        details['timeOfDeletion'] = time_of_deletion
+        _details['timeOfDeletion'] = time_of_deletion
 
-    client = cli_util.build_client('kms_management', ctx)
+    client = cli_util.build_client('key_management', 'kms_management', ctx)
     result = client.schedule_key_version_deletion(
         key_id=key_id,
         key_version_id=key_version_id,
-        schedule_key_version_deletion_details=details,
+        schedule_key_version_deletion_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_key_version') and callable(getattr(client, 'get_key_version')):
             try:
                 wait_period_kwargs = {}
@@ -851,24 +860,25 @@ def update_key(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_int
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
-    client = cli_util.build_client('kms_management', ctx)
+    client = cli_util.build_client('key_management', 'kms_management', ctx)
     result = client.update_key(
         key_id=key_id,
-        update_key_details=details,
+        update_key_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_key') and callable(getattr(client, 'get_key')):
             try:
                 wait_period_kwargs = {}

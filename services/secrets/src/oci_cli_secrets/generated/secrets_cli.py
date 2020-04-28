@@ -1,5 +1,6 @@
 # coding: utf-8
-# Copyright (c) 2016, 2020, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2020, Oracle and/or its affiliates.  All rights reserved.
+# This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 from __future__ import print_function
 import click
@@ -59,7 +60,7 @@ def get_secret_bundle(ctx, from_json, secret_id, version_number, secret_version_
     if stage is not None:
         kwargs['stage'] = stage
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('secrets', ctx)
+    client = cli_util.build_client('secrets', 'secrets', ctx)
     result = client.get_secret_bundle(
         secret_id=secret_id,
         **kwargs
@@ -98,7 +99,7 @@ def list_secret_bundle_versions(ctx, from_json, all_pages, page_size, secret_id,
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('secrets', ctx)
+    client = cli_util.build_client('secrets', 'secrets', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size

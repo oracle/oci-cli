@@ -1,5 +1,6 @@
 # coding: utf-8
-# Copyright (c) 2016, 2020, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2020, Oracle and/or its affiliates.  All rights reserved.
+# This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 from __future__ import print_function
 import click
@@ -64,12 +65,13 @@ def cancel_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('resource_manager', ctx)
+    client = cli_util.build_client('resource_manager', 'resource_manager', ctx)
     result = client.cancel_job(
         job_id=job_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_job') and callable(getattr(client, 'get_job')):
             try:
                 wait_period_kwargs = {}
@@ -128,16 +130,17 @@ def change_stack_compartment(ctx, from_json, wait_for_state, max_wait_seconds, w
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
 
-    client = cli_util.build_client('resource_manager', ctx)
+    client = cli_util.build_client('resource_manager', 'resource_manager', ctx)
     result = client.change_stack_compartment(
         stack_id=stack_id,
-        change_stack_compartment_details=details,
+        change_stack_compartment_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -183,33 +186,34 @@ def create_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['stackId'] = stack_id
+    _details = {}
+    _details['stackId'] = stack_id
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if operation is not None:
-        details['operation'] = operation
+        _details['operation'] = operation
 
     if job_operation_details is not None:
-        details['jobOperationDetails'] = cli_util.parse_json_parameter("job_operation_details", job_operation_details)
+        _details['jobOperationDetails'] = cli_util.parse_json_parameter("job_operation_details", job_operation_details)
 
     if apply_job_plan_resolution is not None:
-        details['applyJobPlanResolution'] = cli_util.parse_json_parameter("apply_job_plan_resolution", apply_job_plan_resolution)
+        _details['applyJobPlanResolution'] = cli_util.parse_json_parameter("apply_job_plan_resolution", apply_job_plan_resolution)
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('resource_manager', ctx)
+    client = cli_util.build_client('resource_manager', 'resource_manager', ctx)
     result = client.create_job(
-        create_job_details=details,
+        create_job_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_job') and callable(getattr(client, 'get_job')):
             try:
                 wait_period_kwargs = {}
@@ -255,34 +259,35 @@ def create_job_create_import_tf_state_job_operation_details(ctx, from_json, wait
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['jobOperationDetails'] = {}
-    details['stackId'] = stack_id
-    details['jobOperationDetails']['tfStateBase64Encoded'] = job_operation_details_tf_state_base64_encoded
+    _details = {}
+    _details['jobOperationDetails'] = {}
+    _details['stackId'] = stack_id
+    _details['jobOperationDetails']['tfStateBase64Encoded'] = job_operation_details_tf_state_base64_encoded
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if operation is not None:
-        details['operation'] = operation
+        _details['operation'] = operation
 
     if apply_job_plan_resolution is not None:
-        details['applyJobPlanResolution'] = cli_util.parse_json_parameter("apply_job_plan_resolution", apply_job_plan_resolution)
+        _details['applyJobPlanResolution'] = cli_util.parse_json_parameter("apply_job_plan_resolution", apply_job_plan_resolution)
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    details['jobOperationDetails']['operation'] = 'IMPORT_TF_STATE'
+    _details['jobOperationDetails']['operation'] = 'IMPORT_TF_STATE'
 
-    client = cli_util.build_client('resource_manager', ctx)
+    client = cli_util.build_client('resource_manager', 'resource_manager', ctx)
     result = client.create_job(
-        create_job_details=details,
+        create_job_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_job') and callable(getattr(client, 'get_job')):
             try:
                 wait_period_kwargs = {}
@@ -329,39 +334,40 @@ def create_job_create_apply_job_operation_details(ctx, from_json, wait_for_state
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['jobOperationDetails'] = {}
-    details['stackId'] = stack_id
+    _details = {}
+    _details['jobOperationDetails'] = {}
+    _details['stackId'] = stack_id
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if operation is not None:
-        details['operation'] = operation
+        _details['operation'] = operation
 
     if apply_job_plan_resolution is not None:
-        details['applyJobPlanResolution'] = cli_util.parse_json_parameter("apply_job_plan_resolution", apply_job_plan_resolution)
+        _details['applyJobPlanResolution'] = cli_util.parse_json_parameter("apply_job_plan_resolution", apply_job_plan_resolution)
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if job_operation_details_execution_plan_strategy is not None:
-        details['jobOperationDetails']['executionPlanStrategy'] = job_operation_details_execution_plan_strategy
+        _details['jobOperationDetails']['executionPlanStrategy'] = job_operation_details_execution_plan_strategy
 
     if job_operation_details_execution_plan_job_id is not None:
-        details['jobOperationDetails']['executionPlanJobId'] = job_operation_details_execution_plan_job_id
+        _details['jobOperationDetails']['executionPlanJobId'] = job_operation_details_execution_plan_job_id
 
-    details['jobOperationDetails']['operation'] = 'APPLY'
+    _details['jobOperationDetails']['operation'] = 'APPLY'
 
-    client = cli_util.build_client('resource_manager', ctx)
+    client = cli_util.build_client('resource_manager', 'resource_manager', ctx)
     result = client.create_job(
-        create_job_details=details,
+        create_job_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_job') and callable(getattr(client, 'get_job')):
             try:
                 wait_period_kwargs = {}
@@ -406,33 +412,34 @@ def create_job_create_plan_job_operation_details(ctx, from_json, wait_for_state,
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['jobOperationDetails'] = {}
-    details['stackId'] = stack_id
+    _details = {}
+    _details['jobOperationDetails'] = {}
+    _details['stackId'] = stack_id
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if operation is not None:
-        details['operation'] = operation
+        _details['operation'] = operation
 
     if apply_job_plan_resolution is not None:
-        details['applyJobPlanResolution'] = cli_util.parse_json_parameter("apply_job_plan_resolution", apply_job_plan_resolution)
+        _details['applyJobPlanResolution'] = cli_util.parse_json_parameter("apply_job_plan_resolution", apply_job_plan_resolution)
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    details['jobOperationDetails']['operation'] = 'PLAN'
+    _details['jobOperationDetails']['operation'] = 'PLAN'
 
-    client = cli_util.build_client('resource_manager', ctx)
+    client = cli_util.build_client('resource_manager', 'resource_manager', ctx)
     result = client.create_job(
-        create_job_details=details,
+        create_job_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_job') and callable(getattr(client, 'get_job')):
             try:
                 wait_period_kwargs = {}
@@ -478,34 +485,35 @@ def create_job_create_destroy_job_operation_details(ctx, from_json, wait_for_sta
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['jobOperationDetails'] = {}
-    details['stackId'] = stack_id
-    details['jobOperationDetails']['executionPlanStrategy'] = job_operation_details_execution_plan_strategy
+    _details = {}
+    _details['jobOperationDetails'] = {}
+    _details['stackId'] = stack_id
+    _details['jobOperationDetails']['executionPlanStrategy'] = job_operation_details_execution_plan_strategy
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if operation is not None:
-        details['operation'] = operation
+        _details['operation'] = operation
 
     if apply_job_plan_resolution is not None:
-        details['applyJobPlanResolution'] = cli_util.parse_json_parameter("apply_job_plan_resolution", apply_job_plan_resolution)
+        _details['applyJobPlanResolution'] = cli_util.parse_json_parameter("apply_job_plan_resolution", apply_job_plan_resolution)
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    details['jobOperationDetails']['operation'] = 'DESTROY'
+    _details['jobOperationDetails']['operation'] = 'DESTROY'
 
-    client = cli_util.build_client('resource_manager', ctx)
+    client = cli_util.build_client('resource_manager', 'resource_manager', ctx)
     result = client.create_job(
-        create_job_details=details,
+        create_job_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_job') and callable(getattr(client, 'get_job')):
             try:
                 wait_period_kwargs = {}
@@ -552,34 +560,35 @@ def create_stack(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
-    details['configSource'] = cli_util.parse_json_parameter("config_source", config_source)
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['configSource'] = cli_util.parse_json_parameter("config_source", config_source)
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
     if variables is not None:
-        details['variables'] = cli_util.parse_json_parameter("variables", variables)
+        _details['variables'] = cli_util.parse_json_parameter("variables", variables)
 
     if terraform_version is not None:
-        details['terraformVersion'] = terraform_version
+        _details['terraformVersion'] = terraform_version
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('resource_manager', ctx)
+    client = cli_util.build_client('resource_manager', 'resource_manager', ctx)
     result = client.create_stack(
-        create_stack_details=details,
+        create_stack_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_stack') and callable(getattr(client, 'get_stack')):
             try:
                 wait_period_kwargs = {}
@@ -627,40 +636,41 @@ def create_stack_create_zip_upload_config_source_details(ctx, from_json, wait_fo
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['configSource'] = {}
-    details['compartmentId'] = compartment_id
-    details['configSource']['zipFileBase64Encoded'] = config_source_zip_file_base64_encoded
+    _details = {}
+    _details['configSource'] = {}
+    _details['compartmentId'] = compartment_id
+    _details['configSource']['zipFileBase64Encoded'] = config_source_zip_file_base64_encoded
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
     if variables is not None:
-        details['variables'] = cli_util.parse_json_parameter("variables", variables)
+        _details['variables'] = cli_util.parse_json_parameter("variables", variables)
 
     if terraform_version is not None:
-        details['terraformVersion'] = terraform_version
+        _details['terraformVersion'] = terraform_version
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if config_source_working_directory is not None:
-        details['configSource']['workingDirectory'] = config_source_working_directory
+        _details['configSource']['workingDirectory'] = config_source_working_directory
 
-    details['configSource']['configSourceType'] = 'ZIP_UPLOAD'
+    _details['configSource']['configSourceType'] = 'ZIP_UPLOAD'
 
-    client = cli_util.build_client('resource_manager', ctx)
+    client = cli_util.build_client('resource_manager', 'resource_manager', ctx)
     result = client.create_stack(
-        create_stack_details=details,
+        create_stack_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_stack') and callable(getattr(client, 'get_stack')):
             try:
                 wait_period_kwargs = {}
@@ -706,12 +716,13 @@ def delete_stack(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('resource_manager', ctx)
+    client = cli_util.build_client('resource_manager', 'resource_manager', ctx)
     result = client.delete_stack(
         stack_id=stack_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_stack') and callable(getattr(client, 'get_stack')):
             try:
                 wait_period_kwargs = {}
@@ -762,7 +773,7 @@ def get_job(ctx, from_json, job_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('resource_manager', ctx)
+    client = cli_util.build_client('resource_manager', 'resource_manager', ctx)
     result = client.get_job(
         job_id=job_id,
         **kwargs
@@ -805,7 +816,7 @@ def get_job_logs(ctx, from_json, job_id, type, level_greater_than_or_equal_to, s
     if timestamp_less_than_or_equal_to is not None:
         kwargs['timestamp_less_than_or_equal_to'] = timestamp_less_than_or_equal_to
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('resource_manager', ctx)
+    client = cli_util.build_client('resource_manager', 'resource_manager', ctx)
     result = client.get_job_logs(
         job_id=job_id,
         **kwargs
@@ -827,7 +838,7 @@ def get_job_logs_content(ctx, from_json, job_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('resource_manager', ctx)
+    client = cli_util.build_client('resource_manager', 'resource_manager', ctx)
     result = client.get_job_logs_content(
         job_id=job_id,
         **kwargs
@@ -850,7 +861,7 @@ def get_job_tf_config(ctx, from_json, file, job_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('resource_manager', ctx)
+    client = cli_util.build_client('resource_manager', 'resource_manager', ctx)
     result = client.get_job_tf_config(
         job_id=job_id,
         **kwargs
@@ -895,7 +906,7 @@ def get_job_tf_state(ctx, from_json, file, job_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('resource_manager', ctx)
+    client = cli_util.build_client('resource_manager', 'resource_manager', ctx)
     result = client.get_job_tf_state(
         job_id=job_id,
         **kwargs
@@ -939,7 +950,7 @@ def get_stack(ctx, from_json, stack_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('resource_manager', ctx)
+    client = cli_util.build_client('resource_manager', 'resource_manager', ctx)
     result = client.get_stack(
         stack_id=stack_id,
         **kwargs
@@ -962,7 +973,7 @@ def get_stack_tf_config(ctx, from_json, file, stack_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('resource_manager', ctx)
+    client = cli_util.build_client('resource_manager', 'resource_manager', ctx)
     result = client.get_stack_tf_config(
         stack_id=stack_id,
         **kwargs
@@ -1007,7 +1018,7 @@ def get_stack_tf_state(ctx, from_json, file, stack_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('resource_manager', ctx)
+    client = cli_util.build_client('resource_manager', 'resource_manager', ctx)
     result = client.get_stack_tf_state(
         stack_id=stack_id,
         **kwargs
@@ -1051,7 +1062,7 @@ def get_work_request(ctx, from_json, work_request_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('resource_manager', ctx)
+    client = cli_util.build_client('resource_manager', 'resource_manager', ctx)
     result = client.get_work_request(
         work_request_id=work_request_id,
         **kwargs
@@ -1105,7 +1116,7 @@ def list_jobs(ctx, from_json, all_pages, page_size, compartment_id, stack_id, id
     if page is not None:
         kwargs['page'] = page
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('resource_manager', ctx)
+    client = cli_util.build_client('resource_manager', 'resource_manager', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -1169,7 +1180,7 @@ def list_stacks(ctx, from_json, all_pages, page_size, compartment_id, id, lifecy
     if page is not None:
         kwargs['page'] = page
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('resource_manager', ctx)
+    client = cli_util.build_client('resource_manager', 'resource_manager', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -1206,7 +1217,7 @@ def list_terraform_versions(ctx, from_json, all_pages, compartment_id):
     if compartment_id is not None:
         kwargs['compartment_id'] = compartment_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('resource_manager', ctx)
+    client = cli_util.build_client('resource_manager', 'resource_manager', ctx)
     result = client.list_terraform_versions(
         **kwargs
     )
@@ -1244,7 +1255,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('resource_manager', ctx)
+    client = cli_util.build_client('resource_manager', 'resource_manager', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -1301,7 +1312,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('resource_manager', ctx)
+    client = cli_util.build_client('resource_manager', 'resource_manager', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -1352,7 +1363,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, res
     if page is not None:
         kwargs['page'] = page
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('resource_manager', ctx)
+    client = cli_util.build_client('resource_manager', 'resource_manager', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -1407,24 +1418,25 @@ def update_job(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_int
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('resource_manager', ctx)
+    client = cli_util.build_client('resource_manager', 'resource_manager', ctx)
     result = client.update_job(
         job_id=job_id,
-        update_job_details=details,
+        update_job_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_job') and callable(getattr(client, 'get_job')):
             try:
                 wait_period_kwargs = {}
@@ -1482,36 +1494,37 @@ def update_stack(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_i
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
     if config_source is not None:
-        details['configSource'] = cli_util.parse_json_parameter("config_source", config_source)
+        _details['configSource'] = cli_util.parse_json_parameter("config_source", config_source)
 
     if variables is not None:
-        details['variables'] = cli_util.parse_json_parameter("variables", variables)
+        _details['variables'] = cli_util.parse_json_parameter("variables", variables)
 
     if terraform_version is not None:
-        details['terraformVersion'] = terraform_version
+        _details['terraformVersion'] = terraform_version
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('resource_manager', ctx)
+    client = cli_util.build_client('resource_manager', 'resource_manager', ctx)
     result = client.update_stack(
         stack_id=stack_id,
-        update_stack_details=details,
+        update_stack_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_stack') and callable(getattr(client, 'get_stack')):
             try:
                 wait_period_kwargs = {}
@@ -1570,42 +1583,43 @@ def update_stack_update_zip_upload_config_source_details(ctx, from_json, force, 
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['configSource'] = {}
+    _details = {}
+    _details['configSource'] = {}
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
     if variables is not None:
-        details['variables'] = cli_util.parse_json_parameter("variables", variables)
+        _details['variables'] = cli_util.parse_json_parameter("variables", variables)
 
     if terraform_version is not None:
-        details['terraformVersion'] = terraform_version
+        _details['terraformVersion'] = terraform_version
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if config_source_working_directory is not None:
-        details['configSource']['workingDirectory'] = config_source_working_directory
+        _details['configSource']['workingDirectory'] = config_source_working_directory
 
     if config_source_zip_file_base64_encoded is not None:
-        details['configSource']['zipFileBase64Encoded'] = config_source_zip_file_base64_encoded
+        _details['configSource']['zipFileBase64Encoded'] = config_source_zip_file_base64_encoded
 
-    details['configSource']['configSourceType'] = 'ZIP_UPLOAD'
+    _details['configSource']['configSourceType'] = 'ZIP_UPLOAD'
 
-    client = cli_util.build_client('resource_manager', ctx)
+    client = cli_util.build_client('resource_manager', 'resource_manager', ctx)
     result = client.update_stack(
         stack_id=stack_id,
-        update_stack_details=details,
+        update_stack_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_stack') and callable(getattr(client, 'get_stack')):
             try:
                 wait_period_kwargs = {}

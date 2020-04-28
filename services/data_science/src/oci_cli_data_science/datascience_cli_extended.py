@@ -1,5 +1,6 @@
 # coding: utf-8
-# Copyright (c) 2016, 2019, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2020, Oracle and/or its affiliates.  All rights reserved.
+# This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 import click
 import oci
@@ -66,7 +67,7 @@ def head_model_artifact(ctx, from_json, model_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_science', ctx)
+    client = cli_util.build_client('data_science', 'data_science', ctx)
     result = client.head_model_artifact(
         model_id=model_id,
         **kwargs
@@ -94,7 +95,7 @@ def create_model_artifact_extended(ctx, model_id, from_json, **kwargs):
     # do not automatically retry operations with binary inputs
     kwargs['retry_strategy'] = oci.retry.NoneRetryStrategy()
 
-    client = cli_util.build_client('data_science', ctx)
+    client = cli_util.build_client('data_science', 'data_science', ctx)
     with open(model_artifact_file, 'rb') as file:
         result = client.create_model_artifact(
             model_id=model_id,

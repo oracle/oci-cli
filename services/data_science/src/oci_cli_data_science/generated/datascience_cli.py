@@ -1,5 +1,6 @@
 # coding: utf-8
-# Copyright (c) 2016, 2020, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2020, Oracle and/or its affiliates.  All rights reserved.
+# This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 from __future__ import print_function
 import click
@@ -77,12 +78,13 @@ def activate_model(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_science', ctx)
+    client = cli_util.build_client('data_science', 'data_science', ctx)
     result = client.activate_model(
         model_id=model_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_model') and callable(getattr(client, 'get_model')):
             try:
                 wait_period_kwargs = {}
@@ -127,12 +129,13 @@ def activate_notebook_session(ctx, from_json, wait_for_state, max_wait_seconds, 
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_science', ctx)
+    client = cli_util.build_client('data_science', 'data_science', ctx)
     result = client.activate_notebook_session(
         notebook_session_id=notebook_session_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -175,7 +178,7 @@ def cancel_work_request(ctx, from_json, work_request_id, if_match):
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_science', ctx)
+    client = cli_util.build_client('data_science', 'data_science', ctx)
     result = client.cancel_work_request(
         work_request_id=work_request_id,
         **kwargs
@@ -202,13 +205,13 @@ def change_model_compartment(ctx, from_json, model_id, compartment_id, if_match)
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
 
-    client = cli_util.build_client('data_science', ctx)
+    client = cli_util.build_client('data_science', 'data_science', ctx)
     result = client.change_model_compartment(
         model_id=model_id,
-        change_model_compartment_details=details,
+        change_model_compartment_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -233,13 +236,13 @@ def change_notebook_session_compartment(ctx, from_json, notebook_session_id, com
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
 
-    client = cli_util.build_client('data_science', ctx)
+    client = cli_util.build_client('data_science', 'data_science', ctx)
     result = client.change_notebook_session_compartment(
         notebook_session_id=notebook_session_id,
-        change_notebook_session_compartment_details=details,
+        change_notebook_session_compartment_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -264,13 +267,13 @@ def change_project_compartment(ctx, from_json, project_id, compartment_id, if_ma
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
 
-    client = cli_util.build_client('data_science', ctx)
+    client = cli_util.build_client('data_science', 'data_science', ctx)
     result = client.change_project_compartment(
         project_id=project_id,
-        change_project_compartment_details=details,
+        change_project_compartment_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -296,28 +299,29 @@ def create_model(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
-    details['projectId'] = project_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['projectId'] = project_id
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('data_science', ctx)
+    client = cli_util.build_client('data_science', 'data_science', ctx)
     result = client.create_model(
-        create_model_details=details,
+        create_model_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_model') and callable(getattr(client, 'get_model')):
             try:
                 wait_period_kwargs = {}
@@ -367,7 +371,7 @@ def create_model_artifact(ctx, from_json, model_id, model_artifact, content_leng
     # do not automatically retry operations with binary inputs
     kwargs['retry_strategy'] = oci.retry.NoneRetryStrategy()
 
-    client = cli_util.build_client('data_science', ctx)
+    client = cli_util.build_client('data_science', 'data_science', ctx)
     result = client.create_model_artifact(
         model_id=model_id,
         model_artifact=model_artifact,
@@ -396,27 +400,27 @@ def create_model_provenance(ctx, from_json, model_id, repository_url, git_branch
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if repository_url is not None:
-        details['repositoryUrl'] = repository_url
+        _details['repositoryUrl'] = repository_url
 
     if git_branch is not None:
-        details['gitBranch'] = git_branch
+        _details['gitBranch'] = git_branch
 
     if git_commit is not None:
-        details['gitCommit'] = git_commit
+        _details['gitCommit'] = git_commit
 
     if script_dir is not None:
-        details['scriptDir'] = script_dir
+        _details['scriptDir'] = script_dir
 
     if training_script is not None:
-        details['trainingScript'] = training_script
+        _details['trainingScript'] = training_script
 
-    client = cli_util.build_client('data_science', ctx)
+    client = cli_util.build_client('data_science', 'data_science', ctx)
     result = client.create_model_provenance(
         model_id=model_id,
-        create_model_provenance_details=details,
+        create_model_provenance_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -442,26 +446,27 @@ def create_notebook_session(ctx, from_json, wait_for_state, max_wait_seconds, wa
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['projectId'] = project_id
-    details['compartmentId'] = compartment_id
-    details['notebookSessionConfigurationDetails'] = cli_util.parse_json_parameter("notebook_session_configuration_details", notebook_session_configuration_details)
+    _details = {}
+    _details['projectId'] = project_id
+    _details['compartmentId'] = compartment_id
+    _details['notebookSessionConfigurationDetails'] = cli_util.parse_json_parameter("notebook_session_configuration_details", notebook_session_configuration_details)
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('data_science', ctx)
+    client = cli_util.build_client('data_science', 'data_science', ctx)
     result = client.create_notebook_session(
-        create_notebook_session_details=details,
+        create_notebook_session_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -505,27 +510,28 @@ def create_project(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('data_science', ctx)
+    client = cli_util.build_client('data_science', 'data_science', ctx)
     result = client.create_project(
-        create_project_details=details,
+        create_project_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_project') and callable(getattr(client, 'get_project')):
             try:
                 wait_period_kwargs = {}
@@ -570,12 +576,13 @@ def deactivate_model(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_science', ctx)
+    client = cli_util.build_client('data_science', 'data_science', ctx)
     result = client.deactivate_model(
         model_id=model_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_model') and callable(getattr(client, 'get_model')):
             try:
                 wait_period_kwargs = {}
@@ -620,12 +627,13 @@ def deactivate_notebook_session(ctx, from_json, wait_for_state, max_wait_seconds
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_science', ctx)
+    client = cli_util.build_client('data_science', 'data_science', ctx)
     result = client.deactivate_notebook_session(
         notebook_session_id=notebook_session_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -671,12 +679,13 @@ def delete_model(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_science', ctx)
+    client = cli_util.build_client('data_science', 'data_science', ctx)
     result = client.delete_model(
         model_id=model_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_model') and callable(getattr(client, 'get_model')):
             try:
                 wait_period_kwargs = {}
@@ -734,12 +743,13 @@ def delete_notebook_session(ctx, from_json, wait_for_state, max_wait_seconds, wa
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_science', ctx)
+    client = cli_util.build_client('data_science', 'data_science', ctx)
     result = client.delete_notebook_session(
         notebook_session_id=notebook_session_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -785,12 +795,13 @@ def delete_project(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_science', ctx)
+    client = cli_util.build_client('data_science', 'data_science', ctx)
     result = client.delete_project(
         project_id=project_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -829,7 +840,7 @@ def get_model(ctx, from_json, model_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_science', ctx)
+    client = cli_util.build_client('data_science', 'data_science', ctx)
     result = client.get_model(
         model_id=model_id,
         **kwargs
@@ -855,7 +866,7 @@ def get_model_artifact_content(ctx, from_json, file, model_id, range):
     if range is not None:
         kwargs['range'] = range
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_science', ctx)
+    client = cli_util.build_client('data_science', 'data_science', ctx)
     result = client.get_model_artifact_content(
         model_id=model_id,
         **kwargs
@@ -899,7 +910,7 @@ def get_model_provenance(ctx, from_json, model_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_science', ctx)
+    client = cli_util.build_client('data_science', 'data_science', ctx)
     result = client.get_model_provenance(
         model_id=model_id,
         **kwargs
@@ -921,7 +932,7 @@ def get_notebook_session(ctx, from_json, notebook_session_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_science', ctx)
+    client = cli_util.build_client('data_science', 'data_science', ctx)
     result = client.get_notebook_session(
         notebook_session_id=notebook_session_id,
         **kwargs
@@ -943,7 +954,7 @@ def get_project(ctx, from_json, project_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_science', ctx)
+    client = cli_util.build_client('data_science', 'data_science', ctx)
     result = client.get_project(
         project_id=project_id,
         **kwargs
@@ -965,7 +976,7 @@ def get_work_request(ctx, from_json, work_request_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_science', ctx)
+    client = cli_util.build_client('data_science', 'data_science', ctx)
     result = client.get_work_request(
         work_request_id=work_request_id,
         **kwargs
@@ -987,7 +998,7 @@ def head_model_artifact(ctx, from_json, model_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_science', ctx)
+    client = cli_util.build_client('data_science', 'data_science', ctx)
     result = client.head_model_artifact(
         model_id=model_id,
         **kwargs
@@ -1042,7 +1053,7 @@ def list_models(ctx, from_json, all_pages, page_size, compartment_id, id, projec
     if sort_by is not None:
         kwargs['sort_by'] = sort_by
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_science', ctx)
+    client = cli_util.build_client('data_science', 'data_science', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -1094,7 +1105,7 @@ def list_notebook_session_shapes(ctx, from_json, all_pages, page_size, compartme
     if page is not None:
         kwargs['page'] = page
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_science', ctx)
+    client = cli_util.build_client('data_science', 'data_science', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -1167,7 +1178,7 @@ def list_notebook_sessions(ctx, from_json, all_pages, page_size, compartment_id,
     if sort_by is not None:
         kwargs['sort_by'] = sort_by
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_science', ctx)
+    client = cli_util.build_client('data_science', 'data_science', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -1237,7 +1248,7 @@ def list_projects(ctx, from_json, all_pages, page_size, compartment_id, id, disp
     if sort_by is not None:
         kwargs['sort_by'] = sort_by
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_science', ctx)
+    client = cli_util.build_client('data_science', 'data_science', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -1278,7 +1289,7 @@ def list_work_request_errors(ctx, from_json, all_pages, work_request_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_science', ctx)
+    client = cli_util.build_client('data_science', 'data_science', ctx)
     result = client.list_work_request_errors(
         work_request_id=work_request_id,
         **kwargs
@@ -1301,7 +1312,7 @@ def list_work_request_logs(ctx, from_json, all_pages, work_request_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_science', ctx)
+    client = cli_util.build_client('data_science', 'data_science', ctx)
     result = client.list_work_request_logs(
         work_request_id=work_request_id,
         **kwargs
@@ -1350,7 +1361,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, id,
     if sort_by is not None:
         kwargs['sort_by'] = sort_by
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_science', ctx)
+    client = cli_util.build_client('data_science', 'data_science', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -1406,27 +1417,28 @@ def update_model(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_i
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('data_science', ctx)
+    client = cli_util.build_client('data_science', 'data_science', ctx)
     result = client.update_model(
         model_id=model_id,
-        update_model_details=details,
+        update_model_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_model') and callable(getattr(client, 'get_model')):
             try:
                 wait_period_kwargs = {}
@@ -1474,27 +1486,27 @@ def update_model_provenance(ctx, from_json, model_id, repository_url, git_branch
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if repository_url is not None:
-        details['repositoryUrl'] = repository_url
+        _details['repositoryUrl'] = repository_url
 
     if git_branch is not None:
-        details['gitBranch'] = git_branch
+        _details['gitBranch'] = git_branch
 
     if git_commit is not None:
-        details['gitCommit'] = git_commit
+        _details['gitCommit'] = git_commit
 
     if script_dir is not None:
-        details['scriptDir'] = script_dir
+        _details['scriptDir'] = script_dir
 
     if training_script is not None:
-        details['trainingScript'] = training_script
+        _details['trainingScript'] = training_script
 
-    client = cli_util.build_client('data_science', ctx)
+    client = cli_util.build_client('data_science', 'data_science', ctx)
     result = client.update_model_provenance(
         model_id=model_id,
-        update_model_provenance_details=details,
+        update_model_provenance_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -1530,27 +1542,28 @@ def update_notebook_session(ctx, from_json, force, wait_for_state, max_wait_seco
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if notebook_session_configuration_details is not None:
-        details['notebookSessionConfigurationDetails'] = cli_util.parse_json_parameter("notebook_session_configuration_details", notebook_session_configuration_details)
+        _details['notebookSessionConfigurationDetails'] = cli_util.parse_json_parameter("notebook_session_configuration_details", notebook_session_configuration_details)
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('data_science', ctx)
+    client = cli_util.build_client('data_science', 'data_science', ctx)
     result = client.update_notebook_session(
         notebook_session_id=notebook_session_id,
-        update_notebook_session_details=details,
+        update_notebook_session_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_notebook_session') and callable(getattr(client, 'get_notebook_session')):
             try:
                 wait_period_kwargs = {}
@@ -1605,27 +1618,28 @@ def update_project(ctx, from_json, force, wait_for_state, max_wait_seconds, wait
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('data_science', ctx)
+    client = cli_util.build_client('data_science', 'data_science', ctx)
     result = client.update_project(
         project_id=project_id,
-        update_project_details=details,
+        update_project_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_project') and callable(getattr(client, 'get_project')):
             try:
                 wait_period_kwargs = {}

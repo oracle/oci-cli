@@ -1,5 +1,6 @@
 # coding: utf-8
-# Copyright (c) 2016, 2020, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2020, Oracle and/or its affiliates.  All rights reserved.
+# This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 from __future__ import print_function
 import click
@@ -137,13 +138,13 @@ def change_boot_volume_backup_compartment(ctx, from_json, boot_volume_backup_id,
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
 
-    client = cli_util.build_client('blockstorage', ctx)
+    client = cli_util.build_client('core', 'blockstorage', ctx)
     result = client.change_boot_volume_backup_compartment(
         boot_volume_backup_id=boot_volume_backup_id,
-        change_boot_volume_backup_compartment_details=details,
+        change_boot_volume_backup_compartment_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -165,13 +166,13 @@ def change_boot_volume_compartment(ctx, from_json, boot_volume_id, compartment_i
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
 
-    client = cli_util.build_client('blockstorage', ctx)
+    client = cli_util.build_client('core', 'blockstorage', ctx)
     result = client.change_boot_volume_compartment(
         boot_volume_id=boot_volume_id,
-        change_boot_volume_compartment_details=details,
+        change_boot_volume_compartment_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -193,13 +194,13 @@ def change_volume_backup_compartment(ctx, from_json, volume_backup_id, compartme
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
 
-    client = cli_util.build_client('blockstorage', ctx)
+    client = cli_util.build_client('core', 'blockstorage', ctx)
     result = client.change_volume_backup_compartment(
         volume_backup_id=volume_backup_id,
-        change_volume_backup_compartment_details=details,
+        change_volume_backup_compartment_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -221,13 +222,13 @@ def change_volume_compartment(ctx, from_json, volume_id, compartment_id):
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
 
-    client = cli_util.build_client('blockstorage', ctx)
+    client = cli_util.build_client('core', 'blockstorage', ctx)
     result = client.change_volume_compartment(
         volume_id=volume_id,
-        change_volume_compartment_details=details,
+        change_volume_compartment_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -249,13 +250,13 @@ def change_volume_group_backup_compartment(ctx, from_json, volume_group_backup_i
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
 
-    client = cli_util.build_client('blockstorage', ctx)
+    client = cli_util.build_client('core', 'blockstorage', ctx)
     result = client.change_volume_group_backup_compartment(
         volume_group_backup_id=volume_group_backup_id,
-        change_volume_group_backup_compartment_details=details,
+        change_volume_group_backup_compartment_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -277,13 +278,13 @@ def change_volume_group_compartment(ctx, from_json, volume_group_id, compartment
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
 
-    client = cli_util.build_client('blockstorage', ctx)
+    client = cli_util.build_client('core', 'blockstorage', ctx)
     result = client.change_volume_group_compartment(
         volume_group_id=volume_group_id,
-        change_volume_group_compartment_details=details,
+        change_volume_group_compartment_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -314,22 +315,23 @@ def copy_boot_volume_backup(ctx, from_json, wait_for_state, max_wait_seconds, wa
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['destinationRegion'] = destination_region
+    _details = {}
+    _details['destinationRegion'] = destination_region
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if kms_key_id is not None:
-        details['kmsKeyId'] = kms_key_id
+        _details['kmsKeyId'] = kms_key_id
 
-    client = cli_util.build_client('blockstorage', ctx)
+    client = cli_util.build_client('core', 'blockstorage', ctx)
     result = client.copy_boot_volume_backup(
         boot_volume_backup_id=boot_volume_backup_id,
-        copy_boot_volume_backup_details=details,
+        copy_boot_volume_backup_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_boot_volume_backup') and callable(getattr(client, 'get_boot_volume_backup')):
             try:
                 wait_period_kwargs = {}
@@ -379,22 +381,23 @@ def copy_volume_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['destinationRegion'] = destination_region
+    _details = {}
+    _details['destinationRegion'] = destination_region
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if kms_key_id is not None:
-        details['kmsKeyId'] = kms_key_id
+        _details['kmsKeyId'] = kms_key_id
 
-    client = cli_util.build_client('blockstorage', ctx)
+    client = cli_util.build_client('core', 'blockstorage', ctx)
     result = client.copy_volume_backup(
         volume_backup_id=volume_backup_id,
-        copy_volume_backup_details=details,
+        copy_volume_backup_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_volume_backup') and callable(getattr(client, 'get_volume_backup')):
             try:
                 wait_period_kwargs = {}
@@ -454,38 +457,39 @@ def create_boot_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
     kwargs = {}
 
-    details = {}
-    details['availabilityDomain'] = availability_domain
-    details['compartmentId'] = compartment_id
-    details['sourceDetails'] = cli_util.parse_json_parameter("source_details", source_details)
+    _details = {}
+    _details['availabilityDomain'] = availability_domain
+    _details['compartmentId'] = compartment_id
+    _details['sourceDetails'] = cli_util.parse_json_parameter("source_details", source_details)
 
     if backup_policy_id is not None:
-        details['backupPolicyId'] = backup_policy_id
+        _details['backupPolicyId'] = backup_policy_id
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if kms_key_id is not None:
-        details['kmsKeyId'] = kms_key_id
+        _details['kmsKeyId'] = kms_key_id
 
     if size_in_gbs is not None:
-        details['sizeInGBs'] = size_in_gbs
+        _details['sizeInGBs'] = size_in_gbs
 
     if vpus_per_gb is not None:
-        details['vpusPerGB'] = vpus_per_gb
+        _details['vpusPerGB'] = vpus_per_gb
 
-    client = cli_util.build_client('blockstorage', ctx)
+    client = cli_util.build_client('core', 'blockstorage', ctx)
     result = client.create_boot_volume(
-        create_boot_volume_details=details,
+        create_boot_volume_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_boot_volume') and callable(getattr(client, 'get_boot_volume')):
             try:
                 wait_period_kwargs = {}
@@ -545,41 +549,42 @@ def create_boot_volume_boot_volume_source_from_boot_volume_backup_details(ctx, f
 
     kwargs = {}
 
-    details = {}
-    details['sourceDetails'] = {}
-    details['availabilityDomain'] = availability_domain
-    details['compartmentId'] = compartment_id
-    details['sourceDetails']['id'] = source_details_id
+    _details = {}
+    _details['sourceDetails'] = {}
+    _details['availabilityDomain'] = availability_domain
+    _details['compartmentId'] = compartment_id
+    _details['sourceDetails']['id'] = source_details_id
 
     if backup_policy_id is not None:
-        details['backupPolicyId'] = backup_policy_id
+        _details['backupPolicyId'] = backup_policy_id
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if kms_key_id is not None:
-        details['kmsKeyId'] = kms_key_id
+        _details['kmsKeyId'] = kms_key_id
 
     if size_in_gbs is not None:
-        details['sizeInGBs'] = size_in_gbs
+        _details['sizeInGBs'] = size_in_gbs
 
     if vpus_per_gb is not None:
-        details['vpusPerGB'] = vpus_per_gb
+        _details['vpusPerGB'] = vpus_per_gb
 
-    details['sourceDetails']['type'] = 'bootVolumeBackup'
+    _details['sourceDetails']['type'] = 'bootVolumeBackup'
 
-    client = cli_util.build_client('blockstorage', ctx)
+    client = cli_util.build_client('core', 'blockstorage', ctx)
     result = client.create_boot_volume(
-        create_boot_volume_details=details,
+        create_boot_volume_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_boot_volume') and callable(getattr(client, 'get_boot_volume')):
             try:
                 wait_period_kwargs = {}
@@ -639,41 +644,42 @@ def create_boot_volume_boot_volume_source_from_boot_volume_details(ctx, from_jso
 
     kwargs = {}
 
-    details = {}
-    details['sourceDetails'] = {}
-    details['availabilityDomain'] = availability_domain
-    details['compartmentId'] = compartment_id
-    details['sourceDetails']['id'] = source_details_id
+    _details = {}
+    _details['sourceDetails'] = {}
+    _details['availabilityDomain'] = availability_domain
+    _details['compartmentId'] = compartment_id
+    _details['sourceDetails']['id'] = source_details_id
 
     if backup_policy_id is not None:
-        details['backupPolicyId'] = backup_policy_id
+        _details['backupPolicyId'] = backup_policy_id
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if kms_key_id is not None:
-        details['kmsKeyId'] = kms_key_id
+        _details['kmsKeyId'] = kms_key_id
 
     if size_in_gbs is not None:
-        details['sizeInGBs'] = size_in_gbs
+        _details['sizeInGBs'] = size_in_gbs
 
     if vpus_per_gb is not None:
-        details['vpusPerGB'] = vpus_per_gb
+        _details['vpusPerGB'] = vpus_per_gb
 
-    details['sourceDetails']['type'] = 'bootVolume'
+    _details['sourceDetails']['type'] = 'bootVolume'
 
-    client = cli_util.build_client('blockstorage', ctx)
+    client = cli_util.build_client('core', 'blockstorage', ctx)
     result = client.create_boot_volume(
-        create_boot_volume_details=details,
+        create_boot_volume_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_boot_volume') and callable(getattr(client, 'get_boot_volume')):
             try:
                 wait_period_kwargs = {}
@@ -722,27 +728,28 @@ def create_boot_volume_backup(ctx, from_json, wait_for_state, max_wait_seconds, 
 
     kwargs = {}
 
-    details = {}
-    details['bootVolumeId'] = boot_volume_id
+    _details = {}
+    _details['bootVolumeId'] = boot_volume_id
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if type is not None:
-        details['type'] = type
+        _details['type'] = type
 
-    client = cli_util.build_client('blockstorage', ctx)
+    client = cli_util.build_client('core', 'blockstorage', ctx)
     result = client.create_boot_volume_backup(
-        create_boot_volume_backup_details=details,
+        create_boot_volume_backup_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_boot_volume_backup') and callable(getattr(client, 'get_boot_volume_backup')):
             try:
                 wait_period_kwargs = {}
@@ -810,46 +817,47 @@ def create_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 
     kwargs = {}
 
-    details = {}
-    details['availabilityDomain'] = availability_domain
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['availabilityDomain'] = availability_domain
+    _details['compartmentId'] = compartment_id
 
     if backup_policy_id is not None:
-        details['backupPolicyId'] = backup_policy_id
+        _details['backupPolicyId'] = backup_policy_id
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if kms_key_id is not None:
-        details['kmsKeyId'] = kms_key_id
+        _details['kmsKeyId'] = kms_key_id
 
     if vpus_per_gb is not None:
-        details['vpusPerGB'] = vpus_per_gb
+        _details['vpusPerGB'] = vpus_per_gb
 
     if size_in_gbs is not None:
-        details['sizeInGBs'] = size_in_gbs
+        _details['sizeInGBs'] = size_in_gbs
 
     if size_in_mbs is not None:
-        details['sizeInMBs'] = size_in_mbs
+        _details['sizeInMBs'] = size_in_mbs
 
     if source_details is not None:
-        details['sourceDetails'] = cli_util.parse_json_parameter("source_details", source_details)
+        _details['sourceDetails'] = cli_util.parse_json_parameter("source_details", source_details)
 
     if volume_backup_id is not None:
-        details['volumeBackupId'] = volume_backup_id
+        _details['volumeBackupId'] = volume_backup_id
 
-    client = cli_util.build_client('blockstorage', ctx)
+    client = cli_util.build_client('core', 'blockstorage', ctx)
     result = client.create_volume(
-        create_volume_details=details,
+        create_volume_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_volume') and callable(getattr(client, 'get_volume')):
             try:
                 wait_period_kwargs = {}
@@ -917,47 +925,48 @@ def create_volume_volume_source_from_volume_details(ctx, from_json, wait_for_sta
 
     kwargs = {}
 
-    details = {}
-    details['sourceDetails'] = {}
-    details['availabilityDomain'] = availability_domain
-    details['compartmentId'] = compartment_id
-    details['sourceDetails']['id'] = source_details_id
+    _details = {}
+    _details['sourceDetails'] = {}
+    _details['availabilityDomain'] = availability_domain
+    _details['compartmentId'] = compartment_id
+    _details['sourceDetails']['id'] = source_details_id
 
     if backup_policy_id is not None:
-        details['backupPolicyId'] = backup_policy_id
+        _details['backupPolicyId'] = backup_policy_id
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if kms_key_id is not None:
-        details['kmsKeyId'] = kms_key_id
+        _details['kmsKeyId'] = kms_key_id
 
     if vpus_per_gb is not None:
-        details['vpusPerGB'] = vpus_per_gb
+        _details['vpusPerGB'] = vpus_per_gb
 
     if size_in_gbs is not None:
-        details['sizeInGBs'] = size_in_gbs
+        _details['sizeInGBs'] = size_in_gbs
 
     if size_in_mbs is not None:
-        details['sizeInMBs'] = size_in_mbs
+        _details['sizeInMBs'] = size_in_mbs
 
     if volume_backup_id is not None:
-        details['volumeBackupId'] = volume_backup_id
+        _details['volumeBackupId'] = volume_backup_id
 
-    details['sourceDetails']['type'] = 'volume'
+    _details['sourceDetails']['type'] = 'volume'
 
-    client = cli_util.build_client('blockstorage', ctx)
+    client = cli_util.build_client('core', 'blockstorage', ctx)
     result = client.create_volume(
-        create_volume_details=details,
+        create_volume_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_volume') and callable(getattr(client, 'get_volume')):
             try:
                 wait_period_kwargs = {}
@@ -1025,47 +1034,48 @@ def create_volume_volume_source_from_volume_backup_details(ctx, from_json, wait_
 
     kwargs = {}
 
-    details = {}
-    details['sourceDetails'] = {}
-    details['availabilityDomain'] = availability_domain
-    details['compartmentId'] = compartment_id
-    details['sourceDetails']['id'] = source_details_id
+    _details = {}
+    _details['sourceDetails'] = {}
+    _details['availabilityDomain'] = availability_domain
+    _details['compartmentId'] = compartment_id
+    _details['sourceDetails']['id'] = source_details_id
 
     if backup_policy_id is not None:
-        details['backupPolicyId'] = backup_policy_id
+        _details['backupPolicyId'] = backup_policy_id
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if kms_key_id is not None:
-        details['kmsKeyId'] = kms_key_id
+        _details['kmsKeyId'] = kms_key_id
 
     if vpus_per_gb is not None:
-        details['vpusPerGB'] = vpus_per_gb
+        _details['vpusPerGB'] = vpus_per_gb
 
     if size_in_gbs is not None:
-        details['sizeInGBs'] = size_in_gbs
+        _details['sizeInGBs'] = size_in_gbs
 
     if size_in_mbs is not None:
-        details['sizeInMBs'] = size_in_mbs
+        _details['sizeInMBs'] = size_in_mbs
 
     if volume_backup_id is not None:
-        details['volumeBackupId'] = volume_backup_id
+        _details['volumeBackupId'] = volume_backup_id
 
-    details['sourceDetails']['type'] = 'volumeBackup'
+    _details['sourceDetails']['type'] = 'volumeBackup'
 
-    client = cli_util.build_client('blockstorage', ctx)
+    client = cli_util.build_client('core', 'blockstorage', ctx)
     result = client.create_volume(
-        create_volume_details=details,
+        create_volume_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_volume') and callable(getattr(client, 'get_volume')):
             try:
                 wait_period_kwargs = {}
@@ -1114,27 +1124,28 @@ def create_volume_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 
     kwargs = {}
 
-    details = {}
-    details['volumeId'] = volume_id
+    _details = {}
+    _details['volumeId'] = volume_id
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if type is not None:
-        details['type'] = type
+        _details['type'] = type
 
-    client = cli_util.build_client('blockstorage', ctx)
+    client = cli_util.build_client('core', 'blockstorage', ctx)
     result = client.create_volume_backup(
-        create_volume_backup_details=details,
+        create_volume_backup_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_volume_backup') and callable(getattr(client, 'get_volume_backup')):
             try:
                 wait_period_kwargs = {}
@@ -1184,27 +1195,27 @@ def create_volume_backup_policy(ctx, from_json, compartment_id, display_name, de
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if destination_region is not None:
-        details['destinationRegion'] = destination_region
+        _details['destinationRegion'] = destination_region
 
     if schedules is not None:
-        details['schedules'] = cli_util.parse_json_parameter("schedules", schedules)
+        _details['schedules'] = cli_util.parse_json_parameter("schedules", schedules)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
-    client = cli_util.build_client('blockstorage', ctx)
+    client = cli_util.build_client('core', 'blockstorage', ctx)
     result = client.create_volume_backup_policy(
-        create_volume_backup_policy_details=details,
+        create_volume_backup_policy_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -1222,13 +1233,13 @@ def create_volume_backup_policy_assignment(ctx, from_json, asset_id, policy_id):
 
     kwargs = {}
 
-    details = {}
-    details['assetId'] = asset_id
-    details['policyId'] = policy_id
+    _details = {}
+    _details['assetId'] = asset_id
+    _details['policyId'] = policy_id
 
-    client = cli_util.build_client('blockstorage', ctx)
+    client = cli_util.build_client('core', 'blockstorage', ctx)
     result = client.create_volume_backup_policy_assignment(
-        create_volume_backup_policy_assignment_details=details,
+        create_volume_backup_policy_assignment_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -1259,26 +1270,27 @@ def create_volume_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 
     kwargs = {}
 
-    details = {}
-    details['availabilityDomain'] = availability_domain
-    details['compartmentId'] = compartment_id
-    details['sourceDetails'] = cli_util.parse_json_parameter("source_details", source_details)
+    _details = {}
+    _details['availabilityDomain'] = availability_domain
+    _details['compartmentId'] = compartment_id
+    _details['sourceDetails'] = cli_util.parse_json_parameter("source_details", source_details)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
-    client = cli_util.build_client('blockstorage', ctx)
+    client = cli_util.build_client('core', 'blockstorage', ctx)
     result = client.create_volume_group(
-        create_volume_group_details=details,
+        create_volume_group_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_volume_group') and callable(getattr(client, 'get_volume_group')):
             try:
                 wait_period_kwargs = {}
@@ -1328,29 +1340,30 @@ def create_volume_group_volume_group_source_from_volume_group_details(ctx, from_
 
     kwargs = {}
 
-    details = {}
-    details['sourceDetails'] = {}
-    details['availabilityDomain'] = availability_domain
-    details['compartmentId'] = compartment_id
-    details['sourceDetails']['volumeGroupId'] = source_details_volume_group_id
+    _details = {}
+    _details['sourceDetails'] = {}
+    _details['availabilityDomain'] = availability_domain
+    _details['compartmentId'] = compartment_id
+    _details['sourceDetails']['volumeGroupId'] = source_details_volume_group_id
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
-    details['sourceDetails']['type'] = 'volumeGroupId'
+    _details['sourceDetails']['type'] = 'volumeGroupId'
 
-    client = cli_util.build_client('blockstorage', ctx)
+    client = cli_util.build_client('core', 'blockstorage', ctx)
     result = client.create_volume_group(
-        create_volume_group_details=details,
+        create_volume_group_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_volume_group') and callable(getattr(client, 'get_volume_group')):
             try:
                 wait_period_kwargs = {}
@@ -1400,29 +1413,30 @@ def create_volume_group_volume_group_source_from_volumes_details(ctx, from_json,
 
     kwargs = {}
 
-    details = {}
-    details['sourceDetails'] = {}
-    details['availabilityDomain'] = availability_domain
-    details['compartmentId'] = compartment_id
-    details['sourceDetails']['volumeIds'] = cli_util.parse_json_parameter("source_details_volume_ids", source_details_volume_ids)
+    _details = {}
+    _details['sourceDetails'] = {}
+    _details['availabilityDomain'] = availability_domain
+    _details['compartmentId'] = compartment_id
+    _details['sourceDetails']['volumeIds'] = cli_util.parse_json_parameter("source_details_volume_ids", source_details_volume_ids)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
-    details['sourceDetails']['type'] = 'volumeIds'
+    _details['sourceDetails']['type'] = 'volumeIds'
 
-    client = cli_util.build_client('blockstorage', ctx)
+    client = cli_util.build_client('core', 'blockstorage', ctx)
     result = client.create_volume_group(
-        create_volume_group_details=details,
+        create_volume_group_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_volume_group') and callable(getattr(client, 'get_volume_group')):
             try:
                 wait_period_kwargs = {}
@@ -1472,29 +1486,30 @@ def create_volume_group_volume_group_source_from_volume_group_backup_details(ctx
 
     kwargs = {}
 
-    details = {}
-    details['sourceDetails'] = {}
-    details['availabilityDomain'] = availability_domain
-    details['compartmentId'] = compartment_id
-    details['sourceDetails']['volumeGroupBackupId'] = source_details_volume_group_backup_id
+    _details = {}
+    _details['sourceDetails'] = {}
+    _details['availabilityDomain'] = availability_domain
+    _details['compartmentId'] = compartment_id
+    _details['sourceDetails']['volumeGroupBackupId'] = source_details_volume_group_backup_id
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
-    details['sourceDetails']['type'] = 'volumeGroupBackupId'
+    _details['sourceDetails']['type'] = 'volumeGroupBackupId'
 
-    client = cli_util.build_client('blockstorage', ctx)
+    client = cli_util.build_client('core', 'blockstorage', ctx)
     result = client.create_volume_group(
-        create_volume_group_details=details,
+        create_volume_group_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_volume_group') and callable(getattr(client, 'get_volume_group')):
             try:
                 wait_period_kwargs = {}
@@ -1542,30 +1557,31 @@ def create_volume_group_backup(ctx, from_json, wait_for_state, max_wait_seconds,
 
     kwargs = {}
 
-    details = {}
-    details['volumeGroupId'] = volume_group_id
+    _details = {}
+    _details['volumeGroupId'] = volume_group_id
 
     if compartment_id is not None:
-        details['compartmentId'] = compartment_id
+        _details['compartmentId'] = compartment_id
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if type is not None:
-        details['type'] = type
+        _details['type'] = type
 
-    client = cli_util.build_client('blockstorage', ctx)
+    client = cli_util.build_client('core', 'blockstorage', ctx)
     result = client.create_volume_group_backup(
-        create_volume_group_backup_details=details,
+        create_volume_group_backup_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_volume_group_backup') and callable(getattr(client, 'get_volume_group_backup')):
             try:
                 wait_period_kwargs = {}
@@ -1610,12 +1626,13 @@ def delete_boot_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
-    client = cli_util.build_client('blockstorage', ctx)
+    client = cli_util.build_client('core', 'blockstorage', ctx)
     result = client.delete_boot_volume(
         boot_volume_id=boot_volume_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_boot_volume') and callable(getattr(client, 'get_boot_volume')):
             try:
                 wait_period_kwargs = {}
@@ -1672,12 +1689,13 @@ def delete_boot_volume_backup(ctx, from_json, wait_for_state, max_wait_seconds, 
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
-    client = cli_util.build_client('blockstorage', ctx)
+    client = cli_util.build_client('core', 'blockstorage', ctx)
     result = client.delete_boot_volume_backup(
         boot_volume_backup_id=boot_volume_backup_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_boot_volume_backup') and callable(getattr(client, 'get_boot_volume_backup')):
             try:
                 wait_period_kwargs = {}
@@ -1731,7 +1749,7 @@ def delete_boot_volume_kms_key(ctx, from_json, boot_volume_id, if_match):
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
-    client = cli_util.build_client('blockstorage', ctx)
+    client = cli_util.build_client('core', 'blockstorage', ctx)
     result = client.delete_boot_volume_kms_key(
         boot_volume_id=boot_volume_id,
         **kwargs
@@ -1759,12 +1777,13 @@ def delete_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
-    client = cli_util.build_client('blockstorage', ctx)
+    client = cli_util.build_client('core', 'blockstorage', ctx)
     result = client.delete_volume(
         volume_id=volume_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_volume') and callable(getattr(client, 'get_volume')):
             try:
                 wait_period_kwargs = {}
@@ -1821,12 +1840,13 @@ def delete_volume_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
-    client = cli_util.build_client('blockstorage', ctx)
+    client = cli_util.build_client('core', 'blockstorage', ctx)
     result = client.delete_volume_backup(
         volume_backup_id=volume_backup_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_volume_backup') and callable(getattr(client, 'get_volume_backup')):
             try:
                 wait_period_kwargs = {}
@@ -1883,7 +1903,7 @@ def delete_volume_backup_policy(ctx, from_json, policy_id, if_match):
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('blockstorage', ctx)
+    client = cli_util.build_client('core', 'blockstorage', ctx)
     result = client.delete_volume_backup_policy(
         policy_id=policy_id,
         **kwargs
@@ -1908,7 +1928,7 @@ def delete_volume_backup_policy_assignment(ctx, from_json, policy_assignment_id,
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
-    client = cli_util.build_client('blockstorage', ctx)
+    client = cli_util.build_client('core', 'blockstorage', ctx)
     result = client.delete_volume_backup_policy_assignment(
         policy_assignment_id=policy_assignment_id,
         **kwargs
@@ -1936,12 +1956,13 @@ def delete_volume_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
-    client = cli_util.build_client('blockstorage', ctx)
+    client = cli_util.build_client('core', 'blockstorage', ctx)
     result = client.delete_volume_group(
         volume_group_id=volume_group_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_volume_group') and callable(getattr(client, 'get_volume_group')):
             try:
                 wait_period_kwargs = {}
@@ -1998,12 +2019,13 @@ def delete_volume_group_backup(ctx, from_json, wait_for_state, max_wait_seconds,
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
-    client = cli_util.build_client('blockstorage', ctx)
+    client = cli_util.build_client('core', 'blockstorage', ctx)
     result = client.delete_volume_group_backup(
         volume_group_backup_id=volume_group_backup_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_volume_group_backup') and callable(getattr(client, 'get_volume_group_backup')):
             try:
                 wait_period_kwargs = {}
@@ -2057,7 +2079,7 @@ def delete_volume_kms_key(ctx, from_json, volume_id, if_match):
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
-    client = cli_util.build_client('blockstorage', ctx)
+    client = cli_util.build_client('core', 'blockstorage', ctx)
     result = client.delete_volume_kms_key(
         volume_id=volume_id,
         **kwargs
@@ -2078,7 +2100,7 @@ def get_boot_volume(ctx, from_json, boot_volume_id):
         raise click.UsageError('Parameter --boot-volume-id cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('blockstorage', ctx)
+    client = cli_util.build_client('core', 'blockstorage', ctx)
     result = client.get_boot_volume(
         boot_volume_id=boot_volume_id,
         **kwargs
@@ -2099,7 +2121,7 @@ def get_boot_volume_backup(ctx, from_json, boot_volume_backup_id):
         raise click.UsageError('Parameter --boot-volume-backup-id cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('blockstorage', ctx)
+    client = cli_util.build_client('core', 'blockstorage', ctx)
     result = client.get_boot_volume_backup(
         boot_volume_backup_id=boot_volume_backup_id,
         **kwargs
@@ -2123,7 +2145,7 @@ def get_boot_volume_kms_key(ctx, from_json, boot_volume_id, if_match):
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
-    client = cli_util.build_client('blockstorage', ctx)
+    client = cli_util.build_client('core', 'blockstorage', ctx)
     result = client.get_boot_volume_kms_key(
         boot_volume_id=boot_volume_id,
         **kwargs
@@ -2144,7 +2166,7 @@ def get_volume(ctx, from_json, volume_id):
         raise click.UsageError('Parameter --volume-id cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('blockstorage', ctx)
+    client = cli_util.build_client('core', 'blockstorage', ctx)
     result = client.get_volume(
         volume_id=volume_id,
         **kwargs
@@ -2165,7 +2187,7 @@ def get_volume_backup(ctx, from_json, volume_backup_id):
         raise click.UsageError('Parameter --volume-backup-id cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('blockstorage', ctx)
+    client = cli_util.build_client('core', 'blockstorage', ctx)
     result = client.get_volume_backup(
         volume_backup_id=volume_backup_id,
         **kwargs
@@ -2186,7 +2208,7 @@ def get_volume_backup_policy(ctx, from_json, policy_id):
         raise click.UsageError('Parameter --policy-id cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('blockstorage', ctx)
+    client = cli_util.build_client('core', 'blockstorage', ctx)
     result = client.get_volume_backup_policy(
         policy_id=policy_id,
         **kwargs
@@ -2212,7 +2234,7 @@ def get_volume_backup_policy_asset_assignment(ctx, from_json, asset_id, limit, p
         kwargs['limit'] = limit
     if page is not None:
         kwargs['page'] = page
-    client = cli_util.build_client('blockstorage', ctx)
+    client = cli_util.build_client('core', 'blockstorage', ctx)
     result = client.get_volume_backup_policy_asset_assignment(
         asset_id=asset_id,
         **kwargs
@@ -2233,7 +2255,7 @@ def get_volume_backup_policy_assignment(ctx, from_json, policy_assignment_id):
         raise click.UsageError('Parameter --policy-assignment-id cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('blockstorage', ctx)
+    client = cli_util.build_client('core', 'blockstorage', ctx)
     result = client.get_volume_backup_policy_assignment(
         policy_assignment_id=policy_assignment_id,
         **kwargs
@@ -2254,7 +2276,7 @@ def get_volume_group(ctx, from_json, volume_group_id):
         raise click.UsageError('Parameter --volume-group-id cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('blockstorage', ctx)
+    client = cli_util.build_client('core', 'blockstorage', ctx)
     result = client.get_volume_group(
         volume_group_id=volume_group_id,
         **kwargs
@@ -2275,7 +2297,7 @@ def get_volume_group_backup(ctx, from_json, volume_group_backup_id):
         raise click.UsageError('Parameter --volume-group-backup-id cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('blockstorage', ctx)
+    client = cli_util.build_client('core', 'blockstorage', ctx)
     result = client.get_volume_group_backup(
         volume_group_backup_id=volume_group_backup_id,
         **kwargs
@@ -2299,7 +2321,7 @@ def get_volume_kms_key(ctx, from_json, volume_id, if_match):
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
-    client = cli_util.build_client('blockstorage', ctx)
+    client = cli_util.build_client('core', 'blockstorage', ctx)
     result = client.get_volume_kms_key(
         volume_id=volume_id,
         **kwargs
@@ -2350,7 +2372,7 @@ def list_boot_volume_backups(ctx, from_json, all_pages, page_size, compartment_i
         kwargs['sort_order'] = sort_order
     if lifecycle_state is not None:
         kwargs['lifecycle_state'] = lifecycle_state
-    client = cli_util.build_client('blockstorage', ctx)
+    client = cli_util.build_client('core', 'blockstorage', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -2405,7 +2427,7 @@ def list_boot_volumes(ctx, from_json, all_pages, page_size, availability_domain,
         kwargs['page'] = page
     if volume_group_id is not None:
         kwargs['volume_group_id'] = volume_group_id
-    client = cli_util.build_client('blockstorage', ctx)
+    client = cli_util.build_client('core', 'blockstorage', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -2461,7 +2483,7 @@ def list_volume_backup_policies(ctx, from_json, all_pages, page_size, limit, pag
         kwargs['page'] = page
     if compartment_id is not None:
         kwargs['compartment_id'] = compartment_id
-    client = cli_util.build_client('blockstorage', ctx)
+    client = cli_util.build_client('core', 'blockstorage', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -2527,7 +2549,7 @@ def list_volume_backups(ctx, from_json, all_pages, page_size, compartment_id, vo
         kwargs['sort_order'] = sort_order
     if lifecycle_state is not None:
         kwargs['lifecycle_state'] = lifecycle_state
-    client = cli_util.build_client('blockstorage', ctx)
+    client = cli_util.build_client('core', 'blockstorage', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -2590,7 +2612,7 @@ def list_volume_group_backups(ctx, from_json, all_pages, page_size, compartment_
         kwargs['sort_by'] = sort_by
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
-    client = cli_util.build_client('blockstorage', ctx)
+    client = cli_util.build_client('core', 'blockstorage', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -2660,7 +2682,7 @@ def list_volume_groups(ctx, from_json, all_pages, page_size, compartment_id, ava
         kwargs['sort_order'] = sort_order
     if lifecycle_state is not None:
         kwargs['lifecycle_state'] = lifecycle_state
-    client = cli_util.build_client('blockstorage', ctx)
+    client = cli_util.build_client('core', 'blockstorage', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -2733,7 +2755,7 @@ def list_volumes(ctx, from_json, all_pages, page_size, compartment_id, availabil
         kwargs['volume_group_id'] = volume_group_id
     if lifecycle_state is not None:
         kwargs['lifecycle_state'] = lifecycle_state
-    client = cli_util.build_client('blockstorage', ctx)
+    client = cli_util.build_client('core', 'blockstorage', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -2799,30 +2821,31 @@ def update_boot_volume(ctx, from_json, force, wait_for_state, max_wait_seconds, 
     if if_match is not None:
         kwargs['if_match'] = if_match
 
-    details = {}
+    _details = {}
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if size_in_gbs is not None:
-        details['sizeInGBs'] = size_in_gbs
+        _details['sizeInGBs'] = size_in_gbs
 
     if vpus_per_gb is not None:
-        details['vpusPerGB'] = vpus_per_gb
+        _details['vpusPerGB'] = vpus_per_gb
 
-    client = cli_util.build_client('blockstorage', ctx)
+    client = cli_util.build_client('core', 'blockstorage', ctx)
     result = client.update_boot_volume(
         boot_volume_id=boot_volume_id,
-        update_boot_volume_details=details,
+        update_boot_volume_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_boot_volume') and callable(getattr(client, 'get_boot_volume')):
             try:
                 wait_period_kwargs = {}
@@ -2879,24 +2902,25 @@ def update_boot_volume_backup(ctx, from_json, force, wait_for_state, max_wait_se
     if if_match is not None:
         kwargs['if_match'] = if_match
 
-    details = {}
+    _details = {}
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
-    client = cli_util.build_client('blockstorage', ctx)
+    client = cli_util.build_client('core', 'blockstorage', ctx)
     result = client.update_boot_volume_backup(
         boot_volume_backup_id=boot_volume_backup_id,
-        update_boot_volume_backup_details=details,
+        update_boot_volume_backup_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_boot_volume_backup') and callable(getattr(client, 'get_boot_volume_backup')):
             try:
                 wait_period_kwargs = {}
@@ -2939,15 +2963,15 @@ def update_boot_volume_kms_key(ctx, from_json, boot_volume_id, kms_key_id, if_ma
     if if_match is not None:
         kwargs['if_match'] = if_match
 
-    details = {}
+    _details = {}
 
     if kms_key_id is not None:
-        details['kmsKeyId'] = kms_key_id
+        _details['kmsKeyId'] = kms_key_id
 
-    client = cli_util.build_client('blockstorage', ctx)
+    client = cli_util.build_client('core', 'blockstorage', ctx)
     result = client.update_boot_volume_kms_key(
         boot_volume_id=boot_volume_id,
-        update_boot_volume_kms_key_details=details,
+        update_boot_volume_kms_key_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -2995,30 +3019,31 @@ def update_volume(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_
     if if_match is not None:
         kwargs['if_match'] = if_match
 
-    details = {}
+    _details = {}
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if vpus_per_gb is not None:
-        details['vpusPerGB'] = vpus_per_gb
+        _details['vpusPerGB'] = vpus_per_gb
 
     if size_in_gbs is not None:
-        details['sizeInGBs'] = size_in_gbs
+        _details['sizeInGBs'] = size_in_gbs
 
-    client = cli_util.build_client('blockstorage', ctx)
+    client = cli_util.build_client('core', 'blockstorage', ctx)
     result = client.update_volume(
         volume_id=volume_id,
-        update_volume_details=details,
+        update_volume_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_volume') and callable(getattr(client, 'get_volume')):
             try:
                 wait_period_kwargs = {}
@@ -3075,24 +3100,25 @@ def update_volume_backup(ctx, from_json, force, wait_for_state, max_wait_seconds
     if if_match is not None:
         kwargs['if_match'] = if_match
 
-    details = {}
+    _details = {}
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
-    client = cli_util.build_client('blockstorage', ctx)
+    client = cli_util.build_client('core', 'blockstorage', ctx)
     result = client.update_volume_backup(
         volume_backup_id=volume_backup_id,
-        update_volume_backup_details=details,
+        update_volume_backup_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_volume_backup') and callable(getattr(client, 'get_volume_backup')):
             try:
                 wait_period_kwargs = {}
@@ -3153,27 +3179,27 @@ def update_volume_backup_policy(ctx, from_json, force, policy_id, display_name, 
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if destination_region is not None:
-        details['destinationRegion'] = destination_region
+        _details['destinationRegion'] = destination_region
 
     if schedules is not None:
-        details['schedules'] = cli_util.parse_json_parameter("schedules", schedules)
+        _details['schedules'] = cli_util.parse_json_parameter("schedules", schedules)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
-    client = cli_util.build_client('blockstorage', ctx)
+    client = cli_util.build_client('core', 'blockstorage', ctx)
     result = client.update_volume_backup_policy(
         policy_id=policy_id,
-        update_volume_backup_policy_details=details,
+        update_volume_backup_policy_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -3214,27 +3240,28 @@ def update_volume_group(ctx, from_json, force, wait_for_state, max_wait_seconds,
     if if_match is not None:
         kwargs['if_match'] = if_match
 
-    details = {}
+    _details = {}
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if volume_ids is not None:
-        details['volumeIds'] = cli_util.parse_json_parameter("volume_ids", volume_ids)
+        _details['volumeIds'] = cli_util.parse_json_parameter("volume_ids", volume_ids)
 
-    client = cli_util.build_client('blockstorage', ctx)
+    client = cli_util.build_client('core', 'blockstorage', ctx)
     result = client.update_volume_group(
         volume_group_id=volume_group_id,
-        update_volume_group_details=details,
+        update_volume_group_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_volume_group') and callable(getattr(client, 'get_volume_group')):
             try:
                 wait_period_kwargs = {}
@@ -3291,24 +3318,25 @@ def update_volume_group_backup(ctx, from_json, force, wait_for_state, max_wait_s
     if if_match is not None:
         kwargs['if_match'] = if_match
 
-    details = {}
+    _details = {}
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
-    client = cli_util.build_client('blockstorage', ctx)
+    client = cli_util.build_client('core', 'blockstorage', ctx)
     result = client.update_volume_group_backup(
         volume_group_backup_id=volume_group_backup_id,
-        update_volume_group_backup_details=details,
+        update_volume_group_backup_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_volume_group_backup') and callable(getattr(client, 'get_volume_group_backup')):
             try:
                 wait_period_kwargs = {}
@@ -3351,15 +3379,15 @@ def update_volume_kms_key(ctx, from_json, volume_id, kms_key_id, if_match):
     if if_match is not None:
         kwargs['if_match'] = if_match
 
-    details = {}
+    _details = {}
 
     if kms_key_id is not None:
-        details['kmsKeyId'] = kms_key_id
+        _details['kmsKeyId'] = kms_key_id
 
-    client = cli_util.build_client('blockstorage', ctx)
+    client = cli_util.build_client('core', 'blockstorage', ctx)
     result = client.update_volume_kms_key(
         volume_id=volume_id,
-        update_volume_kms_key_details=details,
+        update_volume_kms_key_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)

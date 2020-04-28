@@ -1,5 +1,6 @@
 # coding: utf-8
-# Copyright (c) 2016, 2019, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2020, Oracle and/or its affiliates.  All rights reserved.
+# This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 import sys
 import click
@@ -276,7 +277,7 @@ def create_backup_from_onprem(ctx, config_file, profile, **kwargs):
     if out[-1] != b'Recovery Manager complete.':
         sys.exit("Failed to successfully execute rman")
 
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
 
     # Create Backup resource
     details = {}

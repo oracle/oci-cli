@@ -1,5 +1,6 @@
 # coding: utf-8
-# Copyright (c) 2016, 2020, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2020, Oracle and/or its affiliates.  All rights reserved.
+# This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 from __future__ import print_function
 import click
@@ -77,24 +78,24 @@ def create_incident(ctx, from_json, compartment_id, ticket, problem_type, ocid, 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
-    details['ticket'] = cli_util.parse_json_parameter("ticket", ticket)
-    details['problemType'] = problem_type
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['ticket'] = cli_util.parse_json_parameter("ticket", ticket)
+    _details['problemType'] = problem_type
 
     if csi is not None:
-        details['csi'] = csi
+        _details['csi'] = csi
 
     if contacts is not None:
-        details['contacts'] = cli_util.parse_json_parameter("contacts", contacts)
+        _details['contacts'] = cli_util.parse_json_parameter("contacts", contacts)
 
     if referrer is not None:
-        details['referrer'] = referrer
+        _details['referrer'] = referrer
 
-    client = cli_util.build_client('incident', ctx)
+    client = cli_util.build_client('cims', 'incident', ctx)
     result = client.create_incident(
         ocid=ocid,
-        create_incident_details=details,
+        create_incident_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -116,7 +117,7 @@ def get_incident(ctx, from_json, incident_key, csi, ocid):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('incident', ctx)
+    client = cli_util.build_client('cims', 'incident', ctx)
     result = client.get_incident(
         incident_key=incident_key,
         csi=csi,
@@ -141,7 +142,7 @@ def get_status(ctx, from_json, source, ocid):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('incident', ctx)
+    client = cli_util.build_client('cims', 'incident', ctx)
     result = client.get_status(
         source=source,
         ocid=ocid,
@@ -184,7 +185,7 @@ def list_incident_resource_types(ctx, from_json, all_pages, page_size, problem_t
     if name is not None:
         kwargs['name'] = name
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('incident', ctx)
+    client = cli_util.build_client('cims', 'incident', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -252,7 +253,7 @@ def list_incidents(ctx, from_json, all_pages, page_size, csi, compartment_id, oc
     if page is not None:
         kwargs['page'] = page
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('incident', ctx)
+    client = cli_util.build_client('cims', 'incident', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -310,15 +311,15 @@ def update_incident(ctx, from_json, force, incident_key, csi, ticket, ocid, if_m
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['ticket'] = cli_util.parse_json_parameter("ticket", ticket)
+    _details = {}
+    _details['ticket'] = cli_util.parse_json_parameter("ticket", ticket)
 
-    client = cli_util.build_client('incident', ctx)
+    client = cli_util.build_client('cims', 'incident', ctx)
     result = client.update_incident(
         incident_key=incident_key,
         csi=csi,
         ocid=ocid,
-        update_incident_details=details,
+        update_incident_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -339,7 +340,7 @@ def validate_user(ctx, from_json, csi, ocid, problem_type):
     if problem_type is not None:
         kwargs['problem_type'] = problem_type
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('incident', ctx)
+    client = cli_util.build_client('cims', 'incident', ctx)
     result = client.validate_user(
         csi=csi,
         ocid=ocid,

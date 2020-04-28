@@ -1,5 +1,6 @@
 # coding: utf-8
-# Copyright (c) 2016, 2020, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2020, Oracle and/or its affiliates.  All rights reserved.
+# This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 from __future__ import print_function
 import click
@@ -104,13 +105,13 @@ def change_file_system_compartment(ctx, from_json, file_system_id, compartment_i
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
 
-    client = cli_util.build_client('file_storage', ctx)
+    client = cli_util.build_client('file_storage', 'file_storage', ctx)
     result = client.change_file_system_compartment(
         file_system_id=file_system_id,
-        change_file_system_compartment_details=details,
+        change_file_system_compartment_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -135,13 +136,13 @@ def change_mount_target_compartment(ctx, from_json, mount_target_id, compartment
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
 
-    client = cli_util.build_client('file_storage', ctx)
+    client = cli_util.build_client('file_storage', 'file_storage', ctx)
     result = client.change_mount_target_compartment(
         mount_target_id=mount_target_id,
-        change_mount_target_compartment_details=details,
+        change_mount_target_compartment_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -179,20 +180,21 @@ def create_export(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['exportSetId'] = export_set_id
-    details['fileSystemId'] = file_system_id
-    details['path'] = path
+    _details = {}
+    _details['exportSetId'] = export_set_id
+    _details['fileSystemId'] = file_system_id
+    _details['path'] = path
 
     if export_options is not None:
-        details['exportOptions'] = cli_util.parse_json_parameter("export_options", export_options)
+        _details['exportOptions'] = cli_util.parse_json_parameter("export_options", export_options)
 
-    client = cli_util.build_client('file_storage', ctx)
+    client = cli_util.build_client('file_storage', 'file_storage', ctx)
     result = client.create_export(
-        create_export_details=details,
+        create_export_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_export') and callable(getattr(client, 'get_export')):
             try:
                 wait_period_kwargs = {}
@@ -251,28 +253,29 @@ def create_file_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['availabilityDomain'] = availability_domain
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['availabilityDomain'] = availability_domain
+    _details['compartmentId'] = compartment_id
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if kms_key_id is not None:
-        details['kmsKeyId'] = kms_key_id
+        _details['kmsKeyId'] = kms_key_id
 
-    client = cli_util.build_client('file_storage', ctx)
+    client = cli_util.build_client('file_storage', 'file_storage', ctx)
     result = client.create_file_system(
-        create_file_system_details=details,
+        create_file_system_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_file_system') and callable(getattr(client, 'get_file_system')):
             try:
                 wait_period_kwargs = {}
@@ -338,35 +341,36 @@ def create_mount_target(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['availabilityDomain'] = availability_domain
-    details['compartmentId'] = compartment_id
-    details['subnetId'] = subnet_id
+    _details = {}
+    _details['availabilityDomain'] = availability_domain
+    _details['compartmentId'] = compartment_id
+    _details['subnetId'] = subnet_id
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if hostname_label is not None:
-        details['hostnameLabel'] = hostname_label
+        _details['hostnameLabel'] = hostname_label
 
     if ip_address is not None:
-        details['ipAddress'] = ip_address
+        _details['ipAddress'] = ip_address
 
     if nsg_ids is not None:
-        details['nsgIds'] = cli_util.parse_json_parameter("nsg_ids", nsg_ids)
+        _details['nsgIds'] = cli_util.parse_json_parameter("nsg_ids", nsg_ids)
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('file_storage', ctx)
+    client = cli_util.build_client('file_storage', 'file_storage', ctx)
     result = client.create_mount_target(
-        create_mount_target_details=details,
+        create_mount_target_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_mount_target') and callable(getattr(client, 'get_mount_target')):
             try:
                 wait_period_kwargs = {}
@@ -413,22 +417,23 @@ def create_snapshot(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['fileSystemId'] = file_system_id
-    details['name'] = name
+    _details = {}
+    _details['fileSystemId'] = file_system_id
+    _details['name'] = name
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('file_storage', ctx)
+    client = cli_util.build_client('file_storage', 'file_storage', ctx)
     result = client.create_snapshot(
-        create_snapshot_details=details,
+        create_snapshot_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_snapshot') and callable(getattr(client, 'get_snapshot')):
             try:
                 wait_period_kwargs = {}
@@ -474,12 +479,13 @@ def delete_export(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('file_storage', ctx)
+    client = cli_util.build_client('file_storage', 'file_storage', ctx)
     result = client.delete_export(
         export_id=export_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_export') and callable(getattr(client, 'get_export')):
             try:
                 wait_period_kwargs = {}
@@ -537,12 +543,13 @@ def delete_file_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('file_storage', ctx)
+    client = cli_util.build_client('file_storage', 'file_storage', ctx)
     result = client.delete_file_system(
         file_system_id=file_system_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_file_system') and callable(getattr(client, 'get_file_system')):
             try:
                 wait_period_kwargs = {}
@@ -600,12 +607,13 @@ def delete_mount_target(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('file_storage', ctx)
+    client = cli_util.build_client('file_storage', 'file_storage', ctx)
     result = client.delete_mount_target(
         mount_target_id=mount_target_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_mount_target') and callable(getattr(client, 'get_mount_target')):
             try:
                 wait_period_kwargs = {}
@@ -663,12 +671,13 @@ def delete_snapshot(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('file_storage', ctx)
+    client = cli_util.build_client('file_storage', 'file_storage', ctx)
     result = client.delete_snapshot(
         snapshot_id=snapshot_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_snapshot') and callable(getattr(client, 'get_snapshot')):
             try:
                 wait_period_kwargs = {}
@@ -719,7 +728,7 @@ def get_export(ctx, from_json, export_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('file_storage', ctx)
+    client = cli_util.build_client('file_storage', 'file_storage', ctx)
     result = client.get_export(
         export_id=export_id,
         **kwargs
@@ -741,7 +750,7 @@ def get_export_set(ctx, from_json, export_set_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('file_storage', ctx)
+    client = cli_util.build_client('file_storage', 'file_storage', ctx)
     result = client.get_export_set(
         export_set_id=export_set_id,
         **kwargs
@@ -763,7 +772,7 @@ def get_file_system(ctx, from_json, file_system_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('file_storage', ctx)
+    client = cli_util.build_client('file_storage', 'file_storage', ctx)
     result = client.get_file_system(
         file_system_id=file_system_id,
         **kwargs
@@ -785,7 +794,7 @@ def get_mount_target(ctx, from_json, mount_target_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('file_storage', ctx)
+    client = cli_util.build_client('file_storage', 'file_storage', ctx)
     result = client.get_mount_target(
         mount_target_id=mount_target_id,
         **kwargs
@@ -807,7 +816,7 @@ def get_snapshot(ctx, from_json, snapshot_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('file_storage', ctx)
+    client = cli_util.build_client('file_storage', 'file_storage', ctx)
     result = client.get_snapshot(
         snapshot_id=snapshot_id,
         **kwargs
@@ -865,7 +874,7 @@ def list_export_sets(ctx, from_json, all_pages, page_size, compartment_id, avail
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('file_storage', ctx)
+    client = cli_util.build_client('file_storage', 'file_storage', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -942,7 +951,7 @@ def list_exports(ctx, from_json, all_pages, page_size, compartment_id, limit, pa
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('file_storage', ctx)
+    client = cli_util.build_client('file_storage', 'file_storage', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -1015,7 +1024,7 @@ def list_file_systems(ctx, from_json, all_pages, page_size, compartment_id, avai
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('file_storage', ctx)
+    client = cli_util.build_client('file_storage', 'file_storage', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -1097,7 +1106,7 @@ def list_mount_targets(ctx, from_json, all_pages, page_size, compartment_id, ava
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('file_storage', ctx)
+    client = cli_util.build_client('file_storage', 'file_storage', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -1163,7 +1172,7 @@ def list_snapshots(ctx, from_json, all_pages, page_size, file_system_id, limit, 
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('file_storage', ctx)
+    client = cli_util.build_client('file_storage', 'file_storage', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -1222,18 +1231,19 @@ def update_export(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if export_options is not None:
-        details['exportOptions'] = cli_util.parse_json_parameter("export_options", export_options)
+        _details['exportOptions'] = cli_util.parse_json_parameter("export_options", export_options)
 
-    client = cli_util.build_client('file_storage', ctx)
+    client = cli_util.build_client('file_storage', 'file_storage', ctx)
     result = client.update_export(
         export_id=export_id,
-        update_export_details=details,
+        update_export_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_export') and callable(getattr(client, 'get_export')):
             try:
                 wait_period_kwargs = {}
@@ -1284,24 +1294,25 @@ def update_export_set(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if max_fs_stat_bytes is not None:
-        details['maxFsStatBytes'] = max_fs_stat_bytes
+        _details['maxFsStatBytes'] = max_fs_stat_bytes
 
     if max_fs_stat_files is not None:
-        details['maxFsStatFiles'] = max_fs_stat_files
+        _details['maxFsStatFiles'] = max_fs_stat_files
 
-    client = cli_util.build_client('file_storage', ctx)
+    client = cli_util.build_client('file_storage', 'file_storage', ctx)
     result = client.update_export_set(
         export_set_id=export_set_id,
-        update_export_set_details=details,
+        update_export_set_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_export_set') and callable(getattr(client, 'get_export_set')):
             try:
                 wait_period_kwargs = {}
@@ -1360,27 +1371,28 @@ def update_file_system(ctx, from_json, force, wait_for_state, max_wait_seconds, 
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if kms_key_id is not None:
-        details['kmsKeyId'] = kms_key_id
+        _details['kmsKeyId'] = kms_key_id
 
-    client = cli_util.build_client('file_storage', ctx)
+    client = cli_util.build_client('file_storage', 'file_storage', ctx)
     result = client.update_file_system(
         file_system_id=file_system_id,
-        update_file_system_details=details,
+        update_file_system_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_file_system') and callable(getattr(client, 'get_file_system')):
             try:
                 wait_period_kwargs = {}
@@ -1437,27 +1449,28 @@ def update_mount_target(ctx, from_json, force, wait_for_state, max_wait_seconds,
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if nsg_ids is not None:
-        details['nsgIds'] = cli_util.parse_json_parameter("nsg_ids", nsg_ids)
+        _details['nsgIds'] = cli_util.parse_json_parameter("nsg_ids", nsg_ids)
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('file_storage', ctx)
+    client = cli_util.build_client('file_storage', 'file_storage', ctx)
     result = client.update_mount_target(
         mount_target_id=mount_target_id,
-        update_mount_target_details=details,
+        update_mount_target_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_mount_target') and callable(getattr(client, 'get_mount_target')):
             try:
                 wait_period_kwargs = {}
@@ -1510,21 +1523,22 @@ def update_snapshot(ctx, from_json, force, wait_for_state, max_wait_seconds, wai
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('file_storage', ctx)
+    client = cli_util.build_client('file_storage', 'file_storage', ctx)
     result = client.update_snapshot(
         snapshot_id=snapshot_id,
-        update_snapshot_details=details,
+        update_snapshot_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_snapshot') and callable(getattr(client, 'get_snapshot')):
             try:
                 wait_period_kwargs = {}

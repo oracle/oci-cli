@@ -1,5 +1,6 @@
 # coding: utf-8
-# Copyright (c) 2016, 2020, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2020, Oracle and/or its affiliates.  All rights reserved.
+# This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 from __future__ import print_function
 import click
@@ -482,15 +483,15 @@ def add_network_security_group_security_rules(ctx, from_json, network_security_g
 
     kwargs = {}
 
-    details = {}
+    _details = {}
 
     if security_rules is not None:
-        details['securityRules'] = cli_util.parse_json_parameter("security_rules", security_rules)
+        _details['securityRules'] = cli_util.parse_json_parameter("security_rules", security_rules)
 
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.add_network_security_group_security_rules(
         network_security_group_id=network_security_group_id,
-        add_network_security_group_security_rules_details=details,
+        add_network_security_group_security_rules_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -519,16 +520,17 @@ def attach_service_id(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
     if if_match is not None:
         kwargs['if_match'] = if_match
 
-    details = {}
-    details['serviceId'] = service_id
+    _details = {}
+    _details['serviceId'] = service_id
 
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.attach_service_id(
         service_gateway_id=service_gateway_id,
-        attach_service_details=details,
+        attach_service_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_service_gateway') and callable(getattr(client, 'get_service_gateway')):
             try:
                 wait_period_kwargs = {}
@@ -568,13 +570,13 @@ def bulk_add_virtual_circuit_public_prefixes(ctx, from_json, virtual_circuit_id,
 
     kwargs = {}
 
-    details = {}
-    details['publicPrefixes'] = cli_util.parse_json_parameter("public_prefixes", public_prefixes)
+    _details = {}
+    _details['publicPrefixes'] = cli_util.parse_json_parameter("public_prefixes", public_prefixes)
 
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.bulk_add_virtual_circuit_public_prefixes(
         virtual_circuit_id=virtual_circuit_id,
-        bulk_add_virtual_circuit_public_prefixes_details=details,
+        bulk_add_virtual_circuit_public_prefixes_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -595,13 +597,13 @@ def bulk_delete_virtual_circuit_public_prefixes(ctx, from_json, virtual_circuit_
 
     kwargs = {}
 
-    details = {}
-    details['publicPrefixes'] = cli_util.parse_json_parameter("public_prefixes", public_prefixes)
+    _details = {}
+    _details['publicPrefixes'] = cli_util.parse_json_parameter("public_prefixes", public_prefixes)
 
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.bulk_delete_virtual_circuit_public_prefixes(
         virtual_circuit_id=virtual_circuit_id,
-        bulk_delete_virtual_circuit_public_prefixes_details=details,
+        bulk_delete_virtual_circuit_public_prefixes_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -623,13 +625,13 @@ def change_cpe_compartment(ctx, from_json, cpe_id, compartment_id):
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
 
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.change_cpe_compartment(
         cpe_id=cpe_id,
-        change_cpe_compartment_details=details,
+        change_cpe_compartment_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -651,13 +653,13 @@ def change_cross_connect_compartment(ctx, from_json, cross_connect_id, compartme
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
 
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.change_cross_connect_compartment(
         cross_connect_id=cross_connect_id,
-        change_cross_connect_compartment_details=details,
+        change_cross_connect_compartment_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -679,13 +681,13 @@ def change_cross_connect_group_compartment(ctx, from_json, cross_connect_group_i
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
 
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.change_cross_connect_group_compartment(
         cross_connect_group_id=cross_connect_group_id,
-        change_cross_connect_group_compartment_details=details,
+        change_cross_connect_group_compartment_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -707,13 +709,13 @@ def change_dhcp_options_compartment(ctx, from_json, dhcp_id, compartment_id):
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
 
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.change_dhcp_options_compartment(
         dhcp_id=dhcp_id,
-        change_dhcp_options_compartment_details=details,
+        change_dhcp_options_compartment_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -735,13 +737,13 @@ def change_drg_compartment(ctx, from_json, drg_id, compartment_id):
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
 
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.change_drg_compartment(
         drg_id=drg_id,
-        change_drg_compartment_details=details,
+        change_drg_compartment_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -763,13 +765,13 @@ def change_internet_gateway_compartment(ctx, from_json, ig_id, compartment_id):
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
 
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.change_internet_gateway_compartment(
         ig_id=ig_id,
-        change_internet_gateway_compartment_details=details,
+        change_internet_gateway_compartment_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -791,13 +793,13 @@ def change_ip_sec_connection_compartment(ctx, from_json, ipsc_id, compartment_id
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
 
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.change_ip_sec_connection_compartment(
         ipsc_id=ipsc_id,
-        change_ip_sec_connection_compartment_details=details,
+        change_ip_sec_connection_compartment_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -819,13 +821,13 @@ def change_local_peering_gateway_compartment(ctx, from_json, local_peering_gatew
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
 
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.change_local_peering_gateway_compartment(
         local_peering_gateway_id=local_peering_gateway_id,
-        change_local_peering_gateway_compartment_details=details,
+        change_local_peering_gateway_compartment_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -847,13 +849,13 @@ def change_nat_gateway_compartment(ctx, from_json, nat_gateway_id, compartment_i
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
 
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.change_nat_gateway_compartment(
         nat_gateway_id=nat_gateway_id,
-        change_nat_gateway_compartment_details=details,
+        change_nat_gateway_compartment_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -875,13 +877,13 @@ def change_network_security_group_compartment(ctx, from_json, network_security_g
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
 
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.change_network_security_group_compartment(
         network_security_group_id=network_security_group_id,
-        change_network_security_group_compartment_details=details,
+        change_network_security_group_compartment_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -905,13 +907,13 @@ def change_public_ip_compartment(ctx, from_json, public_ip_id, compartment_id):
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
 
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.change_public_ip_compartment(
         public_ip_id=public_ip_id,
-        change_public_ip_compartment_details=details,
+        change_public_ip_compartment_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -933,13 +935,13 @@ def change_remote_peering_connection_compartment(ctx, from_json, remote_peering_
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
 
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.change_remote_peering_connection_compartment(
         remote_peering_connection_id=remote_peering_connection_id,
-        change_remote_peering_connection_compartment_details=details,
+        change_remote_peering_connection_compartment_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -961,13 +963,13 @@ def change_route_table_compartment(ctx, from_json, rt_id, compartment_id):
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
 
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.change_route_table_compartment(
         rt_id=rt_id,
-        change_route_table_compartment_details=details,
+        change_route_table_compartment_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -989,13 +991,13 @@ def change_security_list_compartment(ctx, from_json, security_list_id, compartme
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
 
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.change_security_list_compartment(
         security_list_id=security_list_id,
-        change_security_list_compartment_details=details,
+        change_security_list_compartment_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -1017,13 +1019,13 @@ def change_service_gateway_compartment(ctx, from_json, service_gateway_id, compa
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
 
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.change_service_gateway_compartment(
         service_gateway_id=service_gateway_id,
-        change_service_gateway_compartment_details=details,
+        change_service_gateway_compartment_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -1045,13 +1047,13 @@ def change_subnet_compartment(ctx, from_json, subnet_id, compartment_id):
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
 
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.change_subnet_compartment(
         subnet_id=subnet_id,
-        change_subnet_compartment_details=details,
+        change_subnet_compartment_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -1073,13 +1075,13 @@ def change_vcn_compartment(ctx, from_json, vcn_id, compartment_id):
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
 
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.change_vcn_compartment(
         vcn_id=vcn_id,
-        change_vcn_compartment_details=details,
+        change_vcn_compartment_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -1101,13 +1103,13 @@ def change_virtual_circuit_compartment(ctx, from_json, virtual_circuit_id, compa
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
 
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.change_virtual_circuit_compartment(
         virtual_circuit_id=virtual_circuit_id,
-        change_virtual_circuit_compartment_details=details,
+        change_virtual_circuit_compartment_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -1130,13 +1132,13 @@ def connect_local_peering_gateways(ctx, from_json, local_peering_gateway_id, pee
 
     kwargs = {}
 
-    details = {}
-    details['peerId'] = peer_id
+    _details = {}
+    _details['peerId'] = peer_id
 
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.connect_local_peering_gateways(
         local_peering_gateway_id=local_peering_gateway_id,
-        connect_local_peering_gateways_details=details,
+        connect_local_peering_gateways_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -1162,14 +1164,14 @@ def connect_remote_peering_connections(ctx, from_json, remote_peering_connection
 
     kwargs = {}
 
-    details = {}
-    details['peerId'] = peer_id
-    details['peerRegionName'] = peer_region_name
+    _details = {}
+    _details['peerId'] = peer_id
+    _details['peerRegionName'] = peer_region_name
 
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.connect_remote_peering_connections(
         remote_peering_connection_id=remote_peering_connection_id,
-        connect_remote_peering_connections_details=details,
+        connect_remote_peering_connections_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -1207,25 +1209,25 @@ def create_cpe(ctx, from_json, compartment_id, ip_address, defined_tags, display
 
     kwargs = {}
 
-    details = {}
-    details['compartmentId'] = compartment_id
-    details['ipAddress'] = ip_address
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['ipAddress'] = ip_address
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if cpe_device_shape_id is not None:
-        details['cpeDeviceShapeId'] = cpe_device_shape_id
+        _details['cpeDeviceShapeId'] = cpe_device_shape_id
 
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.create_cpe(
-        create_cpe_details=details,
+        create_cpe_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -1268,38 +1270,39 @@ def create_cross_connect(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 
     kwargs = {}
 
-    details = {}
-    details['compartmentId'] = compartment_id
-    details['locationName'] = location_name
-    details['portSpeedShapeName'] = port_speed_shape_name
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['locationName'] = location_name
+    _details['portSpeedShapeName'] = port_speed_shape_name
 
     if cross_connect_group_id is not None:
-        details['crossConnectGroupId'] = cross_connect_group_id
+        _details['crossConnectGroupId'] = cross_connect_group_id
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if far_cross_connect_or_cross_connect_group_id is not None:
-        details['farCrossConnectOrCrossConnectGroupId'] = far_cross_connect_or_cross_connect_group_id
+        _details['farCrossConnectOrCrossConnectGroupId'] = far_cross_connect_or_cross_connect_group_id
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if near_cross_connect_or_cross_connect_group_id is not None:
-        details['nearCrossConnectOrCrossConnectGroupId'] = near_cross_connect_or_cross_connect_group_id
+        _details['nearCrossConnectOrCrossConnectGroupId'] = near_cross_connect_or_cross_connect_group_id
 
     if customer_reference_name is not None:
-        details['customerReferenceName'] = customer_reference_name
+        _details['customerReferenceName'] = customer_reference_name
 
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.create_cross_connect(
-        create_cross_connect_details=details,
+        create_cross_connect_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_cross_connect') and callable(getattr(client, 'get_cross_connect')):
             try:
                 wait_period_kwargs = {}
@@ -1350,27 +1353,28 @@ def create_cross_connect_group(ctx, from_json, wait_for_state, max_wait_seconds,
 
     kwargs = {}
 
-    details = {}
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if customer_reference_name is not None:
-        details['customerReferenceName'] = customer_reference_name
+        _details['customerReferenceName'] = customer_reference_name
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.create_cross_connect_group(
-        create_cross_connect_group_details=details,
+        create_cross_connect_group_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_cross_connect_group') and callable(getattr(client, 'get_cross_connect_group')):
             try:
                 wait_period_kwargs = {}
@@ -1422,26 +1426,27 @@ def create_dhcp_options(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 
     kwargs = {}
 
-    details = {}
-    details['compartmentId'] = compartment_id
-    details['options'] = cli_util.parse_json_parameter("options", options)
-    details['vcnId'] = vcn_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['options'] = cli_util.parse_json_parameter("options", options)
+    _details['vcnId'] = vcn_id
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.create_dhcp_options(
-        create_dhcp_details=details,
+        create_dhcp_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_dhcp_options') and callable(getattr(client, 'get_dhcp_options')):
             try:
                 wait_period_kwargs = {}
@@ -1491,24 +1496,25 @@ def create_drg(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
 
     kwargs = {}
 
-    details = {}
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.create_drg(
-        create_drg_details=details,
+        create_drg_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_drg') and callable(getattr(client, 'get_drg')):
             try:
                 wait_period_kwargs = {}
@@ -1560,22 +1566,23 @@ def create_drg_attachment(ctx, from_json, wait_for_state, max_wait_seconds, wait
 
     kwargs = {}
 
-    details = {}
-    details['drgId'] = drg_id
-    details['vcnId'] = vcn_id
+    _details = {}
+    _details['drgId'] = drg_id
+    _details['vcnId'] = vcn_id
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if route_table_id is not None:
-        details['routeTableId'] = route_table_id
+        _details['routeTableId'] = route_table_id
 
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.create_drg_attachment(
-        create_drg_attachment_details=details,
+        create_drg_attachment_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_drg_attachment') and callable(getattr(client, 'get_drg_attachment')):
             try:
                 wait_period_kwargs = {}
@@ -1631,26 +1638,27 @@ def create_internet_gateway(ctx, from_json, wait_for_state, max_wait_seconds, wa
 
     kwargs = {}
 
-    details = {}
-    details['compartmentId'] = compartment_id
-    details['isEnabled'] = is_enabled
-    details['vcnId'] = vcn_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['isEnabled'] = is_enabled
+    _details['vcnId'] = vcn_id
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.create_internet_gateway(
-        create_internet_gateway_details=details,
+        create_internet_gateway_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_internet_gateway') and callable(getattr(client, 'get_internet_gateway')):
             try:
                 wait_period_kwargs = {}
@@ -1732,36 +1740,37 @@ def create_ip_sec_connection(ctx, from_json, wait_for_state, max_wait_seconds, w
 
     kwargs = {}
 
-    details = {}
-    details['compartmentId'] = compartment_id
-    details['cpeId'] = cpe_id
-    details['drgId'] = drg_id
-    details['staticRoutes'] = cli_util.parse_json_parameter("static_routes", static_routes)
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['cpeId'] = cpe_id
+    _details['drgId'] = drg_id
+    _details['staticRoutes'] = cli_util.parse_json_parameter("static_routes", static_routes)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if cpe_local_identifier is not None:
-        details['cpeLocalIdentifier'] = cpe_local_identifier
+        _details['cpeLocalIdentifier'] = cpe_local_identifier
 
     if cpe_local_identifier_type is not None:
-        details['cpeLocalIdentifierType'] = cpe_local_identifier_type
+        _details['cpeLocalIdentifierType'] = cpe_local_identifier_type
 
     if tunnel_configuration is not None:
-        details['tunnelConfiguration'] = cli_util.parse_json_parameter("tunnel_configuration", tunnel_configuration)
+        _details['tunnelConfiguration'] = cli_util.parse_json_parameter("tunnel_configuration", tunnel_configuration)
 
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.create_ip_sec_connection(
-        create_ip_sec_connection_details=details,
+        create_ip_sec_connection_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_ip_sec_connection') and callable(getattr(client, 'get_ip_sec_connection')):
             try:
                 wait_period_kwargs = {}
@@ -1816,30 +1825,31 @@ def create_ipv6(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['vnicId'] = vnic_id
+    _details = {}
+    _details['vnicId'] = vnic_id
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if ip_address is not None:
-        details['ipAddress'] = ip_address
+        _details['ipAddress'] = ip_address
 
     if is_internet_access_allowed is not None:
-        details['isInternetAccessAllowed'] = is_internet_access_allowed
+        _details['isInternetAccessAllowed'] = is_internet_access_allowed
 
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.create_ipv6(
-        create_ipv6_details=details,
+        create_ipv6_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_ipv6') and callable(getattr(client, 'get_ipv6')):
             try:
                 wait_period_kwargs = {}
@@ -1891,28 +1901,29 @@ def create_local_peering_gateway(ctx, from_json, wait_for_state, max_wait_second
 
     kwargs = {}
 
-    details = {}
-    details['compartmentId'] = compartment_id
-    details['vcnId'] = vcn_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['vcnId'] = vcn_id
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if route_table_id is not None:
-        details['routeTableId'] = route_table_id
+        _details['routeTableId'] = route_table_id
 
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.create_local_peering_gateway(
-        create_local_peering_gateway_details=details,
+        create_local_peering_gateway_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_local_peering_gateway') and callable(getattr(client, 'get_local_peering_gateway')):
             try:
                 wait_period_kwargs = {}
@@ -1962,28 +1973,29 @@ def create_nat_gateway(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
     kwargs = {}
 
-    details = {}
-    details['compartmentId'] = compartment_id
-    details['vcnId'] = vcn_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['vcnId'] = vcn_id
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if block_traffic is not None:
-        details['blockTraffic'] = block_traffic
+        _details['blockTraffic'] = block_traffic
 
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.create_nat_gateway(
-        create_nat_gateway_details=details,
+        create_nat_gateway_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_nat_gateway') and callable(getattr(client, 'get_nat_gateway')):
             try:
                 wait_period_kwargs = {}
@@ -2030,25 +2042,26 @@ def create_network_security_group(ctx, from_json, wait_for_state, max_wait_secon
 
     kwargs = {}
 
-    details = {}
-    details['compartmentId'] = compartment_id
-    details['vcnId'] = vcn_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['vcnId'] = vcn_id
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.create_network_security_group(
-        create_network_security_group_details=details,
+        create_network_security_group_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_network_security_group') and callable(getattr(client, 'get_network_security_group')):
             try:
                 wait_period_kwargs = {}
@@ -2099,27 +2112,27 @@ def create_private_ip(ctx, from_json, vnic_id, defined_tags, display_name, freef
 
     kwargs = {}
 
-    details = {}
-    details['vnicId'] = vnic_id
+    _details = {}
+    _details['vnicId'] = vnic_id
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if hostname_label is not None:
-        details['hostnameLabel'] = hostname_label
+        _details['hostnameLabel'] = hostname_label
 
     if ip_address is not None:
-        details['ipAddress'] = ip_address
+        _details['ipAddress'] = ip_address
 
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.create_private_ip(
-        create_private_ip_details=details,
+        create_private_ip_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -2160,28 +2173,29 @@ def create_public_ip(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 
     kwargs = {}
 
-    details = {}
-    details['compartmentId'] = compartment_id
-    details['lifetime'] = lifetime
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['lifetime'] = lifetime
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if private_ip_id is not None:
-        details['privateIpId'] = private_ip_id
+        _details['privateIpId'] = private_ip_id
 
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.create_public_ip(
-        create_public_ip_details=details,
+        create_public_ip_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_public_ip') and callable(getattr(client, 'get_public_ip')):
             try:
                 wait_period_kwargs = {}
@@ -2228,25 +2242,26 @@ def create_remote_peering_connection(ctx, from_json, wait_for_state, max_wait_se
 
     kwargs = {}
 
-    details = {}
-    details['compartmentId'] = compartment_id
-    details['drgId'] = drg_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['drgId'] = drg_id
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.create_remote_peering_connection(
-        create_remote_peering_connection_details=details,
+        create_remote_peering_connection_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_remote_peering_connection') and callable(getattr(client, 'get_remote_peering_connection')):
             try:
                 wait_period_kwargs = {}
@@ -2298,26 +2313,27 @@ def create_route_table(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
     kwargs = {}
 
-    details = {}
-    details['compartmentId'] = compartment_id
-    details['routeRules'] = cli_util.parse_json_parameter("route_rules", route_rules)
-    details['vcnId'] = vcn_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['routeRules'] = cli_util.parse_json_parameter("route_rules", route_rules)
+    _details['vcnId'] = vcn_id
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.create_route_table(
-        create_route_table_details=details,
+        create_route_table_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_route_table') and callable(getattr(client, 'get_route_table')):
             try:
                 wait_period_kwargs = {}
@@ -2370,27 +2386,28 @@ def create_security_list(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 
     kwargs = {}
 
-    details = {}
-    details['compartmentId'] = compartment_id
-    details['egressSecurityRules'] = cli_util.parse_json_parameter("egress_security_rules", egress_security_rules)
-    details['ingressSecurityRules'] = cli_util.parse_json_parameter("ingress_security_rules", ingress_security_rules)
-    details['vcnId'] = vcn_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['egressSecurityRules'] = cli_util.parse_json_parameter("egress_security_rules", egress_security_rules)
+    _details['ingressSecurityRules'] = cli_util.parse_json_parameter("ingress_security_rules", ingress_security_rules)
+    _details['vcnId'] = vcn_id
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.create_security_list(
-        create_security_list_details=details,
+        create_security_list_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_security_list') and callable(getattr(client, 'get_security_list')):
             try:
                 wait_period_kwargs = {}
@@ -2449,29 +2466,30 @@ def create_service_gateway(ctx, from_json, wait_for_state, max_wait_seconds, wai
 
     kwargs = {}
 
-    details = {}
-    details['compartmentId'] = compartment_id
-    details['services'] = cli_util.parse_json_parameter("services", services)
-    details['vcnId'] = vcn_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['services'] = cli_util.parse_json_parameter("services", services)
+    _details['vcnId'] = vcn_id
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if route_table_id is not None:
-        details['routeTableId'] = route_table_id
+        _details['routeTableId'] = route_table_id
 
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.create_service_gateway(
-        create_service_gateway_details=details,
+        create_service_gateway_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_service_gateway') and callable(getattr(client, 'get_service_gateway')):
             try:
                 wait_period_kwargs = {}
@@ -2560,47 +2578,48 @@ def create_subnet(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 
     kwargs = {}
 
-    details = {}
-    details['cidrBlock'] = cidr_block
-    details['compartmentId'] = compartment_id
-    details['vcnId'] = vcn_id
+    _details = {}
+    _details['cidrBlock'] = cidr_block
+    _details['compartmentId'] = compartment_id
+    _details['vcnId'] = vcn_id
 
     if availability_domain is not None:
-        details['availabilityDomain'] = availability_domain
+        _details['availabilityDomain'] = availability_domain
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if dhcp_options_id is not None:
-        details['dhcpOptionsId'] = dhcp_options_id
+        _details['dhcpOptionsId'] = dhcp_options_id
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if dns_label is not None:
-        details['dnsLabel'] = dns_label
+        _details['dnsLabel'] = dns_label
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if ipv6_cidr_block is not None:
-        details['ipv6CidrBlock'] = ipv6_cidr_block
+        _details['ipv6CidrBlock'] = ipv6_cidr_block
 
     if prohibit_public_ip_on_vnic is not None:
-        details['prohibitPublicIpOnVnic'] = prohibit_public_ip_on_vnic
+        _details['prohibitPublicIpOnVnic'] = prohibit_public_ip_on_vnic
 
     if route_table_id is not None:
-        details['routeTableId'] = route_table_id
+        _details['routeTableId'] = route_table_id
 
     if security_list_ids is not None:
-        details['securityListIds'] = cli_util.parse_json_parameter("security_list_ids", security_list_ids)
+        _details['securityListIds'] = cli_util.parse_json_parameter("security_list_ids", security_list_ids)
 
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.create_subnet(
-        create_subnet_details=details,
+        create_subnet_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_subnet') and callable(getattr(client, 'get_subnet')):
             try:
                 wait_period_kwargs = {}
@@ -2680,34 +2699,35 @@ def create_vcn(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
 
     kwargs = {}
 
-    details = {}
-    details['cidrBlock'] = cidr_block
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['cidrBlock'] = cidr_block
+    _details['compartmentId'] = compartment_id
 
     if ipv6_cidr_block is not None:
-        details['ipv6CidrBlock'] = ipv6_cidr_block
+        _details['ipv6CidrBlock'] = ipv6_cidr_block
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if dns_label is not None:
-        details['dnsLabel'] = dns_label
+        _details['dnsLabel'] = dns_label
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if is_ipv6_enabled is not None:
-        details['isIpv6Enabled'] = is_ipv6_enabled
+        _details['isIpv6Enabled'] = is_ipv6_enabled
 
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.create_vcn(
-        create_vcn_details=details,
+        create_vcn_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_vcn') and callable(getattr(client, 'get_vcn')):
             try:
                 wait_period_kwargs = {}
@@ -2779,58 +2799,59 @@ def create_virtual_circuit(ctx, from_json, wait_for_state, max_wait_seconds, wai
 
     kwargs = {}
 
-    details = {}
-    details['compartmentId'] = compartment_id
-    details['type'] = type
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['type'] = type
 
     if bandwidth_shape_name is not None:
-        details['bandwidthShapeName'] = bandwidth_shape_name
+        _details['bandwidthShapeName'] = bandwidth_shape_name
 
     if cross_connect_mappings is not None:
-        details['crossConnectMappings'] = cli_util.parse_json_parameter("cross_connect_mappings", cross_connect_mappings)
+        _details['crossConnectMappings'] = cli_util.parse_json_parameter("cross_connect_mappings", cross_connect_mappings)
 
     if customer_bgp_asn is not None:
-        details['customerBgpAsn'] = customer_bgp_asn
+        _details['customerBgpAsn'] = customer_bgp_asn
 
     if customer_asn is not None:
-        details['customerAsn'] = customer_asn
+        _details['customerAsn'] = customer_asn
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if gateway_id is not None:
-        details['gatewayId'] = gateway_id
+        _details['gatewayId'] = gateway_id
 
     if provider_name is not None:
-        details['providerName'] = provider_name
+        _details['providerName'] = provider_name
 
     if provider_service_id is not None:
-        details['providerServiceId'] = provider_service_id
+        _details['providerServiceId'] = provider_service_id
 
     if provider_service_key_name is not None:
-        details['providerServiceKeyName'] = provider_service_key_name
+        _details['providerServiceKeyName'] = provider_service_key_name
 
     if provider_service_name is not None:
-        details['providerServiceName'] = provider_service_name
+        _details['providerServiceName'] = provider_service_name
 
     if public_prefixes is not None:
-        details['publicPrefixes'] = cli_util.parse_json_parameter("public_prefixes", public_prefixes)
+        _details['publicPrefixes'] = cli_util.parse_json_parameter("public_prefixes", public_prefixes)
 
     if region_parameterconflict is not None:
-        details['region'] = region_parameterconflict
+        _details['region'] = region_parameterconflict
 
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.create_virtual_circuit(
-        create_virtual_circuit_details=details,
+        create_virtual_circuit_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_virtual_circuit') and callable(getattr(client, 'get_virtual_circuit')):
             try:
                 wait_period_kwargs = {}
@@ -2872,7 +2893,7 @@ def delete_cpe(ctx, from_json, cpe_id, if_match):
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.delete_cpe(
         cpe_id=cpe_id,
         **kwargs
@@ -2900,12 +2921,13 @@ def delete_cross_connect(ctx, from_json, wait_for_state, max_wait_seconds, wait_
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.delete_cross_connect(
         cross_connect_id=cross_connect_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_cross_connect') and callable(getattr(client, 'get_cross_connect')):
             try:
                 wait_period_kwargs = {}
@@ -2962,12 +2984,13 @@ def delete_cross_connect_group(ctx, from_json, wait_for_state, max_wait_seconds,
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.delete_cross_connect_group(
         cross_connect_group_id=cross_connect_group_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_cross_connect_group') and callable(getattr(client, 'get_cross_connect_group')):
             try:
                 wait_period_kwargs = {}
@@ -3026,12 +3049,13 @@ def delete_dhcp_options(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.delete_dhcp_options(
         dhcp_id=dhcp_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_dhcp_options') and callable(getattr(client, 'get_dhcp_options')):
             try:
                 wait_period_kwargs = {}
@@ -3088,12 +3112,13 @@ def delete_drg(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.delete_drg(
         drg_id=drg_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_drg') and callable(getattr(client, 'get_drg')):
             try:
                 wait_period_kwargs = {}
@@ -3150,12 +3175,13 @@ def delete_drg_attachment(ctx, from_json, wait_for_state, max_wait_seconds, wait
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.delete_drg_attachment(
         drg_attachment_id=drg_attachment_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_drg_attachment') and callable(getattr(client, 'get_drg_attachment')):
             try:
                 wait_period_kwargs = {}
@@ -3214,12 +3240,13 @@ def delete_internet_gateway(ctx, from_json, wait_for_state, max_wait_seconds, wa
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.delete_internet_gateway(
         ig_id=ig_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_internet_gateway') and callable(getattr(client, 'get_internet_gateway')):
             try:
                 wait_period_kwargs = {}
@@ -3278,12 +3305,13 @@ def delete_ip_sec_connection(ctx, from_json, wait_for_state, max_wait_seconds, w
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.delete_ip_sec_connection(
         ipsc_id=ipsc_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_ip_sec_connection') and callable(getattr(client, 'get_ip_sec_connection')):
             try:
                 wait_period_kwargs = {}
@@ -3341,12 +3369,13 @@ def delete_ipv6(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.delete_ipv6(
         ipv6_id=ipv6_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_ipv6') and callable(getattr(client, 'get_ipv6')):
             try:
                 wait_period_kwargs = {}
@@ -3405,12 +3434,13 @@ def delete_local_peering_gateway(ctx, from_json, wait_for_state, max_wait_second
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.delete_local_peering_gateway(
         local_peering_gateway_id=local_peering_gateway_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_local_peering_gateway') and callable(getattr(client, 'get_local_peering_gateway')):
             try:
                 wait_period_kwargs = {}
@@ -3469,12 +3499,13 @@ def delete_nat_gateway(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.delete_nat_gateway(
         nat_gateway_id=nat_gateway_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_nat_gateway') and callable(getattr(client, 'get_nat_gateway')):
             try:
                 wait_period_kwargs = {}
@@ -3533,12 +3564,13 @@ def delete_network_security_group(ctx, from_json, wait_for_state, max_wait_secon
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.delete_network_security_group(
         network_security_group_id=network_security_group_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_network_security_group') and callable(getattr(client, 'get_network_security_group')):
             try:
                 wait_period_kwargs = {}
@@ -3596,7 +3628,7 @@ def delete_private_ip(ctx, from_json, private_ip_id, if_match):
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.delete_private_ip(
         private_ip_id=private_ip_id,
         **kwargs
@@ -3630,12 +3662,13 @@ def delete_public_ip(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.delete_public_ip(
         public_ip_id=public_ip_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_public_ip') and callable(getattr(client, 'get_public_ip')):
             try:
                 wait_period_kwargs = {}
@@ -3694,12 +3727,13 @@ def delete_remote_peering_connection(ctx, from_json, wait_for_state, max_wait_se
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.delete_remote_peering_connection(
         remote_peering_connection_id=remote_peering_connection_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_remote_peering_connection') and callable(getattr(client, 'get_remote_peering_connection')):
             try:
                 wait_period_kwargs = {}
@@ -3758,12 +3792,13 @@ def delete_route_table(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.delete_route_table(
         rt_id=rt_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_route_table') and callable(getattr(client, 'get_route_table')):
             try:
                 wait_period_kwargs = {}
@@ -3822,12 +3857,13 @@ def delete_security_list(ctx, from_json, wait_for_state, max_wait_seconds, wait_
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.delete_security_list(
         security_list_id=security_list_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_security_list') and callable(getattr(client, 'get_security_list')):
             try:
                 wait_period_kwargs = {}
@@ -3884,12 +3920,13 @@ def delete_service_gateway(ctx, from_json, wait_for_state, max_wait_seconds, wai
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.delete_service_gateway(
         service_gateway_id=service_gateway_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_service_gateway') and callable(getattr(client, 'get_service_gateway')):
             try:
                 wait_period_kwargs = {}
@@ -3946,12 +3983,13 @@ def delete_subnet(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.delete_subnet(
         subnet_id=subnet_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_subnet') and callable(getattr(client, 'get_subnet')):
             try:
                 wait_period_kwargs = {}
@@ -4008,12 +4046,13 @@ def delete_vcn(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.delete_vcn(
         vcn_id=vcn_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_vcn') and callable(getattr(client, 'get_vcn')):
             try:
                 wait_period_kwargs = {}
@@ -4072,12 +4111,13 @@ def delete_virtual_circuit(ctx, from_json, wait_for_state, max_wait_seconds, wai
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.delete_virtual_circuit(
         virtual_circuit_id=virtual_circuit_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_virtual_circuit') and callable(getattr(client, 'get_virtual_circuit')):
             try:
                 wait_period_kwargs = {}
@@ -4137,16 +4177,17 @@ def detach_service_id(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
     if if_match is not None:
         kwargs['if_match'] = if_match
 
-    details = {}
-    details['serviceId'] = service_id
+    _details = {}
+    _details['serviceId'] = service_id
 
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.detach_service_id(
         service_gateway_id=service_gateway_id,
-        detach_service_details=details,
+        detach_service_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_service_gateway') and callable(getattr(client, 'get_service_gateway')):
             try:
                 wait_period_kwargs = {}
@@ -4184,7 +4225,7 @@ def get_cpe(ctx, from_json, cpe_id):
         raise click.UsageError('Parameter --cpe-id cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.get_cpe(
         cpe_id=cpe_id,
         **kwargs
@@ -4213,7 +4254,7 @@ def get_cpe_device_config_content(ctx, from_json, file, cpe_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.get_cpe_device_config_content(
         cpe_id=cpe_id,
         **kwargs
@@ -4259,7 +4300,7 @@ def get_cpe_device_shape(ctx, from_json, cpe_device_shape_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.get_cpe_device_shape(
         cpe_device_shape_id=cpe_device_shape_id,
         **kwargs
@@ -4280,7 +4321,7 @@ def get_cross_connect(ctx, from_json, cross_connect_id):
         raise click.UsageError('Parameter --cross-connect-id cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.get_cross_connect(
         cross_connect_id=cross_connect_id,
         **kwargs
@@ -4301,7 +4342,7 @@ def get_cross_connect_group(ctx, from_json, cross_connect_group_id):
         raise click.UsageError('Parameter --cross-connect-group-id cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.get_cross_connect_group(
         cross_connect_group_id=cross_connect_group_id,
         **kwargs
@@ -4322,7 +4363,7 @@ def get_cross_connect_letter_of_authority(ctx, from_json, cross_connect_id):
         raise click.UsageError('Parameter --cross-connect-id cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.get_cross_connect_letter_of_authority(
         cross_connect_id=cross_connect_id,
         **kwargs
@@ -4343,7 +4384,7 @@ def get_cross_connect_status(ctx, from_json, cross_connect_id):
         raise click.UsageError('Parameter --cross-connect-id cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.get_cross_connect_status(
         cross_connect_id=cross_connect_id,
         **kwargs
@@ -4364,7 +4405,7 @@ def get_dhcp_options(ctx, from_json, dhcp_id):
         raise click.UsageError('Parameter --dhcp-id cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.get_dhcp_options(
         dhcp_id=dhcp_id,
         **kwargs
@@ -4385,7 +4426,7 @@ def get_drg(ctx, from_json, drg_id):
         raise click.UsageError('Parameter --drg-id cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.get_drg(
         drg_id=drg_id,
         **kwargs
@@ -4406,7 +4447,7 @@ def get_drg_attachment(ctx, from_json, drg_attachment_id):
         raise click.UsageError('Parameter --drg-attachment-id cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.get_drg_attachment(
         drg_attachment_id=drg_attachment_id,
         **kwargs
@@ -4428,7 +4469,7 @@ def get_drg_redundancy_status(ctx, from_json, drg_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.get_drg_redundancy_status(
         drg_id=drg_id,
         **kwargs
@@ -4449,7 +4490,7 @@ def get_fast_connect_provider_service(ctx, from_json, provider_service_id):
         raise click.UsageError('Parameter --provider-service-id cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.get_fast_connect_provider_service(
         provider_service_id=provider_service_id,
         **kwargs
@@ -4474,7 +4515,7 @@ def get_fast_connect_provider_service_key(ctx, from_json, provider_service_id, p
         raise click.UsageError('Parameter --provider-service-key-name cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.get_fast_connect_provider_service_key(
         provider_service_id=provider_service_id,
         provider_service_key_name=provider_service_key_name,
@@ -4496,7 +4537,7 @@ def get_internet_gateway(ctx, from_json, ig_id):
         raise click.UsageError('Parameter --ig-id cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.get_internet_gateway(
         ig_id=ig_id,
         **kwargs
@@ -4517,7 +4558,7 @@ def get_ip_sec_connection(ctx, from_json, ipsc_id):
         raise click.UsageError('Parameter --ipsc-id cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.get_ip_sec_connection(
         ipsc_id=ipsc_id,
         **kwargs
@@ -4540,7 +4581,7 @@ def get_ip_sec_connection_device_config(ctx, from_json, ipsc_id):
         raise click.UsageError('Parameter --ipsc-id cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.get_ip_sec_connection_device_config(
         ipsc_id=ipsc_id,
         **kwargs
@@ -4561,7 +4602,7 @@ def get_ip_sec_connection_device_status(ctx, from_json, ipsc_id):
         raise click.UsageError('Parameter --ipsc-id cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.get_ip_sec_connection_device_status(
         ipsc_id=ipsc_id,
         **kwargs
@@ -4586,7 +4627,7 @@ def get_ip_sec_connection_tunnel(ctx, from_json, ipsc_id, tunnel_id):
         raise click.UsageError('Parameter --tunnel-id cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.get_ip_sec_connection_tunnel(
         ipsc_id=ipsc_id,
         tunnel_id=tunnel_id,
@@ -4612,7 +4653,7 @@ def get_ip_sec_connection_tunnel_shared_secret(ctx, from_json, ipsc_id, tunnel_i
         raise click.UsageError('Parameter --tunnel-id cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.get_ip_sec_connection_tunnel_shared_secret(
         ipsc_id=ipsc_id,
         tunnel_id=tunnel_id,
@@ -4642,7 +4683,7 @@ def get_ipsec_cpe_device_config_content(ctx, from_json, file, ipsc_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.get_ipsec_cpe_device_config_content(
         ipsc_id=ipsc_id,
         **kwargs
@@ -4686,7 +4727,7 @@ def get_ipv6(ctx, from_json, ipv6_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.get_ipv6(
         ipv6_id=ipv6_id,
         **kwargs
@@ -4707,7 +4748,7 @@ def get_local_peering_gateway(ctx, from_json, local_peering_gateway_id):
         raise click.UsageError('Parameter --local-peering-gateway-id cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.get_local_peering_gateway(
         local_peering_gateway_id=local_peering_gateway_id,
         **kwargs
@@ -4728,7 +4769,7 @@ def get_nat_gateway(ctx, from_json, nat_gateway_id):
         raise click.UsageError('Parameter --nat-gateway-id cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.get_nat_gateway(
         nat_gateway_id=nat_gateway_id,
         **kwargs
@@ -4753,7 +4794,7 @@ def get_network_security_group(ctx, from_json, network_security_group_id):
         raise click.UsageError('Parameter --network-security-group-id cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.get_network_security_group(
         network_security_group_id=network_security_group_id,
         **kwargs
@@ -4774,7 +4815,7 @@ def get_private_ip(ctx, from_json, private_ip_id):
         raise click.UsageError('Parameter --private-ip-id cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.get_private_ip(
         private_ip_id=private_ip_id,
         **kwargs
@@ -4801,7 +4842,7 @@ def get_public_ip(ctx, from_json, public_ip_id):
         raise click.UsageError('Parameter --public-ip-id cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.get_public_ip(
         public_ip_id=public_ip_id,
         **kwargs
@@ -4822,12 +4863,12 @@ def get_public_ip_by_ip_address(ctx, from_json, ip_address):
 
     kwargs = {}
 
-    details = {}
-    details['ipAddress'] = ip_address
+    _details = {}
+    _details['ipAddress'] = ip_address
 
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.get_public_ip_by_ip_address(
-        get_public_ip_by_ip_address_details=details,
+        get_public_ip_by_ip_address_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -4846,12 +4887,12 @@ def get_public_ip_by_private_ip_id(ctx, from_json, private_ip_id):
 
     kwargs = {}
 
-    details = {}
-    details['privateIpId'] = private_ip_id
+    _details = {}
+    _details['privateIpId'] = private_ip_id
 
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.get_public_ip_by_private_ip_id(
-        get_public_ip_by_private_ip_id_details=details,
+        get_public_ip_by_private_ip_id_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -4870,7 +4911,7 @@ def get_remote_peering_connection(ctx, from_json, remote_peering_connection_id):
         raise click.UsageError('Parameter --remote-peering-connection-id cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.get_remote_peering_connection(
         remote_peering_connection_id=remote_peering_connection_id,
         **kwargs
@@ -4891,7 +4932,7 @@ def get_route_table(ctx, from_json, rt_id):
         raise click.UsageError('Parameter --rt-id cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.get_route_table(
         rt_id=rt_id,
         **kwargs
@@ -4912,7 +4953,7 @@ def get_security_list(ctx, from_json, security_list_id):
         raise click.UsageError('Parameter --security-list-id cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.get_security_list(
         security_list_id=security_list_id,
         **kwargs
@@ -4933,7 +4974,7 @@ def get_service(ctx, from_json, service_id):
         raise click.UsageError('Parameter --service-id cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.get_service(
         service_id=service_id,
         **kwargs
@@ -4954,7 +4995,7 @@ def get_service_gateway(ctx, from_json, service_gateway_id):
         raise click.UsageError('Parameter --service-gateway-id cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.get_service_gateway(
         service_gateway_id=service_gateway_id,
         **kwargs
@@ -4975,7 +5016,7 @@ def get_subnet(ctx, from_json, subnet_id):
         raise click.UsageError('Parameter --subnet-id cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.get_subnet(
         subnet_id=subnet_id,
         **kwargs
@@ -5001,7 +5042,7 @@ def get_tunnel_cpe_device_config(ctx, from_json, ipsc_id, tunnel_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.get_tunnel_cpe_device_config(
         ipsc_id=ipsc_id,
         tunnel_id=tunnel_id,
@@ -5035,7 +5076,7 @@ def get_tunnel_cpe_device_config_content(ctx, from_json, file, ipsc_id, tunnel_i
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.get_tunnel_cpe_device_config_content(
         ipsc_id=ipsc_id,
         tunnel_id=tunnel_id,
@@ -5079,7 +5120,7 @@ def get_vcn(ctx, from_json, vcn_id):
         raise click.UsageError('Parameter --vcn-id cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.get_vcn(
         vcn_id=vcn_id,
         **kwargs
@@ -5100,7 +5141,7 @@ def get_virtual_circuit(ctx, from_json, virtual_circuit_id):
         raise click.UsageError('Parameter --virtual-circuit-id cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.get_virtual_circuit(
         virtual_circuit_id=virtual_circuit_id,
         **kwargs
@@ -5121,7 +5162,7 @@ def get_vnic(ctx, from_json, vnic_id):
         raise click.UsageError('Parameter --vnic-id cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.get_vnic(
         vnic_id=vnic_id,
         **kwargs
@@ -5139,7 +5180,7 @@ def get_vnic(ctx, from_json, vnic_id):
 def list_allowed_peer_regions_for_remote_peering(ctx, from_json, all_pages, ):
 
     kwargs = {}
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.list_allowed_peer_regions_for_remote_peering(
         **kwargs
     )
@@ -5175,7 +5216,7 @@ def list_cpe_device_shapes(ctx, from_json, all_pages, page_size, limit, page):
     if page is not None:
         kwargs['page'] = page
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -5221,7 +5262,7 @@ def list_cpes(ctx, from_json, all_pages, page_size, compartment_id, limit, page)
         kwargs['limit'] = limit
     if page is not None:
         kwargs['page'] = page
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -5284,7 +5325,7 @@ def list_cross_connect_groups(ctx, from_json, all_pages, page_size, compartment_
         kwargs['sort_order'] = sort_order
     if lifecycle_state is not None:
         kwargs['lifecycle_state'] = lifecycle_state
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -5333,7 +5374,7 @@ def list_cross_connect_locations(ctx, from_json, all_pages, page_size, compartme
         kwargs['limit'] = limit
     if page is not None:
         kwargs['page'] = page
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -5399,7 +5440,7 @@ def list_cross_connects(ctx, from_json, all_pages, page_size, compartment_id, cr
         kwargs['sort_order'] = sort_order
     if lifecycle_state is not None:
         kwargs['lifecycle_state'] = lifecycle_state
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -5448,7 +5489,7 @@ def list_crossconnect_port_speed_shapes(ctx, from_json, all_pages, page_size, co
         kwargs['limit'] = limit
     if page is not None:
         kwargs['page'] = page
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -5512,7 +5553,7 @@ def list_dhcp_options(ctx, from_json, all_pages, page_size, compartment_id, vcn_
         kwargs['sort_order'] = sort_order
     if lifecycle_state is not None:
         kwargs['lifecycle_state'] = lifecycle_state
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -5570,7 +5611,7 @@ def list_drg_attachments(ctx, from_json, all_pages, page_size, compartment_id, v
         kwargs['limit'] = limit
     if page is not None:
         kwargs['page'] = page
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -5619,7 +5660,7 @@ def list_drgs(ctx, from_json, all_pages, page_size, compartment_id, limit, page)
         kwargs['limit'] = limit
     if page is not None:
         kwargs['page'] = page
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -5672,7 +5713,7 @@ def list_fast_connect_provider_services(ctx, from_json, all_pages, page_size, co
         kwargs['limit'] = limit
     if page is not None:
         kwargs['page'] = page
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -5726,7 +5767,7 @@ def list_fast_connect_provider_virtual_circuit_bandwidth_shapes(ctx, from_json, 
         kwargs['limit'] = limit
     if page is not None:
         kwargs['page'] = page
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -5790,7 +5831,7 @@ def list_internet_gateways(ctx, from_json, all_pages, page_size, compartment_id,
         kwargs['sort_order'] = sort_order
     if lifecycle_state is not None:
         kwargs['lifecycle_state'] = lifecycle_state
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -5845,7 +5886,7 @@ def list_ip_sec_connection_tunnels(ctx, from_json, all_pages, page_size, ipsc_id
         kwargs['limit'] = limit
     if page is not None:
         kwargs['page'] = page
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -5900,7 +5941,7 @@ def list_ip_sec_connections(ctx, from_json, all_pages, page_size, compartment_id
         kwargs['limit'] = limit
     if page is not None:
         kwargs['page'] = page
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -5960,7 +6001,7 @@ def list_ipv6s(ctx, from_json, all_pages, page_size, limit, page, ip_address, su
     if vnic_id is not None:
         kwargs['vnic_id'] = vnic_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -6007,7 +6048,7 @@ def list_local_peering_gateways(ctx, from_json, all_pages, page_size, compartmen
         kwargs['limit'] = limit
     if page is not None:
         kwargs['page'] = page
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -6076,7 +6117,7 @@ def list_nat_gateways(ctx, from_json, all_pages, page_size, compartment_id, vcn_
         kwargs['sort_order'] = sort_order
     if lifecycle_state is not None:
         kwargs['lifecycle_state'] = lifecycle_state
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -6137,7 +6178,7 @@ def list_network_security_group_security_rules(ctx, from_json, all_pages, page_s
         kwargs['sort_by'] = sort_by
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -6195,7 +6236,7 @@ def list_network_security_group_vnics(ctx, from_json, all_pages, page_size, netw
         kwargs['sort_by'] = sort_by
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -6261,7 +6302,7 @@ def list_network_security_groups(ctx, from_json, all_pages, page_size, compartme
         kwargs['sort_order'] = sort_order
     if lifecycle_state is not None:
         kwargs['lifecycle_state'] = lifecycle_state
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -6322,7 +6363,7 @@ def list_private_ips(ctx, from_json, all_pages, page_size, limit, page, ip_addre
         kwargs['subnet_id'] = subnet_id
     if vnic_id is not None:
         kwargs['vnic_id'] = vnic_id
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -6389,7 +6430,7 @@ def list_public_ips(ctx, from_json, all_pages, page_size, scope, compartment_id,
         kwargs['availability_domain'] = availability_domain
     if lifetime is not None:
         kwargs['lifetime'] = lifetime
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -6444,7 +6485,7 @@ def list_remote_peering_connections(ctx, from_json, all_pages, page_size, compar
         kwargs['limit'] = limit
     if page is not None:
         kwargs['page'] = page
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -6508,7 +6549,7 @@ def list_route_tables(ctx, from_json, all_pages, page_size, compartment_id, vcn_
         kwargs['sort_order'] = sort_order
     if lifecycle_state is not None:
         kwargs['lifecycle_state'] = lifecycle_state
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -6575,7 +6616,7 @@ def list_security_lists(ctx, from_json, all_pages, page_size, compartment_id, vc
         kwargs['sort_order'] = sort_order
     if lifecycle_state is not None:
         kwargs['lifecycle_state'] = lifecycle_state
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -6641,7 +6682,7 @@ def list_service_gateways(ctx, from_json, all_pages, page_size, compartment_id, 
         kwargs['sort_order'] = sort_order
     if lifecycle_state is not None:
         kwargs['lifecycle_state'] = lifecycle_state
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -6689,7 +6730,7 @@ def list_services(ctx, from_json, all_pages, page_size, limit, page):
         kwargs['limit'] = limit
     if page is not None:
         kwargs['page'] = page
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -6750,7 +6791,7 @@ def list_subnets(ctx, from_json, all_pages, page_size, compartment_id, vcn_id, l
         kwargs['sort_order'] = sort_order
     if lifecycle_state is not None:
         kwargs['lifecycle_state'] = lifecycle_state
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -6816,7 +6857,7 @@ def list_vcns(ctx, from_json, all_pages, page_size, compartment_id, limit, page,
         kwargs['sort_order'] = sort_order
     if lifecycle_state is not None:
         kwargs['lifecycle_state'] = lifecycle_state
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -6865,7 +6906,7 @@ def list_virtual_circuit_bandwidth_shapes(ctx, from_json, all_pages, page_size, 
         kwargs['limit'] = limit
     if page is not None:
         kwargs['page'] = page
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -6908,7 +6949,7 @@ def list_virtual_circuit_public_prefixes(ctx, from_json, all_pages, virtual_circ
     kwargs = {}
     if verification_state is not None:
         kwargs['verification_state'] = verification_state
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.list_virtual_circuit_public_prefixes(
         virtual_circuit_id=virtual_circuit_id,
         **kwargs
@@ -6953,7 +6994,7 @@ def list_virtual_circuits(ctx, from_json, all_pages, page_size, compartment_id, 
         kwargs['sort_order'] = sort_order
     if lifecycle_state is not None:
         kwargs['lifecycle_state'] = lifecycle_state
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -6994,15 +7035,15 @@ def remove_network_security_group_security_rules(ctx, from_json, network_securit
 
     kwargs = {}
 
-    details = {}
+    _details = {}
 
     if security_rule_ids is not None:
-        details['securityRuleIds'] = cli_util.parse_json_parameter("security_rule_ids", security_rule_ids)
+        _details['securityRuleIds'] = cli_util.parse_json_parameter("security_rule_ids", security_rule_ids)
 
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.remove_network_security_group_security_rules(
         network_security_group_id=network_security_group_id,
-        remove_network_security_group_security_rules_details=details,
+        remove_network_security_group_security_rules_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -7042,24 +7083,24 @@ def update_cpe(ctx, from_json, force, cpe_id, defined_tags, display_name, freefo
     if if_match is not None:
         kwargs['if_match'] = if_match
 
-    details = {}
+    _details = {}
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if cpe_device_shape_id is not None:
-        details['cpeDeviceShapeId'] = cpe_device_shape_id
+        _details['cpeDeviceShapeId'] = cpe_device_shape_id
 
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.update_cpe(
         cpe_id=cpe_id,
-        update_cpe_details=details,
+        update_cpe_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -7101,30 +7142,31 @@ def update_cross_connect(ctx, from_json, force, wait_for_state, max_wait_seconds
     if if_match is not None:
         kwargs['if_match'] = if_match
 
-    details = {}
+    _details = {}
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if is_active is not None:
-        details['isActive'] = is_active
+        _details['isActive'] = is_active
 
     if customer_reference_name is not None:
-        details['customerReferenceName'] = customer_reference_name
+        _details['customerReferenceName'] = customer_reference_name
 
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.update_cross_connect(
         cross_connect_id=cross_connect_id,
-        update_cross_connect_details=details,
+        update_cross_connect_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_cross_connect') and callable(getattr(client, 'get_cross_connect')):
             try:
                 wait_period_kwargs = {}
@@ -7182,27 +7224,28 @@ def update_cross_connect_group(ctx, from_json, force, wait_for_state, max_wait_s
     if if_match is not None:
         kwargs['if_match'] = if_match
 
-    details = {}
+    _details = {}
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if customer_reference_name is not None:
-        details['customerReferenceName'] = customer_reference_name
+        _details['customerReferenceName'] = customer_reference_name
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.update_cross_connect_group(
         cross_connect_group_id=cross_connect_group_id,
-        update_cross_connect_group_details=details,
+        update_cross_connect_group_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_cross_connect_group') and callable(getattr(client, 'get_cross_connect_group')):
             try:
                 wait_period_kwargs = {}
@@ -7264,27 +7307,28 @@ def update_dhcp_options(ctx, from_json, force, wait_for_state, max_wait_seconds,
     if if_match is not None:
         kwargs['if_match'] = if_match
 
-    details = {}
+    _details = {}
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if options is not None:
-        details['options'] = cli_util.parse_json_parameter("options", options)
+        _details['options'] = cli_util.parse_json_parameter("options", options)
 
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.update_dhcp_options(
         dhcp_id=dhcp_id,
-        update_dhcp_details=details,
+        update_dhcp_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_dhcp_options') and callable(getattr(client, 'get_dhcp_options')):
             try:
                 wait_period_kwargs = {}
@@ -7341,24 +7385,25 @@ def update_drg(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_int
     if if_match is not None:
         kwargs['if_match'] = if_match
 
-    details = {}
+    _details = {}
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.update_drg(
         drg_id=drg_id,
-        update_drg_details=details,
+        update_drg_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_drg') and callable(getattr(client, 'get_drg')):
             try:
                 wait_period_kwargs = {}
@@ -7409,21 +7454,22 @@ def update_drg_attachment(ctx, from_json, wait_for_state, max_wait_seconds, wait
     if if_match is not None:
         kwargs['if_match'] = if_match
 
-    details = {}
+    _details = {}
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if route_table_id is not None:
-        details['routeTableId'] = route_table_id
+        _details['routeTableId'] = route_table_id
 
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.update_drg_attachment(
         drg_attachment_id=drg_attachment_id,
-        update_drg_attachment_details=details,
+        update_drg_attachment_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_drg_attachment') and callable(getattr(client, 'get_drg_attachment')):
             try:
                 wait_period_kwargs = {}
@@ -7483,27 +7529,28 @@ def update_internet_gateway(ctx, from_json, force, wait_for_state, max_wait_seco
     if if_match is not None:
         kwargs['if_match'] = if_match
 
-    details = {}
+    _details = {}
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if is_enabled is not None:
-        details['isEnabled'] = is_enabled
+        _details['isEnabled'] = is_enabled
 
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.update_internet_gateway(
         ig_id=ig_id,
-        update_internet_gateway_details=details,
+        update_internet_gateway_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_internet_gateway') and callable(getattr(client, 'get_internet_gateway')):
             try:
                 wait_period_kwargs = {}
@@ -7575,33 +7622,34 @@ def update_ip_sec_connection(ctx, from_json, force, wait_for_state, max_wait_sec
     if if_match is not None:
         kwargs['if_match'] = if_match
 
-    details = {}
+    _details = {}
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if cpe_local_identifier is not None:
-        details['cpeLocalIdentifier'] = cpe_local_identifier
+        _details['cpeLocalIdentifier'] = cpe_local_identifier
 
     if cpe_local_identifier_type is not None:
-        details['cpeLocalIdentifierType'] = cpe_local_identifier_type
+        _details['cpeLocalIdentifierType'] = cpe_local_identifier_type
 
     if static_routes is not None:
-        details['staticRoutes'] = cli_util.parse_json_parameter("static_routes", static_routes)
+        _details['staticRoutes'] = cli_util.parse_json_parameter("static_routes", static_routes)
 
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.update_ip_sec_connection(
         ipsc_id=ipsc_id,
-        update_ip_sec_connection_details=details,
+        update_ip_sec_connection_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_ip_sec_connection') and callable(getattr(client, 'get_ip_sec_connection')):
             try:
                 wait_period_kwargs = {}
@@ -7666,28 +7714,29 @@ def update_ip_sec_connection_tunnel(ctx, from_json, force, wait_for_state, max_w
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if routing is not None:
-        details['routing'] = routing
+        _details['routing'] = routing
 
     if ike_version is not None:
-        details['ikeVersion'] = ike_version
+        _details['ikeVersion'] = ike_version
 
     if bgp_session_config is not None:
-        details['bgpSessionConfig'] = cli_util.parse_json_parameter("bgp_session_config", bgp_session_config)
+        _details['bgpSessionConfig'] = cli_util.parse_json_parameter("bgp_session_config", bgp_session_config)
 
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.update_ip_sec_connection_tunnel(
         ipsc_id=ipsc_id,
         tunnel_id=tunnel_id,
-        update_ip_sec_connection_tunnel_details=details,
+        update_ip_sec_connection_tunnel_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_ip_sec_connection_tunnel') and callable(getattr(client, 'get_ip_sec_connection_tunnel')):
             try:
                 wait_period_kwargs = {}
@@ -7738,16 +7787,16 @@ def update_ip_sec_connection_tunnel_shared_secret(ctx, from_json, ipsc_id, tunne
     if if_match is not None:
         kwargs['if_match'] = if_match
 
-    details = {}
+    _details = {}
 
     if shared_secret is not None:
-        details['sharedSecret'] = shared_secret
+        _details['sharedSecret'] = shared_secret
 
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.update_ip_sec_connection_tunnel_shared_secret(
         ipsc_id=ipsc_id,
         tunnel_id=tunnel_id,
-        update_ip_sec_connection_tunnel_shared_secret_details=details,
+        update_ip_sec_connection_tunnel_shared_secret_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -7794,30 +7843,31 @@ def update_ipv6(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_in
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if is_internet_access_allowed is not None:
-        details['isInternetAccessAllowed'] = is_internet_access_allowed
+        _details['isInternetAccessAllowed'] = is_internet_access_allowed
 
     if vnic_id is not None:
-        details['vnicId'] = vnic_id
+        _details['vnicId'] = vnic_id
 
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.update_ipv6(
         ipv6_id=ipv6_id,
-        update_ipv6_details=details,
+        update_ipv6_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_ipv6') and callable(getattr(client, 'get_ipv6')):
             try:
                 wait_period_kwargs = {}
@@ -7877,27 +7927,28 @@ def update_local_peering_gateway(ctx, from_json, force, wait_for_state, max_wait
     if if_match is not None:
         kwargs['if_match'] = if_match
 
-    details = {}
+    _details = {}
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if route_table_id is not None:
-        details['routeTableId'] = route_table_id
+        _details['routeTableId'] = route_table_id
 
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.update_local_peering_gateway(
         local_peering_gateway_id=local_peering_gateway_id,
-        update_local_peering_gateway_details=details,
+        update_local_peering_gateway_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_local_peering_gateway') and callable(getattr(client, 'get_local_peering_gateway')):
             try:
                 wait_period_kwargs = {}
@@ -7957,27 +8008,28 @@ def update_nat_gateway(ctx, from_json, force, wait_for_state, max_wait_seconds, 
     if if_match is not None:
         kwargs['if_match'] = if_match
 
-    details = {}
+    _details = {}
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if block_traffic is not None:
-        details['blockTraffic'] = block_traffic
+        _details['blockTraffic'] = block_traffic
 
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.update_nat_gateway(
         nat_gateway_id=nat_gateway_id,
-        update_nat_gateway_details=details,
+        update_nat_gateway_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_nat_gateway') and callable(getattr(client, 'get_nat_gateway')):
             try:
                 wait_period_kwargs = {}
@@ -8042,24 +8094,25 @@ def update_network_security_group(ctx, from_json, force, wait_for_state, max_wai
     if if_match is not None:
         kwargs['if_match'] = if_match
 
-    details = {}
+    _details = {}
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.update_network_security_group(
         network_security_group_id=network_security_group_id,
-        update_network_security_group_details=details,
+        update_network_security_group_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_network_security_group') and callable(getattr(client, 'get_network_security_group')):
             try:
                 wait_period_kwargs = {}
@@ -8101,15 +8154,15 @@ def update_network_security_group_security_rules(ctx, from_json, network_securit
 
     kwargs = {}
 
-    details = {}
+    _details = {}
 
     if security_rules is not None:
-        details['securityRules'] = cli_util.parse_json_parameter("security_rules", security_rules)
+        _details['securityRules'] = cli_util.parse_json_parameter("security_rules", security_rules)
 
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.update_network_security_group_security_rules(
         network_security_group_id=network_security_group_id,
-        update_network_security_group_security_rules_details=details,
+        update_network_security_group_security_rules_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -8154,27 +8207,27 @@ def update_private_ip(ctx, from_json, force, private_ip_id, defined_tags, displa
     if if_match is not None:
         kwargs['if_match'] = if_match
 
-    details = {}
+    _details = {}
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if hostname_label is not None:
-        details['hostnameLabel'] = hostname_label
+        _details['hostnameLabel'] = hostname_label
 
     if vnic_id is not None:
-        details['vnicId'] = vnic_id
+        _details['vnicId'] = vnic_id
 
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.update_private_ip(
         private_ip_id=private_ip_id,
-        update_private_ip_details=details,
+        update_private_ip_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -8227,27 +8280,28 @@ def update_public_ip(ctx, from_json, force, wait_for_state, max_wait_seconds, wa
     if if_match is not None:
         kwargs['if_match'] = if_match
 
-    details = {}
+    _details = {}
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if private_ip_id is not None:
-        details['privateIpId'] = private_ip_id
+        _details['privateIpId'] = private_ip_id
 
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.update_public_ip(
         public_ip_id=public_ip_id,
-        update_public_ip_details=details,
+        update_public_ip_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_public_ip') and callable(getattr(client, 'get_public_ip')):
             try:
                 wait_period_kwargs = {}
@@ -8304,24 +8358,25 @@ def update_remote_peering_connection(ctx, from_json, force, wait_for_state, max_
     if if_match is not None:
         kwargs['if_match'] = if_match
 
-    details = {}
+    _details = {}
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.update_remote_peering_connection(
         remote_peering_connection_id=remote_peering_connection_id,
-        update_remote_peering_connection_details=details,
+        update_remote_peering_connection_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_remote_peering_connection') and callable(getattr(client, 'get_remote_peering_connection')):
             try:
                 wait_period_kwargs = {}
@@ -8383,27 +8438,28 @@ def update_route_table(ctx, from_json, force, wait_for_state, max_wait_seconds, 
     if if_match is not None:
         kwargs['if_match'] = if_match
 
-    details = {}
+    _details = {}
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if route_rules is not None:
-        details['routeRules'] = cli_util.parse_json_parameter("route_rules", route_rules)
+        _details['routeRules'] = cli_util.parse_json_parameter("route_rules", route_rules)
 
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.update_route_table(
         rt_id=rt_id,
-        update_route_table_details=details,
+        update_route_table_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_route_table') and callable(getattr(client, 'get_route_table')):
             try:
                 wait_period_kwargs = {}
@@ -8468,30 +8524,31 @@ def update_security_list(ctx, from_json, force, wait_for_state, max_wait_seconds
     if if_match is not None:
         kwargs['if_match'] = if_match
 
-    details = {}
+    _details = {}
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if egress_security_rules is not None:
-        details['egressSecurityRules'] = cli_util.parse_json_parameter("egress_security_rules", egress_security_rules)
+        _details['egressSecurityRules'] = cli_util.parse_json_parameter("egress_security_rules", egress_security_rules)
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if ingress_security_rules is not None:
-        details['ingressSecurityRules'] = cli_util.parse_json_parameter("ingress_security_rules", ingress_security_rules)
+        _details['ingressSecurityRules'] = cli_util.parse_json_parameter("ingress_security_rules", ingress_security_rules)
 
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.update_security_list(
         security_list_id=security_list_id,
-        update_security_list_details=details,
+        update_security_list_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_security_list') and callable(getattr(client, 'get_security_list')):
             try:
                 wait_period_kwargs = {}
@@ -8559,33 +8616,34 @@ def update_service_gateway(ctx, from_json, force, wait_for_state, max_wait_secon
     if if_match is not None:
         kwargs['if_match'] = if_match
 
-    details = {}
+    _details = {}
 
     if block_traffic is not None:
-        details['blockTraffic'] = block_traffic
+        _details['blockTraffic'] = block_traffic
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if route_table_id is not None:
-        details['routeTableId'] = route_table_id
+        _details['routeTableId'] = route_table_id
 
     if services is not None:
-        details['services'] = cli_util.parse_json_parameter("services", services)
+        _details['services'] = cli_util.parse_json_parameter("services", services)
 
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.update_service_gateway(
         service_gateway_id=service_gateway_id,
-        update_service_gateway_details=details,
+        update_service_gateway_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_service_gateway') and callable(getattr(client, 'get_service_gateway')):
             try:
                 wait_period_kwargs = {}
@@ -8645,33 +8703,34 @@ def update_subnet(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_
     if if_match is not None:
         kwargs['if_match'] = if_match
 
-    details = {}
+    _details = {}
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if dhcp_options_id is not None:
-        details['dhcpOptionsId'] = dhcp_options_id
+        _details['dhcpOptionsId'] = dhcp_options_id
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if route_table_id is not None:
-        details['routeTableId'] = route_table_id
+        _details['routeTableId'] = route_table_id
 
     if security_list_ids is not None:
-        details['securityListIds'] = cli_util.parse_json_parameter("security_list_ids", security_list_ids)
+        _details['securityListIds'] = cli_util.parse_json_parameter("security_list_ids", security_list_ids)
 
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.update_subnet(
         subnet_id=subnet_id,
-        update_subnet_details=details,
+        update_subnet_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_subnet') and callable(getattr(client, 'get_subnet')):
             try:
                 wait_period_kwargs = {}
@@ -8726,16 +8785,16 @@ def update_tunnel_cpe_device_config(ctx, from_json, force, ipsc_id, tunnel_id, t
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if tunnel_cpe_device_config is not None:
-        details['tunnelCpeDeviceConfig'] = cli_util.parse_json_parameter("tunnel_cpe_device_config", tunnel_cpe_device_config)
+        _details['tunnelCpeDeviceConfig'] = cli_util.parse_json_parameter("tunnel_cpe_device_config", tunnel_cpe_device_config)
 
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.update_tunnel_cpe_device_config(
         ipsc_id=ipsc_id,
         tunnel_id=tunnel_id,
-        update_tunnel_cpe_device_config_details=details,
+        update_tunnel_cpe_device_config_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -8773,24 +8832,25 @@ def update_vcn(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_int
     if if_match is not None:
         kwargs['if_match'] = if_match
 
-    details = {}
+    _details = {}
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.update_vcn(
         vcn_id=vcn_id,
-        update_vcn_details=details,
+        update_vcn_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_vcn') and callable(getattr(client, 'get_vcn')):
             try:
                 wait_period_kwargs = {}
@@ -8877,48 +8937,49 @@ def update_virtual_circuit(ctx, from_json, force, wait_for_state, max_wait_secon
     if if_match is not None:
         kwargs['if_match'] = if_match
 
-    details = {}
+    _details = {}
 
     if bandwidth_shape_name is not None:
-        details['bandwidthShapeName'] = bandwidth_shape_name
+        _details['bandwidthShapeName'] = bandwidth_shape_name
 
     if cross_connect_mappings is not None:
-        details['crossConnectMappings'] = cli_util.parse_json_parameter("cross_connect_mappings", cross_connect_mappings)
+        _details['crossConnectMappings'] = cli_util.parse_json_parameter("cross_connect_mappings", cross_connect_mappings)
 
     if customer_bgp_asn is not None:
-        details['customerBgpAsn'] = customer_bgp_asn
+        _details['customerBgpAsn'] = customer_bgp_asn
 
     if customer_asn is not None:
-        details['customerAsn'] = customer_asn
+        _details['customerAsn'] = customer_asn
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if gateway_id is not None:
-        details['gatewayId'] = gateway_id
+        _details['gatewayId'] = gateway_id
 
     if provider_state is not None:
-        details['providerState'] = provider_state
+        _details['providerState'] = provider_state
 
     if provider_service_key_name is not None:
-        details['providerServiceKeyName'] = provider_service_key_name
+        _details['providerServiceKeyName'] = provider_service_key_name
 
     if reference_comment is not None:
-        details['referenceComment'] = reference_comment
+        _details['referenceComment'] = reference_comment
 
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.update_virtual_circuit(
         virtual_circuit_id=virtual_circuit_id,
-        update_virtual_circuit_details=details,
+        update_virtual_circuit_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_virtual_circuit') and callable(getattr(client, 'get_virtual_circuit')):
             try:
                 wait_period_kwargs = {}
@@ -8984,33 +9045,34 @@ def update_vnic(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_in
     if if_match is not None:
         kwargs['if_match'] = if_match
 
-    details = {}
+    _details = {}
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if hostname_label is not None:
-        details['hostnameLabel'] = hostname_label
+        _details['hostnameLabel'] = hostname_label
 
     if nsg_ids is not None:
-        details['nsgIds'] = cli_util.parse_json_parameter("nsg_ids", nsg_ids)
+        _details['nsgIds'] = cli_util.parse_json_parameter("nsg_ids", nsg_ids)
 
     if skip_source_dest_check is not None:
-        details['skipSourceDestCheck'] = skip_source_dest_check
+        _details['skipSourceDestCheck'] = skip_source_dest_check
 
-    client = cli_util.build_client('virtual_network', ctx)
+    client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.update_vnic(
         vnic_id=vnic_id,
-        update_vnic_details=details,
+        update_vnic_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_vnic') and callable(getattr(client, 'get_vnic')):
             try:
                 wait_period_kwargs = {}

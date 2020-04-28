@@ -1,5 +1,6 @@
 # coding: utf-8
-# Copyright (c) 2016, 2020, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2020, Oracle and/or its affiliates.  All rights reserved.
+# This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 from __future__ import print_function
 import click
@@ -75,17 +76,18 @@ def add_block_storage(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['clusterAdminPassword'] = cluster_admin_password
-    details['blockVolumeSizeInGBs'] = block_volume_size_in_gbs
+    _details = {}
+    _details['clusterAdminPassword'] = cluster_admin_password
+    _details['blockVolumeSizeInGBs'] = block_volume_size_in_gbs
 
-    client = cli_util.build_client('bds', ctx)
+    client = cli_util.build_client('bds', 'bds', ctx)
     result = client.add_block_storage(
         bds_instance_id=bds_instance_id,
-        add_block_storage_details=details,
+        add_block_storage_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -134,20 +136,21 @@ def add_cloud_sql(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['shape'] = shape
-    details['clusterAdminPassword'] = cluster_admin_password
+    _details = {}
+    _details['shape'] = shape
+    _details['clusterAdminPassword'] = cluster_admin_password
 
     if block_volume_size_in_gbs is not None:
-        details['blockVolumeSizeInGBs'] = block_volume_size_in_gbs
+        _details['blockVolumeSizeInGBs'] = block_volume_size_in_gbs
 
-    client = cli_util.build_client('bds', ctx)
+    client = cli_util.build_client('bds', 'bds', ctx)
     result = client.add_cloud_sql(
         bds_instance_id=bds_instance_id,
-        add_cloud_sql_details=details,
+        add_cloud_sql_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -195,17 +198,18 @@ def add_worker_nodes(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['clusterAdminPassword'] = cluster_admin_password
-    details['numberOfWorkerNodes'] = number_of_worker_nodes
+    _details = {}
+    _details['clusterAdminPassword'] = cluster_admin_password
+    _details['numberOfWorkerNodes'] = number_of_worker_nodes
 
-    client = cli_util.build_client('bds', ctx)
+    client = cli_util.build_client('bds', 'bds', ctx)
     result = client.add_worker_nodes(
         bds_instance_id=bds_instance_id,
-        add_worker_nodes_details=details,
+        add_worker_nodes_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -252,16 +256,17 @@ def change_bds_instance_compartment(ctx, from_json, wait_for_state, max_wait_sec
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
 
-    client = cli_util.build_client('bds', ctx)
+    client = cli_util.build_client('bds', 'bds', ctx)
     result = client.change_bds_instance_compartment(
         bds_instance_id=bds_instance_id,
-        change_bds_instance_compartment_details=details,
+        change_bds_instance_compartment_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -311,31 +316,32 @@ def create_bds_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
-    details['displayName'] = display_name
-    details['clusterVersion'] = cluster_version
-    details['clusterPublicKey'] = cluster_public_key
-    details['clusterAdminPassword'] = cluster_admin_password
-    details['isHighAvailability'] = is_high_availability
-    details['isSecure'] = is_secure
-    details['nodes'] = cli_util.parse_json_parameter("nodes", nodes)
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['displayName'] = display_name
+    _details['clusterVersion'] = cluster_version
+    _details['clusterPublicKey'] = cluster_public_key
+    _details['clusterAdminPassword'] = cluster_admin_password
+    _details['isHighAvailability'] = is_high_availability
+    _details['isSecure'] = is_secure
+    _details['nodes'] = cli_util.parse_json_parameter("nodes", nodes)
 
     if network_config is not None:
-        details['networkConfig'] = cli_util.parse_json_parameter("network_config", network_config)
+        _details['networkConfig'] = cli_util.parse_json_parameter("network_config", network_config)
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('bds', ctx)
+    client = cli_util.build_client('bds', 'bds', ctx)
     result = client.create_bds_instance(
-        create_bds_instance_details=details,
+        create_bds_instance_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -381,12 +387,13 @@ def delete_bds_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('bds', ctx)
+    client = cli_util.build_client('bds', 'bds', ctx)
     result = client.delete_bds_instance(
         bds_instance_id=bds_instance_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -425,7 +432,7 @@ def get_bds_instance(ctx, from_json, bds_instance_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('bds', ctx)
+    client = cli_util.build_client('bds', 'bds', ctx)
     result = client.get_bds_instance(
         bds_instance_id=bds_instance_id,
         **kwargs
@@ -447,7 +454,7 @@ def get_work_request(ctx, from_json, work_request_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('bds', ctx)
+    client = cli_util.build_client('bds', 'bds', ctx)
     result = client.get_work_request(
         work_request_id=work_request_id,
         **kwargs
@@ -489,7 +496,7 @@ def list_bds_instances(ctx, from_json, all_pages, page_size, compartment_id, lif
     if display_name is not None:
         kwargs['display_name'] = display_name
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('bds', ctx)
+    client = cli_util.build_client('bds', 'bds', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -546,7 +553,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('bds', ctx)
+    client = cli_util.build_client('bds', 'bds', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -603,7 +610,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('bds', ctx)
+    client = cli_util.build_client('bds', 'bds', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -660,7 +667,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, res
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('bds', ctx)
+    client = cli_util.build_client('bds', 'bds', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -708,16 +715,17 @@ def remove_cloud_sql(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['clusterAdminPassword'] = cluster_admin_password
+    _details = {}
+    _details['clusterAdminPassword'] = cluster_admin_password
 
-    client = cli_util.build_client('bds', ctx)
+    client = cli_util.build_client('bds', 'bds', ctx)
     result = client.remove_cloud_sql(
         bds_instance_id=bds_instance_id,
-        remove_cloud_sql_details=details,
+        remove_cloud_sql_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -771,24 +779,25 @@ def update_bds_instance(ctx, from_json, force, wait_for_state, max_wait_seconds,
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('bds', ctx)
+    client = cli_util.build_client('bds', 'bds', ctx)
     result = client.update_bds_instance(
         bds_instance_id=bds_instance_id,
-        update_bds_instance_details=details,
+        update_bds_instance_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}

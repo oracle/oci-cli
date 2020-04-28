@@ -1,5 +1,6 @@
 # coding: utf-8
-# Copyright (c) 2016, 2020, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2020, Oracle and/or its affiliates.  All rights reserved.
+# This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 from __future__ import print_function
 import click
@@ -67,36 +68,37 @@ def create_alert_rule(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['type'] = type
-    details['threshold'] = threshold
-    details['thresholdType'] = threshold_type
+    _details = {}
+    _details['type'] = type
+    _details['threshold'] = threshold
+    _details['thresholdType'] = threshold_type
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
     if recipients is not None:
-        details['recipients'] = recipients
+        _details['recipients'] = recipients
 
     if message is not None:
-        details['message'] = message
+        _details['message'] = message
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('budget', ctx)
+    client = cli_util.build_client('budget', 'budget', ctx)
     result = client.create_alert_rule(
         budget_id=budget_id,
-        create_alert_rule_details=details,
+        create_alert_rule_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_alert_rule') and callable(getattr(client, 'get_alert_rule')):
             try:
                 wait_period_kwargs = {}
@@ -149,38 +151,39 @@ def create_budget(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
-    details['amount'] = amount
-    details['resetPeriod'] = reset_period
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['amount'] = amount
+    _details['resetPeriod'] = reset_period
 
     if target_compartment_id is not None:
-        details['targetCompartmentId'] = target_compartment_id
+        _details['targetCompartmentId'] = target_compartment_id
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
     if target_type is not None:
-        details['targetType'] = target_type
+        _details['targetType'] = target_type
 
     if targets is not None:
-        details['targets'] = cli_util.parse_json_parameter("targets", targets)
+        _details['targets'] = cli_util.parse_json_parameter("targets", targets)
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('budget', ctx)
+    client = cli_util.build_client('budget', 'budget', ctx)
     result = client.create_budget(
-        create_budget_details=details,
+        create_budget_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_budget') and callable(getattr(client, 'get_budget')):
             try:
                 wait_period_kwargs = {}
@@ -227,7 +230,7 @@ def delete_alert_rule(ctx, from_json, budget_id, alert_rule_id, if_match):
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('budget', ctx)
+    client = cli_util.build_client('budget', 'budget', ctx)
     result = client.delete_alert_rule(
         budget_id=budget_id,
         alert_rule_id=alert_rule_id,
@@ -257,12 +260,13 @@ def delete_budget(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('budget', ctx)
+    client = cli_util.build_client('budget', 'budget', ctx)
     result = client.delete_budget(
         budget_id=budget_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_budget') and callable(getattr(client, 'get_budget')):
             try:
                 wait_period_kwargs = {}
@@ -317,7 +321,7 @@ def get_alert_rule(ctx, from_json, budget_id, alert_rule_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('budget', ctx)
+    client = cli_util.build_client('budget', 'budget', ctx)
     result = client.get_alert_rule(
         budget_id=budget_id,
         alert_rule_id=alert_rule_id,
@@ -340,7 +344,7 @@ def get_budget(ctx, from_json, budget_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('budget', ctx)
+    client = cli_util.build_client('budget', 'budget', ctx)
     result = client.get_budget(
         budget_id=budget_id,
         **kwargs
@@ -387,7 +391,7 @@ def list_alert_rules(ctx, from_json, all_pages, page_size, budget_id, limit, pag
     if display_name is not None:
         kwargs['display_name'] = display_name
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('budget', ctx)
+    client = cli_util.build_client('budget', 'budget', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -458,7 +462,7 @@ def list_budgets(ctx, from_json, all_pages, page_size, compartment_id, limit, pa
     if target_type is not None:
         kwargs['target_type'] = target_type
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('budget', ctx)
+    client = cli_util.build_client('budget', 'budget', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -527,43 +531,44 @@ def update_alert_rule(ctx, from_json, force, wait_for_state, max_wait_seconds, w
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if type is not None:
-        details['type'] = type
+        _details['type'] = type
 
     if threshold is not None:
-        details['threshold'] = threshold
+        _details['threshold'] = threshold
 
     if threshold_type is not None:
-        details['thresholdType'] = threshold_type
+        _details['thresholdType'] = threshold_type
 
     if recipients is not None:
-        details['recipients'] = recipients
+        _details['recipients'] = recipients
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
     if message is not None:
-        details['message'] = message
+        _details['message'] = message
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('budget', ctx)
+    client = cli_util.build_client('budget', 'budget', ctx)
     result = client.update_alert_rule(
         budget_id=budget_id,
         alert_rule_id=alert_rule_id,
-        update_alert_rule_details=details,
+        update_alert_rule_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_alert_rule') and callable(getattr(client, 'get_alert_rule')):
             try:
                 wait_period_kwargs = {}
@@ -624,33 +629,34 @@ def update_budget(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
     if amount is not None:
-        details['amount'] = amount
+        _details['amount'] = amount
 
     if reset_period is not None:
-        details['resetPeriod'] = reset_period
+        _details['resetPeriod'] = reset_period
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('budget', ctx)
+    client = cli_util.build_client('budget', 'budget', ctx)
     result = client.update_budget(
         budget_id=budget_id,
-        update_budget_details=details,
+        update_budget_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_budget') and callable(getattr(client, 'get_budget')):
             try:
                 wait_period_kwargs = {}

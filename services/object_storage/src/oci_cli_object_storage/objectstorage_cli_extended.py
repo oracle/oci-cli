@@ -1,5 +1,6 @@
 # coding: utf-8
-# Copyright (c) 2016, 2019, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2020, Oracle and/or its affiliates.  All rights reserved.
+# This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 from __future__ import division
 import arrow
@@ -49,7 +50,7 @@ def cli_util_func(ctx, param_name):
                 ctx.obj['cert_bundle'] = default_values_from_file['cert_bundle']
             elif 'cert-bundle' in default_values_from_file:
                 ctx.obj['cert_bundle'] = default_values_from_file['cert-bundle']
-        client = build_client('object_storage', ctx)
+        client = build_client('object_storage', 'object_storage', ctx)
         try:
             namespace = client.get_namespace().data
         except Exception as e:
@@ -260,7 +261,7 @@ def list_object_versions(ctx, from_json, all_pages, page_size, namespace_name, b
         kwargs['page'] = page
     kwargs['opc_client_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    client = cli_util.build_client('object_storage', ctx)
+    client = cli_util.build_client('object_storage', 'object_storage', ctx)
 
     all_items = []
     prefixes = list()
@@ -349,7 +350,7 @@ def object_list(ctx, from_json, namespace, bucket_name, prefix, start, end, limi
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
     elif not all_pages and limit is None:
         limit = 100
-    client = build_client('object_storage', ctx)
+    client = build_client('object_storage', 'object_storage', ctx)
 
     args = {
         'fields': fields,
@@ -475,7 +476,7 @@ def object_put(ctx, from_json, namespace, bucket_name, name, file, if_match, con
     # explicitly disallow retries for object put because we may not be able to re-read the input source
     ctx.obj['no_retry'] = True
 
-    client = build_client('object_storage', ctx)
+    client = build_client('object_storage', 'object_storage', ctx)
 
     client_request_id = ctx.obj['request_id']
     kwargs = {'opc_client_request_id': client_request_id}
@@ -761,7 +762,7 @@ def object_bulk_put(ctx, from_json, namespace, bucket_name, src_dir, object_pref
     if overwrite and no_overwrite:
         raise click.UsageError('The options --overwrite and --no-overwrite cannot be used together.')
 
-    client = build_client('object_storage', ctx)
+    client = build_client('object_storage', 'object_storage', ctx)
     client_request_id = ctx.obj['request_id']
 
     base_kwargs = {'opc_client_request_id': client_request_id}
@@ -975,7 +976,7 @@ def object_get(ctx, from_json, namespace, bucket_name, name, file, version_id, i
         if sse_args:
             encryption_key_params = sse_args
 
-    client = build_client('object_storage', ctx)
+    client = build_client('object_storage', 'object_storage', ctx)
 
     head_object = client.head_object(namespace, bucket_name, name, opc_client_request_id=ctx.obj['request_id'],
                                      **encryption_key_params)
@@ -1140,7 +1141,7 @@ def object_bulk_get(ctx, from_json, namespace, bucket_name, prefix, delimiter, d
     else:
         part_size = part_size * MEBIBYTE
 
-    client = build_client('object_storage', ctx)
+    client = build_client('object_storage', 'object_storage', ctx)
 
     if overwrite and no_overwrite:
         raise click.UsageError('The options --overwrite and --no-overwrite cannot be used together.')
@@ -1334,7 +1335,7 @@ def object_head(ctx, from_json, namespace, bucket_name, name, version_id, if_mat
         if sse_args:
             encryption_key_params = sse_args
 
-    client = build_client('object_storage', ctx)
+    client = build_client('object_storage', 'object_storage', ctx)
     response = client.head_object(
         namespace,
         bucket_name,
@@ -1444,7 +1445,7 @@ def object_bulk_delete(ctx, from_json, namespace, bucket_name, prefix, delimiter
     if include and exclude:
         raise click.UsageError('The --include and --exclude parameters cannot both be provided')
 
-    client = build_client('object_storage', ctx)
+    client = build_client('object_storage', 'object_storage', ctx)
 
     output = BulkDeleteOperationOutput()
 
@@ -1641,7 +1642,7 @@ def object_resume_put(ctx, from_json, namespace, bucket_name, name, file, upload
             raise click.UsageError('The --file must have a name attribute, or --name must be specified')
         name = os.path.basename(file.name)
 
-    client = build_client('object_storage', ctx)
+    client = build_client('object_storage', 'object_storage', ctx)
 
     total_size = os.fstat(file.fileno()).st_size
     if total_size > 0:
@@ -1682,7 +1683,7 @@ def restore_objects(ctx, **kwargs):
     if kwargs['hours'] is not None:
         details['hours'] = kwargs['hours']
 
-    client = build_client('object_storage', ctx)
+    client = build_client('object_storage', 'object_storage', ctx)
     kwargs = {'opc_client_request_id': ctx.obj['request_id']}
     result = client.restore_objects(
         namespace_name=namespace,
@@ -1713,7 +1714,7 @@ def restore_status(ctx, from_json, namespace, bucket_name, name):
     Example:
         oci os object restore-status -ns mynamespace -bn mybucket --name myfile.txt
     """
-    client = build_client('object_storage', ctx)
+    client = build_client('object_storage', 'object_storage', ctx)
     response = client.head_object(
         namespace,
         bucket_name,
@@ -1782,7 +1783,7 @@ def multipart_abort(ctx, from_json, namespace, bucket_name, object_name, upload_
     Example:
         oci os multipart abort -ns mynamespace -bn mybucket --object-name myfile.txt --upload-id my-upload-id
     """
-    client = build_client('object_storage', ctx)
+    client = build_client('object_storage', 'object_storage', ctx)
 
     if not force:
         try:
@@ -1813,7 +1814,7 @@ def copy_object(ctx, **kwargs):
     if 'source_object_name' in kwargs and ('destination_object_name' not in kwargs or kwargs['destination_object_name'] is None):
         kwargs['destination_object_name'] = kwargs['source_object_name']
     if 'destination_namespace' not in kwargs or kwargs['destination_namespace'] is None:
-        client = build_client('object_storage', ctx)
+        client = build_client('object_storage', 'object_storage', ctx)
         kwargs['destination_namespace'] = client.get_namespace().data
     if 'destination_region' not in kwargs or kwargs['destination_region'] is None:
         kwargs['destination_region'] = ctx.obj['config']['region']
@@ -1955,7 +1956,7 @@ def update_retention_rule(ctx, **kwargs):
     args['opc_client_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     # Invoke the API and handle the response
-    client = cli_util.build_client('object_storage', ctx)
+    client = cli_util.build_client('object_storage', 'object_storage', ctx)
     result = client.update_retention_rule(
         namespace_name=namespace_name,
         bucket_name=bucket_name,

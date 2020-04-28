@@ -1,5 +1,6 @@
 # coding: utf-8
-# Copyright (c) 2016, 2020, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2020, Oracle and/or its affiliates.  All rights reserved.
+# This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 
 import click
@@ -83,7 +84,7 @@ def setup_notifications_helper(ctx, create_topic_details, create_rule_kwargs):
 
 # All these methods are meant solely for mock testing
 def get_topic_client(ctx):
-    return cli_util.build_client('notification_control_plane', ctx)
+    return cli_util.build_client('ons', 'notification_control_plane', ctx)
 
 
 def get_topic_id(result):

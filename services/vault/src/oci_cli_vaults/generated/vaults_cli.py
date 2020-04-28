@@ -1,5 +1,6 @@
 # coding: utf-8
-# Copyright (c) 2016, 2020, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2020, Oracle and/or its affiliates.  All rights reserved.
+# This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 from __future__ import print_function
 import click
@@ -53,7 +54,7 @@ def cancel_secret_deletion(ctx, from_json, secret_id, if_match):
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('vaults', ctx)
+    client = cli_util.build_client('vault', 'vaults', ctx)
     result = client.cancel_secret_deletion(
         secret_id=secret_id,
         **kwargs
@@ -82,7 +83,7 @@ def cancel_secret_version_deletion(ctx, from_json, secret_id, secret_version_num
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('vaults', ctx)
+    client = cli_util.build_client('vault', 'vaults', ctx)
     result = client.cancel_secret_version_deletion(
         secret_id=secret_id,
         secret_version_number=secret_version_number,
@@ -112,13 +113,13 @@ def change_secret_compartment(ctx, from_json, secret_id, compartment_id, if_matc
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
 
-    client = cli_util.build_client('vaults', ctx)
+    client = cli_util.build_client('vault', 'vaults', ctx)
     result = client.change_secret_compartment(
         secret_id=secret_id,
-        change_secret_compartment_details=details,
+        change_secret_compartment_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -152,36 +153,37 @@ def create_secret(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
-    details['secretContent'] = cli_util.parse_json_parameter("secret_content", secret_content)
-    details['secretName'] = secret_name
-    details['vaultId'] = vault_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['secretContent'] = cli_util.parse_json_parameter("secret_content", secret_content)
+    _details['secretName'] = secret_name
+    _details['vaultId'] = vault_id
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if key_id is not None:
-        details['keyId'] = key_id
+        _details['keyId'] = key_id
 
     if metadata is not None:
-        details['metadata'] = cli_util.parse_json_parameter("metadata", metadata)
+        _details['metadata'] = cli_util.parse_json_parameter("metadata", metadata)
 
     if secret_rules is not None:
-        details['secretRules'] = cli_util.parse_json_parameter("secret_rules", secret_rules)
+        _details['secretRules'] = cli_util.parse_json_parameter("secret_rules", secret_rules)
 
-    client = cli_util.build_client('vaults', ctx)
+    client = cli_util.build_client('vault', 'vaults', ctx)
     result = client.create_secret(
-        create_secret_details=details,
+        create_secret_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_secret') and callable(getattr(client, 'get_secret')):
             try:
                 wait_period_kwargs = {}
@@ -236,47 +238,48 @@ def create_secret_base64_secret_content_details(ctx, from_json, wait_for_state, 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['secretContent'] = {}
-    details['compartmentId'] = compartment_id
-    details['secretName'] = secret_name
-    details['vaultId'] = vault_id
+    _details = {}
+    _details['secretContent'] = {}
+    _details['compartmentId'] = compartment_id
+    _details['secretName'] = secret_name
+    _details['vaultId'] = vault_id
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if key_id is not None:
-        details['keyId'] = key_id
+        _details['keyId'] = key_id
 
     if metadata is not None:
-        details['metadata'] = cli_util.parse_json_parameter("metadata", metadata)
+        _details['metadata'] = cli_util.parse_json_parameter("metadata", metadata)
 
     if secret_rules is not None:
-        details['secretRules'] = cli_util.parse_json_parameter("secret_rules", secret_rules)
+        _details['secretRules'] = cli_util.parse_json_parameter("secret_rules", secret_rules)
 
     if secret_content_name is not None:
-        details['secretContent']['name'] = secret_content_name
+        _details['secretContent']['name'] = secret_content_name
 
     if secret_content_stage is not None:
-        details['secretContent']['stage'] = secret_content_stage
+        _details['secretContent']['stage'] = secret_content_stage
 
     if secret_content_content is not None:
-        details['secretContent']['content'] = secret_content_content
+        _details['secretContent']['content'] = secret_content_content
 
-    details['secretContent']['contentType'] = 'BASE64'
+    _details['secretContent']['contentType'] = 'BASE64'
 
-    client = cli_util.build_client('vaults', ctx)
+    client = cli_util.build_client('vault', 'vaults', ctx)
     result = client.create_secret(
-        create_secret_details=details,
+        create_secret_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_secret') and callable(getattr(client, 'get_secret')):
             try:
                 wait_period_kwargs = {}
@@ -315,7 +318,7 @@ def get_secret(ctx, from_json, secret_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('vaults', ctx)
+    client = cli_util.build_client('vault', 'vaults', ctx)
     result = client.get_secret(
         secret_id=secret_id,
         **kwargs
@@ -341,7 +344,7 @@ def get_secret_version(ctx, from_json, secret_id, secret_version_number):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('vaults', ctx)
+    client = cli_util.build_client('vault', 'vaults', ctx)
     result = client.get_secret_version(
         secret_id=secret_id,
         secret_version_number=secret_version_number,
@@ -381,7 +384,7 @@ def list_secret_versions(ctx, from_json, all_pages, page_size, secret_id, limit,
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('vaults', ctx)
+    client = cli_util.build_client('vault', 'vaults', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -444,7 +447,7 @@ def list_secrets(ctx, from_json, all_pages, page_size, compartment_id, name, lim
     if lifecycle_state is not None:
         kwargs['lifecycle_state'] = lifecycle_state
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('vaults', ctx)
+    client = cli_util.build_client('vault', 'vaults', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -489,15 +492,15 @@ def schedule_secret_deletion(ctx, from_json, secret_id, time_of_deletion, if_mat
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if time_of_deletion is not None:
-        details['timeOfDeletion'] = time_of_deletion
+        _details['timeOfDeletion'] = time_of_deletion
 
-    client = cli_util.build_client('vaults', ctx)
+    client = cli_util.build_client('vault', 'vaults', ctx)
     result = client.schedule_secret_deletion(
         secret_id=secret_id,
-        schedule_secret_deletion_details=details,
+        schedule_secret_deletion_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -526,16 +529,16 @@ def schedule_secret_version_deletion(ctx, from_json, secret_id, secret_version_n
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if time_of_deletion is not None:
-        details['timeOfDeletion'] = time_of_deletion
+        _details['timeOfDeletion'] = time_of_deletion
 
-    client = cli_util.build_client('vaults', ctx)
+    client = cli_util.build_client('vault', 'vaults', ctx)
     result = client.schedule_secret_version_deletion(
         secret_id=secret_id,
         secret_version_number=secret_version_number,
-        schedule_secret_version_deletion_details=details,
+        schedule_secret_version_deletion_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -578,36 +581,37 @@ def update_secret(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if current_version_number is not None:
-        details['currentVersionNumber'] = current_version_number
+        _details['currentVersionNumber'] = current_version_number
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if metadata is not None:
-        details['metadata'] = cli_util.parse_json_parameter("metadata", metadata)
+        _details['metadata'] = cli_util.parse_json_parameter("metadata", metadata)
 
     if secret_content is not None:
-        details['secretContent'] = cli_util.parse_json_parameter("secret_content", secret_content)
+        _details['secretContent'] = cli_util.parse_json_parameter("secret_content", secret_content)
 
     if secret_rules is not None:
-        details['secretRules'] = cli_util.parse_json_parameter("secret_rules", secret_rules)
+        _details['secretRules'] = cli_util.parse_json_parameter("secret_rules", secret_rules)
 
-    client = cli_util.build_client('vaults', ctx)
+    client = cli_util.build_client('vault', 'vaults', ctx)
     result = client.update_secret(
         secret_id=secret_id,
-        update_secret_details=details,
+        update_secret_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_secret') and callable(getattr(client, 'get_secret')):
             try:
                 wait_period_kwargs = {}
@@ -671,45 +675,46 @@ def update_secret_base64_secret_content_details(ctx, from_json, force, wait_for_
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['secretContent'] = {}
+    _details = {}
+    _details['secretContent'] = {}
 
     if current_version_number is not None:
-        details['currentVersionNumber'] = current_version_number
+        _details['currentVersionNumber'] = current_version_number
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if metadata is not None:
-        details['metadata'] = cli_util.parse_json_parameter("metadata", metadata)
+        _details['metadata'] = cli_util.parse_json_parameter("metadata", metadata)
 
     if secret_rules is not None:
-        details['secretRules'] = cli_util.parse_json_parameter("secret_rules", secret_rules)
+        _details['secretRules'] = cli_util.parse_json_parameter("secret_rules", secret_rules)
 
     if secret_content_name is not None:
-        details['secretContent']['name'] = secret_content_name
+        _details['secretContent']['name'] = secret_content_name
 
     if secret_content_stage is not None:
-        details['secretContent']['stage'] = secret_content_stage
+        _details['secretContent']['stage'] = secret_content_stage
 
     if secret_content_content is not None:
-        details['secretContent']['content'] = secret_content_content
+        _details['secretContent']['content'] = secret_content_content
 
-    details['secretContent']['contentType'] = 'BASE64'
+    _details['secretContent']['contentType'] = 'BASE64'
 
-    client = cli_util.build_client('vaults', ctx)
+    client = cli_util.build_client('vault', 'vaults', ctx)
     result = client.update_secret(
         secret_id=secret_id,
-        update_secret_details=details,
+        update_secret_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_secret') and callable(getattr(client, 'get_secret')):
             try:
                 wait_period_kwargs = {}

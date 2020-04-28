@@ -1,5 +1,6 @@
 # coding: utf-8
-# Copyright (c) 2016, 2020, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2020, Oracle and/or its affiliates.  All rights reserved.
+# This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 from __future__ import print_function
 import click
@@ -56,13 +57,13 @@ def change_application_compartment(ctx, from_json, application_id, compartment_i
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
 
-    client = cli_util.build_client('functions_management', ctx)
+    client = cli_util.build_client('functions', 'functions_management', ctx)
     result = client.change_application_compartment(
         application_id=application_id,
-        change_application_compartment_details=details,
+        change_application_compartment_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -96,26 +97,27 @@ def create_application(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
-    details['displayName'] = display_name
-    details['subnetIds'] = cli_util.parse_json_parameter("subnet_ids", subnet_ids)
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['displayName'] = display_name
+    _details['subnetIds'] = cli_util.parse_json_parameter("subnet_ids", subnet_ids)
 
     if config is not None:
-        details['config'] = cli_util.parse_json_parameter("config", config)
+        _details['config'] = cli_util.parse_json_parameter("config", config)
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('functions_management', ctx)
+    client = cli_util.build_client('functions', 'functions_management', ctx)
     result = client.create_application(
-        create_application_details=details,
+        create_application_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_application') and callable(getattr(client, 'get_application')):
             try:
                 wait_period_kwargs = {}
@@ -171,33 +173,34 @@ def create_function(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['displayName'] = display_name
-    details['applicationId'] = application_id
-    details['image'] = image
-    details['memoryInMBs'] = memory_in_mbs
+    _details = {}
+    _details['displayName'] = display_name
+    _details['applicationId'] = application_id
+    _details['image'] = image
+    _details['memoryInMBs'] = memory_in_mbs
 
     if image_digest is not None:
-        details['imageDigest'] = image_digest
+        _details['imageDigest'] = image_digest
 
     if config is not None:
-        details['config'] = cli_util.parse_json_parameter("config", config)
+        _details['config'] = cli_util.parse_json_parameter("config", config)
 
     if timeout_in_seconds is not None:
-        details['timeoutInSeconds'] = timeout_in_seconds
+        _details['timeoutInSeconds'] = timeout_in_seconds
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('functions_management', ctx)
+    client = cli_util.build_client('functions', 'functions_management', ctx)
     result = client.create_function(
-        create_function_details=details,
+        create_function_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_function') and callable(getattr(client, 'get_function')):
             try:
                 wait_period_kwargs = {}
@@ -243,12 +246,13 @@ def delete_application(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('functions_management', ctx)
+    client = cli_util.build_client('functions', 'functions_management', ctx)
     result = client.delete_application(
         application_id=application_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_application') and callable(getattr(client, 'get_application')):
             try:
                 wait_period_kwargs = {}
@@ -306,12 +310,13 @@ def delete_function(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('functions_management', ctx)
+    client = cli_util.build_client('functions', 'functions_management', ctx)
     result = client.delete_function(
         function_id=function_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_function') and callable(getattr(client, 'get_function')):
             try:
                 wait_period_kwargs = {}
@@ -362,7 +367,7 @@ def get_application(ctx, from_json, application_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('functions_management', ctx)
+    client = cli_util.build_client('functions', 'functions_management', ctx)
     result = client.get_application(
         application_id=application_id,
         **kwargs
@@ -384,7 +389,7 @@ def get_function(ctx, from_json, function_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('functions_management', ctx)
+    client = cli_util.build_client('functions', 'functions_management', ctx)
     result = client.get_function(
         function_id=function_id,
         **kwargs
@@ -437,7 +442,7 @@ def list_applications(ctx, from_json, all_pages, page_size, compartment_id, limi
     if sort_by is not None:
         kwargs['sort_by'] = sort_by
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('functions_management', ctx)
+    client = cli_util.build_client('functions', 'functions_management', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -508,7 +513,7 @@ def list_functions(ctx, from_json, all_pages, page_size, application_id, limit, 
     if sort_by is not None:
         kwargs['sort_by'] = sort_by
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('functions_management', ctx)
+    client = cli_util.build_client('functions', 'functions_management', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -571,24 +576,25 @@ def update_application(ctx, from_json, force, wait_for_state, max_wait_seconds, 
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if config is not None:
-        details['config'] = cli_util.parse_json_parameter("config", config)
+        _details['config'] = cli_util.parse_json_parameter("config", config)
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('functions_management', ctx)
+    client = cli_util.build_client('functions', 'functions_management', ctx)
     result = client.update_application(
         application_id=application_id,
-        update_application_details=details,
+        update_application_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_application') and callable(getattr(client, 'get_application')):
             try:
                 wait_period_kwargs = {}
@@ -652,36 +658,37 @@ def update_function(ctx, from_json, force, wait_for_state, max_wait_seconds, wai
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if image is not None:
-        details['image'] = image
+        _details['image'] = image
 
     if image_digest is not None:
-        details['imageDigest'] = image_digest
+        _details['imageDigest'] = image_digest
 
     if memory_in_mbs is not None:
-        details['memoryInMBs'] = memory_in_mbs
+        _details['memoryInMBs'] = memory_in_mbs
 
     if config is not None:
-        details['config'] = cli_util.parse_json_parameter("config", config)
+        _details['config'] = cli_util.parse_json_parameter("config", config)
 
     if timeout_in_seconds is not None:
-        details['timeoutInSeconds'] = timeout_in_seconds
+        _details['timeoutInSeconds'] = timeout_in_seconds
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('functions_management', ctx)
+    client = cli_util.build_client('functions', 'functions_management', ctx)
     result = client.update_function(
         function_id=function_id,
-        update_function_details=details,
+        update_function_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_function') and callable(getattr(client, 'get_function')):
             try:
                 wait_period_kwargs = {}

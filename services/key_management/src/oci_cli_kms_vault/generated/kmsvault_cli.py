@@ -1,5 +1,6 @@
 # coding: utf-8
-# Copyright (c) 2016, 2020, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2020, Oracle and/or its affiliates.  All rights reserved.
+# This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 from __future__ import print_function
 import click
@@ -59,12 +60,13 @@ def cancel_vault_deletion(ctx, from_json, wait_for_state, max_wait_seconds, wait
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('kms_vault', ctx)
+    client = cli_util.build_client('key_management', 'kms_vault', ctx)
     result = client.cancel_vault_deletion(
         vault_id=vault_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_vault') and callable(getattr(client, 'get_vault')):
             try:
                 wait_period_kwargs = {}
@@ -112,13 +114,13 @@ def change_vault_compartment(ctx, from_json, vault_id, compartment_id, if_match)
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
 
-    client = cli_util.build_client('kms_vault', ctx)
+    client = cli_util.build_client('key_management', 'kms_vault', ctx)
     result = client.change_vault_compartment(
         vault_id=vault_id,
-        change_vault_compartment_details=details,
+        change_vault_compartment_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -145,23 +147,24 @@ def create_vault(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
-    details['displayName'] = display_name
-    details['vaultType'] = vault_type
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['displayName'] = display_name
+    _details['vaultType'] = vault_type
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
-    client = cli_util.build_client('kms_vault', ctx)
+    client = cli_util.build_client('key_management', 'kms_vault', ctx)
     result = client.create_vault(
-        create_vault_details=details,
+        create_vault_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_vault') and callable(getattr(client, 'get_vault')):
             try:
                 wait_period_kwargs = {}
@@ -202,7 +205,7 @@ def get_vault(ctx, from_json, vault_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('kms_vault', ctx)
+    client = cli_util.build_client('key_management', 'kms_vault', ctx)
     result = client.get_vault(
         vault_id=vault_id,
         **kwargs
@@ -224,7 +227,7 @@ def get_vault_usage(ctx, from_json, vault_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('kms_vault', ctx)
+    client = cli_util.build_client('key_management', 'kms_vault', ctx)
     result = client.get_vault_usage(
         vault_id=vault_id,
         **kwargs
@@ -262,7 +265,7 @@ def list_vaults(ctx, from_json, all_pages, page_size, compartment_id, limit, pag
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('kms_vault', ctx)
+    client = cli_util.build_client('key_management', 'kms_vault', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -312,18 +315,19 @@ def schedule_vault_deletion(ctx, from_json, wait_for_state, max_wait_seconds, wa
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if time_of_deletion is not None:
-        details['timeOfDeletion'] = time_of_deletion
+        _details['timeOfDeletion'] = time_of_deletion
 
-    client = cli_util.build_client('kms_vault', ctx)
+    client = cli_util.build_client('key_management', 'kms_vault', ctx)
     result = client.schedule_vault_deletion(
         vault_id=vault_id,
-        schedule_vault_deletion_details=details,
+        schedule_vault_deletion_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_vault') and callable(getattr(client, 'get_vault')):
             try:
                 wait_period_kwargs = {}
@@ -379,24 +383,25 @@ def update_vault(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_i
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
-    client = cli_util.build_client('kms_vault', ctx)
+    client = cli_util.build_client('key_management', 'kms_vault', ctx)
     result = client.update_vault(
         vault_id=vault_id,
-        update_vault_details=details,
+        update_vault_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_vault') and callable(getattr(client, 'get_vault')):
             try:
                 wait_period_kwargs = {}

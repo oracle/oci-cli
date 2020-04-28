@@ -1,5 +1,6 @@
 # coding: utf-8
-# Copyright (c) 2016, 2020, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2020, Oracle and/or its affiliates.  All rights reserved.
+# This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 from __future__ import print_function
 import click
@@ -103,13 +104,13 @@ def change_alarm_compartment(ctx, from_json, alarm_id, compartment_id, if_match)
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
 
-    client = cli_util.build_client('monitoring', ctx)
+    client = cli_util.build_client('monitoring', 'monitoring', ctx)
     result = client.change_alarm_compartment(
         alarm_id=alarm_id,
-        change_alarm_compartment_details=details,
+        change_alarm_compartment_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -192,49 +193,50 @@ def create_alarm(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['displayName'] = display_name
-    details['compartmentId'] = compartment_id
-    details['metricCompartmentId'] = metric_compartment_id
-    details['namespace'] = namespace
-    details['query'] = query_parameterconflict
-    details['severity'] = severity
-    details['destinations'] = cli_util.parse_json_parameter("destinations", destinations)
-    details['isEnabled'] = is_enabled
+    _details = {}
+    _details['displayName'] = display_name
+    _details['compartmentId'] = compartment_id
+    _details['metricCompartmentId'] = metric_compartment_id
+    _details['namespace'] = namespace
+    _details['query'] = query_parameterconflict
+    _details['severity'] = severity
+    _details['destinations'] = cli_util.parse_json_parameter("destinations", destinations)
+    _details['isEnabled'] = is_enabled
 
     if metric_compartment_id_in_subtree is not None:
-        details['metricCompartmentIdInSubtree'] = metric_compartment_id_in_subtree
+        _details['metricCompartmentIdInSubtree'] = metric_compartment_id_in_subtree
 
     if resource_group is not None:
-        details['resourceGroup'] = resource_group
+        _details['resourceGroup'] = resource_group
 
     if resolution is not None:
-        details['resolution'] = resolution
+        _details['resolution'] = resolution
 
     if pending_duration is not None:
-        details['pendingDuration'] = pending_duration
+        _details['pendingDuration'] = pending_duration
 
     if body is not None:
-        details['body'] = body
+        _details['body'] = body
 
     if repeat_notification_duration is not None:
-        details['repeatNotificationDuration'] = repeat_notification_duration
+        _details['repeatNotificationDuration'] = repeat_notification_duration
 
     if suppression is not None:
-        details['suppression'] = cli_util.parse_json_parameter("suppression", suppression)
+        _details['suppression'] = cli_util.parse_json_parameter("suppression", suppression)
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('monitoring', ctx)
+    client = cli_util.build_client('monitoring', 'monitoring', ctx)
     result = client.create_alarm(
-        create_alarm_details=details,
+        create_alarm_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_alarm') and callable(getattr(client, 'get_alarm')):
             try:
                 wait_period_kwargs = {}
@@ -282,12 +284,13 @@ def delete_alarm(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('monitoring', ctx)
+    client = cli_util.build_client('monitoring', 'monitoring', ctx)
     result = client.delete_alarm(
         alarm_id=alarm_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_alarm') and callable(getattr(client, 'get_alarm')):
             try:
                 wait_period_kwargs = {}
@@ -340,7 +343,7 @@ def get_alarm(ctx, from_json, alarm_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('monitoring', ctx)
+    client = cli_util.build_client('monitoring', 'monitoring', ctx)
     result = client.get_alarm(
         alarm_id=alarm_id,
         **kwargs
@@ -389,7 +392,7 @@ def get_alarm_history(ctx, from_json, alarm_id, alarm_historytype, page, limit, 
     if timestamp_less_than is not None:
         kwargs['timestamp_less_than'] = timestamp_less_than
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('monitoring', ctx)
+    client = cli_util.build_client('monitoring', 'monitoring', ctx)
     result = client.get_alarm_history(
         alarm_id=alarm_id,
         **kwargs
@@ -446,7 +449,7 @@ def list_alarms(ctx, from_json, all_pages, page_size, compartment_id, page, limi
     if compartment_id_in_subtree is not None:
         kwargs['compartment_id_in_subtree'] = compartment_id_in_subtree
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('monitoring', ctx)
+    client = cli_util.build_client('monitoring', 'monitoring', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -518,7 +521,7 @@ def list_alarms_status(ctx, from_json, all_pages, page_size, compartment_id, com
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('monitoring', ctx)
+    client = cli_util.build_client('monitoring', 'monitoring', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -599,30 +602,30 @@ def list_metrics(ctx, from_json, all_pages, page_size, compartment_id, name, nam
         kwargs['compartment_id_in_subtree'] = compartment_id_in_subtree
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if name is not None:
-        details['name'] = name
+        _details['name'] = name
 
     if namespace is not None:
-        details['namespace'] = namespace
+        _details['namespace'] = namespace
 
     if resource_group is not None:
-        details['resourceGroup'] = resource_group
+        _details['resourceGroup'] = resource_group
 
     if dimension_filters is not None:
-        details['dimensionFilters'] = cli_util.parse_json_parameter("dimension_filters", dimension_filters)
+        _details['dimensionFilters'] = cli_util.parse_json_parameter("dimension_filters", dimension_filters)
 
     if group_by is not None:
-        details['groupBy'] = cli_util.parse_json_parameter("group_by", group_by)
+        _details['groupBy'] = cli_util.parse_json_parameter("group_by", group_by)
 
     if sort_by is not None:
-        details['sortBy'] = sort_by
+        _details['sortBy'] = sort_by
 
     if sort_order is not None:
-        details['sortOrder'] = sort_order
+        _details['sortOrder'] = sort_order
 
-    client = cli_util.build_client('monitoring', ctx)
+    client = cli_util.build_client('monitoring', 'monitoring', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -630,7 +633,7 @@ def list_metrics(ctx, from_json, all_pages, page_size, compartment_id, name, nam
         result = cli_util.list_call_get_all_results(
             client.list_metrics,
             compartment_id=compartment_id,
-            list_metrics_details=details,
+            list_metrics_details=_details,
             **kwargs
         )
     elif limit is not None:
@@ -639,13 +642,13 @@ def list_metrics(ctx, from_json, all_pages, page_size, compartment_id, name, nam
             limit,
             page_size,
             compartment_id=compartment_id,
-            list_metrics_details=details,
+            list_metrics_details=_details,
             **kwargs
         )
     else:
         result = client.list_metrics(
             compartment_id=compartment_id,
-            list_metrics_details=details,
+            list_metrics_details=_details,
             **kwargs
         )
     cli_util.render_response(result, ctx)
@@ -676,15 +679,15 @@ def post_metric_data(ctx, from_json, metric_data, batch_atomicity):
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['metricData'] = cli_util.parse_json_parameter("metric_data", metric_data)
+    _details = {}
+    _details['metricData'] = cli_util.parse_json_parameter("metric_data", metric_data)
 
     if batch_atomicity is not None:
-        details['batchAtomicity'] = batch_atomicity
+        _details['batchAtomicity'] = batch_atomicity
 
-    client = cli_util.build_client('monitoring', ctx)
+    client = cli_util.build_client('monitoring', 'monitoring', ctx)
     result = client.post_metric_data(
-        post_metric_data_details=details,
+        post_metric_data_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -709,7 +712,7 @@ def remove_alarm_suppression(ctx, from_json, alarm_id, if_match):
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('monitoring', ctx)
+    client = cli_util.build_client('monitoring', 'monitoring', ctx)
     result = client.remove_alarm_suppression(
         alarm_id=alarm_id,
         **kwargs
@@ -758,26 +761,26 @@ def summarize_metrics_data(ctx, from_json, compartment_id, namespace, query_para
         kwargs['compartment_id_in_subtree'] = compartment_id_in_subtree
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['namespace'] = namespace
-    details['query'] = query_parameterconflict
+    _details = {}
+    _details['namespace'] = namespace
+    _details['query'] = query_parameterconflict
 
     if resource_group is not None:
-        details['resourceGroup'] = resource_group
+        _details['resourceGroup'] = resource_group
 
     if start_time is not None:
-        details['startTime'] = start_time
+        _details['startTime'] = start_time
 
     if end_time is not None:
-        details['endTime'] = end_time
+        _details['endTime'] = end_time
 
     if resolution is not None:
-        details['resolution'] = resolution
+        _details['resolution'] = resolution
 
-    client = cli_util.build_client('monitoring', ctx)
+    client = cli_util.build_client('monitoring', 'monitoring', ctx)
     result = client.summarize_metrics_data(
         compartment_id=compartment_id,
-        summarize_metrics_data_details=details,
+        summarize_metrics_data_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -872,66 +875,67 @@ def update_alarm(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_i
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if compartment_id is not None:
-        details['compartmentId'] = compartment_id
+        _details['compartmentId'] = compartment_id
 
     if metric_compartment_id is not None:
-        details['metricCompartmentId'] = metric_compartment_id
+        _details['metricCompartmentId'] = metric_compartment_id
 
     if metric_compartment_id_in_subtree is not None:
-        details['metricCompartmentIdInSubtree'] = metric_compartment_id_in_subtree
+        _details['metricCompartmentIdInSubtree'] = metric_compartment_id_in_subtree
 
     if namespace is not None:
-        details['namespace'] = namespace
+        _details['namespace'] = namespace
 
     if resource_group is not None:
-        details['resourceGroup'] = resource_group
+        _details['resourceGroup'] = resource_group
 
     if query_parameterconflict is not None:
-        details['query'] = query_parameterconflict
+        _details['query'] = query_parameterconflict
 
     if resolution is not None:
-        details['resolution'] = resolution
+        _details['resolution'] = resolution
 
     if pending_duration is not None:
-        details['pendingDuration'] = pending_duration
+        _details['pendingDuration'] = pending_duration
 
     if severity is not None:
-        details['severity'] = severity
+        _details['severity'] = severity
 
     if body is not None:
-        details['body'] = body
+        _details['body'] = body
 
     if destinations is not None:
-        details['destinations'] = cli_util.parse_json_parameter("destinations", destinations)
+        _details['destinations'] = cli_util.parse_json_parameter("destinations", destinations)
 
     if repeat_notification_duration is not None:
-        details['repeatNotificationDuration'] = repeat_notification_duration
+        _details['repeatNotificationDuration'] = repeat_notification_duration
 
     if suppression is not None:
-        details['suppression'] = cli_util.parse_json_parameter("suppression", suppression)
+        _details['suppression'] = cli_util.parse_json_parameter("suppression", suppression)
 
     if is_enabled is not None:
-        details['isEnabled'] = is_enabled
+        _details['isEnabled'] = is_enabled
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('monitoring', ctx)
+    client = cli_util.build_client('monitoring', 'monitoring', ctx)
     result = client.update_alarm(
         alarm_id=alarm_id,
-        update_alarm_details=details,
+        update_alarm_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_alarm') and callable(getattr(client, 'get_alarm')):
             try:
                 wait_period_kwargs = {}

@@ -1,5 +1,6 @@
 # coding: utf-8
-# Copyright (c) 2016, 2019, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2020, Oracle and/or its affiliates.  All rights reserved.
+# This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 from __future__ import print_function
 from base64 import b64encode
@@ -211,7 +212,7 @@ def export_image_internal(ctx, image_id, export_image_details, if_match):
     if if_match is not None:
         kwargs['if_match'] = if_match
 
-    client = cli_util.build_client('compute', ctx)
+    client = cli_util.build_client('core', 'compute', ctx)
     result = client.export_image(
         image_id=image_id,
         export_image_details=export_image_details,
@@ -292,7 +293,7 @@ def import_image_internal(ctx, compartment_id, display_name, import_image_detail
     if launch_mode is not None:
         details['launchMode'] = launch_mode
 
-    client = cli_util.build_client('compute', ctx)
+    client = cli_util.build_client('core', 'compute', ctx)
     result = client.create_image(
         create_image_details=details,
         **kwargs
@@ -322,7 +323,7 @@ def list_vnics(ctx, from_json, compartment_id, instance_id, limit, page, all_pag
     if not compartment_id and not instance_id:
         raise click.UsageError('--compartment-id or --instance-id must be provided')
 
-    client = cli_util.build_client('compute', ctx)
+    client = cli_util.build_client('core', 'compute', ctx)
     if not compartment_id:
         compartment_id = client.get_instance(instance_id=instance_id).data.compartment_id
 
@@ -358,7 +359,7 @@ def list_vnics(ctx, from_json, compartment_id, instance_id, limit, page, all_pag
             **kwargs
         )
 
-    networking_client = cli_util.build_client('virtual_network', ctx)
+    networking_client = cli_util.build_client('core', 'virtual_network', ctx)
     result = []
 
     for vnic_attachment in vnic_attachments_result.data:
@@ -533,7 +534,7 @@ def attach_vnic(ctx, from_json, instance_id, subnet_id, nsg_ids, vnic_display_na
     attachment_details['instanceId'] = instance_id
     attachment_details['nicIndex'] = nic_index
 
-    compute_client = cli_util.build_client('compute', ctx)
+    compute_client = cli_util.build_client('core', 'compute', ctx)
     response = compute_client.attach_vnic(
         attach_vnic_details=attachment_details,
         **kwargs
@@ -554,7 +555,7 @@ def attach_vnic(ctx, from_json, instance_id, subnet_id, nsg_ids, vnic_display_na
     if not response.data.vnic_id:
         sys.exit('The VNIC ID is not set on the VNIC attachment.')
 
-    network_client = cli_util.build_client('virtual_network', ctx)
+    network_client = cli_util.build_client('core', 'virtual_network', ctx)
     response = network_client.get_vnic(vnic_id=response.data.vnic_id)
     cli_util.render_response(response, ctx)
 
@@ -572,7 +573,7 @@ def attach_vnic(ctx, from_json, instance_id, subnet_id, nsg_ids, vnic_display_na
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
 def detach_vnic(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, vnic_id, compartment_id):
-    compute_client = cli_util.build_client('compute', ctx)
+    compute_client = cli_util.build_client('core', 'compute', ctx)
     result = compute_client.list_vnic_attachments(compartment_id=compartment_id, vnic_id=vnic_id)
 
     if result.data is None or len(result.data) == 0:
@@ -654,7 +655,7 @@ def get_plink_connection_string(ctx, from_json, instance_console_connection_id, 
     if isinstance(instance_console_connection_id, six.string_types) and len(instance_console_connection_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-console-connection-id cannot be whitespace or empty string')
     kwargs = {}
-    client = cli_util.build_client('compute', ctx)
+    client = cli_util.build_client('core', 'compute', ctx)
     result = client.get_instance_console_connection(
         instance_console_connection_id=instance_console_connection_id,
         **kwargs
@@ -715,13 +716,13 @@ def change_instance_compartment(ctx, instance_id, compartment_id, if_match, from
 
     details = {'compartmentId': compartment_id}
 
-    client = cli_util.build_client('compute', ctx)
+    client = cli_util.build_client('core', 'compute', ctx)
     result = client.change_instance_compartment(
         instance_id=instance_id,
         change_instance_compartment_details=details,
         **kwargs
     )
-    work_request_client = cli_util.build_client('work_request', ctx)
+    work_request_client = cli_util.build_client('core', 'work_request', ctx)
     if wait_for_state:
         if hasattr(work_request_client, 'get_work_request') and callable(getattr(work_request_client, 'get_work_request')):
             try:
@@ -770,6 +771,6 @@ def list_volume_attachments_extended(ctx, **kwargs):
 
     if not kwargs['compartment_id']:
         # Use instance_id to get compartment_id
-        client = cli_util.build_client('compute', ctx)
+        client = cli_util.build_client('core', 'compute', ctx)
         kwargs['compartment_id'] = client.get_instance(instance_id=kwargs['instance_id']).data.compartment_id
     ctx.invoke(compute_cli.list_volume_attachments, **kwargs)

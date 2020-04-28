@@ -1,5 +1,6 @@
 # coding: utf-8
-# Copyright (c) 2016, 2020, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2020, Oracle and/or its affiliates.  All rights reserved.
+# This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 from __future__ import print_function
 import click
@@ -61,7 +62,7 @@ def consumer_commit(ctx, from_json, stream_id, cursor):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('stream', ctx)
+    client = cli_util.build_client('streaming', 'stream', ctx)
     result = client.consumer_commit(
         stream_id=stream_id,
         cursor=cursor,
@@ -87,7 +88,7 @@ def consumer_heartbeat(ctx, from_json, stream_id, cursor):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('stream', ctx)
+    client = cli_util.build_client('streaming', 'stream', ctx)
     result = client.consumer_heartbeat(
         stream_id=stream_id,
         cursor=cursor,
@@ -119,20 +120,20 @@ def create_cursor(ctx, from_json, stream_id, partition, type, offset, time):
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['partition'] = partition
-    details['type'] = type
+    _details = {}
+    _details['partition'] = partition
+    _details['type'] = type
 
     if offset is not None:
-        details['offset'] = offset
+        _details['offset'] = offset
 
     if time is not None:
-        details['time'] = time
+        _details['time'] = time
 
-    client = cli_util.build_client('stream', ctx)
+    client = cli_util.build_client('streaming', 'stream', ctx)
     result = client.create_cursor(
         stream_id=stream_id,
-        create_cursor_details=details,
+        create_cursor_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -161,26 +162,26 @@ def create_group_cursor(ctx, from_json, stream_id, type, group_name, time, insta
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['type'] = type
-    details['groupName'] = group_name
+    _details = {}
+    _details['type'] = type
+    _details['groupName'] = group_name
 
     if time is not None:
-        details['time'] = time
+        _details['time'] = time
 
     if instance_name is not None:
-        details['instanceName'] = instance_name
+        _details['instanceName'] = instance_name
 
     if timeout_in_ms is not None:
-        details['timeoutInMs'] = timeout_in_ms
+        _details['timeoutInMs'] = timeout_in_ms
 
     if commit_on_get is not None:
-        details['commitOnGet'] = commit_on_get
+        _details['commitOnGet'] = commit_on_get
 
-    client = cli_util.build_client('stream', ctx)
+    client = cli_util.build_client('streaming', 'stream', ctx)
     result = client.create_group_cursor(
         stream_id=stream_id,
-        create_group_cursor_details=details,
+        create_group_cursor_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -206,7 +207,7 @@ def get_group(ctx, from_json, stream_id, group_name):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('stream', ctx)
+    client = cli_util.build_client('streaming', 'stream', ctx)
     result = client.get_group(
         stream_id=stream_id,
         group_name=group_name,
@@ -235,7 +236,7 @@ def get_messages(ctx, from_json, stream_id, cursor, limit):
     if limit is not None:
         kwargs['limit'] = limit
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('stream', ctx)
+    client = cli_util.build_client('streaming', 'stream', ctx)
     result = client.get_messages(
         stream_id=stream_id,
         cursor=cursor,
@@ -262,13 +263,13 @@ def put_messages(ctx, from_json, stream_id, messages):
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['messages'] = cli_util.parse_json_parameter("messages", messages)
+    _details = {}
+    _details['messages'] = cli_util.parse_json_parameter("messages", messages)
 
-    client = cli_util.build_client('stream', ctx)
+    client = cli_util.build_client('streaming', 'stream', ctx)
     result = client.put_messages(
         stream_id=stream_id,
-        put_messages_details=details,
+        put_messages_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -297,19 +298,19 @@ def update_group(ctx, from_json, stream_id, group_name, type, time):
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if type is not None:
-        details['type'] = type
+        _details['type'] = type
 
     if time is not None:
-        details['time'] = time
+        _details['time'] = time
 
-    client = cli_util.build_client('stream', ctx)
+    client = cli_util.build_client('streaming', 'stream', ctx)
     result = client.update_group(
         stream_id=stream_id,
         group_name=group_name,
-        update_group_details=details,
+        update_group_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)

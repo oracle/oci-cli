@@ -1,5 +1,6 @@
 # coding: utf-8
-# Copyright (c) 2016, 2020, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2020, Oracle and/or its affiliates.  All rights reserved.
+# This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 from __future__ import print_function
 import click
@@ -58,7 +59,7 @@ def invoke_function(ctx, from_json, file, function_id, invoke_function_body, fn_
     # do not automatically retry operations with binary inputs
     kwargs['retry_strategy'] = oci.retry.NoneRetryStrategy()
 
-    client = cli_util.build_client('functions_invoke', ctx)
+    client = cli_util.build_client('functions', 'functions_invoke', ctx)
     result = client.invoke_function(
         function_id=function_id,
         **kwargs

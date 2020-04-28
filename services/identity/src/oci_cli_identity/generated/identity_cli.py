@@ -1,5 +1,6 @@
 # coding: utf-8
-# Copyright (c) 2016, 2020, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2020, Oracle and/or its affiliates.  All rights reserved.
+# This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 from __future__ import print_function
 import click
@@ -350,16 +351,16 @@ def activate_mfa_totp_device(ctx, from_json, user_id, mfa_totp_device_id, totp_t
     if if_match is not None:
         kwargs['if_match'] = if_match
 
-    details = {}
+    _details = {}
 
     if totp_token is not None:
-        details['totpToken'] = totp_token
+        _details['totpToken'] = totp_token
 
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.activate_mfa_totp_device(
         user_id=user_id,
         mfa_totp_device_id=mfa_totp_device_id,
-        mfa_totp_token=details,
+        mfa_totp_token=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -382,16 +383,17 @@ def add_user_to_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 
     kwargs = {}
 
-    details = {}
-    details['userId'] = user_id
-    details['groupId'] = group_id
+    _details = {}
+    _details['userId'] = user_id
+    _details['groupId'] = group_id
 
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.add_user_to_group(
-        add_user_to_group_details=details,
+        add_user_to_group_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_user_group_membership') and callable(getattr(client, 'get_user_group_membership')):
             try:
                 wait_period_kwargs = {}
@@ -429,7 +431,7 @@ def assemble_effective_tag_set(ctx, from_json, compartment_id, lifecycle_state):
     kwargs = {}
     if lifecycle_state is not None:
         kwargs['lifecycle_state'] = lifecycle_state
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.assemble_effective_tag_set(
         compartment_id=compartment_id,
         **kwargs
@@ -456,13 +458,13 @@ def change_tag_namespace_compartment(ctx, from_json, tag_namespace_id, compartme
 
     kwargs = {}
 
-    details = {}
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
 
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.change_tag_namespace_compartment(
         tag_namespace_id=tag_namespace_id,
-        change_tag_namespace_compartment_detail=details,
+        change_tag_namespace_compartment_detail=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -487,13 +489,13 @@ def create_auth_token(ctx, from_json, description, user_id):
 
     kwargs = {}
 
-    details = {}
-    details['description'] = description
+    _details = {}
+    _details['description'] = description
 
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.create_auth_token(
         user_id=user_id,
-        create_auth_token_details=details,
+        create_auth_token_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -527,23 +529,24 @@ def create_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
     kwargs = {}
 
-    details = {}
-    details['compartmentId'] = compartment_id
-    details['name'] = name
-    details['description'] = description
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['name'] = name
+    _details['description'] = description
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.create_compartment(
-        create_compartment_details=details,
+        create_compartment_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_compartment') and callable(getattr(client, 'get_compartment')):
             try:
                 wait_period_kwargs = {}
@@ -587,13 +590,13 @@ def create_customer_secret_key(ctx, from_json, display_name, user_id):
 
     kwargs = {}
 
-    details = {}
-    details['displayName'] = display_name
+    _details = {}
+    _details['displayName'] = display_name
 
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.create_customer_secret_key(
         user_id=user_id,
-        create_customer_secret_key_details=details,
+        create_customer_secret_key_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -626,24 +629,25 @@ def create_dynamic_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 
     kwargs = {}
 
-    details = {}
-    details['compartmentId'] = compartment_id
-    details['name'] = name
-    details['matchingRule'] = matching_rule
-    details['description'] = description
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['name'] = name
+    _details['matchingRule'] = matching_rule
+    _details['description'] = description
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.create_dynamic_group(
-        create_dynamic_group_details=details,
+        create_dynamic_group_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_dynamic_group') and callable(getattr(client, 'get_dynamic_group')):
             try:
                 wait_period_kwargs = {}
@@ -696,23 +700,24 @@ def create_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 
     kwargs = {}
 
-    details = {}
-    details['compartmentId'] = compartment_id
-    details['name'] = name
-    details['description'] = description
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['name'] = name
+    _details['description'] = description
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.create_group(
-        create_group_details=details,
+        create_group_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_group') and callable(getattr(client, 'get_group')):
             try:
                 wait_period_kwargs = {}
@@ -769,25 +774,26 @@ def create_identity_provider(ctx, from_json, wait_for_state, max_wait_seconds, w
 
     kwargs = {}
 
-    details = {}
-    details['compartmentId'] = compartment_id
-    details['name'] = name
-    details['description'] = description
-    details['productType'] = product_type
-    details['protocol'] = protocol
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['name'] = name
+    _details['description'] = description
+    _details['productType'] = product_type
+    _details['protocol'] = protocol
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.create_identity_provider(
-        create_identity_provider_details=details,
+        create_identity_provider_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_identity_provider') and callable(getattr(client, 'get_identity_provider')):
             try:
                 wait_period_kwargs = {}
@@ -844,31 +850,32 @@ def create_identity_provider_create_saml2_identity_provider_details(ctx, from_js
 
     kwargs = {}
 
-    details = {}
-    details['compartmentId'] = compartment_id
-    details['name'] = name
-    details['description'] = description
-    details['productType'] = product_type
-    details['metadataUrl'] = metadata_url
-    details['metadata'] = metadata
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['name'] = name
+    _details['description'] = description
+    _details['productType'] = product_type
+    _details['metadataUrl'] = metadata_url
+    _details['metadata'] = metadata
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if freeform_attributes is not None:
-        details['freeformAttributes'] = cli_util.parse_json_parameter("freeform_attributes", freeform_attributes)
+        _details['freeformAttributes'] = cli_util.parse_json_parameter("freeform_attributes", freeform_attributes)
 
-    details['protocol'] = 'SAML2'
+    _details['protocol'] = 'SAML2'
 
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.create_identity_provider(
-        create_identity_provider_details=details,
+        create_identity_provider_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_identity_provider') and callable(getattr(client, 'get_identity_provider')):
             try:
                 wait_period_kwargs = {}
@@ -912,17 +919,18 @@ def create_idp_group_mapping(ctx, from_json, wait_for_state, max_wait_seconds, w
 
     kwargs = {}
 
-    details = {}
-    details['idpGroupName'] = idp_group_name
-    details['groupId'] = group_id
+    _details = {}
+    _details['idpGroupName'] = idp_group_name
+    _details['groupId'] = group_id
 
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.create_idp_group_mapping(
         identity_provider_id=identity_provider_id,
-        create_idp_group_mapping_details=details,
+        create_idp_group_mapping_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_idp_group_mapping') and callable(getattr(client, 'get_idp_group_mapping')):
             try:
                 wait_period_kwargs = {}
@@ -963,12 +971,13 @@ def create_mfa_totp_device(ctx, from_json, wait_for_state, max_wait_seconds, wai
         raise click.UsageError('Parameter --user-id cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.create_mfa_totp_device(
         user_id=user_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_mfa_totp_device') and callable(getattr(client, 'get_mfa_totp_device')):
             try:
                 wait_period_kwargs = {}
@@ -1021,29 +1030,29 @@ def create_network_source(ctx, from_json, compartment_id, name, description, pub
 
     kwargs = {}
 
-    details = {}
-    details['compartmentId'] = compartment_id
-    details['name'] = name
-    details['description'] = description
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['name'] = name
+    _details['description'] = description
 
     if public_source_list is not None:
-        details['publicSourceList'] = cli_util.parse_json_parameter("public_source_list", public_source_list)
+        _details['publicSourceList'] = cli_util.parse_json_parameter("public_source_list", public_source_list)
 
     if virtual_source_list is not None:
-        details['virtualSourceList'] = cli_util.parse_json_parameter("virtual_source_list", virtual_source_list)
+        _details['virtualSourceList'] = cli_util.parse_json_parameter("virtual_source_list", virtual_source_list)
 
     if services is not None:
-        details['services'] = cli_util.parse_json_parameter("services", services)
+        _details['services'] = cli_util.parse_json_parameter("services", services)
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.create_network_source(
-        create_network_source_details=details,
+        create_network_source_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -1066,15 +1075,15 @@ def create_o_auth_client_credential(ctx, from_json, user_id, name, description, 
 
     kwargs = {}
 
-    details = {}
-    details['name'] = name
-    details['description'] = description
-    details['scopes'] = cli_util.parse_json_parameter("scopes", scopes)
+    _details = {}
+    _details['name'] = name
+    _details['description'] = description
+    _details['scopes'] = cli_util.parse_json_parameter("scopes", scopes)
 
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.create_o_auth_client_credential(
         user_id=user_id,
-        create_o_auth2_client_credential_details=details,
+        create_o_auth2_client_credential_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -1097,7 +1106,7 @@ def create_or_reset_ui_password(ctx, from_json, user_id):
         raise click.UsageError('Parameter --user-id cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.create_or_reset_ui_password(
         user_id=user_id,
         **kwargs
@@ -1135,27 +1144,28 @@ def create_policy(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 
     kwargs = {}
 
-    details = {}
-    details['compartmentId'] = compartment_id
-    details['name'] = name
-    details['statements'] = cli_util.parse_json_parameter("statements", statements)
-    details['description'] = description
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['name'] = name
+    _details['statements'] = cli_util.parse_json_parameter("statements", statements)
+    _details['description'] = description
 
     if version_date is not None:
-        details['versionDate'] = version_date
+        _details['versionDate'] = version_date
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.create_policy(
-        create_policy_details=details,
+        create_policy_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_policy') and callable(getattr(client, 'get_policy')):
             try:
                 wait_period_kwargs = {}
@@ -1199,13 +1209,13 @@ def create_region_subscription(ctx, from_json, region_key, tenancy_id):
 
     kwargs = {}
 
-    details = {}
-    details['regionKey'] = region_key
+    _details = {}
+    _details['regionKey'] = region_key
 
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.create_region_subscription(
         tenancy_id=tenancy_id,
-        create_region_subscription_details=details,
+        create_region_subscription_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -1226,13 +1236,13 @@ def create_smtp_credential(ctx, from_json, description, user_id):
 
     kwargs = {}
 
-    details = {}
-    details['description'] = description
+    _details = {}
+    _details['description'] = description
 
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.create_smtp_credential(
         user_id=user_id,
-        create_smtp_credential_details=details,
+        create_smtp_credential_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -1259,13 +1269,13 @@ def create_swift_password(ctx, from_json, description, user_id):
 
     kwargs = {}
 
-    details = {}
-    details['description'] = description
+    _details = {}
+    _details['description'] = description
 
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.create_swift_password(
         user_id=user_id,
-        create_swift_password_details=details,
+        create_swift_password_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -1312,29 +1322,30 @@ def create_tag(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
 
     kwargs = {}
 
-    details = {}
-    details['name'] = name
-    details['description'] = description
+    _details = {}
+    _details['name'] = name
+    _details['description'] = description
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if is_cost_tracking is not None:
-        details['isCostTracking'] = is_cost_tracking
+        _details['isCostTracking'] = is_cost_tracking
 
     if validator is not None:
-        details['validator'] = cli_util.parse_json_parameter("validator", validator)
+        _details['validator'] = cli_util.parse_json_parameter("validator", validator)
 
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.create_tag(
         tag_namespace_id=tag_namespace_id,
-        create_tag_details=details,
+        create_tag_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_tag') and callable(getattr(client, 'get_tag')):
             try:
                 wait_period_kwargs = {}
@@ -1395,29 +1406,30 @@ def create_tag_default_tag_definition_validator(ctx, from_json, wait_for_state, 
 
     kwargs = {}
 
-    details = {}
-    details['validator'] = {}
-    details['name'] = name
-    details['description'] = description
+    _details = {}
+    _details['validator'] = {}
+    _details['name'] = name
+    _details['description'] = description
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if is_cost_tracking is not None:
-        details['isCostTracking'] = is_cost_tracking
+        _details['isCostTracking'] = is_cost_tracking
 
-    details['validator']['validatorType'] = 'DEFAULT'
+    _details['validator']['validatorType'] = 'DEFAULT'
 
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.create_tag(
         tag_namespace_id=tag_namespace_id,
-        create_tag_details=details,
+        create_tag_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_tag') and callable(getattr(client, 'get_tag')):
             try:
                 wait_period_kwargs = {}
@@ -1479,32 +1491,33 @@ def create_tag_enum_tag_definition_validator(ctx, from_json, wait_for_state, max
 
     kwargs = {}
 
-    details = {}
-    details['validator'] = {}
-    details['name'] = name
-    details['description'] = description
+    _details = {}
+    _details['validator'] = {}
+    _details['name'] = name
+    _details['description'] = description
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if is_cost_tracking is not None:
-        details['isCostTracking'] = is_cost_tracking
+        _details['isCostTracking'] = is_cost_tracking
 
     if validator_values is not None:
-        details['validator']['values'] = cli_util.parse_json_parameter("validator_values", validator_values)
+        _details['validator']['values'] = cli_util.parse_json_parameter("validator_values", validator_values)
 
-    details['validator']['validatorType'] = 'ENUM'
+    _details['validator']['validatorType'] = 'ENUM'
 
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.create_tag(
         tag_namespace_id=tag_namespace_id,
-        create_tag_details=details,
+        create_tag_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_tag') and callable(getattr(client, 'get_tag')):
             try:
                 wait_period_kwargs = {}
@@ -1555,20 +1568,21 @@ def create_tag_default(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
-    details['tagDefinitionId'] = tag_definition_id
-    details['value'] = value
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['tagDefinitionId'] = tag_definition_id
+    _details['value'] = value
 
     if is_required is not None:
-        details['isRequired'] = is_required
+        _details['isRequired'] = is_required
 
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.create_tag_default(
-        create_tag_default_details=details,
+        create_tag_default_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_tag_default') and callable(getattr(client, 'get_tag_default')):
             try:
                 wait_period_kwargs = {}
@@ -1621,23 +1635,24 @@ def create_tag_namespace(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 
     kwargs = {}
 
-    details = {}
-    details['compartmentId'] = compartment_id
-    details['name'] = name
-    details['description'] = description
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['name'] = name
+    _details['description'] = description
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.create_tag_namespace(
-        create_tag_namespace_details=details,
+        create_tag_namespace_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_tag_namespace') and callable(getattr(client, 'get_tag_namespace')):
             try:
                 wait_period_kwargs = {}
@@ -1693,26 +1708,27 @@ def create_user(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 
     kwargs = {}
 
-    details = {}
-    details['compartmentId'] = compartment_id
-    details['name'] = name
-    details['description'] = description
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['name'] = name
+    _details['description'] = description
 
     if email is not None:
-        details['email'] = email
+        _details['email'] = email
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.create_user(
-        create_user_details=details,
+        create_user_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_user') and callable(getattr(client, 'get_user')):
             try:
                 wait_period_kwargs = {}
@@ -1760,7 +1776,7 @@ def delete_api_key(ctx, from_json, user_id, fingerprint, if_match):
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.delete_api_key(
         user_id=user_id,
         fingerprint=fingerprint,
@@ -1790,7 +1806,7 @@ def delete_auth_token(ctx, from_json, user_id, auth_token_id, if_match):
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.delete_auth_token(
         user_id=user_id,
         auth_token_id=auth_token_id,
@@ -1819,12 +1835,13 @@ def delete_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.delete_compartment(
         compartment_id=compartment_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -1870,7 +1887,7 @@ def delete_customer_secret_key(ctx, from_json, user_id, customer_secret_key_id, 
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.delete_customer_secret_key(
         user_id=user_id,
         customer_secret_key_id=customer_secret_key_id,
@@ -1899,12 +1916,13 @@ def delete_dynamic_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.delete_dynamic_group(
         dynamic_group_id=dynamic_group_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_dynamic_group') and callable(getattr(client, 'get_dynamic_group')):
             try:
                 wait_period_kwargs = {}
@@ -1961,12 +1979,13 @@ def delete_group(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.delete_group(
         group_id=group_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_group') and callable(getattr(client, 'get_group')):
             try:
                 wait_period_kwargs = {}
@@ -2023,12 +2042,13 @@ def delete_identity_provider(ctx, from_json, wait_for_state, max_wait_seconds, w
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.delete_identity_provider(
         identity_provider_id=identity_provider_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_identity_provider') and callable(getattr(client, 'get_identity_provider')):
             try:
                 wait_period_kwargs = {}
@@ -2086,7 +2106,7 @@ def delete_idp_group_mapping(ctx, from_json, identity_provider_id, mapping_id, i
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.delete_idp_group_mapping(
         identity_provider_id=identity_provider_id,
         mapping_id=mapping_id,
@@ -2116,7 +2136,7 @@ def delete_mfa_totp_device(ctx, from_json, user_id, mfa_totp_device_id, if_match
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.delete_mfa_totp_device(
         user_id=user_id,
         mfa_totp_device_id=mfa_totp_device_id,
@@ -2142,7 +2162,7 @@ def delete_network_source(ctx, from_json, network_source_id, if_match):
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.delete_network_source(
         network_source_id=network_source_id,
         **kwargs
@@ -2171,7 +2191,7 @@ def delete_o_auth_client_credential(ctx, from_json, user_id, oauth2_client_crede
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.delete_o_auth_client_credential(
         user_id=user_id,
         oauth2_client_credential_id=oauth2_client_credential_id,
@@ -2200,12 +2220,13 @@ def delete_policy(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.delete_policy(
         policy_id=policy_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_policy') and callable(getattr(client, 'get_policy')):
             try:
                 wait_period_kwargs = {}
@@ -2263,7 +2284,7 @@ def delete_smtp_credential(ctx, from_json, user_id, smtp_credential_id, if_match
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.delete_smtp_credential(
         user_id=user_id,
         smtp_credential_id=smtp_credential_id,
@@ -2295,7 +2316,7 @@ def delete_swift_password(ctx, from_json, user_id, swift_password_id, if_match):
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.delete_swift_password(
         user_id=user_id,
         swift_password_id=swift_password_id,
@@ -2334,13 +2355,14 @@ def delete_tag(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.delete_tag(
         tag_namespace_id=tag_namespace_id,
         tag_name=tag_name,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -2386,12 +2408,13 @@ def delete_tag_default(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.delete_tag_default(
         tag_default_id=tag_default_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_tag_default') and callable(getattr(client, 'get_tag_default')):
             try:
                 wait_period_kwargs = {}
@@ -2451,12 +2474,13 @@ def delete_tag_namespace(ctx, from_json, wait_for_state, max_wait_seconds, wait_
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.delete_tag_namespace(
         tag_namespace_id=tag_namespace_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_tag_namespace') and callable(getattr(client, 'get_tag_namespace')):
             try:
                 wait_period_kwargs = {}
@@ -2513,12 +2537,13 @@ def delete_user(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.delete_user(
         user_id=user_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_user') and callable(getattr(client, 'get_user')):
             try:
                 wait_period_kwargs = {}
@@ -2578,13 +2603,14 @@ def generate_totp_seed(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.generate_totp_seed(
         user_id=user_id,
         mfa_totp_device_id=mfa_totp_device_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_mfa_totp_device') and callable(getattr(client, 'get_mfa_totp_device')):
             try:
                 wait_period_kwargs = {}
@@ -2622,7 +2648,7 @@ def get_authentication_policy(ctx, from_json, compartment_id):
         raise click.UsageError('Parameter --compartment-id cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.get_authentication_policy(
         compartment_id=compartment_id,
         **kwargs
@@ -2645,7 +2671,7 @@ def get_compartment(ctx, from_json, compartment_id):
         raise click.UsageError('Parameter --compartment-id cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.get_compartment(
         compartment_id=compartment_id,
         **kwargs
@@ -2666,7 +2692,7 @@ def get_dynamic_group(ctx, from_json, dynamic_group_id):
         raise click.UsageError('Parameter --dynamic-group-id cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.get_dynamic_group(
         dynamic_group_id=dynamic_group_id,
         **kwargs
@@ -2689,7 +2715,7 @@ def get_group(ctx, from_json, group_id):
         raise click.UsageError('Parameter --group-id cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.get_group(
         group_id=group_id,
         **kwargs
@@ -2710,7 +2736,7 @@ def get_identity_provider(ctx, from_json, identity_provider_id):
         raise click.UsageError('Parameter --identity-provider-id cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.get_identity_provider(
         identity_provider_id=identity_provider_id,
         **kwargs
@@ -2735,7 +2761,7 @@ def get_idp_group_mapping(ctx, from_json, identity_provider_id, mapping_id):
         raise click.UsageError('Parameter --mapping-id cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.get_idp_group_mapping(
         identity_provider_id=identity_provider_id,
         mapping_id=mapping_id,
@@ -2761,7 +2787,7 @@ def get_mfa_totp_device(ctx, from_json, user_id, mfa_totp_device_id):
         raise click.UsageError('Parameter --mfa-totp-device-id cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.get_mfa_totp_device(
         user_id=user_id,
         mfa_totp_device_id=mfa_totp_device_id,
@@ -2783,7 +2809,7 @@ def get_network_source(ctx, from_json, network_source_id):
         raise click.UsageError('Parameter --network-source-id cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.get_network_source(
         network_source_id=network_source_id,
         **kwargs
@@ -2804,7 +2830,7 @@ def get_policy(ctx, from_json, policy_id):
         raise click.UsageError('Parameter --policy-id cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.get_policy(
         policy_id=policy_id,
         **kwargs
@@ -2829,7 +2855,7 @@ def get_tag(ctx, from_json, tag_namespace_id, tag_name):
         raise click.UsageError('Parameter --tag-name cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.get_tag(
         tag_namespace_id=tag_namespace_id,
         tag_name=tag_name,
@@ -2851,7 +2877,7 @@ def get_tag_default(ctx, from_json, tag_default_id):
         raise click.UsageError('Parameter --tag-default-id cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.get_tag_default(
         tag_default_id=tag_default_id,
         **kwargs
@@ -2872,7 +2898,7 @@ def get_tag_namespace(ctx, from_json, tag_namespace_id):
         raise click.UsageError('Parameter --tag-namespace-id cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.get_tag_namespace(
         tag_namespace_id=tag_namespace_id,
         **kwargs
@@ -2893,7 +2919,7 @@ def get_tagging_work_request(ctx, from_json, work_request_id):
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.get_tagging_work_request(
         work_request_id=work_request_id,
         **kwargs
@@ -2914,7 +2940,7 @@ def get_tenancy(ctx, from_json, tenancy_id):
         raise click.UsageError('Parameter --tenancy-id cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.get_tenancy(
         tenancy_id=tenancy_id,
         **kwargs
@@ -2935,7 +2961,7 @@ def get_user(ctx, from_json, user_id):
         raise click.UsageError('Parameter --user-id cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.get_user(
         user_id=user_id,
         **kwargs
@@ -2956,7 +2982,7 @@ def get_user_group_membership(ctx, from_json, user_group_membership_id):
         raise click.UsageError('Parameter --user-group-membership-id cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.get_user_group_membership(
         user_group_membership_id=user_group_membership_id,
         **kwargs
@@ -2977,7 +3003,7 @@ def get_user_ui_password_information(ctx, from_json, user_id):
         raise click.UsageError('Parameter --user-id cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.get_user_ui_password_information(
         user_id=user_id,
         **kwargs
@@ -2998,7 +3024,7 @@ def get_work_request(ctx, from_json, work_request_id):
         raise click.UsageError('Parameter --work-request-id cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.get_work_request(
         work_request_id=work_request_id,
         **kwargs
@@ -3022,7 +3048,7 @@ def list_api_keys(ctx, from_json, all_pages, user_id):
         raise click.UsageError('Parameter --user-id cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.list_api_keys(
         user_id=user_id,
         **kwargs
@@ -3044,7 +3070,7 @@ def list_auth_tokens(ctx, from_json, all_pages, user_id):
         raise click.UsageError('Parameter --user-id cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.list_auth_tokens(
         user_id=user_id,
         **kwargs
@@ -3063,7 +3089,7 @@ def list_auth_tokens(ctx, from_json, all_pages, user_id):
 def list_availability_domains(ctx, from_json, all_pages, compartment_id):
 
     kwargs = {}
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.list_availability_domains(
         compartment_id=compartment_id,
         **kwargs
@@ -3108,7 +3134,7 @@ def list_compartments(ctx, from_json, all_pages, page_size, compartment_id, page
         kwargs['access_level'] = access_level
     if compartment_id_in_subtree is not None:
         kwargs['compartment_id_in_subtree'] = compartment_id_in_subtree
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -3155,7 +3181,7 @@ def list_cost_tracking_tags(ctx, from_json, all_pages, page_size, compartment_id
         kwargs['page'] = page
     if limit is not None:
         kwargs['limit'] = limit
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -3195,7 +3221,7 @@ def list_customer_secret_keys(ctx, from_json, all_pages, user_id):
         raise click.UsageError('Parameter --user-id cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.list_customer_secret_keys(
         user_id=user_id,
         **kwargs
@@ -3224,7 +3250,7 @@ def list_dynamic_groups(ctx, from_json, all_pages, page_size, compartment_id, pa
         kwargs['page'] = page
     if limit is not None:
         kwargs['limit'] = limit
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -3262,7 +3288,7 @@ def list_dynamic_groups(ctx, from_json, all_pages, page_size, compartment_id, pa
 def list_fault_domains(ctx, from_json, all_pages, compartment_id, availability_domain):
 
     kwargs = {}
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.list_fault_domains(
         compartment_id=compartment_id,
         availability_domain=availability_domain,
@@ -3292,7 +3318,7 @@ def list_groups(ctx, from_json, all_pages, page_size, compartment_id, page, limi
         kwargs['page'] = page
     if limit is not None:
         kwargs['limit'] = limit
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -3342,7 +3368,7 @@ def list_identity_provider_groups(ctx, from_json, all_pages, page_size, identity
         kwargs['page'] = page
     if limit is not None:
         kwargs['limit'] = limit
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -3390,7 +3416,7 @@ def list_identity_providers(ctx, from_json, all_pages, page_size, protocol, comp
         kwargs['page'] = page
     if limit is not None:
         kwargs['limit'] = limit
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -3443,7 +3469,7 @@ def list_idp_group_mappings(ctx, from_json, all_pages, page_size, identity_provi
         kwargs['page'] = page
     if limit is not None:
         kwargs['limit'] = limit
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -3501,7 +3527,7 @@ def list_mfa_totp_devices(ctx, from_json, all_pages, page_size, user_id, page, l
         kwargs['sort_by'] = sort_by
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -3548,7 +3574,7 @@ def list_network_sources(ctx, from_json, all_pages, page_size, compartment_id, p
         kwargs['page'] = page
     if limit is not None:
         kwargs['limit'] = limit
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -3601,7 +3627,7 @@ def list_o_auth_client_credentials(ctx, from_json, all_pages, page_size, user_id
         kwargs['limit'] = limit
     if lifecycle_state is not None:
         kwargs['lifecycle_state'] = lifecycle_state
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -3650,7 +3676,7 @@ def list_policies(ctx, from_json, all_pages, page_size, compartment_id, page, li
         kwargs['page'] = page
     if limit is not None:
         kwargs['limit'] = limit
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -3690,7 +3716,7 @@ def list_region_subscriptions(ctx, from_json, all_pages, tenancy_id):
         raise click.UsageError('Parameter --tenancy-id cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.list_region_subscriptions(
         tenancy_id=tenancy_id,
         **kwargs
@@ -3708,7 +3734,7 @@ def list_region_subscriptions(ctx, from_json, all_pages, tenancy_id):
 def list_regions(ctx, from_json, all_pages, ):
 
     kwargs = {}
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.list_regions(
         **kwargs
     )
@@ -3729,7 +3755,7 @@ def list_smtp_credentials(ctx, from_json, all_pages, user_id):
         raise click.UsageError('Parameter --user-id cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.list_smtp_credentials(
         user_id=user_id,
         **kwargs
@@ -3753,7 +3779,7 @@ def list_swift_passwords(ctx, from_json, all_pages, user_id):
         raise click.UsageError('Parameter --user-id cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.list_swift_passwords(
         user_id=user_id,
         **kwargs
@@ -3793,7 +3819,7 @@ def list_tag_defaults(ctx, from_json, all_pages, page_size, page, limit, id, com
         kwargs['tag_definition_id'] = tag_definition_id
     if lifecycle_state is not None:
         kwargs['lifecycle_state'] = lifecycle_state
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -3843,7 +3869,7 @@ def list_tag_namespaces(ctx, from_json, all_pages, page_size, compartment_id, pa
         kwargs['include_subcompartments'] = include_subcompartments
     if lifecycle_state is not None:
         kwargs['lifecycle_state'] = lifecycle_state
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -3893,7 +3919,7 @@ def list_tagging_work_request_errors(ctx, from_json, all_pages, page_size, work_
         kwargs['page'] = page
     if limit is not None:
         kwargs['limit'] = limit
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -3943,7 +3969,7 @@ def list_tagging_work_request_logs(ctx, from_json, all_pages, page_size, work_re
         kwargs['page'] = page
     if limit is not None:
         kwargs['limit'] = limit
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -3993,7 +4019,7 @@ def list_tagging_work_requests(ctx, from_json, all_pages, page_size, compartment
         kwargs['limit'] = limit
     if resource_identifier is not None:
         kwargs['resource_identifier'] = resource_identifier
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -4046,7 +4072,7 @@ def list_tags(ctx, from_json, all_pages, page_size, tag_namespace_id, page, limi
         kwargs['limit'] = limit
     if lifecycle_state is not None:
         kwargs['lifecycle_state'] = lifecycle_state
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -4101,7 +4127,7 @@ def list_user_group_memberships(ctx, from_json, all_pages, page_size, compartmen
         kwargs['page'] = page
     if limit is not None:
         kwargs['limit'] = limit
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -4154,7 +4180,7 @@ def list_users(ctx, from_json, all_pages, page_size, compartment_id, page, limit
         kwargs['identity_provider_id'] = identity_provider_id
     if external_identifier is not None:
         kwargs['external_identifier'] = external_identifier
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -4204,7 +4230,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, pag
         kwargs['limit'] = limit
     if resource_identifier is not None:
         kwargs['resource_identifier'] = resource_identifier
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -4254,16 +4280,17 @@ def move_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['targetCompartmentId'] = target_compartment_id
+    _details = {}
+    _details['targetCompartmentId'] = target_compartment_id
 
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.move_compartment(
         compartment_id=compartment_id,
-        move_compartment_details=details,
+        move_compartment_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -4308,12 +4335,13 @@ def recover_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.recover_compartment(
         compartment_id=compartment_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_compartment') and callable(getattr(client, 'get_compartment')):
             try:
                 wait_period_kwargs = {}
@@ -4355,7 +4383,7 @@ def remove_user_from_group(ctx, from_json, user_group_membership_id, if_match):
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.remove_user_from_group(
         user_group_membership_id=user_group_membership_id,
         **kwargs
@@ -4376,7 +4404,7 @@ def reset_idp_scim_client(ctx, from_json, identity_provider_id):
         raise click.UsageError('Parameter --identity-provider-id cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.reset_idp_scim_client(
         identity_provider_id=identity_provider_id,
         **kwargs
@@ -4406,16 +4434,16 @@ def update_auth_token(ctx, from_json, user_id, auth_token_id, description, if_ma
     if if_match is not None:
         kwargs['if_match'] = if_match
 
-    details = {}
+    _details = {}
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.update_auth_token(
         user_id=user_id,
         auth_token_id=auth_token_id,
-        update_auth_token_details=details,
+        update_auth_token_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -4444,15 +4472,15 @@ def update_authentication_policy(ctx, from_json, force, compartment_id, password
     if if_match is not None:
         kwargs['if_match'] = if_match
 
-    details = {}
+    _details = {}
 
     if password_policy is not None:
-        details['passwordPolicy'] = cli_util.parse_json_parameter("password_policy", password_policy)
+        _details['passwordPolicy'] = cli_util.parse_json_parameter("password_policy", password_policy)
 
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.update_authentication_policy(
         compartment_id=compartment_id,
-        update_authentication_policy_details=details,
+        update_authentication_policy_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -4487,27 +4515,28 @@ def update_compartment(ctx, from_json, force, wait_for_state, max_wait_seconds, 
     if if_match is not None:
         kwargs['if_match'] = if_match
 
-    details = {}
+    _details = {}
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
     if name is not None:
-        details['name'] = name
+        _details['name'] = name
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.update_compartment(
         compartment_id=compartment_id,
-        update_compartment_details=details,
+        update_compartment_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_compartment') and callable(getattr(client, 'get_compartment')):
             try:
                 wait_period_kwargs = {}
@@ -4554,16 +4583,16 @@ def update_customer_secret_key(ctx, from_json, user_id, customer_secret_key_id, 
     if if_match is not None:
         kwargs['if_match'] = if_match
 
-    details = {}
+    _details = {}
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.update_customer_secret_key(
         user_id=user_id,
         customer_secret_key_id=customer_secret_key_id,
-        update_customer_secret_key_details=details,
+        update_customer_secret_key_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -4598,27 +4627,28 @@ def update_dynamic_group(ctx, from_json, force, wait_for_state, max_wait_seconds
     if if_match is not None:
         kwargs['if_match'] = if_match
 
-    details = {}
+    _details = {}
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
     if matching_rule is not None:
-        details['matchingRule'] = matching_rule
+        _details['matchingRule'] = matching_rule
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.update_dynamic_group(
         dynamic_group_id=dynamic_group_id,
-        update_dynamic_group_details=details,
+        update_dynamic_group_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_dynamic_group') and callable(getattr(client, 'get_dynamic_group')):
             try:
                 wait_period_kwargs = {}
@@ -4671,24 +4701,25 @@ def update_group(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_i
     if if_match is not None:
         kwargs['if_match'] = if_match
 
-    details = {}
+    _details = {}
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.update_group(
         group_id=group_id,
-        update_group_details=details,
+        update_group_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_group') and callable(getattr(client, 'get_group')):
             try:
                 wait_period_kwargs = {}
@@ -4744,25 +4775,26 @@ def update_identity_provider(ctx, from_json, force, wait_for_state, max_wait_sec
     if if_match is not None:
         kwargs['if_match'] = if_match
 
-    details = {}
-    details['protocol'] = protocol
+    _details = {}
+    _details['protocol'] = protocol
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.update_identity_provider(
         identity_provider_id=identity_provider_id,
-        update_identity_provider_details=details,
+        update_identity_provider_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_identity_provider') and callable(getattr(client, 'get_identity_provider')):
             try:
                 wait_period_kwargs = {}
@@ -4818,35 +4850,36 @@ def update_identity_provider_update_saml2_identity_provider_details(ctx, from_js
     if if_match is not None:
         kwargs['if_match'] = if_match
 
-    details = {}
+    _details = {}
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if metadata_url is not None:
-        details['metadataUrl'] = metadata_url
+        _details['metadataUrl'] = metadata_url
 
     if metadata is not None:
-        details['metadata'] = metadata
+        _details['metadata'] = metadata
 
     if freeform_attributes is not None:
-        details['freeformAttributes'] = cli_util.parse_json_parameter("freeform_attributes", freeform_attributes)
+        _details['freeformAttributes'] = cli_util.parse_json_parameter("freeform_attributes", freeform_attributes)
 
-    details['protocol'] = 'SAML2'
+    _details['protocol'] = 'SAML2'
 
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.update_identity_provider(
         identity_provider_id=identity_provider_id,
-        update_identity_provider_details=details,
+        update_identity_provider_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_identity_provider') and callable(getattr(client, 'get_identity_provider')):
             try:
                 wait_period_kwargs = {}
@@ -4897,22 +4930,23 @@ def update_idp_group_mapping(ctx, from_json, wait_for_state, max_wait_seconds, w
     if if_match is not None:
         kwargs['if_match'] = if_match
 
-    details = {}
+    _details = {}
 
     if idp_group_name is not None:
-        details['idpGroupName'] = idp_group_name
+        _details['idpGroupName'] = idp_group_name
 
     if group_id is not None:
-        details['groupId'] = group_id
+        _details['groupId'] = group_id
 
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.update_idp_group_mapping(
         identity_provider_id=identity_provider_id,
         mapping_id=mapping_id,
-        update_idp_group_mapping_details=details,
+        update_idp_group_mapping_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_idp_group_mapping') and callable(getattr(client, 'get_idp_group_mapping')):
             try:
                 wait_period_kwargs = {}
@@ -4967,30 +5001,30 @@ def update_network_source(ctx, from_json, force, network_source_id, description,
     if if_match is not None:
         kwargs['if_match'] = if_match
 
-    details = {}
+    _details = {}
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
     if public_source_list is not None:
-        details['publicSourceList'] = cli_util.parse_json_parameter("public_source_list", public_source_list)
+        _details['publicSourceList'] = cli_util.parse_json_parameter("public_source_list", public_source_list)
 
     if virtual_source_list is not None:
-        details['virtualSourceList'] = cli_util.parse_json_parameter("virtual_source_list", virtual_source_list)
+        _details['virtualSourceList'] = cli_util.parse_json_parameter("virtual_source_list", virtual_source_list)
 
     if services is not None:
-        details['services'] = cli_util.parse_json_parameter("services", services)
+        _details['services'] = cli_util.parse_json_parameter("services", services)
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.update_network_source(
         network_source_id=network_source_id,
-        update_network_source_details=details,
+        update_network_source_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -5025,18 +5059,18 @@ def update_o_auth_client_credential(ctx, from_json, force, user_id, oauth2_clien
     if if_match is not None:
         kwargs['if_match'] = if_match
 
-    details = {}
-    details['description'] = description
-    details['scopes'] = cli_util.parse_json_parameter("scopes", scopes)
+    _details = {}
+    _details['description'] = description
+    _details['scopes'] = cli_util.parse_json_parameter("scopes", scopes)
 
     if is_reset_password is not None:
-        details['isResetPassword'] = is_reset_password
+        _details['isResetPassword'] = is_reset_password
 
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.update_o_auth_client_credential(
         user_id=user_id,
         oauth2_client_credential_id=oauth2_client_credential_id,
-        update_o_auth2_client_credential_details=details,
+        update_o_auth2_client_credential_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -5074,30 +5108,31 @@ def update_policy(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_
     if if_match is not None:
         kwargs['if_match'] = if_match
 
-    details = {}
+    _details = {}
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
     if statements is not None:
-        details['statements'] = cli_util.parse_json_parameter("statements", statements)
+        _details['statements'] = cli_util.parse_json_parameter("statements", statements)
 
     if version_date is not None:
-        details['versionDate'] = version_date
+        _details['versionDate'] = version_date
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.update_policy(
         policy_id=policy_id,
-        update_policy_details=details,
+        update_policy_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_policy') and callable(getattr(client, 'get_policy')):
             try:
                 wait_period_kwargs = {}
@@ -5144,16 +5179,16 @@ def update_smtp_credential(ctx, from_json, user_id, smtp_credential_id, descript
     if if_match is not None:
         kwargs['if_match'] = if_match
 
-    details = {}
+    _details = {}
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.update_smtp_credential(
         user_id=user_id,
         smtp_credential_id=smtp_credential_id,
-        update_smtp_credential_details=details,
+        update_smtp_credential_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -5183,16 +5218,16 @@ def update_swift_password(ctx, from_json, user_id, swift_password_id, descriptio
     if if_match is not None:
         kwargs['if_match'] = if_match
 
-    details = {}
+    _details = {}
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.update_swift_password(
         user_id=user_id,
         swift_password_id=swift_password_id,
-        update_swift_password_details=details,
+        update_swift_password_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -5245,34 +5280,35 @@ def update_tag(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_int
     if if_match is not None:
         kwargs['if_match'] = if_match
 
-    details = {}
+    _details = {}
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
     if is_retired is not None:
-        details['isRetired'] = is_retired
+        _details['isRetired'] = is_retired
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if is_cost_tracking is not None:
-        details['isCostTracking'] = is_cost_tracking
+        _details['isCostTracking'] = is_cost_tracking
 
     if validator is not None:
-        details['validator'] = cli_util.parse_json_parameter("validator", validator)
+        _details['validator'] = cli_util.parse_json_parameter("validator", validator)
 
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.update_tag(
         tag_namespace_id=tag_namespace_id,
         tag_name=tag_name,
-        update_tag_details=details,
+        update_tag_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_tag') and callable(getattr(client, 'get_tag')):
             try:
                 wait_period_kwargs = {}
@@ -5339,34 +5375,35 @@ def update_tag_default_tag_definition_validator(ctx, from_json, force, wait_for_
     if if_match is not None:
         kwargs['if_match'] = if_match
 
-    details = {}
-    details['validator'] = {}
+    _details = {}
+    _details['validator'] = {}
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
     if is_retired is not None:
-        details['isRetired'] = is_retired
+        _details['isRetired'] = is_retired
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if is_cost_tracking is not None:
-        details['isCostTracking'] = is_cost_tracking
+        _details['isCostTracking'] = is_cost_tracking
 
-    details['validator']['validatorType'] = 'DEFAULT'
+    _details['validator']['validatorType'] = 'DEFAULT'
 
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.update_tag(
         tag_namespace_id=tag_namespace_id,
         tag_name=tag_name,
-        update_tag_details=details,
+        update_tag_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_tag') and callable(getattr(client, 'get_tag')):
             try:
                 wait_period_kwargs = {}
@@ -5434,37 +5471,38 @@ def update_tag_enum_tag_definition_validator(ctx, from_json, force, wait_for_sta
     if if_match is not None:
         kwargs['if_match'] = if_match
 
-    details = {}
-    details['validator'] = {}
+    _details = {}
+    _details['validator'] = {}
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
     if is_retired is not None:
-        details['isRetired'] = is_retired
+        _details['isRetired'] = is_retired
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if is_cost_tracking is not None:
-        details['isCostTracking'] = is_cost_tracking
+        _details['isCostTracking'] = is_cost_tracking
 
     if validator_values is not None:
-        details['validator']['values'] = cli_util.parse_json_parameter("validator_values", validator_values)
+        _details['validator']['values'] = cli_util.parse_json_parameter("validator_values", validator_values)
 
-    details['validator']['validatorType'] = 'ENUM'
+    _details['validator']['validatorType'] = 'ENUM'
 
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.update_tag(
         tag_namespace_id=tag_namespace_id,
         tag_name=tag_name,
-        update_tag_details=details,
+        update_tag_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_tag') and callable(getattr(client, 'get_tag')):
             try:
                 wait_period_kwargs = {}
@@ -5518,19 +5556,20 @@ def update_tag_default(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['value'] = value
+    _details = {}
+    _details['value'] = value
 
     if is_required is not None:
-        details['isRequired'] = is_required
+        _details['isRequired'] = is_required
 
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.update_tag_default(
         tag_default_id=tag_default_id,
-        update_tag_default_details=details,
+        update_tag_default_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_tag_default') and callable(getattr(client, 'get_tag_default')):
             try:
                 wait_period_kwargs = {}
@@ -5585,27 +5624,28 @@ def update_tag_namespace(ctx, from_json, force, wait_for_state, max_wait_seconds
 
     kwargs = {}
 
-    details = {}
+    _details = {}
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
     if is_retired is not None:
-        details['isRetired'] = is_retired
+        _details['isRetired'] = is_retired
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.update_tag_namespace(
         tag_namespace_id=tag_namespace_id,
-        update_tag_namespace_details=details,
+        update_tag_namespace_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_tag_namespace') and callable(getattr(client, 'get_tag_namespace')):
             try:
                 wait_period_kwargs = {}
@@ -5659,27 +5699,28 @@ def update_user(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_in
     if if_match is not None:
         kwargs['if_match'] = if_match
 
-    details = {}
+    _details = {}
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
     if email is not None:
-        details['email'] = email
+        _details['email'] = email
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.update_user(
         user_id=user_id,
-        update_user_details=details,
+        update_user_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_user') and callable(getattr(client, 'get_user')):
             try:
                 wait_period_kwargs = {}
@@ -5730,33 +5771,34 @@ def update_user_capabilities(ctx, from_json, wait_for_state, max_wait_seconds, w
     if if_match is not None:
         kwargs['if_match'] = if_match
 
-    details = {}
+    _details = {}
 
     if can_use_console_password is not None:
-        details['canUseConsolePassword'] = can_use_console_password
+        _details['canUseConsolePassword'] = can_use_console_password
 
     if can_use_api_keys is not None:
-        details['canUseApiKeys'] = can_use_api_keys
+        _details['canUseApiKeys'] = can_use_api_keys
 
     if can_use_auth_tokens is not None:
-        details['canUseAuthTokens'] = can_use_auth_tokens
+        _details['canUseAuthTokens'] = can_use_auth_tokens
 
     if can_use_smtp_credentials is not None:
-        details['canUseSmtpCredentials'] = can_use_smtp_credentials
+        _details['canUseSmtpCredentials'] = can_use_smtp_credentials
 
     if can_use_customer_secret_keys is not None:
-        details['canUseCustomerSecretKeys'] = can_use_customer_secret_keys
+        _details['canUseCustomerSecretKeys'] = can_use_customer_secret_keys
 
     if can_use_o_auth2_client_credentials is not None:
-        details['canUseOAuth2ClientCredentials'] = can_use_o_auth2_client_credentials
+        _details['canUseOAuth2ClientCredentials'] = can_use_o_auth2_client_credentials
 
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.update_user_capabilities(
         user_id=user_id,
-        update_user_capabilities_details=details,
+        update_user_capabilities_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_user') and callable(getattr(client, 'get_user')):
             try:
                 wait_period_kwargs = {}
@@ -5802,18 +5844,19 @@ def update_user_state(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
     if if_match is not None:
         kwargs['if_match'] = if_match
 
-    details = {}
+    _details = {}
 
     if blocked is not None:
-        details['blocked'] = blocked
+        _details['blocked'] = blocked
 
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.update_user_state(
         user_id=user_id,
-        update_state_details=details,
+        update_state_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_user') and callable(getattr(client, 'get_user')):
             try:
                 wait_period_kwargs = {}
@@ -5859,13 +5902,13 @@ def upload_api_key(ctx, from_json, user_id, key):
 
     kwargs = {}
 
-    details = {}
-    details['key'] = key
+    _details = {}
+    _details['key'] = key
 
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.upload_api_key(
         user_id=user_id,
-        create_api_key_details=details,
+        create_api_key_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)

@@ -1,5 +1,6 @@
 # coding: utf-8
-# Copyright (c) 2016, 2020, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2020, Oracle and/or its affiliates.  All rights reserved.
+# This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 from __future__ import print_function
 import click
@@ -52,13 +53,13 @@ def change_topic_compartment(ctx, from_json, topic_id, compartment_id, if_match)
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
 
-    client = cli_util.build_client('notification_control_plane', ctx)
+    client = cli_util.build_client('ons', 'notification_control_plane', ctx)
     result = client.change_topic_compartment(
         topic_id=topic_id,
-        change_topic_compartment_details=details,
+        change_topic_compartment_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -92,22 +93,22 @@ def create_topic(ctx, from_json, name, compartment_id, description, freeform_tag
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['name'] = name
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['name'] = name
+    _details['compartmentId'] = compartment_id
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('notification_control_plane', ctx)
+    client = cli_util.build_client('ons', 'notification_control_plane', ctx)
     result = client.create_topic(
-        create_topic_details=details,
+        create_topic_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -133,7 +134,7 @@ def delete_topic(ctx, from_json, topic_id, if_match):
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('notification_control_plane', ctx)
+    client = cli_util.build_client('ons', 'notification_control_plane', ctx)
     result = client.delete_topic(
         topic_id=topic_id,
         **kwargs
@@ -157,7 +158,7 @@ def get_topic(ctx, from_json, topic_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('notification_control_plane', ctx)
+    client = cli_util.build_client('ons', 'notification_control_plane', ctx)
     result = client.get_topic(
         topic_id=topic_id,
         **kwargs
@@ -204,7 +205,7 @@ def list_topics(ctx, from_json, all_pages, page_size, compartment_id, id, name, 
     if lifecycle_state is not None:
         kwargs['lifecycle_state'] = lifecycle_state
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('notification_control_plane', ctx)
+    client = cli_util.build_client('ons', 'notification_control_plane', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -262,19 +263,19 @@ def update_topic(ctx, from_json, force, topic_id, description, freeform_tags, de
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['description'] = description
+    _details = {}
+    _details['description'] = description
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('notification_control_plane', ctx)
+    client = cli_util.build_client('ons', 'notification_control_plane', ctx)
     result = client.update_topic(
         topic_id=topic_id,
-        topic_attributes_details=details,
+        topic_attributes_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)

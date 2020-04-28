@@ -1,5 +1,6 @@
 # coding: utf-8
-# Copyright (c) 2016, 2020, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2020, Oracle and/or its affiliates.  All rights reserved.
+# This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 from __future__ import print_function
 import click
@@ -86,18 +87,19 @@ def change_data_safe_private_endpoint_compartment(ctx, from_json, wait_for_state
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if compartment_id is not None:
-        details['compartmentId'] = compartment_id
+        _details['compartmentId'] = compartment_id
 
-    client = cli_util.build_client('data_safe', ctx)
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
     result = client.change_data_safe_private_endpoint_compartment(
         data_safe_private_endpoint_id=data_safe_private_endpoint_id,
-        change_data_safe_private_endpoint_compartment_details=details,
+        change_data_safe_private_endpoint_compartment_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -149,33 +151,34 @@ def create_data_safe_private_endpoint(ctx, from_json, wait_for_state, max_wait_s
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['displayName'] = display_name
-    details['compartmentId'] = compartment_id
-    details['vcnId'] = vcn_id
-    details['subnetId'] = subnet_id
+    _details = {}
+    _details['displayName'] = display_name
+    _details['compartmentId'] = compartment_id
+    _details['vcnId'] = vcn_id
+    _details['subnetId'] = subnet_id
 
     if private_endpoint_ip is not None:
-        details['privateEndpointIp'] = private_endpoint_ip
+        _details['privateEndpointIp'] = private_endpoint_ip
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
     if nsg_ids is not None:
-        details['nsgIds'] = cli_util.parse_json_parameter("nsg_ids", nsg_ids)
+        _details['nsgIds'] = cli_util.parse_json_parameter("nsg_ids", nsg_ids)
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('data_safe', ctx)
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
     result = client.create_data_safe_private_endpoint(
-        create_data_safe_private_endpoint_details=details,
+        create_data_safe_private_endpoint_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -221,12 +224,13 @@ def delete_data_safe_private_endpoint(ctx, from_json, wait_for_state, max_wait_s
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_safe', ctx)
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
     result = client.delete_data_safe_private_endpoint(
         data_safe_private_endpoint_id=data_safe_private_endpoint_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -283,23 +287,24 @@ def enable_data_safe_configuration(ctx, from_json, force, wait_for_state, max_wa
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if is_enabled is not None:
-        details['isEnabled'] = is_enabled
+        _details['isEnabled'] = is_enabled
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('data_safe', ctx)
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
     result = client.enable_data_safe_configuration(
-        enable_data_safe_configuration_details=details,
+        enable_data_safe_configuration_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -337,7 +342,7 @@ def get_data_safe_configuration(ctx, from_json, compartment_id):
     if compartment_id is not None:
         kwargs['compartment_id'] = compartment_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_safe', ctx)
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
     result = client.get_data_safe_configuration(
         **kwargs
     )
@@ -358,7 +363,7 @@ def get_data_safe_private_endpoint(ctx, from_json, data_safe_private_endpoint_id
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_safe', ctx)
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
     result = client.get_data_safe_private_endpoint(
         data_safe_private_endpoint_id=data_safe_private_endpoint_id,
         **kwargs
@@ -380,7 +385,7 @@ def get_work_request(ctx, from_json, work_request_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_safe', ctx)
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
     result = client.get_work_request(
         work_request_id=work_request_id,
         **kwargs
@@ -427,7 +432,7 @@ def list_data_safe_private_endpoints(ctx, from_json, all_pages, page_size, compa
     if sort_by is not None:
         kwargs['sort_by'] = sort_by
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_safe', ctx)
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -475,7 +480,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     if limit is not None:
         kwargs['limit'] = limit
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_safe', ctx)
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -526,7 +531,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     if limit is not None:
         kwargs['limit'] = limit
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_safe', ctx)
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -579,7 +584,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, res
     if limit is not None:
         kwargs['limit'] = limit
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_safe', ctx)
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -637,28 +642,29 @@ def update_data_safe_private_endpoint(ctx, from_json, force, wait_for_state, max
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['displayName'] = display_name
+    _details = {}
+    _details['displayName'] = display_name
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
     if nsg_ids is not None:
-        details['nsgIds'] = cli_util.parse_json_parameter("nsg_ids", nsg_ids)
+        _details['nsgIds'] = cli_util.parse_json_parameter("nsg_ids", nsg_ids)
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('data_safe', ctx)
+    client = cli_util.build_client('data_safe', 'data_safe', ctx)
     result = client.update_data_safe_private_endpoint(
         data_safe_private_endpoint_id=data_safe_private_endpoint_id,
-        update_data_safe_private_endpoint_details=details,
+        update_data_safe_private_endpoint_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}

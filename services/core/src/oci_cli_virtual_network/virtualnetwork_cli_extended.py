@@ -1,5 +1,6 @@
 # coding: utf-8
-# Copyright (c) 2016, 2019, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2020, Oracle and/or its affiliates.  All rights reserved.
+# This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 from __future__ import print_function
 import click
@@ -115,7 +116,7 @@ For more information about secondary private IPs, see [IP Addresses]
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'PrivateIp'})
 @cli_util.wrap_exceptions
 def assign_private_ip(ctx, from_json, vnic_id, ip_address, display_name, hostname_label, unassign_if_already_assigned, defined_tags, freeform_tags):
-    networking_client = cli_util.build_client('virtual_network', ctx)
+    networking_client = cli_util.build_client('core', 'virtual_network', ctx)
 
     # First we get the VNIC because we need to know the subnet OCID for the ListPrivateIps call
     vnic = networking_client.get_vnic(vnic_id).data
@@ -198,7 +199,7 @@ For more information about secondary private IPs, see [IP Addresses]
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
 def unassign_private_ip(ctx, from_json, vnic_id, ip_address):
-    networking_client = cli_util.build_client('virtual_network', ctx)
+    networking_client = cli_util.build_client('core', 'virtual_network', ctx)
 
     list_private_ips_response = networking_client.list_private_ips(vnic_id=vnic_id)
 
@@ -307,7 +308,7 @@ Example: `us-ashburn-1`""")
 def connect_remote_peering_connections_extended(ctx, **kwargs):
     try:
         # Get the valid region list by querying IAM service
-        client = cli_util.build_client('identity', ctx)
+        client = cli_util.build_client('identity', 'identity', ctx)
         result = client.list_regions()
     except Exception:
         # If the IAM region list call fails, still go ahead with the remote peering connection with the user provided input

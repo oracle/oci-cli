@@ -1,5 +1,6 @@
 # coding: utf-8
-# Copyright (c) 2016, 2020, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2020, Oracle and/or its affiliates.  All rights reserved.
+# This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 from __future__ import print_function
 import click
@@ -92,13 +93,13 @@ def change_http_monitor_compartment(ctx, from_json, monitor_id, compartment_id, 
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
 
-    client = cli_util.build_client('health_checks', ctx)
+    client = cli_util.build_client('healthchecks', 'health_checks', ctx)
     result = client.change_http_monitor_compartment(
         monitor_id=monitor_id,
-        change_http_monitor_compartment_details=details,
+        change_http_monitor_compartment_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -123,13 +124,13 @@ def change_ping_monitor_compartment(ctx, from_json, monitor_id, compartment_id, 
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
 
-    client = cli_util.build_client('health_checks', ctx)
+    client = cli_util.build_client('healthchecks', 'health_checks', ctx)
     result = client.change_ping_monitor_compartment(
         monitor_id=monitor_id,
-        change_ping_monitor_compartment_details=details,
+        change_ping_monitor_compartment_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -162,43 +163,43 @@ def create_http_monitor(ctx, from_json, compartment_id, targets, protocol, displ
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
-    details['targets'] = cli_util.parse_json_parameter("targets", targets)
-    details['protocol'] = protocol
-    details['displayName'] = display_name
-    details['intervalInSeconds'] = interval_in_seconds
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['targets'] = cli_util.parse_json_parameter("targets", targets)
+    _details['protocol'] = protocol
+    _details['displayName'] = display_name
+    _details['intervalInSeconds'] = interval_in_seconds
 
     if vantage_point_names is not None:
-        details['vantagePointNames'] = cli_util.parse_json_parameter("vantage_point_names", vantage_point_names)
+        _details['vantagePointNames'] = cli_util.parse_json_parameter("vantage_point_names", vantage_point_names)
 
     if port is not None:
-        details['port'] = port
+        _details['port'] = port
 
     if timeout_in_seconds is not None:
-        details['timeoutInSeconds'] = timeout_in_seconds
+        _details['timeoutInSeconds'] = timeout_in_seconds
 
     if method is not None:
-        details['method'] = method
+        _details['method'] = method
 
     if path is not None:
-        details['path'] = path
+        _details['path'] = path
 
     if headers is not None:
-        details['headers'] = cli_util.parse_json_parameter("headers", headers)
+        _details['headers'] = cli_util.parse_json_parameter("headers", headers)
 
     if is_enabled is not None:
-        details['isEnabled'] = is_enabled
+        _details['isEnabled'] = is_enabled
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('health_checks', ctx)
+    client = cli_util.build_client('healthchecks', 'health_checks', ctx)
     result = client.create_http_monitor(
-        create_http_monitor_details=details,
+        create_http_monitor_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -228,32 +229,32 @@ def create_on_demand_http_probe(ctx, from_json, compartment_id, targets, protoco
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
-    details['targets'] = cli_util.parse_json_parameter("targets", targets)
-    details['protocol'] = protocol
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['targets'] = cli_util.parse_json_parameter("targets", targets)
+    _details['protocol'] = protocol
 
     if vantage_point_names is not None:
-        details['vantagePointNames'] = cli_util.parse_json_parameter("vantage_point_names", vantage_point_names)
+        _details['vantagePointNames'] = cli_util.parse_json_parameter("vantage_point_names", vantage_point_names)
 
     if port is not None:
-        details['port'] = port
+        _details['port'] = port
 
     if timeout_in_seconds is not None:
-        details['timeoutInSeconds'] = timeout_in_seconds
+        _details['timeoutInSeconds'] = timeout_in_seconds
 
     if method is not None:
-        details['method'] = method
+        _details['method'] = method
 
     if path is not None:
-        details['path'] = path
+        _details['path'] = path
 
     if headers is not None:
-        details['headers'] = cli_util.parse_json_parameter("headers", headers)
+        _details['headers'] = cli_util.parse_json_parameter("headers", headers)
 
-    client = cli_util.build_client('health_checks', ctx)
+    client = cli_util.build_client('healthchecks', 'health_checks', ctx)
     result = client.create_on_demand_http_probe(
-        create_on_demand_http_probe_details=details,
+        create_on_demand_http_probe_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -278,23 +279,23 @@ def create_on_demand_ping_probe(ctx, from_json, compartment_id, targets, protoco
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
-    details['targets'] = cli_util.parse_json_parameter("targets", targets)
-    details['protocol'] = protocol
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['targets'] = cli_util.parse_json_parameter("targets", targets)
+    _details['protocol'] = protocol
 
     if vantage_point_names is not None:
-        details['vantagePointNames'] = cli_util.parse_json_parameter("vantage_point_names", vantage_point_names)
+        _details['vantagePointNames'] = cli_util.parse_json_parameter("vantage_point_names", vantage_point_names)
 
     if port is not None:
-        details['port'] = port
+        _details['port'] = port
 
     if timeout_in_seconds is not None:
-        details['timeoutInSeconds'] = timeout_in_seconds
+        _details['timeoutInSeconds'] = timeout_in_seconds
 
-    client = cli_util.build_client('health_checks', ctx)
+    client = cli_util.build_client('healthchecks', 'health_checks', ctx)
     result = client.create_on_demand_ping_probe(
-        create_on_demand_ping_probe_details=details,
+        create_on_demand_ping_probe_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -322,34 +323,34 @@ def create_ping_monitor(ctx, from_json, compartment_id, targets, protocol, displ
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
-    details['targets'] = cli_util.parse_json_parameter("targets", targets)
-    details['protocol'] = protocol
-    details['displayName'] = display_name
-    details['intervalInSeconds'] = interval_in_seconds
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['targets'] = cli_util.parse_json_parameter("targets", targets)
+    _details['protocol'] = protocol
+    _details['displayName'] = display_name
+    _details['intervalInSeconds'] = interval_in_seconds
 
     if vantage_point_names is not None:
-        details['vantagePointNames'] = cli_util.parse_json_parameter("vantage_point_names", vantage_point_names)
+        _details['vantagePointNames'] = cli_util.parse_json_parameter("vantage_point_names", vantage_point_names)
 
     if port is not None:
-        details['port'] = port
+        _details['port'] = port
 
     if timeout_in_seconds is not None:
-        details['timeoutInSeconds'] = timeout_in_seconds
+        _details['timeoutInSeconds'] = timeout_in_seconds
 
     if is_enabled is not None:
-        details['isEnabled'] = is_enabled
+        _details['isEnabled'] = is_enabled
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('health_checks', ctx)
+    client = cli_util.build_client('healthchecks', 'health_checks', ctx)
     result = client.create_ping_monitor(
-        create_ping_monitor_details=details,
+        create_ping_monitor_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -373,7 +374,7 @@ def delete_http_monitor(ctx, from_json, monitor_id, if_match):
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('health_checks', ctx)
+    client = cli_util.build_client('healthchecks', 'health_checks', ctx)
     result = client.delete_http_monitor(
         monitor_id=monitor_id,
         **kwargs
@@ -399,7 +400,7 @@ def delete_ping_monitor(ctx, from_json, monitor_id, if_match):
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('health_checks', ctx)
+    client = cli_util.build_client('healthchecks', 'health_checks', ctx)
     result = client.delete_ping_monitor(
         monitor_id=monitor_id,
         **kwargs
@@ -424,7 +425,7 @@ def get_http_monitor(ctx, from_json, monitor_id, if_none_match):
     if if_none_match is not None:
         kwargs['if_none_match'] = if_none_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('health_checks', ctx)
+    client = cli_util.build_client('healthchecks', 'health_checks', ctx)
     result = client.get_http_monitor(
         monitor_id=monitor_id,
         **kwargs
@@ -449,7 +450,7 @@ def get_ping_monitor(ctx, from_json, monitor_id, if_none_match):
     if if_none_match is not None:
         kwargs['if_none_match'] = if_none_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('health_checks', ctx)
+    client = cli_util.build_client('healthchecks', 'health_checks', ctx)
     result = client.get_ping_monitor(
         monitor_id=monitor_id,
         **kwargs
@@ -490,7 +491,7 @@ def list_health_checks_vantage_points(ctx, from_json, all_pages, page_size, limi
     if display_name is not None:
         kwargs['display_name'] = display_name
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('health_checks', ctx)
+    client = cli_util.build_client('healthchecks', 'health_checks', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -547,7 +548,7 @@ def list_http_monitors(ctx, from_json, all_pages, page_size, compartment_id, lim
     if home_region is not None:
         kwargs['home_region'] = home_region
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('health_checks', ctx)
+    client = cli_util.build_client('healthchecks', 'health_checks', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -610,7 +611,7 @@ def list_http_probe_results(ctx, from_json, all_pages, page_size, probe_configur
     if target is not None:
         kwargs['target'] = target
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('health_checks', ctx)
+    client = cli_util.build_client('healthchecks', 'health_checks', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -672,7 +673,7 @@ def list_ping_monitors(ctx, from_json, all_pages, page_size, compartment_id, lim
     if home_region is not None:
         kwargs['home_region'] = home_region
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('health_checks', ctx)
+    client = cli_util.build_client('healthchecks', 'health_checks', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -737,7 +738,7 @@ def list_ping_probe_results(ctx, from_json, all_pages, page_size, probe_configur
     if target is not None:
         kwargs['target'] = target
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('health_checks', ctx)
+    client = cli_util.build_client('healthchecks', 'health_checks', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -801,51 +802,51 @@ def update_http_monitor(ctx, from_json, force, monitor_id, targets, vantage_poin
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if targets is not None:
-        details['targets'] = cli_util.parse_json_parameter("targets", targets)
+        _details['targets'] = cli_util.parse_json_parameter("targets", targets)
 
     if vantage_point_names is not None:
-        details['vantagePointNames'] = cli_util.parse_json_parameter("vantage_point_names", vantage_point_names)
+        _details['vantagePointNames'] = cli_util.parse_json_parameter("vantage_point_names", vantage_point_names)
 
     if port is not None:
-        details['port'] = port
+        _details['port'] = port
 
     if timeout_in_seconds is not None:
-        details['timeoutInSeconds'] = timeout_in_seconds
+        _details['timeoutInSeconds'] = timeout_in_seconds
 
     if protocol is not None:
-        details['protocol'] = protocol
+        _details['protocol'] = protocol
 
     if method is not None:
-        details['method'] = method
+        _details['method'] = method
 
     if path is not None:
-        details['path'] = path
+        _details['path'] = path
 
     if headers is not None:
-        details['headers'] = cli_util.parse_json_parameter("headers", headers)
+        _details['headers'] = cli_util.parse_json_parameter("headers", headers)
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if interval_in_seconds is not None:
-        details['intervalInSeconds'] = interval_in_seconds
+        _details['intervalInSeconds'] = interval_in_seconds
 
     if is_enabled is not None:
-        details['isEnabled'] = is_enabled
+        _details['isEnabled'] = is_enabled
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('health_checks', ctx)
+    client = cli_util.build_client('healthchecks', 'health_checks', ctx)
     result = client.update_http_monitor(
         monitor_id=monitor_id,
-        update_http_monitor_details=details,
+        update_http_monitor_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -884,42 +885,42 @@ def update_ping_monitor(ctx, from_json, force, monitor_id, targets, vantage_poin
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if targets is not None:
-        details['targets'] = cli_util.parse_json_parameter("targets", targets)
+        _details['targets'] = cli_util.parse_json_parameter("targets", targets)
 
     if vantage_point_names is not None:
-        details['vantagePointNames'] = cli_util.parse_json_parameter("vantage_point_names", vantage_point_names)
+        _details['vantagePointNames'] = cli_util.parse_json_parameter("vantage_point_names", vantage_point_names)
 
     if port is not None:
-        details['port'] = port
+        _details['port'] = port
 
     if timeout_in_seconds is not None:
-        details['timeoutInSeconds'] = timeout_in_seconds
+        _details['timeoutInSeconds'] = timeout_in_seconds
 
     if protocol is not None:
-        details['protocol'] = protocol
+        _details['protocol'] = protocol
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if interval_in_seconds is not None:
-        details['intervalInSeconds'] = interval_in_seconds
+        _details['intervalInSeconds'] = interval_in_seconds
 
     if is_enabled is not None:
-        details['isEnabled'] = is_enabled
+        _details['isEnabled'] = is_enabled
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('health_checks', ctx)
+    client = cli_util.build_client('healthchecks', 'health_checks', ctx)
     result = client.update_ping_monitor(
         monitor_id=monitor_id,
-        update_ping_monitor_details=details,
+        update_ping_monitor_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)

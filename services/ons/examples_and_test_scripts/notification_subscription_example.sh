@@ -1,3 +1,5 @@
+# Copyright (c) 2016, 2020, Oracle and/or its affiliates.  All rights reserved.
+# This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 # Copy auth token received in email and set CONFIRMATION_TOKEN
 # One example of auth token from email: token=MDAwMHJpeWF3RFVzREhRMGlsOE9NUFNFY0R3cUd4clc0V0xLQjRNR3grMGI3bzRMT2xiT0Y0PQ==&
 # Copy and set CONFIRMATION_TOKEN="MDAwMHJpeWF3RFVzREhRMGlsOE9NUFNFY0R3cUd4clc0V0xLQjRNR3grMGI3bzRMT2xiT0Y0PQ=="

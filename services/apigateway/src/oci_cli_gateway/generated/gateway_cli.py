@@ -1,5 +1,6 @@
 # coding: utf-8
-# Copyright (c) 2016, 2020, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2020, Oracle and/or its affiliates.  All rights reserved.
+# This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 from __future__ import print_function
 import click
@@ -61,16 +62,19 @@ def change_gateway_compartment(ctx, from_json, wait_for_state, max_wait_seconds,
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
 
-    client = cli_util.build_client('gateway', ctx)
+    client = cli_util.build_client('apigateway', 'gateway', ctx)
     result = client.change_gateway_compartment(
         gateway_id=gateway_id,
-        change_gateway_compartment_details=details,
+        change_gateway_compartment_details=_details,
         **kwargs
     )
     if wait_for_state:
+
+        client = cli_util.build_client('apigateway', 'work_requests', ctx)
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -121,26 +125,29 @@ def create_gateway(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
-    details['endpointType'] = endpoint_type
-    details['subnetId'] = subnet_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['endpointType'] = endpoint_type
+    _details['subnetId'] = subnet_id
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('gateway', ctx)
+    client = cli_util.build_client('apigateway', 'gateway', ctx)
     result = client.create_gateway(
-        create_gateway_details=details,
+        create_gateway_details=_details,
         **kwargs
     )
     if wait_for_state:
+
+        client = cli_util.build_client('apigateway', 'work_requests', ctx)
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -186,12 +193,15 @@ def delete_gateway(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('gateway', ctx)
+    client = cli_util.build_client('apigateway', 'gateway', ctx)
     result = client.delete_gateway(
         gateway_id=gateway_id,
         **kwargs
     )
     if wait_for_state:
+
+        client = cli_util.build_client('apigateway', 'work_requests', ctx)
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -230,7 +240,7 @@ def get_gateway(ctx, from_json, gateway_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('gateway', ctx)
+    client = cli_util.build_client('apigateway', 'gateway', ctx)
     result = client.get_gateway(
         gateway_id=gateway_id,
         **kwargs
@@ -276,7 +286,7 @@ def list_gateways(ctx, from_json, all_pages, page_size, compartment_id, display_
     if sort_by is not None:
         kwargs['sort_by'] = sort_by
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('gateway', ctx)
+    client = cli_util.build_client('apigateway', 'gateway', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -337,24 +347,27 @@ def update_gateway(ctx, from_json, force, wait_for_state, max_wait_seconds, wait
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('gateway', ctx)
+    client = cli_util.build_client('apigateway', 'gateway', ctx)
     result = client.update_gateway(
         gateway_id=gateway_id,
-        update_gateway_details=details,
+        update_gateway_details=_details,
         **kwargs
     )
     if wait_for_state:
+
+        client = cli_util.build_client('apigateway', 'work_requests', ctx)
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
