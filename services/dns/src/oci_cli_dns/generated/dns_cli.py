@@ -1,5 +1,6 @@
 # coding: utf-8
-# Copyright (c) 2016, 2020, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2020, Oracle and/or its affiliates.  All rights reserved.
+# This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 from __future__ import print_function
 import click
@@ -106,13 +107,13 @@ def change_steering_policy_compartment(ctx, from_json, steering_policy_id, compa
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
 
-    client = cli_util.build_client('dns', ctx)
+    client = cli_util.build_client('dns', 'dns', ctx)
     result = client.change_steering_policy_compartment(
         steering_policy_id=steering_policy_id,
-        change_steering_policy_compartment_details=details,
+        change_steering_policy_compartment_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -137,13 +138,13 @@ def change_tsig_key_compartment(ctx, from_json, tsig_key_id, compartment_id, if_
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
 
-    client = cli_util.build_client('dns', ctx)
+    client = cli_util.build_client('dns', 'dns', ctx)
     result = client.change_tsig_key_compartment(
         tsig_key_id=tsig_key_id,
-        change_tsig_key_compartment_details=details,
+        change_tsig_key_compartment_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -168,13 +169,13 @@ def change_zone_compartment(ctx, from_json, zone_id, compartment_id, if_match):
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
 
-    client = cli_util.build_client('dns', ctx)
+    client = cli_util.build_client('dns', 'dns', ctx)
     result = client.change_zone_compartment(
         zone_id=zone_id,
-        change_zone_compartment_details=details,
+        change_zone_compartment_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -235,35 +236,36 @@ def create_steering_policy(ctx, from_json, wait_for_state, max_wait_seconds, wai
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
-    details['displayName'] = display_name
-    details['template'] = template
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['displayName'] = display_name
+    _details['template'] = template
 
     if ttl is not None:
-        details['ttl'] = ttl
+        _details['ttl'] = ttl
 
     if health_check_monitor_id is not None:
-        details['healthCheckMonitorId'] = health_check_monitor_id
+        _details['healthCheckMonitorId'] = health_check_monitor_id
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if answers is not None:
-        details['answers'] = cli_util.parse_json_parameter("answers", answers)
+        _details['answers'] = cli_util.parse_json_parameter("answers", answers)
 
     if rules is not None:
-        details['rules'] = cli_util.parse_json_parameter("rules", rules)
+        _details['rules'] = cli_util.parse_json_parameter("rules", rules)
 
-    client = cli_util.build_client('dns', ctx)
+    client = cli_util.build_client('dns', 'dns', ctx)
     result = client.create_steering_policy(
-        create_steering_policy_details=details,
+        create_steering_policy_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_steering_policy') and callable(getattr(client, 'get_steering_policy')):
             try:
                 wait_period_kwargs = {}
@@ -308,20 +310,21 @@ def create_steering_policy_attachment(ctx, from_json, wait_for_state, max_wait_s
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['steeringPolicyId'] = steering_policy_id
-    details['zoneId'] = zone_id
-    details['domainName'] = domain_name
+    _details = {}
+    _details['steeringPolicyId'] = steering_policy_id
+    _details['zoneId'] = zone_id
+    _details['domainName'] = domain_name
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
-    client = cli_util.build_client('dns', ctx)
+    client = cli_util.build_client('dns', 'dns', ctx)
     result = client.create_steering_policy_attachment(
-        create_steering_policy_attachment_details=details,
+        create_steering_policy_attachment_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_steering_policy_attachment') and callable(getattr(client, 'get_steering_policy_attachment')):
             try:
                 wait_period_kwargs = {}
@@ -370,24 +373,25 @@ def create_tsig_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['algorithm'] = algorithm
-    details['name'] = name
-    details['compartmentId'] = compartment_id
-    details['secret'] = secret
+    _details = {}
+    _details['algorithm'] = algorithm
+    _details['name'] = name
+    _details['compartmentId'] = compartment_id
+    _details['secret'] = secret
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('dns', ctx)
+    client = cli_util.build_client('dns', 'dns', ctx)
     result = client.create_tsig_key(
-        create_tsig_key_details=details,
+        create_tsig_key_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_tsig_key') and callable(getattr(client, 'get_tsig_key')):
             try:
                 wait_period_kwargs = {}
@@ -437,25 +441,26 @@ def create_zone(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
         kwargs['compartment_id'] = compartment_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['name'] = name
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['name'] = name
+    _details['compartmentId'] = compartment_id
 
     if migration_source is not None:
-        details['migrationSource'] = migration_source
+        _details['migrationSource'] = migration_source
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('dns', ctx)
+    client = cli_util.build_client('dns', 'dns', ctx)
     result = client.create_zone(
-        create_zone_details=details,
+        create_zone_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_zone') and callable(getattr(client, 'get_zone')):
             try:
                 wait_period_kwargs = {}
@@ -508,30 +513,31 @@ def create_zone_create_zone_details(ctx, from_json, wait_for_state, max_wait_sec
         kwargs['compartment_id'] = compartment_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['name'] = name
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['name'] = name
+    _details['compartmentId'] = compartment_id
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if zone_type is not None:
-        details['zoneType'] = zone_type
+        _details['zoneType'] = zone_type
 
     if external_masters is not None:
-        details['externalMasters'] = cli_util.parse_json_parameter("external_masters", external_masters)
+        _details['externalMasters'] = cli_util.parse_json_parameter("external_masters", external_masters)
 
-    details['migrationSource'] = 'NONE'
+    _details['migrationSource'] = 'NONE'
 
-    client = cli_util.build_client('dns', ctx)
+    client = cli_util.build_client('dns', 'dns', ctx)
     result = client.create_zone(
-        create_zone_details=details,
+        create_zone_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_zone') and callable(getattr(client, 'get_zone')):
             try:
                 wait_period_kwargs = {}
@@ -581,27 +587,28 @@ def create_zone_create_migrated_dynect_zone_details(ctx, from_json, wait_for_sta
         kwargs['compartment_id'] = compartment_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['name'] = name
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['name'] = name
+    _details['compartmentId'] = compartment_id
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if dynect_migration_details is not None:
-        details['dynectMigrationDetails'] = cli_util.parse_json_parameter("dynect_migration_details", dynect_migration_details)
+        _details['dynectMigrationDetails'] = cli_util.parse_json_parameter("dynect_migration_details", dynect_migration_details)
 
-    details['migrationSource'] = 'DYNECT'
+    _details['migrationSource'] = 'DYNECT'
 
-    client = cli_util.build_client('dns', ctx)
+    client = cli_util.build_client('dns', 'dns', ctx)
     result = client.create_zone(
-        create_zone_details=details,
+        create_zone_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_zone') and callable(getattr(client, 'get_zone')):
             try:
                 wait_period_kwargs = {}
@@ -654,7 +661,7 @@ def delete_domain_records(ctx, from_json, zone_name_or_id, domain, if_match, if_
     if compartment_id is not None:
         kwargs['compartment_id'] = compartment_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('dns', ctx)
+    client = cli_util.build_client('dns', 'dns', ctx)
     result = client.delete_domain_records(
         zone_name_or_id=zone_name_or_id,
         domain=domain,
@@ -695,7 +702,7 @@ def delete_rr_set(ctx, from_json, zone_name_or_id, domain, rtype, if_match, if_u
     if compartment_id is not None:
         kwargs['compartment_id'] = compartment_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('dns', ctx)
+    client = cli_util.build_client('dns', 'dns', ctx)
     result = client.delete_rr_set(
         zone_name_or_id=zone_name_or_id,
         domain=domain,
@@ -729,12 +736,13 @@ def delete_steering_policy(ctx, from_json, wait_for_state, max_wait_seconds, wai
     if if_unmodified_since is not None:
         kwargs['if_unmodified_since'] = if_unmodified_since
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('dns', ctx)
+    client = cli_util.build_client('dns', 'dns', ctx)
     result = client.delete_steering_policy(
         steering_policy_id=steering_policy_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_steering_policy') and callable(getattr(client, 'get_steering_policy')):
             try:
                 wait_period_kwargs = {}
@@ -795,12 +803,13 @@ def delete_steering_policy_attachment(ctx, from_json, wait_for_state, max_wait_s
     if if_unmodified_since is not None:
         kwargs['if_unmodified_since'] = if_unmodified_since
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('dns', ctx)
+    client = cli_util.build_client('dns', 'dns', ctx)
     result = client.delete_steering_policy_attachment(
         steering_policy_attachment_id=steering_policy_attachment_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_steering_policy_attachment') and callable(getattr(client, 'get_steering_policy_attachment')):
             try:
                 wait_period_kwargs = {}
@@ -861,12 +870,13 @@ def delete_tsig_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
     if if_unmodified_since is not None:
         kwargs['if_unmodified_since'] = if_unmodified_since
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('dns', ctx)
+    client = cli_util.build_client('dns', 'dns', ctx)
     result = client.delete_tsig_key(
         tsig_key_id=tsig_key_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_tsig_key') and callable(getattr(client, 'get_tsig_key')):
             try:
                 wait_period_kwargs = {}
@@ -930,12 +940,13 @@ def delete_zone(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
     if compartment_id is not None:
         kwargs['compartment_id'] = compartment_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('dns', ctx)
+    client = cli_util.build_client('dns', 'dns', ctx)
     result = client.delete_zone(
         zone_name_or_id=zone_name_or_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_zone') and callable(getattr(client, 'get_zone')):
             try:
                 wait_period_kwargs = {}
@@ -1022,7 +1033,7 @@ def get_domain_records(ctx, from_json, all_pages, page_size, zone_name_or_id, do
     if compartment_id is not None:
         kwargs['compartment_id'] = compartment_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('dns', ctx)
+    client = cli_util.build_client('dns', 'dns', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -1096,7 +1107,7 @@ def get_rr_set(ctx, from_json, all_pages, page_size, zone_name_or_id, domain, rt
     if compartment_id is not None:
         kwargs['compartment_id'] = compartment_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('dns', ctx)
+    client = cli_util.build_client('dns', 'dns', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -1148,7 +1159,7 @@ def get_steering_policy(ctx, from_json, steering_policy_id, if_none_match, if_mo
     if if_modified_since is not None:
         kwargs['if_modified_since'] = if_modified_since
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('dns', ctx)
+    client = cli_util.build_client('dns', 'dns', ctx)
     result = client.get_steering_policy(
         steering_policy_id=steering_policy_id,
         **kwargs
@@ -1176,7 +1187,7 @@ def get_steering_policy_attachment(ctx, from_json, steering_policy_attachment_id
     if if_modified_since is not None:
         kwargs['if_modified_since'] = if_modified_since
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('dns', ctx)
+    client = cli_util.build_client('dns', 'dns', ctx)
     result = client.get_steering_policy_attachment(
         steering_policy_attachment_id=steering_policy_attachment_id,
         **kwargs
@@ -1204,7 +1215,7 @@ def get_tsig_key(ctx, from_json, tsig_key_id, if_none_match, if_modified_since):
     if if_modified_since is not None:
         kwargs['if_modified_since'] = if_modified_since
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('dns', ctx)
+    client = cli_util.build_client('dns', 'dns', ctx)
     result = client.get_tsig_key(
         tsig_key_id=tsig_key_id,
         **kwargs
@@ -1235,7 +1246,7 @@ def get_zone(ctx, from_json, zone_name_or_id, if_none_match, if_modified_since, 
     if compartment_id is not None:
         kwargs['compartment_id'] = compartment_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('dns', ctx)
+    client = cli_util.build_client('dns', 'dns', ctx)
     result = client.get_zone(
         zone_name_or_id=zone_name_or_id,
         **kwargs
@@ -1295,7 +1306,7 @@ def get_zone_records(ctx, from_json, all_pages, page_size, zone_name_or_id, if_n
     if compartment_id is not None:
         kwargs['compartment_id'] = compartment_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('dns', ctx)
+    client = cli_util.build_client('dns', 'dns', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -1373,7 +1384,7 @@ def list_steering_policies(ctx, from_json, all_pages, page_size, compartment_id,
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('dns', ctx)
+    client = cli_util.build_client('dns', 'dns', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -1454,7 +1465,7 @@ def list_steering_policy_attachments(ctx, from_json, all_pages, page_size, compa
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('dns', ctx)
+    client = cli_util.build_client('dns', 'dns', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -1517,7 +1528,7 @@ def list_tsig_keys(ctx, from_json, all_pages, page_size, compartment_id, limit, 
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('dns', ctx)
+    client = cli_util.build_client('dns', 'dns', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -1589,7 +1600,7 @@ def list_zones(ctx, from_json, all_pages, page_size, compartment_id, limit, page
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('dns', ctx)
+    client = cli_util.build_client('dns', 'dns', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -1646,16 +1657,16 @@ def patch_domain_records(ctx, from_json, zone_name_or_id, domain, items, if_matc
         kwargs['compartment_id'] = compartment_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if items is not None:
-        details['items'] = cli_util.parse_json_parameter("items", items)
+        _details['items'] = cli_util.parse_json_parameter("items", items)
 
-    client = cli_util.build_client('dns', ctx)
+    client = cli_util.build_client('dns', 'dns', ctx)
     result = client.patch_domain_records(
         zone_name_or_id=zone_name_or_id,
         domain=domain,
-        patch_domain_records_details=details,
+        patch_domain_records_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -1696,17 +1707,17 @@ def patch_rr_set(ctx, from_json, zone_name_or_id, domain, rtype, items, if_match
         kwargs['compartment_id'] = compartment_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if items is not None:
-        details['items'] = cli_util.parse_json_parameter("items", items)
+        _details['items'] = cli_util.parse_json_parameter("items", items)
 
-    client = cli_util.build_client('dns', ctx)
+    client = cli_util.build_client('dns', 'dns', ctx)
     result = client.patch_rr_set(
         zone_name_or_id=zone_name_or_id,
         domain=domain,
         rtype=rtype,
-        patch_rr_set_details=details,
+        patch_rr_set_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -1739,15 +1750,15 @@ def patch_zone_records(ctx, from_json, zone_name_or_id, items, if_match, if_unmo
         kwargs['compartment_id'] = compartment_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if items is not None:
-        details['items'] = cli_util.parse_json_parameter("items", items)
+        _details['items'] = cli_util.parse_json_parameter("items", items)
 
-    client = cli_util.build_client('dns', ctx)
+    client = cli_util.build_client('dns', 'dns', ctx)
     result = client.patch_zone_records(
         zone_name_or_id=zone_name_or_id,
-        patch_zone_records_details=details,
+        patch_zone_records_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -1789,16 +1800,16 @@ def update_domain_records(ctx, from_json, force, zone_name_or_id, domain, items,
         kwargs['compartment_id'] = compartment_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if items is not None:
-        details['items'] = cli_util.parse_json_parameter("items", items)
+        _details['items'] = cli_util.parse_json_parameter("items", items)
 
-    client = cli_util.build_client('dns', ctx)
+    client = cli_util.build_client('dns', 'dns', ctx)
     result = client.update_domain_records(
         zone_name_or_id=zone_name_or_id,
         domain=domain,
-        update_domain_records_details=details,
+        update_domain_records_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -1844,17 +1855,17 @@ def update_rr_set(ctx, from_json, force, zone_name_or_id, domain, rtype, items, 
         kwargs['compartment_id'] = compartment_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if items is not None:
-        details['items'] = cli_util.parse_json_parameter("items", items)
+        _details['items'] = cli_util.parse_json_parameter("items", items)
 
-    client = cli_util.build_client('dns', ctx)
+    client = cli_util.build_client('dns', 'dns', ctx)
     result = client.update_rr_set(
         zone_name_or_id=zone_name_or_id,
         domain=domain,
         rtype=rtype,
-        update_rr_set_details=details,
+        update_rr_set_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -1929,39 +1940,40 @@ def update_steering_policy(ctx, from_json, force, wait_for_state, max_wait_secon
         kwargs['if_unmodified_since'] = if_unmodified_since
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if ttl is not None:
-        details['ttl'] = ttl
+        _details['ttl'] = ttl
 
     if health_check_monitor_id is not None:
-        details['healthCheckMonitorId'] = health_check_monitor_id
+        _details['healthCheckMonitorId'] = health_check_monitor_id
 
     if template is not None:
-        details['template'] = template
+        _details['template'] = template
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if answers is not None:
-        details['answers'] = cli_util.parse_json_parameter("answers", answers)
+        _details['answers'] = cli_util.parse_json_parameter("answers", answers)
 
     if rules is not None:
-        details['rules'] = cli_util.parse_json_parameter("rules", rules)
+        _details['rules'] = cli_util.parse_json_parameter("rules", rules)
 
-    client = cli_util.build_client('dns', ctx)
+    client = cli_util.build_client('dns', 'dns', ctx)
     result = client.update_steering_policy(
         steering_policy_id=steering_policy_id,
-        update_steering_policy_details=details,
+        update_steering_policy_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_steering_policy') and callable(getattr(client, 'get_steering_policy')):
             try:
                 wait_period_kwargs = {}
@@ -2011,18 +2023,19 @@ def update_steering_policy_attachment(ctx, from_json, wait_for_state, max_wait_s
         kwargs['if_unmodified_since'] = if_unmodified_since
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
-    client = cli_util.build_client('dns', ctx)
+    client = cli_util.build_client('dns', 'dns', ctx)
     result = client.update_steering_policy_attachment(
         steering_policy_attachment_id=steering_policy_attachment_id,
-        update_steering_policy_attachment_details=details,
+        update_steering_policy_attachment_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_steering_policy_attachment') and callable(getattr(client, 'get_steering_policy_attachment')):
             try:
                 wait_period_kwargs = {}
@@ -2082,21 +2095,22 @@ def update_tsig_key(ctx, from_json, force, wait_for_state, max_wait_seconds, wai
         kwargs['if_unmodified_since'] = if_unmodified_since
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('dns', ctx)
+    client = cli_util.build_client('dns', 'dns', ctx)
     result = client.update_tsig_key(
         tsig_key_id=tsig_key_id,
-        update_tsig_key_details=details,
+        update_tsig_key_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_tsig_key') and callable(getattr(client, 'get_tsig_key')):
             try:
                 wait_period_kwargs = {}
@@ -2162,24 +2176,25 @@ def update_zone(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_in
         kwargs['compartment_id'] = compartment_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if external_masters is not None:
-        details['externalMasters'] = cli_util.parse_json_parameter("external_masters", external_masters)
+        _details['externalMasters'] = cli_util.parse_json_parameter("external_masters", external_masters)
 
-    client = cli_util.build_client('dns', ctx)
+    client = cli_util.build_client('dns', 'dns', ctx)
     result = client.update_zone(
         zone_name_or_id=zone_name_or_id,
-        update_zone_details=details,
+        update_zone_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_zone') and callable(getattr(client, 'get_zone')):
             try:
                 wait_period_kwargs = {}
@@ -2236,15 +2251,15 @@ def update_zone_records(ctx, from_json, force, zone_name_or_id, items, if_match,
         kwargs['compartment_id'] = compartment_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if items is not None:
-        details['items'] = cli_util.parse_json_parameter("items", items)
+        _details['items'] = cli_util.parse_json_parameter("items", items)
 
-    client = cli_util.build_client('dns', ctx)
+    client = cli_util.build_client('dns', 'dns', ctx)
     result = client.update_zone_records(
         zone_name_or_id=zone_name_or_id,
-        update_zone_records_details=details,
+        update_zone_records_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)

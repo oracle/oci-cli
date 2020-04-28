@@ -1,5 +1,6 @@
 # coding: utf-8
-# Copyright (c) 2016, 2020, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2020, Oracle and/or its affiliates.  All rights reserved.
+# This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 from __future__ import print_function
 import click
@@ -62,13 +63,13 @@ def change_application_compartment(ctx, from_json, application_id, compartment_i
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
 
-    client = cli_util.build_client('data_flow', ctx)
+    client = cli_util.build_client('data_flow', 'data_flow', ctx)
     result = client.change_application_compartment(
         application_id=application_id,
-        change_application_compartment_details=details,
+        change_application_compartment_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -93,13 +94,13 @@ def change_run_compartment(ctx, from_json, run_id, compartment_id, if_match):
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
 
-    client = cli_util.build_client('data_flow', ctx)
+    client = cli_util.build_client('data_flow', 'data_flow', ctx)
     result = client.change_run_compartment(
         run_id=run_id,
-        change_run_compartment_details=details,
+        change_run_compartment_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -138,49 +139,50 @@ def create_application(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
-    details['displayName'] = display_name
-    details['driverShape'] = driver_shape
-    details['executorShape'] = executor_shape
-    details['fileUri'] = file_uri
-    details['language'] = language
-    details['numExecutors'] = num_executors
-    details['sparkVersion'] = spark_version
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['displayName'] = display_name
+    _details['driverShape'] = driver_shape
+    _details['executorShape'] = executor_shape
+    _details['fileUri'] = file_uri
+    _details['language'] = language
+    _details['numExecutors'] = num_executors
+    _details['sparkVersion'] = spark_version
 
     if arguments is not None:
-        details['arguments'] = cli_util.parse_json_parameter("arguments", arguments)
+        _details['arguments'] = cli_util.parse_json_parameter("arguments", arguments)
 
     if class_name is not None:
-        details['className'] = class_name
+        _details['className'] = class_name
 
     if configuration is not None:
-        details['configuration'] = cli_util.parse_json_parameter("configuration", configuration)
+        _details['configuration'] = cli_util.parse_json_parameter("configuration", configuration)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if logs_bucket_uri is not None:
-        details['logsBucketUri'] = logs_bucket_uri
+        _details['logsBucketUri'] = logs_bucket_uri
 
     if parameters is not None:
-        details['parameters'] = cli_util.parse_json_parameter("parameters", parameters)
+        _details['parameters'] = cli_util.parse_json_parameter("parameters", parameters)
 
     if warehouse_bucket_uri is not None:
-        details['warehouseBucketUri'] = warehouse_bucket_uri
+        _details['warehouseBucketUri'] = warehouse_bucket_uri
 
-    client = cli_util.build_client('data_flow', ctx)
+    client = cli_util.build_client('data_flow', 'data_flow', ctx)
     result = client.create_application(
-        create_application_details=details,
+        create_application_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_application') and callable(getattr(client, 'get_application')):
             try:
                 wait_period_kwargs = {}
@@ -234,47 +236,48 @@ def create_run(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['applicationId'] = application_id
-    details['compartmentId'] = compartment_id
-    details['displayName'] = display_name
+    _details = {}
+    _details['applicationId'] = application_id
+    _details['compartmentId'] = compartment_id
+    _details['displayName'] = display_name
 
     if arguments is not None:
-        details['arguments'] = cli_util.parse_json_parameter("arguments", arguments)
+        _details['arguments'] = cli_util.parse_json_parameter("arguments", arguments)
 
     if configuration is not None:
-        details['configuration'] = cli_util.parse_json_parameter("configuration", configuration)
+        _details['configuration'] = cli_util.parse_json_parameter("configuration", configuration)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if driver_shape is not None:
-        details['driverShape'] = driver_shape
+        _details['driverShape'] = driver_shape
 
     if executor_shape is not None:
-        details['executorShape'] = executor_shape
+        _details['executorShape'] = executor_shape
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if logs_bucket_uri is not None:
-        details['logsBucketUri'] = logs_bucket_uri
+        _details['logsBucketUri'] = logs_bucket_uri
 
     if num_executors is not None:
-        details['numExecutors'] = num_executors
+        _details['numExecutors'] = num_executors
 
     if parameters is not None:
-        details['parameters'] = cli_util.parse_json_parameter("parameters", parameters)
+        _details['parameters'] = cli_util.parse_json_parameter("parameters", parameters)
 
     if warehouse_bucket_uri is not None:
-        details['warehouseBucketUri'] = warehouse_bucket_uri
+        _details['warehouseBucketUri'] = warehouse_bucket_uri
 
-    client = cli_util.build_client('data_flow', ctx)
+    client = cli_util.build_client('data_flow', 'data_flow', ctx)
     result = client.create_run(
-        create_run_details=details,
+        create_run_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_run') and callable(getattr(client, 'get_run')):
             try:
                 wait_period_kwargs = {}
@@ -320,12 +323,13 @@ def delete_application(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_flow', ctx)
+    client = cli_util.build_client('data_flow', 'data_flow', ctx)
     result = client.delete_application(
         application_id=application_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_application') and callable(getattr(client, 'get_application')):
             try:
                 wait_period_kwargs = {}
@@ -383,12 +387,13 @@ def delete_run(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_flow', ctx)
+    client = cli_util.build_client('data_flow', 'data_flow', ctx)
     result = client.delete_run(
         run_id=run_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_run') and callable(getattr(client, 'get_run')):
             try:
                 wait_period_kwargs = {}
@@ -439,7 +444,7 @@ def get_application(ctx, from_json, application_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_flow', ctx)
+    client = cli_util.build_client('data_flow', 'data_flow', ctx)
     result = client.get_application(
         application_id=application_id,
         **kwargs
@@ -461,7 +466,7 @@ def get_run(ctx, from_json, run_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_flow', ctx)
+    client = cli_util.build_client('data_flow', 'data_flow', ctx)
     result = client.get_run(
         run_id=run_id,
         **kwargs
@@ -488,7 +493,7 @@ def get_run_log(ctx, from_json, file, run_id, name):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_flow', ctx)
+    client = cli_util.build_client('data_flow', 'data_flow', ctx)
     result = client.get_run_log(
         run_id=run_id,
         name=name,
@@ -556,7 +561,7 @@ def list_applications(ctx, from_json, all_pages, page_size, compartment_id, limi
     if display_name_starts_with is not None:
         kwargs['display_name_starts_with'] = display_name_starts_with
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_flow', ctx)
+    client = cli_util.build_client('data_flow', 'data_flow', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -607,7 +612,7 @@ def list_run_logs(ctx, from_json, all_pages, page_size, run_id, limit, page):
     if page is not None:
         kwargs['page'] = page
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_flow', ctx)
+    client = cli_util.build_client('data_flow', 'data_flow', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -679,7 +684,7 @@ def list_runs(ctx, from_json, all_pages, page_size, compartment_id, application_
     if display_name is not None:
         kwargs['display_name'] = display_name
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_flow', ctx)
+    client = cli_util.build_client('data_flow', 'data_flow', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -749,63 +754,64 @@ def update_application(ctx, from_json, force, wait_for_state, max_wait_seconds, 
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if class_name is not None:
-        details['className'] = class_name
+        _details['className'] = class_name
 
     if file_uri is not None:
-        details['fileUri'] = file_uri
+        _details['fileUri'] = file_uri
 
     if spark_version is not None:
-        details['sparkVersion'] = spark_version
+        _details['sparkVersion'] = spark_version
 
     if language is not None:
-        details['language'] = language
+        _details['language'] = language
 
     if arguments is not None:
-        details['arguments'] = cli_util.parse_json_parameter("arguments", arguments)
+        _details['arguments'] = cli_util.parse_json_parameter("arguments", arguments)
 
     if configuration is not None:
-        details['configuration'] = cli_util.parse_json_parameter("configuration", configuration)
+        _details['configuration'] = cli_util.parse_json_parameter("configuration", configuration)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if driver_shape is not None:
-        details['driverShape'] = driver_shape
+        _details['driverShape'] = driver_shape
 
     if executor_shape is not None:
-        details['executorShape'] = executor_shape
+        _details['executorShape'] = executor_shape
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if logs_bucket_uri is not None:
-        details['logsBucketUri'] = logs_bucket_uri
+        _details['logsBucketUri'] = logs_bucket_uri
 
     if num_executors is not None:
-        details['numExecutors'] = num_executors
+        _details['numExecutors'] = num_executors
 
     if parameters is not None:
-        details['parameters'] = cli_util.parse_json_parameter("parameters", parameters)
+        _details['parameters'] = cli_util.parse_json_parameter("parameters", parameters)
 
     if warehouse_bucket_uri is not None:
-        details['warehouseBucketUri'] = warehouse_bucket_uri
+        _details['warehouseBucketUri'] = warehouse_bucket_uri
 
-    client = cli_util.build_client('data_flow', ctx)
+    client = cli_util.build_client('data_flow', 'data_flow', ctx)
     result = client.update_application(
         application_id=application_id,
-        update_application_details=details,
+        update_application_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_application') and callable(getattr(client, 'get_application')):
             try:
                 wait_period_kwargs = {}
@@ -858,21 +864,22 @@ def update_run(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_int
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
-    client = cli_util.build_client('data_flow', ctx)
+    client = cli_util.build_client('data_flow', 'data_flow', ctx)
     result = client.update_run(
         run_id=run_id,
-        update_run_details=details,
+        update_run_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_run') and callable(getattr(client, 'get_run')):
             try:
                 wait_period_kwargs = {}

@@ -1,5 +1,6 @@
 # coding: utf-8
-# Copyright (c) 2016, 2019, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2020, Oracle and/or its affiliates.  All rights reserved.
+# This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 from __future__ import print_function
 from .cli_root import cli
@@ -89,7 +90,7 @@ def validate(ctx, local):
             click.echo("Session has expired", file=sys.stderr)
             sys.exit(1)
     else:
-        client = cli_util.build_client('identity', ctx)
+        client = cli_util.build_client('identity', 'identity', ctx)
         try:
             client.list_regions()
         except oci.exceptions.ServiceError as service_error:

@@ -1,5 +1,6 @@
 # coding: utf-8
-# Copyright (c) 2016, 2020, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2020, Oracle and/or its affiliates.  All rights reserved.
+# This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 from __future__ import print_function
 import click
@@ -90,19 +91,20 @@ def attach_load_balancer(ctx, from_json, wait_for_state, max_wait_seconds, wait_
     if if_match is not None:
         kwargs['if_match'] = if_match
 
-    details = {}
-    details['loadBalancerId'] = load_balancer_id
-    details['backendSetName'] = backend_set_name
-    details['port'] = port
-    details['vnicSelection'] = vnic_selection
+    _details = {}
+    _details['loadBalancerId'] = load_balancer_id
+    _details['backendSetName'] = backend_set_name
+    _details['port'] = port
+    _details['vnicSelection'] = vnic_selection
 
-    client = cli_util.build_client('compute_management', ctx)
+    client = cli_util.build_client('core', 'compute_management', ctx)
     result = client.attach_load_balancer(
         instance_pool_id=instance_pool_id,
-        attach_load_balancer_details=details,
+        attach_load_balancer_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_instance_pool') and callable(getattr(client, 'get_instance_pool')):
             try:
                 wait_period_kwargs = {}
@@ -148,13 +150,13 @@ def change_cluster_network_compartment(ctx, from_json, cluster_network_id, compa
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
 
-    client = cli_util.build_client('compute_management', ctx)
+    client = cli_util.build_client('core', 'compute_management', ctx)
     result = client.change_cluster_network_compartment(
         cluster_network_id=cluster_network_id,
-        change_cluster_network_compartment_details=details,
+        change_cluster_network_compartment_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -183,13 +185,13 @@ def change_instance_configuration_compartment(ctx, from_json, instance_configura
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
 
-    client = cli_util.build_client('compute_management', ctx)
+    client = cli_util.build_client('core', 'compute_management', ctx)
     result = client.change_instance_configuration_compartment(
         instance_configuration_id=instance_configuration_id,
-        change_instance_configuration_compartment_details=details,
+        change_instance_configuration_compartment_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -216,13 +218,13 @@ def change_instance_pool_compartment(ctx, from_json, instance_pool_id, compartme
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
 
-    client = cli_util.build_client('compute_management', ctx)
+    client = cli_util.build_client('core', 'compute_management', ctx)
     result = client.change_instance_pool_compartment(
         instance_pool_id=instance_pool_id,
-        change_instance_pool_compartment_details=details,
+        change_instance_pool_compartment_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -253,26 +255,27 @@ def create_cluster_network(ctx, from_json, wait_for_state, max_wait_seconds, wai
 
     kwargs = {}
 
-    details = {}
-    details['compartmentId'] = compartment_id
-    details['instancePools'] = cli_util.parse_json_parameter("instance_pools", instance_pools)
-    details['placementConfiguration'] = cli_util.parse_json_parameter("placement_configuration", placement_configuration)
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['instancePools'] = cli_util.parse_json_parameter("instance_pools", instance_pools)
+    _details['placementConfiguration'] = cli_util.parse_json_parameter("placement_configuration", placement_configuration)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
-    client = cli_util.build_client('compute_management', ctx)
+    client = cli_util.build_client('core', 'compute_management', ctx)
     result = client.create_cluster_network(
-        create_cluster_network_details=details,
+        create_cluster_network_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_cluster_network') and callable(getattr(client, 'get_cluster_network')):
             try:
                 wait_period_kwargs = {}
@@ -322,24 +325,24 @@ def create_instance_configuration(ctx, from_json, compartment_id, defined_tags, 
 
     kwargs = {}
 
-    details = {}
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if source is not None:
-        details['source'] = source
+        _details['source'] = source
 
-    client = cli_util.build_client('compute_management', ctx)
+    client = cli_util.build_client('core', 'compute_management', ctx)
     result = client.create_instance_configuration(
-        create_instance_configuration=details,
+        create_instance_configuration=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -364,24 +367,24 @@ def create_instance_configuration_create_instance_configuration_details(ctx, fro
 
     kwargs = {}
 
-    details = {}
-    details['compartmentId'] = compartment_id
-    details['instanceDetails'] = cli_util.parse_json_parameter("instance_details", instance_details)
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['instanceDetails'] = cli_util.parse_json_parameter("instance_details", instance_details)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
-    details['source'] = 'NONE'
+    _details['source'] = 'NONE'
 
-    client = cli_util.build_client('compute_management', ctx)
+    client = cli_util.build_client('core', 'compute_management', ctx)
     result = client.create_instance_configuration(
-        create_instance_configuration=details,
+        create_instance_configuration=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -406,24 +409,24 @@ def create_instance_configuration_create_instance_configuration_from_instance_de
 
     kwargs = {}
 
-    details = {}
-    details['compartmentId'] = compartment_id
-    details['instanceId'] = instance_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['instanceId'] = instance_id
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
-    details['source'] = 'INSTANCE'
+    _details['source'] = 'INSTANCE'
 
-    client = cli_util.build_client('compute_management', ctx)
+    client = cli_util.build_client('core', 'compute_management', ctx)
     result = client.create_instance_configuration(
-        create_instance_configuration=details,
+        create_instance_configuration=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -458,30 +461,31 @@ def create_instance_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 
     kwargs = {}
 
-    details = {}
-    details['compartmentId'] = compartment_id
-    details['instanceConfigurationId'] = instance_configuration_id
-    details['placementConfigurations'] = cli_util.parse_json_parameter("placement_configurations", placement_configurations)
-    details['size'] = size
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['instanceConfigurationId'] = instance_configuration_id
+    _details['placementConfigurations'] = cli_util.parse_json_parameter("placement_configurations", placement_configurations)
+    _details['size'] = size
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if load_balancers is not None:
-        details['loadBalancers'] = cli_util.parse_json_parameter("load_balancers", load_balancers)
+        _details['loadBalancers'] = cli_util.parse_json_parameter("load_balancers", load_balancers)
 
-    client = cli_util.build_client('compute_management', ctx)
+    client = cli_util.build_client('core', 'compute_management', ctx)
     result = client.create_instance_pool(
-        create_instance_pool_details=details,
+        create_instance_pool_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_instance_pool') and callable(getattr(client, 'get_instance_pool')):
             try:
                 wait_period_kwargs = {}
@@ -523,7 +527,7 @@ def delete_instance_configuration(ctx, from_json, instance_configuration_id, if_
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
-    client = cli_util.build_client('compute_management', ctx)
+    client = cli_util.build_client('core', 'compute_management', ctx)
     result = client.delete_instance_configuration(
         instance_configuration_id=instance_configuration_id,
         **kwargs
@@ -553,17 +557,18 @@ def detach_load_balancer(ctx, from_json, wait_for_state, max_wait_seconds, wait_
     if if_match is not None:
         kwargs['if_match'] = if_match
 
-    details = {}
-    details['loadBalancerId'] = load_balancer_id
-    details['backendSetName'] = backend_set_name
+    _details = {}
+    _details['loadBalancerId'] = load_balancer_id
+    _details['backendSetName'] = backend_set_name
 
-    client = cli_util.build_client('compute_management', ctx)
+    client = cli_util.build_client('core', 'compute_management', ctx)
     result = client.detach_load_balancer(
         instance_pool_id=instance_pool_id,
-        detach_load_balancer_details=details,
+        detach_load_balancer_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_instance_pool') and callable(getattr(client, 'get_instance_pool')):
             try:
                 wait_period_kwargs = {}
@@ -601,7 +606,7 @@ def get_cluster_network(ctx, from_json, cluster_network_id):
         raise click.UsageError('Parameter --cluster-network-id cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('compute_management', ctx)
+    client = cli_util.build_client('core', 'compute_management', ctx)
     result = client.get_cluster_network(
         cluster_network_id=cluster_network_id,
         **kwargs
@@ -622,7 +627,7 @@ def get_instance_configuration(ctx, from_json, instance_configuration_id):
         raise click.UsageError('Parameter --instance-configuration-id cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('compute_management', ctx)
+    client = cli_util.build_client('core', 'compute_management', ctx)
     result = client.get_instance_configuration(
         instance_configuration_id=instance_configuration_id,
         **kwargs
@@ -643,7 +648,7 @@ def get_instance_pool(ctx, from_json, instance_pool_id):
         raise click.UsageError('Parameter --instance-pool-id cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('compute_management', ctx)
+    client = cli_util.build_client('core', 'compute_management', ctx)
     result = client.get_instance_pool(
         instance_pool_id=instance_pool_id,
         **kwargs
@@ -668,7 +673,7 @@ def get_instance_pool_load_balancer_attachment(ctx, from_json, instance_pool_id,
         raise click.UsageError('Parameter --instance-pool-load-balancer-attachment-id cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('compute_management', ctx)
+    client = cli_util.build_client('core', 'compute_management', ctx)
     result = client.get_instance_pool_load_balancer_attachment(
         instance_pool_id=instance_pool_id,
         instance_pool_load_balancer_attachment_id=instance_pool_load_balancer_attachment_id,
@@ -694,13 +699,13 @@ def launch_instance_configuration(ctx, from_json, instance_configuration_id, ins
 
     kwargs = {}
 
-    details = {}
-    details['instanceType'] = instance_type
+    _details = {}
+    _details['instanceType'] = instance_type
 
-    client = cli_util.build_client('compute_management', ctx)
+    client = cli_util.build_client('core', 'compute_management', ctx)
     result = client.launch_instance_configuration(
         instance_configuration_id=instance_configuration_id,
-        instance_configuration=details,
+        instance_configuration=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -729,23 +734,23 @@ def launch_instance_configuration_compute_instance_details(ctx, from_json, insta
 
     kwargs = {}
 
-    details = {}
+    _details = {}
 
     if block_volumes is not None:
-        details['blockVolumes'] = cli_util.parse_json_parameter("block_volumes", block_volumes)
+        _details['blockVolumes'] = cli_util.parse_json_parameter("block_volumes", block_volumes)
 
     if launch_details is not None:
-        details['launchDetails'] = cli_util.parse_json_parameter("launch_details", launch_details)
+        _details['launchDetails'] = cli_util.parse_json_parameter("launch_details", launch_details)
 
     if secondary_vnics is not None:
-        details['secondaryVnics'] = cli_util.parse_json_parameter("secondary_vnics", secondary_vnics)
+        _details['secondaryVnics'] = cli_util.parse_json_parameter("secondary_vnics", secondary_vnics)
 
-    details['instanceType'] = 'compute'
+    _details['instanceType'] = 'compute'
 
-    client = cli_util.build_client('compute_management', ctx)
+    client = cli_util.build_client('core', 'compute_management', ctx)
     result = client.launch_instance_configuration(
         instance_configuration_id=instance_configuration_id,
-        instance_configuration=details,
+        instance_configuration=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -789,7 +794,7 @@ def list_cluster_network_instances(ctx, from_json, all_pages, page_size, compart
         kwargs['sort_by'] = sort_by
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
-    client = cli_util.build_client('compute_management', ctx)
+    client = cli_util.build_client('core', 'compute_management', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -855,7 +860,7 @@ def list_cluster_networks(ctx, from_json, all_pages, page_size, compartment_id, 
         kwargs['sort_order'] = sort_order
     if lifecycle_state is not None:
         kwargs['lifecycle_state'] = lifecycle_state
-    client = cli_util.build_client('compute_management', ctx)
+    client = cli_util.build_client('core', 'compute_management', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -912,7 +917,7 @@ def list_instance_configurations(ctx, from_json, all_pages, page_size, compartme
         kwargs['sort_by'] = sort_by
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
-    client = cli_util.build_client('compute_management', ctx)
+    client = cli_util.build_client('core', 'compute_management', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -976,7 +981,7 @@ def list_instance_pool_instances(ctx, from_json, all_pages, page_size, compartme
         kwargs['sort_by'] = sort_by
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
-    client = cli_util.build_client('compute_management', ctx)
+    client = cli_util.build_client('core', 'compute_management', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -1042,7 +1047,7 @@ def list_instance_pools(ctx, from_json, all_pages, page_size, compartment_id, di
         kwargs['sort_order'] = sort_order
     if lifecycle_state is not None:
         kwargs['lifecycle_state'] = lifecycle_state
-    client = cli_util.build_client('compute_management', ctx)
+    client = cli_util.build_client('core', 'compute_management', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -1087,12 +1092,13 @@ def reset_instance_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
-    client = cli_util.build_client('compute_management', ctx)
+    client = cli_util.build_client('core', 'compute_management', ctx)
     result = client.reset_instance_pool(
         instance_pool_id=instance_pool_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_instance_pool') and callable(getattr(client, 'get_instance_pool')):
             try:
                 wait_period_kwargs = {}
@@ -1136,12 +1142,13 @@ def softreset_instance_pool(ctx, from_json, wait_for_state, max_wait_seconds, wa
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
-    client = cli_util.build_client('compute_management', ctx)
+    client = cli_util.build_client('core', 'compute_management', ctx)
     result = client.softreset_instance_pool(
         instance_pool_id=instance_pool_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_instance_pool') and callable(getattr(client, 'get_instance_pool')):
             try:
                 wait_period_kwargs = {}
@@ -1185,12 +1192,13 @@ def start_instance_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
-    client = cli_util.build_client('compute_management', ctx)
+    client = cli_util.build_client('core', 'compute_management', ctx)
     result = client.start_instance_pool(
         instance_pool_id=instance_pool_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_instance_pool') and callable(getattr(client, 'get_instance_pool')):
             try:
                 wait_period_kwargs = {}
@@ -1234,12 +1242,13 @@ def stop_instance_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
-    client = cli_util.build_client('compute_management', ctx)
+    client = cli_util.build_client('core', 'compute_management', ctx)
     result = client.stop_instance_pool(
         instance_pool_id=instance_pool_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_instance_pool') and callable(getattr(client, 'get_instance_pool')):
             try:
                 wait_period_kwargs = {}
@@ -1286,12 +1295,13 @@ def terminate_cluster_network(ctx, from_json, wait_for_state, max_wait_seconds, 
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
-    client = cli_util.build_client('compute_management', ctx)
+    client = cli_util.build_client('core', 'compute_management', ctx)
     result = client.terminate_cluster_network(
         cluster_network_id=cluster_network_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_cluster_network') and callable(getattr(client, 'get_cluster_network')):
             try:
                 wait_period_kwargs = {}
@@ -1348,12 +1358,13 @@ def terminate_instance_pool(ctx, from_json, wait_for_state, max_wait_seconds, wa
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
-    client = cli_util.build_client('compute_management', ctx)
+    client = cli_util.build_client('core', 'compute_management', ctx)
     result = client.terminate_instance_pool(
         instance_pool_id=instance_pool_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_instance_pool') and callable(getattr(client, 'get_instance_pool')):
             try:
                 wait_period_kwargs = {}
@@ -1422,24 +1433,25 @@ def update_cluster_network(ctx, from_json, force, wait_for_state, max_wait_secon
     if if_match is not None:
         kwargs['if_match'] = if_match
 
-    details = {}
+    _details = {}
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
-    client = cli_util.build_client('compute_management', ctx)
+    client = cli_util.build_client('core', 'compute_management', ctx)
     result = client.update_cluster_network(
         cluster_network_id=cluster_network_id,
-        update_cluster_network_details=details,
+        update_cluster_network_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_cluster_network') and callable(getattr(client, 'get_cluster_network')):
             try:
                 wait_period_kwargs = {}
@@ -1495,21 +1507,21 @@ def update_instance_configuration(ctx, from_json, force, instance_configuration_
     if if_match is not None:
         kwargs['if_match'] = if_match
 
-    details = {}
+    _details = {}
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
-    client = cli_util.build_client('compute_management', ctx)
+    client = cli_util.build_client('core', 'compute_management', ctx)
     result = client.update_instance_configuration(
         instance_configuration_id=instance_configuration_id,
-        update_instance_configuration_details=details,
+        update_instance_configuration_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -1556,33 +1568,34 @@ def update_instance_pool(ctx, from_json, force, wait_for_state, max_wait_seconds
     if if_match is not None:
         kwargs['if_match'] = if_match
 
-    details = {}
+    _details = {}
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if instance_configuration_id is not None:
-        details['instanceConfigurationId'] = instance_configuration_id
+        _details['instanceConfigurationId'] = instance_configuration_id
 
     if placement_configurations is not None:
-        details['placementConfigurations'] = cli_util.parse_json_parameter("placement_configurations", placement_configurations)
+        _details['placementConfigurations'] = cli_util.parse_json_parameter("placement_configurations", placement_configurations)
 
     if size is not None:
-        details['size'] = size
+        _details['size'] = size
 
-    client = cli_util.build_client('compute_management', ctx)
+    client = cli_util.build_client('core', 'compute_management', ctx)
     result = client.update_instance_pool(
         instance_pool_id=instance_pool_id,
-        update_instance_pool_details=details,
+        update_instance_pool_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_instance_pool') and callable(getattr(client, 'get_instance_pool')):
             try:
                 wait_period_kwargs = {}

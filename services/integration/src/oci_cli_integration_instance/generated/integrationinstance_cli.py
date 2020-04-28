@@ -1,5 +1,6 @@
 # coding: utf-8
-# Copyright (c) 2016, 2020, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2020, Oracle and/or its affiliates.  All rights reserved.
+# This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 from __future__ import print_function
 import click
@@ -72,18 +73,19 @@ def change_integration_instance_compartment(ctx, from_json, wait_for_state, max_
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if compartment_id is not None:
-        details['compartmentId'] = compartment_id
+        _details['compartmentId'] = compartment_id
 
-    client = cli_util.build_client('integration_instance', ctx)
+    client = cli_util.build_client('integration', 'integration_instance', ctx)
     result = client.change_integration_instance_compartment(
         integration_instance_id=integration_instance_id,
-        change_integration_instance_compartment_details=details,
+        change_integration_instance_compartment_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -130,28 +132,29 @@ def create_integration_instance(ctx, from_json, wait_for_state, max_wait_seconds
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['displayName'] = display_name
-    details['compartmentId'] = compartment_id
-    details['integrationInstanceType'] = integration_instance_type
-    details['isByol'] = is_byol
-    details['messagePacks'] = message_packs
+    _details = {}
+    _details['displayName'] = display_name
+    _details['compartmentId'] = compartment_id
+    _details['integrationInstanceType'] = integration_instance_type
+    _details['isByol'] = is_byol
+    _details['messagePacks'] = message_packs
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if idcs_at is not None:
-        details['idcsAt'] = idcs_at
+        _details['idcsAt'] = idcs_at
 
-    client = cli_util.build_client('integration_instance', ctx)
+    client = cli_util.build_client('integration', 'integration_instance', ctx)
     result = client.create_integration_instance(
-        create_integration_instance_details=details,
+        create_integration_instance_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -197,12 +200,13 @@ def delete_integration_instance(ctx, from_json, wait_for_state, max_wait_seconds
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('integration_instance', ctx)
+    client = cli_util.build_client('integration', 'integration_instance', ctx)
     result = client.delete_integration_instance(
         integration_instance_id=integration_instance_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -241,7 +245,7 @@ def get_integration_instance(ctx, from_json, integration_instance_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('integration_instance', ctx)
+    client = cli_util.build_client('integration', 'integration_instance', ctx)
     result = client.get_integration_instance(
         integration_instance_id=integration_instance_id,
         **kwargs
@@ -263,7 +267,7 @@ def get_work_request(ctx, from_json, work_request_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('integration_instance', ctx)
+    client = cli_util.build_client('integration', 'integration_instance', ctx)
     result = client.get_work_request(
         work_request_id=work_request_id,
         **kwargs
@@ -276,7 +280,7 @@ def get_work_request(ctx, from_json, work_request_id):
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable.
 
 Example: `My new resource`""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""Life cycle state to query on.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""Life cycle state to query on.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
@@ -307,7 +311,7 @@ def list_integration_instances(ctx, from_json, all_pages, page_size, compartment
     if sort_by is not None:
         kwargs['sort_by'] = sort_by
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('integration_instance', ctx)
+    client = cli_util.build_client('integration', 'integration_instance', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -359,7 +363,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, compartment_i
     if page is not None:
         kwargs['page'] = page
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('integration_instance', ctx)
+    client = cli_util.build_client('integration', 'integration_instance', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -414,7 +418,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, compartment_id,
     if page is not None:
         kwargs['page'] = page
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('integration_instance', ctx)
+    client = cli_util.build_client('integration', 'integration_instance', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -468,7 +472,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, pag
     if integration_instance_id is not None:
         kwargs['integration_instance_id'] = integration_instance_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('integration_instance', ctx)
+    client = cli_util.build_client('integration', 'integration_instance', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -491,6 +495,108 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, pag
             compartment_id=compartment_id,
             **kwargs
         )
+    cli_util.render_response(result, ctx)
+
+
+@integration_instance_group.command(name=cli_util.override('integration.start_integration_instance.command_name', 'start'), help=u"""Start an integration instance that was previously in an INACTIVE state""")
+@cli_util.option('--integration-instance-id', required=True, help=u"""Unique Integration Instance identifier.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def start_integration_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, integration_instance_id, if_match):
+
+    if isinstance(integration_instance_id, six.string_types) and len(integration_instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --integration-instance-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('integration', 'integration_instance', ctx)
+    result = client.start_integration_instance(
+        integration_instance_id=integration_instance_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@integration_instance_group.command(name=cli_util.override('integration.stop_integration_instance.command_name', 'stop'), help=u"""Stop an integration instance that was previously in an ACTIVE state""")
+@cli_util.option('--integration-instance-id', required=True, help=u"""Unique Integration Instance identifier.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def stop_integration_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, integration_instance_id, if_match):
+
+    if isinstance(integration_instance_id, six.string_types) and len(integration_instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --integration-instance-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('integration', 'integration_instance', ctx)
+    result = client.stop_integration_instance(
+        integration_instance_id=integration_instance_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -526,33 +632,34 @@ def update_integration_instance(ctx, from_json, force, wait_for_state, max_wait_
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if integration_instance_type is not None:
-        details['integrationInstanceType'] = integration_instance_type
+        _details['integrationInstanceType'] = integration_instance_type
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if is_byol is not None:
-        details['isByol'] = is_byol
+        _details['isByol'] = is_byol
 
     if message_packs is not None:
-        details['messagePacks'] = message_packs
+        _details['messagePacks'] = message_packs
 
-    client = cli_util.build_client('integration_instance', ctx)
+    client = cli_util.build_client('integration', 'integration_instance', ctx)
     result = client.update_integration_instance(
         integration_instance_id=integration_instance_id,
-        update_integration_instance_details=details,
+        update_integration_instance_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}

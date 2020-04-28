@@ -1,5 +1,6 @@
 # coding: utf-8
-# Copyright (c) 2016, 2020, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2020, Oracle and/or its affiliates.  All rights reserved.
+# This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 from __future__ import print_function
 import click
@@ -49,13 +50,13 @@ def change_appliance_export_job_compartment(ctx, from_json, appliance_export_job
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
 
-    client = cli_util.build_client('appliance_export_job', ctx)
+    client = cli_util.build_client('dts', 'appliance_export_job', ctx)
     result = client.change_appliance_export_job_compartment(
         appliance_export_job_id=appliance_export_job_id,
-        change_appliance_export_job_compartment_details=details,
+        change_appliance_export_job_compartment_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -88,33 +89,34 @@ def create_appliance_export_job(ctx, from_json, wait_for_state, max_wait_seconds
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
-    details['bucketName'] = bucket_name
-    details['displayName'] = display_name
-    details['customerShippingAddress'] = cli_util.parse_json_parameter("customer_shipping_address", customer_shipping_address)
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['bucketName'] = bucket_name
+    _details['displayName'] = display_name
+    _details['customerShippingAddress'] = cli_util.parse_json_parameter("customer_shipping_address", customer_shipping_address)
 
     if prefix is not None:
-        details['prefix'] = prefix
+        _details['prefix'] = prefix
 
     if range_start is not None:
-        details['rangeStart'] = range_start
+        _details['rangeStart'] = range_start
 
     if range_end is not None:
-        details['rangeEnd'] = range_end
+        _details['rangeEnd'] = range_end
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('appliance_export_job', ctx)
+    client = cli_util.build_client('dts', 'appliance_export_job', ctx)
     result = client.create_appliance_export_job(
-        create_appliance_export_job_details=details,
+        create_appliance_export_job_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_appliance_export_job') and callable(getattr(client, 'get_appliance_export_job')):
             try:
                 wait_period_kwargs = {}
@@ -160,12 +162,13 @@ def delete_appliance_export_job(ctx, from_json, wait_for_state, max_wait_seconds
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('appliance_export_job', ctx)
+    client = cli_util.build_client('dts', 'appliance_export_job', ctx)
     result = client.delete_appliance_export_job(
         appliance_export_job_id=appliance_export_job_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_appliance_export_job') and callable(getattr(client, 'get_appliance_export_job')):
             try:
                 wait_period_kwargs = {}
@@ -216,7 +219,7 @@ def get_appliance_export_job(ctx, from_json, appliance_export_job_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('appliance_export_job', ctx)
+    client = cli_util.build_client('dts', 'appliance_export_job', ctx)
     result = client.get_appliance_export_job(
         appliance_export_job_id=appliance_export_job_id,
         **kwargs
@@ -254,7 +257,7 @@ def list_appliance_export_jobs(ctx, from_json, all_pages, page_size, compartment
     if page is not None:
         kwargs['page'] = page
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('appliance_export_job', ctx)
+    client = cli_util.build_client('dts', 'appliance_export_job', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -327,66 +330,67 @@ def update_appliance_export_job(ctx, from_json, force, wait_for_state, max_wait_
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if bucket_name is not None:
-        details['bucketName'] = bucket_name
+        _details['bucketName'] = bucket_name
 
     if prefix is not None:
-        details['prefix'] = prefix
+        _details['prefix'] = prefix
 
     if range_start is not None:
-        details['rangeStart'] = range_start
+        _details['rangeStart'] = range_start
 
     if range_end is not None:
-        details['rangeEnd'] = range_end
+        _details['rangeEnd'] = range_end
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if lifecycle_state is not None:
-        details['lifecycleState'] = lifecycle_state
+        _details['lifecycleState'] = lifecycle_state
 
     if lifecycle_state_details is not None:
-        details['lifecycleStateDetails'] = lifecycle_state_details
+        _details['lifecycleStateDetails'] = lifecycle_state_details
 
     if manifest_file is not None:
-        details['manifestFile'] = manifest_file
+        _details['manifestFile'] = manifest_file
 
     if manifest_md5 is not None:
-        details['manifestMd5'] = manifest_md5
+        _details['manifestMd5'] = manifest_md5
 
     if number_of_objects is not None:
-        details['numberOfObjects'] = number_of_objects
+        _details['numberOfObjects'] = number_of_objects
 
     if total_size_in_bytes is not None:
-        details['totalSizeInBytes'] = total_size_in_bytes
+        _details['totalSizeInBytes'] = total_size_in_bytes
 
     if first_object is not None:
-        details['firstObject'] = first_object
+        _details['firstObject'] = first_object
 
     if last_object is not None:
-        details['lastObject'] = last_object
+        _details['lastObject'] = last_object
 
     if next_object is not None:
-        details['nextObject'] = next_object
+        _details['nextObject'] = next_object
 
     if customer_shipping_address is not None:
-        details['customerShippingAddress'] = cli_util.parse_json_parameter("customer_shipping_address", customer_shipping_address)
+        _details['customerShippingAddress'] = cli_util.parse_json_parameter("customer_shipping_address", customer_shipping_address)
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('appliance_export_job', ctx)
+    client = cli_util.build_client('dts', 'appliance_export_job', ctx)
     result = client.update_appliance_export_job(
         appliance_export_job_id=appliance_export_job_id,
-        update_appliance_export_job_details=details,
+        update_appliance_export_job_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_appliance_export_job') and callable(getattr(client, 'get_appliance_export_job')):
             try:
                 wait_period_kwargs = {}

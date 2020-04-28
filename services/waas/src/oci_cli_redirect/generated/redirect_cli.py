@@ -1,5 +1,6 @@
 # coding: utf-8
-# Copyright (c) 2016, 2020, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2020, Oracle and/or its affiliates.  All rights reserved.
+# This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 from __future__ import print_function
 import click
@@ -51,13 +52,13 @@ def change_http_redirect_compartment(ctx, from_json, http_redirect_id, compartme
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
 
-    client = cli_util.build_client('redirect', ctx)
+    client = cli_util.build_client('waas', 'redirect', ctx)
     result = client.change_http_redirect_compartment(
         http_redirect_id=http_redirect_id,
-        change_http_redirect_compartment_details=details,
+        change_http_redirect_compartment_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -88,29 +89,30 @@ def create_http_redirect(ctx, from_json, wait_for_state, max_wait_seconds, wait_
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
-    details['domain'] = domain
-    details['target'] = cli_util.parse_json_parameter("target", target)
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['domain'] = domain
+    _details['target'] = cli_util.parse_json_parameter("target", target)
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if response_code is not None:
-        details['responseCode'] = response_code
+        _details['responseCode'] = response_code
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('redirect', ctx)
+    client = cli_util.build_client('waas', 'redirect', ctx)
     result = client.create_http_redirect(
-        create_http_redirect_details=details,
+        create_http_redirect_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -156,12 +158,13 @@ def delete_http_redirect(ctx, from_json, wait_for_state, max_wait_seconds, wait_
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('redirect', ctx)
+    client = cli_util.build_client('waas', 'redirect', ctx)
     result = client.delete_http_redirect(
         http_redirect_id=http_redirect_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -200,7 +203,7 @@ def get_http_redirect(ctx, from_json, http_redirect_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('redirect', ctx)
+    client = cli_util.build_client('waas', 'redirect', ctx)
     result = client.get_http_redirect(
         http_redirect_id=http_redirect_id,
         **kwargs
@@ -251,7 +254,7 @@ def list_http_redirects(ctx, from_json, all_pages, page_size, compartment_id, li
     if time_created_less_than is not None:
         kwargs['time_created_less_than'] = time_created_less_than
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('redirect', ctx)
+    client = cli_util.build_client('waas', 'redirect', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -312,30 +315,31 @@ def update_http_redirect(ctx, from_json, force, wait_for_state, max_wait_seconds
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if target is not None:
-        details['target'] = cli_util.parse_json_parameter("target", target)
+        _details['target'] = cli_util.parse_json_parameter("target", target)
 
     if response_code is not None:
-        details['responseCode'] = response_code
+        _details['responseCode'] = response_code
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('redirect', ctx)
+    client = cli_util.build_client('waas', 'redirect', ctx)
     result = client.update_http_redirect(
         http_redirect_id=http_redirect_id,
-        update_http_redirect_details=details,
+        update_http_redirect_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}

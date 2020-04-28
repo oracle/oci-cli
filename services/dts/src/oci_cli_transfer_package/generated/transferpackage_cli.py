@@ -1,5 +1,6 @@
 # coding: utf-8
-# Copyright (c) 2016, 2020, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2020, Oracle and/or its affiliates.  All rights reserved.
+# This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 from __future__ import print_function
 import click
@@ -56,16 +57,16 @@ def attach_devices_to_transfer_package(ctx, from_json, id, transfer_package_labe
 
     kwargs = {}
 
-    details = {}
+    _details = {}
 
     if device_labels is not None:
-        details['deviceLabels'] = cli_util.parse_json_parameter("device_labels", device_labels)
+        _details['deviceLabels'] = cli_util.parse_json_parameter("device_labels", device_labels)
 
-    client = cli_util.build_client('transfer_package', ctx)
+    client = cli_util.build_client('dts', 'transfer_package', ctx)
     result = client.attach_devices_to_transfer_package(
         id=id,
         transfer_package_label=transfer_package_label,
-        attach_devices_details=details,
+        attach_devices_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -91,24 +92,25 @@ def create_transfer_package(ctx, from_json, wait_for_state, max_wait_seconds, wa
 
     kwargs = {}
 
-    details = {}
+    _details = {}
 
     if original_package_delivery_tracking_number is not None:
-        details['originalPackageDeliveryTrackingNumber'] = original_package_delivery_tracking_number
+        _details['originalPackageDeliveryTrackingNumber'] = original_package_delivery_tracking_number
 
     if return_package_delivery_tracking_number is not None:
-        details['returnPackageDeliveryTrackingNumber'] = return_package_delivery_tracking_number
+        _details['returnPackageDeliveryTrackingNumber'] = return_package_delivery_tracking_number
 
     if package_delivery_vendor is not None:
-        details['packageDeliveryVendor'] = package_delivery_vendor
+        _details['packageDeliveryVendor'] = package_delivery_vendor
 
-    client = cli_util.build_client('transfer_package', ctx)
+    client = cli_util.build_client('dts', 'transfer_package', ctx)
     result = client.create_transfer_package(
         id=id,
-        create_transfer_package_details=details,
+        create_transfer_package_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_transfer_package') and callable(getattr(client, 'get_transfer_package')):
             try:
                 wait_period_kwargs = {}
@@ -151,7 +153,7 @@ def delete_transfer_package(ctx, from_json, id, transfer_package_label):
         raise click.UsageError('Parameter --transfer-package-label cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('transfer_package', ctx)
+    client = cli_util.build_client('dts', 'transfer_package', ctx)
     result = client.delete_transfer_package(
         id=id,
         transfer_package_label=transfer_package_label,
@@ -179,16 +181,16 @@ def detach_devices_from_transfer_package(ctx, from_json, id, transfer_package_la
 
     kwargs = {}
 
-    details = {}
+    _details = {}
 
     if device_labels is not None:
-        details['deviceLabels'] = cli_util.parse_json_parameter("device_labels", device_labels)
+        _details['deviceLabels'] = cli_util.parse_json_parameter("device_labels", device_labels)
 
-    client = cli_util.build_client('transfer_package', ctx)
+    client = cli_util.build_client('dts', 'transfer_package', ctx)
     result = client.detach_devices_from_transfer_package(
         id=id,
         transfer_package_label=transfer_package_label,
-        detach_devices_details=details,
+        detach_devices_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -211,7 +213,7 @@ def get_transfer_package(ctx, from_json, id, transfer_package_label):
         raise click.UsageError('Parameter --transfer-package-label cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('transfer_package', ctx)
+    client = cli_util.build_client('dts', 'transfer_package', ctx)
     result = client.get_transfer_package(
         id=id,
         transfer_package_label=transfer_package_label,
@@ -240,7 +242,7 @@ def list_transfer_packages(ctx, from_json, all_pages, id, lifecycle_state, displ
         kwargs['lifecycle_state'] = lifecycle_state
     if display_name is not None:
         kwargs['display_name'] = display_name
-    client = cli_util.build_client('transfer_package', ctx)
+    client = cli_util.build_client('dts', 'transfer_package', ctx)
     result = client.list_transfer_packages(
         id=id,
         **kwargs
@@ -276,28 +278,29 @@ def update_transfer_package(ctx, from_json, wait_for_state, max_wait_seconds, wa
     if if_match is not None:
         kwargs['if_match'] = if_match
 
-    details = {}
+    _details = {}
 
     if original_package_delivery_tracking_number is not None:
-        details['originalPackageDeliveryTrackingNumber'] = original_package_delivery_tracking_number
+        _details['originalPackageDeliveryTrackingNumber'] = original_package_delivery_tracking_number
 
     if return_package_delivery_tracking_number is not None:
-        details['returnPackageDeliveryTrackingNumber'] = return_package_delivery_tracking_number
+        _details['returnPackageDeliveryTrackingNumber'] = return_package_delivery_tracking_number
 
     if package_delivery_vendor is not None:
-        details['packageDeliveryVendor'] = package_delivery_vendor
+        _details['packageDeliveryVendor'] = package_delivery_vendor
 
     if lifecycle_state is not None:
-        details['lifecycleState'] = lifecycle_state
+        _details['lifecycleState'] = lifecycle_state
 
-    client = cli_util.build_client('transfer_package', ctx)
+    client = cli_util.build_client('dts', 'transfer_package', ctx)
     result = client.update_transfer_package(
         id=id,
         transfer_package_label=transfer_package_label,
-        update_transfer_package_details=details,
+        update_transfer_package_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_transfer_package') and callable(getattr(client, 'get_transfer_package')):
             try:
                 wait_period_kwargs = {}

@@ -1,5 +1,6 @@
 # coding: utf-8
-# Copyright (c) 2016, 2019, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2020, Oracle and/or its affiliates.  All rights reserved.
+# This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 from __future__ import print_function
 import click
@@ -34,7 +35,7 @@ def close_transfer_job_extended(ctx, **kwargs):
 
 
 def create_transfer_job_client(ctx):
-    return cli_util.build_client('transfer_job', ctx)
+    return cli_util.build_client('dts', 'transfer_job', ctx)
 
 
 @cli_util.copy_params_from_generated_command(transferjob_cli.get_transfer_job, params_to_exclude=['id'])
@@ -101,7 +102,7 @@ def create_transfer_job_extended(ctx, from_json, wait_for_state, max_wait_second
     if defined_tags is not None:
         details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('transfer_job', ctx)
+    client = cli_util.build_client('dts', 'transfer_job', ctx)
     if not skip_upload_user_check:
         validate_bucket_belongs_to_compartment(ctx, bucket, compartment_id)
         validate_upload_user_credentials(ctx, bucket)
@@ -143,7 +144,7 @@ def get_transfer_job_helper(ctx, from_json, id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('transfer_job', ctx)
+    client = cli_util.build_client('dts', 'transfer_job', ctx)
     result = client.get_transfer_job(
         id=id,
         **kwargs

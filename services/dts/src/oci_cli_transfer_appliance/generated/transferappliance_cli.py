@@ -1,5 +1,6 @@
 # coding: utf-8
-# Copyright (c) 2016, 2020, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2020, Oracle and/or its affiliates.  All rights reserved.
+# This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 from __future__ import print_function
 import click
@@ -69,18 +70,19 @@ def create_transfer_appliance(ctx, from_json, wait_for_state, max_wait_seconds, 
 
     kwargs = {}
 
-    details = {}
+    _details = {}
 
     if customer_shipping_address is not None:
-        details['customerShippingAddress'] = cli_util.parse_json_parameter("customer_shipping_address", customer_shipping_address)
+        _details['customerShippingAddress'] = cli_util.parse_json_parameter("customer_shipping_address", customer_shipping_address)
 
-    client = cli_util.build_client('transfer_appliance', ctx)
+    client = cli_util.build_client('dts', 'transfer_appliance', ctx)
     result = client.create_transfer_appliance(
         id=id,
-        create_transfer_appliance_details=details,
+        create_transfer_appliance_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_transfer_appliance') and callable(getattr(client, 'get_transfer_appliance')):
             try:
                 wait_period_kwargs = {}
@@ -124,16 +126,16 @@ def create_transfer_appliance_admin_credentials(ctx, from_json, id, transfer_app
 
     kwargs = {}
 
-    details = {}
+    _details = {}
 
     if public_key is not None:
-        details['publicKey'] = public_key
+        _details['publicKey'] = public_key
 
-    client = cli_util.build_client('transfer_appliance', ctx)
+    client = cli_util.build_client('dts', 'transfer_appliance', ctx)
     result = client.create_transfer_appliance_admin_credentials(
         id=id,
         transfer_appliance_label=transfer_appliance_label,
-        admin_public_key=details,
+        admin_public_key=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -157,7 +159,7 @@ def delete_transfer_appliance(ctx, from_json, id, transfer_appliance_label):
         raise click.UsageError('Parameter --transfer-appliance-label cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('transfer_appliance', ctx)
+    client = cli_util.build_client('dts', 'transfer_appliance', ctx)
     result = client.delete_transfer_appliance(
         id=id,
         transfer_appliance_label=transfer_appliance_label,
@@ -183,7 +185,7 @@ def get_transfer_appliance(ctx, from_json, id, transfer_appliance_label):
         raise click.UsageError('Parameter --transfer-appliance-label cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('transfer_appliance', ctx)
+    client = cli_util.build_client('dts', 'transfer_appliance', ctx)
     result = client.get_transfer_appliance(
         id=id,
         transfer_appliance_label=transfer_appliance_label,
@@ -209,7 +211,7 @@ def get_transfer_appliance_certificate_authority_certificate(ctx, from_json, id,
         raise click.UsageError('Parameter --transfer-appliance-label cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('transfer_appliance', ctx)
+    client = cli_util.build_client('dts', 'transfer_appliance', ctx)
     result = client.get_transfer_appliance_certificate_authority_certificate(
         id=id,
         transfer_appliance_label=transfer_appliance_label,
@@ -235,7 +237,7 @@ def get_transfer_appliance_encryption_passphrase(ctx, from_json, id, transfer_ap
         raise click.UsageError('Parameter --transfer-appliance-label cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('transfer_appliance', ctx)
+    client = cli_util.build_client('dts', 'transfer_appliance', ctx)
     result = client.get_transfer_appliance_encryption_passphrase(
         id=id,
         transfer_appliance_label=transfer_appliance_label,
@@ -261,7 +263,7 @@ def list_transfer_appliances(ctx, from_json, all_pages, id, lifecycle_state):
     kwargs = {}
     if lifecycle_state is not None:
         kwargs['lifecycle_state'] = lifecycle_state
-    client = cli_util.build_client('transfer_appliance', ctx)
+    client = cli_util.build_client('dts', 'transfer_appliance', ctx)
     result = client.list_transfer_appliances(
         id=id,
         **kwargs
@@ -300,22 +302,23 @@ def update_transfer_appliance(ctx, from_json, force, wait_for_state, max_wait_se
     if if_match is not None:
         kwargs['if_match'] = if_match
 
-    details = {}
+    _details = {}
 
     if lifecycle_state is not None:
-        details['lifecycleState'] = lifecycle_state
+        _details['lifecycleState'] = lifecycle_state
 
     if customer_shipping_address is not None:
-        details['customerShippingAddress'] = cli_util.parse_json_parameter("customer_shipping_address", customer_shipping_address)
+        _details['customerShippingAddress'] = cli_util.parse_json_parameter("customer_shipping_address", customer_shipping_address)
 
-    client = cli_util.build_client('transfer_appliance', ctx)
+    client = cli_util.build_client('dts', 'transfer_appliance', ctx)
     result = client.update_transfer_appliance(
         id=id,
         transfer_appliance_label=transfer_appliance_label,
-        update_transfer_appliance_details=details,
+        update_transfer_appliance_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_transfer_appliance') and callable(getattr(client, 'get_transfer_appliance')):
             try:
                 wait_period_kwargs = {}

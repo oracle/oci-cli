@@ -1,9 +1,7 @@
 # coding: utf-8
-# Copyright (c) 2016, 2019, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2020, Oracle and/or its affiliates.  All rights reserved.
+# This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
-
-# coding: utf-8
-# Copyright (c) 2016, 2019, Oracle and/or its affiliates. All rights reserved.
 
 # NOTE: This file has been commented because the feature is not ready for public release
 #       Once the feature is ready, this should be brought back
@@ -54,7 +52,7 @@ def get_transfer_appliance_entitlement_extended(ctx, **kwargs):
     list_kwargs = {
         'opc_request_id': cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     }
-    client = cli_util.build_client('transfer_appliance_entitlement', ctx)
+    client = cli_util.build_client('dts', 'transfer_appliance_entitlement', ctx)
     compartment_id = kwargs['compartment_id']
     entitlements_list = client.list_transfer_appliance_entitlement(compartment_id=compartment_id, **list_kwargs)
     if len(entitlements_list.data) < 1:

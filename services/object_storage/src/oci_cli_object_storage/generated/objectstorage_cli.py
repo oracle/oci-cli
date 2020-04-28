@@ -1,5 +1,6 @@
 # coding: utf-8
-# Copyright (c) 2016, 2020, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2020, Oracle and/or its affiliates.  All rights reserved.
+# This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 from __future__ import print_function
 import click
@@ -131,7 +132,7 @@ def abort_multipart_upload(ctx, from_json, namespace_name, bucket_name, object_n
 
     kwargs = {}
     kwargs['opc_client_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('object_storage', ctx)
+    client = cli_util.build_client('object_storage', 'object_storage', ctx)
     result = client.abort_multipart_upload(
         namespace_name=namespace_name,
         bucket_name=bucket_name,
@@ -157,7 +158,7 @@ def cancel_work_request(ctx, from_json, work_request_id):
 
     kwargs = {}
     kwargs['opc_client_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('object_storage', ctx)
+    client = cli_util.build_client('object_storage', 'object_storage', ctx)
     result = client.cancel_work_request(
         work_request_id=work_request_id,
         **kwargs
@@ -197,19 +198,19 @@ def commit_multipart_upload(ctx, from_json, namespace_name, bucket_name, object_
         kwargs['if_none_match'] = if_none_match
     kwargs['opc_client_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['partsToCommit'] = cli_util.parse_json_parameter("parts_to_commit", parts_to_commit)
+    _details = {}
+    _details['partsToCommit'] = cli_util.parse_json_parameter("parts_to_commit", parts_to_commit)
 
     if parts_to_exclude is not None:
-        details['partsToExclude'] = cli_util.parse_json_parameter("parts_to_exclude", parts_to_exclude)
+        _details['partsToExclude'] = cli_util.parse_json_parameter("parts_to_exclude", parts_to_exclude)
 
-    client = cli_util.build_client('object_storage', ctx)
+    client = cli_util.build_client('object_storage', 'object_storage', ctx)
     result = client.commit_multipart_upload(
         namespace_name=namespace_name,
         bucket_name=bucket_name,
         object_name=object_name,
         upload_id=upload_id,
-        commit_multipart_upload_details=details,
+        commit_multipart_upload_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -265,36 +266,37 @@ def copy_object(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
         kwargs['opc_source_sse_customer_key_sha256'] = opc_source_sse_customer_key_sha256
     kwargs['opc_client_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['sourceObjectName'] = source_object_name
-    details['destinationRegion'] = destination_region
-    details['destinationNamespace'] = destination_namespace
-    details['destinationBucket'] = destination_bucket
-    details['destinationObjectName'] = destination_object_name
+    _details = {}
+    _details['sourceObjectName'] = source_object_name
+    _details['destinationRegion'] = destination_region
+    _details['destinationNamespace'] = destination_namespace
+    _details['destinationBucket'] = destination_bucket
+    _details['destinationObjectName'] = destination_object_name
 
     if source_object_if_match_e_tag is not None:
-        details['sourceObjectIfMatchETag'] = source_object_if_match_e_tag
+        _details['sourceObjectIfMatchETag'] = source_object_if_match_e_tag
 
     if source_version_id is not None:
-        details['sourceVersionId'] = source_version_id
+        _details['sourceVersionId'] = source_version_id
 
     if destination_object_if_match_e_tag is not None:
-        details['destinationObjectIfMatchETag'] = destination_object_if_match_e_tag
+        _details['destinationObjectIfMatchETag'] = destination_object_if_match_e_tag
 
     if destination_object_if_none_match_e_tag is not None:
-        details['destinationObjectIfNoneMatchETag'] = destination_object_if_none_match_e_tag
+        _details['destinationObjectIfNoneMatchETag'] = destination_object_if_none_match_e_tag
 
     if destination_object_metadata is not None:
-        details['destinationObjectMetadata'] = cli_util.parse_json_parameter("destination_object_metadata", destination_object_metadata)
+        _details['destinationObjectMetadata'] = cli_util.parse_json_parameter("destination_object_metadata", destination_object_metadata)
 
-    client = cli_util.build_client('object_storage', ctx)
+    client = cli_util.build_client('object_storage', 'object_storage', ctx)
     result = client.copy_object(
         namespace_name=namespace_name,
         bucket_name=bucket_name,
-        copy_object_details=details,
+        copy_object_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -344,38 +346,38 @@ def create_bucket(ctx, from_json, namespace_name, name, compartment_id, metadata
     kwargs = {}
     kwargs['opc_client_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['name'] = name
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['name'] = name
+    _details['compartmentId'] = compartment_id
 
     if metadata is not None:
-        details['metadata'] = cli_util.parse_json_parameter("metadata", metadata)
+        _details['metadata'] = cli_util.parse_json_parameter("metadata", metadata)
 
     if public_access_type is not None:
-        details['publicAccessType'] = public_access_type
+        _details['publicAccessType'] = public_access_type
 
     if storage_tier is not None:
-        details['storageTier'] = storage_tier
+        _details['storageTier'] = storage_tier
 
     if object_events_enabled is not None:
-        details['objectEventsEnabled'] = object_events_enabled
+        _details['objectEventsEnabled'] = object_events_enabled
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if kms_key_id is not None:
-        details['kmsKeyId'] = kms_key_id
+        _details['kmsKeyId'] = kms_key_id
 
     if versioning is not None:
-        details['versioning'] = versioning
+        _details['versioning'] = versioning
 
-    client = cli_util.build_client('object_storage', ctx)
+    client = cli_util.build_client('object_storage', 'object_storage', ctx)
     result = client.create_bucket(
         namespace_name=namespace_name,
-        create_bucket_details=details,
+        create_bucket_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -422,32 +424,32 @@ def create_multipart_upload(ctx, from_json, namespace_name, bucket_name, object,
         kwargs['opc_sse_customer_key_sha256'] = opc_sse_customer_key_sha256
     kwargs['opc_client_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['object'] = object
+    _details = {}
+    _details['object'] = object
 
     if content_type is not None:
-        details['contentType'] = content_type
+        _details['contentType'] = content_type
 
     if content_language is not None:
-        details['contentLanguage'] = content_language
+        _details['contentLanguage'] = content_language
 
     if content_encoding is not None:
-        details['contentEncoding'] = content_encoding
+        _details['contentEncoding'] = content_encoding
 
     if content_disposition is not None:
-        details['contentDisposition'] = content_disposition
+        _details['contentDisposition'] = content_disposition
 
     if cache_control is not None:
-        details['cacheControl'] = cache_control
+        _details['cacheControl'] = cache_control
 
     if metadata is not None:
-        details['metadata'] = cli_util.parse_json_parameter("metadata", metadata)
+        _details['metadata'] = cli_util.parse_json_parameter("metadata", metadata)
 
-    client = cli_util.build_client('object_storage', ctx)
+    client = cli_util.build_client('object_storage', 'object_storage', ctx)
     result = client.create_multipart_upload(
         namespace_name=namespace_name,
         bucket_name=bucket_name,
-        create_multipart_upload_details=details,
+        create_multipart_upload_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -476,19 +478,19 @@ def create_preauthenticated_request(ctx, from_json, namespace_name, bucket_name,
     kwargs = {}
     kwargs['opc_client_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['name'] = name
-    details['accessType'] = access_type
-    details['timeExpires'] = time_expires
+    _details = {}
+    _details['name'] = name
+    _details['accessType'] = access_type
+    _details['timeExpires'] = time_expires
 
     if object_name is not None:
-        details['objectName'] = object_name
+        _details['objectName'] = object_name
 
-    client = cli_util.build_client('object_storage', ctx)
+    client = cli_util.build_client('object_storage', 'object_storage', ctx)
     result = client.create_preauthenticated_request(
         namespace_name=namespace_name,
         bucket_name=bucket_name,
-        create_preauthenticated_request_details=details,
+        create_preauthenticated_request_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -516,16 +518,16 @@ def create_replication_policy(ctx, from_json, namespace_name, bucket_name, name,
     kwargs = {}
     kwargs['opc_client_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['name'] = name
-    details['destinationRegionName'] = destination_region_name
-    details['destinationBucketName'] = destination_bucket_name
+    _details = {}
+    _details['name'] = name
+    _details['destinationRegionName'] = destination_region_name
+    _details['destinationBucketName'] = destination_bucket_name
 
-    client = cli_util.build_client('object_storage', ctx)
+    client = cli_util.build_client('object_storage', 'object_storage', ctx)
     result = client.create_replication_policy(
         namespace_name=namespace_name,
         bucket_name=bucket_name,
-        create_replication_policy_details=details,
+        create_replication_policy_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -553,22 +555,22 @@ def create_retention_rule(ctx, from_json, namespace_name, bucket_name, display_n
     kwargs = {}
     kwargs['opc_client_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if duration is not None:
-        details['duration'] = cli_util.parse_json_parameter("duration", duration)
+        _details['duration'] = cli_util.parse_json_parameter("duration", duration)
 
     if time_rule_locked is not None:
-        details['timeRuleLocked'] = time_rule_locked
+        _details['timeRuleLocked'] = time_rule_locked
 
-    client = cli_util.build_client('object_storage', ctx)
+    client = cli_util.build_client('object_storage', 'object_storage', ctx)
     result = client.create_retention_rule(
         namespace_name=namespace_name,
         bucket_name=bucket_name,
-        create_retention_rule_details=details,
+        create_retention_rule_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -596,7 +598,7 @@ def delete_bucket(ctx, from_json, namespace_name, bucket_name, if_match):
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_client_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('object_storage', ctx)
+    client = cli_util.build_client('object_storage', 'object_storage', ctx)
     result = client.delete_bucket(
         namespace_name=namespace_name,
         bucket_name=bucket_name,
@@ -634,7 +636,7 @@ def delete_object(ctx, from_json, namespace_name, bucket_name, object_name, if_m
     if version_id is not None:
         kwargs['version_id'] = version_id
     kwargs['opc_client_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('object_storage', ctx)
+    client = cli_util.build_client('object_storage', 'object_storage', ctx)
     result = client.delete_object(
         namespace_name=namespace_name,
         bucket_name=bucket_name,
@@ -666,7 +668,7 @@ def delete_object_lifecycle_policy(ctx, from_json, namespace_name, bucket_name, 
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_client_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('object_storage', ctx)
+    client = cli_util.build_client('object_storage', 'object_storage', ctx)
     result = client.delete_object_lifecycle_policy(
         namespace_name=namespace_name,
         bucket_name=bucket_name,
@@ -698,7 +700,7 @@ def delete_preauthenticated_request(ctx, from_json, namespace_name, bucket_name,
 
     kwargs = {}
     kwargs['opc_client_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('object_storage', ctx)
+    client = cli_util.build_client('object_storage', 'object_storage', ctx)
     result = client.delete_preauthenticated_request(
         namespace_name=namespace_name,
         bucket_name=bucket_name,
@@ -731,7 +733,7 @@ def delete_replication_policy(ctx, from_json, namespace_name, bucket_name, repli
 
     kwargs = {}
     kwargs['opc_client_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('object_storage', ctx)
+    client = cli_util.build_client('object_storage', 'object_storage', ctx)
     result = client.delete_replication_policy(
         namespace_name=namespace_name,
         bucket_name=bucket_name,
@@ -767,7 +769,7 @@ def delete_retention_rule(ctx, from_json, namespace_name, bucket_name, retention
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_client_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('object_storage', ctx)
+    client = cli_util.build_client('object_storage', 'object_storage', ctx)
     result = client.delete_retention_rule(
         namespace_name=namespace_name,
         bucket_name=bucket_name,
@@ -804,7 +806,7 @@ def get_bucket(ctx, from_json, namespace_name, bucket_name, if_match, if_none_ma
     if fields is not None and len(fields) > 0:
         kwargs['fields'] = fields
     kwargs['opc_client_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('object_storage', ctx)
+    client = cli_util.build_client('object_storage', 'object_storage', ctx)
     result = client.get_bucket(
         namespace_name=namespace_name,
         bucket_name=bucket_name,
@@ -828,7 +830,7 @@ def get_namespace(ctx, from_json, compartment_id):
     if compartment_id is not None:
         kwargs['compartment_id'] = compartment_id
     kwargs['opc_client_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('object_storage', ctx)
+    client = cli_util.build_client('object_storage', 'object_storage', ctx)
     result = client.get_namespace(
         **kwargs
     )
@@ -851,7 +853,7 @@ def get_namespace_metadata(ctx, from_json, namespace_name):
 
     kwargs = {}
     kwargs['opc_client_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('object_storage', ctx)
+    client = cli_util.build_client('object_storage', 'object_storage', ctx)
     result = client.get_namespace_metadata(
         namespace_name=namespace_name,
         **kwargs
@@ -903,7 +905,7 @@ def get_object(ctx, from_json, file, namespace_name, bucket_name, object_name, v
     if opc_sse_customer_key_sha256 is not None:
         kwargs['opc_sse_customer_key_sha256'] = opc_sse_customer_key_sha256
     kwargs['opc_client_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('object_storage', ctx)
+    client = cli_util.build_client('object_storage', 'object_storage', ctx)
     result = client.get_object(
         namespace_name=namespace_name,
         bucket_name=bucket_name,
@@ -953,7 +955,7 @@ def get_object_lifecycle_policy(ctx, from_json, namespace_name, bucket_name):
 
     kwargs = {}
     kwargs['opc_client_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('object_storage', ctx)
+    client = cli_util.build_client('object_storage', 'object_storage', ctx)
     result = client.get_object_lifecycle_policy(
         namespace_name=namespace_name,
         bucket_name=bucket_name,
@@ -984,7 +986,7 @@ def get_preauthenticated_request(ctx, from_json, namespace_name, bucket_name, pa
 
     kwargs = {}
     kwargs['opc_client_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('object_storage', ctx)
+    client = cli_util.build_client('object_storage', 'object_storage', ctx)
     result = client.get_preauthenticated_request(
         namespace_name=namespace_name,
         bucket_name=bucket_name,
@@ -1016,7 +1018,7 @@ def get_replication_policy(ctx, from_json, namespace_name, bucket_name, replicat
 
     kwargs = {}
     kwargs['opc_client_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('object_storage', ctx)
+    client = cli_util.build_client('object_storage', 'object_storage', ctx)
     result = client.get_replication_policy(
         namespace_name=namespace_name,
         bucket_name=bucket_name,
@@ -1048,7 +1050,7 @@ def get_retention_rule(ctx, from_json, namespace_name, bucket_name, retention_ru
 
     kwargs = {}
     kwargs['opc_client_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('object_storage', ctx)
+    client = cli_util.build_client('object_storage', 'object_storage', ctx)
     result = client.get_retention_rule(
         namespace_name=namespace_name,
         bucket_name=bucket_name,
@@ -1072,7 +1074,7 @@ def get_work_request(ctx, from_json, work_request_id):
 
     kwargs = {}
     kwargs['opc_client_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('object_storage', ctx)
+    client = cli_util.build_client('object_storage', 'object_storage', ctx)
     result = client.get_work_request(
         work_request_id=work_request_id,
         **kwargs
@@ -1104,7 +1106,7 @@ def head_bucket(ctx, from_json, namespace_name, bucket_name, if_match, if_none_m
     if if_none_match is not None:
         kwargs['if_none_match'] = if_none_match
     kwargs['opc_client_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('object_storage', ctx)
+    client = cli_util.build_client('object_storage', 'object_storage', ctx)
     result = client.head_bucket(
         namespace_name=namespace_name,
         bucket_name=bucket_name,
@@ -1153,7 +1155,7 @@ def head_object(ctx, from_json, namespace_name, bucket_name, object_name, versio
     if opc_sse_customer_key_sha256 is not None:
         kwargs['opc_sse_customer_key_sha256'] = opc_sse_customer_key_sha256
     kwargs['opc_client_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('object_storage', ctx)
+    client = cli_util.build_client('object_storage', 'object_storage', ctx)
     result = client.head_object(
         namespace_name=namespace_name,
         bucket_name=bucket_name,
@@ -1194,7 +1196,7 @@ def list_buckets(ctx, from_json, all_pages, page_size, namespace_name, compartme
     if fields is not None and len(fields) > 0:
         kwargs['fields'] = fields
     kwargs['opc_client_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('object_storage', ctx)
+    client = cli_util.build_client('object_storage', 'object_storage', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -1257,7 +1259,7 @@ def list_multipart_upload_parts(ctx, from_json, all_pages, page_size, namespace_
     if page is not None:
         kwargs['page'] = page
     kwargs['opc_client_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('object_storage', ctx)
+    client = cli_util.build_client('object_storage', 'object_storage', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -1321,7 +1323,7 @@ def list_multipart_uploads(ctx, from_json, all_pages, page_size, namespace_name,
     if page is not None:
         kwargs['page'] = page
     kwargs['opc_client_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('object_storage', ctx)
+    client = cli_util.build_client('object_storage', 'object_storage', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -1399,7 +1401,7 @@ def list_object_versions(ctx, from_json, all_pages, page_size, namespace_name, b
     if page is not None:
         kwargs['page'] = page
     kwargs['opc_client_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('object_storage', ctx)
+    client = cli_util.build_client('object_storage', 'object_storage', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -1470,7 +1472,7 @@ def list_objects(ctx, from_json, all_pages, namespace_name, bucket_name, prefix,
     if start_after is not None:
         kwargs['start_after'] = start_after
     kwargs['opc_client_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('object_storage', ctx)
+    client = cli_util.build_client('object_storage', 'object_storage', ctx)
     result = client.list_objects(
         namespace_name=namespace_name,
         bucket_name=bucket_name,
@@ -1511,7 +1513,7 @@ def list_preauthenticated_requests(ctx, from_json, all_pages, page_size, namespa
     if page is not None:
         kwargs['page'] = page
     kwargs['opc_client_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('object_storage', ctx)
+    client = cli_util.build_client('object_storage', 'object_storage', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -1569,7 +1571,7 @@ def list_replication_policies(ctx, from_json, all_pages, page_size, namespace_na
     if limit is not None:
         kwargs['limit'] = limit
     kwargs['opc_client_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('object_storage', ctx)
+    client = cli_util.build_client('object_storage', 'object_storage', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -1627,7 +1629,7 @@ def list_replication_sources(ctx, from_json, all_pages, page_size, namespace_nam
     if limit is not None:
         kwargs['limit'] = limit
     kwargs['opc_client_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('object_storage', ctx)
+    client = cli_util.build_client('object_storage', 'object_storage', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -1677,7 +1679,7 @@ def list_retention_rules(ctx, from_json, all_pages, namespace_name, bucket_name,
     kwargs = {}
     if page is not None:
         kwargs['page'] = page
-    client = cli_util.build_client('object_storage', ctx)
+    client = cli_util.build_client('object_storage', 'object_storage', ctx)
     if all_pages:
         result = cli_util.list_call_get_all_results(
             client.list_retention_rules,
@@ -1719,7 +1721,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     if limit is not None:
         kwargs['limit'] = limit
     kwargs['opc_client_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('object_storage', ctx)
+    client = cli_util.build_client('object_storage', 'object_storage', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -1770,7 +1772,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     if limit is not None:
         kwargs['limit'] = limit
     kwargs['opc_client_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('object_storage', ctx)
+    client = cli_util.build_client('object_storage', 'object_storage', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -1818,7 +1820,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, pag
     if limit is not None:
         kwargs['limit'] = limit
     kwargs['opc_client_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('object_storage', ctx)
+    client = cli_util.build_client('object_storage', 'object_storage', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -1862,7 +1864,7 @@ def make_bucket_writable(ctx, from_json, namespace_name, bucket_name):
 
     kwargs = {}
     kwargs['opc_client_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('object_storage', ctx)
+    client = cli_util.build_client('object_storage', 'object_storage', ctx)
     result = client.make_bucket_writable(
         namespace_name=namespace_name,
         bucket_name=bucket_name,
@@ -1944,7 +1946,7 @@ def put_object(ctx, from_json, namespace_name, bucket_name, object_name, put_obj
     # do not automatically retry operations with binary inputs
     kwargs['retry_strategy'] = oci.retry.NoneRetryStrategy()
 
-    client = cli_util.build_client('object_storage', ctx)
+    client = cli_util.build_client('object_storage', 'object_storage', ctx)
     result = client.put_object(
         namespace_name=namespace_name,
         bucket_name=bucket_name,
@@ -1988,16 +1990,16 @@ def put_object_lifecycle_policy(ctx, from_json, force, namespace_name, bucket_na
         kwargs['if_none_match'] = if_none_match
     kwargs['opc_client_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if items is not None:
-        details['items'] = cli_util.parse_json_parameter("items", items)
+        _details['items'] = cli_util.parse_json_parameter("items", items)
 
-    client = cli_util.build_client('object_storage', ctx)
+    client = cli_util.build_client('object_storage', 'object_storage', ctx)
     result = client.put_object_lifecycle_policy(
         namespace_name=namespace_name,
         bucket_name=bucket_name,
-        put_object_lifecycle_policy_details=details,
+        put_object_lifecycle_policy_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -2026,13 +2028,14 @@ def reencrypt_bucket(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 
     kwargs = {}
     kwargs['opc_client_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('object_storage', ctx)
+    client = cli_util.build_client('object_storage', 'object_storage', ctx)
     result = client.reencrypt_bucket(
         namespace_name=namespace_name,
         bucket_name=bucket_name,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -2081,24 +2084,24 @@ def rename_object(ctx, from_json, namespace_name, bucket_name, source_name, new_
     kwargs = {}
     kwargs['opc_client_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['sourceName'] = source_name
-    details['newName'] = new_name
+    _details = {}
+    _details['sourceName'] = source_name
+    _details['newName'] = new_name
 
     if src_obj_if_match_e_tag is not None:
-        details['srcObjIfMatchETag'] = src_obj_if_match_e_tag
+        _details['srcObjIfMatchETag'] = src_obj_if_match_e_tag
 
     if new_obj_if_match_e_tag is not None:
-        details['newObjIfMatchETag'] = new_obj_if_match_e_tag
+        _details['newObjIfMatchETag'] = new_obj_if_match_e_tag
 
     if new_obj_if_none_match_e_tag is not None:
-        details['newObjIfNoneMatchETag'] = new_obj_if_none_match_e_tag
+        _details['newObjIfNoneMatchETag'] = new_obj_if_none_match_e_tag
 
-    client = cli_util.build_client('object_storage', ctx)
+    client = cli_util.build_client('object_storage', 'object_storage', ctx)
     result = client.rename_object(
         namespace_name=namespace_name,
         bucket_name=bucket_name,
-        rename_object_details=details,
+        rename_object_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -2126,20 +2129,20 @@ def restore_objects(ctx, from_json, namespace_name, bucket_name, object_name, ho
     kwargs = {}
     kwargs['opc_client_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['objectName'] = object_name
+    _details = {}
+    _details['objectName'] = object_name
 
     if hours is not None:
-        details['hours'] = hours
+        _details['hours'] = hours
 
     if version_id is not None:
-        details['versionId'] = version_id
+        _details['versionId'] = version_id
 
-    client = cli_util.build_client('object_storage', ctx)
+    client = cli_util.build_client('object_storage', 'object_storage', ctx)
     result = client.restore_objects(
         namespace_name=namespace_name,
         bucket_name=bucket_name,
-        restore_objects_details=details,
+        restore_objects_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -2177,40 +2180,40 @@ def update_bucket(ctx, from_json, namespace_name, bucket_name, compartment_id, m
         kwargs['if_match'] = if_match
     kwargs['opc_client_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if compartment_id is not None:
-        details['compartmentId'] = compartment_id
+        _details['compartmentId'] = compartment_id
 
     if bucket_name is not None:
-        details['name'] = bucket_name
+        _details['name'] = bucket_name
 
     if metadata is not None:
-        details['metadata'] = cli_util.parse_json_parameter("metadata", metadata)
+        _details['metadata'] = cli_util.parse_json_parameter("metadata", metadata)
 
     if public_access_type is not None:
-        details['publicAccessType'] = public_access_type
+        _details['publicAccessType'] = public_access_type
 
     if object_events_enabled is not None:
-        details['objectEventsEnabled'] = object_events_enabled
+        _details['objectEventsEnabled'] = object_events_enabled
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if kms_key_id is not None:
-        details['kmsKeyId'] = kms_key_id
+        _details['kmsKeyId'] = kms_key_id
 
     if versioning is not None:
-        details['versioning'] = versioning
+        _details['versioning'] = versioning
 
-    client = cli_util.build_client('object_storage', ctx)
+    client = cli_util.build_client('object_storage', 'object_storage', ctx)
     result = client.update_bucket(
         namespace_name=namespace_name,
         bucket_name=bucket_name,
-        update_bucket_details=details,
+        update_bucket_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -2235,18 +2238,18 @@ def update_namespace_metadata(ctx, from_json, namespace_name, default_s3_compart
     kwargs = {}
     kwargs['opc_client_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if default_s3_compartment_id is not None:
-        details['defaultS3CompartmentId'] = default_s3_compartment_id
+        _details['defaultS3CompartmentId'] = default_s3_compartment_id
 
     if default_swift_compartment_id is not None:
-        details['defaultSwiftCompartmentId'] = default_swift_compartment_id
+        _details['defaultSwiftCompartmentId'] = default_swift_compartment_id
 
-    client = cli_util.build_client('object_storage', ctx)
+    client = cli_util.build_client('object_storage', 'object_storage', ctx)
     result = client.update_namespace_metadata(
         namespace_name=namespace_name,
-        update_namespace_metadata_details=details,
+        update_namespace_metadata_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -2286,23 +2289,23 @@ def update_retention_rule(ctx, from_json, force, namespace_name, bucket_name, re
         kwargs['if_match'] = if_match
     kwargs['opc_client_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if duration is not None:
-        details['duration'] = cli_util.parse_json_parameter("duration", duration)
+        _details['duration'] = cli_util.parse_json_parameter("duration", duration)
 
     if time_rule_locked is not None:
-        details['timeRuleLocked'] = time_rule_locked
+        _details['timeRuleLocked'] = time_rule_locked
 
-    client = cli_util.build_client('object_storage', ctx)
+    client = cli_util.build_client('object_storage', 'object_storage', ctx)
     result = client.update_retention_rule(
         namespace_name=namespace_name,
         bucket_name=bucket_name,
         retention_rule_id=retention_rule_id,
-        update_retention_rule_details=details,
+        update_retention_rule_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -2363,7 +2366,7 @@ def upload_part(ctx, from_json, namespace_name, bucket_name, object_name, upload
     # do not automatically retry operations with binary inputs
     kwargs['retry_strategy'] = oci.retry.NoneRetryStrategy()
 
-    client = cli_util.build_client('object_storage', ctx)
+    client = cli_util.build_client('object_storage', 'object_storage', ctx)
     result = client.upload_part(
         namespace_name=namespace_name,
         bucket_name=bucket_name,

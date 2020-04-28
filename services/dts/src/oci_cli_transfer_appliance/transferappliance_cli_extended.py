@@ -1,5 +1,6 @@
 # coding: utf-8
-# Copyright (c) 2016, 2019, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2020, Oracle and/or its affiliates.  All rights reserved.
+# This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 from __future__ import print_function
 import click
@@ -87,7 +88,7 @@ def create_transfer_appliance_extended(ctx, **kwargs):
     if customer_shipping_address is not None:
         details['customerShippingAddress'] = cli_util.parse_json_parameter("customer_shipping_address", customer_shipping_address)
 
-    client = cli_util.build_client('transfer_appliance', ctx)
+    client = cli_util.build_client('dts', 'transfer_appliance', ctx)
     result = client.create_transfer_appliance(
         id=id,
         create_transfer_appliance_details=details,
@@ -125,7 +126,7 @@ def create_transfer_appliance_extended(ctx, **kwargs):
 def get_transfer_appliance_helper(ctx, from_json, id, transfer_appliance_label):
 
     kwargs = {}
-    client = cli_util.build_client('transfer_appliance', ctx)
+    client = cli_util.build_client('dts', 'transfer_appliance', ctx)
     result = client.get_transfer_appliance(
         id=id,
         transfer_appliance_label=transfer_appliance_label,

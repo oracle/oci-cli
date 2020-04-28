@@ -1,5 +1,6 @@
 # coding: utf-8
-# Copyright (c) 2016, 2020, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2020, Oracle and/or its affiliates.  All rights reserved.
+# This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 from __future__ import print_function
 import click
@@ -59,13 +60,13 @@ def change_subscription_compartment(ctx, from_json, subscription_id, compartment
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
 
-    client = cli_util.build_client('notification_data_plane', ctx)
+    client = cli_util.build_client('ons', 'notification_data_plane', ctx)
     result = client.change_subscription_compartment(
         subscription_id=subscription_id,
-        change_subscription_compartment_details=details,
+        change_subscription_compartment_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -104,27 +105,28 @@ def create_subscription(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['topicId'] = topic_id
-    details['compartmentId'] = compartment_id
-    details['protocol'] = protocol
-    details['endpoint'] = endpoint_parameterconflict
+    _details = {}
+    _details['topicId'] = topic_id
+    _details['compartmentId'] = compartment_id
+    _details['protocol'] = protocol
+    _details['endpoint'] = endpoint_parameterconflict
 
     if metadata is not None:
-        details['metadata'] = metadata
+        _details['metadata'] = metadata
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('notification_data_plane', ctx)
+    client = cli_util.build_client('ons', 'notification_data_plane', ctx)
     result = client.create_subscription(
-        create_subscription_details=details,
+        create_subscription_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_subscription') and callable(getattr(client, 'get_subscription')):
             try:
                 wait_period_kwargs = {}
@@ -172,12 +174,13 @@ def delete_subscription(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('notification_data_plane', ctx)
+    client = cli_util.build_client('ons', 'notification_data_plane', ctx)
     result = client.delete_subscription(
         subscription_id=subscription_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_subscription') and callable(getattr(client, 'get_subscription')):
             try:
                 wait_period_kwargs = {}
@@ -236,7 +239,7 @@ def get_confirm_subscription(ctx, from_json, id, token, protocol):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('notification_data_plane', ctx)
+    client = cli_util.build_client('ons', 'notification_data_plane', ctx)
     result = client.get_confirm_subscription(
         id=id,
         token=token,
@@ -262,7 +265,7 @@ def get_subscription(ctx, from_json, subscription_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('notification_data_plane', ctx)
+    client = cli_util.build_client('ons', 'notification_data_plane', ctx)
     result = client.get_subscription(
         subscription_id=subscription_id,
         **kwargs
@@ -292,7 +295,7 @@ def get_unsubscription(ctx, from_json, id, token, protocol):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('notification_data_plane', ctx)
+    client = cli_util.build_client('ons', 'notification_data_plane', ctx)
     result = client.get_unsubscription(
         id=id,
         token=token,
@@ -329,7 +332,7 @@ def list_subscriptions(ctx, from_json, all_pages, page_size, compartment_id, top
     if limit is not None:
         kwargs['limit'] = limit
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('notification_data_plane', ctx)
+    client = cli_util.build_client('ons', 'notification_data_plane', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -387,16 +390,16 @@ def publish_message(ctx, from_json, topic_id, body, title, message_type):
         kwargs['message_type'] = message_type
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['body'] = body
+    _details = {}
+    _details['body'] = body
 
     if title is not None:
-        details['title'] = title
+        _details['title'] = title
 
-    client = cli_util.build_client('notification_data_plane', ctx)
+    client = cli_util.build_client('ons', 'notification_data_plane', ctx)
     result = client.publish_message(
         topic_id=topic_id,
-        message_details=details,
+        message_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -418,7 +421,7 @@ def resend_subscription_confirmation(ctx, from_json, id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('notification_data_plane', ctx)
+    client = cli_util.build_client('ons', 'notification_data_plane', ctx)
     result = client.resend_subscription_confirmation(
         id=id,
         **kwargs
@@ -458,21 +461,21 @@ def update_subscription(ctx, from_json, force, subscription_id, delivery_policy,
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if delivery_policy is not None:
-        details['deliveryPolicy'] = cli_util.parse_json_parameter("delivery_policy", delivery_policy)
+        _details['deliveryPolicy'] = cli_util.parse_json_parameter("delivery_policy", delivery_policy)
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('notification_data_plane', ctx)
+    client = cli_util.build_client('ons', 'notification_data_plane', ctx)
     result = client.update_subscription(
         subscription_id=subscription_id,
-        update_subscription_details=details,
+        update_subscription_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)

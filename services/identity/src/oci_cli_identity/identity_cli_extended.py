@@ -1,5 +1,6 @@
 # coding: utf-8
-# Copyright (c) 2016, 2019, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2020, Oracle and/or its affiliates.  All rights reserved.
+# This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 from __future__ import print_function
 import click
@@ -121,7 +122,7 @@ def list_groups_for_user(ctx, from_json, compartment_id, user_id, page, limit, a
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     args = {}
 
     args['user_id'] = user_id
@@ -179,7 +180,7 @@ def list_users_for_group(ctx, from_json, compartment_id, group_id, page, limit, 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     args = {}
 
     args['group_id'] = group_id
@@ -228,7 +229,7 @@ def list_users_for_group(ctx, from_json, compartment_id, group_id, page, limit, 
 @cli_util.wrap_exceptions
 def add_user_to_group(ctx, from_json, user_id, group_id):
     cli_util.load_context_obj_values_from_defaults(ctx)
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.add_user_to_group(add_user_to_group_details={"userId": user_id, "groupId": group_id})
     cli_util.render_response(result, ctx)
 
@@ -250,7 +251,7 @@ def remove_user_from_group(ctx, from_json, compartment_id, user_id, group_id, fo
         if not click.confirm("Are you sure you want to remove the given user from the given group?"):
             ctx.abort()
 
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     memberships = client.list_user_group_memberships(compartment_id=compartment_id, user_id=user_id, group_id=group_id).data
 
     if memberships and len(memberships) == 1:
@@ -278,7 +279,7 @@ Policy changes take effect typically within 10 seconds.""")
 def update_policy(ctx, from_json, policy_id, description, statements, version_date, if_match, force, defined_tags, freeform_tags):
     cli_util.load_context_obj_values_from_defaults(ctx)
 
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     if statements or version_date:
         if statements is None or version_date is None:
             sys.exit('If updating either statements or version date, both parameters must be specified.')
@@ -355,7 +356,7 @@ def retire_tag(ctx, **kwargs):
     service_kwargs = {}
     details = {'isRetired': True}
 
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.update_tag(
         tag_namespace_id=tag_namespace_id,
         tag_name=tag_name,
@@ -386,7 +387,7 @@ def reactivate_tag(ctx, **kwargs):
     service_kwargs = {}
     details = {'isRetired': False}
 
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.update_tag(
         tag_namespace_id=tag_namespace_id,
         tag_name=tag_name,
@@ -427,7 +428,7 @@ def update_tag_namespace_description(ctx, **kwargs):
     if defined_tags is not None:
         details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.update_tag_namespace(
         tag_namespace_id=tag_namespace_id,
         update_tag_namespace_details=details,
@@ -449,7 +450,7 @@ def retire_tag_namespace(ctx, **kwargs):
     service_kwargs = {}
     details = {'isRetired': True}
 
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.update_tag_namespace(
         tag_namespace_id=tag_namespace_id,
         update_tag_namespace_details=details,
@@ -471,7 +472,7 @@ def reactivate_tag_namespace(ctx, **kwargs):
     service_kwargs = {}
     details = {'isRetired': False}
 
-    client = cli_util.build_client('identity', ctx)
+    client = cli_util.build_client('identity', 'identity', ctx)
     result = client.update_tag_namespace(
         tag_namespace_id=tag_namespace_id,
         update_tag_namespace_details=details,

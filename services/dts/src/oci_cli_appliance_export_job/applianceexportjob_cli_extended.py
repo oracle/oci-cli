@@ -1,5 +1,6 @@
 # coding: utf-8
-# Copyright (c) 2016, 2019, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2020, Oracle and/or its affiliates.  All rights reserved.
+# This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 from __future__ import print_function
 import click
@@ -115,7 +116,7 @@ def setup_export_notifications(ctx):
 
 
 def create_os_client(ctx):
-    return cli_util.build_client('object_storage', ctx)
+    return cli_util.build_client('object_storage', 'object_storage', ctx)
 
 
 def policy_printer(policy_name, bucket_access_policies):
@@ -169,7 +170,7 @@ def show_appliance_export_job_extended(ctx, **kwargs):
     kwargs_request = {
         'opc_request_id': cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     }
-    client = cli_util.build_client('appliance_export_job', ctx)
+    client = cli_util.build_client('dts', 'appliance_export_job', ctx)
     result = client.get_appliance_export_job(
         appliance_export_job_id=kwargs['job_id'],
         **kwargs_request
@@ -296,7 +297,7 @@ def create_policy_extended(ctx, **kwargs):
     kwargs_show = {
         'opc_request_id': cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     }
-    client = cli_util.build_client('appliance_export_job', ctx)
+    client = cli_util.build_client('dts', 'appliance_export_job', ctx)
     result = client.get_appliance_export_job(
         appliance_export_job_id=kwargs['job_id'],
         **kwargs_show
@@ -311,7 +312,7 @@ def create_policy_extended(ctx, **kwargs):
     policy_name = result.data.display_name + "_Policy"
 
     # Get the home region through the region-subscription list command
-    identity_client = cli_util.build_client('identity', ctx)
+    identity_client = cli_util.build_client('identity', 'identity', ctx)
     subscription_kwargs = {}
     subscriptions_result = identity_client.list_region_subscriptions(
         tenancy_id=root_compartment,
@@ -327,7 +328,7 @@ def create_policy_extended(ctx, **kwargs):
                 break
 
     # Re-create the identity client with the home region set in the ctx
-    identity_client = cli_util.build_client('identity', ctx)
+    identity_client = cli_util.build_client('identity', 'identity', ctx)
 
     click.echo('\nSetting up the following policies in the root compartment. If the following operation fails it means '
                'that you do not have enough privileges to create policies. Re-run the below command with the correct user')
@@ -441,7 +442,7 @@ def configure_physical_appliance_export_job_extended(ctx, **kwargs):
     #   - oci dts nfs-dataset activate
     if isinstance(kwargs['job_id'], six.string_types) and len(kwargs['job_id'].strip()) == 0:
         raise click.UsageError('Parameter --appliance-export-job-id cannot be whitespace or empty string')
-    client = cli_util.build_client('appliance_export_job', ctx)
+    client = cli_util.build_client('dts', 'appliance_export_job', ctx)
 
     kwargs_request = {'opc_request_id': cli_util.use_or_generate_request_id(ctx.obj['request_id'])}
     result = client.get_appliance_export_job(appliance_export_job_id=kwargs['job_id'], **kwargs_request)

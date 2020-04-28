@@ -1,5 +1,6 @@
 # coding: utf-8
-# Copyright (c) 2016, 2020, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2020, Oracle and/or its affiliates.  All rights reserved.
+# This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 from __future__ import print_function
 import click
@@ -49,13 +50,13 @@ def change_rule_compartment(ctx, from_json, rule_id, compartment_id, if_match):
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
 
-    client = cli_util.build_client('events', ctx)
+    client = cli_util.build_client('events', 'events', ctx)
     result = client.change_rule_compartment(
         rule_id=rule_id,
-        change_rule_compartment_details=details,
+        change_rule_compartment_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -99,28 +100,29 @@ def create_rule(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['displayName'] = display_name
-    details['isEnabled'] = is_enabled
-    details['condition'] = condition
-    details['compartmentId'] = compartment_id
-    details['actions'] = cli_util.parse_json_parameter("actions", actions)
+    _details = {}
+    _details['displayName'] = display_name
+    _details['isEnabled'] = is_enabled
+    _details['condition'] = condition
+    _details['compartmentId'] = compartment_id
+    _details['actions'] = cli_util.parse_json_parameter("actions", actions)
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('events', ctx)
+    client = cli_util.build_client('events', 'events', ctx)
     result = client.create_rule(
-        create_rule_details=details,
+        create_rule_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_rule') and callable(getattr(client, 'get_rule')):
             try:
                 wait_period_kwargs = {}
@@ -166,12 +168,13 @@ def delete_rule(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('events', ctx)
+    client = cli_util.build_client('events', 'events', ctx)
     result = client.delete_rule(
         rule_id=rule_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_rule') and callable(getattr(client, 'get_rule')):
             try:
                 wait_period_kwargs = {}
@@ -222,7 +225,7 @@ def get_rule(ctx, from_json, rule_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('events', ctx)
+    client = cli_util.build_client('events', 'events', ctx)
     result = client.get_rule(
         rule_id=rule_id,
         **kwargs
@@ -274,7 +277,7 @@ def list_rules(ctx, from_json, all_pages, page_size, compartment_id, limit, page
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('events', ctx)
+    client = cli_util.build_client('events', 'events', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -349,36 +352,37 @@ def update_rule(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_in
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
     if is_enabled is not None:
-        details['isEnabled'] = is_enabled
+        _details['isEnabled'] = is_enabled
 
     if condition is not None:
-        details['condition'] = condition
+        _details['condition'] = condition
 
     if actions is not None:
-        details['actions'] = cli_util.parse_json_parameter("actions", actions)
+        _details['actions'] = cli_util.parse_json_parameter("actions", actions)
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('events', ctx)
+    client = cli_util.build_client('events', 'events', ctx)
     result = client.update_rule(
         rule_id=rule_id,
-        update_rule_details=details,
+        update_rule_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_rule') and callable(getattr(client, 'get_rule')):
             try:
                 wait_period_kwargs = {}

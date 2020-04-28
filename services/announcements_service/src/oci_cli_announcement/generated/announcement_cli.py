@@ -1,5 +1,6 @@
 # coding: utf-8
-# Copyright (c) 2016, 2020, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2020, Oracle and/or its affiliates.  All rights reserved.
+# This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 from __future__ import print_function
 import click
@@ -64,7 +65,7 @@ def get_announcement(ctx, from_json, announcement_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('announcement', ctx)
+    client = cli_util.build_client('announcements_service', 'announcement', ctx)
     result = client.get_announcement(
         announcement_id=announcement_id,
         **kwargs
@@ -86,7 +87,7 @@ def get_announcement_user_status(ctx, from_json, announcement_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('announcement', ctx)
+    client = cli_util.build_client('announcements_service', 'announcement', ctx)
     result = client.get_announcement_user_status(
         announcement_id=announcement_id,
         **kwargs
@@ -137,7 +138,7 @@ def list_announcements(ctx, from_json, all_pages, page_size, compartment_id, lim
     if time_one_latest_time is not None:
         kwargs['time_one_latest_time'] = time_one_latest_time
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('announcement', ctx)
+    client = cli_util.build_client('announcements_service', 'announcement', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -184,17 +185,17 @@ def update_announcement_user_status(ctx, from_json, announcement_id, user_status
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['userStatusAnnouncementId'] = user_status_announcement_id
-    details['userId'] = user_id
+    _details = {}
+    _details['userStatusAnnouncementId'] = user_status_announcement_id
+    _details['userId'] = user_id
 
     if time_acknowledged is not None:
-        details['timeAcknowledged'] = time_acknowledged
+        _details['timeAcknowledged'] = time_acknowledged
 
-    client = cli_util.build_client('announcement', ctx)
+    client = cli_util.build_client('announcements_service', 'announcement', ctx)
     result = client.update_announcement_user_status(
         announcement_id=announcement_id,
-        status_details=details,
+        status_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)

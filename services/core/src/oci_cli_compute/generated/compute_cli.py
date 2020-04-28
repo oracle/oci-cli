@@ -1,5 +1,6 @@
 # coding: utf-8
-# Copyright (c) 2016, 2020, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2020, Oracle and/or its affiliates.  All rights reserved.
+# This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 from __future__ import print_function
 import click
@@ -226,16 +227,16 @@ def add_image_shape_compatibility_entry(ctx, from_json, force, image_id, shape_n
 
     kwargs = {}
 
-    details = {}
+    _details = {}
 
     if ocpu_constraints is not None:
-        details['ocpuConstraints'] = cli_util.parse_json_parameter("ocpu_constraints", ocpu_constraints)
+        _details['ocpuConstraints'] = cli_util.parse_json_parameter("ocpu_constraints", ocpu_constraints)
 
-    client = cli_util.build_client('compute', ctx)
+    client = cli_util.build_client('core', 'compute', ctx)
     result = client.add_image_shape_compatibility_entry(
         image_id=image_id,
         shape_name=shape_name,
-        add_image_shape_compatibility_entry_details=details,
+        add_image_shape_compatibility_entry_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -257,19 +258,20 @@ def attach_boot_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
     kwargs = {}
 
-    details = {}
-    details['bootVolumeId'] = boot_volume_id
-    details['instanceId'] = instance_id
+    _details = {}
+    _details['bootVolumeId'] = boot_volume_id
+    _details['instanceId'] = instance_id
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
-    client = cli_util.build_client('compute', ctx)
+    client = cli_util.build_client('core', 'compute', ctx)
     result = client.attach_boot_volume(
-        attach_boot_volume_details=details,
+        attach_boot_volume_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_boot_volume_attachment') and callable(getattr(client, 'get_boot_volume_attachment')):
             try:
                 wait_period_kwargs = {}
@@ -311,22 +313,23 @@ def attach_vnic(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 
     kwargs = {}
 
-    details = {}
-    details['createVnicDetails'] = cli_util.parse_json_parameter("create_vnic_details", create_vnic_details)
-    details['instanceId'] = instance_id
+    _details = {}
+    _details['createVnicDetails'] = cli_util.parse_json_parameter("create_vnic_details", create_vnic_details)
+    _details['instanceId'] = instance_id
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if nic_index is not None:
-        details['nicIndex'] = nic_index
+        _details['nicIndex'] = nic_index
 
-    client = cli_util.build_client('compute', ctx)
+    client = cli_util.build_client('core', 'compute', ctx)
     result = client.attach_vnic(
-        attach_vnic_details=details,
+        attach_vnic_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_vnic_attachment') and callable(getattr(client, 'get_vnic_attachment')):
             try:
                 wait_period_kwargs = {}
@@ -371,29 +374,30 @@ def attach_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 
     kwargs = {}
 
-    details = {}
-    details['instanceId'] = instance_id
-    details['type'] = type
-    details['volumeId'] = volume_id
+    _details = {}
+    _details['instanceId'] = instance_id
+    _details['type'] = type
+    _details['volumeId'] = volume_id
 
     if device is not None:
-        details['device'] = device
+        _details['device'] = device
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if is_read_only is not None:
-        details['isReadOnly'] = is_read_only
+        _details['isReadOnly'] = is_read_only
 
     if is_shareable is not None:
-        details['isShareable'] = is_shareable
+        _details['isShareable'] = is_shareable
 
-    client = cli_util.build_client('compute', ctx)
+    client = cli_util.build_client('core', 'compute', ctx)
     result = client.attach_volume(
-        attach_volume_details=details,
+        attach_volume_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_volume_attachment') and callable(getattr(client, 'get_volume_attachment')):
             try:
                 wait_period_kwargs = {}
@@ -437,30 +441,31 @@ def attach_volume_attach_service_determined_volume_details(ctx, from_json, wait_
 
     kwargs = {}
 
-    details = {}
-    details['instanceId'] = instance_id
-    details['volumeId'] = volume_id
+    _details = {}
+    _details['instanceId'] = instance_id
+    _details['volumeId'] = volume_id
 
     if device is not None:
-        details['device'] = device
+        _details['device'] = device
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if is_read_only is not None:
-        details['isReadOnly'] = is_read_only
+        _details['isReadOnly'] = is_read_only
 
     if is_shareable is not None:
-        details['isShareable'] = is_shareable
+        _details['isShareable'] = is_shareable
 
-    details['type'] = 'service_determined'
+    _details['type'] = 'service_determined'
 
-    client = cli_util.build_client('compute', ctx)
+    client = cli_util.build_client('core', 'compute', ctx)
     result = client.attach_volume(
-        attach_volume_details=details,
+        attach_volume_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_volume_attachment') and callable(getattr(client, 'get_volume_attachment')):
             try:
                 wait_period_kwargs = {}
@@ -504,30 +509,31 @@ def attach_volume_attach_emulated_volume_details(ctx, from_json, wait_for_state,
 
     kwargs = {}
 
-    details = {}
-    details['instanceId'] = instance_id
-    details['volumeId'] = volume_id
+    _details = {}
+    _details['instanceId'] = instance_id
+    _details['volumeId'] = volume_id
 
     if device is not None:
-        details['device'] = device
+        _details['device'] = device
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if is_read_only is not None:
-        details['isReadOnly'] = is_read_only
+        _details['isReadOnly'] = is_read_only
 
     if is_shareable is not None:
-        details['isShareable'] = is_shareable
+        _details['isShareable'] = is_shareable
 
-    details['type'] = 'emulated'
+    _details['type'] = 'emulated'
 
-    client = cli_util.build_client('compute', ctx)
+    client = cli_util.build_client('core', 'compute', ctx)
     result = client.attach_volume(
-        attach_volume_details=details,
+        attach_volume_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_volume_attachment') and callable(getattr(client, 'get_volume_attachment')):
             try:
                 wait_period_kwargs = {}
@@ -572,33 +578,34 @@ def attach_volume_attach_i_scsi_volume_details(ctx, from_json, wait_for_state, m
 
     kwargs = {}
 
-    details = {}
-    details['instanceId'] = instance_id
-    details['volumeId'] = volume_id
+    _details = {}
+    _details['instanceId'] = instance_id
+    _details['volumeId'] = volume_id
 
     if device is not None:
-        details['device'] = device
+        _details['device'] = device
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if is_read_only is not None:
-        details['isReadOnly'] = is_read_only
+        _details['isReadOnly'] = is_read_only
 
     if is_shareable is not None:
-        details['isShareable'] = is_shareable
+        _details['isShareable'] = is_shareable
 
     if use_chap is not None:
-        details['useChap'] = use_chap
+        _details['useChap'] = use_chap
 
-    details['type'] = 'iscsi'
+    _details['type'] = 'iscsi'
 
-    client = cli_util.build_client('compute', ctx)
+    client = cli_util.build_client('core', 'compute', ctx)
     result = client.attach_volume(
-        attach_volume_details=details,
+        attach_volume_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_volume_attachment') and callable(getattr(client, 'get_volume_attachment')):
             try:
                 wait_period_kwargs = {}
@@ -643,33 +650,34 @@ def attach_volume_attach_paravirtualized_volume_details(ctx, from_json, wait_for
 
     kwargs = {}
 
-    details = {}
-    details['instanceId'] = instance_id
-    details['volumeId'] = volume_id
+    _details = {}
+    _details['instanceId'] = instance_id
+    _details['volumeId'] = volume_id
 
     if device is not None:
-        details['device'] = device
+        _details['device'] = device
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if is_read_only is not None:
-        details['isReadOnly'] = is_read_only
+        _details['isReadOnly'] = is_read_only
 
     if is_shareable is not None:
-        details['isShareable'] = is_shareable
+        _details['isShareable'] = is_shareable
 
     if is_pv_encryption_in_transit_enabled is not None:
-        details['isPvEncryptionInTransitEnabled'] = is_pv_encryption_in_transit_enabled
+        _details['isPvEncryptionInTransitEnabled'] = is_pv_encryption_in_transit_enabled
 
-    details['type'] = 'paravirtualized'
+    _details['type'] = 'paravirtualized'
 
-    client = cli_util.build_client('compute', ctx)
+    client = cli_util.build_client('core', 'compute', ctx)
     result = client.attach_volume(
-        attach_volume_details=details,
+        attach_volume_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_volume_attachment') and callable(getattr(client, 'get_volume_attachment')):
             try:
                 wait_period_kwargs = {}
@@ -719,24 +727,25 @@ def capture_console_history(ctx, from_json, wait_for_state, max_wait_seconds, wa
 
     kwargs = {}
 
-    details = {}
-    details['instanceId'] = instance_id
+    _details = {}
+    _details['instanceId'] = instance_id
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
-    client = cli_util.build_client('compute', ctx)
+    client = cli_util.build_client('core', 'compute', ctx)
     result = client.capture_console_history(
-        capture_console_history_details=details,
+        capture_console_history_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_console_history') and callable(getattr(client, 'get_console_history')):
             try:
                 wait_period_kwargs = {}
@@ -780,13 +789,13 @@ def change_dedicated_vm_host_compartment(ctx, from_json, dedicated_vm_host_id, c
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
 
-    client = cli_util.build_client('compute', ctx)
+    client = cli_util.build_client('core', 'compute', ctx)
     result = client.change_dedicated_vm_host_compartment(
         dedicated_vm_host_id=dedicated_vm_host_id,
-        change_dedicated_vm_host_compartment_details=details,
+        change_dedicated_vm_host_compartment_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -811,13 +820,13 @@ def change_image_compartment(ctx, from_json, image_id, compartment_id, if_match)
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
 
-    client = cli_util.build_client('compute', ctx)
+    client = cli_util.build_client('core', 'compute', ctx)
     result = client.change_image_compartment(
         image_id=image_id,
-        change_image_compartment_details=details,
+        change_image_compartment_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -844,13 +853,13 @@ def change_instance_compartment(ctx, from_json, instance_id, compartment_id, if_
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
 
-    client = cli_util.build_client('compute', ctx)
+    client = cli_util.build_client('core', 'compute', ctx)
     result = client.change_instance_compartment(
         instance_id=instance_id,
-        change_instance_compartment_details=details,
+        change_instance_compartment_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -873,20 +882,20 @@ def create_app_catalog_subscription(ctx, from_json, compartment_id, listing_id, 
 
     kwargs = {}
 
-    details = {}
-    details['compartmentId'] = compartment_id
-    details['listingId'] = listing_id
-    details['listingResourceVersion'] = listing_resource_version
-    details['oracleTermsOfUseLink'] = oracle_terms_of_use_link
-    details['timeRetrieved'] = time_retrieved
-    details['signature'] = signature
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['listingId'] = listing_id
+    _details['listingResourceVersion'] = listing_resource_version
+    _details['oracleTermsOfUseLink'] = oracle_terms_of_use_link
+    _details['timeRetrieved'] = time_retrieved
+    _details['signature'] = signature
 
     if eula_link is not None:
-        details['eulaLink'] = eula_link
+        _details['eulaLink'] = eula_link
 
-    client = cli_util.build_client('compute', ctx)
+    client = cli_util.build_client('core', 'compute', ctx)
     result = client.create_app_catalog_subscription(
-        create_app_catalog_subscription_details=details,
+        create_app_catalog_subscription_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -925,29 +934,30 @@ def create_dedicated_vm_host(ctx, from_json, wait_for_state, max_wait_seconds, w
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['availabilityDomain'] = availability_domain
-    details['compartmentId'] = compartment_id
-    details['dedicatedVmHostShape'] = dedicated_vm_host_shape
+    _details = {}
+    _details['availabilityDomain'] = availability_domain
+    _details['compartmentId'] = compartment_id
+    _details['dedicatedVmHostShape'] = dedicated_vm_host_shape
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if fault_domain is not None:
-        details['faultDomain'] = fault_domain
+        _details['faultDomain'] = fault_domain
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
-    client = cli_util.build_client('compute', ctx)
+    client = cli_util.build_client('core', 'compute', ctx)
     result = client.create_dedicated_vm_host(
-        create_dedicated_vm_host_details=details,
+        create_dedicated_vm_host_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_dedicated_vm_host') and callable(getattr(client, 'get_dedicated_vm_host')):
             try:
                 wait_period_kwargs = {}
@@ -1012,33 +1022,34 @@ def create_image(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 
     kwargs = {}
 
-    details = {}
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if image_source_details is not None:
-        details['imageSourceDetails'] = cli_util.parse_json_parameter("image_source_details", image_source_details)
+        _details['imageSourceDetails'] = cli_util.parse_json_parameter("image_source_details", image_source_details)
 
     if instance_id is not None:
-        details['instanceId'] = instance_id
+        _details['instanceId'] = instance_id
 
     if launch_mode is not None:
-        details['launchMode'] = launch_mode
+        _details['launchMode'] = launch_mode
 
-    client = cli_util.build_client('compute', ctx)
+    client = cli_util.build_client('core', 'compute', ctx)
     result = client.create_image(
-        create_image_details=details,
+        create_image_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_image') and callable(getattr(client, 'get_image')):
             try:
                 wait_period_kwargs = {}
@@ -1108,45 +1119,46 @@ def create_image_image_source_via_object_storage_tuple_details(ctx, from_json, w
 
     kwargs = {}
 
-    details = {}
-    details['imageSourceDetails'] = {}
-    details['compartmentId'] = compartment_id
-    details['imageSourceDetails']['bucketName'] = image_source_details_bucket_name
-    details['imageSourceDetails']['namespaceName'] = image_source_details_namespace_name
-    details['imageSourceDetails']['objectName'] = image_source_details_object_name
+    _details = {}
+    _details['imageSourceDetails'] = {}
+    _details['compartmentId'] = compartment_id
+    _details['imageSourceDetails']['bucketName'] = image_source_details_bucket_name
+    _details['imageSourceDetails']['namespaceName'] = image_source_details_namespace_name
+    _details['imageSourceDetails']['objectName'] = image_source_details_object_name
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if instance_id is not None:
-        details['instanceId'] = instance_id
+        _details['instanceId'] = instance_id
 
     if launch_mode is not None:
-        details['launchMode'] = launch_mode
+        _details['launchMode'] = launch_mode
 
     if image_source_details_operating_system is not None:
-        details['imageSourceDetails']['operatingSystem'] = image_source_details_operating_system
+        _details['imageSourceDetails']['operatingSystem'] = image_source_details_operating_system
 
     if image_source_details_operating_system_version is not None:
-        details['imageSourceDetails']['operatingSystemVersion'] = image_source_details_operating_system_version
+        _details['imageSourceDetails']['operatingSystemVersion'] = image_source_details_operating_system_version
 
     if image_source_details_source_image_type is not None:
-        details['imageSourceDetails']['sourceImageType'] = image_source_details_source_image_type
+        _details['imageSourceDetails']['sourceImageType'] = image_source_details_source_image_type
 
-    details['imageSourceDetails']['sourceType'] = 'objectStorageTuple'
+    _details['imageSourceDetails']['sourceType'] = 'objectStorageTuple'
 
-    client = cli_util.build_client('compute', ctx)
+    client = cli_util.build_client('core', 'compute', ctx)
     result = client.create_image(
-        create_image_details=details,
+        create_image_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_image') and callable(getattr(client, 'get_image')):
             try:
                 wait_period_kwargs = {}
@@ -1214,43 +1226,44 @@ def create_image_image_source_via_object_storage_uri_details(ctx, from_json, wai
 
     kwargs = {}
 
-    details = {}
-    details['imageSourceDetails'] = {}
-    details['compartmentId'] = compartment_id
-    details['imageSourceDetails']['sourceUri'] = image_source_details_source_uri
+    _details = {}
+    _details['imageSourceDetails'] = {}
+    _details['compartmentId'] = compartment_id
+    _details['imageSourceDetails']['sourceUri'] = image_source_details_source_uri
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if instance_id is not None:
-        details['instanceId'] = instance_id
+        _details['instanceId'] = instance_id
 
     if launch_mode is not None:
-        details['launchMode'] = launch_mode
+        _details['launchMode'] = launch_mode
 
     if image_source_details_operating_system is not None:
-        details['imageSourceDetails']['operatingSystem'] = image_source_details_operating_system
+        _details['imageSourceDetails']['operatingSystem'] = image_source_details_operating_system
 
     if image_source_details_operating_system_version is not None:
-        details['imageSourceDetails']['operatingSystemVersion'] = image_source_details_operating_system_version
+        _details['imageSourceDetails']['operatingSystemVersion'] = image_source_details_operating_system_version
 
     if image_source_details_source_image_type is not None:
-        details['imageSourceDetails']['sourceImageType'] = image_source_details_source_image_type
+        _details['imageSourceDetails']['sourceImageType'] = image_source_details_source_image_type
 
-    details['imageSourceDetails']['sourceType'] = 'objectStorageUri'
+    _details['imageSourceDetails']['sourceType'] = 'objectStorageUri'
 
-    client = cli_util.build_client('compute', ctx)
+    client = cli_util.build_client('core', 'compute', ctx)
     result = client.create_image(
-        create_image_details=details,
+        create_image_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_image') and callable(getattr(client, 'get_image')):
             try:
                 wait_period_kwargs = {}
@@ -1298,22 +1311,23 @@ def create_instance_console_connection(ctx, from_json, wait_for_state, max_wait_
 
     kwargs = {}
 
-    details = {}
-    details['instanceId'] = instance_id
-    details['publicKey'] = public_key
+    _details = {}
+    _details['instanceId'] = instance_id
+    _details['publicKey'] = public_key
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
-    client = cli_util.build_client('compute', ctx)
+    client = cli_util.build_client('core', 'compute', ctx)
     result = client.create_instance_console_connection(
-        create_instance_console_connection_details=details,
+        create_instance_console_connection_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_instance_console_connection') and callable(getattr(client, 'get_instance_console_connection')):
             try:
                 wait_period_kwargs = {}
@@ -1351,7 +1365,7 @@ def create_instance_console_connection(ctx, from_json, wait_for_state, max_wait_
 def delete_app_catalog_subscription(ctx, from_json, listing_id, compartment_id, resource_version):
 
     kwargs = {}
-    client = cli_util.build_client('compute', ctx)
+    client = cli_util.build_client('core', 'compute', ctx)
     result = client.delete_app_catalog_subscription(
         listing_id=listing_id,
         compartment_id=compartment_id,
@@ -1381,12 +1395,13 @@ def delete_console_history(ctx, from_json, wait_for_state, max_wait_seconds, wai
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
-    client = cli_util.build_client('compute', ctx)
+    client = cli_util.build_client('core', 'compute', ctx)
     result = client.delete_console_history(
         instance_console_history_id=instance_console_history_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_console_history') and callable(getattr(client, 'get_console_history')):
             try:
                 wait_period_kwargs = {}
@@ -1443,12 +1458,13 @@ def delete_dedicated_vm_host(ctx, from_json, wait_for_state, max_wait_seconds, w
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('compute', ctx)
+    client = cli_util.build_client('core', 'compute', ctx)
     result = client.delete_dedicated_vm_host(
         dedicated_vm_host_id=dedicated_vm_host_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_dedicated_vm_host') and callable(getattr(client, 'get_dedicated_vm_host')):
             try:
                 wait_period_kwargs = {}
@@ -1505,12 +1521,13 @@ def delete_image(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
-    client = cli_util.build_client('compute', ctx)
+    client = cli_util.build_client('core', 'compute', ctx)
     result = client.delete_image(
         image_id=image_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_image') and callable(getattr(client, 'get_image')):
             try:
                 wait_period_kwargs = {}
@@ -1567,12 +1584,13 @@ def delete_instance_console_connection(ctx, from_json, wait_for_state, max_wait_
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
-    client = cli_util.build_client('compute', ctx)
+    client = cli_util.build_client('core', 'compute', ctx)
     result = client.delete_instance_console_connection(
         instance_console_connection_id=instance_console_connection_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_instance_console_connection') and callable(getattr(client, 'get_instance_console_connection')):
             try:
                 wait_period_kwargs = {}
@@ -1631,12 +1649,13 @@ def detach_boot_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
-    client = cli_util.build_client('compute', ctx)
+    client = cli_util.build_client('core', 'compute', ctx)
     result = client.detach_boot_volume(
         boot_volume_attachment_id=boot_volume_attachment_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_boot_volume_attachment') and callable(getattr(client, 'get_boot_volume_attachment')):
             try:
                 wait_period_kwargs = {}
@@ -1695,12 +1714,13 @@ def detach_vnic(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
-    client = cli_util.build_client('compute', ctx)
+    client = cli_util.build_client('core', 'compute', ctx)
     result = client.detach_vnic(
         vnic_attachment_id=vnic_attachment_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_vnic_attachment') and callable(getattr(client, 'get_vnic_attachment')):
             try:
                 wait_period_kwargs = {}
@@ -1759,12 +1779,13 @@ def detach_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
-    client = cli_util.build_client('compute', ctx)
+    client = cli_util.build_client('core', 'compute', ctx)
     result = client.detach_volume(
         volume_attachment_id=volume_attachment_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_volume_attachment') and callable(getattr(client, 'get_volume_attachment')):
             try:
                 wait_period_kwargs = {}
@@ -1828,16 +1849,17 @@ def export_image(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
     if if_match is not None:
         kwargs['if_match'] = if_match
 
-    details = {}
-    details['destinationType'] = destination_type
+    _details = {}
+    _details['destinationType'] = destination_type
 
-    client = cli_util.build_client('compute', ctx)
+    client = cli_util.build_client('core', 'compute', ctx)
     result = client.export_image(
         image_id=image_id,
-        export_image_details=details,
+        export_image_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_image') and callable(getattr(client, 'get_image')):
             try:
                 wait_period_kwargs = {}
@@ -1889,18 +1911,19 @@ def export_image_export_image_via_object_storage_uri_details(ctx, from_json, wai
     if if_match is not None:
         kwargs['if_match'] = if_match
 
-    details = {}
-    details['destinationUri'] = destination_uri
+    _details = {}
+    _details['destinationUri'] = destination_uri
 
-    details['destinationType'] = 'objectStorageUri'
+    _details['destinationType'] = 'objectStorageUri'
 
-    client = cli_util.build_client('compute', ctx)
+    client = cli_util.build_client('core', 'compute', ctx)
     result = client.export_image(
         image_id=image_id,
-        export_image_details=details,
+        export_image_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_image') and callable(getattr(client, 'get_image')):
             try:
                 wait_period_kwargs = {}
@@ -1954,20 +1977,21 @@ def export_image_export_image_via_object_storage_tuple_details(ctx, from_json, w
     if if_match is not None:
         kwargs['if_match'] = if_match
 
-    details = {}
-    details['bucketName'] = bucket_name
-    details['namespaceName'] = namespace_name
-    details['objectName'] = object_name
+    _details = {}
+    _details['bucketName'] = bucket_name
+    _details['namespaceName'] = namespace_name
+    _details['objectName'] = object_name
 
-    details['destinationType'] = 'objectStorageTuple'
+    _details['destinationType'] = 'objectStorageTuple'
 
-    client = cli_util.build_client('compute', ctx)
+    client = cli_util.build_client('core', 'compute', ctx)
     result = client.export_image(
         image_id=image_id,
-        export_image_details=details,
+        export_image_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_image') and callable(getattr(client, 'get_image')):
             try:
                 wait_period_kwargs = {}
@@ -2005,7 +2029,7 @@ def get_app_catalog_listing(ctx, from_json, listing_id):
         raise click.UsageError('Parameter --listing-id cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('compute', ctx)
+    client = cli_util.build_client('core', 'compute', ctx)
     result = client.get_app_catalog_listing(
         listing_id=listing_id,
         **kwargs
@@ -2030,7 +2054,7 @@ def get_app_catalog_listing_agreements(ctx, from_json, listing_id, resource_vers
         raise click.UsageError('Parameter --resource-version cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('compute', ctx)
+    client = cli_util.build_client('core', 'compute', ctx)
     result = client.get_app_catalog_listing_agreements(
         listing_id=listing_id,
         resource_version=resource_version,
@@ -2056,7 +2080,7 @@ def get_app_catalog_listing_resource_version(ctx, from_json, listing_id, resourc
         raise click.UsageError('Parameter --resource-version cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('compute', ctx)
+    client = cli_util.build_client('core', 'compute', ctx)
     result = client.get_app_catalog_listing_resource_version(
         listing_id=listing_id,
         resource_version=resource_version,
@@ -2078,7 +2102,7 @@ def get_boot_volume_attachment(ctx, from_json, boot_volume_attachment_id):
         raise click.UsageError('Parameter --boot-volume-attachment-id cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('compute', ctx)
+    client = cli_util.build_client('core', 'compute', ctx)
     result = client.get_boot_volume_attachment(
         boot_volume_attachment_id=boot_volume_attachment_id,
         **kwargs
@@ -2099,7 +2123,7 @@ def get_console_history(ctx, from_json, instance_console_history_id):
         raise click.UsageError('Parameter --instance-console-history-id cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('compute', ctx)
+    client = cli_util.build_client('core', 'compute', ctx)
     result = client.get_console_history(
         instance_console_history_id=instance_console_history_id,
         **kwargs
@@ -2127,7 +2151,7 @@ def get_console_history_content(ctx, from_json, file, instance_console_history_i
         kwargs['offset'] = offset
     if length is not None:
         kwargs['length'] = length
-    client = cli_util.build_client('compute', ctx)
+    client = cli_util.build_client('core', 'compute', ctx)
     result = client.get_console_history_content(
         instance_console_history_id=instance_console_history_id,
         **kwargs
@@ -2149,7 +2173,7 @@ def get_dedicated_vm_host(ctx, from_json, dedicated_vm_host_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('compute', ctx)
+    client = cli_util.build_client('core', 'compute', ctx)
     result = client.get_dedicated_vm_host(
         dedicated_vm_host_id=dedicated_vm_host_id,
         **kwargs
@@ -2170,7 +2194,7 @@ def get_image(ctx, from_json, image_id):
         raise click.UsageError('Parameter --image-id cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('compute', ctx)
+    client = cli_util.build_client('core', 'compute', ctx)
     result = client.get_image(
         image_id=image_id,
         **kwargs
@@ -2196,7 +2220,7 @@ def get_image_shape_compatibility_entry(ctx, from_json, image_id, shape_name):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('compute', ctx)
+    client = cli_util.build_client('core', 'compute', ctx)
     result = client.get_image_shape_compatibility_entry(
         image_id=image_id,
         shape_name=shape_name,
@@ -2218,7 +2242,7 @@ def get_instance(ctx, from_json, instance_id):
         raise click.UsageError('Parameter --instance-id cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('compute', ctx)
+    client = cli_util.build_client('core', 'compute', ctx)
     result = client.get_instance(
         instance_id=instance_id,
         **kwargs
@@ -2239,7 +2263,7 @@ def get_instance_console_connection(ctx, from_json, instance_console_connection_
         raise click.UsageError('Parameter --instance-console-connection-id cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('compute', ctx)
+    client = cli_util.build_client('core', 'compute', ctx)
     result = client.get_instance_console_connection(
         instance_console_connection_id=instance_console_connection_id,
         **kwargs
@@ -2260,7 +2284,7 @@ def get_vnic_attachment(ctx, from_json, vnic_attachment_id):
         raise click.UsageError('Parameter --vnic-attachment-id cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('compute', ctx)
+    client = cli_util.build_client('core', 'compute', ctx)
     result = client.get_vnic_attachment(
         vnic_attachment_id=vnic_attachment_id,
         **kwargs
@@ -2281,7 +2305,7 @@ def get_volume_attachment(ctx, from_json, volume_attachment_id):
         raise click.UsageError('Parameter --volume-attachment-id cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('compute', ctx)
+    client = cli_util.build_client('core', 'compute', ctx)
     result = client.get_volume_attachment(
         volume_attachment_id=volume_attachment_id,
         **kwargs
@@ -2302,7 +2326,7 @@ def get_windows_instance_initial_credentials(ctx, from_json, instance_id):
         raise click.UsageError('Parameter --instance-id cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('compute', ctx)
+    client = cli_util.build_client('core', 'compute', ctx)
     result = client.get_windows_instance_initial_credentials(
         instance_id=instance_id,
         **kwargs
@@ -2342,13 +2366,14 @@ def instance_action(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
-    client = cli_util.build_client('compute', ctx)
+    client = cli_util.build_client('core', 'compute', ctx)
     result = client.instance_action(
         instance_id=instance_id,
         action=action,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_instance') and callable(getattr(client, 'get_instance')):
             try:
                 wait_period_kwargs = {}
@@ -2476,68 +2501,69 @@ def launch_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 
     kwargs = {}
 
-    details = {}
-    details['availabilityDomain'] = availability_domain
-    details['compartmentId'] = compartment_id
-    details['shape'] = shape
+    _details = {}
+    _details['availabilityDomain'] = availability_domain
+    _details['compartmentId'] = compartment_id
+    _details['shape'] = shape
 
     if create_vnic_details is not None:
-        details['createVnicDetails'] = cli_util.parse_json_parameter("create_vnic_details", create_vnic_details)
+        _details['createVnicDetails'] = cli_util.parse_json_parameter("create_vnic_details", create_vnic_details)
 
     if dedicated_vm_host_id is not None:
-        details['dedicatedVmHostId'] = dedicated_vm_host_id
+        _details['dedicatedVmHostId'] = dedicated_vm_host_id
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if extended_metadata is not None:
-        details['extendedMetadata'] = cli_util.parse_json_parameter("extended_metadata", extended_metadata)
+        _details['extendedMetadata'] = cli_util.parse_json_parameter("extended_metadata", extended_metadata)
 
     if fault_domain is not None:
-        details['faultDomain'] = fault_domain
+        _details['faultDomain'] = fault_domain
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if hostname_label is not None:
-        details['hostnameLabel'] = hostname_label
+        _details['hostnameLabel'] = hostname_label
 
     if image_id is not None:
-        details['imageId'] = image_id
+        _details['imageId'] = image_id
 
     if ipxe_script_file is not None:
-        details['ipxeScript'] = ipxe_script_file.read()
+        _details['ipxeScript'] = ipxe_script_file.read()
 
     if launch_options is not None:
-        details['launchOptions'] = cli_util.parse_json_parameter("launch_options", launch_options)
+        _details['launchOptions'] = cli_util.parse_json_parameter("launch_options", launch_options)
 
     if metadata is not None:
-        details['metadata'] = cli_util.parse_json_parameter("metadata", metadata)
+        _details['metadata'] = cli_util.parse_json_parameter("metadata", metadata)
 
     if agent_config is not None:
-        details['agentConfig'] = cli_util.parse_json_parameter("agent_config", agent_config)
+        _details['agentConfig'] = cli_util.parse_json_parameter("agent_config", agent_config)
 
     if shape_config is not None:
-        details['shapeConfig'] = cli_util.parse_json_parameter("shape_config", shape_config)
+        _details['shapeConfig'] = cli_util.parse_json_parameter("shape_config", shape_config)
 
     if source_details is not None:
-        details['sourceDetails'] = cli_util.parse_json_parameter("source_details", source_details)
+        _details['sourceDetails'] = cli_util.parse_json_parameter("source_details", source_details)
 
     if subnet_id is not None:
-        details['subnetId'] = subnet_id
+        _details['subnetId'] = subnet_id
 
     if is_pv_encryption_in_transit_enabled is not None:
-        details['isPvEncryptionInTransitEnabled'] = is_pv_encryption_in_transit_enabled
+        _details['isPvEncryptionInTransitEnabled'] = is_pv_encryption_in_transit_enabled
 
-    client = cli_util.build_client('compute', ctx)
+    client = cli_util.build_client('core', 'compute', ctx)
     result = client.launch_instance(
-        launch_instance_details=details,
+        launch_instance_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_instance') and callable(getattr(client, 'get_instance')):
             try:
                 wait_period_kwargs = {}
@@ -2666,72 +2692,73 @@ def launch_instance_instance_source_via_image_details(ctx, from_json, wait_for_s
 
     kwargs = {}
 
-    details = {}
-    details['sourceDetails'] = {}
-    details['availabilityDomain'] = availability_domain
-    details['compartmentId'] = compartment_id
-    details['shape'] = shape
-    details['sourceDetails']['imageId'] = source_details_image_id
+    _details = {}
+    _details['sourceDetails'] = {}
+    _details['availabilityDomain'] = availability_domain
+    _details['compartmentId'] = compartment_id
+    _details['shape'] = shape
+    _details['sourceDetails']['imageId'] = source_details_image_id
 
     if create_vnic_details is not None:
-        details['createVnicDetails'] = cli_util.parse_json_parameter("create_vnic_details", create_vnic_details)
+        _details['createVnicDetails'] = cli_util.parse_json_parameter("create_vnic_details", create_vnic_details)
 
     if dedicated_vm_host_id is not None:
-        details['dedicatedVmHostId'] = dedicated_vm_host_id
+        _details['dedicatedVmHostId'] = dedicated_vm_host_id
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if extended_metadata is not None:
-        details['extendedMetadata'] = cli_util.parse_json_parameter("extended_metadata", extended_metadata)
+        _details['extendedMetadata'] = cli_util.parse_json_parameter("extended_metadata", extended_metadata)
 
     if fault_domain is not None:
-        details['faultDomain'] = fault_domain
+        _details['faultDomain'] = fault_domain
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if hostname_label is not None:
-        details['hostnameLabel'] = hostname_label
+        _details['hostnameLabel'] = hostname_label
 
     if image_id is not None:
-        details['imageId'] = image_id
+        _details['imageId'] = image_id
 
     if ipxe_script_file is not None:
-        details['ipxeScript'] = ipxe_script_file.read()
+        _details['ipxeScript'] = ipxe_script_file.read()
 
     if launch_options is not None:
-        details['launchOptions'] = cli_util.parse_json_parameter("launch_options", launch_options)
+        _details['launchOptions'] = cli_util.parse_json_parameter("launch_options", launch_options)
 
     if metadata is not None:
-        details['metadata'] = cli_util.parse_json_parameter("metadata", metadata)
+        _details['metadata'] = cli_util.parse_json_parameter("metadata", metadata)
 
     if agent_config is not None:
-        details['agentConfig'] = cli_util.parse_json_parameter("agent_config", agent_config)
+        _details['agentConfig'] = cli_util.parse_json_parameter("agent_config", agent_config)
 
     if shape_config is not None:
-        details['shapeConfig'] = cli_util.parse_json_parameter("shape_config", shape_config)
+        _details['shapeConfig'] = cli_util.parse_json_parameter("shape_config", shape_config)
 
     if subnet_id is not None:
-        details['subnetId'] = subnet_id
+        _details['subnetId'] = subnet_id
 
     if is_pv_encryption_in_transit_enabled is not None:
-        details['isPvEncryptionInTransitEnabled'] = is_pv_encryption_in_transit_enabled
+        _details['isPvEncryptionInTransitEnabled'] = is_pv_encryption_in_transit_enabled
 
     if source_details_boot_volume_size_in_gbs is not None:
-        details['sourceDetails']['bootVolumeSizeInGBs'] = source_details_boot_volume_size_in_gbs
+        _details['sourceDetails']['bootVolumeSizeInGBs'] = source_details_boot_volume_size_in_gbs
 
-    details['sourceDetails']['sourceType'] = 'image'
+    _details['sourceDetails']['sourceType'] = 'image'
 
-    client = cli_util.build_client('compute', ctx)
+    client = cli_util.build_client('core', 'compute', ctx)
     result = client.launch_instance(
-        launch_instance_details=details,
+        launch_instance_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_instance') and callable(getattr(client, 'get_instance')):
             try:
                 wait_period_kwargs = {}
@@ -2859,69 +2886,70 @@ def launch_instance_instance_source_via_boot_volume_details(ctx, from_json, wait
 
     kwargs = {}
 
-    details = {}
-    details['sourceDetails'] = {}
-    details['availabilityDomain'] = availability_domain
-    details['compartmentId'] = compartment_id
-    details['shape'] = shape
-    details['sourceDetails']['bootVolumeId'] = source_details_boot_volume_id
+    _details = {}
+    _details['sourceDetails'] = {}
+    _details['availabilityDomain'] = availability_domain
+    _details['compartmentId'] = compartment_id
+    _details['shape'] = shape
+    _details['sourceDetails']['bootVolumeId'] = source_details_boot_volume_id
 
     if create_vnic_details is not None:
-        details['createVnicDetails'] = cli_util.parse_json_parameter("create_vnic_details", create_vnic_details)
+        _details['createVnicDetails'] = cli_util.parse_json_parameter("create_vnic_details", create_vnic_details)
 
     if dedicated_vm_host_id is not None:
-        details['dedicatedVmHostId'] = dedicated_vm_host_id
+        _details['dedicatedVmHostId'] = dedicated_vm_host_id
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if extended_metadata is not None:
-        details['extendedMetadata'] = cli_util.parse_json_parameter("extended_metadata", extended_metadata)
+        _details['extendedMetadata'] = cli_util.parse_json_parameter("extended_metadata", extended_metadata)
 
     if fault_domain is not None:
-        details['faultDomain'] = fault_domain
+        _details['faultDomain'] = fault_domain
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if hostname_label is not None:
-        details['hostnameLabel'] = hostname_label
+        _details['hostnameLabel'] = hostname_label
 
     if image_id is not None:
-        details['imageId'] = image_id
+        _details['imageId'] = image_id
 
     if ipxe_script_file is not None:
-        details['ipxeScript'] = ipxe_script_file.read()
+        _details['ipxeScript'] = ipxe_script_file.read()
 
     if launch_options is not None:
-        details['launchOptions'] = cli_util.parse_json_parameter("launch_options", launch_options)
+        _details['launchOptions'] = cli_util.parse_json_parameter("launch_options", launch_options)
 
     if metadata is not None:
-        details['metadata'] = cli_util.parse_json_parameter("metadata", metadata)
+        _details['metadata'] = cli_util.parse_json_parameter("metadata", metadata)
 
     if agent_config is not None:
-        details['agentConfig'] = cli_util.parse_json_parameter("agent_config", agent_config)
+        _details['agentConfig'] = cli_util.parse_json_parameter("agent_config", agent_config)
 
     if shape_config is not None:
-        details['shapeConfig'] = cli_util.parse_json_parameter("shape_config", shape_config)
+        _details['shapeConfig'] = cli_util.parse_json_parameter("shape_config", shape_config)
 
     if subnet_id is not None:
-        details['subnetId'] = subnet_id
+        _details['subnetId'] = subnet_id
 
     if is_pv_encryption_in_transit_enabled is not None:
-        details['isPvEncryptionInTransitEnabled'] = is_pv_encryption_in_transit_enabled
+        _details['isPvEncryptionInTransitEnabled'] = is_pv_encryption_in_transit_enabled
 
-    details['sourceDetails']['sourceType'] = 'bootVolume'
+    _details['sourceDetails']['sourceType'] = 'bootVolume'
 
-    client = cli_util.build_client('compute', ctx)
+    client = cli_util.build_client('core', 'compute', ctx)
     result = client.launch_instance(
-        launch_instance_details=details,
+        launch_instance_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_instance') and callable(getattr(client, 'get_instance')):
             try:
                 wait_period_kwargs = {}
@@ -2975,7 +3003,7 @@ def list_app_catalog_listing_resource_versions(ctx, from_json, all_pages, page_s
         kwargs['page'] = page
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
-    client = cli_util.build_client('compute', ctx)
+    client = cli_util.build_client('core', 'compute', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -3035,7 +3063,7 @@ def list_app_catalog_listings(ctx, from_json, all_pages, page_size, limit, page,
         kwargs['publisher_type'] = publisher_type
     if display_name is not None:
         kwargs['display_name'] = display_name
-    client = cli_util.build_client('compute', ctx)
+    client = cli_util.build_client('core', 'compute', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -3092,7 +3120,7 @@ def list_app_catalog_subscriptions(ctx, from_json, all_pages, page_size, compart
         kwargs['sort_order'] = sort_order
     if listing_id is not None:
         kwargs['listing_id'] = listing_id
-    client = cli_util.build_client('compute', ctx)
+    client = cli_util.build_client('core', 'compute', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -3150,7 +3178,7 @@ def list_boot_volume_attachments(ctx, from_json, all_pages, page_size, availabil
         kwargs['instance_id'] = instance_id
     if boot_volume_id is not None:
         kwargs['boot_volume_id'] = boot_volume_id
-    client = cli_util.build_client('compute', ctx)
+    client = cli_util.build_client('core', 'compute', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -3223,7 +3251,7 @@ def list_console_histories(ctx, from_json, all_pages, page_size, compartment_id,
         kwargs['sort_order'] = sort_order
     if lifecycle_state is not None:
         kwargs['lifecycle_state'] = lifecycle_state
-    client = cli_util.build_client('compute', ctx)
+    client = cli_util.build_client('core', 'compute', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -3281,7 +3309,7 @@ def list_dedicated_vm_host_instance_shapes(ctx, from_json, all_pages, page_size,
     if page is not None:
         kwargs['page'] = page
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('compute', ctx)
+    client = cli_util.build_client('core', 'compute', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -3350,7 +3378,7 @@ def list_dedicated_vm_host_instances(ctx, from_json, all_pages, page_size, compa
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('compute', ctx)
+    client = cli_util.build_client('core', 'compute', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -3411,7 +3439,7 @@ def list_dedicated_vm_host_shapes(ctx, from_json, all_pages, page_size, compartm
     if page is not None:
         kwargs['page'] = page
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('compute', ctx)
+    client = cli_util.build_client('core', 'compute', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -3487,7 +3515,7 @@ def list_dedicated_vm_hosts(ctx, from_json, all_pages, page_size, compartment_id
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('compute', ctx)
+    client = cli_util.build_client('core', 'compute', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -3540,7 +3568,7 @@ def list_image_shape_compatibility_entries(ctx, from_json, all_pages, page_size,
     if page is not None:
         kwargs['page'] = page
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('compute', ctx)
+    client = cli_util.build_client('core', 'compute', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -3618,7 +3646,7 @@ def list_images(ctx, from_json, all_pages, page_size, compartment_id, display_na
         kwargs['sort_order'] = sort_order
     if lifecycle_state is not None:
         kwargs['lifecycle_state'] = lifecycle_state
-    client = cli_util.build_client('compute', ctx)
+    client = cli_util.build_client('core', 'compute', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -3672,7 +3700,7 @@ def list_instance_console_connections(ctx, from_json, all_pages, page_size, comp
         kwargs['limit'] = limit
     if page is not None:
         kwargs['page'] = page
-    client = cli_util.build_client('compute', ctx)
+    client = cli_util.build_client('core', 'compute', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -3739,7 +3767,7 @@ def list_instance_devices(ctx, from_json, all_pages, page_size, instance_id, is_
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('compute', ctx)
+    client = cli_util.build_client('core', 'compute', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -3809,7 +3837,7 @@ def list_instances(ctx, from_json, all_pages, page_size, compartment_id, availab
         kwargs['sort_order'] = sort_order
     if lifecycle_state is not None:
         kwargs['lifecycle_state'] = lifecycle_state
-    client = cli_util.build_client('compute', ctx)
+    client = cli_util.build_client('core', 'compute', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -3866,7 +3894,7 @@ def list_shapes(ctx, from_json, all_pages, page_size, compartment_id, availabili
         kwargs['page'] = page
     if image_id is not None:
         kwargs['image_id'] = image_id
-    client = cli_util.build_client('compute', ctx)
+    client = cli_util.build_client('core', 'compute', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -3926,7 +3954,7 @@ def list_vnic_attachments(ctx, from_json, all_pages, page_size, compartment_id, 
         kwargs['page'] = page
     if vnic_id is not None:
         kwargs['vnic_id'] = vnic_id
-    client = cli_util.build_client('compute', ctx)
+    client = cli_util.build_client('core', 'compute', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -3988,7 +4016,7 @@ def list_volume_attachments(ctx, from_json, all_pages, page_size, compartment_id
         kwargs['instance_id'] = instance_id
     if volume_id is not None:
         kwargs['volume_id'] = volume_id
-    client = cli_util.build_client('compute', ctx)
+    client = cli_util.build_client('core', 'compute', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -4032,7 +4060,7 @@ def remove_image_shape_compatibility_entry(ctx, from_json, image_id, shape_name)
         raise click.UsageError('Parameter --shape-name cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('compute', ctx)
+    client = cli_util.build_client('core', 'compute', ctx)
     result = client.remove_image_shape_compatibility_entry(
         image_id=image_id,
         shape_name=shape_name,
@@ -4068,12 +4096,13 @@ def terminate_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
         kwargs['if_match'] = if_match
     if preserve_boot_volume is not None:
         kwargs['preserve_boot_volume'] = preserve_boot_volume
-    client = cli_util.build_client('compute', ctx)
+    client = cli_util.build_client('core', 'compute', ctx)
     result = client.terminate_instance(
         instance_id=instance_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_instance') and callable(getattr(client, 'get_instance')):
             try:
                 wait_period_kwargs = {}
@@ -4142,24 +4171,25 @@ def update_console_history(ctx, from_json, force, wait_for_state, max_wait_secon
     if if_match is not None:
         kwargs['if_match'] = if_match
 
-    details = {}
+    _details = {}
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
-    client = cli_util.build_client('compute', ctx)
+    client = cli_util.build_client('core', 'compute', ctx)
     result = client.update_console_history(
         instance_console_history_id=instance_console_history_id,
-        update_console_history_details=details,
+        update_console_history_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_console_history') and callable(getattr(client, 'get_console_history')):
             try:
                 wait_period_kwargs = {}
@@ -4219,24 +4249,25 @@ def update_dedicated_vm_host(ctx, from_json, force, wait_for_state, max_wait_sec
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
-    client = cli_util.build_client('compute', ctx)
+    client = cli_util.build_client('core', 'compute', ctx)
     result = client.update_dedicated_vm_host(
         dedicated_vm_host_id=dedicated_vm_host_id,
-        update_dedicated_vm_host_details=details,
+        update_dedicated_vm_host_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_dedicated_vm_host') and callable(getattr(client, 'get_dedicated_vm_host')):
             try:
                 wait_period_kwargs = {}
@@ -4301,30 +4332,31 @@ def update_image(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_i
     if if_match is not None:
         kwargs['if_match'] = if_match
 
-    details = {}
+    _details = {}
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if operating_system is not None:
-        details['operatingSystem'] = operating_system
+        _details['operatingSystem'] = operating_system
 
     if operating_system_version is not None:
-        details['operatingSystemVersion'] = operating_system_version
+        _details['operatingSystemVersion'] = operating_system_version
 
-    client = cli_util.build_client('compute', ctx)
+    client = cli_util.build_client('core', 'compute', ctx)
     result = client.update_image(
         image_id=image_id,
-        update_image_details=details,
+        update_image_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_image') and callable(getattr(client, 'get_image')):
             try:
                 wait_period_kwargs = {}
@@ -4406,39 +4438,40 @@ def update_instance(ctx, from_json, force, wait_for_state, max_wait_seconds, wai
     if if_match is not None:
         kwargs['if_match'] = if_match
 
-    details = {}
+    _details = {}
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if agent_config is not None:
-        details['agentConfig'] = cli_util.parse_json_parameter("agent_config", agent_config)
+        _details['agentConfig'] = cli_util.parse_json_parameter("agent_config", agent_config)
 
     if metadata is not None:
-        details['metadata'] = cli_util.parse_json_parameter("metadata", metadata)
+        _details['metadata'] = cli_util.parse_json_parameter("metadata", metadata)
 
     if extended_metadata is not None:
-        details['extendedMetadata'] = cli_util.parse_json_parameter("extended_metadata", extended_metadata)
+        _details['extendedMetadata'] = cli_util.parse_json_parameter("extended_metadata", extended_metadata)
 
     if shape is not None:
-        details['shape'] = shape
+        _details['shape'] = shape
 
     if shape_config is not None:
-        details['shapeConfig'] = cli_util.parse_json_parameter("shape_config", shape_config)
+        _details['shapeConfig'] = cli_util.parse_json_parameter("shape_config", shape_config)
 
-    client = cli_util.build_client('compute', ctx)
+    client = cli_util.build_client('core', 'compute', ctx)
     result = client.update_instance(
         instance_id=instance_id,
-        update_instance_details=details,
+        update_instance_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_instance') and callable(getattr(client, 'get_instance')):
             try:
                 wait_period_kwargs = {}

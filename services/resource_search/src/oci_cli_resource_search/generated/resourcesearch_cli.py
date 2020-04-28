@@ -1,5 +1,6 @@
 # coding: utf-8
-# Copyright (c) 2016, 2020, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2020, Oracle and/or its affiliates.  All rights reserved.
+# This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 from __future__ import print_function
 import click
@@ -50,7 +51,7 @@ def get_resource_type(ctx, from_json, name):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('resource_search', ctx)
+    client = cli_util.build_client('resource_search', 'resource_search', ctx)
     result = client.get_resource_type(
         name=name,
         **kwargs
@@ -79,7 +80,7 @@ def list_resource_types(ctx, from_json, all_pages, page_size, limit, page):
     if page is not None:
         kwargs['page'] = page
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('resource_search', ctx)
+    client = cli_util.build_client('resource_search', 'resource_search', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -121,15 +122,15 @@ def search_resources(ctx, from_json, type, matching_context_type, limit, page):
         kwargs['page'] = page
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['type'] = type
+    _details = {}
+    _details['type'] = type
 
     if matching_context_type is not None:
-        details['matchingContextType'] = matching_context_type
+        _details['matchingContextType'] = matching_context_type
 
-    client = cli_util.build_client('resource_search', ctx)
+    client = cli_util.build_client('resource_search', 'resource_search', ctx)
     result = client.search_resources(
-        search_details=details,
+        search_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -154,17 +155,17 @@ def search_resources_structured_search_details(ctx, from_json, query_parameterco
         kwargs['page'] = page
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['query'] = query_parameterconflict
+    _details = {}
+    _details['query'] = query_parameterconflict
 
     if matching_context_type is not None:
-        details['matchingContextType'] = matching_context_type
+        _details['matchingContextType'] = matching_context_type
 
-    details['type'] = 'Structured'
+    _details['type'] = 'Structured'
 
-    client = cli_util.build_client('resource_search', ctx)
+    client = cli_util.build_client('resource_search', 'resource_search', ctx)
     result = client.search_resources(
-        search_details=details,
+        search_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -189,17 +190,17 @@ def search_resources_free_text_search_details(ctx, from_json, text, matching_con
         kwargs['page'] = page
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['text'] = text
+    _details = {}
+    _details['text'] = text
 
     if matching_context_type is not None:
-        details['matchingContextType'] = matching_context_type
+        _details['matchingContextType'] = matching_context_type
 
-    details['type'] = 'FreeText'
+    _details['type'] = 'FreeText'
 
-    client = cli_util.build_client('resource_search', ctx)
+    client = cli_util.build_client('resource_search', 'resource_search', ctx)
     result = client.search_resources(
-        search_details=details,
+        search_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)

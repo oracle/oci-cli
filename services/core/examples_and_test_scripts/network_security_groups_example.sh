@@ -1,5 +1,7 @@
 #!/bin/bash
-#
+# Copyright (c) 2016, 2020, Oracle and/or its affiliates.  All rights reserved.
+# This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
+
 # This script provides a basic example of how to use the Network Security Group feature in the CLI.
 # These variables must be defined by the user:
 #   * COMPARTMENT_ID: The OCID of the compartment that contains our resources, and is where we'll create the network security group 
@@ -14,9 +16,7 @@
 #   * Adding and removing security rules to the NSG
 #   * Listing and adding VNICs that belong to an NSG
 #
-# This script uses jq (https://stedolan.github.io/jq/) for JSON querying of CLI output. 
-# 
-# Copyright (c) 2016, 2019, Oracle and/or its affiliates. All rights reserved.
+# This script uses jq (https://stedolan.github.io/jq/) for JSON querying of CLI output.
 
 COMPARTMENT_ID=""
 VCN_ID=""

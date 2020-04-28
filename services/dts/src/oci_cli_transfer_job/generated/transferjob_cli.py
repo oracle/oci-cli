@@ -1,5 +1,6 @@
 # coding: utf-8
-# Copyright (c) 2016, 2020, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2020, Oracle and/or its affiliates.  All rights reserved.
+# This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 from __future__ import print_function
 import click
@@ -56,13 +57,13 @@ def change_transfer_job_compartment(ctx, from_json, transfer_job_id, compartment
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
 
-    client = cli_util.build_client('transfer_job', ctx)
+    client = cli_util.build_client('dts', 'transfer_job', ctx)
     result = client.change_transfer_job_compartment(
         transfer_job_id=transfer_job_id,
-        change_transfer_job_compartment_details=details,
+        change_transfer_job_compartment_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -92,32 +93,33 @@ def create_transfer_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if compartment_id is not None:
-        details['compartmentId'] = compartment_id
+        _details['compartmentId'] = compartment_id
 
     if upload_bucket_name is not None:
-        details['uploadBucketName'] = upload_bucket_name
+        _details['uploadBucketName'] = upload_bucket_name
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if device_type is not None:
-        details['deviceType'] = device_type
+        _details['deviceType'] = device_type
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('transfer_job', ctx)
+    client = cli_util.build_client('dts', 'transfer_job', ctx)
     result = client.create_transfer_job(
-        create_transfer_job_details=details,
+        create_transfer_job_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_transfer_job') and callable(getattr(client, 'get_transfer_job')):
             try:
                 wait_period_kwargs = {}
@@ -160,12 +162,13 @@ def delete_transfer_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('transfer_job', ctx)
+    client = cli_util.build_client('dts', 'transfer_job', ctx)
     result = client.delete_transfer_job(
         id=id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_transfer_job') and callable(getattr(client, 'get_transfer_job')):
             try:
                 wait_period_kwargs = {}
@@ -216,7 +219,7 @@ def get_transfer_job(ctx, from_json, id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('transfer_job', ctx)
+    client = cli_util.build_client('dts', 'transfer_job', ctx)
     result = client.get_transfer_job(
         id=id,
         **kwargs
@@ -254,7 +257,7 @@ def list_transfer_jobs(ctx, from_json, all_pages, page_size, compartment_id, lif
     if page is not None:
         kwargs['page'] = page
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('transfer_job', ctx)
+    client = cli_util.build_client('dts', 'transfer_job', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -315,30 +318,31 @@ def update_transfer_job(ctx, from_json, force, wait_for_state, max_wait_seconds,
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if lifecycle_state is not None:
-        details['lifecycleState'] = lifecycle_state
+        _details['lifecycleState'] = lifecycle_state
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if device_type is not None:
-        details['deviceType'] = device_type
+        _details['deviceType'] = device_type
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('transfer_job', ctx)
+    client = cli_util.build_client('dts', 'transfer_job', ctx)
     result = client.update_transfer_job(
         id=id,
-        update_transfer_job_details=details,
+        update_transfer_job_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_transfer_job') and callable(getattr(client, 'get_transfer_job')):
             try:
                 wait_period_kwargs = {}

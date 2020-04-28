@@ -1,5 +1,6 @@
 # coding: utf-8
-# Copyright (c) 2016, 2020, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2020, Oracle and/or its affiliates.  All rights reserved.
+# This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 from __future__ import print_function
 import click
@@ -63,13 +64,13 @@ def change_connect_harness_compartment(ctx, from_json, connect_harness_id, compa
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
 
-    client = cli_util.build_client('stream_admin', ctx)
+    client = cli_util.build_client('streaming', 'stream_admin', ctx)
     result = client.change_connect_harness_compartment(
         connect_harness_id=connect_harness_id,
-        change_connect_harness_compartment_details=details,
+        change_connect_harness_compartment_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -94,13 +95,13 @@ def change_stream_compartment(ctx, from_json, stream_id, compartment_id, if_matc
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
 
-    client = cli_util.build_client('stream_admin', ctx)
+    client = cli_util.build_client('streaming', 'stream_admin', ctx)
     result = client.change_stream_compartment(
         stream_id=stream_id,
-        change_stream_compartment_details=details,
+        change_stream_compartment_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -125,13 +126,13 @@ def change_stream_pool_compartment(ctx, from_json, stream_pool_id, compartment_i
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
 
-    client = cli_util.build_client('stream_admin', ctx)
+    client = cli_util.build_client('streaming', 'stream_admin', ctx)
     result = client.change_stream_pool_compartment(
         stream_pool_id=stream_pool_id,
-        change_stream_pool_compartment_details=details,
+        change_stream_pool_compartment_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -161,22 +162,23 @@ def create_connect_harness(ctx, from_json, wait_for_state, max_wait_seconds, wai
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['name'] = name
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['name'] = name
+    _details['compartmentId'] = compartment_id
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('stream_admin', ctx)
+    client = cli_util.build_client('streaming', 'stream_admin', ctx)
     result = client.create_connect_harness(
-        create_connect_harness_details=details,
+        create_connect_harness_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_connect_harness') and callable(getattr(client, 'get_connect_harness')):
             try:
                 wait_period_kwargs = {}
@@ -228,31 +230,32 @@ def create_stream(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['name'] = name
-    details['partitions'] = partitions
+    _details = {}
+    _details['name'] = name
+    _details['partitions'] = partitions
 
     if compartment_id is not None:
-        details['compartmentId'] = compartment_id
+        _details['compartmentId'] = compartment_id
 
     if stream_pool_id is not None:
-        details['streamPoolId'] = stream_pool_id
+        _details['streamPoolId'] = stream_pool_id
 
     if retention_in_hours is not None:
-        details['retentionInHours'] = retention_in_hours
+        _details['retentionInHours'] = retention_in_hours
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('stream_admin', ctx)
+    client = cli_util.build_client('streaming', 'stream_admin', ctx)
     result = client.create_stream(
-        create_stream_details=details,
+        create_stream_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_stream') and callable(getattr(client, 'get_stream')):
             try:
                 wait_period_kwargs = {}
@@ -304,31 +307,32 @@ def create_stream_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
-    details['name'] = name
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['name'] = name
 
     if kafka_settings is not None:
-        details['kafkaSettings'] = cli_util.parse_json_parameter("kafka_settings", kafka_settings)
+        _details['kafkaSettings'] = cli_util.parse_json_parameter("kafka_settings", kafka_settings)
 
     if custom_encryption_key_details is not None:
-        details['customEncryptionKeyDetails'] = cli_util.parse_json_parameter("custom_encryption_key_details", custom_encryption_key_details)
+        _details['customEncryptionKeyDetails'] = cli_util.parse_json_parameter("custom_encryption_key_details", custom_encryption_key_details)
 
     if private_endpoint_details is not None:
-        details['privateEndpointDetails'] = cli_util.parse_json_parameter("private_endpoint_details", private_endpoint_details)
+        _details['privateEndpointDetails'] = cli_util.parse_json_parameter("private_endpoint_details", private_endpoint_details)
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('stream_admin', ctx)
+    client = cli_util.build_client('streaming', 'stream_admin', ctx)
     result = client.create_stream_pool(
-        create_stream_pool_details=details,
+        create_stream_pool_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_stream_pool') and callable(getattr(client, 'get_stream_pool')):
             try:
                 wait_period_kwargs = {}
@@ -374,12 +378,13 @@ def delete_connect_harness(ctx, from_json, wait_for_state, max_wait_seconds, wai
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('stream_admin', ctx)
+    client = cli_util.build_client('streaming', 'stream_admin', ctx)
     result = client.delete_connect_harness(
         connect_harness_id=connect_harness_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_connect_harness') and callable(getattr(client, 'get_connect_harness')):
             try:
                 wait_period_kwargs = {}
@@ -437,12 +442,13 @@ def delete_stream(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('stream_admin', ctx)
+    client = cli_util.build_client('streaming', 'stream_admin', ctx)
     result = client.delete_stream(
         stream_id=stream_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_stream') and callable(getattr(client, 'get_stream')):
             try:
                 wait_period_kwargs = {}
@@ -500,12 +506,13 @@ def delete_stream_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('stream_admin', ctx)
+    client = cli_util.build_client('streaming', 'stream_admin', ctx)
     result = client.delete_stream_pool(
         stream_pool_id=stream_pool_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_stream_pool') and callable(getattr(client, 'get_stream_pool')):
             try:
                 wait_period_kwargs = {}
@@ -556,7 +563,7 @@ def get_connect_harness(ctx, from_json, connect_harness_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('stream_admin', ctx)
+    client = cli_util.build_client('streaming', 'stream_admin', ctx)
     result = client.get_connect_harness(
         connect_harness_id=connect_harness_id,
         **kwargs
@@ -578,7 +585,7 @@ def get_stream(ctx, from_json, stream_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('stream_admin', ctx)
+    client = cli_util.build_client('streaming', 'stream_admin', ctx)
     result = client.get_stream(
         stream_id=stream_id,
         **kwargs
@@ -600,7 +607,7 @@ def get_stream_pool(ctx, from_json, stream_pool_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('stream_admin', ctx)
+    client = cli_util.build_client('streaming', 'stream_admin', ctx)
     result = client.get_stream_pool(
         stream_pool_id=stream_pool_id,
         **kwargs
@@ -645,7 +652,7 @@ def list_connect_harnesses(ctx, from_json, all_pages, page_size, compartment_id,
     if lifecycle_state is not None:
         kwargs['lifecycle_state'] = lifecycle_state
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('stream_admin', ctx)
+    client = cli_util.build_client('streaming', 'stream_admin', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -708,7 +715,7 @@ def list_stream_pools(ctx, from_json, all_pages, page_size, compartment_id, id, 
     if lifecycle_state is not None:
         kwargs['lifecycle_state'] = lifecycle_state
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('stream_admin', ctx)
+    client = cli_util.build_client('streaming', 'stream_admin', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -776,7 +783,7 @@ def list_streams(ctx, from_json, all_pages, page_size, compartment_id, stream_po
     if lifecycle_state is not None:
         kwargs['lifecycle_state'] = lifecycle_state
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('stream_admin', ctx)
+    client = cli_util.build_client('streaming', 'stream_admin', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -831,21 +838,22 @@ def update_connect_harness(ctx, from_json, force, wait_for_state, max_wait_secon
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('stream_admin', ctx)
+    client = cli_util.build_client('streaming', 'stream_admin', ctx)
     result = client.update_connect_harness(
         connect_harness_id=connect_harness_id,
-        update_connect_harness_details=details,
+        update_connect_harness_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_connect_harness') and callable(getattr(client, 'get_connect_harness')):
             try:
                 wait_period_kwargs = {}
@@ -903,24 +911,25 @@ def update_stream(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if stream_pool_id is not None:
-        details['streamPoolId'] = stream_pool_id
+        _details['streamPoolId'] = stream_pool_id
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('stream_admin', ctx)
+    client = cli_util.build_client('streaming', 'stream_admin', ctx)
     result = client.update_stream(
         stream_id=stream_id,
-        update_stream_details=details,
+        update_stream_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_stream') and callable(getattr(client, 'get_stream')):
             try:
                 wait_period_kwargs = {}
@@ -980,30 +989,31 @@ def update_stream_pool(ctx, from_json, force, wait_for_state, max_wait_seconds, 
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if name is not None:
-        details['name'] = name
+        _details['name'] = name
 
     if kafka_settings is not None:
-        details['kafkaSettings'] = cli_util.parse_json_parameter("kafka_settings", kafka_settings)
+        _details['kafkaSettings'] = cli_util.parse_json_parameter("kafka_settings", kafka_settings)
 
     if custom_encryption_key_details is not None:
-        details['customEncryptionKeyDetails'] = cli_util.parse_json_parameter("custom_encryption_key_details", custom_encryption_key_details)
+        _details['customEncryptionKeyDetails'] = cli_util.parse_json_parameter("custom_encryption_key_details", custom_encryption_key_details)
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('stream_admin', ctx)
+    client = cli_util.build_client('streaming', 'stream_admin', ctx)
     result = client.update_stream_pool(
         stream_pool_id=stream_pool_id,
-        update_stream_pool_details=details,
+        update_stream_pool_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_stream_pool') and callable(getattr(client, 'get_stream_pool')):
             try:
                 wait_period_kwargs = {}

@@ -6,10 +6,50 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.10.1 - 2020-04-28
+-------------------
+Added
+~~~~~
+
+* Support for the MySQL Database Service
+
+  * ``oci mysql``
+
+* Marketplace Service updates to support gov regions
+
+  * ``oci marketplace agreement get --compartment-id``
+  * ``oci marketplace agreement list --compartment-id``
+  * ``oci marketplace category list --compartment-id``
+  * ``oci marketplace package get --compartment-id``
+  * ``oci marketplace package list --compartment-id``
+  * ``oci marketplace listing get --compartment-id``
+  * ``oci marketplace listing list --compartment-id``
+  * ``oci marketplace publisher list --compartment-id``
+  * ``oci marketplace report-collection list-reports --compartment-id``
+  * ``oci marketplace report-type-collection list-report-types --compartment-id``
+
+* Support for updating a dbHomeId of a database in the Database Service
+
+  * ``oci db database update --db-home-id``
+
+* Support for Instance Stop and Instance Start as part of the Integration Service
+
+  * ``oci integration integration-instance stop --id``
+  * ``oci integration integration-instance start --id``
+
+* Support for Windows managed instances in OS Management
+
+  * ``oci os-management managed-instance install-all-windows-updates``
+  * ``oci os-management managed-instance install-windows-update``
+  * ``oci os-management managed-instance list-available-windows-updates``
+  * ``oci os-management managed-instance list-installed-windows-updates``
+
+
 2.10.0 - 2020-04-21
 -------------------
 Added
 ~~~~~
+
 * Support for Data Safe service
 
   * ``oci data-safe``

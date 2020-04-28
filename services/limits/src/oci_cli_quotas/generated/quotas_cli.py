@@ -1,5 +1,6 @@
 # coding: utf-8
-# Copyright (c) 2016, 2020, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2020, Oracle and/or its affiliates.  All rights reserved.
+# This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 from __future__ import print_function
 import click
@@ -50,24 +51,25 @@ def create_quota(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
-    details['description'] = description
-    details['name'] = name
-    details['statements'] = cli_util.parse_json_parameter("statements", statements)
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['description'] = description
+    _details['name'] = name
+    _details['statements'] = cli_util.parse_json_parameter("statements", statements)
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('quotas', ctx)
+    client = cli_util.build_client('limits', 'quotas', ctx)
     result = client.create_quota(
-        create_quota_details=details,
+        create_quota_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_quota') and callable(getattr(client, 'get_quota')):
             try:
                 wait_period_kwargs = {}
@@ -113,12 +115,13 @@ def delete_quota(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('quotas', ctx)
+    client = cli_util.build_client('limits', 'quotas', ctx)
     result = client.delete_quota(
         quota_id=quota_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_quota') and callable(getattr(client, 'get_quota')):
             try:
                 wait_period_kwargs = {}
@@ -169,7 +172,7 @@ def get_quota(ctx, from_json, quota_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('quotas', ctx)
+    client = cli_util.build_client('limits', 'quotas', ctx)
     result = client.get_quota(
         quota_id=quota_id,
         **kwargs
@@ -211,7 +214,7 @@ def list_quotas(ctx, from_json, all_pages, page_size, compartment_id, page, limi
     if sort_by is not None:
         kwargs['sort_by'] = sort_by
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('quotas', ctx)
+    client = cli_util.build_client('limits', 'quotas', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -267,27 +270,28 @@ def update_quota(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_i
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
     if statements is not None:
-        details['statements'] = cli_util.parse_json_parameter("statements", statements)
+        _details['statements'] = cli_util.parse_json_parameter("statements", statements)
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('quotas', ctx)
+    client = cli_util.build_client('limits', 'quotas', ctx)
     result = client.update_quota(
         quota_id=quota_id,
-        update_quota_details=details,
+        update_quota_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_quota') and callable(getattr(client, 'get_quota')):
             try:
                 wait_period_kwargs = {}

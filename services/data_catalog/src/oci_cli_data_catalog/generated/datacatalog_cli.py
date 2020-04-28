@@ -1,5 +1,6 @@
 # coding: utf-8
-# Copyright (c) 2016, 2020, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2020, Oracle and/or its affiliates.  All rights reserved.
+# This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 from __future__ import print_function
 import click
@@ -303,16 +304,17 @@ def change_catalog_compartment(ctx, from_json, wait_for_state, max_wait_seconds,
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
 
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     result = client.change_catalog_compartment(
         catalog_id=catalog_id,
-        change_catalog_compartment_details=details,
+        change_catalog_compartment_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -371,41 +373,41 @@ def create_attribute(ctx, from_json, catalog_id, data_asset_key, entity_key, dis
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['displayName'] = display_name
-    details['externalDataType'] = external_data_type
-    details['timeExternal'] = time_external
+    _details = {}
+    _details['displayName'] = display_name
+    _details['externalDataType'] = external_data_type
+    _details['timeExternal'] = time_external
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
     if is_incremental_data is not None:
-        details['isIncrementalData'] = is_incremental_data
+        _details['isIncrementalData'] = is_incremental_data
 
     if is_nullable is not None:
-        details['isNullable'] = is_nullable
+        _details['isNullable'] = is_nullable
 
     if length is not None:
-        details['length'] = length
+        _details['length'] = length
 
     if position is not None:
-        details['position'] = position
+        _details['position'] = position
 
     if precision is not None:
-        details['precision'] = precision
+        _details['precision'] = precision
 
     if scale is not None:
-        details['scale'] = scale
+        _details['scale'] = scale
 
     if properties is not None:
-        details['properties'] = cli_util.parse_json_parameter("properties", properties)
+        _details['properties'] = cli_util.parse_json_parameter("properties", properties)
 
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     result = client.create_attribute(
         catalog_id=catalog_id,
         data_asset_key=data_asset_key,
         entity_key=entity_key,
-        create_attribute_details=details,
+        create_attribute_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -440,21 +442,21 @@ def create_attribute_tag(ctx, from_json, catalog_id, data_asset_key, entity_key,
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if name is not None:
-        details['name'] = name
+        _details['name'] = name
 
     if term_key is not None:
-        details['termKey'] = term_key
+        _details['termKey'] = term_key
 
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     result = client.create_attribute_tag(
         catalog_id=catalog_id,
         data_asset_key=data_asset_key,
         entity_key=entity_key,
         attribute_key=attribute_key,
-        create_attribute_tag_details=details,
+        create_attribute_tag_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -478,24 +480,25 @@ def create_catalog(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     result = client.create_catalog(
-        create_catalog_details=details,
+        create_catalog_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -545,25 +548,25 @@ def create_connection(ctx, from_json, catalog_id, data_asset_key, display_name, 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['displayName'] = display_name
-    details['typeKey'] = type_key
-    details['properties'] = cli_util.parse_json_parameter("properties", properties)
+    _details = {}
+    _details['displayName'] = display_name
+    _details['typeKey'] = type_key
+    _details['properties'] = cli_util.parse_json_parameter("properties", properties)
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
     if enc_properties is not None:
-        details['encProperties'] = cli_util.parse_json_parameter("enc_properties", enc_properties)
+        _details['encProperties'] = cli_util.parse_json_parameter("enc_properties", enc_properties)
 
     if is_default is not None:
-        details['isDefault'] = is_default
+        _details['isDefault'] = is_default
 
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     result = client.create_connection(
         catalog_id=catalog_id,
         data_asset_key=data_asset_key,
-        create_connection_details=details,
+        create_connection_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -588,20 +591,20 @@ def create_data_asset(ctx, from_json, catalog_id, display_name, type_key, descri
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['displayName'] = display_name
-    details['typeKey'] = type_key
+    _details = {}
+    _details['displayName'] = display_name
+    _details['typeKey'] = type_key
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
     if properties is not None:
-        details['properties'] = cli_util.parse_json_parameter("properties", properties)
+        _details['properties'] = cli_util.parse_json_parameter("properties", properties)
 
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     result = client.create_data_asset(
         catalog_id=catalog_id,
-        create_data_asset_details=details,
+        create_data_asset_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -628,19 +631,19 @@ def create_data_asset_tag(ctx, from_json, catalog_id, data_asset_key, name, term
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if name is not None:
-        details['name'] = name
+        _details['name'] = name
 
     if term_key is not None:
-        details['termKey'] = term_key
+        _details['termKey'] = term_key
 
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     result = client.create_data_asset_tag(
         catalog_id=catalog_id,
         data_asset_key=data_asset_key,
-        create_data_asset_tag_details=details,
+        create_data_asset_tag_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -674,36 +677,36 @@ def create_entity(ctx, from_json, catalog_id, data_asset_key, display_name, time
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['displayName'] = display_name
-    details['timeExternal'] = time_external
+    _details = {}
+    _details['displayName'] = display_name
+    _details['timeExternal'] = time_external
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
     if is_logical is not None:
-        details['isLogical'] = is_logical
+        _details['isLogical'] = is_logical
 
     if is_partition is not None:
-        details['isPartition'] = is_partition
+        _details['isPartition'] = is_partition
 
     if folder_key is not None:
-        details['folderKey'] = folder_key
+        _details['folderKey'] = folder_key
 
     if harvest_status is not None:
-        details['harvestStatus'] = harvest_status
+        _details['harvestStatus'] = harvest_status
 
     if last_job_key is not None:
-        details['lastJobKey'] = last_job_key
+        _details['lastJobKey'] = last_job_key
 
     if properties is not None:
-        details['properties'] = cli_util.parse_json_parameter("properties", properties)
+        _details['properties'] = cli_util.parse_json_parameter("properties", properties)
 
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     result = client.create_entity(
         catalog_id=catalog_id,
         data_asset_key=data_asset_key,
-        create_entity_details=details,
+        create_entity_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -734,20 +737,20 @@ def create_entity_tag(ctx, from_json, catalog_id, data_asset_key, entity_key, na
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if name is not None:
-        details['name'] = name
+        _details['name'] = name
 
     if term_key is not None:
-        details['termKey'] = term_key
+        _details['termKey'] = term_key
 
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     result = client.create_entity_tag(
         catalog_id=catalog_id,
         data_asset_key=data_asset_key,
         entity_key=entity_key,
-        create_entity_tag_details=details,
+        create_entity_tag_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -779,30 +782,30 @@ def create_folder(ctx, from_json, catalog_id, data_asset_key, display_name, time
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['displayName'] = display_name
-    details['timeExternal'] = time_external
+    _details = {}
+    _details['displayName'] = display_name
+    _details['timeExternal'] = time_external
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
     if properties is not None:
-        details['properties'] = cli_util.parse_json_parameter("properties", properties)
+        _details['properties'] = cli_util.parse_json_parameter("properties", properties)
 
     if parent_folder_key is not None:
-        details['parentFolderKey'] = parent_folder_key
+        _details['parentFolderKey'] = parent_folder_key
 
     if last_job_key is not None:
-        details['lastJobKey'] = last_job_key
+        _details['lastJobKey'] = last_job_key
 
     if harvest_status is not None:
-        details['harvestStatus'] = harvest_status
+        _details['harvestStatus'] = harvest_status
 
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     result = client.create_folder(
         catalog_id=catalog_id,
         data_asset_key=data_asset_key,
-        create_folder_details=details,
+        create_folder_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -833,20 +836,20 @@ def create_folder_tag(ctx, from_json, catalog_id, data_asset_key, folder_key, na
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if name is not None:
-        details['name'] = name
+        _details['name'] = name
 
     if term_key is not None:
-        details['termKey'] = term_key
+        _details['termKey'] = term_key
 
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     result = client.create_folder_tag(
         catalog_id=catalog_id,
         data_asset_key=data_asset_key,
         folder_key=folder_key,
-        create_folder_tag_details=details,
+        create_folder_tag_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -871,22 +874,22 @@ def create_glossary(ctx, from_json, catalog_id, display_name, description, workf
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['displayName'] = display_name
+    _details = {}
+    _details['displayName'] = display_name
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
     if workflow_status is not None:
-        details['workflowStatus'] = workflow_status
+        _details['workflowStatus'] = workflow_status
 
     if owner is not None:
-        details['owner'] = owner
+        _details['owner'] = owner
 
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     result = client.create_glossary(
         catalog_id=catalog_id,
-        create_glossary_details=details,
+        create_glossary_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -914,29 +917,29 @@ def create_job(ctx, from_json, catalog_id, display_name, job_definition_key, des
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['displayName'] = display_name
-    details['jobDefinitionKey'] = job_definition_key
+    _details = {}
+    _details['displayName'] = display_name
+    _details['jobDefinitionKey'] = job_definition_key
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
     if schedule_cron_expression is not None:
-        details['scheduleCronExpression'] = schedule_cron_expression
+        _details['scheduleCronExpression'] = schedule_cron_expression
 
     if time_schedule_begin is not None:
-        details['timeScheduleBegin'] = time_schedule_begin
+        _details['timeScheduleBegin'] = time_schedule_begin
 
     if time_schedule_end is not None:
-        details['timeScheduleEnd'] = time_schedule_end
+        _details['timeScheduleEnd'] = time_schedule_end
 
     if connection_key is not None:
-        details['connectionKey'] = connection_key
+        _details['connectionKey'] = connection_key
 
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     result = client.create_job(
         catalog_id=catalog_id,
-        create_job_details=details,
+        create_job_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -966,35 +969,35 @@ def create_job_definition(ctx, from_json, catalog_id, display_name, job_type, de
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['displayName'] = display_name
-    details['jobType'] = job_type
+    _details = {}
+    _details['displayName'] = display_name
+    _details['jobType'] = job_type
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
     if is_incremental is not None:
-        details['isIncremental'] = is_incremental
+        _details['isIncremental'] = is_incremental
 
     if data_asset_key is not None:
-        details['dataAssetKey'] = data_asset_key
+        _details['dataAssetKey'] = data_asset_key
 
     if connection_key is not None:
-        details['connectionKey'] = connection_key
+        _details['connectionKey'] = connection_key
 
     if is_sample_data_extracted is not None:
-        details['isSampleDataExtracted'] = is_sample_data_extracted
+        _details['isSampleDataExtracted'] = is_sample_data_extracted
 
     if sample_data_size_in_mbs is not None:
-        details['sampleDataSizeInMBs'] = sample_data_size_in_mbs
+        _details['sampleDataSizeInMBs'] = sample_data_size_in_mbs
 
     if properties is not None:
-        details['properties'] = cli_util.parse_json_parameter("properties", properties)
+        _details['properties'] = cli_util.parse_json_parameter("properties", properties)
 
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     result = client.create_job_definition(
         catalog_id=catalog_id,
-        create_job_definition_details=details,
+        create_job_definition_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -1033,55 +1036,55 @@ def create_job_execution(ctx, from_json, catalog_id, job_key, sub_type, job_type
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if sub_type is not None:
-        details['subType'] = sub_type
+        _details['subType'] = sub_type
 
     if job_type is not None:
-        details['jobType'] = job_type
+        _details['jobType'] = job_type
 
     if parent_key is not None:
-        details['parentKey'] = parent_key
+        _details['parentKey'] = parent_key
 
     if time_started is not None:
-        details['timeStarted'] = time_started
+        _details['timeStarted'] = time_started
 
     if time_ended is not None:
-        details['timeEnded'] = time_ended
+        _details['timeEnded'] = time_ended
 
     if lifecycle_state is not None:
-        details['lifecycleState'] = lifecycle_state
+        _details['lifecycleState'] = lifecycle_state
 
     if error_code is not None:
-        details['errorCode'] = error_code
+        _details['errorCode'] = error_code
 
     if error_message is not None:
-        details['errorMessage'] = error_message
+        _details['errorMessage'] = error_message
 
     if schedule_instance_key is not None:
-        details['scheduleInstanceKey'] = schedule_instance_key
+        _details['scheduleInstanceKey'] = schedule_instance_key
 
     if process_key is not None:
-        details['processKey'] = process_key
+        _details['processKey'] = process_key
 
     if external_url is not None:
-        details['externalUrl'] = external_url
+        _details['externalUrl'] = external_url
 
     if event_key is not None:
-        details['eventKey'] = event_key
+        _details['eventKey'] = event_key
 
     if data_entity_key is not None:
-        details['dataEntityKey'] = data_entity_key
+        _details['dataEntityKey'] = data_entity_key
 
     if properties is not None:
-        details['properties'] = cli_util.parse_json_parameter("properties", properties)
+        _details['properties'] = cli_util.parse_json_parameter("properties", properties)
 
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     result = client.create_job_execution(
         catalog_id=catalog_id,
         job_key=job_key,
-        create_job_execution_details=details,
+        create_job_execution_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -1112,29 +1115,29 @@ def create_term(ctx, from_json, catalog_id, glossary_key, display_name, descript
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['displayName'] = display_name
+    _details = {}
+    _details['displayName'] = display_name
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
     if is_allowed_to_have_child_terms is not None:
-        details['isAllowedToHaveChildTerms'] = is_allowed_to_have_child_terms
+        _details['isAllowedToHaveChildTerms'] = is_allowed_to_have_child_terms
 
     if parent_term_key is not None:
-        details['parentTermKey'] = parent_term_key
+        _details['parentTermKey'] = parent_term_key
 
     if owner is not None:
-        details['owner'] = owner
+        _details['owner'] = owner
 
     if workflow_status is not None:
-        details['workflowStatus'] = workflow_status
+        _details['workflowStatus'] = workflow_status
 
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     result = client.create_term(
         catalog_id=catalog_id,
         glossary_key=glossary_key,
-        create_term_details=details,
+        create_term_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -1166,19 +1169,19 @@ def create_term_relationship(ctx, from_json, catalog_id, glossary_key, term_key,
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['displayName'] = display_name
-    details['relatedTermKey'] = related_term_key
+    _details = {}
+    _details['displayName'] = display_name
+    _details['relatedTermKey'] = related_term_key
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     result = client.create_term_relationship(
         catalog_id=catalog_id,
         glossary_key=glossary_key,
         term_key=term_key,
-        create_term_relationship_details=details,
+        create_term_relationship_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -1214,7 +1217,7 @@ def delete_attribute(ctx, from_json, catalog_id, data_asset_key, entity_key, att
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     result = client.delete_attribute(
         catalog_id=catalog_id,
         data_asset_key=data_asset_key,
@@ -1259,7 +1262,7 @@ def delete_attribute_tag(ctx, from_json, catalog_id, data_asset_key, entity_key,
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     result = client.delete_attribute_tag(
         catalog_id=catalog_id,
         data_asset_key=data_asset_key,
@@ -1292,12 +1295,13 @@ def delete_catalog(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     result = client.delete_catalog(
         catalog_id=catalog_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -1348,7 +1352,7 @@ def delete_connection(ctx, from_json, catalog_id, data_asset_key, connection_key
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     result = client.delete_connection(
         catalog_id=catalog_id,
         data_asset_key=data_asset_key,
@@ -1380,7 +1384,7 @@ def delete_data_asset(ctx, from_json, catalog_id, data_asset_key, if_match):
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     result = client.delete_data_asset(
         catalog_id=catalog_id,
         data_asset_key=data_asset_key,
@@ -1415,7 +1419,7 @@ def delete_data_asset_tag(ctx, from_json, catalog_id, data_asset_key, tag_key, i
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     result = client.delete_data_asset_tag(
         catalog_id=catalog_id,
         data_asset_key=data_asset_key,
@@ -1451,7 +1455,7 @@ def delete_entity(ctx, from_json, catalog_id, data_asset_key, entity_key, if_mat
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     result = client.delete_entity(
         catalog_id=catalog_id,
         data_asset_key=data_asset_key,
@@ -1491,7 +1495,7 @@ def delete_entity_tag(ctx, from_json, catalog_id, data_asset_key, entity_key, ta
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     result = client.delete_entity_tag(
         catalog_id=catalog_id,
         data_asset_key=data_asset_key,
@@ -1528,7 +1532,7 @@ def delete_folder(ctx, from_json, catalog_id, data_asset_key, folder_key, if_mat
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     result = client.delete_folder(
         catalog_id=catalog_id,
         data_asset_key=data_asset_key,
@@ -1568,7 +1572,7 @@ def delete_folder_tag(ctx, from_json, catalog_id, data_asset_key, folder_key, ta
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     result = client.delete_folder_tag(
         catalog_id=catalog_id,
         data_asset_key=data_asset_key,
@@ -1601,7 +1605,7 @@ def delete_glossary(ctx, from_json, catalog_id, glossary_key, if_match):
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     result = client.delete_glossary(
         catalog_id=catalog_id,
         glossary_key=glossary_key,
@@ -1632,7 +1636,7 @@ def delete_job(ctx, from_json, catalog_id, job_key, if_match):
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     result = client.delete_job(
         catalog_id=catalog_id,
         job_key=job_key,
@@ -1663,7 +1667,7 @@ def delete_job_definition(ctx, from_json, catalog_id, job_definition_key, if_mat
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     result = client.delete_job_definition(
         catalog_id=catalog_id,
         job_definition_key=job_definition_key,
@@ -1698,7 +1702,7 @@ def delete_term(ctx, from_json, catalog_id, glossary_key, term_key, if_match):
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     result = client.delete_term(
         catalog_id=catalog_id,
         glossary_key=glossary_key,
@@ -1738,7 +1742,7 @@ def delete_term_relationship(ctx, from_json, catalog_id, glossary_key, term_key,
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     result = client.delete_term_relationship(
         catalog_id=catalog_id,
         glossary_key=glossary_key,
@@ -1767,7 +1771,7 @@ def expand_tree_for_glossary(ctx, from_json, catalog_id, glossary_key):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     result = client.expand_tree_for_glossary(
         catalog_id=catalog_id,
         glossary_key=glossary_key,
@@ -1797,7 +1801,7 @@ def export_glossary(ctx, from_json, catalog_id, glossary_key, is_relationship_ex
     if is_relationship_exported is not None:
         kwargs['is_relationship_exported'] = is_relationship_exported
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     result = client.export_glossary(
         catalog_id=catalog_id,
         glossary_key=glossary_key,
@@ -1835,7 +1839,7 @@ def get_attribute(ctx, from_json, catalog_id, data_asset_key, entity_key, attrib
     if fields is not None and len(fields) > 0:
         kwargs['fields'] = fields
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     result = client.get_attribute(
         catalog_id=catalog_id,
         data_asset_key=data_asset_key,
@@ -1879,7 +1883,7 @@ def get_attribute_tag(ctx, from_json, catalog_id, data_asset_key, entity_key, at
     if fields is not None and len(fields) > 0:
         kwargs['fields'] = fields
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     result = client.get_attribute_tag(
         catalog_id=catalog_id,
         data_asset_key=data_asset_key,
@@ -1905,7 +1909,7 @@ def get_catalog(ctx, from_json, catalog_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     result = client.get_catalog(
         catalog_id=catalog_id,
         **kwargs
@@ -1938,7 +1942,7 @@ def get_connection(ctx, from_json, catalog_id, data_asset_key, connection_key, f
     if fields is not None and len(fields) > 0:
         kwargs['fields'] = fields
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     result = client.get_connection(
         catalog_id=catalog_id,
         data_asset_key=data_asset_key,
@@ -1969,7 +1973,7 @@ def get_data_asset(ctx, from_json, catalog_id, data_asset_key, fields):
     if fields is not None and len(fields) > 0:
         kwargs['fields'] = fields
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     result = client.get_data_asset(
         catalog_id=catalog_id,
         data_asset_key=data_asset_key,
@@ -2003,7 +2007,7 @@ def get_data_asset_tag(ctx, from_json, catalog_id, data_asset_key, tag_key, fiel
     if fields is not None and len(fields) > 0:
         kwargs['fields'] = fields
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     result = client.get_data_asset_tag(
         catalog_id=catalog_id,
         data_asset_key=data_asset_key,
@@ -2038,7 +2042,7 @@ def get_entity(ctx, from_json, catalog_id, data_asset_key, entity_key, fields):
     if fields is not None and len(fields) > 0:
         kwargs['fields'] = fields
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     result = client.get_entity(
         catalog_id=catalog_id,
         data_asset_key=data_asset_key,
@@ -2077,7 +2081,7 @@ def get_entity_tag(ctx, from_json, catalog_id, data_asset_key, entity_key, tag_k
     if fields is not None and len(fields) > 0:
         kwargs['fields'] = fields
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     result = client.get_entity_tag(
         catalog_id=catalog_id,
         data_asset_key=data_asset_key,
@@ -2113,7 +2117,7 @@ def get_folder(ctx, from_json, catalog_id, data_asset_key, folder_key, fields):
     if fields is not None and len(fields) > 0:
         kwargs['fields'] = fields
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     result = client.get_folder(
         catalog_id=catalog_id,
         data_asset_key=data_asset_key,
@@ -2152,7 +2156,7 @@ def get_folder_tag(ctx, from_json, catalog_id, data_asset_key, folder_key, tag_k
     if fields is not None and len(fields) > 0:
         kwargs['fields'] = fields
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     result = client.get_folder_tag(
         catalog_id=catalog_id,
         data_asset_key=data_asset_key,
@@ -2184,7 +2188,7 @@ def get_glossary(ctx, from_json, catalog_id, glossary_key, fields):
     if fields is not None and len(fields) > 0:
         kwargs['fields'] = fields
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     result = client.get_glossary(
         catalog_id=catalog_id,
         glossary_key=glossary_key,
@@ -2214,7 +2218,7 @@ def get_job(ctx, from_json, catalog_id, job_key, fields):
     if fields is not None and len(fields) > 0:
         kwargs['fields'] = fields
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     result = client.get_job(
         catalog_id=catalog_id,
         job_key=job_key,
@@ -2244,7 +2248,7 @@ def get_job_definition(ctx, from_json, catalog_id, job_definition_key, fields):
     if fields is not None and len(fields) > 0:
         kwargs['fields'] = fields
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     result = client.get_job_definition(
         catalog_id=catalog_id,
         job_definition_key=job_definition_key,
@@ -2278,7 +2282,7 @@ def get_job_execution(ctx, from_json, catalog_id, job_key, job_execution_key, fi
     if fields is not None and len(fields) > 0:
         kwargs['fields'] = fields
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     result = client.get_job_execution(
         catalog_id=catalog_id,
         job_key=job_key,
@@ -2317,7 +2321,7 @@ def get_job_log(ctx, from_json, catalog_id, job_key, job_execution_key, job_log_
     if fields is not None and len(fields) > 0:
         kwargs['fields'] = fields
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     result = client.get_job_log(
         catalog_id=catalog_id,
         job_key=job_key,
@@ -2357,7 +2361,7 @@ def get_job_metrics(ctx, from_json, catalog_id, job_key, job_execution_key, job_
     if fields is not None and len(fields) > 0:
         kwargs['fields'] = fields
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     result = client.get_job_metrics(
         catalog_id=catalog_id,
         job_key=job_key,
@@ -2393,7 +2397,7 @@ def get_term(ctx, from_json, catalog_id, glossary_key, term_key, fields):
     if fields is not None and len(fields) > 0:
         kwargs['fields'] = fields
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     result = client.get_term(
         catalog_id=catalog_id,
         glossary_key=glossary_key,
@@ -2432,7 +2436,7 @@ def get_term_relationship(ctx, from_json, catalog_id, glossary_key, term_key, te
     if fields is not None and len(fields) > 0:
         kwargs['fields'] = fields
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     result = client.get_term_relationship(
         catalog_id=catalog_id,
         glossary_key=glossary_key,
@@ -2464,7 +2468,7 @@ def get_type(ctx, from_json, catalog_id, type_key, fields):
     if fields is not None and len(fields) > 0:
         kwargs['fields'] = fields
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     result = client.get_type(
         catalog_id=catalog_id,
         type_key=type_key,
@@ -2487,7 +2491,7 @@ def get_work_request(ctx, from_json, work_request_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     result = client.get_work_request(
         work_request_id=work_request_id,
         **kwargs
@@ -2519,17 +2523,17 @@ def import_connection(ctx, from_json, catalog_id, data_asset_key, connection_pay
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['connectionPayload'] = connection_payload
+    _details = {}
+    _details['connectionPayload'] = connection_payload
 
     if connection_detail is not None:
-        details['connectionDetail'] = cli_util.parse_json_parameter("connection_detail", connection_detail)
+        _details['connectionDetail'] = cli_util.parse_json_parameter("connection_detail", connection_detail)
 
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     result = client.import_connection(
         catalog_id=catalog_id,
         data_asset_key=data_asset_key,
-        import_connection_details=details,
+        import_connection_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -2558,16 +2562,16 @@ def import_glossary(ctx, from_json, catalog_id, glossary_key, glossary_file_cont
         kwargs['is_relationship_imported'] = is_relationship_imported
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if glossary_file_contents is not None:
-        details['glossaryFileContents'] = glossary_file_contents
+        _details['glossaryFileContents'] = glossary_file_contents
 
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     result = client.import_glossary(
         catalog_id=catalog_id,
         glossary_key=glossary_key,
-        import_glossary_details=details,
+        import_glossary_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -2637,7 +2641,7 @@ def list_attribute_tags(ctx, from_json, all_pages, page_size, catalog_id, data_a
     if page is not None:
         kwargs['page'] = page
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -2759,7 +2763,7 @@ def list_attributes(ctx, from_json, all_pages, page_size, catalog_id, data_asset
     if page is not None:
         kwargs['page'] = page
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -2825,7 +2829,7 @@ def list_catalogs(ctx, from_json, all_pages, page_size, compartment_id, display_
     if sort_by is not None:
         kwargs['sort_by'] = sort_by
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -2916,7 +2920,7 @@ def list_connections(ctx, from_json, all_pages, page_size, catalog_id, data_asse
     if page is not None:
         kwargs['page'] = page
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -3001,7 +3005,7 @@ def list_data_asset_tags(ctx, from_json, all_pages, page_size, catalog_id, data_
     if page is not None:
         kwargs['page'] = page
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -3088,7 +3092,7 @@ def list_data_assets(ctx, from_json, all_pages, page_size, catalog_id, display_n
     if page is not None:
         kwargs['page'] = page
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -3197,7 +3201,7 @@ def list_entities(ctx, from_json, all_pages, page_size, catalog_id, data_asset_k
     if page is not None:
         kwargs['page'] = page
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -3286,7 +3290,7 @@ def list_entity_tags(ctx, from_json, all_pages, page_size, catalog_id, data_asse
     if page is not None:
         kwargs['page'] = page
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -3378,7 +3382,7 @@ def list_folder_tags(ctx, from_json, all_pages, page_size, catalog_id, data_asse
     if page is not None:
         kwargs['page'] = page
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -3481,7 +3485,7 @@ def list_folders(ctx, from_json, all_pages, page_size, catalog_id, data_asset_ke
     if page is not None:
         kwargs['page'] = page
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -3562,7 +3566,7 @@ def list_glossaries(ctx, from_json, all_pages, page_size, catalog_id, display_na
     if page is not None:
         kwargs['page'] = page
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -3655,7 +3659,7 @@ def list_job_definitions(ctx, from_json, all_pages, page_size, catalog_id, displ
     if page is not None:
         kwargs['page'] = page
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -3767,7 +3771,7 @@ def list_job_executions(ctx, from_json, all_pages, page_size, catalog_id, job_ke
     if page is not None:
         kwargs['page'] = page
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -3856,7 +3860,7 @@ def list_job_logs(ctx, from_json, all_pages, page_size, catalog_id, job_key, job
     if page is not None:
         kwargs['page'] = page
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -3963,7 +3967,7 @@ def list_job_metrics(ctx, from_json, all_pages, page_size, catalog_id, job_key, 
     if page is not None:
         kwargs['page'] = page
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -4074,7 +4078,7 @@ def list_jobs(ctx, from_json, all_pages, page_size, catalog_id, display_name, li
     if page is not None:
         kwargs['page'] = page
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -4140,7 +4144,7 @@ def list_tags(ctx, from_json, all_pages, page_size, catalog_id, display_name, li
     if page is not None:
         kwargs['page'] = page
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -4214,7 +4218,7 @@ def list_term_relationships(ctx, from_json, all_pages, page_size, catalog_id, gl
     if page is not None:
         kwargs['page'] = page
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -4302,7 +4306,7 @@ def list_terms(ctx, from_json, all_pages, page_size, catalog_id, glossary_key, d
     if page is not None:
         kwargs['page'] = page
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -4386,7 +4390,7 @@ def list_types(ctx, from_json, all_pages, page_size, catalog_id, name, lifecycle
     if page is not None:
         kwargs['page'] = page
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -4443,7 +4447,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -4500,7 +4504,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -4548,7 +4552,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, pag
     if limit is not None:
         kwargs['limit'] = limit
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -4600,7 +4604,7 @@ def object_stats(ctx, from_json, catalog_id, sort_by, sort_order, limit, page):
     if page is not None:
         kwargs['page'] = page
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     result = client.object_stats(
         catalog_id=catalog_id,
         **kwargs
@@ -4632,19 +4636,19 @@ def parse_connection(ctx, from_json, catalog_id, data_asset_key, connection_deta
         kwargs['connection_key'] = connection_key
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if connection_detail is not None:
-        details['connectionDetail'] = cli_util.parse_json_parameter("connection_detail", connection_detail)
+        _details['connectionDetail'] = cli_util.parse_json_parameter("connection_detail", connection_detail)
 
     if connection_payload is not None:
-        details['connectionPayload'] = connection_payload
+        _details['connectionPayload'] = connection_payload
 
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     result = client.parse_connection(
         catalog_id=catalog_id,
         data_asset_key=data_asset_key,
-        parse_connection_details=details,
+        parse_connection_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -4690,15 +4694,15 @@ def search_criteria(ctx, from_json, catalog_id, query_parameterconflict, display
         kwargs['page'] = page
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if query_parameterconflict is not None:
-        details['query'] = query_parameterconflict
+        _details['query'] = query_parameterconflict
 
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     result = client.search_criteria(
         catalog_id=catalog_id,
-        search_criteria_details=details,
+        search_criteria_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -4726,7 +4730,7 @@ def test_connection(ctx, from_json, catalog_id, data_asset_key, connection_key):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     result = client.test_connection(
         catalog_id=catalog_id,
         data_asset_key=data_asset_key,
@@ -4782,48 +4786,48 @@ def update_attribute(ctx, from_json, force, catalog_id, data_asset_key, entity_k
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
     if external_data_type is not None:
-        details['externalDataType'] = external_data_type
+        _details['externalDataType'] = external_data_type
 
     if is_incremental_data is not None:
-        details['isIncrementalData'] = is_incremental_data
+        _details['isIncrementalData'] = is_incremental_data
 
     if is_nullable is not None:
-        details['isNullable'] = is_nullable
+        _details['isNullable'] = is_nullable
 
     if length is not None:
-        details['length'] = length
+        _details['length'] = length
 
     if position is not None:
-        details['position'] = position
+        _details['position'] = position
 
     if precision is not None:
-        details['precision'] = precision
+        _details['precision'] = precision
 
     if scale is not None:
-        details['scale'] = scale
+        _details['scale'] = scale
 
     if time_external is not None:
-        details['timeExternal'] = time_external
+        _details['timeExternal'] = time_external
 
     if properties is not None:
-        details['properties'] = cli_util.parse_json_parameter("properties", properties)
+        _details['properties'] = cli_util.parse_json_parameter("properties", properties)
 
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     result = client.update_attribute(
         catalog_id=catalog_id,
         data_asset_key=data_asset_key,
         entity_key=entity_key,
         attribute_key=attribute_key,
-        update_attribute_details=details,
+        update_attribute_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -4855,21 +4859,21 @@ def update_catalog(ctx, from_json, force, catalog_id, display_name, freeform_tag
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     result = client.update_catalog(
         catalog_id=catalog_id,
-        update_catalog_details=details,
+        update_catalog_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -4911,29 +4915,29 @@ def update_connection(ctx, from_json, force, catalog_id, data_asset_key, connect
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if properties is not None:
-        details['properties'] = cli_util.parse_json_parameter("properties", properties)
+        _details['properties'] = cli_util.parse_json_parameter("properties", properties)
 
     if enc_properties is not None:
-        details['encProperties'] = cli_util.parse_json_parameter("enc_properties", enc_properties)
+        _details['encProperties'] = cli_util.parse_json_parameter("enc_properties", enc_properties)
 
     if is_default is not None:
-        details['isDefault'] = is_default
+        _details['isDefault'] = is_default
 
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     result = client.update_connection(
         catalog_id=catalog_id,
         data_asset_key=data_asset_key,
         connection_key=connection_key,
-        update_connection_details=details,
+        update_connection_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -4969,22 +4973,22 @@ def update_data_asset(ctx, from_json, force, catalog_id, data_asset_key, display
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
     if properties is not None:
-        details['properties'] = cli_util.parse_json_parameter("properties", properties)
+        _details['properties'] = cli_util.parse_json_parameter("properties", properties)
 
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     result = client.update_data_asset(
         catalog_id=catalog_id,
         data_asset_key=data_asset_key,
-        update_data_asset_details=details,
+        update_data_asset_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -5030,41 +5034,41 @@ def update_entity(ctx, from_json, force, catalog_id, data_asset_key, entity_key,
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
     if time_external is not None:
-        details['timeExternal'] = time_external
+        _details['timeExternal'] = time_external
 
     if is_logical is not None:
-        details['isLogical'] = is_logical
+        _details['isLogical'] = is_logical
 
     if is_partition is not None:
-        details['isPartition'] = is_partition
+        _details['isPartition'] = is_partition
 
     if folder_key is not None:
-        details['folderKey'] = folder_key
+        _details['folderKey'] = folder_key
 
     if harvest_status is not None:
-        details['harvestStatus'] = harvest_status
+        _details['harvestStatus'] = harvest_status
 
     if last_job_key is not None:
-        details['lastJobKey'] = last_job_key
+        _details['lastJobKey'] = last_job_key
 
     if properties is not None:
-        details['properties'] = cli_util.parse_json_parameter("properties", properties)
+        _details['properties'] = cli_util.parse_json_parameter("properties", properties)
 
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     result = client.update_entity(
         catalog_id=catalog_id,
         data_asset_key=data_asset_key,
         entity_key=entity_key,
-        update_entity_details=details,
+        update_entity_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -5108,35 +5112,35 @@ def update_folder(ctx, from_json, force, catalog_id, data_asset_key, folder_key,
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
     if parent_folder_key is not None:
-        details['parentFolderKey'] = parent_folder_key
+        _details['parentFolderKey'] = parent_folder_key
 
     if properties is not None:
-        details['properties'] = cli_util.parse_json_parameter("properties", properties)
+        _details['properties'] = cli_util.parse_json_parameter("properties", properties)
 
     if time_external is not None:
-        details['timeExternal'] = time_external
+        _details['timeExternal'] = time_external
 
     if harvest_status is not None:
-        details['harvestStatus'] = harvest_status
+        _details['harvestStatus'] = harvest_status
 
     if last_job_key is not None:
-        details['lastJobKey'] = last_job_key
+        _details['lastJobKey'] = last_job_key
 
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     result = client.update_folder(
         catalog_id=catalog_id,
         data_asset_key=data_asset_key,
         folder_key=folder_key,
-        update_folder_details=details,
+        update_folder_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -5168,25 +5172,25 @@ def update_glossary(ctx, from_json, catalog_id, glossary_key, display_name, desc
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
     if owner is not None:
-        details['owner'] = owner
+        _details['owner'] = owner
 
     if workflow_status is not None:
-        details['workflowStatus'] = workflow_status
+        _details['workflowStatus'] = workflow_status
 
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     result = client.update_glossary(
         catalog_id=catalog_id,
         glossary_key=glossary_key,
-        update_glossary_details=details,
+        update_glossary_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -5220,31 +5224,31 @@ def update_job(ctx, from_json, catalog_id, job_key, display_name, description, s
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
     if schedule_cron_expression is not None:
-        details['scheduleCronExpression'] = schedule_cron_expression
+        _details['scheduleCronExpression'] = schedule_cron_expression
 
     if time_schedule_begin is not None:
-        details['timeScheduleBegin'] = time_schedule_begin
+        _details['timeScheduleBegin'] = time_schedule_begin
 
     if time_schedule_end is not None:
-        details['timeScheduleEnd'] = time_schedule_end
+        _details['timeScheduleEnd'] = time_schedule_end
 
     if connection_key is not None:
-        details['connectionKey'] = connection_key
+        _details['connectionKey'] = connection_key
 
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     result = client.update_job(
         catalog_id=catalog_id,
         job_key=job_key,
-        update_job_details=details,
+        update_job_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -5285,37 +5289,37 @@ def update_job_definition(ctx, from_json, force, catalog_id, job_definition_key,
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if is_incremental is not None:
-        details['isIncremental'] = is_incremental
+        _details['isIncremental'] = is_incremental
 
     if data_asset_key is not None:
-        details['dataAssetKey'] = data_asset_key
+        _details['dataAssetKey'] = data_asset_key
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
     if connection_key is not None:
-        details['connectionKey'] = connection_key
+        _details['connectionKey'] = connection_key
 
     if is_sample_data_extracted is not None:
-        details['isSampleDataExtracted'] = is_sample_data_extracted
+        _details['isSampleDataExtracted'] = is_sample_data_extracted
 
     if sample_data_size_in_mbs is not None:
-        details['sampleDataSizeInMBs'] = sample_data_size_in_mbs
+        _details['sampleDataSizeInMBs'] = sample_data_size_in_mbs
 
     if properties is not None:
-        details['properties'] = cli_util.parse_json_parameter("properties", properties)
+        _details['properties'] = cli_util.parse_json_parameter("properties", properties)
 
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     result = client.update_job_definition(
         catalog_id=catalog_id,
         job_definition_key=job_definition_key,
-        update_job_definition_details=details,
+        update_job_definition_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -5352,29 +5356,29 @@ def update_term(ctx, from_json, catalog_id, glossary_key, term_key, display_name
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
     if parent_term_key is not None:
-        details['parentTermKey'] = parent_term_key
+        _details['parentTermKey'] = parent_term_key
 
     if owner is not None:
-        details['owner'] = owner
+        _details['owner'] = owner
 
     if workflow_status is not None:
-        details['workflowStatus'] = workflow_status
+        _details['workflowStatus'] = workflow_status
 
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     result = client.update_term(
         catalog_id=catalog_id,
         glossary_key=glossary_key,
         term_key=term_key,
-        update_term_details=details,
+        update_term_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -5412,21 +5416,21 @@ def update_term_relationship(ctx, from_json, catalog_id, glossary_key, term_key,
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     result = client.update_term_relationship(
         catalog_id=catalog_id,
         glossary_key=glossary_key,
         term_key=term_key,
         term_relationship_key=term_relationship_key,
-        update_term_relationship_details=details,
+        update_term_relationship_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -5460,18 +5464,18 @@ def upload_credentials(ctx, from_json, catalog_id, data_asset_key, connection_ke
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['credentialPayload'] = credential_payload
+    _details = {}
+    _details['credentialPayload'] = credential_payload
 
     if connection_detail is not None:
-        details['connectionDetail'] = cli_util.parse_json_parameter("connection_detail", connection_detail)
+        _details['connectionDetail'] = cli_util.parse_json_parameter("connection_detail", connection_detail)
 
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     result = client.upload_credentials(
         catalog_id=catalog_id,
         data_asset_key=data_asset_key,
         connection_key=connection_key,
-        upload_credentials_details=details,
+        upload_credentials_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -5503,7 +5507,7 @@ def users(ctx, from_json, catalog_id, sort_by, sort_order, limit, page):
     if page is not None:
         kwargs['page'] = page
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     result = client.users(
         catalog_id=catalog_id,
         **kwargs
@@ -5532,19 +5536,19 @@ def validate_connection(ctx, from_json, catalog_id, data_asset_key, connection_d
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if connection_detail is not None:
-        details['connectionDetail'] = cli_util.parse_json_parameter("connection_detail", connection_detail)
+        _details['connectionDetail'] = cli_util.parse_json_parameter("connection_detail", connection_detail)
 
     if connection_payload is not None:
-        details['connectionPayload'] = connection_payload
+        _details['connectionPayload'] = connection_payload
 
-    client = cli_util.build_client('data_catalog', ctx)
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     result = client.validate_connection(
         catalog_id=catalog_id,
         data_asset_key=data_asset_key,
-        validate_connection_details=details,
+        validate_connection_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)

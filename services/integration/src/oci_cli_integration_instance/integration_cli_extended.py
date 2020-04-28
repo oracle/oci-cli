@@ -1,5 +1,6 @@
 # coding: utf-8
-# Copyright (c) 2016, 2019, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2020, Oracle and/or its affiliates.  All rights reserved.
+# This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 from __future__ import print_function
 import click
@@ -22,6 +23,32 @@ def change_integration_instance_compartment_extended(ctx, **kwargs):
         kwargs['integration_instance_id'] = kwargs['id']
         kwargs.pop('id')
     ctx.invoke(integrationinstance_cli.change_integration_instance_compartment, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(integrationinstance_cli.start_integration_instance, params_to_exclude=['integration_instance_id'])
+@integrationinstance_cli.integration_instance_group.command(name=cli_util.override('integration.start_integration_instance.command_name', 'start'), help=integrationinstance_cli.start_integration_instance.help)
+@cli_util.option('--id', required=True, help=u"""Unique Integration Instance identifier.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def start_integration_instance_extended(ctx, **kwargs):
+    if 'id' in kwargs:
+        kwargs['integration_instance_id'] = kwargs['id']
+        kwargs.pop('id')
+    ctx.invoke(integrationinstance_cli.start_integration_instance, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(integrationinstance_cli.stop_integration_instance, params_to_exclude=['integration_instance_id'])
+@integrationinstance_cli.integration_instance_group.command(name=cli_util.override('integration.stop_integration_instance.command_name', 'stop'), help=integrationinstance_cli.stop_integration_instance.help)
+@cli_util.option('--id', required=True, help=u"""Unique Integration Instance identifier.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def stop_integration_instance_extended(ctx, **kwargs):
+    if 'id' in kwargs:
+        kwargs['integration_instance_id'] = kwargs['id']
+        kwargs.pop('id')
+    ctx.invoke(integrationinstance_cli.stop_integration_instance, **kwargs)
 
 
 @cli_util.copy_params_from_generated_command(integrationinstance_cli.delete_integration_instance, params_to_exclude=['integration_instance_id'])

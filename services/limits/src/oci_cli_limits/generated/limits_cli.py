@@ -1,5 +1,6 @@
 # coding: utf-8
-# Copyright (c) 2016, 2020, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2020, Oracle and/or its affiliates.  All rights reserved.
+# This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 from __future__ import print_function
 import click
@@ -79,7 +80,7 @@ def get_resource_availability(ctx, from_json, service_name, limit_name, compartm
     if availability_domain is not None:
         kwargs['availability_domain'] = availability_domain
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('limits', ctx)
+    client = cli_util.build_client('limits', 'limits', ctx)
     result = client.get_resource_availability(
         service_name=service_name,
         limit_name=limit_name,
@@ -123,7 +124,7 @@ def list_limit_definitions(ctx, from_json, all_pages, page_size, compartment_id,
     if page is not None:
         kwargs['page'] = page
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('limits', ctx)
+    client = cli_util.build_client('limits', 'limits', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -189,7 +190,7 @@ def list_limit_values(ctx, from_json, all_pages, page_size, compartment_id, serv
     if page is not None:
         kwargs['page'] = page
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('limits', ctx)
+    client = cli_util.build_client('limits', 'limits', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -246,7 +247,7 @@ def list_services(ctx, from_json, all_pages, page_size, compartment_id, sort_by,
     if page is not None:
         kwargs['page'] = page
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('limits', ctx)
+    client = cli_util.build_client('limits', 'limits', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size

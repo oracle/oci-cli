@@ -1,5 +1,6 @@
 # coding: utf-8
-# Copyright (c) 2016, 2019, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2020, Oracle and/or its affiliates.  All rights reserved.
+# This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 import sys
 import click
@@ -63,7 +64,7 @@ def invoke_function_extended(ctx, **kwargs):
     # Make a get call so we can grab the endpoint so the user doesn't have to specify --endpoint.
     get_kwargs = {}
     get_kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('functions_management', ctx)
+    client = cli_util.build_client('functions', 'functions_management', ctx)
     result = client.get_function(function_id=kwargs['function_id'], **get_kwargs)
     ctx.obj['endpoint'] = result.data.invoke_endpoint
 
@@ -76,7 +77,7 @@ def invoke_function_extended(ctx, **kwargs):
     del kwargs['file']
     if 'from_json' in kwargs:
         del kwargs['from_json']
-    client = cli_util.build_client('functions_invoke', ctx)
+    client = cli_util.build_client('functions', 'functions_invoke', ctx)
     result = client.invoke_function(**kwargs)
 
     # If outputting to stdout we don't want to print a progress bar because it will get mixed up with the output

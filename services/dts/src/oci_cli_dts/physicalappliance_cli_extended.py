@@ -1,5 +1,6 @@
 # coding: utf-8
-# Copyright (c) 2016, 2019, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2020, Oracle and/or its affiliates.  All rights reserved.
+# This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 from __future__ import print_function
 
@@ -79,7 +80,7 @@ def pa_initialize_authentication(ctx, from_json, job_id, appliance_label, applia
 
     click.echo("Retrieving the Appliance serial id from Oracle Cloud Infrastructure")
     # Get the Transfer Appliance serial number from the information received from CCP
-    client = cli_util.build_client('transfer_appliance', ctx)
+    client = cli_util.build_client('dts', 'transfer_appliance', ctx)
     result = client.get_transfer_appliance(
         id=job_id,
         transfer_appliance_label=appliance_label,
@@ -157,7 +158,7 @@ def pa_unregister(ctx, from_json, appliance_profile):
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
 def pa_configure_encryption(ctx, from_json, appliance_profile, job_id, appliance_label):
-    client = cli_util.build_client('transfer_appliance', ctx)
+    client = cli_util.build_client('dts', 'transfer_appliance', ctx)
     result = client.get_transfer_appliance(
         id=job_id,
         transfer_appliance_label=appliance_label
@@ -213,7 +214,7 @@ def pa_unlock(ctx, from_json, appliance_profile, job_id, appliance_label):
             sys.exit(-1)
     else:
         click.echo("Retrieving the passphrase from Oracle Cloud Infrastructure")
-        client = cli_util.build_client('transfer_appliance', ctx)
+        client = cli_util.build_client('dts', 'transfer_appliance', ctx)
         passphrase = client.get_transfer_appliance_encryption_passphrase(
             id=job_id,
             transfer_appliance_label=appliance_label
@@ -263,7 +264,7 @@ def pa_show_helper(ctx, from_json, appliance_profile):
 @cli_util.wrap_exceptions
 def pa_finalize(ctx, from_json, appliance_profile, job_id, appliance_label, skip_upload_user_check):
     click.echo("Retrieving the upload summary object name from Oracle Cloud Infrastructure")
-    appliance_client = cli_util.build_client('transfer_appliance', ctx)
+    appliance_client = cli_util.build_client('dts', 'transfer_appliance', ctx)
     physical_appliance_client = create_appliance_client(ctx, appliance_profile)
 
     upload_summary_obj_name = appliance_client.get_transfer_appliance(
@@ -272,7 +273,7 @@ def pa_finalize(ctx, from_json, appliance_profile, job_id, appliance_label, skip
     ).data.upload_status_log_uri
 
     click.echo("Retrieving the upload bucket name from Oracle Cloud Infrastructure")
-    client = cli_util.build_client('transfer_job', ctx)
+    client = cli_util.build_client('dts', 'transfer_job', ctx)
     upload_bucket = client.get_transfer_job(id=job_id).data.upload_bucket_name
 
     if not skip_upload_user_check:
@@ -377,7 +378,7 @@ def validate_upload_user_credentials(ctx, upload_bucket):
                 sys.exit(-1)
             ctx.obj['region'] = region
             ctx.obj['config']['region'] = region
-            object_storage_admin_client = cli_util.build_client('object_storage', ctx)
+            object_storage_admin_client = cli_util.build_client('object_storage', 'object_storage', ctx)
             # A bit hacky but gets the job done. Only two parameters need to be changed to get the upload user context,
             # the profile and the config file. All other parameters remain the same
             upload_user_ctx = ctx

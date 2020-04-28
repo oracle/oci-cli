@@ -1,3 +1,7 @@
+api-gateway, work-request, cancel
+api-gateway, work-request, list
+api-gateway, work-request-error, list
+api-gateway, work-request-log, list
 bv, boot-volume, create
 bv, volume, create
 compute, instance, launch

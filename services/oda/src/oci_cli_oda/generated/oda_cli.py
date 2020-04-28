@@ -1,5 +1,6 @@
 # coding: utf-8
-# Copyright (c) 2016, 2020, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2020, Oracle and/or its affiliates.  All rights reserved.
+# This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 from __future__ import print_function
 import click
@@ -72,16 +73,17 @@ def change_oda_instance_compartment(ctx, from_json, wait_for_state, max_wait_sec
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
 
-    client = cli_util.build_client('oda', ctx)
+    client = cli_util.build_client('oda', 'oda', ctx)
     result = client.change_oda_instance_compartment(
         oda_instance_id=oda_instance_id,
-        change_oda_instance_compartment_details=details,
+        change_oda_instance_compartment_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -128,28 +130,29 @@ def create_oda_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
-    details['shapeName'] = shape_name
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['shapeName'] = shape_name
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('oda', ctx)
+    client = cli_util.build_client('oda', 'oda', ctx)
     result = client.create_oda_instance(
-        create_oda_instance_details=details,
+        create_oda_instance_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -197,12 +200,13 @@ def delete_oda_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('oda', ctx)
+    client = cli_util.build_client('oda', 'oda', ctx)
     result = client.delete_oda_instance(
         oda_instance_id=oda_instance_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -241,7 +245,7 @@ def get_oda_instance(ctx, from_json, oda_instance_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('oda', ctx)
+    client = cli_util.build_client('oda', 'oda', ctx)
     result = client.get_oda_instance(
         oda_instance_id=oda_instance_id,
         **kwargs
@@ -265,7 +269,7 @@ def get_work_request(ctx, from_json, work_request_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('oda', ctx)
+    client = cli_util.build_client('oda', 'oda', ctx)
     result = client.get_work_request(
         work_request_id=work_request_id,
         **kwargs
@@ -317,7 +321,7 @@ def list_oda_instances(ctx, from_json, all_pages, page_size, compartment_id, dis
     if sort_by is not None:
         kwargs['sort_by'] = sort_by
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('oda', ctx)
+    client = cli_util.build_client('oda', 'oda', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -382,7 +386,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('oda', ctx)
+    client = cli_util.build_client('oda', 'oda', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -447,7 +451,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('oda', ctx)
+    client = cli_util.build_client('oda', 'oda', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -512,7 +516,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, oda
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('oda', ctx)
+    client = cli_util.build_client('oda', 'oda', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -558,12 +562,13 @@ def start_oda_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('oda', ctx)
+    client = cli_util.build_client('oda', 'oda', ctx)
     result = client.start_oda_instance(
         oda_instance_id=oda_instance_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -608,12 +613,13 @@ def stop_oda_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('oda', ctx)
+    client = cli_util.build_client('oda', 'oda', ctx)
     result = client.stop_oda_instance(
         oda_instance_id=oda_instance_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -668,27 +674,28 @@ def update_oda_instance(ctx, from_json, force, wait_for_state, max_wait_seconds,
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('oda', ctx)
+    client = cli_util.build_client('oda', 'oda', ctx)
     result = client.update_oda_instance(
         oda_instance_id=oda_instance_id,
-        update_oda_instance_details=details,
+        update_oda_instance_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_oda_instance') and callable(getattr(client, 'get_oda_instance')):
             try:
                 wait_period_kwargs = {}

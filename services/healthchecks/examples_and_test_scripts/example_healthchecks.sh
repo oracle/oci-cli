@@ -1,4 +1,7 @@
 #!/bin/bash
+# Copyright (c) 2016, 2020, Oracle and/or its affiliates.  All rights reserved.
+# This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
+
 # This script provides a basic example of how to use the DNS service in the CLI. The two variables at the beginning of the script must be specified accordingly:
 #
 #   * COMPARTMENT_ID: The OCID of the compartment you want to use HealthChecks with

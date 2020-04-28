@@ -1,5 +1,6 @@
 # coding: utf-8
-# Copyright (c) 2016, 2020, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2020, Oracle and/or its affiliates.  All rights reserved.
+# This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 from __future__ import print_function
 import click
@@ -262,13 +263,14 @@ def accept_recommendations(ctx, from_json, wait_for_state, max_wait_seconds, wai
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('waas', ctx)
+    client = cli_util.build_client('waas', 'waas', ctx)
     result = client.accept_recommendations(
         waas_policy_id=waas_policy_id,
         protection_rule_keys=cli_util.parse_json_parameter("protection_rule_keys", protection_rule_keys),
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -311,7 +313,7 @@ def cancel_work_request(ctx, from_json, work_request_id, if_match):
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('waas', ctx)
+    client = cli_util.build_client('waas', 'waas', ctx)
     result = client.cancel_work_request(
         work_request_id=work_request_id,
         **kwargs
@@ -338,13 +340,13 @@ def change_address_list_compartment(ctx, from_json, address_list_id, compartment
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
 
-    client = cli_util.build_client('waas', ctx)
+    client = cli_util.build_client('waas', 'waas', ctx)
     result = client.change_address_list_compartment(
         address_list_id=address_list_id,
-        change_address_list_compartment_details=details,
+        change_address_list_compartment_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -369,13 +371,13 @@ def change_certificate_compartment(ctx, from_json, certificate_id, compartment_i
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
 
-    client = cli_util.build_client('waas', ctx)
+    client = cli_util.build_client('waas', 'waas', ctx)
     result = client.change_certificate_compartment(
         certificate_id=certificate_id,
-        change_certificate_compartment_details=details,
+        change_certificate_compartment_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -400,13 +402,13 @@ def change_custom_protection_rule_compartment(ctx, from_json, custom_protection_
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
 
-    client = cli_util.build_client('waas', ctx)
+    client = cli_util.build_client('waas', 'waas', ctx)
     result = client.change_custom_protection_rule_compartment(
         custom_protection_rule_id=custom_protection_rule_id,
-        change_custom_protection_rule_compartment_details=details,
+        change_custom_protection_rule_compartment_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -431,13 +433,13 @@ def change_waas_policy_compartment(ctx, from_json, waas_policy_id, compartment_i
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
 
-    client = cli_util.build_client('waas', ctx)
+    client = cli_util.build_client('waas', 'waas', ctx)
     result = client.change_waas_policy_compartment(
         waas_policy_id=waas_policy_id,
-        change_waas_policy_compartment_details=details,
+        change_waas_policy_compartment_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -466,23 +468,24 @@ def create_address_list(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
-    details['displayName'] = display_name
-    details['addresses'] = cli_util.parse_json_parameter("addresses", addresses)
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['displayName'] = display_name
+    _details['addresses'] = cli_util.parse_json_parameter("addresses", addresses)
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('waas', ctx)
+    client = cli_util.build_client('waas', 'waas', ctx)
     result = client.create_address_list(
-        create_address_list_details=details,
+        create_address_list_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_address_list') and callable(getattr(client, 'get_address_list')):
             try:
                 wait_period_kwargs = {}
@@ -538,29 +541,30 @@ def create_certificate(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
-    details['certificateData'] = certificate_data
-    details['privateKeyData'] = private_key_data
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['certificateData'] = certificate_data
+    _details['privateKeyData'] = private_key_data
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if is_trust_verification_disabled is not None:
-        details['isTrustVerificationDisabled'] = is_trust_verification_disabled
+        _details['isTrustVerificationDisabled'] = is_trust_verification_disabled
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('waas', ctx)
+    client = cli_util.build_client('waas', 'waas', ctx)
     result = client.create_certificate(
-        create_certificate_details=details,
+        create_certificate_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_certificate') and callable(getattr(client, 'get_certificate')):
             try:
                 wait_period_kwargs = {}
@@ -627,26 +631,27 @@ def create_custom_protection_rule(ctx, from_json, wait_for_state, max_wait_secon
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
-    details['displayName'] = display_name
-    details['template'] = template
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['displayName'] = display_name
+    _details['template'] = template
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('waas', ctx)
+    client = cli_util.build_client('waas', 'waas', ctx)
     result = client.create_custom_protection_rule(
-        create_custom_protection_rule_details=details,
+        create_custom_protection_rule_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_custom_protection_rule') and callable(getattr(client, 'get_custom_protection_rule')):
             try:
                 wait_period_kwargs = {}
@@ -715,40 +720,41 @@ def create_waas_policy(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
-    details['domain'] = domain
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['domain'] = domain
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if additional_domains is not None:
-        details['additionalDomains'] = cli_util.parse_json_parameter("additional_domains", additional_domains)
+        _details['additionalDomains'] = cli_util.parse_json_parameter("additional_domains", additional_domains)
 
     if origins is not None:
-        details['origins'] = cli_util.parse_json_parameter("origins", origins)
+        _details['origins'] = cli_util.parse_json_parameter("origins", origins)
 
     if origin_groups is not None:
-        details['originGroups'] = cli_util.parse_json_parameter("origin_groups", origin_groups)
+        _details['originGroups'] = cli_util.parse_json_parameter("origin_groups", origin_groups)
 
     if policy_config is not None:
-        details['policyConfig'] = cli_util.parse_json_parameter("policy_config", policy_config)
+        _details['policyConfig'] = cli_util.parse_json_parameter("policy_config", policy_config)
 
     if waf_config is not None:
-        details['wafConfig'] = cli_util.parse_json_parameter("waf_config", waf_config)
+        _details['wafConfig'] = cli_util.parse_json_parameter("waf_config", waf_config)
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('waas', ctx)
+    client = cli_util.build_client('waas', 'waas', ctx)
     result = client.create_waas_policy(
-        create_waas_policy_details=details,
+        create_waas_policy_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -794,12 +800,13 @@ def delete_address_list(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('waas', ctx)
+    client = cli_util.build_client('waas', 'waas', ctx)
     result = client.delete_address_list(
         address_list_id=address_list_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_address_list') and callable(getattr(client, 'get_address_list')):
             try:
                 wait_period_kwargs = {}
@@ -857,12 +864,13 @@ def delete_certificate(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('waas', ctx)
+    client = cli_util.build_client('waas', 'waas', ctx)
     result = client.delete_certificate(
         certificate_id=certificate_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_certificate') and callable(getattr(client, 'get_certificate')):
             try:
                 wait_period_kwargs = {}
@@ -920,12 +928,13 @@ def delete_custom_protection_rule(ctx, from_json, wait_for_state, max_wait_secon
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('waas', ctx)
+    client = cli_util.build_client('waas', 'waas', ctx)
     result = client.delete_custom_protection_rule(
         custom_protection_rule_id=custom_protection_rule_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_custom_protection_rule') and callable(getattr(client, 'get_custom_protection_rule')):
             try:
                 wait_period_kwargs = {}
@@ -983,12 +992,13 @@ def delete_waas_policy(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('waas', ctx)
+    client = cli_util.build_client('waas', 'waas', ctx)
     result = client.delete_waas_policy(
         waas_policy_id=waas_policy_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -1027,7 +1037,7 @@ def get_address_list(ctx, from_json, address_list_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('waas', ctx)
+    client = cli_util.build_client('waas', 'waas', ctx)
     result = client.get_address_list(
         address_list_id=address_list_id,
         **kwargs
@@ -1049,7 +1059,7 @@ def get_certificate(ctx, from_json, certificate_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('waas', ctx)
+    client = cli_util.build_client('waas', 'waas', ctx)
     result = client.get_certificate(
         certificate_id=certificate_id,
         **kwargs
@@ -1071,7 +1081,7 @@ def get_custom_protection_rule(ctx, from_json, custom_protection_rule_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('waas', ctx)
+    client = cli_util.build_client('waas', 'waas', ctx)
     result = client.get_custom_protection_rule(
         custom_protection_rule_id=custom_protection_rule_id,
         **kwargs
@@ -1093,7 +1103,7 @@ def get_device_fingerprint_challenge(ctx, from_json, waas_policy_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('waas', ctx)
+    client = cli_util.build_client('waas', 'waas', ctx)
     result = client.get_device_fingerprint_challenge(
         waas_policy_id=waas_policy_id,
         **kwargs
@@ -1115,7 +1125,7 @@ def get_human_interaction_challenge(ctx, from_json, waas_policy_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('waas', ctx)
+    client = cli_util.build_client('waas', 'waas', ctx)
     result = client.get_human_interaction_challenge(
         waas_policy_id=waas_policy_id,
         **kwargs
@@ -1137,7 +1147,7 @@ def get_js_challenge(ctx, from_json, waas_policy_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('waas', ctx)
+    client = cli_util.build_client('waas', 'waas', ctx)
     result = client.get_js_challenge(
         waas_policy_id=waas_policy_id,
         **kwargs
@@ -1159,7 +1169,7 @@ def get_policy_config(ctx, from_json, waas_policy_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('waas', ctx)
+    client = cli_util.build_client('waas', 'waas', ctx)
     result = client.get_policy_config(
         waas_policy_id=waas_policy_id,
         **kwargs
@@ -1185,7 +1195,7 @@ def get_protection_rule(ctx, from_json, waas_policy_id, protection_rule_key):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('waas', ctx)
+    client = cli_util.build_client('waas', 'waas', ctx)
     result = client.get_protection_rule(
         waas_policy_id=waas_policy_id,
         protection_rule_key=protection_rule_key,
@@ -1208,7 +1218,7 @@ def get_protection_settings(ctx, from_json, waas_policy_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('waas', ctx)
+    client = cli_util.build_client('waas', 'waas', ctx)
     result = client.get_protection_settings(
         waas_policy_id=waas_policy_id,
         **kwargs
@@ -1230,7 +1240,7 @@ def get_waas_policy(ctx, from_json, waas_policy_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('waas', ctx)
+    client = cli_util.build_client('waas', 'waas', ctx)
     result = client.get_waas_policy(
         waas_policy_id=waas_policy_id,
         **kwargs
@@ -1252,7 +1262,7 @@ def get_waf_address_rate_limiting(ctx, from_json, waas_policy_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('waas', ctx)
+    client = cli_util.build_client('waas', 'waas', ctx)
     result = client.get_waf_address_rate_limiting(
         waas_policy_id=waas_policy_id,
         **kwargs
@@ -1274,7 +1284,7 @@ def get_waf_config(ctx, from_json, waas_policy_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('waas', ctx)
+    client = cli_util.build_client('waas', 'waas', ctx)
     result = client.get_waf_config(
         waas_policy_id=waas_policy_id,
         **kwargs
@@ -1296,7 +1306,7 @@ def get_work_request(ctx, from_json, work_request_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('waas', ctx)
+    client = cli_util.build_client('waas', 'waas', ctx)
     result = client.get_work_request(
         work_request_id=work_request_id,
         **kwargs
@@ -1329,7 +1339,7 @@ def list_access_rules(ctx, from_json, all_pages, page_size, waas_policy_id, limi
     if page is not None:
         kwargs['page'] = page
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('waas', ctx)
+    client = cli_util.build_client('waas', 'waas', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -1398,7 +1408,7 @@ def list_address_lists(ctx, from_json, all_pages, page_size, compartment_id, lim
     if time_created_less_than is not None:
         kwargs['time_created_less_than'] = time_created_less_than
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('waas', ctx)
+    client = cli_util.build_client('waas', 'waas', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -1449,7 +1459,7 @@ def list_caching_rules(ctx, from_json, all_pages, page_size, waas_policy_id, lim
     if page is not None:
         kwargs['page'] = page
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('waas', ctx)
+    client = cli_util.build_client('waas', 'waas', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -1502,7 +1512,7 @@ def list_captchas(ctx, from_json, all_pages, page_size, waas_policy_id, limit, p
     if page is not None:
         kwargs['page'] = page
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('waas', ctx)
+    client = cli_util.build_client('waas', 'waas', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -1571,7 +1581,7 @@ def list_certificates(ctx, from_json, all_pages, page_size, compartment_id, limi
     if time_created_less_than is not None:
         kwargs['time_created_less_than'] = time_created_less_than
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('waas', ctx)
+    client = cli_util.build_client('waas', 'waas', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -1640,7 +1650,7 @@ def list_custom_protection_rules(ctx, from_json, all_pages, page_size, compartme
     if time_created_less_than is not None:
         kwargs['time_created_less_than'] = time_created_less_than
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('waas', ctx)
+    client = cli_util.build_client('waas', 'waas', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -1693,7 +1703,7 @@ def list_edge_subnets(ctx, from_json, all_pages, page_size, limit, page, sort_by
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('waas', ctx)
+    client = cli_util.build_client('waas', 'waas', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -1743,7 +1753,7 @@ def list_good_bots(ctx, from_json, all_pages, page_size, waas_policy_id, limit, 
     if page is not None:
         kwargs['page'] = page
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('waas', ctx)
+    client = cli_util.build_client('waas', 'waas', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -1800,7 +1810,7 @@ def list_protection_rules(ctx, from_json, all_pages, page_size, waas_policy_id, 
     if action is not None and len(action) > 0:
         kwargs['action'] = action
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('waas', ctx)
+    client = cli_util.build_client('waas', 'waas', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -1856,7 +1866,7 @@ def list_recommendations(ctx, from_json, all_pages, page_size, waas_policy_id, r
     if page is not None:
         kwargs['page'] = page
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('waas', ctx)
+    client = cli_util.build_client('waas', 'waas', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -1907,7 +1917,7 @@ def list_threat_feeds(ctx, from_json, all_pages, page_size, waas_policy_id, limi
     if page is not None:
         kwargs['page'] = page
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('waas', ctx)
+    client = cli_util.build_client('waas', 'waas', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -1976,7 +1986,7 @@ def list_waas_policies(ctx, from_json, all_pages, page_size, compartment_id, lim
     if time_created_less_than is not None:
         kwargs['time_created_less_than'] = time_created_less_than
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('waas', ctx)
+    client = cli_util.build_client('waas', 'waas', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -2033,7 +2043,7 @@ def list_waas_policy_custom_protection_rules(ctx, from_json, all_pages, page_siz
     if action is not None and len(action) > 0:
         kwargs['action'] = action
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('waas', ctx)
+    client = cli_util.build_client('waas', 'waas', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -2093,7 +2103,7 @@ def list_waf_blocked_requests(ctx, from_json, all_pages, page_size, waas_policy_
     if waf_feature is not None and len(waf_feature) > 0:
         kwargs['waf_feature'] = waf_feature
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('waas', ctx)
+    client = cli_util.build_client('waas', 'waas', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -2201,7 +2211,7 @@ def list_waf_logs(ctx, from_json, all_pages, page_size, waas_policy_id, limit, p
     if protection_rule_key is not None and len(protection_rule_key) > 0:
         kwargs['protection_rule_key'] = protection_rule_key
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('waas', ctx)
+    client = cli_util.build_client('waas', 'waas', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -2258,7 +2268,7 @@ def list_waf_requests(ctx, from_json, all_pages, page_size, waas_policy_id, time
     if page is not None:
         kwargs['page'] = page
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('waas', ctx)
+    client = cli_util.build_client('waas', 'waas', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -2315,7 +2325,7 @@ def list_waf_traffic(ctx, from_json, all_pages, page_size, waas_policy_id, time_
     if page is not None:
         kwargs['page'] = page
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('waas', ctx)
+    client = cli_util.build_client('waas', 'waas', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -2366,7 +2376,7 @@ def list_whitelists(ctx, from_json, all_pages, page_size, waas_policy_id, limit,
     if page is not None:
         kwargs['page'] = page
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('waas', ctx)
+    client = cli_util.build_client('waas', 'waas', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -2421,7 +2431,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, waas_policy_id, com
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('waas', ctx)
+    client = cli_util.build_client('waas', 'waas', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -2472,18 +2482,19 @@ def purge_cache(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if resources is not None:
-        details['resources'] = cli_util.parse_json_parameter("resources", resources)
+        _details['resources'] = cli_util.parse_json_parameter("resources", resources)
 
-    client = cli_util.build_client('waas', ctx)
+    client = cli_util.build_client('waas', 'waas', ctx)
     result = client.purge_cache(
         waas_policy_id=waas_policy_id,
-        purge_cache=details,
+        purge_cache=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -2537,13 +2548,14 @@ def update_access_rules(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('waas', ctx)
+    client = cli_util.build_client('waas', 'waas', ctx)
     result = client.update_access_rules(
         waas_policy_id=waas_policy_id,
         access_rules=cli_util.parse_json_parameter("access_rules", access_rules),
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -2602,27 +2614,28 @@ def update_address_list(ctx, from_json, force, wait_for_state, max_wait_seconds,
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if addresses is not None:
-        details['addresses'] = cli_util.parse_json_parameter("addresses", addresses)
+        _details['addresses'] = cli_util.parse_json_parameter("addresses", addresses)
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('waas', ctx)
+    client = cli_util.build_client('waas', 'waas', ctx)
     result = client.update_address_list(
         address_list_id=address_list_id,
-        update_address_list_details=details,
+        update_address_list_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_address_list') and callable(getattr(client, 'get_address_list')):
             try:
                 wait_period_kwargs = {}
@@ -2674,13 +2687,14 @@ def update_caching_rules(ctx, from_json, wait_for_state, max_wait_seconds, wait_
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('waas', ctx)
+    client = cli_util.build_client('waas', 'waas', ctx)
     result = client.update_caching_rules(
         waas_policy_id=waas_policy_id,
         caching_rules_details=cli_util.parse_json_parameter("caching_rules_details", caching_rules_details),
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -2732,13 +2746,14 @@ def update_captchas(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('waas', ctx)
+    client = cli_util.build_client('waas', 'waas', ctx)
     result = client.update_captchas(
         waas_policy_id=waas_policy_id,
         captchas=cli_util.parse_json_parameter("captchas", captchas),
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -2796,24 +2811,25 @@ def update_certificate(ctx, from_json, force, wait_for_state, max_wait_seconds, 
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('waas', ctx)
+    client = cli_util.build_client('waas', 'waas', ctx)
     result = client.update_certificate(
         certificate_id=certificate_id,
-        update_certificate_details=details,
+        update_certificate_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_certificate') and callable(getattr(client, 'get_certificate')):
             try:
                 wait_period_kwargs = {}
@@ -2889,30 +2905,31 @@ def update_custom_protection_rule(ctx, from_json, force, wait_for_state, max_wai
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
     if template is not None:
-        details['template'] = template
+        _details['template'] = template
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('waas', ctx)
+    client = cli_util.build_client('waas', 'waas', ctx)
     result = client.update_custom_protection_rule(
         custom_protection_rule_id=custom_protection_rule_id,
-        update_custom_protection_rule_details=details,
+        update_custom_protection_rule_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_custom_protection_rule') and callable(getattr(client, 'get_custom_protection_rule')):
             try:
                 wait_period_kwargs = {}
@@ -2975,37 +2992,38 @@ def update_device_fingerprint_challenge(ctx, from_json, force, wait_for_state, m
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['isEnabled'] = is_enabled
+    _details = {}
+    _details['isEnabled'] = is_enabled
 
     if action is not None:
-        details['action'] = action
+        _details['action'] = action
 
     if failure_threshold is not None:
-        details['failureThreshold'] = failure_threshold
+        _details['failureThreshold'] = failure_threshold
 
     if action_expiration_in_seconds is not None:
-        details['actionExpirationInSeconds'] = action_expiration_in_seconds
+        _details['actionExpirationInSeconds'] = action_expiration_in_seconds
 
     if failure_threshold_expiration_in_seconds is not None:
-        details['failureThresholdExpirationInSeconds'] = failure_threshold_expiration_in_seconds
+        _details['failureThresholdExpirationInSeconds'] = failure_threshold_expiration_in_seconds
 
     if max_address_count is not None:
-        details['maxAddressCount'] = max_address_count
+        _details['maxAddressCount'] = max_address_count
 
     if max_address_count_expiration_in_seconds is not None:
-        details['maxAddressCountExpirationInSeconds'] = max_address_count_expiration_in_seconds
+        _details['maxAddressCountExpirationInSeconds'] = max_address_count_expiration_in_seconds
 
     if challenge_settings is not None:
-        details['challengeSettings'] = cli_util.parse_json_parameter("challenge_settings", challenge_settings)
+        _details['challengeSettings'] = cli_util.parse_json_parameter("challenge_settings", challenge_settings)
 
-    client = cli_util.build_client('waas', ctx)
+    client = cli_util.build_client('waas', 'waas', ctx)
     result = client.update_device_fingerprint_challenge(
         waas_policy_id=waas_policy_id,
-        update_device_fingerprint_challenge_details=details,
+        update_device_fingerprint_challenge_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -3053,13 +3071,14 @@ def update_good_bots(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('waas', ctx)
+    client = cli_util.build_client('waas', 'waas', ctx)
     result = client.update_good_bots(
         waas_policy_id=waas_policy_id,
         good_bots=cli_util.parse_json_parameter("good_bots", good_bots),
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -3120,43 +3139,44 @@ def update_human_interaction_challenge(ctx, from_json, force, wait_for_state, ma
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['isEnabled'] = is_enabled
+    _details = {}
+    _details['isEnabled'] = is_enabled
 
     if action is not None:
-        details['action'] = action
+        _details['action'] = action
 
     if failure_threshold is not None:
-        details['failureThreshold'] = failure_threshold
+        _details['failureThreshold'] = failure_threshold
 
     if action_expiration_in_seconds is not None:
-        details['actionExpirationInSeconds'] = action_expiration_in_seconds
+        _details['actionExpirationInSeconds'] = action_expiration_in_seconds
 
     if failure_threshold_expiration_in_seconds is not None:
-        details['failureThresholdExpirationInSeconds'] = failure_threshold_expiration_in_seconds
+        _details['failureThresholdExpirationInSeconds'] = failure_threshold_expiration_in_seconds
 
     if interaction_threshold is not None:
-        details['interactionThreshold'] = interaction_threshold
+        _details['interactionThreshold'] = interaction_threshold
 
     if recording_period_in_seconds is not None:
-        details['recordingPeriodInSeconds'] = recording_period_in_seconds
+        _details['recordingPeriodInSeconds'] = recording_period_in_seconds
 
     if set_http_header is not None:
-        details['setHttpHeader'] = cli_util.parse_json_parameter("set_http_header", set_http_header)
+        _details['setHttpHeader'] = cli_util.parse_json_parameter("set_http_header", set_http_header)
 
     if challenge_settings is not None:
-        details['challengeSettings'] = cli_util.parse_json_parameter("challenge_settings", challenge_settings)
+        _details['challengeSettings'] = cli_util.parse_json_parameter("challenge_settings", challenge_settings)
 
     if is_nat_enabled is not None:
-        details['isNatEnabled'] = is_nat_enabled
+        _details['isNatEnabled'] = is_nat_enabled
 
-    client = cli_util.build_client('waas', ctx)
+    client = cli_util.build_client('waas', 'waas', ctx)
     result = client.update_human_interaction_challenge(
         waas_policy_id=waas_policy_id,
-        update_human_interaction_challenge_details=details,
+        update_human_interaction_challenge_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -3218,40 +3238,41 @@ def update_js_challenge(ctx, from_json, force, wait_for_state, max_wait_seconds,
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['isEnabled'] = is_enabled
+    _details = {}
+    _details['isEnabled'] = is_enabled
 
     if action is not None:
-        details['action'] = action
+        _details['action'] = action
 
     if failure_threshold is not None:
-        details['failureThreshold'] = failure_threshold
+        _details['failureThreshold'] = failure_threshold
 
     if action_expiration_in_seconds is not None:
-        details['actionExpirationInSeconds'] = action_expiration_in_seconds
+        _details['actionExpirationInSeconds'] = action_expiration_in_seconds
 
     if set_http_header is not None:
-        details['setHttpHeader'] = cli_util.parse_json_parameter("set_http_header", set_http_header)
+        _details['setHttpHeader'] = cli_util.parse_json_parameter("set_http_header", set_http_header)
 
     if challenge_settings is not None:
-        details['challengeSettings'] = cli_util.parse_json_parameter("challenge_settings", challenge_settings)
+        _details['challengeSettings'] = cli_util.parse_json_parameter("challenge_settings", challenge_settings)
 
     if are_redirects_challenged is not None:
-        details['areRedirectsChallenged'] = are_redirects_challenged
+        _details['areRedirectsChallenged'] = are_redirects_challenged
 
     if criteria is not None:
-        details['criteria'] = cli_util.parse_json_parameter("criteria", criteria)
+        _details['criteria'] = cli_util.parse_json_parameter("criteria", criteria)
 
     if is_nat_enabled is not None:
-        details['isNatEnabled'] = is_nat_enabled
+        _details['isNatEnabled'] = is_nat_enabled
 
-    client = cli_util.build_client('waas', ctx)
+    client = cli_util.build_client('waas', 'waas', ctx)
     result = client.update_js_challenge(
         waas_policy_id=waas_policy_id,
-        update_js_challenge_details=details,
+        update_js_challenge_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -3340,57 +3361,58 @@ def update_policy_config(ctx, from_json, force, wait_for_state, max_wait_seconds
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if certificate_id is not None:
-        details['certificateId'] = certificate_id
+        _details['certificateId'] = certificate_id
 
     if is_https_enabled is not None:
-        details['isHttpsEnabled'] = is_https_enabled
+        _details['isHttpsEnabled'] = is_https_enabled
 
     if is_https_forced is not None:
-        details['isHttpsForced'] = is_https_forced
+        _details['isHttpsForced'] = is_https_forced
 
     if tls_protocols is not None:
-        details['tlsProtocols'] = cli_util.parse_json_parameter("tls_protocols", tls_protocols)
+        _details['tlsProtocols'] = cli_util.parse_json_parameter("tls_protocols", tls_protocols)
 
     if is_origin_compression_enabled is not None:
-        details['isOriginCompressionEnabled'] = is_origin_compression_enabled
+        _details['isOriginCompressionEnabled'] = is_origin_compression_enabled
 
     if is_behind_cdn is not None:
-        details['isBehindCdn'] = is_behind_cdn
+        _details['isBehindCdn'] = is_behind_cdn
 
     if client_address_header is not None:
-        details['clientAddressHeader'] = client_address_header
+        _details['clientAddressHeader'] = client_address_header
 
     if is_cache_control_respected is not None:
-        details['isCacheControlRespected'] = is_cache_control_respected
+        _details['isCacheControlRespected'] = is_cache_control_respected
 
     if is_response_buffering_enabled is not None:
-        details['isResponseBufferingEnabled'] = is_response_buffering_enabled
+        _details['isResponseBufferingEnabled'] = is_response_buffering_enabled
 
     if cipher_group is not None:
-        details['cipherGroup'] = cipher_group
+        _details['cipherGroup'] = cipher_group
 
     if load_balancing_method is not None:
-        details['loadBalancingMethod'] = cli_util.parse_json_parameter("load_balancing_method", load_balancing_method)
+        _details['loadBalancingMethod'] = cli_util.parse_json_parameter("load_balancing_method", load_balancing_method)
 
     if websocket_path_prefixes is not None:
-        details['websocketPathPrefixes'] = cli_util.parse_json_parameter("websocket_path_prefixes", websocket_path_prefixes)
+        _details['websocketPathPrefixes'] = cli_util.parse_json_parameter("websocket_path_prefixes", websocket_path_prefixes)
 
     if is_sni_enabled is not None:
-        details['isSniEnabled'] = is_sni_enabled
+        _details['isSniEnabled'] = is_sni_enabled
 
     if health_checks is not None:
-        details['healthChecks'] = cli_util.parse_json_parameter("health_checks", health_checks)
+        _details['healthChecks'] = cli_util.parse_json_parameter("health_checks", health_checks)
 
-    client = cli_util.build_client('waas', ctx)
+    client = cli_util.build_client('waas', 'waas', ctx)
     result = client.update_policy_config(
         waas_policy_id=waas_policy_id,
-        update_policy_config_details=details,
+        update_policy_config_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -3478,57 +3500,58 @@ def update_policy_config_round_robin_load_balancing_method(ctx, from_json, force
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['loadBalancingMethod'] = {}
+    _details = {}
+    _details['loadBalancingMethod'] = {}
 
     if certificate_id is not None:
-        details['certificateId'] = certificate_id
+        _details['certificateId'] = certificate_id
 
     if is_https_enabled is not None:
-        details['isHttpsEnabled'] = is_https_enabled
+        _details['isHttpsEnabled'] = is_https_enabled
 
     if is_https_forced is not None:
-        details['isHttpsForced'] = is_https_forced
+        _details['isHttpsForced'] = is_https_forced
 
     if tls_protocols is not None:
-        details['tlsProtocols'] = cli_util.parse_json_parameter("tls_protocols", tls_protocols)
+        _details['tlsProtocols'] = cli_util.parse_json_parameter("tls_protocols", tls_protocols)
 
     if is_origin_compression_enabled is not None:
-        details['isOriginCompressionEnabled'] = is_origin_compression_enabled
+        _details['isOriginCompressionEnabled'] = is_origin_compression_enabled
 
     if is_behind_cdn is not None:
-        details['isBehindCdn'] = is_behind_cdn
+        _details['isBehindCdn'] = is_behind_cdn
 
     if client_address_header is not None:
-        details['clientAddressHeader'] = client_address_header
+        _details['clientAddressHeader'] = client_address_header
 
     if is_cache_control_respected is not None:
-        details['isCacheControlRespected'] = is_cache_control_respected
+        _details['isCacheControlRespected'] = is_cache_control_respected
 
     if is_response_buffering_enabled is not None:
-        details['isResponseBufferingEnabled'] = is_response_buffering_enabled
+        _details['isResponseBufferingEnabled'] = is_response_buffering_enabled
 
     if cipher_group is not None:
-        details['cipherGroup'] = cipher_group
+        _details['cipherGroup'] = cipher_group
 
     if websocket_path_prefixes is not None:
-        details['websocketPathPrefixes'] = cli_util.parse_json_parameter("websocket_path_prefixes", websocket_path_prefixes)
+        _details['websocketPathPrefixes'] = cli_util.parse_json_parameter("websocket_path_prefixes", websocket_path_prefixes)
 
     if is_sni_enabled is not None:
-        details['isSniEnabled'] = is_sni_enabled
+        _details['isSniEnabled'] = is_sni_enabled
 
     if health_checks is not None:
-        details['healthChecks'] = cli_util.parse_json_parameter("health_checks", health_checks)
+        _details['healthChecks'] = cli_util.parse_json_parameter("health_checks", health_checks)
 
-    details['loadBalancingMethod']['method'] = 'ROUND_ROBIN'
+    _details['loadBalancingMethod']['method'] = 'ROUND_ROBIN'
 
-    client = cli_util.build_client('waas', ctx)
+    client = cli_util.build_client('waas', 'waas', ctx)
     result = client.update_policy_config(
         waas_policy_id=waas_policy_id,
-        update_policy_config_details=details,
+        update_policy_config_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -3619,66 +3642,67 @@ def update_policy_config_sticky_cookie_load_balancing_method(ctx, from_json, for
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['loadBalancingMethod'] = {}
+    _details = {}
+    _details['loadBalancingMethod'] = {}
 
     if certificate_id is not None:
-        details['certificateId'] = certificate_id
+        _details['certificateId'] = certificate_id
 
     if is_https_enabled is not None:
-        details['isHttpsEnabled'] = is_https_enabled
+        _details['isHttpsEnabled'] = is_https_enabled
 
     if is_https_forced is not None:
-        details['isHttpsForced'] = is_https_forced
+        _details['isHttpsForced'] = is_https_forced
 
     if tls_protocols is not None:
-        details['tlsProtocols'] = cli_util.parse_json_parameter("tls_protocols", tls_protocols)
+        _details['tlsProtocols'] = cli_util.parse_json_parameter("tls_protocols", tls_protocols)
 
     if is_origin_compression_enabled is not None:
-        details['isOriginCompressionEnabled'] = is_origin_compression_enabled
+        _details['isOriginCompressionEnabled'] = is_origin_compression_enabled
 
     if is_behind_cdn is not None:
-        details['isBehindCdn'] = is_behind_cdn
+        _details['isBehindCdn'] = is_behind_cdn
 
     if client_address_header is not None:
-        details['clientAddressHeader'] = client_address_header
+        _details['clientAddressHeader'] = client_address_header
 
     if is_cache_control_respected is not None:
-        details['isCacheControlRespected'] = is_cache_control_respected
+        _details['isCacheControlRespected'] = is_cache_control_respected
 
     if is_response_buffering_enabled is not None:
-        details['isResponseBufferingEnabled'] = is_response_buffering_enabled
+        _details['isResponseBufferingEnabled'] = is_response_buffering_enabled
 
     if cipher_group is not None:
-        details['cipherGroup'] = cipher_group
+        _details['cipherGroup'] = cipher_group
 
     if websocket_path_prefixes is not None:
-        details['websocketPathPrefixes'] = cli_util.parse_json_parameter("websocket_path_prefixes", websocket_path_prefixes)
+        _details['websocketPathPrefixes'] = cli_util.parse_json_parameter("websocket_path_prefixes", websocket_path_prefixes)
 
     if is_sni_enabled is not None:
-        details['isSniEnabled'] = is_sni_enabled
+        _details['isSniEnabled'] = is_sni_enabled
 
     if health_checks is not None:
-        details['healthChecks'] = cli_util.parse_json_parameter("health_checks", health_checks)
+        _details['healthChecks'] = cli_util.parse_json_parameter("health_checks", health_checks)
 
     if load_balancing_method_name is not None:
-        details['loadBalancingMethod']['name'] = load_balancing_method_name
+        _details['loadBalancingMethod']['name'] = load_balancing_method_name
 
     if load_balancing_method_domain is not None:
-        details['loadBalancingMethod']['domain'] = load_balancing_method_domain
+        _details['loadBalancingMethod']['domain'] = load_balancing_method_domain
 
     if load_balancing_method_expiration_time_in_seconds is not None:
-        details['loadBalancingMethod']['expirationTimeInSeconds'] = load_balancing_method_expiration_time_in_seconds
+        _details['loadBalancingMethod']['expirationTimeInSeconds'] = load_balancing_method_expiration_time_in_seconds
 
-    details['loadBalancingMethod']['method'] = 'STICKY_COOKIE'
+    _details['loadBalancingMethod']['method'] = 'STICKY_COOKIE'
 
-    client = cli_util.build_client('waas', ctx)
+    client = cli_util.build_client('waas', 'waas', ctx)
     result = client.update_policy_config(
         waas_policy_id=waas_policy_id,
-        update_policy_config_details=details,
+        update_policy_config_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -3766,57 +3790,58 @@ def update_policy_config_ip_hash_load_balancing_method(ctx, from_json, force, wa
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['loadBalancingMethod'] = {}
+    _details = {}
+    _details['loadBalancingMethod'] = {}
 
     if certificate_id is not None:
-        details['certificateId'] = certificate_id
+        _details['certificateId'] = certificate_id
 
     if is_https_enabled is not None:
-        details['isHttpsEnabled'] = is_https_enabled
+        _details['isHttpsEnabled'] = is_https_enabled
 
     if is_https_forced is not None:
-        details['isHttpsForced'] = is_https_forced
+        _details['isHttpsForced'] = is_https_forced
 
     if tls_protocols is not None:
-        details['tlsProtocols'] = cli_util.parse_json_parameter("tls_protocols", tls_protocols)
+        _details['tlsProtocols'] = cli_util.parse_json_parameter("tls_protocols", tls_protocols)
 
     if is_origin_compression_enabled is not None:
-        details['isOriginCompressionEnabled'] = is_origin_compression_enabled
+        _details['isOriginCompressionEnabled'] = is_origin_compression_enabled
 
     if is_behind_cdn is not None:
-        details['isBehindCdn'] = is_behind_cdn
+        _details['isBehindCdn'] = is_behind_cdn
 
     if client_address_header is not None:
-        details['clientAddressHeader'] = client_address_header
+        _details['clientAddressHeader'] = client_address_header
 
     if is_cache_control_respected is not None:
-        details['isCacheControlRespected'] = is_cache_control_respected
+        _details['isCacheControlRespected'] = is_cache_control_respected
 
     if is_response_buffering_enabled is not None:
-        details['isResponseBufferingEnabled'] = is_response_buffering_enabled
+        _details['isResponseBufferingEnabled'] = is_response_buffering_enabled
 
     if cipher_group is not None:
-        details['cipherGroup'] = cipher_group
+        _details['cipherGroup'] = cipher_group
 
     if websocket_path_prefixes is not None:
-        details['websocketPathPrefixes'] = cli_util.parse_json_parameter("websocket_path_prefixes", websocket_path_prefixes)
+        _details['websocketPathPrefixes'] = cli_util.parse_json_parameter("websocket_path_prefixes", websocket_path_prefixes)
 
     if is_sni_enabled is not None:
-        details['isSniEnabled'] = is_sni_enabled
+        _details['isSniEnabled'] = is_sni_enabled
 
     if health_checks is not None:
-        details['healthChecks'] = cli_util.parse_json_parameter("health_checks", health_checks)
+        _details['healthChecks'] = cli_util.parse_json_parameter("health_checks", health_checks)
 
-    details['loadBalancingMethod']['method'] = 'IP_HASH'
+    _details['loadBalancingMethod']['method'] = 'IP_HASH'
 
-    client = cli_util.build_client('waas', ctx)
+    client = cli_util.build_client('waas', 'waas', ctx)
     result = client.update_policy_config(
         waas_policy_id=waas_policy_id,
-        update_policy_config_details=details,
+        update_policy_config_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -3862,13 +3887,14 @@ def update_protection_rules(ctx, from_json, wait_for_state, max_wait_seconds, wa
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('waas', ctx)
+    client = cli_util.build_client('waas', 'waas', ctx)
     result = client.update_protection_rules(
         waas_policy_id=waas_policy_id,
         protection_rules=cli_util.parse_json_parameter("protection_rules", protection_rules),
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -3942,54 +3968,55 @@ def update_protection_settings(ctx, from_json, force, wait_for_state, max_wait_s
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if block_action is not None:
-        details['blockAction'] = block_action
+        _details['blockAction'] = block_action
 
     if block_response_code is not None:
-        details['blockResponseCode'] = block_response_code
+        _details['blockResponseCode'] = block_response_code
 
     if block_error_page_message is not None:
-        details['blockErrorPageMessage'] = block_error_page_message
+        _details['blockErrorPageMessage'] = block_error_page_message
 
     if block_error_page_code is not None:
-        details['blockErrorPageCode'] = block_error_page_code
+        _details['blockErrorPageCode'] = block_error_page_code
 
     if block_error_page_description is not None:
-        details['blockErrorPageDescription'] = block_error_page_description
+        _details['blockErrorPageDescription'] = block_error_page_description
 
     if max_argument_count is not None:
-        details['maxArgumentCount'] = max_argument_count
+        _details['maxArgumentCount'] = max_argument_count
 
     if max_name_length_per_argument is not None:
-        details['maxNameLengthPerArgument'] = max_name_length_per_argument
+        _details['maxNameLengthPerArgument'] = max_name_length_per_argument
 
     if max_total_name_length_of_arguments is not None:
-        details['maxTotalNameLengthOfArguments'] = max_total_name_length_of_arguments
+        _details['maxTotalNameLengthOfArguments'] = max_total_name_length_of_arguments
 
     if recommendations_period_in_days is not None:
-        details['recommendationsPeriodInDays'] = recommendations_period_in_days
+        _details['recommendationsPeriodInDays'] = recommendations_period_in_days
 
     if is_response_inspected is not None:
-        details['isResponseInspected'] = is_response_inspected
+        _details['isResponseInspected'] = is_response_inspected
 
     if max_response_size_in_ki_b is not None:
-        details['maxResponseSizeInKiB'] = max_response_size_in_ki_b
+        _details['maxResponseSizeInKiB'] = max_response_size_in_ki_b
 
     if allowed_http_methods is not None:
-        details['allowedHttpMethods'] = cli_util.parse_json_parameter("allowed_http_methods", allowed_http_methods)
+        _details['allowedHttpMethods'] = cli_util.parse_json_parameter("allowed_http_methods", allowed_http_methods)
 
     if media_types is not None:
-        details['mediaTypes'] = cli_util.parse_json_parameter("media_types", media_types)
+        _details['mediaTypes'] = cli_util.parse_json_parameter("media_types", media_types)
 
-    client = cli_util.build_client('waas', ctx)
+    client = cli_util.build_client('waas', 'waas', ctx)
     result = client.update_protection_settings(
         waas_policy_id=waas_policy_id,
-        update_protection_settings_details=details,
+        update_protection_settings_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -4035,13 +4062,14 @@ def update_threat_feeds(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('waas', ctx)
+    client = cli_util.build_client('waas', 'waas', ctx)
     result = client.update_threat_feeds(
         waas_policy_id=waas_policy_id,
         threat_feeds=cli_util.parse_json_parameter("threat_feeds", threat_feeds),
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -4108,39 +4136,40 @@ def update_waas_policy(ctx, from_json, force, wait_for_state, max_wait_seconds, 
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if additional_domains is not None:
-        details['additionalDomains'] = cli_util.parse_json_parameter("additional_domains", additional_domains)
+        _details['additionalDomains'] = cli_util.parse_json_parameter("additional_domains", additional_domains)
 
     if origins is not None:
-        details['origins'] = cli_util.parse_json_parameter("origins", origins)
+        _details['origins'] = cli_util.parse_json_parameter("origins", origins)
 
     if origin_groups is not None:
-        details['originGroups'] = cli_util.parse_json_parameter("origin_groups", origin_groups)
+        _details['originGroups'] = cli_util.parse_json_parameter("origin_groups", origin_groups)
 
     if policy_config is not None:
-        details['policyConfig'] = cli_util.parse_json_parameter("policy_config", policy_config)
+        _details['policyConfig'] = cli_util.parse_json_parameter("policy_config", policy_config)
 
     if waf_config is not None:
-        details['wafConfig'] = cli_util.parse_json_parameter("waf_config", waf_config)
+        _details['wafConfig'] = cli_util.parse_json_parameter("waf_config", waf_config)
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('waas', ctx)
+    client = cli_util.build_client('waas', 'waas', ctx)
     result = client.update_waas_policy(
         waas_policy_id=waas_policy_id,
-        update_waas_policy_details=details,
+        update_waas_policy_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -4186,13 +4215,14 @@ def update_waas_policy_custom_protection_rules(ctx, from_json, wait_for_state, m
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('waas', ctx)
+    client = cli_util.build_client('waas', 'waas', ctx)
     result = client.update_waas_policy_custom_protection_rules(
         waas_policy_id=waas_policy_id,
         update_custom_protection_rules_details=cli_util.parse_json_parameter("update_custom_protection_rules_details", update_custom_protection_rules_details),
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -4242,25 +4272,26 @@ def update_waf_address_rate_limiting(ctx, from_json, wait_for_state, max_wait_se
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['isEnabled'] = is_enabled
+    _details = {}
+    _details['isEnabled'] = is_enabled
 
     if allowed_rate_per_address is not None:
-        details['allowedRatePerAddress'] = allowed_rate_per_address
+        _details['allowedRatePerAddress'] = allowed_rate_per_address
 
     if max_delayed_count_per_address is not None:
-        details['maxDelayedCountPerAddress'] = max_delayed_count_per_address
+        _details['maxDelayedCountPerAddress'] = max_delayed_count_per_address
 
     if block_response_code is not None:
-        details['blockResponseCode'] = block_response_code
+        _details['blockResponseCode'] = block_response_code
 
-    client = cli_util.build_client('waas', ctx)
+    client = cli_util.build_client('waas', 'waas', ctx)
     result = client.update_waf_address_rate_limiting(
         waas_policy_id=waas_policy_id,
-        update_waf_address_rate_limiting_details=details,
+        update_waf_address_rate_limiting_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -4346,60 +4377,61 @@ def update_waf_config(ctx, from_json, force, wait_for_state, max_wait_seconds, w
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if access_rules is not None:
-        details['accessRules'] = cli_util.parse_json_parameter("access_rules", access_rules)
+        _details['accessRules'] = cli_util.parse_json_parameter("access_rules", access_rules)
 
     if address_rate_limiting is not None:
-        details['addressRateLimiting'] = cli_util.parse_json_parameter("address_rate_limiting", address_rate_limiting)
+        _details['addressRateLimiting'] = cli_util.parse_json_parameter("address_rate_limiting", address_rate_limiting)
 
     if captchas is not None:
-        details['captchas'] = cli_util.parse_json_parameter("captchas", captchas)
+        _details['captchas'] = cli_util.parse_json_parameter("captchas", captchas)
 
     if device_fingerprint_challenge is not None:
-        details['deviceFingerprintChallenge'] = cli_util.parse_json_parameter("device_fingerprint_challenge", device_fingerprint_challenge)
+        _details['deviceFingerprintChallenge'] = cli_util.parse_json_parameter("device_fingerprint_challenge", device_fingerprint_challenge)
 
     if good_bots is not None:
-        details['goodBots'] = cli_util.parse_json_parameter("good_bots", good_bots)
+        _details['goodBots'] = cli_util.parse_json_parameter("good_bots", good_bots)
 
     if human_interaction_challenge is not None:
-        details['humanInteractionChallenge'] = cli_util.parse_json_parameter("human_interaction_challenge", human_interaction_challenge)
+        _details['humanInteractionChallenge'] = cli_util.parse_json_parameter("human_interaction_challenge", human_interaction_challenge)
 
     if js_challenge is not None:
-        details['jsChallenge'] = cli_util.parse_json_parameter("js_challenge", js_challenge)
+        _details['jsChallenge'] = cli_util.parse_json_parameter("js_challenge", js_challenge)
 
     if origin is not None:
-        details['origin'] = origin
+        _details['origin'] = origin
 
     if caching_rules is not None:
-        details['cachingRules'] = cli_util.parse_json_parameter("caching_rules", caching_rules)
+        _details['cachingRules'] = cli_util.parse_json_parameter("caching_rules", caching_rules)
 
     if custom_protection_rules is not None:
-        details['customProtectionRules'] = cli_util.parse_json_parameter("custom_protection_rules", custom_protection_rules)
+        _details['customProtectionRules'] = cli_util.parse_json_parameter("custom_protection_rules", custom_protection_rules)
 
     if origin_groups is not None:
-        details['originGroups'] = cli_util.parse_json_parameter("origin_groups", origin_groups)
+        _details['originGroups'] = cli_util.parse_json_parameter("origin_groups", origin_groups)
 
     if protection_rules is not None:
-        details['protectionRules'] = cli_util.parse_json_parameter("protection_rules", protection_rules)
+        _details['protectionRules'] = cli_util.parse_json_parameter("protection_rules", protection_rules)
 
     if protection_settings is not None:
-        details['protectionSettings'] = cli_util.parse_json_parameter("protection_settings", protection_settings)
+        _details['protectionSettings'] = cli_util.parse_json_parameter("protection_settings", protection_settings)
 
     if threat_feeds is not None:
-        details['threatFeeds'] = cli_util.parse_json_parameter("threat_feeds", threat_feeds)
+        _details['threatFeeds'] = cli_util.parse_json_parameter("threat_feeds", threat_feeds)
 
     if whitelists is not None:
-        details['whitelists'] = cli_util.parse_json_parameter("whitelists", whitelists)
+        _details['whitelists'] = cli_util.parse_json_parameter("whitelists", whitelists)
 
-    client = cli_util.build_client('waas', ctx)
+    client = cli_util.build_client('waas', 'waas', ctx)
     result = client.update_waf_config(
         waas_policy_id=waas_policy_id,
-        update_waf_config_details=details,
+        update_waf_config_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -4453,13 +4485,14 @@ def update_whitelists(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('waas', ctx)
+    client = cli_util.build_client('waas', 'waas', ctx)
     result = client.update_whitelists(
         waas_policy_id=waas_policy_id,
         whitelists=cli_util.parse_json_parameter("whitelists", whitelists),
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}

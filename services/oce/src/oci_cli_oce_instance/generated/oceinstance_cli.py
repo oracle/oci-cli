@@ -1,5 +1,6 @@
 # coding: utf-8
-# Copyright (c) 2016, 2020, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2020, Oracle and/or its affiliates.  All rights reserved.
+# This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 from __future__ import print_function
 import click
@@ -72,16 +73,17 @@ def change_oce_instance_compartment(ctx, from_json, wait_for_state, max_wait_sec
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
 
-    client = cli_util.build_client('oce_instance', ctx)
+    client = cli_util.build_client('oce', 'oce_instance', ctx)
     result = client.change_oce_instance_compartment(
         oce_instance_id=oce_instance_id,
-        change_oce_instance_compartment_details=details,
+        change_oce_instance_compartment_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -135,45 +137,46 @@ def create_oce_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
-    details['name'] = name
-    details['tenancyId'] = tenancy_id
-    details['idcsAccessToken'] = idcs_access_token
-    details['tenancyName'] = tenancy_name
-    details['objectStorageNamespace'] = object_storage_namespace
-    details['adminEmail'] = admin_email
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['name'] = name
+    _details['tenancyId'] = tenancy_id
+    _details['idcsAccessToken'] = idcs_access_token
+    _details['tenancyName'] = tenancy_name
+    _details['objectStorageNamespace'] = object_storage_namespace
+    _details['adminEmail'] = admin_email
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
     if identity_stripe is not None:
-        details['identityStripe'] = cli_util.parse_json_parameter("identity_stripe", identity_stripe)
+        _details['identityStripe'] = cli_util.parse_json_parameter("identity_stripe", identity_stripe)
 
     if instance_usage_type is not None:
-        details['instanceUsageType'] = instance_usage_type
+        _details['instanceUsageType'] = instance_usage_type
 
     if upgrade_schedule is not None:
-        details['upgradeSchedule'] = upgrade_schedule
+        _details['upgradeSchedule'] = upgrade_schedule
 
     if waf_primary_domain is not None:
-        details['wafPrimaryDomain'] = waf_primary_domain
+        _details['wafPrimaryDomain'] = waf_primary_domain
 
     if instance_access_type is not None:
-        details['instanceAccessType'] = instance_access_type
+        _details['instanceAccessType'] = instance_access_type
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('oce_instance', ctx)
+    client = cli_util.build_client('oce', 'oce_instance', ctx)
     result = client.create_oce_instance(
-        create_oce_instance_details=details,
+        create_oce_instance_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -219,12 +222,13 @@ def delete_oce_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('oce_instance', ctx)
+    client = cli_util.build_client('oce', 'oce_instance', ctx)
     result = client.delete_oce_instance(
         oce_instance_id=oce_instance_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}
@@ -263,7 +267,7 @@ def get_oce_instance(ctx, from_json, oce_instance_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('oce_instance', ctx)
+    client = cli_util.build_client('oce', 'oce_instance', ctx)
     result = client.get_oce_instance(
         oce_instance_id=oce_instance_id,
         **kwargs
@@ -285,7 +289,7 @@ def get_work_request(ctx, from_json, work_request_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('oce_instance', ctx)
+    client = cli_util.build_client('oce', 'oce_instance', ctx)
     result = client.get_work_request(
         work_request_id=work_request_id,
         **kwargs
@@ -329,7 +333,7 @@ def list_oce_instances(ctx, from_json, all_pages, page_size, compartment_id, dis
     if lifecycle_state is not None:
         kwargs['lifecycle_state'] = lifecycle_state
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('oce_instance', ctx)
+    client = cli_util.build_client('oce', 'oce_instance', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -380,7 +384,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     if limit is not None:
         kwargs['limit'] = limit
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('oce_instance', ctx)
+    client = cli_util.build_client('oce', 'oce_instance', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -431,7 +435,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     if limit is not None:
         kwargs['limit'] = limit
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('oce_instance', ctx)
+    client = cli_util.build_client('oce', 'oce_instance', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -482,7 +486,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, res
     if limit is not None:
         kwargs['limit'] = limit
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('oce_instance', ctx)
+    client = cli_util.build_client('oce', 'oce_instance', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -538,27 +542,28 @@ def update_oce_instance(ctx, from_json, force, wait_for_state, max_wait_seconds,
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if description is not None:
-        details['description'] = description
+        _details['description'] = description
 
     if waf_primary_domain is not None:
-        details['wafPrimaryDomain'] = waf_primary_domain
+        _details['wafPrimaryDomain'] = waf_primary_domain
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('oce_instance', ctx)
+    client = cli_util.build_client('oce', 'oce_instance', ctx)
     result = client.update_oce_instance(
         oce_instance_id=oce_instance_id,
-        update_oce_instance_details=details,
+        update_oce_instance_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
             try:
                 wait_period_kwargs = {}

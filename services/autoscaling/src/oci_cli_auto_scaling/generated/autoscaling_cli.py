@@ -1,5 +1,6 @@
 # coding: utf-8
-# Copyright (c) 2016, 2020, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2020, Oracle and/or its affiliates.  All rights reserved.
+# This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 from __future__ import print_function
 import click
@@ -60,13 +61,13 @@ def change_auto_scaling_configuration_compartment(ctx, from_json, auto_scaling_c
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
 
-    client = cli_util.build_client('auto_scaling', ctx)
+    client = cli_util.build_client('autoscaling', 'auto_scaling', ctx)
     result = client.change_auto_scaling_configuration_compartment(
         auto_scaling_configuration_id=auto_scaling_configuration_id,
-        change_compartment_details=details,
+        change_compartment_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -95,29 +96,29 @@ def create_auto_scaling_configuration(ctx, from_json, compartment_id, policies, 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
-    details['policies'] = cli_util.parse_json_parameter("policies", policies)
-    details['resource'] = cli_util.parse_json_parameter("resource", resource)
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['policies'] = cli_util.parse_json_parameter("policies", policies)
+    _details['resource'] = cli_util.parse_json_parameter("resource", resource)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if cool_down_in_seconds is not None:
-        details['coolDownInSeconds'] = cool_down_in_seconds
+        _details['coolDownInSeconds'] = cool_down_in_seconds
 
     if is_enabled is not None:
-        details['isEnabled'] = is_enabled
+        _details['isEnabled'] = is_enabled
 
-    client = cli_util.build_client('auto_scaling', ctx)
+    client = cli_util.build_client('autoscaling', 'auto_scaling', ctx)
     result = client.create_auto_scaling_configuration(
-        create_auto_scaling_configuration_details=details,
+        create_auto_scaling_configuration_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -146,32 +147,32 @@ def create_auto_scaling_configuration_instance_pool_resource(ctx, from_json, com
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['resource'] = {}
-    details['compartmentId'] = compartment_id
-    details['policies'] = cli_util.parse_json_parameter("policies", policies)
-    details['resource']['id'] = resource_id
+    _details = {}
+    _details['resource'] = {}
+    _details['compartmentId'] = compartment_id
+    _details['policies'] = cli_util.parse_json_parameter("policies", policies)
+    _details['resource']['id'] = resource_id
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if cool_down_in_seconds is not None:
-        details['coolDownInSeconds'] = cool_down_in_seconds
+        _details['coolDownInSeconds'] = cool_down_in_seconds
 
     if is_enabled is not None:
-        details['isEnabled'] = is_enabled
+        _details['isEnabled'] = is_enabled
 
-    details['resource']['type'] = 'instancePool'
+    _details['resource']['type'] = 'instancePool'
 
-    client = cli_util.build_client('auto_scaling', ctx)
+    client = cli_util.build_client('autoscaling', 'auto_scaling', ctx)
     result = client.create_auto_scaling_configuration(
-        create_auto_scaling_configuration_details=details,
+        create_auto_scaling_configuration_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -195,17 +196,17 @@ def create_auto_scaling_policy(ctx, from_json, auto_scaling_configuration_id, ca
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['capacity'] = cli_util.parse_json_parameter("capacity", capacity)
-    details['policyType'] = policy_type
+    _details = {}
+    _details['capacity'] = cli_util.parse_json_parameter("capacity", capacity)
+    _details['policyType'] = policy_type
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
-    client = cli_util.build_client('auto_scaling', ctx)
+    client = cli_util.build_client('autoscaling', 'auto_scaling', ctx)
     result = client.create_auto_scaling_policy(
         auto_scaling_configuration_id=auto_scaling_configuration_id,
-        create_auto_scaling_policy_details=details,
+        create_auto_scaling_policy_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -229,19 +230,19 @@ def create_auto_scaling_policy_create_threshold_policy_details(ctx, from_json, a
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['capacity'] = cli_util.parse_json_parameter("capacity", capacity)
-    details['rules'] = cli_util.parse_json_parameter("rules", rules)
+    _details = {}
+    _details['capacity'] = cli_util.parse_json_parameter("capacity", capacity)
+    _details['rules'] = cli_util.parse_json_parameter("rules", rules)
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
-    details['policyType'] = 'threshold'
+    _details['policyType'] = 'threshold'
 
-    client = cli_util.build_client('auto_scaling', ctx)
+    client = cli_util.build_client('autoscaling', 'auto_scaling', ctx)
     result = client.create_auto_scaling_policy(
         auto_scaling_configuration_id=auto_scaling_configuration_id,
-        create_auto_scaling_policy_details=details,
+        create_auto_scaling_policy_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -265,7 +266,7 @@ def delete_auto_scaling_configuration(ctx, from_json, auto_scaling_configuration
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('auto_scaling', ctx)
+    client = cli_util.build_client('autoscaling', 'auto_scaling', ctx)
     result = client.delete_auto_scaling_configuration(
         auto_scaling_configuration_id=auto_scaling_configuration_id,
         **kwargs
@@ -295,7 +296,7 @@ def delete_auto_scaling_policy(ctx, from_json, auto_scaling_configuration_id, au
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('auto_scaling', ctx)
+    client = cli_util.build_client('autoscaling', 'auto_scaling', ctx)
     result = client.delete_auto_scaling_policy(
         auto_scaling_configuration_id=auto_scaling_configuration_id,
         auto_scaling_policy_id=auto_scaling_policy_id,
@@ -318,7 +319,7 @@ def get_auto_scaling_configuration(ctx, from_json, auto_scaling_configuration_id
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('auto_scaling', ctx)
+    client = cli_util.build_client('autoscaling', 'auto_scaling', ctx)
     result = client.get_auto_scaling_configuration(
         auto_scaling_configuration_id=auto_scaling_configuration_id,
         **kwargs
@@ -344,7 +345,7 @@ def get_auto_scaling_policy(ctx, from_json, auto_scaling_configuration_id, auto_
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('auto_scaling', ctx)
+    client = cli_util.build_client('autoscaling', 'auto_scaling', ctx)
     result = client.get_auto_scaling_policy(
         auto_scaling_configuration_id=auto_scaling_configuration_id,
         auto_scaling_policy_id=auto_scaling_policy_id,
@@ -384,7 +385,7 @@ def list_auto_scaling_configurations(ctx, from_json, all_pages, page_size, compa
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('auto_scaling', ctx)
+    client = cli_util.build_client('autoscaling', 'auto_scaling', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -444,7 +445,7 @@ def list_auto_scaling_policies(ctx, from_json, all_pages, page_size, auto_scalin
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('auto_scaling', ctx)
+    client = cli_util.build_client('autoscaling', 'auto_scaling', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -502,27 +503,27 @@ def update_auto_scaling_configuration(ctx, from_json, force, auto_scaling_config
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if is_enabled is not None:
-        details['isEnabled'] = is_enabled
+        _details['isEnabled'] = is_enabled
 
     if cool_down_in_seconds is not None:
-        details['coolDownInSeconds'] = cool_down_in_seconds
+        _details['coolDownInSeconds'] = cool_down_in_seconds
 
-    client = cli_util.build_client('auto_scaling', ctx)
+    client = cli_util.build_client('autoscaling', 'auto_scaling', ctx)
     result = client.update_auto_scaling_configuration(
         auto_scaling_configuration_id=auto_scaling_configuration_id,
-        update_auto_scaling_configuration_details=details,
+        update_auto_scaling_configuration_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -558,20 +559,20 @@ def update_auto_scaling_policy(ctx, from_json, force, auto_scaling_configuration
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['policyType'] = policy_type
+    _details = {}
+    _details['policyType'] = policy_type
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if capacity is not None:
-        details['capacity'] = cli_util.parse_json_parameter("capacity", capacity)
+        _details['capacity'] = cli_util.parse_json_parameter("capacity", capacity)
 
-    client = cli_util.build_client('auto_scaling', ctx)
+    client = cli_util.build_client('autoscaling', 'auto_scaling', ctx)
     result = client.update_auto_scaling_policy(
         auto_scaling_configuration_id=auto_scaling_configuration_id,
         auto_scaling_policy_id=auto_scaling_policy_id,
-        update_auto_scaling_policy_details=details,
+        update_auto_scaling_policy_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -609,24 +610,24 @@ def update_auto_scaling_policy_update_threshold_policy_details(ctx, from_json, f
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if capacity is not None:
-        details['capacity'] = cli_util.parse_json_parameter("capacity", capacity)
+        _details['capacity'] = cli_util.parse_json_parameter("capacity", capacity)
 
     if rules is not None:
-        details['rules'] = cli_util.parse_json_parameter("rules", rules)
+        _details['rules'] = cli_util.parse_json_parameter("rules", rules)
 
-    details['policyType'] = 'threshold'
+    _details['policyType'] = 'threshold'
 
-    client = cli_util.build_client('auto_scaling', ctx)
+    client = cli_util.build_client('autoscaling', 'auto_scaling', ctx)
     result = client.update_auto_scaling_policy(
         auto_scaling_configuration_id=auto_scaling_configuration_id,
         auto_scaling_policy_id=auto_scaling_policy_id,
-        update_auto_scaling_policy_details=details,
+        update_auto_scaling_policy_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)

@@ -1,5 +1,6 @@
 # coding: utf-8
-# Copyright (c) 2016, 2019, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2020, Oracle and/or its affiliates.  All rights reserved.
+# This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 from oci_cli import cli_util
 from services.container_engine.src.oci_cli_container_engine.generated import containerengine_cli
@@ -33,7 +34,7 @@ def generate_token(ctx, from_json, cluster_id):
     if isinstance(cluster_id, six.string_types) and len(cluster_id.strip()) == 0:
         raise click.UsageError('Parameter --cluster-id cannot be whitespace or empty string')
 
-    client = cli_util.build_client('container_engine', ctx)
+    client = cli_util.build_client('container_engine', 'container_engine', ctx)
     signer = client.base_client.signer
 
     url = "https://containerengine.%s.oraclecloud.com/cluster_request/%s" % (ctx.obj['config']['region'], cluster_id)
@@ -255,7 +256,7 @@ def create_kubeconfig(ctx, from_json, file, cluster_id, token_version, expiratio
     if expiration is not None:
         details['expiration'] = expiration
 
-    client = cli_util.build_client('container_engine', ctx)
+    client = cli_util.build_client('container_engine', 'container_engine', ctx)
     result = client.create_kubeconfig(
         cluster_id=cluster_id,
         create_cluster_kubeconfig_content_details=details,

@@ -1,5 +1,6 @@
 # coding: utf-8
-# Copyright (c) 2016, 2020, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2020, Oracle and/or its affiliates.  All rights reserved.
+# This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 from __future__ import print_function
 import click
@@ -257,16 +258,17 @@ def activate_exadata_infrastructure(ctx, from_json, wait_for_state, max_wait_sec
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['activationFile'] = activation_file
+    _details = {}
+    _details['activationFile'] = activation_file
 
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.activate_exadata_infrastructure(
         exadata_infrastructure_id=exadata_infrastructure_id,
-        activate_exadata_infrastructure_details=details,
+        activate_exadata_infrastructure_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_exadata_infrastructure') and callable(getattr(client, 'get_exadata_infrastructure')):
             try:
                 wait_period_kwargs = {}
@@ -310,13 +312,13 @@ def change_autonomous_container_database_compartment(ctx, from_json, compartment
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
 
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.change_autonomous_container_database_compartment(
         autonomous_container_database_id=autonomous_container_database_id,
-        change_compartment_details=details,
+        change_compartment_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -341,13 +343,13 @@ def change_autonomous_database_compartment(ctx, from_json, compartment_id, auton
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
 
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.change_autonomous_database_compartment(
         autonomous_database_id=autonomous_database_id,
-        change_compartment_details=details,
+        change_compartment_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -372,13 +374,13 @@ def change_autonomous_exadata_infrastructure_compartment(ctx, from_json, compart
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
 
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.change_autonomous_exadata_infrastructure_compartment(
         autonomous_exadata_infrastructure_id=autonomous_exadata_infrastructure_id,
-        change_compartment_details=details,
+        change_compartment_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -403,13 +405,13 @@ def change_backup_destination_compartment(ctx, from_json, compartment_id, backup
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
 
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.change_backup_destination_compartment(
         backup_destination_id=backup_destination_id,
-        change_compartment_details=details,
+        change_compartment_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -434,13 +436,13 @@ def change_db_system_compartment(ctx, from_json, compartment_id, db_system_id, i
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
 
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.change_db_system_compartment(
         db_system_id=db_system_id,
-        change_compartment_details=details,
+        change_compartment_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -465,13 +467,13 @@ def change_exadata_infrastructure_compartment(ctx, from_json, compartment_id, ex
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
 
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.change_exadata_infrastructure_compartment(
         exadata_infrastructure_id=exadata_infrastructure_id,
-        change_exadata_infrastructure_compartment_details=details,
+        change_exadata_infrastructure_compartment_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -496,13 +498,13 @@ def change_vm_cluster_compartment(ctx, from_json, compartment_id, vm_cluster_id,
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
 
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.change_vm_cluster_compartment(
         vm_cluster_id=vm_cluster_id,
-        change_vm_cluster_compartment_details=details,
+        change_vm_cluster_compartment_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -533,30 +535,30 @@ def complete_external_backup_job(ctx, from_json, backup_id, tde_wallet_path, cf_
     if if_match is not None:
         kwargs['if_match'] = if_match
 
-    details = {}
+    _details = {}
 
     if tde_wallet_path is not None:
-        details['tdeWalletPath'] = tde_wallet_path
+        _details['tdeWalletPath'] = tde_wallet_path
 
     if cf_backup_handle is not None:
-        details['cfBackupHandle'] = cf_backup_handle
+        _details['cfBackupHandle'] = cf_backup_handle
 
     if spf_backup_handle is not None:
-        details['spfBackupHandle'] = spf_backup_handle
+        _details['spfBackupHandle'] = spf_backup_handle
 
     if sql_patches is not None:
-        details['sqlPatches'] = cli_util.parse_json_parameter("sql_patches", sql_patches)
+        _details['sqlPatches'] = cli_util.parse_json_parameter("sql_patches", sql_patches)
 
     if data_size is not None:
-        details['dataSize'] = data_size
+        _details['dataSize'] = data_size
 
     if redo_size is not None:
-        details['redoSize'] = redo_size
+        _details['redoSize'] = redo_size
 
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.complete_external_backup_job(
         backup_id=backup_id,
-        complete_external_backup_job_details=details,
+        complete_external_backup_job_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -586,35 +588,36 @@ def create_autonomous_container_database(ctx, from_json, wait_for_state, max_wai
 
     kwargs = {}
 
-    details = {}
-    details['displayName'] = display_name
-    details['autonomousExadataInfrastructureId'] = autonomous_exadata_infrastructure_id
-    details['patchModel'] = patch_model
+    _details = {}
+    _details['displayName'] = display_name
+    _details['autonomousExadataInfrastructureId'] = autonomous_exadata_infrastructure_id
+    _details['patchModel'] = patch_model
 
     if service_level_agreement_type is not None:
-        details['serviceLevelAgreementType'] = service_level_agreement_type
+        _details['serviceLevelAgreementType'] = service_level_agreement_type
 
     if compartment_id is not None:
-        details['compartmentId'] = compartment_id
+        _details['compartmentId'] = compartment_id
 
     if maintenance_window_details is not None:
-        details['maintenanceWindowDetails'] = cli_util.parse_json_parameter("maintenance_window_details", maintenance_window_details)
+        _details['maintenanceWindowDetails'] = cli_util.parse_json_parameter("maintenance_window_details", maintenance_window_details)
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if backup_config is not None:
-        details['backupConfig'] = cli_util.parse_json_parameter("backup_config", backup_config)
+        _details['backupConfig'] = cli_util.parse_json_parameter("backup_config", backup_config)
 
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.create_autonomous_container_database(
-        create_autonomous_container_database_details=details,
+        create_autonomous_container_database_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_autonomous_container_database') and callable(getattr(client, 'get_autonomous_container_database')):
             try:
                 wait_period_kwargs = {}
@@ -663,31 +666,32 @@ def create_autonomous_data_warehouse(ctx, from_json, wait_for_state, max_wait_se
 
     kwargs = {}
 
-    details = {}
-    details['compartmentId'] = compartment_id
-    details['dbName'] = db_name
-    details['cpuCoreCount'] = cpu_core_count
-    details['dataStorageSizeInTBs'] = data_storage_size_in_tbs
-    details['adminPassword'] = admin_password
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['dbName'] = db_name
+    _details['cpuCoreCount'] = cpu_core_count
+    _details['dataStorageSizeInTBs'] = data_storage_size_in_tbs
+    _details['adminPassword'] = admin_password
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if license_model is not None:
-        details['licenseModel'] = license_model
+        _details['licenseModel'] = license_model
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.create_autonomous_data_warehouse(
-        create_autonomous_data_warehouse_details=details,
+        create_autonomous_data_warehouse_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_autonomous_data_warehouse') and callable(getattr(client, 'get_autonomous_data_warehouse')):
             try:
                 wait_period_kwargs = {}
@@ -727,16 +731,17 @@ def create_autonomous_data_warehouse_backup(ctx, from_json, wait_for_state, max_
 
     kwargs = {}
 
-    details = {}
-    details['displayName'] = display_name
-    details['autonomousDataWarehouseId'] = autonomous_data_warehouse_id
+    _details = {}
+    _details['displayName'] = display_name
+    _details['autonomousDataWarehouseId'] = autonomous_data_warehouse_id
 
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.create_autonomous_data_warehouse_backup(
-        create_autonomous_data_warehouse_backup_details=details,
+        create_autonomous_data_warehouse_backup_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_autonomous_data_warehouse_backup') and callable(getattr(client, 'get_autonomous_data_warehouse_backup')):
             try:
                 wait_period_kwargs = {}
@@ -806,67 +811,68 @@ def create_autonomous_database(ctx, from_json, wait_for_state, max_wait_seconds,
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
-    details['dbName'] = db_name
-    details['cpuCoreCount'] = cpu_core_count
-    details['dataStorageSizeInTBs'] = data_storage_size_in_tbs
-    details['adminPassword'] = admin_password
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['dbName'] = db_name
+    _details['cpuCoreCount'] = cpu_core_count
+    _details['dataStorageSizeInTBs'] = data_storage_size_in_tbs
+    _details['adminPassword'] = admin_password
 
     if db_workload is not None:
-        details['dbWorkload'] = db_workload
+        _details['dbWorkload'] = db_workload
 
     if is_free_tier is not None:
-        details['isFreeTier'] = is_free_tier
+        _details['isFreeTier'] = is_free_tier
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if license_model is not None:
-        details['licenseModel'] = license_model
+        _details['licenseModel'] = license_model
 
     if is_preview_version_with_service_terms_accepted is not None:
-        details['isPreviewVersionWithServiceTermsAccepted'] = is_preview_version_with_service_terms_accepted
+        _details['isPreviewVersionWithServiceTermsAccepted'] = is_preview_version_with_service_terms_accepted
 
     if is_auto_scaling_enabled is not None:
-        details['isAutoScalingEnabled'] = is_auto_scaling_enabled
+        _details['isAutoScalingEnabled'] = is_auto_scaling_enabled
 
     if is_dedicated is not None:
-        details['isDedicated'] = is_dedicated
+        _details['isDedicated'] = is_dedicated
 
     if autonomous_container_database_id is not None:
-        details['autonomousContainerDatabaseId'] = autonomous_container_database_id
+        _details['autonomousContainerDatabaseId'] = autonomous_container_database_id
 
     if whitelisted_ips is not None:
-        details['whitelistedIps'] = cli_util.parse_json_parameter("whitelisted_ips", whitelisted_ips)
+        _details['whitelistedIps'] = cli_util.parse_json_parameter("whitelisted_ips", whitelisted_ips)
 
     if subnet_id is not None:
-        details['subnetId'] = subnet_id
+        _details['subnetId'] = subnet_id
 
     if nsg_ids is not None:
-        details['nsgIds'] = cli_util.parse_json_parameter("nsg_ids", nsg_ids)
+        _details['nsgIds'] = cli_util.parse_json_parameter("nsg_ids", nsg_ids)
 
     if private_endpoint_label is not None:
-        details['privateEndpointLabel'] = private_endpoint_label
+        _details['privateEndpointLabel'] = private_endpoint_label
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if db_version is not None:
-        details['dbVersion'] = db_version
+        _details['dbVersion'] = db_version
 
     if source is not None:
-        details['source'] = source
+        _details['source'] = source
 
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.create_autonomous_database(
-        create_autonomous_database_details=details,
+        create_autonomous_database_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_autonomous_database') and callable(getattr(client, 'get_autonomous_database')):
             try:
                 wait_period_kwargs = {}
@@ -935,68 +941,69 @@ def create_autonomous_database_create_autonomous_database_clone_details(ctx, fro
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
-    details['dbName'] = db_name
-    details['cpuCoreCount'] = cpu_core_count
-    details['dataStorageSizeInTBs'] = data_storage_size_in_tbs
-    details['adminPassword'] = admin_password
-    details['sourceId'] = source_id
-    details['cloneType'] = clone_type
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['dbName'] = db_name
+    _details['cpuCoreCount'] = cpu_core_count
+    _details['dataStorageSizeInTBs'] = data_storage_size_in_tbs
+    _details['adminPassword'] = admin_password
+    _details['sourceId'] = source_id
+    _details['cloneType'] = clone_type
 
     if db_workload is not None:
-        details['dbWorkload'] = db_workload
+        _details['dbWorkload'] = db_workload
 
     if is_free_tier is not None:
-        details['isFreeTier'] = is_free_tier
+        _details['isFreeTier'] = is_free_tier
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if license_model is not None:
-        details['licenseModel'] = license_model
+        _details['licenseModel'] = license_model
 
     if is_preview_version_with_service_terms_accepted is not None:
-        details['isPreviewVersionWithServiceTermsAccepted'] = is_preview_version_with_service_terms_accepted
+        _details['isPreviewVersionWithServiceTermsAccepted'] = is_preview_version_with_service_terms_accepted
 
     if is_auto_scaling_enabled is not None:
-        details['isAutoScalingEnabled'] = is_auto_scaling_enabled
+        _details['isAutoScalingEnabled'] = is_auto_scaling_enabled
 
     if is_dedicated is not None:
-        details['isDedicated'] = is_dedicated
+        _details['isDedicated'] = is_dedicated
 
     if autonomous_container_database_id is not None:
-        details['autonomousContainerDatabaseId'] = autonomous_container_database_id
+        _details['autonomousContainerDatabaseId'] = autonomous_container_database_id
 
     if whitelisted_ips is not None:
-        details['whitelistedIps'] = cli_util.parse_json_parameter("whitelisted_ips", whitelisted_ips)
+        _details['whitelistedIps'] = cli_util.parse_json_parameter("whitelisted_ips", whitelisted_ips)
 
     if subnet_id is not None:
-        details['subnetId'] = subnet_id
+        _details['subnetId'] = subnet_id
 
     if nsg_ids is not None:
-        details['nsgIds'] = cli_util.parse_json_parameter("nsg_ids", nsg_ids)
+        _details['nsgIds'] = cli_util.parse_json_parameter("nsg_ids", nsg_ids)
 
     if private_endpoint_label is not None:
-        details['privateEndpointLabel'] = private_endpoint_label
+        _details['privateEndpointLabel'] = private_endpoint_label
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if db_version is not None:
-        details['dbVersion'] = db_version
+        _details['dbVersion'] = db_version
 
-    details['source'] = 'DATABASE'
+    _details['source'] = 'DATABASE'
 
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.create_autonomous_database(
-        create_autonomous_database_details=details,
+        create_autonomous_database_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_autonomous_database') and callable(getattr(client, 'get_autonomous_database')):
             try:
                 wait_period_kwargs = {}
@@ -1065,68 +1072,69 @@ def create_autonomous_database_create_autonomous_database_from_backup_details(ct
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
-    details['dbName'] = db_name
-    details['cpuCoreCount'] = cpu_core_count
-    details['dataStorageSizeInTBs'] = data_storage_size_in_tbs
-    details['adminPassword'] = admin_password
-    details['autonomousDatabaseBackupId'] = autonomous_database_backup_id
-    details['cloneType'] = clone_type
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['dbName'] = db_name
+    _details['cpuCoreCount'] = cpu_core_count
+    _details['dataStorageSizeInTBs'] = data_storage_size_in_tbs
+    _details['adminPassword'] = admin_password
+    _details['autonomousDatabaseBackupId'] = autonomous_database_backup_id
+    _details['cloneType'] = clone_type
 
     if db_workload is not None:
-        details['dbWorkload'] = db_workload
+        _details['dbWorkload'] = db_workload
 
     if is_free_tier is not None:
-        details['isFreeTier'] = is_free_tier
+        _details['isFreeTier'] = is_free_tier
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if license_model is not None:
-        details['licenseModel'] = license_model
+        _details['licenseModel'] = license_model
 
     if is_preview_version_with_service_terms_accepted is not None:
-        details['isPreviewVersionWithServiceTermsAccepted'] = is_preview_version_with_service_terms_accepted
+        _details['isPreviewVersionWithServiceTermsAccepted'] = is_preview_version_with_service_terms_accepted
 
     if is_auto_scaling_enabled is not None:
-        details['isAutoScalingEnabled'] = is_auto_scaling_enabled
+        _details['isAutoScalingEnabled'] = is_auto_scaling_enabled
 
     if is_dedicated is not None:
-        details['isDedicated'] = is_dedicated
+        _details['isDedicated'] = is_dedicated
 
     if autonomous_container_database_id is not None:
-        details['autonomousContainerDatabaseId'] = autonomous_container_database_id
+        _details['autonomousContainerDatabaseId'] = autonomous_container_database_id
 
     if whitelisted_ips is not None:
-        details['whitelistedIps'] = cli_util.parse_json_parameter("whitelisted_ips", whitelisted_ips)
+        _details['whitelistedIps'] = cli_util.parse_json_parameter("whitelisted_ips", whitelisted_ips)
 
     if subnet_id is not None:
-        details['subnetId'] = subnet_id
+        _details['subnetId'] = subnet_id
 
     if nsg_ids is not None:
-        details['nsgIds'] = cli_util.parse_json_parameter("nsg_ids", nsg_ids)
+        _details['nsgIds'] = cli_util.parse_json_parameter("nsg_ids", nsg_ids)
 
     if private_endpoint_label is not None:
-        details['privateEndpointLabel'] = private_endpoint_label
+        _details['privateEndpointLabel'] = private_endpoint_label
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if db_version is not None:
-        details['dbVersion'] = db_version
+        _details['dbVersion'] = db_version
 
-    details['source'] = 'BACKUP_FROM_ID'
+    _details['source'] = 'BACKUP_FROM_ID'
 
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.create_autonomous_database(
-        create_autonomous_database_details=details,
+        create_autonomous_database_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_autonomous_database') and callable(getattr(client, 'get_autonomous_database')):
             try:
                 wait_period_kwargs = {}
@@ -1196,69 +1204,70 @@ def create_autonomous_database_create_autonomous_database_from_backup_timestamp_
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
-    details['dbName'] = db_name
-    details['cpuCoreCount'] = cpu_core_count
-    details['dataStorageSizeInTBs'] = data_storage_size_in_tbs
-    details['adminPassword'] = admin_password
-    details['autonomousDatabaseId'] = autonomous_database_id
-    details['timestamp'] = timestamp
-    details['cloneType'] = clone_type
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['dbName'] = db_name
+    _details['cpuCoreCount'] = cpu_core_count
+    _details['dataStorageSizeInTBs'] = data_storage_size_in_tbs
+    _details['adminPassword'] = admin_password
+    _details['autonomousDatabaseId'] = autonomous_database_id
+    _details['timestamp'] = timestamp
+    _details['cloneType'] = clone_type
 
     if db_workload is not None:
-        details['dbWorkload'] = db_workload
+        _details['dbWorkload'] = db_workload
 
     if is_free_tier is not None:
-        details['isFreeTier'] = is_free_tier
+        _details['isFreeTier'] = is_free_tier
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if license_model is not None:
-        details['licenseModel'] = license_model
+        _details['licenseModel'] = license_model
 
     if is_preview_version_with_service_terms_accepted is not None:
-        details['isPreviewVersionWithServiceTermsAccepted'] = is_preview_version_with_service_terms_accepted
+        _details['isPreviewVersionWithServiceTermsAccepted'] = is_preview_version_with_service_terms_accepted
 
     if is_auto_scaling_enabled is not None:
-        details['isAutoScalingEnabled'] = is_auto_scaling_enabled
+        _details['isAutoScalingEnabled'] = is_auto_scaling_enabled
 
     if is_dedicated is not None:
-        details['isDedicated'] = is_dedicated
+        _details['isDedicated'] = is_dedicated
 
     if autonomous_container_database_id is not None:
-        details['autonomousContainerDatabaseId'] = autonomous_container_database_id
+        _details['autonomousContainerDatabaseId'] = autonomous_container_database_id
 
     if whitelisted_ips is not None:
-        details['whitelistedIps'] = cli_util.parse_json_parameter("whitelisted_ips", whitelisted_ips)
+        _details['whitelistedIps'] = cli_util.parse_json_parameter("whitelisted_ips", whitelisted_ips)
 
     if subnet_id is not None:
-        details['subnetId'] = subnet_id
+        _details['subnetId'] = subnet_id
 
     if nsg_ids is not None:
-        details['nsgIds'] = cli_util.parse_json_parameter("nsg_ids", nsg_ids)
+        _details['nsgIds'] = cli_util.parse_json_parameter("nsg_ids", nsg_ids)
 
     if private_endpoint_label is not None:
-        details['privateEndpointLabel'] = private_endpoint_label
+        _details['privateEndpointLabel'] = private_endpoint_label
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if db_version is not None:
-        details['dbVersion'] = db_version
+        _details['dbVersion'] = db_version
 
-    details['source'] = 'BACKUP_FROM_TIMESTAMP'
+    _details['source'] = 'BACKUP_FROM_TIMESTAMP'
 
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.create_autonomous_database(
-        create_autonomous_database_details=details,
+        create_autonomous_database_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_autonomous_database') and callable(getattr(client, 'get_autonomous_database')):
             try:
                 wait_period_kwargs = {}
@@ -1325,66 +1334,67 @@ def create_autonomous_database_create_autonomous_database_details(ctx, from_json
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
-    details['dbName'] = db_name
-    details['cpuCoreCount'] = cpu_core_count
-    details['dataStorageSizeInTBs'] = data_storage_size_in_tbs
-    details['adminPassword'] = admin_password
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['dbName'] = db_name
+    _details['cpuCoreCount'] = cpu_core_count
+    _details['dataStorageSizeInTBs'] = data_storage_size_in_tbs
+    _details['adminPassword'] = admin_password
 
     if db_workload is not None:
-        details['dbWorkload'] = db_workload
+        _details['dbWorkload'] = db_workload
 
     if is_free_tier is not None:
-        details['isFreeTier'] = is_free_tier
+        _details['isFreeTier'] = is_free_tier
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if license_model is not None:
-        details['licenseModel'] = license_model
+        _details['licenseModel'] = license_model
 
     if is_preview_version_with_service_terms_accepted is not None:
-        details['isPreviewVersionWithServiceTermsAccepted'] = is_preview_version_with_service_terms_accepted
+        _details['isPreviewVersionWithServiceTermsAccepted'] = is_preview_version_with_service_terms_accepted
 
     if is_auto_scaling_enabled is not None:
-        details['isAutoScalingEnabled'] = is_auto_scaling_enabled
+        _details['isAutoScalingEnabled'] = is_auto_scaling_enabled
 
     if is_dedicated is not None:
-        details['isDedicated'] = is_dedicated
+        _details['isDedicated'] = is_dedicated
 
     if autonomous_container_database_id is not None:
-        details['autonomousContainerDatabaseId'] = autonomous_container_database_id
+        _details['autonomousContainerDatabaseId'] = autonomous_container_database_id
 
     if whitelisted_ips is not None:
-        details['whitelistedIps'] = cli_util.parse_json_parameter("whitelisted_ips", whitelisted_ips)
+        _details['whitelistedIps'] = cli_util.parse_json_parameter("whitelisted_ips", whitelisted_ips)
 
     if subnet_id is not None:
-        details['subnetId'] = subnet_id
+        _details['subnetId'] = subnet_id
 
     if nsg_ids is not None:
-        details['nsgIds'] = cli_util.parse_json_parameter("nsg_ids", nsg_ids)
+        _details['nsgIds'] = cli_util.parse_json_parameter("nsg_ids", nsg_ids)
 
     if private_endpoint_label is not None:
-        details['privateEndpointLabel'] = private_endpoint_label
+        _details['privateEndpointLabel'] = private_endpoint_label
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if db_version is not None:
-        details['dbVersion'] = db_version
+        _details['dbVersion'] = db_version
 
-    details['source'] = 'NONE'
+    _details['source'] = 'NONE'
 
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.create_autonomous_database(
-        create_autonomous_database_details=details,
+        create_autonomous_database_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_autonomous_database') and callable(getattr(client, 'get_autonomous_database')):
             try:
                 wait_period_kwargs = {}
@@ -1425,16 +1435,17 @@ def create_autonomous_database_backup(ctx, from_json, wait_for_state, max_wait_s
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['displayName'] = display_name
-    details['autonomousDatabaseId'] = autonomous_database_id
+    _details = {}
+    _details['displayName'] = display_name
+    _details['autonomousDatabaseId'] = autonomous_database_id
 
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.create_autonomous_database_backup(
-        create_autonomous_database_backup_details=details,
+        create_autonomous_database_backup_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_autonomous_database_backup') and callable(getattr(client, 'get_autonomous_database_backup')):
             try:
                 wait_period_kwargs = {}
@@ -1474,16 +1485,17 @@ def create_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 
     kwargs = {}
 
-    details = {}
-    details['databaseId'] = database_id
-    details['displayName'] = display_name
+    _details = {}
+    _details['databaseId'] = database_id
+    _details['displayName'] = display_name
 
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.create_backup(
-        create_backup_details=details,
+        create_backup_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_backup') and callable(getattr(client, 'get_backup')):
             try:
                 wait_period_kwargs = {}
@@ -1529,23 +1541,24 @@ def create_backup_destination(ctx, from_json, wait_for_state, max_wait_seconds, 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['displayName'] = display_name
-    details['compartmentId'] = compartment_id
-    details['type'] = type
+    _details = {}
+    _details['displayName'] = display_name
+    _details['compartmentId'] = compartment_id
+    _details['type'] = type
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.create_backup_destination(
-        create_backup_destination_details=details,
+        create_backup_destination_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_backup_destination') and callable(getattr(client, 'get_backup_destination')):
             try:
                 wait_period_kwargs = {}
@@ -1591,25 +1604,26 @@ def create_backup_destination_create_nfs_backup_destination_details(ctx, from_js
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['displayName'] = display_name
-    details['compartmentId'] = compartment_id
-    details['localMountPointPath'] = local_mount_point_path
+    _details = {}
+    _details['displayName'] = display_name
+    _details['compartmentId'] = compartment_id
+    _details['localMountPointPath'] = local_mount_point_path
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    details['type'] = 'NFS'
+    _details['type'] = 'NFS'
 
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.create_backup_destination(
-        create_backup_destination_details=details,
+        create_backup_destination_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_backup_destination') and callable(getattr(client, 'get_backup_destination')):
             try:
                 wait_period_kwargs = {}
@@ -1656,26 +1670,27 @@ def create_backup_destination_create_recovery_appliance_backup_destination_detai
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['displayName'] = display_name
-    details['compartmentId'] = compartment_id
-    details['connectionString'] = connection_string
-    details['vpcUsers'] = cli_util.parse_json_parameter("vpc_users", vpc_users)
+    _details = {}
+    _details['displayName'] = display_name
+    _details['compartmentId'] = compartment_id
+    _details['connectionString'] = connection_string
+    _details['vpcUsers'] = cli_util.parse_json_parameter("vpc_users", vpc_users)
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    details['type'] = 'RECOVERY_APPLIANCE'
+    _details['type'] = 'RECOVERY_APPLIANCE'
 
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.create_backup_destination(
-        create_backup_destination_details=details,
+        create_backup_destination_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_backup_destination') and callable(getattr(client, 'get_backup_destination')):
             try:
                 wait_period_kwargs = {}
@@ -1718,16 +1733,17 @@ def create_console_connection(ctx, from_json, wait_for_state, max_wait_seconds, 
 
     kwargs = {}
 
-    details = {}
-    details['publicKey'] = public_key
+    _details = {}
+    _details['publicKey'] = public_key
 
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.create_console_connection(
         db_node_id=db_node_id,
-        create_console_connection_details=details,
+        create_console_connection_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_console_connection') and callable(getattr(client, 'get_console_connection')):
             try:
                 wait_period_kwargs = {}
@@ -1795,19 +1811,20 @@ def create_data_guard_association(ctx, from_json, wait_for_state, max_wait_secon
 
     kwargs = {}
 
-    details = {}
-    details['databaseAdminPassword'] = database_admin_password
-    details['protectionMode'] = protection_mode
-    details['transportType'] = transport_type
-    details['creationType'] = creation_type
+    _details = {}
+    _details['databaseAdminPassword'] = database_admin_password
+    _details['protectionMode'] = protection_mode
+    _details['transportType'] = transport_type
+    _details['creationType'] = creation_type
 
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.create_data_guard_association(
         database_id=database_id,
-        create_data_guard_association_details=details,
+        create_data_guard_association_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_data_guard_association') and callable(getattr(client, 'get_data_guard_association')):
             try:
                 wait_period_kwargs = {}
@@ -1885,41 +1902,42 @@ def create_data_guard_association_create_data_guard_association_with_new_db_syst
 
     kwargs = {}
 
-    details = {}
-    details['databaseAdminPassword'] = database_admin_password
-    details['protectionMode'] = protection_mode
-    details['transportType'] = transport_type
+    _details = {}
+    _details['databaseAdminPassword'] = database_admin_password
+    _details['protectionMode'] = protection_mode
+    _details['transportType'] = transport_type
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if availability_domain is not None:
-        details['availabilityDomain'] = availability_domain
+        _details['availabilityDomain'] = availability_domain
 
     if shape is not None:
-        details['shape'] = shape
+        _details['shape'] = shape
 
     if subnet_id is not None:
-        details['subnetId'] = subnet_id
+        _details['subnetId'] = subnet_id
 
     if nsg_ids is not None:
-        details['nsgIds'] = cli_util.parse_json_parameter("nsg_ids", nsg_ids)
+        _details['nsgIds'] = cli_util.parse_json_parameter("nsg_ids", nsg_ids)
 
     if backup_network_nsg_ids is not None:
-        details['backupNetworkNsgIds'] = cli_util.parse_json_parameter("backup_network_nsg_ids", backup_network_nsg_ids)
+        _details['backupNetworkNsgIds'] = cli_util.parse_json_parameter("backup_network_nsg_ids", backup_network_nsg_ids)
 
     if hostname is not None:
-        details['hostname'] = hostname
+        _details['hostname'] = hostname
 
-    details['creationType'] = 'NewDbSystem'
+    _details['creationType'] = 'NewDbSystem'
 
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.create_data_guard_association(
         database_id=database_id,
-        create_data_guard_association_details=details,
+        create_data_guard_association_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_data_guard_association') and callable(getattr(client, 'get_data_guard_association')):
             try:
                 wait_period_kwargs = {}
@@ -1987,23 +2005,24 @@ def create_data_guard_association_create_data_guard_association_to_existing_db_s
 
     kwargs = {}
 
-    details = {}
-    details['databaseAdminPassword'] = database_admin_password
-    details['protectionMode'] = protection_mode
-    details['transportType'] = transport_type
+    _details = {}
+    _details['databaseAdminPassword'] = database_admin_password
+    _details['protectionMode'] = protection_mode
+    _details['transportType'] = transport_type
 
     if peer_db_system_id is not None:
-        details['peerDbSystemId'] = peer_db_system_id
+        _details['peerDbSystemId'] = peer_db_system_id
 
-    details['creationType'] = 'ExistingDbSystem'
+    _details['creationType'] = 'ExistingDbSystem'
 
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.create_data_guard_association(
         database_id=database_id,
-        create_data_guard_association_details=details,
+        create_data_guard_association_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_data_guard_association') and callable(getattr(client, 'get_data_guard_association')):
             try:
                 wait_period_kwargs = {}
@@ -2045,19 +2064,20 @@ def create_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['dbHomeId'] = db_home_id
-    details['source'] = source
+    _details = {}
+    _details['dbHomeId'] = db_home_id
+    _details['source'] = source
 
     if db_version is not None:
-        details['dbVersion'] = db_version
+        _details['dbVersion'] = db_version
 
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.create_database(
-        create_new_database_details=details,
+        create_new_database_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_database') and callable(getattr(client, 'get_database')):
             try:
                 wait_period_kwargs = {}
@@ -2099,21 +2119,22 @@ def create_database_create_new_database_details(ctx, from_json, wait_for_state, 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['dbHomeId'] = db_home_id
-    details['database'] = cli_util.parse_json_parameter("database", database)
+    _details = {}
+    _details['dbHomeId'] = db_home_id
+    _details['database'] = cli_util.parse_json_parameter("database", database)
 
     if db_version is not None:
-        details['dbVersion'] = db_version
+        _details['dbVersion'] = db_version
 
-    details['source'] = 'NONE'
+    _details['source'] = 'NONE'
 
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.create_database(
-        create_new_database_details=details,
+        create_new_database_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_database') and callable(getattr(client, 'get_database')):
             try:
                 wait_period_kwargs = {}
@@ -2155,21 +2176,22 @@ def create_database_create_database_from_backup(ctx, from_json, wait_for_state, 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['dbHomeId'] = db_home_id
-    details['database'] = cli_util.parse_json_parameter("database", database)
+    _details = {}
+    _details['dbHomeId'] = db_home_id
+    _details['database'] = cli_util.parse_json_parameter("database", database)
 
     if db_version is not None:
-        details['dbVersion'] = db_version
+        _details['dbVersion'] = db_version
 
-    details['source'] = 'DB_BACKUP'
+    _details['source'] = 'DB_BACKUP'
 
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.create_database(
-        create_new_database_details=details,
+        create_new_database_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_database') and callable(getattr(client, 'get_database')):
             try:
                 wait_period_kwargs = {}
@@ -2209,20 +2231,21 @@ def create_db_home(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 
     kwargs = {}
 
-    details = {}
+    _details = {}
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if source is not None:
-        details['source'] = source
+        _details['source'] = source
 
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.create_db_home(
-        create_db_home_with_db_system_id_details=details,
+        create_db_home_with_db_system_id_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_db_home') and callable(getattr(client, 'get_db_home')):
             try:
                 wait_period_kwargs = {}
@@ -2263,21 +2286,22 @@ def create_db_home_create_db_home_with_db_system_id_from_backup_details(ctx, fro
 
     kwargs = {}
 
-    details = {}
-    details['dbSystemId'] = db_system_id
-    details['database'] = cli_util.parse_json_parameter("database", database)
+    _details = {}
+    _details['dbSystemId'] = db_system_id
+    _details['database'] = cli_util.parse_json_parameter("database", database)
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
-    details['source'] = 'DB_BACKUP'
+    _details['source'] = 'DB_BACKUP'
 
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.create_db_home(
-        create_db_home_with_db_system_id_details=details,
+        create_db_home_with_db_system_id_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_db_home') and callable(getattr(client, 'get_db_home')):
             try:
                 wait_period_kwargs = {}
@@ -2319,24 +2343,25 @@ def create_db_home_create_db_home_with_db_system_id_details(ctx, from_json, wait
 
     kwargs = {}
 
-    details = {}
-    details['dbSystemId'] = db_system_id
-    details['dbVersion'] = db_version
+    _details = {}
+    _details['dbSystemId'] = db_system_id
+    _details['dbVersion'] = db_version
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if database is not None:
-        details['database'] = cli_util.parse_json_parameter("database", database)
+        _details['database'] = cli_util.parse_json_parameter("database", database)
 
-    details['source'] = 'NONE'
+    _details['source'] = 'NONE'
 
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.create_db_home(
-        create_db_home_with_db_system_id_details=details,
+        create_db_home_with_db_system_id_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_db_home') and callable(getattr(client, 'get_db_home')):
             try:
                 wait_period_kwargs = {}
@@ -2378,24 +2403,25 @@ def create_db_home_create_db_home_with_vm_cluster_id_details(ctx, from_json, wai
 
     kwargs = {}
 
-    details = {}
-    details['vmClusterId'] = vm_cluster_id
-    details['dbVersion'] = db_version
+    _details = {}
+    _details['vmClusterId'] = vm_cluster_id
+    _details['dbVersion'] = db_version
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if database is not None:
-        details['database'] = cli_util.parse_json_parameter("database", database)
+        _details['database'] = cli_util.parse_json_parameter("database", database)
 
-    details['source'] = 'VM_CLUSTER_NEW'
+    _details['source'] = 'VM_CLUSTER_NEW'
 
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.create_db_home(
-        create_db_home_with_db_system_id_details=details,
+        create_db_home_with_db_system_id_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_db_home') and callable(getattr(client, 'get_db_home')):
             try:
                 wait_period_kwargs = {}
@@ -2451,35 +2477,36 @@ def create_exadata_infrastructure(ctx, from_json, wait_for_state, max_wait_secon
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
-    details['displayName'] = display_name
-    details['shape'] = shape
-    details['timeZone'] = time_zone
-    details['cloudControlPlaneServer1'] = cloud_control_plane_server1
-    details['cloudControlPlaneServer2'] = cloud_control_plane_server2
-    details['netmask'] = netmask
-    details['gateway'] = gateway
-    details['adminNetworkCIDR'] = admin_network_cidr
-    details['infiniBandNetworkCIDR'] = infini_band_network_cidr
-    details['dnsServer'] = cli_util.parse_json_parameter("dns_server", dns_server)
-    details['ntpServer'] = cli_util.parse_json_parameter("ntp_server", ntp_server)
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['displayName'] = display_name
+    _details['shape'] = shape
+    _details['timeZone'] = time_zone
+    _details['cloudControlPlaneServer1'] = cloud_control_plane_server1
+    _details['cloudControlPlaneServer2'] = cloud_control_plane_server2
+    _details['netmask'] = netmask
+    _details['gateway'] = gateway
+    _details['adminNetworkCIDR'] = admin_network_cidr
+    _details['infiniBandNetworkCIDR'] = infini_band_network_cidr
+    _details['dnsServer'] = cli_util.parse_json_parameter("dns_server", dns_server)
+    _details['ntpServer'] = cli_util.parse_json_parameter("ntp_server", ntp_server)
 
     if corporate_proxy is not None:
-        details['corporateProxy'] = corporate_proxy
+        _details['corporateProxy'] = corporate_proxy
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.create_exadata_infrastructure(
-        create_exadata_infrastructure_details=details,
+        create_exadata_infrastructure_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_exadata_infrastructure') and callable(getattr(client, 'get_exadata_infrastructure')):
             try:
                 wait_period_kwargs = {}
@@ -2528,27 +2555,27 @@ def create_external_backup_job(ctx, from_json, availability_domain, compartment_
 
     kwargs = {}
 
-    details = {}
-    details['availabilityDomain'] = availability_domain
-    details['compartmentId'] = compartment_id
-    details['displayName'] = display_name
-    details['dbVersion'] = db_version
-    details['dbName'] = db_name
-    details['externalDatabaseIdentifier'] = external_database_identifier
-    details['characterSet'] = character_set
-    details['ncharacterSet'] = ncharacter_set
-    details['databaseMode'] = database_mode
-    details['databaseEdition'] = database_edition
+    _details = {}
+    _details['availabilityDomain'] = availability_domain
+    _details['compartmentId'] = compartment_id
+    _details['displayName'] = display_name
+    _details['dbVersion'] = db_version
+    _details['dbName'] = db_name
+    _details['externalDatabaseIdentifier'] = external_database_identifier
+    _details['characterSet'] = character_set
+    _details['ncharacterSet'] = ncharacter_set
+    _details['databaseMode'] = database_mode
+    _details['databaseEdition'] = database_edition
 
     if db_unique_name is not None:
-        details['dbUniqueName'] = db_unique_name
+        _details['dbUniqueName'] = db_unique_name
 
     if pdb_name is not None:
-        details['pdbName'] = pdb_name
+        _details['pdbName'] = pdb_name
 
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.create_external_backup_job(
-        create_external_backup_job_details=details,
+        create_external_backup_job_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -2583,39 +2610,40 @@ def create_vm_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
-    details['displayName'] = display_name
-    details['exadataInfrastructureId'] = exadata_infrastructure_id
-    details['cpuCoreCount'] = cpu_core_count
-    details['sshPublicKeys'] = cli_util.parse_json_parameter("ssh_public_keys", ssh_public_keys)
-    details['vmClusterNetworkId'] = vm_cluster_network_id
-    details['giVersion'] = gi_version
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['displayName'] = display_name
+    _details['exadataInfrastructureId'] = exadata_infrastructure_id
+    _details['cpuCoreCount'] = cpu_core_count
+    _details['sshPublicKeys'] = cli_util.parse_json_parameter("ssh_public_keys", ssh_public_keys)
+    _details['vmClusterNetworkId'] = vm_cluster_network_id
+    _details['giVersion'] = gi_version
 
     if license_model is not None:
-        details['licenseModel'] = license_model
+        _details['licenseModel'] = license_model
 
     if is_sparse_diskgroup_enabled is not None:
-        details['isSparseDiskgroupEnabled'] = is_sparse_diskgroup_enabled
+        _details['isSparseDiskgroupEnabled'] = is_sparse_diskgroup_enabled
 
     if is_local_backup_enabled is not None:
-        details['isLocalBackupEnabled'] = is_local_backup_enabled
+        _details['isLocalBackupEnabled'] = is_local_backup_enabled
 
     if time_zone is not None:
-        details['timeZone'] = time_zone
+        _details['timeZone'] = time_zone
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.create_vm_cluster(
-        create_vm_cluster_details=details,
+        create_vm_cluster_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_vm_cluster') and callable(getattr(client, 'get_vm_cluster')):
             try:
                 wait_period_kwargs = {}
@@ -2668,31 +2696,32 @@ def create_vm_cluster_network(ctx, from_json, wait_for_state, max_wait_seconds, 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
-    details['displayName'] = display_name
-    details['scans'] = cli_util.parse_json_parameter("scans", scans)
-    details['vmNetworks'] = cli_util.parse_json_parameter("vm_networks", vm_networks)
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['displayName'] = display_name
+    _details['scans'] = cli_util.parse_json_parameter("scans", scans)
+    _details['vmNetworks'] = cli_util.parse_json_parameter("vm_networks", vm_networks)
 
     if dns is not None:
-        details['dns'] = cli_util.parse_json_parameter("dns", dns)
+        _details['dns'] = cli_util.parse_json_parameter("dns", dns)
 
     if ntp is not None:
-        details['ntp'] = cli_util.parse_json_parameter("ntp", ntp)
+        _details['ntp'] = cli_util.parse_json_parameter("ntp", ntp)
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.create_vm_cluster_network(
         exadata_infrastructure_id=exadata_infrastructure_id,
-        vm_cluster_network_details=details,
+        vm_cluster_network_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_vm_cluster_network') and callable(getattr(client, 'get_vm_cluster_network')):
             try:
                 wait_period_kwargs = {}
@@ -2739,13 +2768,14 @@ def db_node_action(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.db_node_action(
         db_node_id=db_node_id,
         action=action,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_db_node') and callable(getattr(client, 'get_db_node')):
             try:
                 wait_period_kwargs = {}
@@ -2790,12 +2820,13 @@ def delete_autonomous_data_warehouse(ctx, from_json, wait_for_state, max_wait_se
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.delete_autonomous_data_warehouse(
         autonomous_data_warehouse_id=autonomous_data_warehouse_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_autonomous_data_warehouse') and callable(getattr(client, 'get_autonomous_data_warehouse')):
             try:
                 wait_period_kwargs = {}
@@ -2853,12 +2884,13 @@ def delete_autonomous_database(ctx, from_json, wait_for_state, max_wait_seconds,
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.delete_autonomous_database(
         autonomous_database_id=autonomous_database_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_autonomous_database') and callable(getattr(client, 'get_autonomous_database')):
             try:
                 wait_period_kwargs = {}
@@ -2915,12 +2947,13 @@ def delete_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.delete_backup(
         backup_id=backup_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_backup') and callable(getattr(client, 'get_backup')):
             try:
                 wait_period_kwargs = {}
@@ -2978,12 +3011,13 @@ def delete_backup_destination(ctx, from_json, wait_for_state, max_wait_seconds, 
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.delete_backup_destination(
         backup_destination_id=backup_destination_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_backup_destination') and callable(getattr(client, 'get_backup_destination')):
             try:
                 wait_period_kwargs = {}
@@ -3041,7 +3075,7 @@ def delete_console_connection(ctx, from_json, db_node_id, console_connection_id,
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.delete_console_connection(
         db_node_id=db_node_id,
         console_connection_id=console_connection_id,
@@ -3080,12 +3114,13 @@ def delete_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
     if perform_final_backup is not None:
         kwargs['perform_final_backup'] = perform_final_backup
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.delete_database(
         database_id=database_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_database') and callable(getattr(client, 'get_database')):
             try:
                 wait_period_kwargs = {}
@@ -3153,12 +3188,13 @@ def delete_db_home(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
         kwargs['if_match'] = if_match
     if perform_final_backup is not None:
         kwargs['perform_final_backup'] = perform_final_backup
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.delete_db_home(
         db_home_id=db_home_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_db_home') and callable(getattr(client, 'get_db_home')):
             try:
                 wait_period_kwargs = {}
@@ -3216,12 +3252,13 @@ def delete_exadata_infrastructure(ctx, from_json, wait_for_state, max_wait_secon
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.delete_exadata_infrastructure(
         exadata_infrastructure_id=exadata_infrastructure_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_exadata_infrastructure') and callable(getattr(client, 'get_exadata_infrastructure')):
             try:
                 wait_period_kwargs = {}
@@ -3279,12 +3316,13 @@ def delete_vm_cluster(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.delete_vm_cluster(
         vm_cluster_id=vm_cluster_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_vm_cluster') and callable(getattr(client, 'get_vm_cluster')):
             try:
                 wait_period_kwargs = {}
@@ -3343,7 +3381,7 @@ def delete_vm_cluster_network(ctx, from_json, exadata_infrastructure_id, vm_clus
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.delete_vm_cluster_network(
         exadata_infrastructure_id=exadata_infrastructure_id,
         vm_cluster_network_id=vm_cluster_network_id,
@@ -3366,7 +3404,7 @@ def deregister_autonomous_database_data_safe(ctx, from_json, autonomous_database
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.deregister_autonomous_database_data_safe(
         autonomous_database_id=autonomous_database_id,
         **kwargs
@@ -3389,7 +3427,7 @@ def download_exadata_infrastructure_config_file(ctx, from_json, file, exadata_in
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.download_exadata_infrastructure_config_file(
         exadata_infrastructure_id=exadata_infrastructure_id,
         **kwargs
@@ -3438,7 +3476,7 @@ def download_vm_cluster_network_config_file(ctx, from_json, file, exadata_infras
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.download_vm_cluster_network_config_file(
         exadata_infrastructure_id=exadata_infrastructure_id,
         vm_cluster_network_id=vm_cluster_network_id,
@@ -3496,17 +3534,18 @@ def failover_data_guard_association(ctx, from_json, wait_for_state, max_wait_sec
     if if_match is not None:
         kwargs['if_match'] = if_match
 
-    details = {}
-    details['databaseAdminPassword'] = database_admin_password
+    _details = {}
+    _details['databaseAdminPassword'] = database_admin_password
 
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.failover_data_guard_association(
         database_id=database_id,
         data_guard_association_id=data_guard_association_id,
-        failover_data_guard_association_details=details,
+        failover_data_guard_association_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_data_guard_association') and callable(getattr(client, 'get_data_guard_association')):
             try:
                 wait_period_kwargs = {}
@@ -3548,13 +3587,13 @@ def generate_autonomous_data_warehouse_wallet(ctx, from_json, file, autonomous_d
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['password'] = password
+    _details = {}
+    _details['password'] = password
 
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.generate_autonomous_data_warehouse_wallet(
         autonomous_data_warehouse_id=autonomous_data_warehouse_id,
-        generate_autonomous_data_warehouse_wallet_details=details,
+        generate_autonomous_data_warehouse_wallet_details=_details,
         **kwargs
     )
 
@@ -3600,16 +3639,16 @@ def generate_autonomous_database_wallet(ctx, from_json, file, autonomous_databas
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['password'] = password
+    _details = {}
+    _details['password'] = password
 
     if generate_type is not None:
-        details['generateType'] = generate_type
+        _details['generateType'] = generate_type
 
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.generate_autonomous_database_wallet(
         autonomous_database_id=autonomous_database_id,
-        generate_autonomous_database_wallet_details=details,
+        generate_autonomous_database_wallet_details=_details,
         **kwargs
     )
 
@@ -3661,27 +3700,27 @@ def generate_recommended_vm_cluster_network(ctx, from_json, exadata_infrastructu
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
-    details['displayName'] = display_name
-    details['networks'] = cli_util.parse_json_parameter("networks", networks)
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['displayName'] = display_name
+    _details['networks'] = cli_util.parse_json_parameter("networks", networks)
 
     if dns is not None:
-        details['dns'] = cli_util.parse_json_parameter("dns", dns)
+        _details['dns'] = cli_util.parse_json_parameter("dns", dns)
 
     if ntp is not None:
-        details['ntp'] = cli_util.parse_json_parameter("ntp", ntp)
+        _details['ntp'] = cli_util.parse_json_parameter("ntp", ntp)
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.generate_recommended_vm_cluster_network(
         exadata_infrastructure_id=exadata_infrastructure_id,
-        generate_recommended_network_details=details,
+        generate_recommended_network_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -3700,7 +3739,7 @@ def get_autonomous_container_database(ctx, from_json, autonomous_container_datab
         raise click.UsageError('Parameter --autonomous-container-database-id cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.get_autonomous_container_database(
         autonomous_container_database_id=autonomous_container_database_id,
         **kwargs
@@ -3721,7 +3760,7 @@ def get_autonomous_data_warehouse(ctx, from_json, autonomous_data_warehouse_id):
         raise click.UsageError('Parameter --autonomous-data-warehouse-id cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.get_autonomous_data_warehouse(
         autonomous_data_warehouse_id=autonomous_data_warehouse_id,
         **kwargs
@@ -3742,7 +3781,7 @@ def get_autonomous_data_warehouse_backup(ctx, from_json, autonomous_data_warehou
         raise click.UsageError('Parameter --autonomous-data-warehouse-backup-id cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.get_autonomous_data_warehouse_backup(
         autonomous_data_warehouse_backup_id=autonomous_data_warehouse_backup_id,
         **kwargs
@@ -3764,7 +3803,7 @@ def get_autonomous_database(ctx, from_json, autonomous_database_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.get_autonomous_database(
         autonomous_database_id=autonomous_database_id,
         **kwargs
@@ -3786,7 +3825,7 @@ def get_autonomous_database_backup(ctx, from_json, autonomous_database_backup_id
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.get_autonomous_database_backup(
         autonomous_database_backup_id=autonomous_database_backup_id,
         **kwargs
@@ -3804,7 +3843,7 @@ def get_autonomous_database_regional_wallet(ctx, from_json, ):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.get_autonomous_database_regional_wallet(
         **kwargs
     )
@@ -3825,7 +3864,7 @@ def get_autonomous_database_wallet(ctx, from_json, autonomous_database_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.get_autonomous_database_wallet(
         autonomous_database_id=autonomous_database_id,
         **kwargs
@@ -3846,7 +3885,7 @@ def get_autonomous_exadata_infrastructure(ctx, from_json, autonomous_exadata_inf
         raise click.UsageError('Parameter --autonomous-exadata-infrastructure-id cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.get_autonomous_exadata_infrastructure(
         autonomous_exadata_infrastructure_id=autonomous_exadata_infrastructure_id,
         **kwargs
@@ -3867,7 +3906,7 @@ def get_backup(ctx, from_json, backup_id):
         raise click.UsageError('Parameter --backup-id cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.get_backup(
         backup_id=backup_id,
         **kwargs
@@ -3889,7 +3928,7 @@ def get_backup_destination(ctx, from_json, backup_destination_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.get_backup_destination(
         backup_destination_id=backup_destination_id,
         **kwargs
@@ -3914,7 +3953,7 @@ def get_console_connection(ctx, from_json, db_node_id, console_connection_id):
         raise click.UsageError('Parameter --console-connection-id cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.get_console_connection(
         db_node_id=db_node_id,
         console_connection_id=console_connection_id,
@@ -3940,7 +3979,7 @@ def get_data_guard_association(ctx, from_json, database_id, data_guard_associati
         raise click.UsageError('Parameter --data-guard-association-id cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.get_data_guard_association(
         database_id=database_id,
         data_guard_association_id=data_guard_association_id,
@@ -3962,7 +4001,7 @@ def get_database(ctx, from_json, database_id):
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.get_database(
         database_id=database_id,
         **kwargs
@@ -3983,7 +4022,7 @@ def get_db_home(ctx, from_json, db_home_id):
         raise click.UsageError('Parameter --db-home-id cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.get_db_home(
         db_home_id=db_home_id,
         **kwargs
@@ -4008,7 +4047,7 @@ def get_db_home_patch(ctx, from_json, db_home_id, patch_id):
         raise click.UsageError('Parameter --patch-id cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.get_db_home_patch(
         db_home_id=db_home_id,
         patch_id=patch_id,
@@ -4034,7 +4073,7 @@ def get_db_home_patch_history_entry(ctx, from_json, db_home_id, patch_history_en
         raise click.UsageError('Parameter --patch-history-entry-id cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.get_db_home_patch_history_entry(
         db_home_id=db_home_id,
         patch_history_entry_id=patch_history_entry_id,
@@ -4056,7 +4095,7 @@ def get_db_node(ctx, from_json, db_node_id):
         raise click.UsageError('Parameter --db-node-id cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.get_db_node(
         db_node_id=db_node_id,
         **kwargs
@@ -4077,7 +4116,7 @@ def get_db_system(ctx, from_json, db_system_id):
         raise click.UsageError('Parameter --db-system-id cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.get_db_system(
         db_system_id=db_system_id,
         **kwargs
@@ -4102,7 +4141,7 @@ def get_db_system_patch(ctx, from_json, db_system_id, patch_id):
         raise click.UsageError('Parameter --patch-id cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.get_db_system_patch(
         db_system_id=db_system_id,
         patch_id=patch_id,
@@ -4128,7 +4167,7 @@ def get_db_system_patch_history_entry(ctx, from_json, db_system_id, patch_histor
         raise click.UsageError('Parameter --patch-history-entry-id cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.get_db_system_patch_history_entry(
         db_system_id=db_system_id,
         patch_history_entry_id=patch_history_entry_id,
@@ -4151,7 +4190,7 @@ def get_exadata_infrastructure(ctx, from_json, exadata_infrastructure_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.get_exadata_infrastructure(
         exadata_infrastructure_id=exadata_infrastructure_id,
         **kwargs
@@ -4173,7 +4212,7 @@ def get_exadata_infrastructure_ocpus(ctx, from_json, autonomous_exadata_infrastr
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.get_exadata_infrastructure_ocpus(
         autonomous_exadata_infrastructure_id=autonomous_exadata_infrastructure_id,
         **kwargs
@@ -4195,7 +4234,7 @@ def get_exadata_iorm_config(ctx, from_json, db_system_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.get_exadata_iorm_config(
         db_system_id=db_system_id,
         **kwargs
@@ -4218,7 +4257,7 @@ def get_external_backup_job(ctx, from_json, backup_id):
         raise click.UsageError('Parameter --backup-id cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.get_external_backup_job(
         backup_id=backup_id,
         **kwargs
@@ -4239,7 +4278,7 @@ def get_maintenance_run(ctx, from_json, maintenance_run_id):
         raise click.UsageError('Parameter --maintenance-run-id cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.get_maintenance_run(
         maintenance_run_id=maintenance_run_id,
         **kwargs
@@ -4261,7 +4300,7 @@ def get_vm_cluster(ctx, from_json, vm_cluster_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.get_vm_cluster(
         vm_cluster_id=vm_cluster_id,
         **kwargs
@@ -4287,7 +4326,7 @@ def get_vm_cluster_network(ctx, from_json, exadata_infrastructure_id, vm_cluster
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.get_vm_cluster_network(
         exadata_infrastructure_id=exadata_infrastructure_id,
         vm_cluster_network_id=vm_cluster_network_id,
@@ -4326,39 +4365,40 @@ def launch_autonomous_exadata_infrastructure(ctx, from_json, wait_for_state, max
 
     kwargs = {}
 
-    details = {}
-    details['compartmentId'] = compartment_id
-    details['availabilityDomain'] = availability_domain
-    details['subnetId'] = subnet_id
-    details['shape'] = shape
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['availabilityDomain'] = availability_domain
+    _details['subnetId'] = subnet_id
+    _details['shape'] = shape
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if nsg_ids is not None:
-        details['nsgIds'] = cli_util.parse_json_parameter("nsg_ids", nsg_ids)
+        _details['nsgIds'] = cli_util.parse_json_parameter("nsg_ids", nsg_ids)
 
     if domain is not None:
-        details['domain'] = domain
+        _details['domain'] = domain
 
     if license_model is not None:
-        details['licenseModel'] = license_model
+        _details['licenseModel'] = license_model
 
     if maintenance_window_details is not None:
-        details['maintenanceWindowDetails'] = cli_util.parse_json_parameter("maintenance_window_details", maintenance_window_details)
+        _details['maintenanceWindowDetails'] = cli_util.parse_json_parameter("maintenance_window_details", maintenance_window_details)
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.launch_autonomous_exadata_infrastructure(
-        launch_autonomous_exadata_infrastructure_details=details,
+        launch_autonomous_exadata_infrastructure_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_autonomous_exadata_infrastructure') and callable(getattr(client, 'get_autonomous_exadata_infrastructure')):
             try:
                 wait_period_kwargs = {}
@@ -4449,69 +4489,70 @@ def launch_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 
     kwargs = {}
 
-    details = {}
-    details['compartmentId'] = compartment_id
-    details['availabilityDomain'] = availability_domain
-    details['subnetId'] = subnet_id
-    details['shape'] = shape
-    details['sshPublicKeys'] = cli_util.parse_json_parameter("ssh_public_keys", ssh_public_keys)
-    details['hostname'] = hostname
-    details['cpuCoreCount'] = cpu_core_count
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['availabilityDomain'] = availability_domain
+    _details['subnetId'] = subnet_id
+    _details['shape'] = shape
+    _details['sshPublicKeys'] = cli_util.parse_json_parameter("ssh_public_keys", ssh_public_keys)
+    _details['hostname'] = hostname
+    _details['cpuCoreCount'] = cpu_core_count
 
     if fault_domains is not None:
-        details['faultDomains'] = cli_util.parse_json_parameter("fault_domains", fault_domains)
+        _details['faultDomains'] = cli_util.parse_json_parameter("fault_domains", fault_domains)
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if backup_subnet_id is not None:
-        details['backupSubnetId'] = backup_subnet_id
+        _details['backupSubnetId'] = backup_subnet_id
 
     if nsg_ids is not None:
-        details['nsgIds'] = cli_util.parse_json_parameter("nsg_ids", nsg_ids)
+        _details['nsgIds'] = cli_util.parse_json_parameter("nsg_ids", nsg_ids)
 
     if backup_network_nsg_ids is not None:
-        details['backupNetworkNsgIds'] = cli_util.parse_json_parameter("backup_network_nsg_ids", backup_network_nsg_ids)
+        _details['backupNetworkNsgIds'] = cli_util.parse_json_parameter("backup_network_nsg_ids", backup_network_nsg_ids)
 
     if time_zone is not None:
-        details['timeZone'] = time_zone
+        _details['timeZone'] = time_zone
 
     if db_system_options is not None:
-        details['dbSystemOptions'] = cli_util.parse_json_parameter("db_system_options", db_system_options)
+        _details['dbSystemOptions'] = cli_util.parse_json_parameter("db_system_options", db_system_options)
 
     if sparse_diskgroup is not None:
-        details['sparseDiskgroup'] = sparse_diskgroup
+        _details['sparseDiskgroup'] = sparse_diskgroup
 
     if domain is not None:
-        details['domain'] = domain
+        _details['domain'] = domain
 
     if cluster_name is not None:
-        details['clusterName'] = cluster_name
+        _details['clusterName'] = cluster_name
 
     if data_storage_percentage is not None:
-        details['dataStoragePercentage'] = data_storage_percentage
+        _details['dataStoragePercentage'] = data_storage_percentage
 
     if initial_data_storage_size_in_gb is not None:
-        details['initialDataStorageSizeInGB'] = initial_data_storage_size_in_gb
+        _details['initialDataStorageSizeInGB'] = initial_data_storage_size_in_gb
 
     if node_count is not None:
-        details['nodeCount'] = node_count
+        _details['nodeCount'] = node_count
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if source is not None:
-        details['source'] = source
+        _details['source'] = source
 
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.launch_db_system(
-        launch_db_system_details=details,
+        launch_db_system_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_db_system') and callable(getattr(client, 'get_db_system')):
             try:
                 wait_period_kwargs = {}
@@ -4606,79 +4647,80 @@ def launch_db_system_launch_db_system_details(ctx, from_json, wait_for_state, ma
 
     kwargs = {}
 
-    details = {}
-    details['compartmentId'] = compartment_id
-    details['availabilityDomain'] = availability_domain
-    details['subnetId'] = subnet_id
-    details['shape'] = shape
-    details['sshPublicKeys'] = cli_util.parse_json_parameter("ssh_public_keys", ssh_public_keys)
-    details['hostname'] = hostname
-    details['cpuCoreCount'] = cpu_core_count
-    details['dbHome'] = cli_util.parse_json_parameter("db_home", db_home)
-    details['databaseEdition'] = database_edition
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['availabilityDomain'] = availability_domain
+    _details['subnetId'] = subnet_id
+    _details['shape'] = shape
+    _details['sshPublicKeys'] = cli_util.parse_json_parameter("ssh_public_keys", ssh_public_keys)
+    _details['hostname'] = hostname
+    _details['cpuCoreCount'] = cpu_core_count
+    _details['dbHome'] = cli_util.parse_json_parameter("db_home", db_home)
+    _details['databaseEdition'] = database_edition
 
     if fault_domains is not None:
-        details['faultDomains'] = cli_util.parse_json_parameter("fault_domains", fault_domains)
+        _details['faultDomains'] = cli_util.parse_json_parameter("fault_domains", fault_domains)
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if backup_subnet_id is not None:
-        details['backupSubnetId'] = backup_subnet_id
+        _details['backupSubnetId'] = backup_subnet_id
 
     if nsg_ids is not None:
-        details['nsgIds'] = cli_util.parse_json_parameter("nsg_ids", nsg_ids)
+        _details['nsgIds'] = cli_util.parse_json_parameter("nsg_ids", nsg_ids)
 
     if backup_network_nsg_ids is not None:
-        details['backupNetworkNsgIds'] = cli_util.parse_json_parameter("backup_network_nsg_ids", backup_network_nsg_ids)
+        _details['backupNetworkNsgIds'] = cli_util.parse_json_parameter("backup_network_nsg_ids", backup_network_nsg_ids)
 
     if time_zone is not None:
-        details['timeZone'] = time_zone
+        _details['timeZone'] = time_zone
 
     if db_system_options is not None:
-        details['dbSystemOptions'] = cli_util.parse_json_parameter("db_system_options", db_system_options)
+        _details['dbSystemOptions'] = cli_util.parse_json_parameter("db_system_options", db_system_options)
 
     if sparse_diskgroup is not None:
-        details['sparseDiskgroup'] = sparse_diskgroup
+        _details['sparseDiskgroup'] = sparse_diskgroup
 
     if domain is not None:
-        details['domain'] = domain
+        _details['domain'] = domain
 
     if cluster_name is not None:
-        details['clusterName'] = cluster_name
+        _details['clusterName'] = cluster_name
 
     if data_storage_percentage is not None:
-        details['dataStoragePercentage'] = data_storage_percentage
+        _details['dataStoragePercentage'] = data_storage_percentage
 
     if initial_data_storage_size_in_gb is not None:
-        details['initialDataStorageSizeInGB'] = initial_data_storage_size_in_gb
+        _details['initialDataStorageSizeInGB'] = initial_data_storage_size_in_gb
 
     if node_count is not None:
-        details['nodeCount'] = node_count
+        _details['nodeCount'] = node_count
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if disk_redundancy is not None:
-        details['diskRedundancy'] = disk_redundancy
+        _details['diskRedundancy'] = disk_redundancy
 
     if license_model is not None:
-        details['licenseModel'] = license_model
+        _details['licenseModel'] = license_model
 
     if maintenance_window_details is not None:
-        details['maintenanceWindowDetails'] = cli_util.parse_json_parameter("maintenance_window_details", maintenance_window_details)
+        _details['maintenanceWindowDetails'] = cli_util.parse_json_parameter("maintenance_window_details", maintenance_window_details)
 
-    details['source'] = 'NONE'
+    _details['source'] = 'NONE'
 
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.launch_db_system(
-        launch_db_system_details=details,
+        launch_db_system_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_db_system') and callable(getattr(client, 'get_db_system')):
             try:
                 wait_period_kwargs = {}
@@ -4772,76 +4814,77 @@ def launch_db_system_launch_db_system_from_backup_details(ctx, from_json, wait_f
 
     kwargs = {}
 
-    details = {}
-    details['compartmentId'] = compartment_id
-    details['availabilityDomain'] = availability_domain
-    details['subnetId'] = subnet_id
-    details['shape'] = shape
-    details['sshPublicKeys'] = cli_util.parse_json_parameter("ssh_public_keys", ssh_public_keys)
-    details['hostname'] = hostname
-    details['cpuCoreCount'] = cpu_core_count
-    details['dbHome'] = cli_util.parse_json_parameter("db_home", db_home)
-    details['databaseEdition'] = database_edition
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['availabilityDomain'] = availability_domain
+    _details['subnetId'] = subnet_id
+    _details['shape'] = shape
+    _details['sshPublicKeys'] = cli_util.parse_json_parameter("ssh_public_keys", ssh_public_keys)
+    _details['hostname'] = hostname
+    _details['cpuCoreCount'] = cpu_core_count
+    _details['dbHome'] = cli_util.parse_json_parameter("db_home", db_home)
+    _details['databaseEdition'] = database_edition
 
     if fault_domains is not None:
-        details['faultDomains'] = cli_util.parse_json_parameter("fault_domains", fault_domains)
+        _details['faultDomains'] = cli_util.parse_json_parameter("fault_domains", fault_domains)
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if backup_subnet_id is not None:
-        details['backupSubnetId'] = backup_subnet_id
+        _details['backupSubnetId'] = backup_subnet_id
 
     if nsg_ids is not None:
-        details['nsgIds'] = cli_util.parse_json_parameter("nsg_ids", nsg_ids)
+        _details['nsgIds'] = cli_util.parse_json_parameter("nsg_ids", nsg_ids)
 
     if backup_network_nsg_ids is not None:
-        details['backupNetworkNsgIds'] = cli_util.parse_json_parameter("backup_network_nsg_ids", backup_network_nsg_ids)
+        _details['backupNetworkNsgIds'] = cli_util.parse_json_parameter("backup_network_nsg_ids", backup_network_nsg_ids)
 
     if time_zone is not None:
-        details['timeZone'] = time_zone
+        _details['timeZone'] = time_zone
 
     if db_system_options is not None:
-        details['dbSystemOptions'] = cli_util.parse_json_parameter("db_system_options", db_system_options)
+        _details['dbSystemOptions'] = cli_util.parse_json_parameter("db_system_options", db_system_options)
 
     if sparse_diskgroup is not None:
-        details['sparseDiskgroup'] = sparse_diskgroup
+        _details['sparseDiskgroup'] = sparse_diskgroup
 
     if domain is not None:
-        details['domain'] = domain
+        _details['domain'] = domain
 
     if cluster_name is not None:
-        details['clusterName'] = cluster_name
+        _details['clusterName'] = cluster_name
 
     if data_storage_percentage is not None:
-        details['dataStoragePercentage'] = data_storage_percentage
+        _details['dataStoragePercentage'] = data_storage_percentage
 
     if initial_data_storage_size_in_gb is not None:
-        details['initialDataStorageSizeInGB'] = initial_data_storage_size_in_gb
+        _details['initialDataStorageSizeInGB'] = initial_data_storage_size_in_gb
 
     if node_count is not None:
-        details['nodeCount'] = node_count
+        _details['nodeCount'] = node_count
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if disk_redundancy is not None:
-        details['diskRedundancy'] = disk_redundancy
+        _details['diskRedundancy'] = disk_redundancy
 
     if license_model is not None:
-        details['licenseModel'] = license_model
+        _details['licenseModel'] = license_model
 
-    details['source'] = 'DB_BACKUP'
+    _details['source'] = 'DB_BACKUP'
 
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.launch_db_system(
-        launch_db_system_details=details,
+        launch_db_system_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_db_system') and callable(getattr(client, 'get_db_system')):
             try:
                 wait_period_kwargs = {}
@@ -4909,7 +4952,7 @@ def list_autonomous_container_databases(ctx, from_json, all_pages, page_size, co
         kwargs['availability_domain'] = availability_domain
     if display_name is not None:
         kwargs['display_name'] = display_name
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -4975,7 +5018,7 @@ def list_autonomous_data_warehouse_backups(ctx, from_json, all_pages, page_size,
         kwargs['lifecycle_state'] = lifecycle_state
     if display_name is not None:
         kwargs['display_name'] = display_name
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -5033,7 +5076,7 @@ def list_autonomous_data_warehouses(ctx, from_json, all_pages, page_size, compar
         kwargs['lifecycle_state'] = lifecycle_state
     if display_name is not None:
         kwargs['display_name'] = display_name
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -5100,7 +5143,7 @@ def list_autonomous_database_backups(ctx, from_json, all_pages, page_size, auton
     if display_name is not None:
         kwargs['display_name'] = display_name
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -5171,7 +5214,7 @@ def list_autonomous_databases(ctx, from_json, all_pages, page_size, compartment_
     if display_name is not None:
         kwargs['display_name'] = display_name
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -5227,7 +5270,7 @@ def list_autonomous_db_preview_versions(ctx, from_json, all_pages, page_size, co
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -5281,7 +5324,7 @@ def list_autonomous_db_versions(ctx, from_json, all_pages, page_size, compartmen
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -5330,7 +5373,7 @@ def list_autonomous_exadata_infrastructure_shapes(ctx, from_json, all_pages, pag
     if page is not None:
         kwargs['page'] = page
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -5399,7 +5442,7 @@ def list_autonomous_exadata_infrastructures(ctx, from_json, all_pages, page_size
         kwargs['availability_domain'] = availability_domain
     if display_name is not None:
         kwargs['display_name'] = display_name
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -5450,7 +5493,7 @@ def list_backup_destination(ctx, from_json, all_pages, page_size, compartment_id
     if type is not None:
         kwargs['type'] = type
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -5502,7 +5545,7 @@ def list_backups(ctx, from_json, all_pages, page_size, database_id, compartment_
         kwargs['limit'] = limit
     if page is not None:
         kwargs['page'] = page
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -5539,7 +5582,7 @@ def list_console_connections(ctx, from_json, all_pages, db_node_id):
         raise click.UsageError('Parameter --db-node-id cannot be whitespace or empty string')
 
     kwargs = {}
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.list_console_connections(
         db_node_id=db_node_id,
         **kwargs
@@ -5571,7 +5614,7 @@ def list_data_guard_associations(ctx, from_json, all_pages, page_size, database_
         kwargs['limit'] = limit
     if page is not None:
         kwargs['page'] = page
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -5636,7 +5679,7 @@ def list_databases(ctx, from_json, all_pages, page_size, compartment_id, db_home
         kwargs['lifecycle_state'] = lifecycle_state
     if db_name is not None:
         kwargs['db_name'] = db_name
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -5686,7 +5729,7 @@ def list_db_home_patch_history_entries(ctx, from_json, all_pages, page_size, db_
         kwargs['limit'] = limit
     if page is not None:
         kwargs['page'] = page
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -5736,7 +5779,7 @@ def list_db_home_patches(ctx, from_json, all_pages, page_size, db_home_id, limit
         kwargs['limit'] = limit
     if page is not None:
         kwargs['page'] = page
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -5804,7 +5847,7 @@ def list_db_homes(ctx, from_json, all_pages, page_size, compartment_id, db_syste
         kwargs['lifecycle_state'] = lifecycle_state
     if display_name is not None:
         kwargs['display_name'] = display_name
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -5866,7 +5909,7 @@ def list_db_nodes(ctx, from_json, all_pages, page_size, compartment_id, db_syste
         kwargs['sort_order'] = sort_order
     if lifecycle_state is not None:
         kwargs['lifecycle_state'] = lifecycle_state
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -5916,7 +5959,7 @@ def list_db_system_patch_history_entries(ctx, from_json, all_pages, page_size, d
         kwargs['limit'] = limit
     if page is not None:
         kwargs['page'] = page
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -5966,7 +6009,7 @@ def list_db_system_patches(ctx, from_json, all_pages, page_size, db_system_id, l
         kwargs['limit'] = limit
     if page is not None:
         kwargs['page'] = page
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -6016,7 +6059,7 @@ def list_db_system_shapes(ctx, from_json, all_pages, page_size, compartment_id, 
         kwargs['limit'] = limit
     if page is not None:
         kwargs['page'] = page
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -6085,7 +6128,7 @@ def list_db_systems(ctx, from_json, all_pages, page_size, compartment_id, limit,
         kwargs['availability_domain'] = availability_domain
     if display_name is not None:
         kwargs['display_name'] = display_name
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -6141,7 +6184,7 @@ def list_db_versions(ctx, from_json, all_pages, page_size, compartment_id, limit
         kwargs['db_system_id'] = db_system_id
     if storage_management is not None:
         kwargs['storage_management'] = storage_management
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -6201,7 +6244,7 @@ def list_exadata_infrastructures(ctx, from_json, all_pages, page_size, compartme
     if display_name is not None:
         kwargs['display_name'] = display_name
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -6254,7 +6297,7 @@ def list_gi_versions(ctx, from_json, all_pages, page_size, compartment_id, limit
         kwargs['sort_order'] = sort_order
     if shape is not None:
         kwargs['shape'] = shape
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -6326,7 +6369,7 @@ def list_maintenance_runs(ctx, from_json, all_pages, page_size, compartment_id, 
         kwargs['lifecycle_state'] = lifecycle_state
     if availability_domain is not None:
         kwargs['availability_domain'] = availability_domain
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -6390,7 +6433,7 @@ def list_vm_cluster_networks(ctx, from_json, all_pages, page_size, exadata_infra
     if display_name is not None:
         kwargs['display_name'] = display_name
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -6456,7 +6499,7 @@ def list_vm_clusters(ctx, from_json, all_pages, page_size, compartment_id, exada
     if display_name is not None:
         kwargs['display_name'] = display_name
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -6496,7 +6539,7 @@ def register_autonomous_database_data_safe(ctx, from_json, autonomous_database_i
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.register_autonomous_database_data_safe(
         autonomous_database_id=autonomous_database_id,
         **kwargs
@@ -6529,17 +6572,18 @@ def reinstate_data_guard_association(ctx, from_json, wait_for_state, max_wait_se
     if if_match is not None:
         kwargs['if_match'] = if_match
 
-    details = {}
-    details['databaseAdminPassword'] = database_admin_password
+    _details = {}
+    _details['databaseAdminPassword'] = database_admin_password
 
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.reinstate_data_guard_association(
         database_id=database_id,
         data_guard_association_id=data_guard_association_id,
-        reinstate_data_guard_association_details=details,
+        reinstate_data_guard_association_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_data_guard_association') and callable(getattr(client, 'get_data_guard_association')):
             try:
                 wait_period_kwargs = {}
@@ -6584,12 +6628,13 @@ def restart_autonomous_container_database(ctx, from_json, wait_for_state, max_wa
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.restart_autonomous_container_database(
         autonomous_container_database_id=autonomous_container_database_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_autonomous_container_database') and callable(getattr(client, 'get_autonomous_container_database')):
             try:
                 wait_period_kwargs = {}
@@ -6633,12 +6678,13 @@ def restart_autonomous_database(ctx, from_json, wait_for_state, max_wait_seconds
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.restart_autonomous_database(
         autonomous_database_id=autonomous_database_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_autonomous_database') and callable(getattr(client, 'get_autonomous_database')):
             try:
                 wait_period_kwargs = {}
@@ -6684,16 +6730,17 @@ def restore_autonomous_data_warehouse(ctx, from_json, wait_for_state, max_wait_s
     if if_match is not None:
         kwargs['if_match'] = if_match
 
-    details = {}
-    details['timestamp'] = timestamp
+    _details = {}
+    _details['timestamp'] = timestamp
 
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.restore_autonomous_data_warehouse(
         autonomous_data_warehouse_id=autonomous_data_warehouse_id,
-        restore_autonomous_data_warehouse_details=details,
+        restore_autonomous_data_warehouse_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_autonomous_data_warehouse') and callable(getattr(client, 'get_autonomous_data_warehouse')):
             try:
                 wait_period_kwargs = {}
@@ -6741,22 +6788,23 @@ def restore_autonomous_database(ctx, from_json, wait_for_state, max_wait_seconds
     if if_match is not None:
         kwargs['if_match'] = if_match
 
-    details = {}
-    details['timestamp'] = timestamp
+    _details = {}
+    _details['timestamp'] = timestamp
 
     if database_scn is not None:
-        details['databaseSCN'] = database_scn
+        _details['databaseSCN'] = database_scn
 
     if latest is not None:
-        details['latest'] = latest
+        _details['latest'] = latest
 
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.restore_autonomous_database(
         autonomous_database_id=autonomous_database_id,
-        restore_autonomous_database_details=details,
+        restore_autonomous_database_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_autonomous_database') and callable(getattr(client, 'get_autonomous_database')):
             try:
                 wait_period_kwargs = {}
@@ -6804,24 +6852,25 @@ def restore_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
     if if_match is not None:
         kwargs['if_match'] = if_match
 
-    details = {}
+    _details = {}
 
     if database_scn is not None:
-        details['databaseSCN'] = database_scn
+        _details['databaseSCN'] = database_scn
 
     if timestamp is not None:
-        details['timestamp'] = timestamp
+        _details['timestamp'] = timestamp
 
     if latest is not None:
-        details['latest'] = latest
+        _details['latest'] = latest
 
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.restore_database(
         database_id=database_id,
-        restore_database_details=details,
+        restore_database_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_database') and callable(getattr(client, 'get_database')):
             try:
                 wait_period_kwargs = {}
@@ -6865,12 +6914,13 @@ def start_autonomous_data_warehouse(ctx, from_json, wait_for_state, max_wait_sec
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.start_autonomous_data_warehouse(
         autonomous_data_warehouse_id=autonomous_data_warehouse_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_autonomous_data_warehouse') and callable(getattr(client, 'get_autonomous_data_warehouse')):
             try:
                 wait_period_kwargs = {}
@@ -6914,12 +6964,13 @@ def start_autonomous_database(ctx, from_json, wait_for_state, max_wait_seconds, 
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.start_autonomous_database(
         autonomous_database_id=autonomous_database_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_autonomous_database') and callable(getattr(client, 'get_autonomous_database')):
             try:
                 wait_period_kwargs = {}
@@ -6963,12 +7014,13 @@ def stop_autonomous_data_warehouse(ctx, from_json, wait_for_state, max_wait_seco
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.stop_autonomous_data_warehouse(
         autonomous_data_warehouse_id=autonomous_data_warehouse_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_autonomous_data_warehouse') and callable(getattr(client, 'get_autonomous_data_warehouse')):
             try:
                 wait_period_kwargs = {}
@@ -7013,12 +7065,13 @@ def stop_autonomous_database(ctx, from_json, wait_for_state, max_wait_seconds, w
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.stop_autonomous_database(
         autonomous_database_id=autonomous_database_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_autonomous_database') and callable(getattr(client, 'get_autonomous_database')):
             try:
                 wait_period_kwargs = {}
@@ -7070,17 +7123,18 @@ def switchover_data_guard_association(ctx, from_json, wait_for_state, max_wait_s
     if if_match is not None:
         kwargs['if_match'] = if_match
 
-    details = {}
-    details['databaseAdminPassword'] = database_admin_password
+    _details = {}
+    _details['databaseAdminPassword'] = database_admin_password
 
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.switchover_data_guard_association(
         database_id=database_id,
         data_guard_association_id=data_guard_association_id,
-        switchover_data_guard_association_details=details,
+        switchover_data_guard_association_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_data_guard_association') and callable(getattr(client, 'get_data_guard_association')):
             try:
                 wait_period_kwargs = {}
@@ -7125,12 +7179,13 @@ def terminate_autonomous_container_database(ctx, from_json, wait_for_state, max_
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.terminate_autonomous_container_database(
         autonomous_container_database_id=autonomous_container_database_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_autonomous_container_database') and callable(getattr(client, 'get_autonomous_container_database')):
             try:
                 wait_period_kwargs = {}
@@ -7187,12 +7242,13 @@ def terminate_autonomous_exadata_infrastructure(ctx, from_json, wait_for_state, 
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.terminate_autonomous_exadata_infrastructure(
         autonomous_exadata_infrastructure_id=autonomous_exadata_infrastructure_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_autonomous_exadata_infrastructure') and callable(getattr(client, 'get_autonomous_exadata_infrastructure')):
             try:
                 wait_period_kwargs = {}
@@ -7249,12 +7305,13 @@ def terminate_db_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.terminate_db_system(
         db_system_id=db_system_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_db_system') and callable(getattr(client, 'get_db_system')):
             try:
                 wait_period_kwargs = {}
@@ -7324,33 +7381,34 @@ def update_autonomous_container_database(ctx, from_json, force, wait_for_state, 
     if if_match is not None:
         kwargs['if_match'] = if_match
 
-    details = {}
+    _details = {}
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if patch_model is not None:
-        details['patchModel'] = patch_model
+        _details['patchModel'] = patch_model
 
     if maintenance_window_details is not None:
-        details['maintenanceWindowDetails'] = cli_util.parse_json_parameter("maintenance_window_details", maintenance_window_details)
+        _details['maintenanceWindowDetails'] = cli_util.parse_json_parameter("maintenance_window_details", maintenance_window_details)
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if backup_config is not None:
-        details['backupConfig'] = cli_util.parse_json_parameter("backup_config", backup_config)
+        _details['backupConfig'] = cli_util.parse_json_parameter("backup_config", backup_config)
 
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.update_autonomous_container_database(
         autonomous_container_database_id=autonomous_container_database_id,
-        update_autonomous_container_database_details=details,
+        update_autonomous_container_database_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_autonomous_container_database') and callable(getattr(client, 'get_autonomous_container_database')):
             try:
                 wait_period_kwargs = {}
@@ -7408,33 +7466,34 @@ def update_autonomous_data_warehouse(ctx, from_json, force, wait_for_state, max_
     if if_match is not None:
         kwargs['if_match'] = if_match
 
-    details = {}
+    _details = {}
 
     if cpu_core_count is not None:
-        details['cpuCoreCount'] = cpu_core_count
+        _details['cpuCoreCount'] = cpu_core_count
 
     if data_storage_size_in_tbs is not None:
-        details['dataStorageSizeInTBs'] = data_storage_size_in_tbs
+        _details['dataStorageSizeInTBs'] = data_storage_size_in_tbs
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if admin_password is not None:
-        details['adminPassword'] = admin_password
+        _details['adminPassword'] = admin_password
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.update_autonomous_data_warehouse(
         autonomous_data_warehouse_id=autonomous_data_warehouse_id,
-        update_autonomous_data_warehouse_details=details,
+        update_autonomous_data_warehouse_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_autonomous_data_warehouse') and callable(getattr(client, 'get_autonomous_data_warehouse')):
             try:
                 wait_period_kwargs = {}
@@ -7499,51 +7558,52 @@ def update_autonomous_database(ctx, from_json, force, wait_for_state, max_wait_s
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if cpu_core_count is not None:
-        details['cpuCoreCount'] = cpu_core_count
+        _details['cpuCoreCount'] = cpu_core_count
 
     if data_storage_size_in_tbs is not None:
-        details['dataStorageSizeInTBs'] = data_storage_size_in_tbs
+        _details['dataStorageSizeInTBs'] = data_storage_size_in_tbs
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if is_free_tier is not None:
-        details['isFreeTier'] = is_free_tier
+        _details['isFreeTier'] = is_free_tier
 
     if admin_password is not None:
-        details['adminPassword'] = admin_password
+        _details['adminPassword'] = admin_password
 
     if db_name is not None:
-        details['dbName'] = db_name
+        _details['dbName'] = db_name
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if nsg_ids is not None:
-        details['nsgIds'] = cli_util.parse_json_parameter("nsg_ids", nsg_ids)
+        _details['nsgIds'] = cli_util.parse_json_parameter("nsg_ids", nsg_ids)
 
     if license_model is not None:
-        details['licenseModel'] = license_model
+        _details['licenseModel'] = license_model
 
     if whitelisted_ips is not None:
-        details['whitelistedIps'] = cli_util.parse_json_parameter("whitelisted_ips", whitelisted_ips)
+        _details['whitelistedIps'] = cli_util.parse_json_parameter("whitelisted_ips", whitelisted_ips)
 
     if is_auto_scaling_enabled is not None:
-        details['isAutoScalingEnabled'] = is_auto_scaling_enabled
+        _details['isAutoScalingEnabled'] = is_auto_scaling_enabled
 
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.update_autonomous_database(
         autonomous_database_id=autonomous_database_id,
-        update_autonomous_database_details=details,
+        update_autonomous_database_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_autonomous_database') and callable(getattr(client, 'get_autonomous_database')):
             try:
                 wait_period_kwargs = {}
@@ -7580,14 +7640,14 @@ def update_autonomous_database_regional_wallet(ctx, from_json, should_rotate):
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if should_rotate is not None:
-        details['shouldRotate'] = should_rotate
+        _details['shouldRotate'] = should_rotate
 
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.update_autonomous_database_regional_wallet(
-        update_autonomous_database_wallet_details=details,
+        update_autonomous_database_wallet_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -7609,15 +7669,15 @@ def update_autonomous_database_wallet(ctx, from_json, autonomous_database_id, sh
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if should_rotate is not None:
-        details['shouldRotate'] = should_rotate
+        _details['shouldRotate'] = should_rotate
 
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.update_autonomous_database_wallet(
         autonomous_database_id=autonomous_database_id,
-        update_autonomous_database_wallet_details=details,
+        update_autonomous_database_wallet_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -7655,30 +7715,31 @@ def update_autonomous_exadata_infrastructure(ctx, from_json, force, wait_for_sta
     if if_match is not None:
         kwargs['if_match'] = if_match
 
-    details = {}
+    _details = {}
 
     if display_name is not None:
-        details['displayName'] = display_name
+        _details['displayName'] = display_name
 
     if maintenance_window_details is not None:
-        details['maintenanceWindowDetails'] = cli_util.parse_json_parameter("maintenance_window_details", maintenance_window_details)
+        _details['maintenanceWindowDetails'] = cli_util.parse_json_parameter("maintenance_window_details", maintenance_window_details)
 
     if nsg_ids is not None:
-        details['nsgIds'] = cli_util.parse_json_parameter("nsg_ids", nsg_ids)
+        _details['nsgIds'] = cli_util.parse_json_parameter("nsg_ids", nsg_ids)
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.update_autonomous_exadata_infrastructure(
         autonomous_exadata_infrastructure_id=autonomous_exadata_infrastructure_id,
-        update_autonomous_exadata_infrastructures_details=details,
+        update_autonomous_exadata_infrastructures_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_autonomous_exadata_infrastructure') and callable(getattr(client, 'get_autonomous_exadata_infrastructure')):
             try:
                 wait_period_kwargs = {}
@@ -7736,30 +7797,31 @@ def update_backup_destination(ctx, from_json, force, wait_for_state, max_wait_se
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if vpc_users is not None:
-        details['vpcUsers'] = cli_util.parse_json_parameter("vpc_users", vpc_users)
+        _details['vpcUsers'] = cli_util.parse_json_parameter("vpc_users", vpc_users)
 
     if connection_string is not None:
-        details['connectionString'] = connection_string
+        _details['connectionString'] = connection_string
 
     if local_mount_point_path is not None:
-        details['localMountPointPath'] = local_mount_point_path
+        _details['localMountPointPath'] = local_mount_point_path
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.update_backup_destination(
         backup_destination_id=backup_destination_id,
-        update_backup_destination_details=details,
+        update_backup_destination_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_backup_destination') and callable(getattr(client, 'get_backup_destination')):
             try:
                 wait_period_kwargs = {}
@@ -7787,6 +7849,7 @@ def update_backup_destination(ctx, from_json, force, wait_for_state, max_wait_se
 @database_group.command(name=cli_util.override('db.update_database.command_name', 'update'), help=u"""Update a Database based on the request parameters you provide.""")
 @cli_util.option('--database-id', required=True, help=u"""The database [OCID].""")
 @cli_util.option('--db-backup-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--db-home-id', help=u"""The [OCID] of the Database Home.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -7801,7 +7864,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'db-backup-config': {'module': 'database', 'class': 'DbBackupConfig'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'Database'})
 @cli_util.wrap_exceptions
-def update_database(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, db_backup_config, freeform_tags, defined_tags, if_match):
+def update_database(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, db_backup_config, db_home_id, freeform_tags, defined_tags, if_match):
 
     if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
         raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
@@ -7814,24 +7877,28 @@ def update_database(ctx, from_json, force, wait_for_state, max_wait_seconds, wai
     if if_match is not None:
         kwargs['if_match'] = if_match
 
-    details = {}
+    _details = {}
 
     if db_backup_config is not None:
-        details['dbBackupConfig'] = cli_util.parse_json_parameter("db_backup_config", db_backup_config)
+        _details['dbBackupConfig'] = cli_util.parse_json_parameter("db_backup_config", db_backup_config)
+
+    if db_home_id is not None:
+        _details['dbHomeId'] = db_home_id
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.update_database(
         database_id=database_id,
-        update_database_details=details,
+        update_database_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_database') and callable(getattr(client, 'get_database')):
             try:
                 wait_period_kwargs = {}
@@ -7882,18 +7949,19 @@ def update_db_home(ctx, from_json, force, wait_for_state, max_wait_seconds, wait
     if if_match is not None:
         kwargs['if_match'] = if_match
 
-    details = {}
+    _details = {}
 
     if db_version is not None:
-        details['dbVersion'] = cli_util.parse_json_parameter("db_version", db_version)
+        _details['dbVersion'] = cli_util.parse_json_parameter("db_version", db_version)
 
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.update_db_home(
         db_home_id=db_home_id,
-        update_db_home_details=details,
+        update_db_home_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_db_home') and callable(getattr(client, 'get_db_home')):
             try:
                 wait_period_kwargs = {}
@@ -7957,45 +8025,46 @@ def update_db_system(ctx, from_json, force, wait_for_state, max_wait_seconds, wa
     if if_match is not None:
         kwargs['if_match'] = if_match
 
-    details = {}
+    _details = {}
 
     if cpu_core_count is not None:
-        details['cpuCoreCount'] = cpu_core_count
+        _details['cpuCoreCount'] = cpu_core_count
 
     if version_parameterconflict is not None:
-        details['version'] = cli_util.parse_json_parameter("version_parameterconflict", version_parameterconflict)
+        _details['version'] = cli_util.parse_json_parameter("version_parameterconflict", version_parameterconflict)
 
     if ssh_public_keys is not None:
-        details['sshPublicKeys'] = cli_util.parse_json_parameter("ssh_public_keys", ssh_public_keys)
+        _details['sshPublicKeys'] = cli_util.parse_json_parameter("ssh_public_keys", ssh_public_keys)
 
     if data_storage_size_in_gbs is not None:
-        details['dataStorageSizeInGBs'] = data_storage_size_in_gbs
+        _details['dataStorageSizeInGBs'] = data_storage_size_in_gbs
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
     if shape is not None:
-        details['shape'] = shape
+        _details['shape'] = shape
 
     if nsg_ids is not None:
-        details['nsgIds'] = cli_util.parse_json_parameter("nsg_ids", nsg_ids)
+        _details['nsgIds'] = cli_util.parse_json_parameter("nsg_ids", nsg_ids)
 
     if backup_network_nsg_ids is not None:
-        details['backupNetworkNsgIds'] = cli_util.parse_json_parameter("backup_network_nsg_ids", backup_network_nsg_ids)
+        _details['backupNetworkNsgIds'] = cli_util.parse_json_parameter("backup_network_nsg_ids", backup_network_nsg_ids)
 
     if maintenance_window_details is not None:
-        details['maintenanceWindowDetails'] = cli_util.parse_json_parameter("maintenance_window_details", maintenance_window_details)
+        _details['maintenanceWindowDetails'] = cli_util.parse_json_parameter("maintenance_window_details", maintenance_window_details)
 
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.update_db_system(
         db_system_id=db_system_id,
-        update_db_system_details=details,
+        update_db_system_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_db_system') and callable(getattr(client, 'get_db_system')):
             try:
                 wait_period_kwargs = {}
@@ -8060,51 +8129,52 @@ def update_exadata_infrastructure(ctx, from_json, force, wait_for_state, max_wai
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if cloud_control_plane_server1 is not None:
-        details['cloudControlPlaneServer1'] = cloud_control_plane_server1
+        _details['cloudControlPlaneServer1'] = cloud_control_plane_server1
 
     if cloud_control_plane_server2 is not None:
-        details['cloudControlPlaneServer2'] = cloud_control_plane_server2
+        _details['cloudControlPlaneServer2'] = cloud_control_plane_server2
 
     if netmask is not None:
-        details['netmask'] = netmask
+        _details['netmask'] = netmask
 
     if gateway is not None:
-        details['gateway'] = gateway
+        _details['gateway'] = gateway
 
     if admin_network_cidr is not None:
-        details['adminNetworkCIDR'] = admin_network_cidr
+        _details['adminNetworkCIDR'] = admin_network_cidr
 
     if infini_band_network_cidr is not None:
-        details['infiniBandNetworkCIDR'] = infini_band_network_cidr
+        _details['infiniBandNetworkCIDR'] = infini_band_network_cidr
 
     if corporate_proxy is not None:
-        details['corporateProxy'] = corporate_proxy
+        _details['corporateProxy'] = corporate_proxy
 
     if dns_server is not None:
-        details['dnsServer'] = cli_util.parse_json_parameter("dns_server", dns_server)
+        _details['dnsServer'] = cli_util.parse_json_parameter("dns_server", dns_server)
 
     if ntp_server is not None:
-        details['ntpServer'] = cli_util.parse_json_parameter("ntp_server", ntp_server)
+        _details['ntpServer'] = cli_util.parse_json_parameter("ntp_server", ntp_server)
 
     if time_zone is not None:
-        details['timeZone'] = time_zone
+        _details['timeZone'] = time_zone
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.update_exadata_infrastructure(
         exadata_infrastructure_id=exadata_infrastructure_id,
-        update_exadata_infrastructure_details=details,
+        update_exadata_infrastructure_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_exadata_infrastructure') and callable(getattr(client, 'get_exadata_infrastructure')):
             try:
                 wait_period_kwargs = {}
@@ -8159,21 +8229,22 @@ def update_exadata_iorm_config(ctx, from_json, force, wait_for_state, max_wait_s
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if objective is not None:
-        details['objective'] = objective
+        _details['objective'] = objective
 
     if db_plans is not None:
-        details['dbPlans'] = cli_util.parse_json_parameter("db_plans", db_plans)
+        _details['dbPlans'] = cli_util.parse_json_parameter("db_plans", db_plans)
 
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.update_exadata_iorm_config(
         db_system_id=db_system_id,
-        exadata_iorm_config_update_details=details,
+        exadata_iorm_config_update_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_exadata_iorm_config') and callable(getattr(client, 'get_exadata_iorm_config')):
             try:
                 wait_period_kwargs = {}
@@ -8220,21 +8291,22 @@ def update_maintenance_run(ctx, from_json, wait_for_state, max_wait_seconds, wai
     if if_match is not None:
         kwargs['if_match'] = if_match
 
-    details = {}
+    _details = {}
 
     if is_enabled is not None:
-        details['isEnabled'] = is_enabled
+        _details['isEnabled'] = is_enabled
 
     if time_scheduled is not None:
-        details['timeScheduled'] = time_scheduled
+        _details['timeScheduled'] = time_scheduled
 
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.update_maintenance_run(
         maintenance_run_id=maintenance_run_id,
-        update_maintenance_run_details=details,
+        update_maintenance_run_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_maintenance_run') and callable(getattr(client, 'get_maintenance_run')):
             try:
                 wait_period_kwargs = {}
@@ -8292,30 +8364,31 @@ def update_vm_cluster(ctx, from_json, force, wait_for_state, max_wait_seconds, w
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if cpu_core_count is not None:
-        details['cpuCoreCount'] = cpu_core_count
+        _details['cpuCoreCount'] = cpu_core_count
 
     if license_model is not None:
-        details['licenseModel'] = license_model
+        _details['licenseModel'] = license_model
 
     if ssh_public_keys is not None:
-        details['sshPublicKeys'] = cli_util.parse_json_parameter("ssh_public_keys", ssh_public_keys)
+        _details['sshPublicKeys'] = cli_util.parse_json_parameter("ssh_public_keys", ssh_public_keys)
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.update_vm_cluster(
         vm_cluster_id=vm_cluster_id,
-        update_vm_cluster_details=details,
+        update_vm_cluster_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_vm_cluster') and callable(getattr(client, 'get_vm_cluster')):
             try:
                 wait_period_kwargs = {}
@@ -8382,34 +8455,35 @@ def update_vm_cluster_network(ctx, from_json, force, wait_for_state, max_wait_se
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if scans is not None:
-        details['scans'] = cli_util.parse_json_parameter("scans", scans)
+        _details['scans'] = cli_util.parse_json_parameter("scans", scans)
 
     if dns is not None:
-        details['dns'] = cli_util.parse_json_parameter("dns", dns)
+        _details['dns'] = cli_util.parse_json_parameter("dns", dns)
 
     if ntp is not None:
-        details['ntp'] = cli_util.parse_json_parameter("ntp", ntp)
+        _details['ntp'] = cli_util.parse_json_parameter("ntp", ntp)
 
     if vm_networks is not None:
-        details['vmNetworks'] = cli_util.parse_json_parameter("vm_networks", vm_networks)
+        _details['vmNetworks'] = cli_util.parse_json_parameter("vm_networks", vm_networks)
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.update_vm_cluster_network(
         exadata_infrastructure_id=exadata_infrastructure_id,
         vm_cluster_network_id=vm_cluster_network_id,
-        update_vm_cluster_network_details=details,
+        update_vm_cluster_network_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_vm_cluster_network') and callable(getattr(client, 'get_vm_cluster_network')):
             try:
                 wait_period_kwargs = {}
@@ -8455,13 +8529,14 @@ def validate_vm_cluster_network(ctx, from_json, wait_for_state, max_wait_seconds
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
     result = client.validate_vm_cluster_network(
         exadata_infrastructure_id=exadata_infrastructure_id,
         vm_cluster_network_id=vm_cluster_network_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_vm_cluster_network') and callable(getattr(client, 'get_vm_cluster_network')):
             try:
                 wait_period_kwargs = {}

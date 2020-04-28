@@ -1,5 +1,6 @@
 # coding: utf-8
-# Copyright (c) 2016, 2020, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2020, Oracle and/or its affiliates.  All rights reserved.
+# This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 from __future__ import print_function
 import click
@@ -59,13 +60,13 @@ def change_sender_compartment(ctx, from_json, sender_id, compartment_id, if_matc
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
+    _details = {}
+    _details['compartmentId'] = compartment_id
 
-    client = cli_util.build_client('email', ctx)
+    client = cli_util.build_client('email', 'email', ctx)
     result = client.change_sender_compartment(
         sender_id=sender_id,
-        change_sender_compartment_details=details,
+        change_sender_compartment_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -89,22 +90,23 @@ def create_sender(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
-    details['emailAddress'] = email_address
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['emailAddress'] = email_address
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('email', ctx)
+    client = cli_util.build_client('email', 'email', ctx)
     result = client.create_sender(
-        create_sender_details=details,
+        create_sender_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_sender') and callable(getattr(client, 'get_sender')):
             try:
                 wait_period_kwargs = {}
@@ -142,13 +144,13 @@ def create_suppression(ctx, from_json, compartment_id, email_address):
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
-    details['compartmentId'] = compartment_id
-    details['emailAddress'] = email_address
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['emailAddress'] = email_address
 
-    client = cli_util.build_client('email', ctx)
+    client = cli_util.build_client('email', 'email', ctx)
     result = client.create_suppression(
-        create_suppression_details=details,
+        create_suppression_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -175,12 +177,13 @@ def delete_sender(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('email', ctx)
+    client = cli_util.build_client('email', 'email', ctx)
     result = client.delete_sender(
         sender_id=sender_id,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_sender') and callable(getattr(client, 'get_sender')):
             try:
                 wait_period_kwargs = {}
@@ -232,7 +235,7 @@ def delete_suppression(ctx, from_json, suppression_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('email', ctx)
+    client = cli_util.build_client('email', 'email', ctx)
     result = client.delete_suppression(
         suppression_id=suppression_id,
         **kwargs
@@ -254,7 +257,7 @@ def get_sender(ctx, from_json, sender_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('email', ctx)
+    client = cli_util.build_client('email', 'email', ctx)
     result = client.get_sender(
         sender_id=sender_id,
         **kwargs
@@ -276,7 +279,7 @@ def get_suppression(ctx, from_json, suppression_id):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('email', ctx)
+    client = cli_util.build_client('email', 'email', ctx)
     result = client.get_suppression(
         suppression_id=suppression_id,
         **kwargs
@@ -318,7 +321,7 @@ def list_senders(ctx, from_json, all_pages, page_size, compartment_id, lifecycle
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('email', ctx)
+    client = cli_util.build_client('email', 'email', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -385,7 +388,7 @@ def list_suppressions(ctx, from_json, all_pages, page_size, compartment_id, emai
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('email', ctx)
+    client = cli_util.build_client('email', 'email', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
@@ -439,21 +442,22 @@ def update_sender(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
-    details = {}
+    _details = {}
 
     if freeform_tags is not None:
-        details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
-        details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('email', ctx)
+    client = cli_util.build_client('email', 'email', ctx)
     result = client.update_sender(
         sender_id=sender_id,
-        update_sender_details=details,
+        update_sender_details=_details,
         **kwargs
     )
     if wait_for_state:
+
         if hasattr(client, 'get_sender') and callable(getattr(client, 'get_sender')):
             try:
                 wait_period_kwargs = {}

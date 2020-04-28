@@ -1,5 +1,6 @@
 # coding: utf-8
-# Copyright (c) 2016, 2019, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2016, 2020, Oracle and/or its affiliates.  All rights reserved.
+# This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 from __future__ import print_function
 import click
@@ -68,7 +69,7 @@ def create_volume_extended(ctx, **kwargs):
     if kwargs['size_in_mbs'] and kwargs['size_in_gbs']:
         raise click.UsageError('You cannot specify both --size-in-mbs and --size-in-gbs')
 
-    client = cli_util.build_client('blockstorage', ctx)
+    client = cli_util.build_client('core', 'blockstorage', ctx)
 
     if kwargs['source_volume_id']:
         source_volume = client.get_volume(volume_id=kwargs['source_volume_id'])
@@ -124,7 +125,7 @@ def create_boot_volume_extended(ctx, **kwargs):
     if not kwargs['source_boot_volume_id'] and not kwargs['availability_domain']:
         raise click.UsageError('An availability domain must be specified when restoring a boot volume from backup')
 
-    client = cli_util.build_client('blockstorage', ctx)
+    client = cli_util.build_client('core', 'blockstorage', ctx)
 
     if kwargs['source_boot_volume_id']:
         source_boot_volume = client.get_boot_volume(boot_volume_id=kwargs['source_boot_volume_id'])
@@ -181,7 +182,7 @@ def copy_volume_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     if kms_key_id is not None:
         details['kmsKeyId'] = kms_key_id
 
-    client = cli_util.build_client('blockstorage', ctx)
+    client = cli_util.build_client('core', 'blockstorage', ctx)
     result = client.copy_volume_backup(
         volume_backup_id=volume_backup_id,
         copy_volume_backup_details=details,
@@ -190,7 +191,7 @@ def copy_volume_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     # Newly created Resource will be in a different region from the origin region.
     # We should build the client for destination region
     ctx.obj['region'] = destination_region
-    client = cli_util.build_client('blockstorage', ctx)
+    client = cli_util.build_client('core', 'blockstorage', ctx)
     if wait_for_state:
         if hasattr(client, 'get_volume_backup') and callable(getattr(client, 'get_volume_backup')):
             try:
@@ -238,7 +239,7 @@ def copy_boot_volume_backup(ctx, from_json, wait_for_state, max_wait_seconds, wa
     if kms_key_id is not None:
         details['kmsKeyId'] = kms_key_id
 
-    client = cli_util.build_client('blockstorage', ctx)
+    client = cli_util.build_client('core', 'blockstorage', ctx)
     result = client.copy_boot_volume_backup(
         boot_volume_backup_id=boot_volume_backup_id,
         copy_boot_volume_backup_details=details,
@@ -247,7 +248,7 @@ def copy_boot_volume_backup(ctx, from_json, wait_for_state, max_wait_seconds, wa
     # Newly created Resource will be in a different region from the origin region.
     # We should build the client for destination region
     ctx.obj['region'] = destination_region
-    client = cli_util.build_client('blockstorage', ctx)
+    client = cli_util.build_client('core', 'blockstorage', ctx)
     if wait_for_state:
         if hasattr(client, 'get_boot_volume_backup') and callable(getattr(client, 'get_boot_volume_backup')):
             try:
