@@ -6,6 +6,29 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.10.2 - 2020-05-05
+-------------------
+Added
+~~~~~
+* Support for updating the license type of database systems in the Database service
+ 
+  * ``oci db system update --license-model``
+
+* Support for updating the version of 19c autonomous databases in the Database service 
+
+  * ``oci db autonomous-database update --db-version``
+  
+* Support for backup and restore functionality in the Key Management service
+
+  * ``oci kms management vault backup``
+  * ``oci kms management vault restore``
+  * ``oci kms management vault restore-from-file``
+  * ``oci kms management key backup``
+  * ``oci kms management key restore``
+  * ``oci kms management key restore-from-file``
+
+* Support for calling Oracle Cloud Infrastructure services in the Hyderabad region (``--region ap-hyderabad-1``)
+
 2.10.1 - 2020-04-28
 -------------------
 Added

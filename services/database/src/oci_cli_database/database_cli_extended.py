@@ -515,8 +515,11 @@ def delete_database(ctx, **kwargs):
     # this is the only database in the db-home before deleting
     response = client.get_db_home(db_home_id)
 
-    db_system_id = response.data.db_system_id
-    get_db_system_response = client.get_db_system(db_system_id)
+    # For Exacc db homes, vm_cluster_id will be not null while for other type of db homes, db_system_id will be not null
+    if response.data.vm_cluster_id is not None:
+        get_db_system_response = client.get_vm_cluster(response.data.vm_cluster_id)
+    else:
+        get_db_system_response = client.get_db_system(response.data.db_system_id)
     db_system_shape = get_db_system_response.data.shape
     response = client.list_databases(db_home_id=db_home_id, compartment_id=compartment_id)
     # For Exadata systems delete database is called

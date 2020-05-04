@@ -45,6 +45,195 @@ kms_management_root_group.add_command(key_version_group)
 kms_management_root_group.add_command(key_group)
 
 
+@key_group.command(name=cli_util.override('kms_management.backup_key.command_name', 'backup'), help=u"""Backs up an encrypted file that contains all key versions and metadata of the specified key so that you can restore the key later. The file also contains the metadata of the vault that the key belonged to.
+
+The top level --endpoint parameter must be supplied for this operation.""")
+@cli_util.option('--key-id', required=True, help=u"""The OCID of the key.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--backup-location', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ENABLING", "ENABLED", "DISABLING", "DISABLED", "DELETING", "DELETED", "PENDING_DELETION", "SCHEDULING_DELETION", "CANCELLING_DELETION", "UPDATING", "BACKUP_IN_PROGRESS", "RESTORING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'backup-location': {'module': 'key_management', 'class': 'BackupLocation'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'backup-location': {'module': 'key_management', 'class': 'BackupLocation'}}, output_type={'module': 'key_management', 'class': 'Key'})
+@cli_util.wrap_exceptions
+def backup_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, key_id, if_match, backup_location):
+
+    if isinstance(key_id, six.string_types) and len(key_id.strip()) == 0:
+        raise click.UsageError('Parameter --key-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if backup_location is not None:
+        _details['backupLocation'] = cli_util.parse_json_parameter("backup_location", backup_location)
+
+    client = cli_util.build_client('key_management', 'kms_management', ctx)
+    result = client.backup_key(
+        key_id=key_id,
+        backup_key_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_key') and callable(getattr(client, 'get_key')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_key(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@key_group.command(name=cli_util.override('kms_management.backup_key_backup_location_bucket.command_name', 'backup-key-backup-location-bucket'), help=u"""Backs up an encrypted file that contains all key versions and metadata of the specified key so that you can restore the key later. The file also contains the metadata of the vault that the key belonged to.
+
+The top level --endpoint parameter must be supplied for this operation.""")
+@cli_util.option('--key-id', required=True, help=u"""The OCID of the key.""")
+@cli_util.option('--backup-location-namespace', required=True, help=u"""""")
+@cli_util.option('--backup-location-bucket-name', required=True, help=u"""""")
+@cli_util.option('--backup-location-object-name', required=True, help=u"""""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ENABLING", "ENABLED", "DISABLING", "DISABLED", "DELETING", "DELETED", "PENDING_DELETION", "SCHEDULING_DELETION", "CANCELLING_DELETION", "UPDATING", "BACKUP_IN_PROGRESS", "RESTORING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'key_management', 'class': 'Key'})
+@cli_util.wrap_exceptions
+def backup_key_backup_location_bucket(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, key_id, backup_location_namespace, backup_location_bucket_name, backup_location_object_name, if_match):
+
+    if isinstance(key_id, six.string_types) and len(key_id.strip()) == 0:
+        raise click.UsageError('Parameter --key-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['backupLocation'] = {}
+    _details['backupLocation']['namespace'] = backup_location_namespace
+    _details['backupLocation']['bucketName'] = backup_location_bucket_name
+    _details['backupLocation']['objectName'] = backup_location_object_name
+
+    _details['backupLocation']['destination'] = 'BUCKET'
+
+    client = cli_util.build_client('key_management', 'kms_management', ctx)
+    result = client.backup_key(
+        key_id=key_id,
+        backup_key_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_key') and callable(getattr(client, 'get_key')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_key(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@key_group.command(name=cli_util.override('kms_management.backup_key_backup_location_uri.command_name', 'backup-key-backup-location-uri'), help=u"""Backs up an encrypted file that contains all key versions and metadata of the specified key so that you can restore the key later. The file also contains the metadata of the vault that the key belonged to.
+
+The top level --endpoint parameter must be supplied for this operation.""")
+@cli_util.option('--key-id', required=True, help=u"""The OCID of the key.""")
+@cli_util.option('--backup-location-uri', required=True, help=u"""""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ENABLING", "ENABLED", "DISABLING", "DISABLED", "DELETING", "DELETED", "PENDING_DELETION", "SCHEDULING_DELETION", "CANCELLING_DELETION", "UPDATING", "BACKUP_IN_PROGRESS", "RESTORING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'key_management', 'class': 'Key'})
+@cli_util.wrap_exceptions
+def backup_key_backup_location_uri(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, key_id, backup_location_uri, if_match):
+
+    if isinstance(key_id, six.string_types) and len(key_id.strip()) == 0:
+        raise click.UsageError('Parameter --key-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['backupLocation'] = {}
+    _details['backupLocation']['uri'] = backup_location_uri
+
+    _details['backupLocation']['destination'] = 'PRE_AUTHENTICATED_REQUEST_URI'
+
+    client = cli_util.build_client('key_management', 'kms_management', ctx)
+    result = client.backup_key(
+        key_id=key_id,
+        backup_key_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_key') and callable(getattr(client, 'get_key')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_key(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @key_group.command(name=cli_util.override('kms_management.cancel_key_deletion.command_name', 'cancel-key-deletion'), help=u"""Cancels the scheduled deletion of the specified key. Canceling a scheduled deletion restores the key's lifecycle state to what it was before its scheduled deletion.
 
 As a provisioning operation, this call is subject to a Key Management limit that applies to the total number of requests across all provisioning write operations. Key Management might throttle this call to reject an otherwise valid request when the total rate of provisioning write operations exceeds 10 requests per second for a given tenancy.
@@ -52,7 +241,7 @@ As a provisioning operation, this call is subject to a Key Management limit that
 The top level --endpoint parameter must be supplied for this operation.""")
 @cli_util.option('--key-id', required=True, help=u"""The OCID of the key.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ENABLING", "ENABLED", "DISABLING", "DISABLED", "DELETING", "DELETED", "PENDING_DELETION", "SCHEDULING_DELETION", "CANCELLING_DELETION", "UPDATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ENABLING", "ENABLED", "DISABLING", "DISABLED", "DELETING", "DELETED", "PENDING_DELETION", "SCHEDULING_DELETION", "CANCELLING_DELETION", "UPDATING", "BACKUP_IN_PROGRESS", "RESTORING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -168,7 +357,7 @@ As a provisioning operation, this call is subject to a Key Management limit that
 
 The top level --endpoint parameter must be supplied for this operation.""")
 @cli_util.option('--key-id', required=True, help=u"""The OCID of the key.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the key to.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that you want to move the key to.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -202,12 +391,12 @@ def change_key_compartment(ctx, from_json, key_id, compartment_id, if_match):
 As a management operation, this call is subject to a Key Management limit that applies to the total number of requests across all management write operations. Key Management might throttle this call to reject an otherwise valid request when the total rate of management write operations exceeds 10 requests per second for a given tenancy.
 
 The top level --endpoint parameter must be supplied for this operation.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains this master encryption key.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where you want to create the master encryption key.""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name for the key. It does not have to be unique, and it is changeable. Avoid entering confidential information.""")
 @cli_util.option('--key-shape', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ENABLING", "ENABLED", "DISABLING", "DISABLED", "DELETING", "DELETED", "PENDING_DELETION", "SCHEDULING_DELETION", "CANCELLING_DELETION", "UPDATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ENABLING", "ENABLED", "DISABLING", "DISABLED", "DELETING", "DELETED", "PENDING_DELETION", "SCHEDULING_DELETION", "CANCELLING_DELETION", "UPDATING", "BACKUP_IN_PROGRESS", "RESTORING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'key_management', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'key_management', 'class': 'dict(str, string)'}, 'key-shape': {'module': 'key_management', 'class': 'KeyShape'}})
@@ -262,7 +451,7 @@ def create_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
     cli_util.render_response(result, ctx)
 
 
-@key_version_group.command(name=cli_util.override('kms_management.create_key_version.command_name', 'create'), help=u"""Generates a new [KeyVersion] resource that provides new cryptographic material for a master encryption key. The key must be in an ENABLED state to be rotated.
+@key_version_group.command(name=cli_util.override('kms_management.create_key_version.command_name', 'create'), help=u"""Generates a new [KeyVersion] resource that provides new cryptographic material for a master encryption key. The key must be in an `ENABLED` state to be rotated.
 
 As a management operation, this call is subject to a Key Management limit that applies to the total number of requests across all  management write operations. Key Management might throttle this call to reject an otherwise valid request when the total rate of management write operations exceeds 10 requests per second for a given tenancy.
 
@@ -321,7 +510,7 @@ As a management operation, this call is subject to a Key Management limit that a
 The top level --endpoint parameter must be supplied for this operation.""")
 @cli_util.option('--key-id', required=True, help=u"""The OCID of the key.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ENABLING", "ENABLED", "DISABLING", "DISABLED", "DELETING", "DELETED", "PENDING_DELETION", "SCHEDULING_DELETION", "CANCELLING_DELETION", "UPDATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ENABLING", "ENABLED", "DISABLING", "DISABLED", "DELETING", "DELETED", "PENDING_DELETION", "SCHEDULING_DELETION", "CANCELLING_DELETION", "UPDATING", "BACKUP_IN_PROGRESS", "RESTORING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -376,7 +565,7 @@ As a management operation, this call is subject to a Key Management limit that a
 The top level --endpoint parameter must be supplied for this operation.""")
 @cli_util.option('--key-id', required=True, help=u"""The OCID of the key.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ENABLING", "ENABLED", "DISABLING", "DISABLED", "DELETING", "DELETED", "PENDING_DELETION", "SCHEDULING_DELETION", "CANCELLING_DELETION", "UPDATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ENABLING", "ENABLED", "DISABLING", "DISABLED", "DELETING", "DELETED", "PENDING_DELETION", "SCHEDULING_DELETION", "CANCELLING_DELETION", "UPDATING", "BACKUP_IN_PROGRESS", "RESTORING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -481,7 +670,7 @@ def get_key_version(ctx, from_json, key_id, key_version_id):
     cli_util.render_response(result, ctx)
 
 
-@wrapping_key_group.command(name=cli_util.override('kms_management.get_wrapping_key.command_name', 'get'), help=u"""Returns the RSA wrapping key associated with the vault in the endpoint.
+@wrapping_key_group.command(name=cli_util.override('kms_management.get_wrapping_key.command_name', 'get'), help=u"""Gets details about the public RSA wrapping key associated with the vault in the endpoint. Each vault has an RSA key-pair that wraps and unwraps AES key material for import into Key Management.
 
 The top level --endpoint parameter must be supplied for this operation.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -500,7 +689,7 @@ def get_wrapping_key(ctx, from_json, ):
     cli_util.render_response(result, ctx)
 
 
-@key_group.command(name=cli_util.override('kms_management.import_key.command_name', 'import'), help=u"""Imports the given wrapped/encrypted AES key.
+@key_group.command(name=cli_util.override('kms_management.import_key.command_name', 'import'), help=u"""Imports AES key material to create a new key with. The key material must be base64-encoded and wrapped by the vault's public RSA wrapping key before you can import it. Key Management supports AES symmetric keys that are exactly 16, 24, or 32 bytes. Furthermore, the key length must match what you specify at the time of import.
 
 The top level --endpoint parameter must be supplied for this operation.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains this key.""")
@@ -539,13 +728,13 @@ def import_key(ctx, from_json, compartment_id, display_name, key_shape, wrapped_
     cli_util.render_response(result, ctx)
 
 
-@key_version_group.command(name=cli_util.override('kms_management.import_key_version.command_name', 'import'), help=u"""Imports the given key version.
+@key_version_group.command(name=cli_util.override('kms_management.import_key_version.command_name', 'import'), help=u"""Imports AES key material to create a new key version with, and then rotates the key to begin using the new key version. The key material must be base64-encoded and wrapped by the vault's public RSA wrapping key before you can import it. Key Management supports AES symmetric keys that are exactly 16, 24, or 32 bytes. Furthermore, the key length must match the length of the specified key and what you specify as the length at the time of import.
 
 The top level --endpoint parameter must be supplied for this operation.""")
 @cli_util.option('--key-id', required=True, help=u"""The OCID of the key.""")
 @cli_util.option('--wrapped-import-key', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Usage of predefined tag keys. These predefined keys are scoped to namespaces. Example: `{\"foo-namespace\": {\"bar-key\": \"foo-value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type, or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'key_management', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'key_management', 'class': 'dict(str, string)'}, 'wrapped-import-key': {'module': 'key_management', 'class': 'WrappedImportKey'}})
 @cli_util.help_option
 @click.pass_context
@@ -696,6 +885,136 @@ def list_keys(ctx, from_json, all_pages, page_size, compartment_id, limit, page,
     cli_util.render_response(result, ctx)
 
 
+@key_group.command(name=cli_util.override('kms_management.restore_key_from_file.command_name', 'restore-key-from-file'), help=u"""Restores the specified key to the specified vault, based on information in the backup file provided. If the vault doesn't exist, the operation returns a response with a 404 HTTP status error code. You need to first restore the vault associated with the key.
+
+The top level --endpoint parameter must be supplied for this operation.""")
+@cli_util.option('--restore-key-from-file-details', required=True, help=u"""The encrypted backup file to upload to restore the key.""")
+@cli_util.option('--content-length', type=click.INT, help=u"""The content length of the body.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--content-md5', help=u"""The base64-encoded MD5 hash value of the body, as described in [RFC 2616], section 14.15. If the Content-MD5 header is present, Key Management performs an integrity check on the body of the HTTP request by computing the MD5 hash for the body and comparing it to the MD5 hash supplied in the header. If the two hashes don't match, the object is rejected and a response with 400 Unmatched Content MD5 error is returned, along with the message: \"The computed MD5 of the request body (ACTUAL_MD5) does not match the Content-MD5 header (HEADER_MD5).\"""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'key_management', 'class': 'Key'})
+@cli_util.wrap_exceptions
+def restore_key_from_file(ctx, from_json, restore_key_from_file_details, content_length, if_match, content_md5):
+
+    kwargs = {}
+    if content_length is not None:
+        kwargs['content_length'] = content_length
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    if content_md5 is not None:
+        kwargs['content_md5'] = content_md5
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    # do not automatically retry operations with binary inputs
+    kwargs['retry_strategy'] = oci.retry.NoneRetryStrategy()
+
+    client = cli_util.build_client('key_management', 'kms_management', ctx)
+    result = client.restore_key_from_file(
+        restore_key_from_file_details=restore_key_from_file_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@key_group.command(name=cli_util.override('kms_management.restore_key_from_object_store.command_name', 'restore-key-from-object-store'), help=u"""Restores the specified key to the specified vault from an Oracle Cloud Infrastructure Object Storage location. If the vault doesn't exist, the operation returns a response with a 404 HTTP status error code. You need to first restore the vault associated with the key.
+
+The top level --endpoint parameter must be supplied for this operation.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--backup-location', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'backup-location': {'module': 'key_management', 'class': 'BackupLocation'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'backup-location': {'module': 'key_management', 'class': 'BackupLocation'}}, output_type={'module': 'key_management', 'class': 'Key'})
+@cli_util.wrap_exceptions
+def restore_key_from_object_store(ctx, from_json, if_match, backup_location):
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if backup_location is not None:
+        _details['backupLocation'] = cli_util.parse_json_parameter("backup_location", backup_location)
+
+    client = cli_util.build_client('key_management', 'kms_management', ctx)
+    result = client.restore_key_from_object_store(
+        restore_key_from_object_store_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@key_group.command(name=cli_util.override('kms_management.restore_key_from_object_store_backup_location_bucket.command_name', 'restore-key-from-object-store-backup-location-bucket'), help=u"""Restores the specified key to the specified vault from an Oracle Cloud Infrastructure Object Storage location. If the vault doesn't exist, the operation returns a response with a 404 HTTP status error code. You need to first restore the vault associated with the key.
+
+The top level --endpoint parameter must be supplied for this operation.""")
+@cli_util.option('--backup-location-namespace', required=True, help=u"""""")
+@cli_util.option('--backup-location-bucket-name', required=True, help=u"""""")
+@cli_util.option('--backup-location-object-name', required=True, help=u"""""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'key_management', 'class': 'Key'})
+@cli_util.wrap_exceptions
+def restore_key_from_object_store_backup_location_bucket(ctx, from_json, backup_location_namespace, backup_location_bucket_name, backup_location_object_name, if_match):
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['backupLocation'] = {}
+    _details['backupLocation']['namespace'] = backup_location_namespace
+    _details['backupLocation']['bucketName'] = backup_location_bucket_name
+    _details['backupLocation']['objectName'] = backup_location_object_name
+
+    _details['backupLocation']['destination'] = 'BUCKET'
+
+    client = cli_util.build_client('key_management', 'kms_management', ctx)
+    result = client.restore_key_from_object_store(
+        restore_key_from_object_store_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@key_group.command(name=cli_util.override('kms_management.restore_key_from_object_store_backup_location_uri.command_name', 'restore-key-from-object-store-backup-location-uri'), help=u"""Restores the specified key to the specified vault from an Oracle Cloud Infrastructure Object Storage location. If the vault doesn't exist, the operation returns a response with a 404 HTTP status error code. You need to first restore the vault associated with the key.
+
+The top level --endpoint parameter must be supplied for this operation.""")
+@cli_util.option('--backup-location-uri', required=True, help=u"""""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'key_management', 'class': 'Key'})
+@cli_util.wrap_exceptions
+def restore_key_from_object_store_backup_location_uri(ctx, from_json, backup_location_uri, if_match):
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['backupLocation'] = {}
+    _details['backupLocation']['uri'] = backup_location_uri
+
+    _details['backupLocation']['destination'] = 'PRE_AUTHENTICATED_REQUEST_URI'
+
+    client = cli_util.build_client('key_management', 'kms_management', ctx)
+    result = client.restore_key_from_object_store(
+        restore_key_from_object_store_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @key_group.command(name=cli_util.override('kms_management.schedule_key_deletion.command_name', 'schedule-key-deletion'), help=u"""Schedules the deletion of the specified key. This sets the lifecycle state of the key to `PENDING_DELETION` and then deletes it after the specified retention period ends.
 
 As a provisioning operation, this call is subject to a Key Management limit that applies to the total number of requests across all provisioning write operations. Key Management might throttle this call to reject an otherwise valid request when the total rate of provisioning write operations exceeds 10 requests per second for a given tenancy.
@@ -704,7 +1023,7 @@ The top level --endpoint parameter must be supplied for this operation.""")
 @cli_util.option('--key-id', required=True, help=u"""The OCID of the key.""")
 @cli_util.option('--time-of-deletion', type=custom_types.CLI_DATETIME, help=u"""An optional property to indicate when to delete the vault, expressed in [RFC 3339] timestamp format. The specified time must be between 7 and 30 days from when the request is received. If this property is missing, it will be set to 30 days from the time of the request by default.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ENABLING", "ENABLED", "DISABLING", "DISABLED", "DELETING", "DELETED", "PENDING_DELETION", "SCHEDULING_DELETION", "CANCELLING_DELETION", "UPDATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ENABLING", "ENABLED", "DISABLING", "DISABLED", "DELETING", "DELETED", "PENDING_DELETION", "SCHEDULING_DELETION", "CANCELLING_DELETION", "UPDATING", "BACKUP_IN_PROGRESS", "RESTORING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -838,7 +1157,7 @@ The top level --endpoint parameter must be supplied for this operation.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ENABLING", "ENABLED", "DISABLING", "DISABLED", "DELETING", "DELETED", "PENDING_DELETION", "SCHEDULING_DELETION", "CANCELLING_DELETION", "UPDATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ENABLING", "ENABLED", "DISABLING", "DISABLED", "DELETING", "DELETED", "PENDING_DELETION", "SCHEDULING_DELETION", "CANCELLING_DELETION", "UPDATING", "BACKUP_IN_PROGRESS", "RESTORING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'key_management', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'key_management', 'class': 'dict(str, string)'}})
