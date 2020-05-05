@@ -200,7 +200,7 @@ def generate_input_dict_for_skeleton(ctx, targeted_complex_param=None):
         tags_obj = get_example_object_for_tags(targeted_complex_param)
         if tags_obj:
             return tags_obj
-        example_obj = translate_complex_param_to_example_object(input_params_to_complex_types[targeted_complex_param])
+        example_obj = translate_complex_param_to_example_object(input_params_to_complex_types[targeted_complex_param], set())
 
         # If this is a dictionary, remove any redundant elements from the top level (as they have
         # been splatted out of the complex param)
@@ -215,7 +215,7 @@ def generate_input_dict_for_skeleton(ctx, targeted_complex_param=None):
         if tags_obj:
             input_as_dict[camelize(attr_name)] = tags_obj
         else:
-            example_obj = translate_complex_param_to_example_object(complex_param_entry)
+            example_obj = translate_complex_param_to_example_object(complex_param_entry, set())
             remove_keys_if_dict(example_obj, already_processed_params)
             input_as_dict[camelize(attr_name)] = example_obj
 
@@ -249,15 +249,15 @@ def generate_input_dict_for_freeform_tags():
     return dict
 
 
-def translate_complex_param_to_example_object(complex_param_entry):
+def translate_complex_param_to_example_object(complex_param_entry, visited):
     cls = complex_param_entry['class']
 
     # For lists we produce an example 2 element list containing objects of whatever the list type is
     if cls.startswith('list['):
         sub_kls = re.match('list\[(.*)\]', cls).group(1)  # noqa: W605
         return [
-            translate_complex_param_to_example_object({'module': complex_param_entry['module'], 'class': sub_kls}),
-            translate_complex_param_to_example_object({'module': complex_param_entry['module'], 'class': sub_kls})
+            translate_complex_param_to_example_object({'module': complex_param_entry['module'], 'class': sub_kls}, visited),
+            translate_complex_param_to_example_object({'module': complex_param_entry['module'], 'class': sub_kls}, visited)
         ]
 
     # For dictionaries we produce an example 2 element dictionary. We assume that dictionary keys are
@@ -274,7 +274,7 @@ def translate_complex_param_to_example_object(complex_param_entry):
             key_sub_kls = re.match('dict\(([^,]*), (.*)\)', cls).group(1)    # noqa: W605
             value_sub_kls = re.match('dict\(([^,]*), (.*)\)', cls).group(2)  # noqa: W605
 
-        value = translate_complex_param_to_example_object({'module': complex_param_entry['module'], 'class': value_sub_kls})
+        value = translate_complex_param_to_example_object({'module': complex_param_entry['module'], 'class': value_sub_kls}, visited)
         return {PRIMITIVE_TYPES_TO_EXAMPLE_KEY_VALUES[key_sub_kls][0]: value, PRIMITIVE_TYPES_TO_EXAMPLE_KEY_VALUES[key_sub_kls][1]: value}
 
     # If the value is a primitive then just return an example value
@@ -284,6 +284,11 @@ def translate_complex_param_to_example_object(complex_param_entry):
     # If we're at this point, we're some sort of model object so pull out what class we actually are
     cls_type = cli_util.MODULE_TO_TYPE_MAPPINGS[complex_param_entry['module']][cls]
 
+    # Check if we already visited this Class, this is important to cut any cycle.
+    if cls in visited:
+        return None
+    visited.add(cls)
+
     # If we have subclasses it gets a little odd to communicate the variants to cusomters. To do this, we create an array where
     # the first element is a warning that says it isn't actually an array and the remaining elements are examples of what the
     # subclasses look like so the caller can pick one
@@ -291,7 +296,7 @@ def translate_complex_param_to_example_object(complex_param_entry):
     if len(subclasses) > 0:
         subclass_definitions = ['This parameter should actually be a JSON object rather than an array - pick one of the following object variants to use']
         for sc in subclasses:
-            subclass_definitions.append(translate_complex_param_to_example_object({'module': complex_param_entry['module'], 'class': sc.__name__}))
+            subclass_definitions.append(translate_complex_param_to_example_object({'module': complex_param_entry['module'], 'class': sc.__name__}, visited))
 
         return subclass_definitions
 
@@ -309,8 +314,8 @@ def translate_complex_param_to_example_object(complex_param_entry):
         elif attr_type in PRIMITIVE_TYPES_TO_EXAMPLE_SCALAR_VALUES:
             obj_as_dict[property_name] = PRIMITIVE_TYPES_TO_EXAMPLE_SCALAR_VALUES[attr_type]
         else:
-            obj_as_dict[property_name] = translate_complex_param_to_example_object({'module': complex_param_entry['module'], 'class': attr_type})
-
+            obj_as_dict[property_name] = translate_complex_param_to_example_object({'module': complex_param_entry['module'], 'class': attr_type}, visited)
+    visited.remove(cls)
     return obj_as_dict
 
 
