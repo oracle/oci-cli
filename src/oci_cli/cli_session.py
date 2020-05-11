@@ -168,7 +168,7 @@ def refresh(ctx):
 
     auth = oci.auth.signers.SecurityTokenSigner(token, oci.signer.load_private_key_from_file(client_config.get('key_file'), client_config.get('pass_phrase')))
 
-    refresh_url = "https://auth.{region}.oraclecloud.com/v1/authentication/refresh".format(region=client_config.get('region'))
+    refresh_url = "{endpoint}/v1/authentication/refresh".format(endpoint=oci.regions.endpoint_for("auth", client_config.get('region')))
     click.echo("Attempting to refresh token from {refresh_url}".format(refresh_url=refresh_url), file=sys.stderr)
 
     response = requests.post(

@@ -6,10 +6,26 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.10.3 - 2020-05-12
+-------------------
+Added
+~~~~~
+
+* Support for Drift Detection feature as part of Resource Manager Service
+
+  * ``oci resource-manager stack detect-drift --stack-id``
+  * ``oci resource-manager stack list-resource-drift-details --stack-id, --resource-drift-status``
+
+Fixed
+~~~~~
+
+* ``oci session refresh`` was generating incorrect URL for gov regions.
+
 2.10.2 - 2020-05-05
 -------------------
 Added
 ~~~~~
+
 * Support for updating the license type of database systems in the Database service
  
   * ``oci db system update --license-model``
