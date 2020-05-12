@@ -212,3 +212,17 @@ def create_import_tf_state_job(ctx, **kwargs):
 
     # invoke generated command.
     ctx.invoke(resourcemanager_cli.create_job_create_import_tf_state_job_operation_details, **kwargs)
+
+
+# Rename detect-stack-drift to detect-drift
+cli_util.rename_command(resourcemanager_cli, resourcemanager_cli.stack_group, resourcemanager_cli.detect_stack_drift, "detect-drift")
+
+# Move list-stack-resource-drift-details from stack-resource-drift-summary-group to stack-group
+resourcemanager_cli.stack_resource_drift_summary_group.commands.pop(resourcemanager_cli.list_stack_resource_drift_details.name)
+resourcemanager_cli.stack_group.add_command(resourcemanager_cli.list_stack_resource_drift_details)
+
+# Rename list-stack-resource-drift-details to list-resource-drift-details
+cli_util.rename_command(resourcemanager_cli, resourcemanager_cli.stack_group, resourcemanager_cli.list_stack_resource_drift_details, "list-resource-drift-details")
+
+# Pop the stack_resource_drift_summary group
+resourcemanager_cli.resource_manager_root_group.commands.pop(resourcemanager_cli.stack_resource_drift_summary_group.name)

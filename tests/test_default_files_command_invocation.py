@@ -3,11 +3,7 @@
 # This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 import json
-import os
-import os.path
 import pytest
-import shutil
-import six
 import unittest
 from . import test_config_container
 from . import util
@@ -45,79 +41,6 @@ class TestDefaultFilesCommandInvocation(unittest.TestCase):
             result = self.invoke(['os', 'bucket', 'list', '-c', util.COMPARTMENT_ID, '--defaults-file', 'tests/resources/default_files/specific_command_default'])
             assert result.exit_code == 0
             assert result.output == ''  # The namespace shouldn't exist so we get back a blank result
-
-    @pytest.mark.skip
-    def test_invoke_with_default_file_param_accepts_multiple_values(self):
-        with test_config_container.create_vcr().use_cassette(
-                'default_files_command_invoke_with_default_file_param_accepts_multiple_values.yml'):
-            test_bucket_name = util.random_name('BulkPutDefaultsFileTempBucket')
-
-            test_folder = os.path.join('tests', 'temp', 'os_bulk_put_default_file_test')
-            if not os.path.exists(test_folder):
-                os.makedirs(test_folder)
-
-            # Make some files for include/exclude
-            folders_to_files = {
-                '': ['test_file1.txt', 'test_file2.png'],
-                'subfolder': ['blah.pdf', 'hello.txt', 'testfile3.png'],
-                'subfolder/subfolder2': ['xyz.jpg', 'blag.txt', 'byz.jpg', 'testfile4.png']
-            }
-            for folder, files in six.iteritems(folders_to_files):
-                folder_path = os.path.join(test_folder, folder)
-                if not os.path.exists(folder_path):
-                    os.makedirs(folder_path)
-
-                for file in files:
-                    file_path = os.path.join(folder_path, file)
-                    with open(file_path, 'w') as f:
-                        # For non-text extension types this won't create a valid file, but for testing is probably OK
-                        f.write('this is some bulk upload content')
-
-            # Grab the Object Storage namespace
-            result = self.invoke(['os', 'ns', 'get'])
-            util.validate_response(result)
-            namespace = json.loads(result.output)['data']
-
-            result = self.invoke(['os', 'bucket', 'create', '-c', util.COMPARTMENT_ID, '-ns', namespace, '--name', test_bucket_name])
-            util.validate_response(result)
-
-            result = self.invoke([
-                'os', 'object', 'bulk-upload',
-                '-ns', namespace,
-                '--bucket-name', test_bucket_name,
-                '--src-dir', test_folder,
-                '--overwrite',
-                '--defaults-file', 'tests/resources/default_files/param_multiple_default'
-            ])
-            parsed_result = self.parse_json_response_from_mixed_output(result.output)
-            assert parsed_result['skipped-objects'] == []
-            assert parsed_result['upload-failures'] == {}
-
-            expected_uploaded_files = [
-                'test_file1.txt',
-                'subfolder/hello.txt',
-                'subfolder/testfile3.png',
-                'subfolder/subfolder2/blag.txt',
-                'subfolder/subfolder2/testfile4.png'
-            ]
-
-            assert len(parsed_result['uploaded-objects']) == len(expected_uploaded_files)
-            for f in expected_uploaded_files:
-                assert f in parsed_result['uploaded-objects']
-
-        with test_config_container.create_vcr().use_cassette(
-                'default_files_command_invoke_with_default_file_param_accepts_multiple_value_bulk_delete.yml'):
-
-            result = self.invoke(['os', 'object', 'bulk-delete', '-ns', namespace, '--bucket-name', test_bucket_name, '--force'])
-            assert result.exit_code == 0
-
-        with test_config_container.create_vcr().use_cassette(
-                'default_files_command_invoke_with_default_file_param_accepts_multiple_values_delete_bucket.yml'):
-
-            result = self.invoke(['os', 'bucket', 'delete', '-ns', namespace, '--name', test_bucket_name, '--force'])
-            util.validate_response(result)
-
-            shutil.rmtree(test_folder)
 
     @util.slow
     def test_invoke_with_file_paths_and_json_in_default_file(self):

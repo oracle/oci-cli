@@ -7,7 +7,6 @@ from . import test_config_container
 from . import util
 
 import json
-import oci_cli
 import os.path
 import pytest
 import time
@@ -55,46 +54,6 @@ def network_resources():
 
         result = util.invoke_command(['network', 'vcn', 'delete', '--vcn-id', vcn_ocid, '--force', '--wait-for-state', 'TERMINATED', '--wait-interval-seconds', util.WAIT_INTERVAL_SECONDS])
         util.validate_response(result, json_response_expected=False)
-
-
-def test_commands_with_tags_can_generate_json():
-    command_sequences = sorted(util.collect_commands_with_given_args(oci_cli.cli, include_args=['--defined-tags']))
-
-    expected_freeform = {
-        'tagKey1': 'tagValue1',
-        'tagKey2': 'tagValue2'
-    }
-    expected_defined = {
-        'tagNamespace1': {
-            "tagKey1": "tagValue1",
-            "tagKey2": "tagValue2"
-        },
-        'tagNamespace2': {
-            "tagKey1": "tagValue1",
-            "tagKey2": "tagValue2"
-        }
-    }
-
-    for cmd_seq in command_sequences:
-        print(cmd_seq)
-        cmd_to_run_freeform_tags = list(cmd_seq) + ['--generate-param-json-input', 'freeform-tags']
-        cmd_to_run_defined_tags = list(cmd_seq) + ['--generate-param-json-input', 'defined-tags']
-        cmd_to_run_full_json = list(cmd_seq) + ['--generate-full-command-json-input']
-
-        result = invoke(cmd_to_run_freeform_tags)
-        parsed_result = json.loads(result.output)
-        assert expected_freeform == parsed_result
-
-        result = invoke(cmd_to_run_defined_tags)
-        parsed_result = json.loads(result.output)
-        assert expected_defined == parsed_result
-
-        result = invoke(cmd_to_run_full_json)
-        # TODO: generate-full-command-json-input should take advantage of the changes to
-        # generate-param-json-input for freeform-tags and defined-tags.
-        # parsed_result = json.loads(result.output)
-        # assert expected_freeform == parsed_result['freeformTags']
-        # assert expected_defined == parsed_result['definedTags']
 
 
 @util.slow
