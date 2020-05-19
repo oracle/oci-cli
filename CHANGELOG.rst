@@ -6,6 +6,29 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.10.4 - 2020-05-19
+-------------------
+Added
+~~~~~
+
+* Support for Native JWT Validation in Oracle Cloud Infrastructure API Gateway service
+
+  * ``oci api-gateway deployment create --specification``
+  * ``oci api-gateway deployment update --specification``
+
+* Support for Autonomous DataWarehouse and Autonomous Transaction Processing features as a part of the Database Service to display the Private IP for Private Endpoint Database service for Autonomous Databases
+
+  * ``autonomous-database get --autonomous-database-id``
+
+Fixed
+~~~~~
+
+* Combination of --stream-output, --all and --query with pagination was returning invalid JSON output.
+
+  * ``oci audit event list``
+
+* For CLI operations returning Unauthorized error, fixed bug where FileNotFoundError was displayed instead of error message.  (`Issue 280 <https://github.com/oracle/oci-cli/issues/280>`__)  (`Issue 278 <https://github.com/oracle/oci-cli/issues/278>`__)
+
 2.10.3 - 2020-05-12
 -------------------
 Added

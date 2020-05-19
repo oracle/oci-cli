@@ -28,7 +28,7 @@ cli_util.rename_command(incident_cli, incident_group, incident_cli.update_incide
 @cli_util.copy_params_from_generated_command(incident_cli.create_incident, params_to_exclude=['csi', 'ticket'])
 @incident_cli.incident_group.command(name=cli_util.override('support.create_incident.command_name', 'create'), help=u"""This API enables the customer to Create an Incident""")
 @cli_util.option('--csi', required=True, help=u'''Customer Support Identifier''')
-@cli_util.option('--severity', required=True, type=custom_types.CliCaseInsensitiveChoice(["LOW", "MEDIUM", "HGIH", "HIGHEST"]), help=u"""States severity level of incident. Acceptable values are LOW, MEDIUM, HIGH, HIGHEST.  Please note for HIGHEST: Oracle Support requires a 24x7 contact be provided so additional information can be requested as needed 24x7.)""")
+@cli_util.option('--severity', required=True, type=custom_types.CliCaseInsensitiveChoice(["MEDIUM", "HIGH", "HIGHEST"]), help=u"""States severity level of incident. Acceptable values are MEDIUM, HIGH, HIGHEST.  Please note for HIGHEST: Oracle Support requires a 24x7 contact be provided so additional information can be requested as needed 24x7.)""")
 @cli_util.option('--title', required=True, help=u"""Title for the SR.  Should be a high level description of issue.  eg:  Cannot connect to instance""")
 @cli_util.option('--description', required=True, help=u"""This should be the description of the SR with a more granular level of detail as to what the problem you are facing is.  eg: I cannot connect to my compute instance.  I have tried ssh, ping, traceroute, and provide the results of those.""")
 @click.pass_context

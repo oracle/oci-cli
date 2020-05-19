@@ -744,9 +744,9 @@ def wrap_exceptions(func):
             func(ctx, *args, **kwargs)
         except exceptions.ServiceError as exception:
             if exception.status == 401:
+                warn_if_token_present_in_profile_but_not_using_token_auth(ctx)
                 command_name = (ctx.command_path).split()[1] if len(ctx.command_path) > 1 else 'compute'
                 warn_if_clock_skew_present(ctx.obj.get('config'), command_name)
-                warn_if_token_present_in_profile_but_not_using_token_auth(ctx)
 
             if ctx.obj["debug"]:
                 raise
@@ -847,6 +847,7 @@ def make_dict_keys_camel_case(original_obj, parameter_name=None, complex_paramet
 
         new_dict = {}
         for key, value in six.iteritems(original_obj):
+
             camelized_key = string_utils.camelize(key)
 
             # Figure out what the type of "value" is so that we can pass it to the next call to this method. The different cases are:
@@ -886,11 +887,15 @@ def make_dict_keys_camel_case(original_obj, parameter_name=None, complex_paramet
                                     'class': instance.swagger_types[underscored_name]
                                 }
                                 break
+                            elif key == underscored_name:
+                                camelize_keys = False
+                                param_type_to_pass = {
+                                    'module': complex_type_definition['module'],
+                                    'class': instance.swagger_types[underscored_name]
+                                }
+                                break
 
-            if camelize_keys:
-                new_dict[camelized_key] = make_dict_keys_camel_case(value, parameter_name=key, complex_parameter_type=param_type_to_pass)
-            else:
-                new_dict[key] = make_dict_keys_camel_case(value, parameter_name=key, complex_parameter_type=param_type_to_pass)
+            new_dict[camelized_key if camelize_keys else key] = make_dict_keys_camel_case(value, parameter_name=key, complex_parameter_type=param_type_to_pass)
 
         return new_dict
 
@@ -1471,7 +1476,10 @@ def update_command_names_to_spec_names(command_names_to_spec_names, link_replace
     if not generate_all:
         service_dir_list = ['.']
     else:
-        service_dir_list = [os.path.join('services', dir) for dir in os.listdir('services')]
+        if os.path.isdir('services'):
+            service_dir_list = [os.path.join('services', dir) for dir in os.listdir('services')]
+        else:
+            service_dir_list = ['.']
 
     for service_dir in service_dir_list:
         if not os.path.isdir(service_dir) or not os.path.isdir(os.path.join(service_dir, 'docs')):
@@ -1514,9 +1522,9 @@ def get_spec_name_from_command_name(command_name, link_replacements={}, generate
 
 # checks computer time vs server time to determine if clock skew is > 5 minute threshold
 def warn_if_clock_skew_present(config, command_name):
-    spec_name = get_spec_name_from_command_name(command_name)
     try:
         try:
+            spec_name = get_spec_name_from_command_name(command_name)
             endpoint = oci.regions.endpoint_for(
                 spec_name,
                 region=config.get("region"),
@@ -1899,13 +1907,15 @@ def stream_page(is_json, page_index, call_result, ctx, previous_page_has_data):
         # group 1="["; group2="{. . .}, {. . .";  group3="}]"
         page_parts = json_page_matcher.search(json_data)
         if page_parts:
-            previous_page_has_data = True
             if page_index > 1:
                 if previous_page_has_data:
                     print("},")
-                print(page_parts.group(2))                          # print data minus last }
+                    print(page_parts.group(2))  # print data minus last }
+                else:  # This case happens when the data in the first pages were filtered out by the --query option
+                    print(page_parts.group(1), page_parts.group(2))  # print [ with data
             else:
-                print(page_parts.group(1), page_parts.group(2))     # print [ with data
+                print(page_parts.group(1), page_parts.group(2))  # print [ with data
+            previous_page_has_data = True
     else:
         print(call_result.data)
 
