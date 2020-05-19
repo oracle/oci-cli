@@ -38,7 +38,6 @@ def setup_module():
 
 
 def test_run_all_operations(vcr_fixture, runner, config_file, config_profile, debug, test_id):
-    pytest.skip('To fix windows 2012 failure')
     """Successfully calls every operation with required arguments only."""
     bucket_name = 'cli_retentionrule_temp_bucket_' + test_id + ('_debug' if debug else '_no_debug')
 
