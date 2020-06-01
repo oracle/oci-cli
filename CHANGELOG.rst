@@ -6,6 +6,40 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.10.5 - 2020-06-02
+-------------------
+Added
+~~~~~
+
+* Support for Identity Provider
+
+  * ``oci iam identity-provider create``
+  * ``oci iam identity-provider list``
+  * ``oci iam identity-provider get``
+  * ``oci iam identity-provider delete``
+  * ``oci iam identity-provider update``
+
+* Support for getting image id of Image Listing Package in Marketplace Service
+
+  * ``oci marketplace package get``
+
+Changed
+~~~~~~~
+
+* Data Transfer Service
+
+  * ``oci dts physical-appliance finalize``
+
+    * Validates upload_user_config file and returns explicit config error message if invalid
+
+  * ``oci dts export create``
+
+    * Prevents export job create if bucket type is Archive
+
+* Marketplace API updated to ignore signature parameter and mark it as deprecated
+
+  * ``oci marketplace accepted-agreement delete --signature``
+
 2.10.4 - 2020-05-19
 -------------------
 Added

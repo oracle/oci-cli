@@ -109,18 +109,18 @@ def test_run_all_operations(vcr_fixture, runner, config_file, config_profile, de
     duration = result_json['data']['duration']
     assert (duration is None)
 
-    # update retention rule of retentionruleid_2 to a time-rule-locked duration of 123456789000
+    # update retention rule of retentionruleid_2 to a time-rule-locked duration of 12345678900
     result = invoke(runner, config_file, config_profile,
                     ['retention-rule', 'update', '--namespace-name', util.NAMESPACE, '--bucket-name', bucket_name,
-                     '--retention-rule-id', retentionruleid_2, '--time-rule-locked', '123456789000'], debug=debug)
+                     '--retention-rule-id', retentionruleid_2, '--time-rule-locked', '12345678900'], debug=debug)
     # This should fail because we can't set time-rule-locked when the rule duration is infinite
     assert "InvalidRetentionRuleDetails" in result.output
     assert '"status": 400' in result.output
 
-    # update retention rule of retentionruleid_2 to a time-rule-locked duration of 123456789000 and set the rule duration to 1 day
+    # update retention rule of retentionruleid_2 to a time-rule-locked duration of 12345678900 and set the rule duration to 1 day
     result = invoke(runner, config_file, config_profile,
                     ['retention-rule', 'update', '--namespace-name', util.NAMESPACE, '--bucket-name', bucket_name,
-                     '--retention-rule-id', retentionruleid_2, '--time-rule-locked', '123456789000', '--time-amount', '1', '--time-unit', 'DAYS'], debug=debug)
+                     '--retention-rule-id', retentionruleid_2, '--time-rule-locked', '12345678900', '--time-amount', '1', '--time-unit', 'DAYS'], debug=debug)
     validate_response(result, includes_debug_data=debug)
 
     # verify the update by retrieving the retention rule of retentionruleid_2
@@ -129,7 +129,7 @@ def test_run_all_operations(vcr_fixture, runner, config_file, config_profile, de
                      '--retention-rule-id', retentionruleid_2], debug=debug)
     result_json = json.loads(result.output)
     time_rule_locked = result_json['data']['time-rule-locked']
-    assert (time_rule_locked == '5882-03-11T00:30:00+00:00')
+    assert (time_rule_locked == '2361-03-21T19:15:00+00:00')
 
     # update retention rule of retentionruleid_2 to an infinite rule duration. This should not succeed.
     result = invoke(runner, config_file, config_profile,

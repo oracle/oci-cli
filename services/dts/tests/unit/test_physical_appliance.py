@@ -240,9 +240,11 @@ class PhysicalApplianceTest(unittest.TestCase):
         for i in range(1, len(specs)):
             assert config_manager.is_config_present(specs[i].appliance_config_spec.get_profile())
 
+    @mock.patch('services.dts.src.oci_cli_dts.physicalappliance_cli_extended.get_upload_user_config')
     @mock.patch('services.dts.src.oci_cli_dts.physicalappliance_cli_extended.get_upload_user_region')
     @mock.patch('services.dts.src.oci_cli_dts.physicalappliance_cli_extended.get_user')
-    def test_validate_upload_user_credentials(self, user, region):
+    @mock.patch('services.dts.src.oci_cli_dts.physicalappliance_cli_extended.create_obj_storage_client')
+    def test_validate_upload_user_credentials(self, mock_os_client, user, region, upload_user_config):
 
         def mock_get_upload_user_region():
             return "test-region"
@@ -250,15 +252,25 @@ class PhysicalApplianceTest(unittest.TestCase):
         def mock_get_user():
             return Response(200, {}, "test-user", Request("mock.method", "mock.url"))
 
+        def mock_get_upload_user_config(ctx):
+            return ctx.obj['config']
+
+        def mock_get_namespace():
+            return Response(200, {}, "test-namespace", Request("mock.method", "mock.url"))
+
         auth_spec = self._get_test_auth_spec(self._get_config_manager(), "1.2.3.4", 443)
         self._test_init_auth(auth_spec)
 
         mock_context = get_mock_context()
         user.return_value = mock_get_user()
         region.return_value = mock_get_upload_user_region()
+        upload_user_config.return_value = mock_get_upload_user_config(mock_context)
+        mock_os_client.return_value.get_namespace.side_effect = mock_get_namespace
 
         with self.assertRaises(SystemExit):
             with mock.patch('click.confirm', return_value=False):
-                validate_upload_user_credentials(mock_context, 'fake-bucket')
+                validate_upload_user_credentials(mock_context, 'fake-bucket', upload_user_config=None)
+
         mock_context.obj['config']['region'] = 'test-region'
-        validate_upload_user_credentials(mock_context, 'fake-bucket')
+        with mock.patch('click.confirm', return_value=True):
+            validate_upload_user_credentials(mock_context, 'fake-bucket', upload_user_config=None)

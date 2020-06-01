@@ -70,7 +70,6 @@ final_command_processor.SERVICE_FUNCTIONS_TO_EXECUTE.append(set_iam_default_tena
 identity_cli.iam_root_group.commands.pop(identity_cli.idp_group_mapping_group.name)
 identity_cli.iam_root_group.commands.pop(identity_cli.tenancy_group.name)
 identity_cli.iam_root_group.commands.pop(identity_cli.user_group_membership_group.name)
-identity_cli.iam_root_group.commands.pop(identity_cli.identity_provider_group.name)
 identity_cli.iam_root_group.commands.pop(identity_cli.api_key_group.name)
 identity_cli.iam_root_group.commands.pop(identity_cli.swift_password_group.name)
 identity_cli.iam_root_group.commands.pop(identity_cli.ui_password_group.name)
@@ -88,6 +87,10 @@ identity_cli.tag_group.commands.pop(identity_cli.create_tag_default_tag_definiti
 identity_cli.tag_group.commands.pop(identity_cli.create_tag_enum_tag_definition_validator.name)
 identity_cli.tag_group.commands.pop(identity_cli.update_tag_default_tag_definition_validator.name)
 identity_cli.tag_group.commands.pop(identity_cli.update_tag_enum_tag_definition_validator.name)
+
+# Disable subclass commands
+identity_cli.identity_provider_group.commands.pop(identity_cli.create_identity_provider_create_saml2_identity_provider_details.name)
+identity_cli.identity_provider_group.commands.pop(identity_cli.update_identity_provider_update_saml2_identity_provider_details.name)
 
 cli_util.get_param(identity_cli.create_policy, 'version_date').type = click.STRING
 

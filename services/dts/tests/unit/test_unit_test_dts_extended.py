@@ -59,7 +59,7 @@ def vcr_fixture(request):
 def get_mock_context():
     context_obj = {'config': {'log_requests': False, 'additional_user_agent': '', 'pass_phrase': None,
                               'user': 'ocid1.user.oc1..test-user', 'fingerprint': '00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00',
-                              'key_file': '/Users/test-user/.oci/oci_api_key.pem', 'tenancy': 'ocid1.tenancy.oc1..tenancy-id',
+                              'key_file': '/fakepath/.oci/oci_api_key.pem', 'tenancy': 'ocid1.tenancy.oc1..tenancy-id',
                               'region': 'us-phoenix-1'},
                    'region': 'us-phoenix-1'}
     return click.Context(click.Command('unit-test-command', params={}), parent=None,
@@ -497,6 +497,30 @@ class UnitTestDTS(unittest.TestCase):
                 return UnitTestDTS.TestResult.Success
 
     @mock.patch('services.dts.src.oci_cli_appliance_export_job.applianceexportjob_cli_extended.create_os_client')
+    def test_archive_bucket_export_job_create_prevention(self, mock_os_client):
+
+        def mock_get_namespace():
+            return Response(200, {}, "test-namespace", Request("mock.method", "mock.url"))
+
+        def mock_get_bucket(namespace_name, bucket_name):
+            return Response(200, {}, Bucket(namespace="test-namespace", compartment_id="compartment_id",
+                                            name="test-bucket-name", storage_tier=OBJECT_STORAGE_BUCKET_TYPE_ARCHIVE),
+                            Request("mock.method", "mock.url")
+                            )
+
+        mock_os_client.return_value.get_namespace.side_effect = mock_get_namespace
+        mock_os_client.return_value.get_bucket.side_effect = mock_get_bucket
+
+        args_list = ['dts', 'export', 'create', '--compartment-id', '123', '--bucket-name', '123', '--display-name',
+                     '123', '--addressee', '123', '--care-of', '123', '--address1', '123', '--city-or-locality',
+                     '123', '--state-province-region', '123', '--country', '123', '--zip-postal-code', '123',
+                     '--phone-number', '123', '--email', '123', '--address2', '123', '--address3', '123', '--address4',
+                     '123', '--setup-notifications', 'True']
+        result = util.invoke_command(args_list)
+        assert (isinstance(result.exception, SystemExit))
+        assert "Export for Archive buckets is currently not supported" in result.exception.__str__()
+
+    @mock.patch('services.dts.src.oci_cli_appliance_export_job.applianceexportjob_cli_extended.create_os_client')
     def test_archive_bucket_export_prevention(self, mock_os_client):
 
         def mock_get_namespace():
@@ -511,8 +535,8 @@ class UnitTestDTS(unittest.TestCase):
         mock_os_client.return_value.get_namespace.side_effect = mock_get_namespace
         mock_os_client.return_value.get_bucket.side_effect = mock_get_bucket
 
-        args_list = ['dts', 'export', 'generate-manifest', '--compartment-id', "compartment_id", '--job-id',
-                     "job_id", '--bucket', 'test-bucket-name']
+        args_list = ['dts', 'export', 'generate-manifest', '--compartment-id', "123", '--job-id',
+                     "123", '--bucket', 'test-bucket-name']
         result = util.invoke_command(args_list)
         assert (isinstance(result.exception, SystemExit))
         assert "Export for Archive buckets is currently not supported" in result.exception.__str__()
@@ -637,9 +661,10 @@ class UnitTestDTS(unittest.TestCase):
                             Request("mock.method", "mock.url")
                             )
 
+        mock_context = get_mock_context()
         mock_os_client.return_value.get_namespace.side_effect = mock_get_namespace
         mock_os_client.return_value.get_bucket.side_effect = mock_get_bucket
 
         with pytest.raises(oci.exceptions.ClientError):
-            validate_bucket_belongs_to_compartment(ctx='123', bucket="test-bucket", compartment_id="compartment-id")
-        assert validate_bucket_belongs_to_compartment(ctx='123', bucket="test-bucket", compartment_id="test-compartment-id") is None
+            validate_bucket_belongs_to_compartment(ctx=mock_context, bucket="test-bucket", compartment_id="compartment-id")
+        assert validate_bucket_belongs_to_compartment(ctx=mock_context, bucket="test-bucket", compartment_id="test-compartment-id") is None
