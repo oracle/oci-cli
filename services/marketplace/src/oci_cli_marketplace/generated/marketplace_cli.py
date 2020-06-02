@@ -131,7 +131,7 @@ def create_accepted_agreement(ctx, from_json, compartment_id, listing_id, packag
 
 @accepted_agreement_group.command(name=cli_util.override('marketplace.delete_accepted_agreement.command_name', 'delete'), help=u"""Removes a previously accepted terms of use agreement from the list of agreements that Marketplace checks before initiating a deployment. Listings in the Marketplace that require acceptance of the specified terms of use can no longer be deployed, but existing deployments aren't affected.""")
 @cli_util.option('--accepted-agreement-id', required=True, help=u"""The unique identifier for the accepted terms of use agreement.""")
-@cli_util.option('--signature', required=True, help=u"""A signature generated for the listing package terms of use agreements that you can retrieve with a [GetAgreement] API call.""")
+@cli_util.option('--signature', help=u"""Deprecated. The signature value is ignored.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -145,13 +145,14 @@ def delete_accepted_agreement(ctx, from_json, accepted_agreement_id, signature, 
         raise click.UsageError('Parameter --accepted-agreement-id cannot be whitespace or empty string')
 
     kwargs = {}
+    if signature is not None:
+        kwargs['signature'] = signature
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('marketplace', 'marketplace', ctx)
     result = client.delete_accepted_agreement(
         accepted_agreement_id=accepted_agreement_id,
-        signature=signature,
         **kwargs
     )
     cli_util.render_response(result, ctx)

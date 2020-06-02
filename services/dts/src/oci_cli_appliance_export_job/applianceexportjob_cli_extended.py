@@ -67,6 +67,18 @@ def setup_notifications_extended(ctx):
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'dts', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'dts', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'dts', 'class': 'ApplianceExportJob'})
 @cli_util.wrap_exceptions
 def create_appliance_export_job_extended(ctx, **kwargs):
+
+    os_client = create_os_client(ctx)
+    namespace = os_client.get_namespace().data
+
+    result = os_client.get_bucket(
+        namespace_name=namespace,
+        bucket_name=kwargs['bucket_name']
+    )
+
+    if result.data.storage_tier == OBJECT_STORAGE_BUCKET_TYPE_ARCHIVE:
+        raise click.UsageError('Export for Archive buckets is currently not supported')
+
     kwargs['customer_shipping_address'] = {}
     for option, value in customer_address_options.items():
         if option in kwargs:

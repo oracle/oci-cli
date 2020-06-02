@@ -1,12 +1,12 @@
 # coding: utf-8
 # Copyright (c) 2016, 2020, Oracle and/or its affiliates.  All rights reserved.
 # This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
-
+import sys
 
 import click
 from oci_cli import cli_util
 
-from services.ons.src.oci_cli_notification_data_plane.generated.notificationdataplane_cli import create_subscription
+from services.ons.src.oci_cli_ons.ons_cli_extended import create_subscription
 from services.events.src.oci_cli_events.generated.events_cli import create_rule
 
 
@@ -41,7 +41,7 @@ def setup_notifications_helper(ctx, create_topic_details, create_rule_kwargs):
                '--description "{}"'.format(create_topic_details['compartmentId'], create_topic_details['name'],
                                            create_topic_details['description']))
     click.echo('oci ons subscription create --protocol EMAIL --compartment-id $ROOT_COMPARTMENT_OCID '
-               '--topic-id $TOPIC_OCID --endpoint $EMAIL_ID')
+               '--topic-id $TOPIC_OCID --subscription_endpoint $EMAIL_ID')
     click.echo('oci events rule create --display-name %s --is-enabled true'
                '--compartment-id %s '
                '--actions \'{"actions":[{"actionType":"ONS","topicId":"$TOPIC_OCID","isEnabled":true}]}\' '
@@ -69,7 +69,7 @@ def setup_notifications_helper(ctx, create_topic_details, create_rule_kwargs):
             'protocol': 'EMAIL',
             'compartment_id': create_topic_details['compartmentId'],
             'topic_id': get_topic_id(create_topic_result),
-            'endpoint': email
+            'subscription_endpoint': email
         }
         click.echo('Creating subscription for {}'.format(email))
         create_subscription_helper(ctx, create_subscription_kwargs)
@@ -102,3 +102,8 @@ def create_subscription_helper(ctx, create_subscription_kwargs):
 
 def create_rule_helper(ctx, create_rule_kwargs):
     ctx.invoke(create_rule, **create_rule_kwargs)
+
+
+def error_message_wrapper(msg):
+    click.echo(click.style("Error: {}", fg="red").format(msg), err=True)
+    sys.exit(1)

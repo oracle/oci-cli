@@ -12,7 +12,7 @@ from oci_cli import json_skeleton_utils
 from oci_cli import custom_types
 
 from services.dts.src.oci_cli_appliance_export_job.applianceexportjob_cli_extended import create_os_client
-from services.dts.src.oci_cli_dts.cli_utils import setup_notifications_helper
+from services.dts.src.oci_cli_dts.cli_utils import setup_notifications_helper, error_message_wrapper
 from services.dts.src.oci_cli_transfer_appliance.transferappliance_cli_extended import get_transfer_appliance_helper
 from services.dts.src.oci_cli_transfer_job.generated import transferjob_cli
 from services.dts.src.oci_cli_dts.physicalappliance_cli_extended import validate_upload_user_credentials
@@ -45,7 +45,13 @@ def create_transfer_job_client(ctx):
 @json_skeleton_utils.json_skeleton_generation_handler({})
 @cli_util.wrap_exceptions
 def verify_upload_user_credentials_extended(ctx, from_json, bucket, **kwargs):
-    validate_upload_user_credentials(ctx, bucket)
+
+    create_transfer_job_client(ctx)
+    try:
+        validate_upload_user_credentials(ctx, bucket, None)
+        click.echo("Successfully verified upload user credentials")
+    except Exception as e:
+        error_message_wrapper("Failed to verify upload user credentials: %s" % e)
 
 
 def validate_bucket_belongs_to_compartment(ctx, bucket, compartment_id):
