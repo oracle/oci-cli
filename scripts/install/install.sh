@@ -162,10 +162,6 @@ case $key in
     install_args="$install_args --dry-run"
     shift # past argument
     ;;
-    --verify-native-dependencies)
-    install_args="$install_args --verify-native-dependencies"
-    shift # past argument
-    ;;
     # Help text for this script. This option takes precedence over all other options
     --help|-h)
     echo "$usage"

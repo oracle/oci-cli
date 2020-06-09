@@ -108,6 +108,10 @@ identity_cli.get_tag_namespace.short_help = 'Get a tagNamespace''s information'
 identity_cli.list_tag_namespaces.short_help = 'List the tagNamespaces in a compartment'
 
 
+# Rename oci iam bulk-action-resource-type-collection list-bulk-action-resource-types -> oci iam bulk-action-resource-type-collection list
+cli_util.rename_command(identity_cli, identity_cli.bulk_action_resource_type_collection_group, identity_cli.list_bulk_action_resource_types, "list")
+
+
 @identity_cli.user_group.command(name='list-groups', help="""Lists the groups for which the specified user is a member. You must specify your tenancy's OCID as the value for the compartment ID (remember that the tenancy is simply the root compartment). See [Where to Get the Tenancy's OCID and User's OCID].""")
 @cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment (remember that the tenancy is simply the root compartment).""")
 @cli_util.option('--user-id', required=True, help="""The OCID of the user.""")
@@ -481,6 +485,63 @@ def reactivate_tag_namespace(ctx, **kwargs):
         update_tag_namespace_details=details,
         **service_kwargs
     )
+    cli_util.render_response(result, ctx)
+
+
+@cli_util.copy_params_from_generated_command(identity_cli.list_compartments)
+@identity_cli.compartment_group.command(name='list', help=identity_cli.list_compartments.help)
+@cli_util.option('--include-root', 'with_root', is_flag=True, help="""Include root compartment""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'list[Compartment]'})
+@cli_util.wrap_exceptions
+def list_compartments(ctx, from_json, all_pages, page_size, compartment_id, page, limit, access_level, compartment_id_in_subtree, with_root):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    if access_level is not None:
+        kwargs['access_level'] = access_level
+    if compartment_id_in_subtree is not None:
+        kwargs['compartment_id_in_subtree'] = compartment_id_in_subtree
+    client = cli_util.build_client('identity', 'identity', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_compartments,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_compartments,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_compartments(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    if with_root:
+        tenancy_id = get_tenancy_from_config(ctx)
+        tenancy_result = client.get_compartment(
+            compartment_id=tenancy_id,
+        )
+        if limit is not None and result.data:
+            # remove from list as root will be one compartment
+            result.data.pop()
+
+        result.data.insert(0, tenancy_result.data)
+
     cli_util.render_response(result, ctx)
 
 

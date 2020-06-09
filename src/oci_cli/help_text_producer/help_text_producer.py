@@ -48,7 +48,7 @@ def _render_help_posix_with_groff(ctx, command_chain):
     target_man_page = os.path.join(man_page_folder, '{}.1'.format('_'.join(command_chain)))
 
     if os.path.exists(target_man_page):
-        groff_converter_cmd = ['groff', '-m', 'man', '-T', 'ascii']
+        groff_converter_cmd = ['groff', '-m', 'man', '-T', 'ascii', '-rHY=0']
 
         p3 = Popen(groff_converter_cmd, stdin=PIPE, stdout=PIPE, stderr=PIPE)
         with open(target_man_page, 'rb') as f:

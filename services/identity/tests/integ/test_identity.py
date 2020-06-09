@@ -68,6 +68,25 @@ class TestIdentity(unittest.TestCase):
         result = self.invoke(['compartment', 'list', '--limit', '1000'])
         self.validate_response(result)
 
+        result = self.invoke(['compartment', 'list', '--include-root'])
+        self.validate_response(result)
+
+        result = self.invoke(['compartment', 'list', '--include-root', '--limit', '10'])
+        self.validate_response(result)
+        self.assertEquals(len(json.loads(result.output)['data']), 10)
+
+        result = self.invoke(['compartment', 'list', '--include-root', '--limit', '1'])
+        self.validate_response(result)
+        tenant_id = "ocid1.tenancy.oc1..aaaaaaaa3vi3ft3yi3sq4nhiql4nvbzjz6gipbn72h7werl6njs6xsq4wgdq"
+        self.assertEquals(tenant_id, json.loads(result.output)['data'][0]['id'])
+        self.assertEquals(len(json.loads(result.output)['data']), 1)
+
+        result = self.invoke(['compartment', 'list', '--all', '--include-root'])
+        self.validate_response(result)
+
+        result = self.invoke(['compartment', 'list', '--compartment-id', util.TENANT_ID, '--include-root'])
+        self.validate_response(result)
+
         result = self.invoke(['compartment', 'get', '--compartment-id', util.COMPARTMENT_ID])
         self.validate_response(result, expect_etag=True)
 
