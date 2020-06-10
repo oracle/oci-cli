@@ -74,3 +74,9 @@ class TestDBCliExtended(unittest.TestCase):
         result = util.invoke_command(['db', 'exadata-infrastructure', 'get-compute-units'])
         assert 'Error: Missing option(s)' in result.output
         assert '--autonomous-exadata-infrastructure-id' in result.output
+
+    def test_update_vm_cluster(self):
+        result = util.invoke_command(['db', 'vm-cluster', 'update'])
+        assert 'version' not in result.output
+        assert 'Error: Missing option(s)' in result.output
+        assert '--vm-cluster-id' in result.output

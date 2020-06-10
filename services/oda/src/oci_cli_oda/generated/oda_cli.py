@@ -15,7 +15,7 @@ from oci_cli import custom_types  # noqa: F401
 from oci_cli.aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('oda.oda_root_group.command_name', 'oda'), cls=CommandGroupWithAlias, help=cli_util.override('oda.oda_root_group.help', """API to create and maintain Oracle Digital Assistant service instances."""), short_help=cli_util.override('oda.oda_root_group.short_help', """Digital Assistant Control Plane API"""))
+@cli.command(cli_util.override('oda.oda_root_group.command_name', 'oda'), cls=CommandGroupWithAlias, help=cli_util.override('oda.oda_root_group.help', """API to create and maintain Oracle Digital Assistant service instances."""), short_help=cli_util.override('oda.oda_root_group.short_help', """Digital Assistant Service Instance API"""))
 @cli_util.help_option_group
 def oda_root_group():
     pass

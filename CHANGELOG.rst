@@ -6,6 +6,79 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.11.0 - 2020-06-09
+-------------------
+Added
+~~~~~
+
+* Support for enabling File Server capability for an Integration Instance
+
+  * ``oci integration integration-instance create --is-file-server-enabled``
+  * ``oci integration integration-instance update --is-file-server-enabled``
+
+* Support for deleting non empty tag namespace and bulk deleting tags
+
+  * ``oci iam tag bulk-delete``
+  * ``oci iam tag-namespace cascade-delete``
+
+* Support bulk actions in Compartment Explorer
+
+  * ``oci iam compartment bulk-move-resources``
+  * ``oci iam compartment bulk-delete-resources``
+
+* Support get, list commands for DB Patch for given DB Home
+
+  * ``oci db patch list-db-home --db-home-id``
+  * ``oci db patch get-db-home --db-home-id``
+
+* Support get, list commands for DB Patch for given VM Cluster
+
+  * ``oci db patch list-vm-cluster --vm-cluster-id``
+  * ``oci db patch get-vm-cluster --vm-cluster-id``
+
+
+* Support get, list commands for DB Patch History for given DB Home
+
+  * ``oci db patch-history list-db-home --db-home-id``
+  * ``oci db patch-history get-db-home --db-home-id``
+
+* Support get, list commands for DB Patch History for given VM Cluster
+
+  * ``oci db patch-history list-vm-cluster --vm-cluster-id``
+  * ``oci db patch-history get-vm-cluster --vm-cluster-id``
+
+* Support specifying a Patch Id and Patch Action when patching a VM Cluster.
+
+  * ``oci db vm-cluster update --patch-id --patch-action``
+
+* New parameter --include-root to include root compartment
+
+  * ``oci iam compartment list --include-root``
+
+* New entry in the User-Agent for CloudShell to differentiate between requests coming from CLI and CloudShell
+
+Fixed
+~~~~~
+
+* The fields defindedTags and freeformTags of backupPolicy Complex Object in MySQL Service were invalid in the JSON output
+
+  * ``oci mysql db-system create --generate-full-command-json-input``
+
+Changed
+~~~~~~~
+
+* [BREAKING] Lifecycle state "OFFLINE" was removed and new state "DISCONNECTED" was added.
+
+  * ``oci db exadata-infrastructure activate --wait-for-state``
+  * ``oci db exadata-infrastructure create --wait-for-state``
+  * ``oci db exadata-infrastructure delete --wait-for-state``
+  * ``oci db exadata-infrastructure list --wait-for-state``
+  * ``oci db exadata-infrastructure update --wait-for-state``
+
+* Man page outputs for --help reformatted to line break on complete words
+
+* ``--verify-native-dependencies`` option within install.py script is removed.
+
 2.10.5 - 2020-06-02
 -------------------
 Added

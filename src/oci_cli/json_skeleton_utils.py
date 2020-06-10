@@ -223,9 +223,9 @@ def generate_input_dict_for_skeleton(ctx, targeted_complex_param=None):
 
 
 def get_example_object_for_tags(targeted_complex_param):
-    if targeted_complex_param == "defined-tags":
+    if targeted_complex_param in ["defined-tags", "definedTags"]:
         return generate_input_dict_for_defined_tags()
-    if targeted_complex_param == "freeform-tags":
+    if targeted_complex_param in ["freeform-tags", "freeformTags"]:
         return generate_input_dict_for_freeform_tags()
 
     return None
@@ -307,7 +307,11 @@ def translate_complex_param_to_example_object(complex_param_entry, visited):
         property_name = instance.attribute_map[attr_name]
         attribute_value = getattr(instance, attr_name, None)
 
-        if attribute_value is not None:
+        # If the field name is definedTags or freeformTags, add tags examples
+        tags_obj = get_example_object_for_tags(property_name)
+        if tags_obj:
+            obj_as_dict[property_name] = tags_obj
+        elif attribute_value is not None:
             # If there is some sort of default value then use it. This is useful in cases like subclasses where the type field is prepopulated
             # with information
             obj_as_dict[property_name] = attribute_value

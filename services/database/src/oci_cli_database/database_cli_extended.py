@@ -688,6 +688,33 @@ def patch_db_system(ctx, **kwargs):
     cli_util.render(db_system, None, ctx)
 
 
+@cli_util.copy_params_from_generated_command(database_cli.update_vm_cluster, params_to_exclude=['version_parameterconflict'])
+@database_cli.vm_cluster_group.command(name='update', help=database_cli.update_vm_cluster.help)
+@cli_util.option('--patch-action', help="""The action to perform on the patch.""")
+@cli_util.option('--patch-id', help="""The OCID of the patch.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'ssh-public-keys': {'module': 'database', 'class': 'list[string]'}, 'version': {'module': 'database', 'class': 'PatchDetails'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'VmCluster'})
+@cli_util.wrap_exceptions
+def update_vm_cluster_extended(ctx, **kwargs):
+    patch_action = kwargs.get('patch_action')
+    patch_id = kwargs.get('patch_id')
+    if patch_action and not patch_id:
+        raise click.UsageError('--patch-id is required if --patch-action is specified')
+    elif patch_id and not patch_action:
+        raise click.UsageError('--patch-action is required if --patch-id is specified')
+    elif patch_id and patch_action:
+        kwargs['version_parameterconflict'] = {
+            "action": patch_action,
+            "patchId": patch_id
+        }
+
+    # remove kwargs that update_vm_cluster wont recognize
+    del kwargs['patch_action']
+    del kwargs['patch_id']
+
+    ctx.invoke(database_cli.update_vm_cluster, **kwargs)
+
+
 @database_cli.data_guard_association_group.command(name=cli_util.override('create_data_guard_association.command_name', 'create'), cls=CommandGroupWithAlias, help="""Creates a new Data Guard association.  A Data Guard association represents the replication relationship between the specified database and a peer database. For more information, see [Using Oracle Data Guard].
 
 All Oracle Cloud Infrastructure resources, including Data Guard associations, get an Oracle-assigned, unique ID called an Oracle Cloud Identifier (OCID). When you create a resource, you can find its OCID in the response. You can also retrieve a resource's OCID by using a List API operation on that resource type, or by viewing the resource in the Console. Fore more information, see [Resource Identifiers].""")
@@ -931,14 +958,8 @@ database_cli.db_system_group.add_command(launch_db_system_backup_extended)
 database_cli.db_system_group.add_command(update_db_system_extended)
 database_cli.db_home_group.add_command(create_db_home)
 
-database_cli.patch_group.commands.pop(database_cli.get_db_home_patch.name)
-database_cli.patch_group.commands.pop(database_cli.list_db_home_patches.name)
-
 patch_get_group.add_command(database_cli.get_db_system_patch)
 patch_list_group.add_command(database_cli.list_db_system_patches)
-
-database_cli.patch_history_entry_group.commands.pop(database_cli.get_db_home_patch_history_entry.name)
-database_cli.patch_history_entry_group.commands.pop(database_cli.list_db_home_patch_history_entries.name)
 
 patch_history_get_group.add_command(database_cli.get_db_system_patch_history_entry)
 patch_history_list_group.add_command(database_cli.list_db_system_patch_history_entries)

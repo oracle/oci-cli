@@ -521,80 +521,6 @@ def verify_python_version():
     print_status('Python version {}.{}.{} okay.'.format(v.major, v.minor, v.micro))
 
 
-# This code is being deprecated.  See verify_native_dependencies() below.
-def _native_dependencies_for_dist(verify_cmd_args, update_cmd_args, install_cmd_args, dep_list):
-    try:
-        print_status("Executing: '{} {}'".format(' '.join(verify_cmd_args), ' '.join(dep_list)))
-        subprocess.check_output(verify_cmd_args + dep_list, stderr=subprocess.STDOUT)
-        print_status('Native dependencies okay.')
-    except subprocess.CalledProcessError:
-        err_msg = 'One or more of the following native dependencies are not currently installed and may be required.\n'
-        err_msg += '"{}"'.format(' '.join(install_cmd_args + dep_list))
-        print_status(err_msg)
-
-        prompt = 'Missing native dependencies. Continue and install the following dependencies: {}?'.format(', '.join(dep_list))
-        ans_yes = prompt_y_n(prompt, 'y')
-        if not ans_yes:
-            raise CLIInstallError('Please install the native dependencies and try again.')
-
-        # run command to update packages for this OS (e.g. apt-get update)
-        subprocess.call(update_cmd_args)
-
-        # run command to install packages using native package manager (e.g. apt-get install {deps})
-        subprocess.call(install_cmd_args + dep_list)
-
-
-# This code is being deprecated.
-# Also the name is a little goofy as it does more than just verify your system, it actually can modify your system.
-# Installing native dependencies on ubuntu 18, may cause the system to restart which is disruptive to this installer.
-# By removing this code we are removing the dependency for needing elevated sudo privs to run this script.
-# We also no longer need to compile the crypto python package, so it will also speed things up.
-#
-# We already have OS specific front end scripts, install.sh and install.ps1.
-# Any OS native dependencies should be done in one of those front end scripts.
-# They will already require elevated sudo privs in order to install python, if it is not present.
-#
-# This will give flexibility to organizations to have sysadmins install system requirements whereas this
-# python CLI installer can be run by average users without elevated sudo permissions.
-def verify_native_dependencies():
-    distname, version, _ = platform.linux_distribution()
-    if not distname:
-        # There's no distribution name so can't determine native dependencies required / or they may not be needed like on OS X
-        return
-    print_status('Verifying native dependencies.')
-    is_python3 = sys.version_info[0] == 3
-    distname = distname.lower().strip()
-    verify_cmd_args = None
-    install_cmd_args = None
-    dep_list = None
-    if any(x in distname for x in ['ubuntu', 'debian']):
-        verify_cmd_args = ['dpkg', '-s']
-        update_cmd_args = ['sudo', 'apt-get', 'update']
-        install_cmd_args = ['sudo', 'apt-get', 'install', '-y']
-        python_dep = 'python3-dev' if is_python3 else 'python-dev'
-        if distname == 'ubuntu' and version in ['12.04', '14.04'] or distname == 'debian' and version.startswith('7'):
-            dep_list = ['libssl-dev', 'libffi-dev', python_dep]
-        elif distname == 'ubuntu' and version in ['15.10', '16.04', '18.04'] or distname == 'debian' and (version.startswith('8') or version.startswith('10')):
-            dep_list = ['libssl-dev', 'libffi-dev', python_dep, 'build-essential']
-    elif any(x in distname for x in ['centos', 'rhel', 'red hat']):
-        verify_cmd_args = ['rpm', '-q']
-        update_cmd_args = ['sudo', 'yum', 'check-update']
-        install_cmd_args = ['sudo', 'yum', 'install', '-y']
-        # python3-devel not available on yum but python3Xu-devel versions available.
-        python_dep = 'python3{}u-devel'.format(sys.version_info[1]) if is_python3 else 'python-devel'
-        dep_list = ['gcc', 'libffi-devel', python_dep, 'openssl-devel']
-    if verify_cmd_args and install_cmd_args and dep_list:
-        if DRY_RUN:
-            print_status("dry-run: Skipping native_dependencies execution.")
-            print_status("dry-run: verify_cmd_args=" + str(verify_cmd_args))
-            print_status("dry-run: update_cmd_args=" + str(update_cmd_args))
-            print_status("dry-run: install_cmd_args=" + str(install_cmd_args))
-            print_status("dry-run: dep_list=" + str(dep_list))
-        _native_dependencies_for_dist(verify_cmd_args, update_cmd_args, install_cmd_args, dep_list)
-    else:
-        print_status("Unable to verify native dependencies. dist={}, version={}. Continuing...".format(distname, version))
-
-
 def verify_install_dir_exec_path_conflict(install_dir, exec_path):
     if install_dir == exec_path:
         raise CLIInstallError("The executable file '{}' would clash with the install directory of '{}'. Choose either a different install directory or directory to place the executable.".format(exec_path, install_dir))
@@ -628,8 +554,6 @@ def main():
                                                'the --update-path-and-enable-tab-completion option')
     parser.add_argument('--oci-cli-version', help='The pip version of CLI to install.')
     parser.add_argument('--dry-run', action='store_true', help='Do not install virtualenv or CLI but go through the motions.')
-    parser.add_argument('--verify-native-dependencies', action='store_true',
-                        help='Check whether linux native dependencies are available to compile modules like cryptography. This option is deprecated in version 2.9.7 and will be removed soon.')
     args = parser.parse_args()
     global ACCEPT_ALL_DEFAULTS
     ACCEPT_ALL_DEFAULTS = args.accept_all_defaults
@@ -638,10 +562,7 @@ def main():
     OPTIONAL_FEATURES = args.optional_features
     install_dir = args.install_dir
     exec_dir = args.exec_dir
-
     verify_python_version()
-    if args.verify_native_dependencies:
-        verify_native_dependencies()
     tmp_dir = create_tmp_dir()
     allow_spaces = False    # on *nix systems, virtualenv pip does not work properly when there are spaces in the dir.
     if is_windows():

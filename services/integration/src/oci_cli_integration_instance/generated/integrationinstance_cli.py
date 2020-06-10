@@ -119,6 +119,7 @@ def change_integration_instance_compartment(ctx, from_json, wait_for_state, max_
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Usage of predefined tag keys. These predefined keys are scoped to namespaces. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--idcs-at', help=u"""IDCS Authentication token. This is is required for pre-UCPIS cloud accounts, but not UCPIS, hence not a required parameter""")
+@cli_util.option('--is-file-server-enabled', type=click.BOOL, help=u"""The file server is enabled or not.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -127,7 +128,7 @@ def change_integration_instance_compartment(ctx, from_json, wait_for_state, max_
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'integration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'integration', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def create_integration_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, integration_instance_type, is_byol, message_packs, freeform_tags, defined_tags, idcs_at):
+def create_integration_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, integration_instance_type, is_byol, message_packs, freeform_tags, defined_tags, idcs_at, is_file_server_enabled):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -147,6 +148,9 @@ def create_integration_instance(ctx, from_json, wait_for_state, max_wait_seconds
 
     if idcs_at is not None:
         _details['idcsAt'] = idcs_at
+
+    if is_file_server_enabled is not None:
+        _details['isFileServerEnabled'] = is_file_server_enabled
 
     client = cli_util.build_client('integration', 'integration_instance', ctx)
     result = client.create_integration_instance(
@@ -608,6 +612,7 @@ def stop_integration_instance(ctx, from_json, wait_for_state, max_wait_seconds, 
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Usage of predefined tag keys. These predefined keys are scoped to namespaces. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-byol', type=click.BOOL, help=u"""Bring your own license.""")
 @cli_util.option('--message-packs', type=click.INT, help=u"""The number of configured message packs""")
+@cli_util.option('--is-file-server-enabled', type=click.BOOL, help=u"""The file server is enabled or not.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -618,7 +623,7 @@ def stop_integration_instance(ctx, from_json, wait_for_state, max_wait_seconds, 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'integration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'integration', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_integration_instance(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, integration_instance_id, display_name, integration_instance_type, freeform_tags, defined_tags, is_byol, message_packs, if_match):
+def update_integration_instance(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, integration_instance_id, display_name, integration_instance_type, freeform_tags, defined_tags, is_byol, message_packs, is_file_server_enabled, if_match):
 
     if isinstance(integration_instance_id, six.string_types) and len(integration_instance_id.strip()) == 0:
         raise click.UsageError('Parameter --integration-instance-id cannot be whitespace or empty string')
@@ -651,6 +656,9 @@ def update_integration_instance(ctx, from_json, force, wait_for_state, max_wait_
 
     if message_packs is not None:
         _details['messagePacks'] = message_packs
+
+    if is_file_server_enabled is not None:
+        _details['isFileServerEnabled'] = is_file_server_enabled
 
     client = cli_util.build_client('integration', 'integration_instance', ctx)
     result = client.update_integration_instance(
