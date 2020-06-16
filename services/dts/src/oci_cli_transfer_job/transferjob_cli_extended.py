@@ -55,6 +55,8 @@ def verify_upload_user_credentials_extended(ctx, from_json, bucket, **kwargs):
 
 
 def validate_bucket_belongs_to_compartment(ctx, bucket, compartment_id):
+    ctx.endpoint = None
+    ctx.obj['endpoint'] = None
     os_client = create_os_client(ctx)
     namespace = os_client.get_namespace().data
 

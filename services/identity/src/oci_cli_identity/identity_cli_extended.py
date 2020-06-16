@@ -494,7 +494,7 @@ def reactivate_tag_namespace(ctx, **kwargs):
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'list[Compartment]'})
 @cli_util.wrap_exceptions
-def list_compartments(ctx, from_json, all_pages, page_size, compartment_id, page, limit, access_level, compartment_id_in_subtree, with_root):
+def list_compartments(ctx, from_json, all_pages, page_size, compartment_id, page, limit, access_level, compartment_id_in_subtree, name, sort_by, sort_order, lifecycle_state, with_root):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -508,6 +508,14 @@ def list_compartments(ctx, from_json, all_pages, page_size, compartment_id, page
         kwargs['access_level'] = access_level
     if compartment_id_in_subtree is not None:
         kwargs['compartment_id_in_subtree'] = compartment_id_in_subtree
+    if name is not None:
+        kwargs['name'] = name
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
     client = cli_util.build_client('identity', 'identity', ctx)
     if all_pages:
         if page_size:
