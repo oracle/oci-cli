@@ -3405,6 +3405,12 @@ See [Where to Get the Tenancy's OCID and User's OCID].""")
 
 When set to `ANY` permissions are not checked.""")
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""Default is false. Can only be set to true when performing ListCompartments on the tenancy (root compartment). When set to true, the hierarchy of compartments is traversed and all compartments and subcompartments in the tenancy are returned depending on the the setting of `accessLevel`.""")
+@cli_util.option('--name', help=u"""A filter to only return resources that match the given name exactly.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "NAME"]), help=u"""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for NAME is ascending. The NAME sort order is case sensitive.
+
+**Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by Availability Domain if the scope of the resource type is within a single Availability Domain. If you call one of these \"List\" operations without specifying an Availability Domain, the resources are grouped by Availability Domain, then sorted.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The NAME sort order is case sensitive.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED"]), help=u"""A filter to only return resources that match the given lifecycle state.  The state value is case-insensitive.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -3412,7 +3418,7 @@ When set to `ANY` permissions are not checked.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'list[Compartment]'})
 @cli_util.wrap_exceptions
-def list_compartments(ctx, from_json, all_pages, page_size, compartment_id, page, limit, access_level, compartment_id_in_subtree):
+def list_compartments(ctx, from_json, all_pages, page_size, compartment_id, page, limit, access_level, compartment_id_in_subtree, name, sort_by, sort_order, lifecycle_state):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -3426,6 +3432,14 @@ def list_compartments(ctx, from_json, all_pages, page_size, compartment_id, page
         kwargs['access_level'] = access_level
     if compartment_id_in_subtree is not None:
         kwargs['compartment_id_in_subtree'] = compartment_id_in_subtree
+    if name is not None:
+        kwargs['name'] = name
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
     client = cli_util.build_client('identity', 'identity', ctx)
     if all_pages:
         if page_size:
@@ -3525,6 +3539,12 @@ def list_customer_secret_keys(ctx, from_json, all_pages, user_id):
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment (remember that the tenancy is simply the root compartment).""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call.""")
+@cli_util.option('--name', help=u"""A filter to only return resources that match the given name exactly.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "NAME"]), help=u"""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for NAME is ascending. The NAME sort order is case sensitive.
+
+**Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by Availability Domain if the scope of the resource type is within a single Availability Domain. If you call one of these \"List\" operations without specifying an Availability Domain, the resources are grouped by Availability Domain, then sorted.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The NAME sort order is case sensitive.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED"]), help=u"""A filter to only return resources that match the given lifecycle state.  The state value is case-insensitive.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -3532,7 +3552,7 @@ def list_customer_secret_keys(ctx, from_json, all_pages, user_id):
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'list[DynamicGroup]'})
 @cli_util.wrap_exceptions
-def list_dynamic_groups(ctx, from_json, all_pages, page_size, compartment_id, page, limit):
+def list_dynamic_groups(ctx, from_json, all_pages, page_size, compartment_id, page, limit, name, sort_by, sort_order, lifecycle_state):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -3542,6 +3562,14 @@ def list_dynamic_groups(ctx, from_json, all_pages, page_size, compartment_id, pa
         kwargs['page'] = page
     if limit is not None:
         kwargs['limit'] = limit
+    if name is not None:
+        kwargs['name'] = name
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
     client = cli_util.build_client('identity', 'identity', ctx)
     if all_pages:
         if page_size:
@@ -3593,6 +3621,12 @@ def list_fault_domains(ctx, from_json, all_pages, compartment_id, availability_d
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment (remember that the tenancy is simply the root compartment).""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call.""")
+@cli_util.option('--name', help=u"""A filter to only return resources that match the given name exactly.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "NAME"]), help=u"""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for NAME is ascending. The NAME sort order is case sensitive.
+
+**Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by Availability Domain if the scope of the resource type is within a single Availability Domain. If you call one of these \"List\" operations without specifying an Availability Domain, the resources are grouped by Availability Domain, then sorted.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The NAME sort order is case sensitive.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED"]), help=u"""A filter to only return resources that match the given lifecycle state.  The state value is case-insensitive.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -3600,7 +3634,7 @@ def list_fault_domains(ctx, from_json, all_pages, compartment_id, availability_d
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'list[Group]'})
 @cli_util.wrap_exceptions
-def list_groups(ctx, from_json, all_pages, page_size, compartment_id, page, limit):
+def list_groups(ctx, from_json, all_pages, page_size, compartment_id, page, limit, name, sort_by, sort_order, lifecycle_state):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -3610,6 +3644,14 @@ def list_groups(ctx, from_json, all_pages, page_size, compartment_id, page, limi
         kwargs['page'] = page
     if limit is not None:
         kwargs['limit'] = limit
+    if name is not None:
+        kwargs['name'] = name
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
     client = cli_util.build_client('identity', 'identity', ctx)
     if all_pages:
         if page_size:
@@ -3640,6 +3682,8 @@ def list_groups(ctx, from_json, all_pages, page_size, compartment_id, page, limi
 @cli_util.option('--identity-provider-id', required=True, help=u"""The OCID of the identity provider.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call.""")
+@cli_util.option('--name', help=u"""A filter to only return resources that match the given name exactly.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED"]), help=u"""A filter to only return resources that match the given lifecycle state.  The state value is case-insensitive.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -3647,7 +3691,7 @@ def list_groups(ctx, from_json, all_pages, page_size, compartment_id, page, limi
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'list[IdentityProviderGroupSummary]'})
 @cli_util.wrap_exceptions
-def list_identity_provider_groups(ctx, from_json, all_pages, page_size, identity_provider_id, page, limit):
+def list_identity_provider_groups(ctx, from_json, all_pages, page_size, identity_provider_id, page, limit, name, lifecycle_state):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -3660,6 +3704,10 @@ def list_identity_provider_groups(ctx, from_json, all_pages, page_size, identity
         kwargs['page'] = page
     if limit is not None:
         kwargs['limit'] = limit
+    if name is not None:
+        kwargs['name'] = name
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
     client = cli_util.build_client('identity', 'identity', ctx)
     if all_pages:
         if page_size:
@@ -3691,6 +3739,12 @@ def list_identity_provider_groups(ctx, from_json, all_pages, page_size, identity
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment (remember that the tenancy is simply the root compartment).""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call.""")
+@cli_util.option('--name', help=u"""A filter to only return resources that match the given name exactly.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "NAME"]), help=u"""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for NAME is ascending. The NAME sort order is case sensitive.
+
+**Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by Availability Domain if the scope of the resource type is within a single Availability Domain. If you call one of these \"List\" operations without specifying an Availability Domain, the resources are grouped by Availability Domain, then sorted.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The NAME sort order is case sensitive.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED"]), help=u"""A filter to only return resources that match the given lifecycle state.  The state value is case-insensitive.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -3698,7 +3752,7 @@ def list_identity_provider_groups(ctx, from_json, all_pages, page_size, identity
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'list[IdentityProvider]'})
 @cli_util.wrap_exceptions
-def list_identity_providers(ctx, from_json, all_pages, page_size, protocol, compartment_id, page, limit):
+def list_identity_providers(ctx, from_json, all_pages, page_size, protocol, compartment_id, page, limit, name, sort_by, sort_order, lifecycle_state):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -3708,6 +3762,14 @@ def list_identity_providers(ctx, from_json, all_pages, page_size, protocol, comp
         kwargs['page'] = page
     if limit is not None:
         kwargs['limit'] = limit
+    if name is not None:
+        kwargs['name'] = name
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
     client = cli_util.build_client('identity', 'identity', ctx)
     if all_pages:
         if page_size:
@@ -3849,6 +3911,12 @@ def list_mfa_totp_devices(ctx, from_json, all_pages, page_size, user_id, page, l
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment (remember that the tenancy is simply the root compartment).""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call.""")
+@cli_util.option('--name', help=u"""A filter to only return resources that match the given name exactly.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "NAME"]), help=u"""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for NAME is ascending. The NAME sort order is case sensitive.
+
+**Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by Availability Domain if the scope of the resource type is within a single Availability Domain. If you call one of these \"List\" operations without specifying an Availability Domain, the resources are grouped by Availability Domain, then sorted.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The NAME sort order is case sensitive.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED"]), help=u"""A filter to only return resources that match the given lifecycle state.  The state value is case-insensitive.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -3856,7 +3924,7 @@ def list_mfa_totp_devices(ctx, from_json, all_pages, page_size, user_id, page, l
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'list[NetworkSourcesSummary]'})
 @cli_util.wrap_exceptions
-def list_network_sources(ctx, from_json, all_pages, page_size, compartment_id, page, limit):
+def list_network_sources(ctx, from_json, all_pages, page_size, compartment_id, page, limit, name, sort_by, sort_order, lifecycle_state):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -3866,6 +3934,14 @@ def list_network_sources(ctx, from_json, all_pages, page_size, compartment_id, p
         kwargs['page'] = page
     if limit is not None:
         kwargs['limit'] = limit
+    if name is not None:
+        kwargs['name'] = name
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
     client = cli_util.build_client('identity', 'identity', ctx)
     if all_pages:
         if page_size:
@@ -3951,6 +4027,12 @@ To determine which policies apply to a particular group or compartment, you must
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment (remember that the tenancy is simply the root compartment).""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call.""")
+@cli_util.option('--name', help=u"""A filter to only return resources that match the given name exactly.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "NAME"]), help=u"""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for NAME is ascending. The NAME sort order is case sensitive.
+
+**Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by Availability Domain if the scope of the resource type is within a single Availability Domain. If you call one of these \"List\" operations without specifying an Availability Domain, the resources are grouped by Availability Domain, then sorted.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The NAME sort order is case sensitive.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED"]), help=u"""A filter to only return resources that match the given lifecycle state.  The state value is case-insensitive.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -3958,7 +4040,7 @@ To determine which policies apply to a particular group or compartment, you must
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'list[Policy]'})
 @cli_util.wrap_exceptions
-def list_policies(ctx, from_json, all_pages, page_size, compartment_id, page, limit):
+def list_policies(ctx, from_json, all_pages, page_size, compartment_id, page, limit, name, sort_by, sort_order, lifecycle_state):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -3968,6 +4050,14 @@ def list_policies(ctx, from_json, all_pages, page_size, compartment_id, page, li
         kwargs['page'] = page
     if limit is not None:
         kwargs['limit'] = limit
+    if name is not None:
+        kwargs['name'] = name
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
     client = cli_util.build_client('identity', 'identity', ctx)
     if all_pages:
         if page_size:
@@ -4451,6 +4541,12 @@ def list_user_group_memberships(ctx, from_json, all_pages, page_size, compartmen
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call.""")
 @cli_util.option('--identity-provider-id', help=u"""The id of the identity provider.""")
 @cli_util.option('--external-identifier', help=u"""The id of a user in the identity provider.""")
+@cli_util.option('--name', help=u"""A filter to only return resources that match the given name exactly.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "NAME"]), help=u"""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for NAME is ascending. The NAME sort order is case sensitive.
+
+**Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by Availability Domain if the scope of the resource type is within a single Availability Domain. If you call one of these \"List\" operations without specifying an Availability Domain, the resources are grouped by Availability Domain, then sorted.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The NAME sort order is case sensitive.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED"]), help=u"""A filter to only return resources that match the given lifecycle state.  The state value is case-insensitive.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -4458,7 +4554,7 @@ def list_user_group_memberships(ctx, from_json, all_pages, page_size, compartmen
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'list[User]'})
 @cli_util.wrap_exceptions
-def list_users(ctx, from_json, all_pages, page_size, compartment_id, page, limit, identity_provider_id, external_identifier):
+def list_users(ctx, from_json, all_pages, page_size, compartment_id, page, limit, identity_provider_id, external_identifier, name, sort_by, sort_order, lifecycle_state):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -4472,6 +4568,14 @@ def list_users(ctx, from_json, all_pages, page_size, compartment_id, page, limit
         kwargs['identity_provider_id'] = identity_provider_id
     if external_identifier is not None:
         kwargs['external_identifier'] = external_identifier
+    if name is not None:
+        kwargs['name'] = name
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
     client = cli_util.build_client('identity', 'identity', ctx)
     if all_pages:
         if page_size:

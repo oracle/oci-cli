@@ -2218,7 +2218,7 @@ def create_database_create_database_from_backup(ctx, from_json, wait_for_state, 
 
 @db_home_group.command(name=cli_util.override('db.create_db_home.command_name', 'create'), help=u"""Creates a new Database Home in the specified DB system based on the request parameters you provide. Applies to bare metal DB systems, Exadata DB systems, and Exadata Cloud at Customer systems.""")
 @cli_util.option('--display-name', help=u"""The user-provided name of the Database Home.""")
-@cli_util.option('--source', type=custom_types.CliCaseInsensitiveChoice(["NONE", "DB_BACKUP", "VM_CLUSTER_NEW"]), help=u"""The source of database: NONE for creating a new database. DB_BACKUP for creating a new database by restoring from a database backup.""")
+@cli_util.option('--source', type=custom_types.CliCaseInsensitiveChoice(["NONE", "DB_BACKUP", "DATABASE", "VM_CLUSTER_NEW"]), help=u"""The source of database: NONE for creating a new database. DB_BACKUP for creating a new database by restoring from a database backup.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -2238,6 +2238,62 @@ def create_db_home(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 
     if source is not None:
         _details['source'] = source
+
+    client = cli_util.build_client('database', 'database', ctx)
+    result = client.create_db_home(
+        create_db_home_with_db_system_id_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_db_home') and callable(getattr(client, 'get_db_home')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_db_home(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@db_home_group.command(name=cli_util.override('db.create_db_home_create_db_home_with_db_system_id_from_database_details.command_name', 'create-db-home-create-db-home-with-db-system-id-from-database-details'), help=u"""Creates a new Database Home in the specified DB system based on the request parameters you provide. Applies to bare metal DB systems, Exadata DB systems, and Exadata Cloud at Customer systems.""")
+@cli_util.option('--db-system-id', required=True, help=u"""The [OCID] of the DB system.""")
+@cli_util.option('--database', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help=u"""The user-provided name of the Database Home.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'database': {'module': 'database', 'class': 'CreateDatabaseFromAnotherDatabaseDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database': {'module': 'database', 'class': 'CreateDatabaseFromAnotherDatabaseDetails'}}, output_type={'module': 'database', 'class': 'DbHome'})
+@cli_util.wrap_exceptions
+def create_db_home_create_db_home_with_db_system_id_from_database_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, db_system_id, database, display_name):
+
+    kwargs = {}
+
+    _details = {}
+    _details['dbSystemId'] = db_system_id
+    _details['database'] = cli_util.parse_json_parameter("database", database)
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    _details['source'] = 'DATABASE'
 
     client = cli_util.build_client('database', 'database', ctx)
     result = client.create_db_home(
@@ -4538,7 +4594,7 @@ Example: `FAULT-DOMAIN-1`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--source', type=custom_types.CliCaseInsensitiveChoice(["NONE", "DB_BACKUP"]), help=u"""The source of the database: Use `NONE` for creating a new database. Use `DB_BACKUP` for creating a new database by restoring from a backup. The default is `NONE`.""")
+@cli_util.option('--source', type=custom_types.CliCaseInsensitiveChoice(["NONE", "DB_BACKUP", "DATABASE"]), help=u"""The source of the database: Use `NONE` for creating a new database. Use `DB_BACKUP` for creating a new database by restoring from a backup. Use `DATABASE` for creating a new database from an existing database, including archive redo log data. The default is `NONE`.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -4775,6 +4831,170 @@ def launch_db_system_launch_db_system_details(ctx, from_json, wait_for_state, ma
         _details['maintenanceWindowDetails'] = cli_util.parse_json_parameter("maintenance_window_details", maintenance_window_details)
 
     _details['source'] = 'NONE'
+
+    client = cli_util.build_client('database', 'database', ctx)
+    result = client.launch_db_system(
+        launch_db_system_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_db_system') and callable(getattr(client, 'get_db_system')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_db_system(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@db_system_group.command(name=cli_util.override('db.launch_db_system_launch_db_system_from_database_details.command_name', 'launch-db-system-launch-db-system-from-database-details'), help=u"""Creates a new DB system in the specified compartment and availability domain. The Oracle Database edition that you specify applies to all the databases on that DB system. The selected edition cannot be changed.
+
+An initial database is created on the DB system based on the request parameters you provide and some default options. For detailed information about default options, see the following:
+
+- [Bare metal and virtual machine DB system default options] - [Exadata DB system default options]""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment the DB system  belongs in.""")
+@cli_util.option('--availability-domain', required=True, help=u"""The availability domain where the DB system is located.""")
+@cli_util.option('--subnet-id', required=True, help=u"""The [OCID] of the subnet the DB system is associated with.
+
+**Subnet Restrictions:** - For bare metal DB systems and for single node virtual machine DB systems, do not use a subnet that overlaps with 192.168.16.16/28. - For Exadata and virtual machine 2-node RAC DB systems, do not use a subnet that overlaps with 192.168.128.0/20.
+
+These subnets are used by the Oracle Clusterware private interconnect on the database instance. Specifying an overlapping subnet will cause the private interconnect to malfunction. This restriction applies to both the client subnet and the backup subnet.""")
+@cli_util.option('--shape', required=True, help=u"""The shape of the DB system. The shape determines resources allocated to the DB system. - For virtual machine shapes, the number of CPU cores and memory - For bare metal and Exadata shapes, the number of CPU cores, memory, and storage
+
+To get a list of shapes, use the [ListDbSystemShapes] operation.""")
+@cli_util.option('--ssh-public-keys', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The public key portion of the key pair to use for SSH access to the DB system. Multiple public keys can be provided. The length of the combined keys cannot exceed 40,000 characters.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--hostname', required=True, help=u"""The hostname for the DB system. The hostname must begin with an alphabetic character, and can contain alphanumeric characters and hyphens (-). The maximum length of the hostname is 16 characters for bare metal and virtual machine DB systems, and 12 characters for Exadata DB systems.
+
+The maximum length of the combined hostname and domain is 63 characters.
+
+**Note:** The hostname must be unique within the subnet. If it is not unique, the DB system will fail to provision.""")
+@cli_util.option('--cpu-core-count', required=True, type=click.INT, help=u"""The number of CPU cores to enable for a bare metal or Exadata DB system. The valid values depend on the specified shape:
+
+- BM.DenseIO1.36 - Specify a multiple of 2, from 2 to 36. - BM.DenseIO2.52 - Specify a multiple of 2, from 2 to 52. - Exadata.Base.48 - Specify a multiple of 2, from 0 to 48. - Exadata.Quarter1.84 - Specify a multiple of 2, from 22 to 84. - Exadata.Half1.168 - Specify a multiple of 4, from 44 to 168. - Exadata.Full1.336 - Specify a multiple of 8, from 88 to 336. - Exadata.Quarter2.92 - Specify a multiple of 2, from 0 to 92. - Exadata.Half2.184 - Specify a multiple of 4, from 0 to 184. - Exadata.Full2.368 - Specify a multiple of 8, from 0 to 368.
+
+This parameter is not used for virtual machine DB systems because virtual machine DB systems have a set number of cores for each shape. For information about the number of cores for a virtual machine DB system shape, see [Virtual Machine DB Systems]""")
+@cli_util.option('--db-home', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-edition', required=True, type=custom_types.CliCaseInsensitiveChoice(["STANDARD_EDITION", "ENTERPRISE_EDITION", "ENTERPRISE_EDITION_HIGH_PERFORMANCE", "ENTERPRISE_EDITION_EXTREME_PERFORMANCE"]), help=u"""The Oracle Database Edition that applies to all the databases on the DB system. Exadata DB systems and 2-node RAC DB systems require ENTERPRISE_EDITION_EXTREME_PERFORMANCE.""")
+@cli_util.option('--fault-domains', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A Fault Domain is a grouping of hardware and infrastructure within an availability domain. Fault Domains let you distribute your instances so that they are not on the same physical hardware within a single availability domain. A hardware failure or maintenance that affects one Fault Domain does not affect DB systems in other Fault Domains.
+
+If you do not specify the Fault Domain, the system selects one for you. To change the Fault Domain for a DB system, terminate it and launch a new DB system in the preferred Fault Domain.
+
+If the node count is greater than 1, you can specify which Fault Domains these nodes will be distributed into. The system assigns your nodes automatically to the Fault Domains you specify so that no Fault Domain contains more than one node.
+
+To get a list of Fault Domains, use the [ListFaultDomains] operation in the Identity and Access Management Service API.
+
+Example: `FAULT-DOMAIN-1`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help=u"""The user-friendly name for the DB system. The name does not have to be unique.""")
+@cli_util.option('--backup-subnet-id', help=u"""The [OCID] of the backup network subnet the DB system is associated with. Applicable only to Exadata DB systems.
+
+**Subnet Restrictions:** See the subnet restrictions information for **subnetId**.""")
+@cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of the [OCIDs] of the network security groups (NSGs) that this resource belongs to. Setting this to an empty array after the list is created removes the resource from all NSGs. For more information about NSGs, see [Security Rules]. **NsgIds restrictions:** - Autonomous Databases with private access require at least 1 Network Security Group (NSG). The nsgIds array cannot be empty.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--backup-network-nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of the [OCIDs] of the network security groups (NSGs) that the backup network of this DB system belongs to. Setting this to an empty array after the list is created removes the resource from all NSGs. For more information about NSGs, see [Security Rules]. Applicable only to Exadata DB systems.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--time-zone', help=u"""The time zone to use for the DB system. For details, see [DB System Time Zones].""")
+@cli_util.option('--db-system-options', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--sparse-diskgroup', type=click.BOOL, help=u"""If true, Sparse Diskgroup is configured for Exadata dbsystem. If False, Sparse diskgroup is not configured.""")
+@cli_util.option('--domain', help=u"""A domain name used for the DB system. If the Oracle-provided Internet and VCN Resolver is enabled for the specified subnet, the domain name for the subnet is used (do not provide one). Otherwise, provide a valid DNS domain name. Hyphens (-) are not permitted.""")
+@cli_util.option('--cluster-name', help=u"""The cluster name for Exadata and 2-node RAC virtual machine DB systems. The cluster name must begin with an an alphabetic character, and may contain hyphens (-). Underscores (_) are not permitted. The cluster name can be no longer than 11 characters and is not case sensitive.""")
+@cli_util.option('--data-storage-percentage', type=click.INT, help=u"""The percentage assigned to DATA storage (user data and database files). The remaining percentage is assigned to RECO storage (database redo logs, archive logs, and recovery manager backups). Specify 80 or 40. The default is 80 percent assigned to DATA storage. Not applicable for virtual machine DB systems.""")
+@cli_util.option('--initial-data-storage-size-in-gb', type=click.INT, help=u"""Size (in GB) of the initial data volume that will be created and attached to a virtual machine DB system. You can scale up storage after provisioning, as needed. Note that the total storage size attached will be more than the amount you specify to allow for REDO/RECO space and software volume.""")
+@cli_util.option('--node-count', type=click.INT, help=u"""The number of nodes to launch for a 2-node RAC virtual machine DB system. Specify either 1 or 2.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--disk-redundancy', type=custom_types.CliCaseInsensitiveChoice(["HIGH", "NORMAL"]), help=u"""The type of redundancy configured for the DB system. NORMAL 2-way redundancy, recommended for test and development systems. HIGH is 3-way redundancy, recommended for production systems.""")
+@cli_util.option('--license-model', type=custom_types.CliCaseInsensitiveChoice(["LICENSE_INCLUDED", "BRING_YOUR_OWN_LICENSE"]), help=u"""The Oracle license model that applies to all the databases on the DB system. The default is LICENSE_INCLUDED.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'fault-domains': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'backup-network-nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'db-system-options': {'module': 'database', 'class': 'DbSystemOptions'}, 'ssh-public-keys': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'db-home': {'module': 'database', 'class': 'CreateDbHomeFromDatabaseDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'fault-domains': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'backup-network-nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'db-system-options': {'module': 'database', 'class': 'DbSystemOptions'}, 'ssh-public-keys': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'db-home': {'module': 'database', 'class': 'CreateDbHomeFromDatabaseDetails'}}, output_type={'module': 'database', 'class': 'DbSystem'})
+@cli_util.wrap_exceptions
+def launch_db_system_launch_db_system_from_database_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, availability_domain, subnet_id, shape, ssh_public_keys, hostname, cpu_core_count, db_home, database_edition, fault_domains, display_name, backup_subnet_id, nsg_ids, backup_network_nsg_ids, time_zone, db_system_options, sparse_diskgroup, domain, cluster_name, data_storage_percentage, initial_data_storage_size_in_gb, node_count, freeform_tags, defined_tags, disk_redundancy, license_model):
+
+    kwargs = {}
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['availabilityDomain'] = availability_domain
+    _details['subnetId'] = subnet_id
+    _details['shape'] = shape
+    _details['sshPublicKeys'] = cli_util.parse_json_parameter("ssh_public_keys", ssh_public_keys)
+    _details['hostname'] = hostname
+    _details['cpuCoreCount'] = cpu_core_count
+    _details['dbHome'] = cli_util.parse_json_parameter("db_home", db_home)
+    _details['databaseEdition'] = database_edition
+
+    if fault_domains is not None:
+        _details['faultDomains'] = cli_util.parse_json_parameter("fault_domains", fault_domains)
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if backup_subnet_id is not None:
+        _details['backupSubnetId'] = backup_subnet_id
+
+    if nsg_ids is not None:
+        _details['nsgIds'] = cli_util.parse_json_parameter("nsg_ids", nsg_ids)
+
+    if backup_network_nsg_ids is not None:
+        _details['backupNetworkNsgIds'] = cli_util.parse_json_parameter("backup_network_nsg_ids", backup_network_nsg_ids)
+
+    if time_zone is not None:
+        _details['timeZone'] = time_zone
+
+    if db_system_options is not None:
+        _details['dbSystemOptions'] = cli_util.parse_json_parameter("db_system_options", db_system_options)
+
+    if sparse_diskgroup is not None:
+        _details['sparseDiskgroup'] = sparse_diskgroup
+
+    if domain is not None:
+        _details['domain'] = domain
+
+    if cluster_name is not None:
+        _details['clusterName'] = cluster_name
+
+    if data_storage_percentage is not None:
+        _details['dataStoragePercentage'] = data_storage_percentage
+
+    if initial_data_storage_size_in_gb is not None:
+        _details['initialDataStorageSizeInGB'] = initial_data_storage_size_in_gb
+
+    if node_count is not None:
+        _details['nodeCount'] = node_count
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if disk_redundancy is not None:
+        _details['diskRedundancy'] = disk_redundancy
+
+    if license_model is not None:
+        _details['licenseModel'] = license_model
+
+    _details['source'] = 'DATABASE'
 
     client = cli_util.build_client('database', 'database', ctx)
     result = client.launch_db_system(

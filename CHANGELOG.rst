@@ -6,6 +6,51 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.11.1 - 2020-06-16
+-------------------
+Added
+~~~~~
+
+* Support creating a new database from another database for the Database service
+
+  * ``oci db database create-from-database --point-in-time-recovery-timestamp``
+
+* Support for the new DNS format of the Data Transfer service
+
+* Support for Schedule-based Autoscaling via a new policy type (scheduled) in the Autoscaling service 
+
+* Support for enabling/disabling individual policies in the Autoscaling service 
+
+  * ``oci autoscaling policy update --is-enabled``
+
+* Support for filtering lists by name, lifecycle state and sorting by value, order for compartments, dynamic group, group, identity provider, network sources, policy, user in the Identity Service
+
+  * ``oci iam compartment list --name --lifecycle-state --sort-by --sort-order``
+  * ``oci iam dynamic-group list --name --lifecycle-state --sort-by --sort-order``
+  * ``oci iam group list --name --lifecycle-state --sort-by --sort-order``
+  * ``oci iam identity-provider list --name --lifecycle-state --sort-by --sort-order``
+  * ``oci iam network-sources list --name --lifecycle-state --sort-by --sort-order``
+  * ``oci iam policy list --name --lifecycle-state --sort-by --sort-order``
+  * ``oci iam user list --name --lifecycle-state --sort-by --sort-order``
+
+* Support for filtering lists by name and lifecycle state for identity provider group in the Identity Service
+
+  * ``oci iam identity-provider-group list --name --lifecycle-state``
+
+Changed
+~~~~~~~
+
+* Added DB version field in Autonomous Container Database summary response for the Database service
+
+  * ``oci db autonomous-database``
+
+* DTS service endpoint is updated to ``https://datatransfer.{region}.oci.{secondLevelDomain}``
+
+Fixed
+~~~~~
+
+* Bug fix in appliance-status update in ``oci dts export configure-physical-appliance``
+
 2.11.0 - 2020-06-09
 -------------------
 Added
@@ -35,7 +80,6 @@ Added
 
   * ``oci db patch list-vm-cluster --vm-cluster-id``
   * ``oci db patch get-vm-cluster --vm-cluster-id``
-
 
 * Support get, list commands for DB Patch History for given DB Home
 

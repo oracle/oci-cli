@@ -96,12 +96,10 @@ compute_instance_launch_metadata_help = """Custom metadata key/value pairs that 
 
 Note: user_data and ssh_authorized_keys can instead be specified using the parameters --user-data-file and --ssh-authorized-keys-file."""
 
-compute_instance_launch_subnet_id_help = """The OCID of the subnet where the VNIC attached to this instance will be created."""
 compute_instance_launch_hostname_label_help = """The hostname for the VNIC that is created during instance launch. Used for DNS. The value is the hostname portion of the instance's fully qualified domain name (FQDN) (e.g., `bminstance-1` in FQDN `bminstance-1.subnet123.vcn1.oraclevcn.com`). Must be unique across all VNICs in the subnet and comply with [RFC 952] and [RFC 1123]. The value cannot be changed, and it can be retrieved from the [Vnic].
 
 For more information, see [DNS in Your Virtual Cloud Network]."""
 cli_util.update_param_help(compute_cli.launch_instance, 'metadata', compute_instance_launch_metadata_help, append=False, example=compute_instance_launch_metadata_example)
-cli_util.update_param_help(compute_cli.launch_instance, 'subnet_id', compute_instance_launch_subnet_id_help)
 cli_util.update_param_help(compute_cli.launch_instance, 'hostname_label', compute_instance_launch_hostname_label_help, example='`bminstance-1`')
 cli_util.update_param_help(compute_cli.launch_instance, 'source_details', """Use this parameter to specify whether a boot volume or an image should be used to launch a new instance.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 cli_util.update_param_help(compute_cli.launch_instance, 'image_id', """The OCID of the image used to boot the instance. This is a shortcut for specifying an image source via the --source-details complex JSON parameter. If this parameter is provided, you cannot provide the --source-details or --source-boot-volume-id parameters.""", append=False)
@@ -384,7 +382,7 @@ def list_vnics(ctx, from_json, compartment_id, instance_id, limit, page, all_pag
     cli_util.render(result, vnic_attachments_result.headers, ctx=ctx)
 
 
-@cli_util.copy_params_from_generated_command(compute_cli.launch_instance, params_to_exclude=['create_vnic_details'])
+@cli_util.copy_params_from_generated_command(compute_cli.launch_instance, params_to_exclude=['create_vnic_details', 'subnet_id'])
 @compute_cli.instance_group.command(name='launch', help=compute_cli.launch_instance.help)
 @cli_util.option('--vnic-display-name', help="""A user-friendly name for the default VNIC attached to this instance. Does not have to be unique.""")
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of the [OCIDs] of the network security groups (NSGs) to add the VNIC to..""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -395,6 +393,7 @@ def list_vnics(ctx, from_json, compartment_id, instance_id, limit, page, all_pag
 @cli_util.option('--ssh-authorized-keys-file', type=click.File('r'), help="""A file containing one or more public SSH keys to be included in the ~/.ssh/authorized_keys file for the default user on the instance. Use a newline character to separate multiple keys. The SSH keys must be in the format necessary for the authorized_keys file. This parameter is a convenience wrapper around the 'ssh_authorized_keys' field of the --metadata parameter. Populating both values in the same call will result in an error. For more info see documentation: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/requests/LaunchInstanceDetails.""")
 @cli_util.option('--source-boot-volume-id', help="""The OCID of the boot volume used to boot the instance. This is a shortcut for specifying a boot volume source via the --source-details complex JSON parameter. If this parameter is provided, you cannot provide the --source-details or --image-id parameters.""")
 @cli_util.option('--boot-volume-size-in-gbs', type=click.INT, help="""The size of the boot volume in GBs. Minimum value is 50 GB and maximum value is 16384 GB (16TB). This is a shortcut for specifying a boot volume size via the --source-details complex JSON parameter. If this parameter is provided, you cannot provide the --source-details or --source-boot-volume-id parameters.""")
+@cli_util.option('--subnet-id', required=True, help=u"""The OCID of the subnet where the VNIC attached to this instance will be created.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'nsg-ids': {'module': 'core', 'class': 'list[string]'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
@@ -418,6 +417,11 @@ def launch_instance_extended(ctx, **kwargs):
                 'Cannot specify ssh-authorized-keys as part of both --ssh-authorized-keys-file and --metadata.')
         else:
             metadata['ssh_authorized_keys'] = ssh_authorized_keys_file.read()
+
+    if not (kwargs.get('source_details') or kwargs.get('image_id') or kwargs.get('source_boot_volume_id')):
+        raise click.UsageError(
+            'Must specify --source-details or --image-id or --source-boot-volume-id'
+        )
 
     if kwargs.get('source_details') and (kwargs.get('image_id') or kwargs.get('source_boot_volume_id') or kwargs.get('boot_volume_size_in_gbs')):
         raise click.UsageError(

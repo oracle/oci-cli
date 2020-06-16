@@ -68,6 +68,8 @@ def setup_notifications_extended(ctx):
 @cli_util.wrap_exceptions
 def create_appliance_export_job_extended(ctx, **kwargs):
 
+    ctx.endpoint = None
+    ctx.obj['endpoint'] = None
     os_client = create_os_client(ctx)
     namespace = os_client.get_namespace().data
 
@@ -309,6 +311,7 @@ def create_policy_extended(ctx, **kwargs):
     kwargs_show = {
         'opc_request_id': cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     }
+
     client = cli_util.build_client('dts', 'appliance_export_job', ctx)
     result = client.get_appliance_export_job(
         appliance_export_job_id=kwargs['job_id'],
@@ -322,7 +325,8 @@ def create_policy_extended(ctx, **kwargs):
     config = oci.config.from_file(file_location=ctx.obj['config_file'], profile_name=ctx.obj['profile'])
     root_compartment = config['tenancy']
     policy_name = result.data.display_name + "_Policy"
-
+    ctx.endpoint = None
+    ctx.obj['endpoint'] = None
     # Get the home region through the region-subscription list command
     identity_client = cli_util.build_client('identity', 'identity', ctx)
     subscription_kwargs = {}
@@ -382,18 +386,18 @@ def appliance_state_update(appliance_lifecycle_state, appliance_lifecycle_state_
     :param kwargs: appliance details
     :return: updated kwargs with target-state
     '''
+
     if appliance_lifecycle_state == UpdateApplianceExportJobDetails.LIFECYCLE_STATE_INPROGRESS:
-        if appliance_lifecycle_state_details is not LIFECYCLE_STATE_DETAILS_CUSTOMER_PROCESSING:
-            kwargs_update = {'appliance_export_job_id': kwargs['job_id']}
-            if appliance_lifecycle_state_details in [LIFECYCLE_STATE_DETAILS_ORACLE_SHIPPED, LIFECYCLE_STATE_DETAILS_CUSTOMER_RECEIVED]:
-                kwargs_update.update({'lifecycle_state': appliance_lifecycle_state, 'lifecycle_state_details': LIFECYCLE_STATE_DETAILS_CUSTOMER_PROCESSING})
-                click.echo("Updating the state of the job from {} to {}".format(appliance_lifecycle_state_details, LIFECYCLE_STATE_DETAILS_CUSTOMER_PROCESSING))
-                return kwargs_update
-            else:
-                raise click.ClickException("The Appliance is not in state for export. Contact Oracle Support")
-        else:
+        if appliance_lifecycle_state_details == LIFECYCLE_STATE_DETAILS_CUSTOMER_PROCESSING:
             click.echo("Appliance lifecycle_state_details is already in {}.".format(LIFECYCLE_STATE_DETAILS_CUSTOMER_PROCESSING))
             return None
+        kwargs_update = {'appliance_export_job_id': kwargs['job_id']}
+        if appliance_lifecycle_state_details in [LIFECYCLE_STATE_DETAILS_ORACLE_SHIPPED, LIFECYCLE_STATE_DETAILS_CUSTOMER_RECEIVED]:
+            kwargs_update.update({'lifecycle_state': appliance_lifecycle_state, 'lifecycle_state_details': LIFECYCLE_STATE_DETAILS_CUSTOMER_PROCESSING})
+            click.echo("Updating the state of the job from {} to {}".format(appliance_lifecycle_state_details, LIFECYCLE_STATE_DETAILS_CUSTOMER_PROCESSING))
+            return kwargs_update
+        else:
+            raise click.ClickException("The Appliance is not in state for export. Contact Oracle Support")
     else:
         click.echo("Appliance lifecycle-state is NOT {}.".format(UpdateApplianceExportJobDetails.LIFECYCLE_STATE_INPROGRESS))
         return None
@@ -459,13 +463,6 @@ def configure_physical_appliance_export_job_extended(ctx, **kwargs):
     kwargs_request = {'opc_request_id': cli_util.use_or_generate_request_id(ctx.obj['request_id'])}
     result = client.get_appliance_export_job(appliance_export_job_id=kwargs['job_id'], **kwargs_request)
 
-    # Appliance state change
-    appliance_lifecycle_state = result.data.lifecycle_state
-    appliance_lifecycle_state_details = result.data.lifecycle_state_details
-    kwargs_update = appliance_state_update(appliance_lifecycle_state, appliance_lifecycle_state_details, **kwargs)
-    if kwargs_update:
-        ctx.invoke(applianceexportjob_cli.update_appliance_export_job, **kwargs_update)
-
     click.echo("Getting the serial number and passphrase of the appliance")
     serial_number = result.data.appliance_serial_number
     passphrase = result.data.appliance_decryption_passphrase
@@ -475,6 +472,13 @@ def configure_physical_appliance_export_job_extended(ctx, **kwargs):
     click.echo("Initializing authentication with the appliance")
     pa_init_auth_helper(ctx, appliance_profile, kwargs['appliance_cert_fingerprint'], kwargs['appliance_ip'],
                         kwargs['appliance_port'], serial_number, kwargs['access_token'])
+
+    # Appliance state change
+    appliance_lifecycle_state = result.data.lifecycle_state
+    appliance_lifecycle_state_details = result.data.lifecycle_state_details
+    kwargs_update = appliance_state_update(appliance_lifecycle_state, appliance_lifecycle_state_details, **kwargs)
+    if kwargs_update:
+        ctx.invoke(applianceexportjob_cli.update_appliance_export_job, **kwargs_update)
 
     # Get appliance info
     appliance_info = pa_show_helper(ctx=ctx, appliance_profile=appliance_profile, from_json=None)

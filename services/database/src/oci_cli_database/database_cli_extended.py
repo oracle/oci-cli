@@ -462,6 +462,68 @@ def update_database_extended(ctx, **kwargs):
     ctx.invoke(database_cli.update_database, **kwargs)
 
 
+# Creates a database from the settings of another existing database.
+# This function was added so we could have this command structure -- "oci db database create-from-database".
+# This is similar to what was done for create_database_from_backup.
+# Db home is not exposed to the end user.
+@cli_util.copy_params_from_generated_command(database_cli.create_db_home, params_to_exclude=['database', 'display_name', 'db_version', 'source'])
+@database_cli.database_group.command(name='create-from-database', help="""Creates a new database in the given DB System from another database.""")
+@cli_util.option('--db-system-id', required=False, help="""The Db System Id to clone this database under.""")
+@cli_util.option('--admin-password', required=True, help="""A strong password for SYS, SYSTEM, and PDB Admin. The password must be at least nine characters and contain at least two uppercase, two lowercase, two numbers, and two special characters. The special characters must be _, #, or -.""")
+@cli_util.option('--database-id', required=True, help="""The OCID of the from-database.""")
+@cli_util.option('--backup-tde-password', required=True, help="""The password to open the TDE wallet.""")
+@cli_util.option('--point-in-time-recovery-timestamp', required=False, help="""The point in time of the original database from which the new database is created. If not specifed, the latest backup is used to create the database.""")
+@cli_util.option('--db-name', required=False, help="""The display name of the database to be created. It must begin with an alphabetic character and can contain a maximum of eight alphanumeric characters. Special characters are not permitted.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'DatabaseSummary'})
+@cli_util.wrap_exceptions
+def create_database_from_another_database(ctx, **kwargs):
+    create_db_home_with_system_details = oci.database.models.CreateDbHomeWithDbSystemIdFromDatabaseDetails()
+    create_database_details = oci.database.models.CreateDatabaseFromAnotherDatabaseDetails()
+    if 'admin_password' in kwargs and kwargs['admin_password']:
+        create_database_details.admin_password = kwargs['admin_password']
+
+    if 'database_id' in kwargs and kwargs['database_id']:
+        create_database_details.database_id = kwargs['database_id']
+
+    if 'backup_tde_password' in kwargs and kwargs['backup_tde_password']:
+        create_database_details.backup_tde_password = kwargs['backup_tde_password']
+
+    if 'db_name' in kwargs and kwargs['db_name']:
+        create_database_details.db_name = kwargs['db_name']
+
+    if 'point_in_time_recovery_timestamp' in kwargs and kwargs['point_in_time_recovery_timestamp']:
+        create_database_details.time_stamp_for_point_in_time_recovery = kwargs['point_in_time_recovery_timestamp']
+
+    create_db_home_with_system_details.database = create_database_details
+
+    if 'db_system_id' in kwargs and kwargs['db_system_id']:
+        create_db_home_with_system_details.db_system_id = kwargs['db_system_id']
+
+    create_db_home_with_system_details.source = 'DATABASE'
+
+    client = cli_util.build_client('database', ctx)
+
+    result = client.create_db_home(create_db_home_with_system_details)
+
+    db_home_id = result.data.id
+    compartment_id = result.data.compartment_id
+
+    # result is now the DbHome that was created, so we need to get the
+    # corresponding database and print that out for the user
+    try:
+        result = client.list_databases(db_home_id=db_home_id, compartment_id=compartment_id)
+    except oci.exceptions.ServiceError:
+        click.echo("Failed retrieving database info after successfully creation.  You can view the status of databases in this DB system by executing: oci db database list -c {comp_id} --db-system-id {db_sys_id} ".format(comp_id=compartment_id, db_sys_id=kwargs['db_system_id']), file=sys.stderr)
+        sys.exit(1)
+
+    # there is only one database per db-home
+    # so just return the first database in this newly created db-home
+    database = result.data[0]
+
+    cli_util.render(database, None, ctx)
+
+
 @database_cli.database_group.command(name='patch', help="""Perform a patch action for a given patch and database.""")
 @cli_util.option('--database-id', required=True, help="""The OCID of the database.""")
 @cli_util.option('--patch-action', required=True, help="""The action to perform on the patch.""")
@@ -929,6 +991,7 @@ database_cli.db_home_group.commands.pop(database_cli.create_db_home.name)
 database_cli.db_home_group.commands.pop(database_cli.create_db_home_create_db_home_with_db_system_id_from_backup_details.name)
 database_cli.db_home_group.commands.pop(database_cli.create_db_home_create_db_home_with_db_system_id_details.name)
 database_cli.db_home_group.commands.pop(database_cli.create_db_home_create_db_home_with_vm_cluster_id_details.name)
+database_cli.db_home_group.commands.pop(database_cli.create_db_home_create_db_home_with_db_system_id_from_database_details.name)
 
 # This is simulated via oci cli create database --db-home-id
 database_cli.database_group.commands.pop(database_cli.create_database_create_new_database_details.name)
@@ -941,6 +1004,7 @@ database_cli.db_system_group.commands.pop(database_cli.launch_db_system.name)
 # Disable subclass commands
 database_cli.db_system_group.commands.pop(database_cli.launch_db_system_launch_db_system_details.name)
 database_cli.db_system_group.commands.pop(database_cli.launch_db_system_launch_db_system_from_backup_details.name)
+database_cli.db_system_group.commands.pop(database_cli.launch_db_system_launch_db_system_from_database_details.name)
 
 database_cli.db_system_group.commands.pop(database_cli.update_db_system.name)
 
@@ -951,11 +1015,13 @@ database_cli.data_guard_association_group.commands.pop(database_cli.create_data_
 # we need to expose customized create / delete / list database commands in order to avoid exposing DbHomes
 database_cli.database_group.add_command(create_database)
 database_cli.database_group.add_command(create_database_from_backup)
+database_cli.database_group.add_command(create_database_from_another_database)
 database_cli.database_group.add_command(delete_database)
 database_cli.database_group.add_command(list_databases)
 database_cli.db_system_group.add_command(launch_db_system_extended)
 database_cli.db_system_group.add_command(launch_db_system_backup_extended)
 database_cli.db_system_group.add_command(update_db_system_extended)
+
 database_cli.db_home_group.add_command(create_db_home)
 
 patch_get_group.add_command(database_cli.get_db_system_patch)

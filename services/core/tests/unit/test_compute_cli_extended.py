@@ -16,6 +16,11 @@ class TestCompute(unittest.TestCase):
         assert 'availability-domain' in result.output
         assert 'compartment-id' in result.output
         assert 'shape' in result.output
+        assert 'subnet-id' in result.output
+
+        result = util.invoke_command(['compute', 'instance', 'launch', '--availability-domain', 'dummy', '--compartment-id', 'dummy', '--shape', 'dummy', '--subnet-id', 'dummy'])
+        assert 'source-details' in result.output
+        assert 'image-id' in result.output
 
     def test_attach_vnic(self):
         result = util.invoke_command(['compute', 'instance', 'attach-vnic', '--nsg-ids', 'dummy'])

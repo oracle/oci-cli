@@ -53,7 +53,8 @@ def setup_notifications_helper(ctx, create_topic_details, create_rule_kwargs):
     create_topic_kwargs = {
         'opc_request_id': cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     }
-
+    ctx.endpoint = None
+    ctx.obj['endpoint'] = None
     create_topic_client = get_topic_client(ctx)
     click.echo('Creating topic {}'.format(create_topic_details['name']))
     create_topic_result = create_topic_client.create_topic(
@@ -79,6 +80,8 @@ def setup_notifications_helper(ctx, create_topic_details, create_rule_kwargs):
                 create_rule_kwargs['actions']['actions'][index]['topicId'] is None:
             create_rule_kwargs['actions']['actions'][index]['topicId'] = get_topic_id(create_topic_result)
     click.echo('Creating rule {}'.format(create_rule_kwargs['display_name']))
+    ctx.endpoint = None
+    ctx.obj['endpoint'] = None
     create_rule_helper(ctx, create_rule_kwargs)
 
 

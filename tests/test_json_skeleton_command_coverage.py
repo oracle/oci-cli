@@ -12,75 +12,9 @@ import random
 import vcr
 import os
 import pytest
-
+from common_util import ignored_commands
 
 # Commands which we skip evaluation of because they don't have the JSON input
-IGNORED_COMMANDS = [
-    ['setup', 'autocomplete'],
-    ['setup', 'bootstrap'],
-    ['setup', 'config'],
-    ['setup', 'keys'],
-    ['setup', 'repair-file-permissions'],
-    ['setup', 'oci-cli-rc'],
-    ['session', 'authenticate'],
-    ['session', 'export'],
-    ['session', 'import'],
-    ['session', 'refresh'],
-    ['session', 'terminate'],
-    ['session', 'validate'],
-    ['raw-request'],
-    # Note this is being added b/c python sdk doesn't generate models
-    # for top level enums.
-    # This means that the --generate-full-command-json-input will not work
-    # for these commands.
-    ['cims', 'incident', 'create'],
-    ['cims', 'incident', 'update'],
-    # DTS commands
-    ['dts', 'nfs-dataset', 'activate'],
-    ['dts', 'nfs-dataset', 'create'],
-    ['dts', 'nfs-dataset', 'deactivate'],
-    ['dts', 'nfs-dataset', 'delete'],
-    ['dts', 'nfs-dataset', 'get-seal-manifest'],
-    ['dts', 'nfs-dataset', 'list'],
-    ['dts', 'nfs-dataset', 'reopen'],
-    ['dts', 'nfs-dataset', 'seal'],
-    ['dts', 'nfs-dataset', 'seal-status'],
-    ['dts', 'nfs-dataset', 'set-export'],
-    ['dts', 'nfs-dataset', 'show'],
-    ['dts', 'physical-appliance', 'list'],
-    ['dts', 'physical-appliance', 'show'],
-    ['dts', 'physical-appliance', 'unregister'],
-    ['dts', 'physical-appliance', 'configure-encryption'],
-    ['dts', 'physical-appliance', 'finalize'],
-    ['dts', 'physical-appliance', 'initialize-authentication'],
-    ['dts', 'physical-appliance', 'unlock'],
-    ['dts', 'appliance', 'setup-notifications'],
-    ['dts', 'job', 'verify-upload-user-credentials'],
-    ['dts', 'appliance', 'show-entitlement'],
-    ['dts', 'job', 'setup-notifications'],
-    ['dts', 'export', 'configure-physical-appliance'],
-    ['dts', 'export', 'generate-manifest'],
-    ['dts', 'export', 'request-appliance'],
-    ['dts', 'export', 'create-policy'],
-    ['dts', 'export', 'setup-notifications'],
-    ['dts', 'appliance', 'show-entitlement'],
-    ['os', 'replication', 'list-replication-sources'],
-    ['os', 'replication', 'list-replication-policies'],
-    ['os', 'replication', 'get-replication-policy'],
-    ['os', 'replication', 'delete-replication-policy'],
-    ['os', 'replication', 'create-replication-policy'],
-    ['os', 'replication', 'make-bucket-writable'],
-    ['os', 'object', 'copy'],
-    ['os', 'object', 'head'],
-    ['os', 'retention-rule', 'create'],
-    ['os', 'retention-rule', 'get'],
-    ['os', 'retention-rule', 'list'],
-    ['os', 'retention-rule', 'update'],
-    ['data-flow', 'application', 'create'],
-    ['data-flow', 'application', 'update'],
-    # input requires a valid file to upload
-    ['data-science', 'model', 'create-model-artifact'],
-]
 
 
 IGNORE_COMMANDS_LOCATION = 'tests/resources/json_ignore_command_list.txt'
@@ -110,7 +44,7 @@ def ignored_extended_commands():
 # From returned list of (command, number of params, number of required params),
 # filter command names with number of params <= 2 (--help and --from-json) into a sorted list.
 COMMANDS_WITH_NO_PARAMS = sorted(command for command, _, _ in
-                                 filter(lambda x: x[1] <= 2 and x[0] not in IGNORED_COMMANDS,
+                                 filter(lambda x: x[1] <= 2 and x[0] not in ignored_commands.IGNORED_COMMANDS,
                                         util.collect_leaf_commands_with_counts(oci_cli.cli)))
 
 
@@ -132,12 +66,12 @@ COMMANDS_WITH_NO_PARAMS = sorted(command for command, _, _ in
 # ['os', 'ns', 'update-metadata'],
 # ['rqs', 'resource-type', 'list']]
 # From returned list of (command, number of params, number of required params),
-# filter command names with number of required params == 0 and command not in IGNORED_COMMANDS list into a sorted list.
+# filter command names with number of required params == 0 and command not in ignored_commands.IGNORED_COMMANDS list into a sorted list.
 COMMANDS_WITH_ALL_OPTIONAL_PARAMS = sorted(command for command, _, _ in
-                                           filter(lambda x: x[2] == 0 and x[0] not in IGNORED_COMMANDS,
+                                           filter(lambda x: x[2] == 0 and x[0] not in ignored_commands.IGNORED_COMMANDS,
                                                   util.collect_leaf_commands_with_counts(oci_cli.cli)))
 commands_list = [cmd for cmd in sorted(util.collect_commands(oci_cli.cli, leaf_commands_only=True))
-                 if cmd not in IGNORED_COMMANDS]
+                 if cmd not in ignored_commands.IGNORED_COMMANDS]
 
 
 def test_all_commands_generate_skeleton():
@@ -266,7 +200,7 @@ def _traverse_oci_cli(command, path, failed_commands, ignored_extended_commands)
         for name, command in six.iteritems(command.commands):
             _traverse_oci_cli(command, path + [name], failed_commands, ignored_extended_commands)
     else:
-        if path not in IGNORED_COMMANDS and path not in ignored_extended_commands:
+        if path not in ignored_commands.IGNORED_COMMANDS and path not in ignored_extended_commands:
             complex_options = [option for option in command.params if str(option.type) == 'COMPLEX_TYPE']
             if complex_options:
                 for option in complex_options:
