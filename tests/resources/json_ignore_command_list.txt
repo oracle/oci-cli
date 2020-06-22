@@ -17,3 +17,4 @@ resource-manager, stack, create
 resource-manager, stack, update
 waas, policy-config, update
 waas, protection-settings, update
+dts, export, get-passphrase

@@ -194,6 +194,30 @@ def show_appliance_export_job_extended(ctx, **kwargs):
     cli_util.render_response(result, ctx)
 
 
+@applianceexportjob_cli.appliance_export_job_root_group.command(name="get-passphrase", help=u"""Get the passphrase of the export job""")
+@cli_util.option('--job-id', required=True, help=u"""OCID of the Export Job""")
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'dts', 'class': 'ApplianceExportJob'})
+@cli_util.wrap_exceptions
+def get_passphrase_export_job_extended(ctx, **kwargs):
+
+    if isinstance(kwargs['job_id'], six.string_types) and len(kwargs['job_id'].strip()) == 0:
+        raise click.UsageError('Parameter --appliance-export-job-id cannot be whitespace or empty string')
+
+    kwargs_request = {
+        'opc_request_id': cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    }
+    ctx.endpoint = None
+    ctx.obj['endpoint'] = None
+    client = cli_util.build_client('appliance_export_job', ctx)
+    result = client.get_appliance_export_job(
+        appliance_export_job_id=kwargs['job_id'],
+        **kwargs_request
+    )
+    click.echo(result.data.appliance_decryption_passphrase)
+
+
 def reset_passphrase(result):
     result.data.appliance_decryption_passphrase = "********"
 

@@ -6,6 +6,63 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.12.0 - 2020-06-23
+-------------------
+Added
+~~~~~
+
+* Tagging support when creating database and db-home in the Database Service
+
+  * ``oci db database create --defined-tags, --freeform-tags``
+  * ``oci db database create-from-backup --defined-tags, --freeform-tags``
+  * ``oci db database create-from-database --defined-tags, --freeform-tags``
+  * ``oci db db-home create --defined-tags, --freeform-tags``
+
+* Support for Data Integration Service
+
+  * ``oci data-integration``
+
+* Support for managing Autonomous VM Cluster resources at Customer Cloud.
+
+  * ``oci db autonomous-vm-cluster``
+
+* Support for backups on Autonomous Databases at Customer Cloud.
+
+  * ``oci db autonomous-container-database create --db-unique-name``
+  * ``oci db backup-destination create-nfs-details --local-mount-point-path, --mount-type-details``
+  * ``oci db backup-destination update --nfs-mount-type, --nfs-server, --nfs-server-export``
+
+* Support for a dependency archive zip file to be specified for use by an application for data flow service.
+
+    * ``oci data-flow application create --archive-uri``
+
+* Support for accessing data assets via private endpoint in the Data Catalog service
+
+  * ``oci data-catalog catalog-private-endpoint``
+  * ``oci data-catalog catalog attach``
+  * ``oci data-catalog catalog detach``
+
+* Support to get passphrase of export job
+
+  * ``oci dts export get-passphrase --job-id``
+
+* New parameter added to the following command
+
+  * ``oci dts physical-appliance initialize-authentication --export-job-id``
+
+Changed
+~~~~~~~
+* Parameters --appliance-label and --job-id are now optional for the following command
+
+  * ``oci dts physical-appliance initialize-authentication``
+
+* [BREAKING] for the Data Catalog service, the following parameters have been restricted to specific values.
+
+  * ``lifecycle_state, wait-for-state, job_type, harvest_status, workflow_status, schedule_type``
+
+
+
+
 2.11.1 - 2020-06-16
 -------------------
 Added

@@ -218,34 +218,35 @@ def test_generate_param_json_input_for_all_complex_types(ignored_extended_comman
     handle_failed_commands(failed_commands)
 
 
-def test_all_commands_can_accept_from_json_input():
+def test_all_commands_can_accept_from_json_input(ignored_extended_commands):
     with test_config_container.create_vcr().use_cassette('json_skeleton_command_coverage_test_all_commands_can_accept_from_json_input.yml'):
         for cmd in commands_list:
-            full_command = list(cmd)
-            full_command.extend(['--from-json', 'file://tests/resources/json_input/dummy.json'])
-            result = util.invoke_command(full_command)
-            if result.output:
-                if 'CannotOverwriteExistingCassetteException' in result.output:
-                    continue
-                assert 'from-json' not in result.output
-                if cmd in [['iam', 'compartment', 'list'],
-                           ['iam', 'availability-domain', 'list']]:
-                    # This command works with only optional parameters, so check that there are no errors and that\
-                    # a response was received
-                    assert 'error' not in result.output.lower() and 'missing' not in result.output.lower()
-                    assert 'compartment-id' in result.output
-                elif cmd in [['iam', 'region-subscription', 'list']]:
-                    # This command works with only optional parameters, so check that there are no errors and that\
-                    # a response was received
-                    assert 'error' not in result.output.lower() and 'missing' not in result.output.lower()
-                    assert 'region-name' in result.output
-                elif cmd in [['network', 'service', 'list']]:
-                    assert 'error' not in result.output.lower() and 'missing' not in result.output.lower()
-                else:
+            if cmd not in ignored_extended_commands:
+                full_command = list(cmd)
+                full_command.extend(['--from-json', 'file://tests/resources/json_input/dummy.json'])
+                result = util.invoke_command(full_command)
+                if result.output:
+                    if 'CannotOverwriteExistingCassetteException' in result.output:
+                        continue
                     assert 'from-json' not in result.output
-                    if cmd == ['network', 'public-ip', 'get']:
-                        # This command displays a different message
-                        assert 'At least one of the options' in str(result.output)
+                    if cmd in [['iam', 'compartment', 'list'],
+                               ['iam', 'availability-domain', 'list']]:
+                        # This command works with only optional parameters, so check that there are no errors and that\
+                        # a response was received
+                        assert 'error' not in result.output.lower() and 'missing' not in result.output.lower()
+                        assert 'compartment-id' in result.output
+                    elif cmd in [['iam', 'region-subscription', 'list']]:
+                        # This command works with only optional parameters, so check that there are no errors and that\
+                        # a response was received
+                        assert 'error' not in result.output.lower() and 'missing' not in result.output.lower()
+                        assert 'region-name' in result.output
+                    elif cmd in [['network', 'service', 'list']]:
+                        assert 'error' not in result.output.lower() and 'missing' not in result.output.lower()
+                    else:
+                        assert 'from-json' not in result.output
+                        if cmd == ['network', 'public-ip', 'get']:
+                            # This command displays a different message
+                            assert 'At least one of the options' in str(result.output)
         return
 
 
