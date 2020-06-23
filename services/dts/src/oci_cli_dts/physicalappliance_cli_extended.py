@@ -8,7 +8,6 @@ import click
 import configparser
 from enum import Enum
 import os
-import six
 import sys
 
 from oci import exceptions
@@ -53,8 +52,9 @@ dts_service_cli.dts_service_group.add_command(physical_appliance_group)
 @physical_appliance_group.command('initialize-authentication',
                                   help=u"""Initializes authentication between the Data Transfer Utility
                                   and the transfer appliance.""")
-@cli_util.option('--job-id', required=True, help=u"""Transfer job ocid.""")
-@cli_util.option('--appliance-label', required=True, help=u"""Appliance label.""")
+@cli_util.option('--job-id', required=False, help=u"""Transfer job ocid.""")
+@cli_util.option('--appliance-label', required=False, help=u"""Appliance label.""")
+@cli_util.option('--export-job-id', required=False, help=u"""Export job ocid.""")
 @cli_util.option('--appliance-cert-fingerprint', required=True,
                  help=u"""The transfer appliance X.509/SSL certificate fingerprint.""")
 @cli_util.option('--appliance-ip', required=True, help=u"""AThe IP address of the transfer appliance.""")
@@ -69,27 +69,37 @@ dts_service_cli.dts_service_group.add_command(physical_appliance_group)
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={},
                                                       output_type={'module': 'dts', 'class': 'PhysicalAppliance'})
 @cli_util.wrap_exceptions
-def pa_initialize_authentication(ctx, from_json, job_id, appliance_label, appliance_cert_fingerprint, appliance_ip,
-                                 appliance_port, access_token, profile, appliance_profile):
-    if isinstance(job_id, six.string_types) and len(job_id.strip()) == 0:
-        raise click.UsageError('Parameter --job-id cannot be whitespace or empty string')
-
-    if isinstance(appliance_label, six.string_types) and len(appliance_label.strip()) == 0:
-        raise click.UsageError('Parameter --appliance-label cannot be whitespace or empty string')
-
-    # Do this for all the input arguments
+def pa_initialize_authentication(ctx, from_json, job_id, appliance_label, export_job_id, appliance_cert_fingerprint,
+                                 appliance_ip, appliance_port, access_token, profile, appliance_profile):
 
     kwargs = {}
 
-    click.echo("Retrieving the Appliance serial id from Oracle Cloud Infrastructure")
-    # Get the Transfer Appliance serial number from the information received from CCP
-    client = cli_util.build_client('dts', 'transfer_appliance', ctx)
-    result = client.get_transfer_appliance(
-        id=job_id,
-        transfer_appliance_label=appliance_label,
-        **kwargs
-    )
-    serial_number = result.data.serial_number
+    if job_id is not None and appliance_label is not None:
+        if export_job_id is not None:
+            raise click.UsageError('Either use --export-job-id or a combination of --job-id and --appliance-label')
+
+        click.echo("Retrieving the Appliance serial id from Oracle Cloud Infrastructure for Import job")
+        # Get the Transfer Appliance serial number from the control plane
+        client = cli_util.build_client('transfer_appliance', ctx)
+        result = client.get_transfer_appliance(
+            id=job_id,
+            transfer_appliance_label=appliance_label,
+            **kwargs
+        )
+        serial_number = result.data.serial_number
+
+    elif export_job_id is not None:
+        if job_id is not None and appliance_label is not None:
+            raise click.UsageError('Either use --export-job-id or a combination of --job-id and --appliance-label')
+
+        click.echo("Retrieving the Appliance serial id from Oracle Cloud Infrastructure for Export Job")
+        client = cli_util.build_client('appliance_export_job', ctx)
+        kwargs_request = {'opc_request_id': cli_util.use_or_generate_request_id(ctx.obj['request_id'])}
+        result = client.get_appliance_export_job(appliance_export_job_id=export_job_id, **kwargs_request)
+        serial_number = result.data.appliance_serial_number
+    else:
+        raise click.UsageError('Either use --export-job-id or a combination of --job-id and --appliance-label')
+
     pa_init_auth_helper(ctx, appliance_profile, appliance_cert_fingerprint, appliance_ip, appliance_port,
                         serial_number, access_token)
 

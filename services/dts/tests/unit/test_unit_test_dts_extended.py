@@ -164,9 +164,6 @@ class UnitTestDTS(unittest.TestCase):
              "optional_params": []}
         ]
         self.pa_subcommands = [
-            {"sub_command": "initialize-authentication",
-             "required_params": ["job-id", "appliance-label", "appliance-cert-fingerprint", "appliance-ip"],
-             "optional_params": ["appliance-profile", "appliance-port", "access-token", "profile"]},
             {"sub_command": "list",
              "required_params": [],
              "optional_params": []},
@@ -245,6 +242,9 @@ class UnitTestDTS(unittest.TestCase):
              "required_params": ["job-id"],
              "optional_params": ["if-match", "force"]},
             {"sub_command": "show",
+             "required_params": ["job-id"],
+             "optional_params": []},
+            {"sub_command": "get-passphrase",
              "required_params": ["job-id"],
              "optional_params": []},
             {"sub_command": "list",
@@ -593,6 +593,63 @@ class UnitTestDTS(unittest.TestCase):
         appliance_unlock(ctx=ctx_obj, appliance_profile=appliance_profile, passphrase=passphrase,
                          appliance_lock_status=APPLIANCE_STATUS_NA)
         mocker_pa.assert_called_with(ctx_obj, appliance_profile, passphrase)
+
+    @mock.patch('services.dts.src.oci_cli_dts.physicalappliance_cli_extended.create_appliance_client')
+    @mock.patch('services.dts.src.oci_cli_dts.physicalappliance_cli_extended.create_init_auth')
+    @mock.patch('click.prompt', return_value=True)
+    @mock.patch('oci_cli.cli_util.build_client')
+    def test_appliance_init_auth_export_job(self, mock_build_client, mock_prompt, mock_create_init_auth, mock_create_appliance_client):
+
+        args_list = ['dts', 'physical-appliance', 'initialize-authentication', '--export-job-id', 'exportJobId',
+                     '--appliance-ip', '1.2.3.4', '--appliance-port', '443', '--appliance-cert-fingerprint', '12:34:56',
+                     '--access-token', 'accessToken', '--profile', 'profile', '--appliance-profile', 'applianceProfile']
+
+        result = util.invoke_command(args_list)
+
+        assert result.exception is None
+        assert result.exit_code is 0
+
+    @mock.patch('services.dts.src.oci_cli_dts.physicalappliance_cli_extended.create_appliance_client')
+    @mock.patch('services.dts.src.oci_cli_dts.physicalappliance_cli_extended.create_init_auth')
+    @mock.patch('click.prompt', return_value=True)
+    @mock.patch('oci_cli.cli_util.build_client')
+    def test_appliance_init_auth_import_job(self, mock_build_client, mock_prompt, mock_create_init_auth, mock_create_appliance_client):
+
+        args_list = ['dts', 'physical-appliance', 'initialize-authentication', '--job-id', 'jobId',
+                     '--appliance-label', 'applianceLabel', '--appliance-ip', '1.2.3.4', '--appliance-port', '443',
+                     '--appliance-cert-fingerprint', '12:34:56', '--access-token', 'accessToken',
+                     '--profile', 'profile', '--appliance-profile', 'applianceProfile']
+
+        result = util.invoke_command(args_list)
+
+        assert result.exception is None
+        assert result.exit_code is 0
+
+    @mock.patch('services.dts.src.oci_cli_dts.physicalappliance_cli_extended.create_appliance_client')
+    @mock.patch('services.dts.src.oci_cli_dts.physicalappliance_cli_extended.create_init_auth')
+    @mock.patch('click.prompt', return_value=True)
+    @mock.patch('oci_cli.cli_util.build_client')
+    def test_appliance_init_auth_wrong_job_info(self, mock_build_client, mock_prompt, mock_create_init_auth, mock_create_appliance_client):
+
+        # Passing no job ID, appliance label or export job ID
+        args_list = ['dts', 'physical-appliance', 'initialize-authentication',
+                     '--appliance-ip', '1.2.3.4', '--appliance-port', '443', '--appliance-cert-fingerprint', '12:34:56',
+                     '--access-token', 'accessToken', '--profile', 'profile', '--appliance-profile', 'applianceProfile']
+
+        result = util.invoke_command(args_list)
+
+        assert (isinstance(result.exception, SystemExit))
+        assert "Either use --export-job-id or a combination of --job-id and --appliance-label" in result.exception.__str__()
+
+        # Passing job ID without appliance label
+        args_list = ['dts', 'physical-appliance', 'initialize-authentication', '--job-id', 'jobId',
+                     '--appliance-ip', '1.2.3.4', '--appliance-port', '443', '--appliance-cert-fingerprint', '12:34:56',
+                     '--access-token', 'accessToken', '--profile', 'profile', '--appliance-profile', 'applianceProfile']
+
+        result = util.invoke_command(args_list)
+
+        assert (isinstance(result.exception, SystemExit))
+        assert "Either use --export-job-id or a combination of --job-id and --appliance-label" in result.exception.__str__()
 
     @mock.patch('services.dts.src.oci_cli_dts.nfsdataset_cli_extended.nfs_dataset_deactivate_helper')
     def test_deactivate_nfs_dataset(self, mocker_nfs_dataset_deactivate):
