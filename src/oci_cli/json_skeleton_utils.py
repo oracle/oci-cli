@@ -293,6 +293,7 @@ def translate_complex_param_to_example_object(complex_param_entry, visited):
     # the first element is a warning that says it isn't actually an array and the remaining elements are examples of what the
     # subclasses look like so the caller can pick one
     subclasses = cls_type.__subclasses__()
+    subclasses = sorted(subclasses, key=lambda x: x.__name__)
     if len(subclasses) > 0:
         subclass_definitions = ['This parameter should actually be a JSON object rather than an array - pick one of the following object variants to use']
         for sc in subclasses:
@@ -303,7 +304,7 @@ def translate_complex_param_to_example_object(complex_param_entry, visited):
     # If we've reached this point, we're some sort of model object so just translate it to a dictionary
     obj_as_dict = {}
     instance = cls_type()
-    for attr_name, attr_type in instance.swagger_types.items():
+    for attr_name, attr_type in sorted(instance.swagger_types.items()):
         property_name = instance.attribute_map[attr_name]
         attribute_value = getattr(instance, attr_name, None)
 

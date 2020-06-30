@@ -6,6 +6,38 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.12.1 - 2020-06-30
+-------------------
+Added
+~~~~~
+* Support for Usage API service
+
+  * ``oci usage``
+
+* Support for Oracle Cloud VMware Solution service
+
+  * ``oci ocvs``
+
+* Support for one-off patches in Database service
+
+  * ``oci db database patch --one-off-patches``
+
+* Support for Vlan features as part of support Layer 2 Virtual Networking
+
+  * ``oci network vlan``
+  * ``oci network private-ip list --vlan-id``
+  * ``oci network vnic assign-private-ip --vlan-id``
+  * ``oci compute instance attach-vnic --vlan-id``
+
+* Validator parameter added for updating tags in Identity service
+
+  * ``oci iam tag update --validator``
+
+* Improve Create Instance Configuration to include the latest AttachVolumeDetails properties in the Compute Management service
+
+  * ``oci compute-management instance-configuration create --instance-details``
+
+
 2.12.0 - 2020-06-23
 -------------------
 Added

@@ -20,6 +20,7 @@ from mimetypes import guess_type
 OBJECTS_TO_CREATE_IN_BUCKET_FOR_BULK_GET = 100
 OBJECTS_TO_CREATE_IN_FOLDER_FOR_BULK_PUT = 20
 CONTENT_STRING_LENGTH = 5000
+CONTENT_STRING_LENGTH_SHORT = 50
 MID_SIZED_FILE_IN_MEBIBTYES = 20
 LARGE_CONTENT_FILE_SIZE_IN_MEBIBYTES = 150  # Default multipart is 128MiB
 GENERATED_ENC_KEY_FILE = 'tests/temp/generated_enc_key.txt'
@@ -46,6 +47,11 @@ bulk_put_bucket_name = None
 def vcr_fixture(request):
     with test_config_container.create_vcr(cassette_library_dir='services/object_storage/tests/cassettes').use_cassette('object_storage_bulk_operations_{name}.yml'.format(name=request.function.__name__)):
         yield
+
+
+@pytest.fixture(params=[False])
+def debug(request):
+    return request.param
 
 
 # Generate test data for different operations:
@@ -165,7 +171,6 @@ def test_normalize_object_name_path():
 def test_get_all_objects_in_bucket(vcr_fixture):
     download_folder = 'tests/temp/get_all_{}'.format(bulk_get_bucket_name)
     result = invoke(['os', 'object', 'bulk-download', '--namespace', util.NAMESPACE, '--bucket-name', bulk_get_bucket_name, '--download-dir', download_folder])
-    print(result.output)
 
     # Ensure that content matches
     for object_name in bulk_get_object_to_content:
@@ -948,6 +953,203 @@ def test_bulk_operation_table_output_query(object_storage_client, test_id):
     shutil.rmtree(target_download_folder)
 
 
+def generate_data_bulk_delete_versions(object_storage_client, bucket_name):
+    # Create items at various heirarchy levels (to be surfaced as different directories on disk)
+    for i in range(OBJECTS_TO_CREATE_IN_BUCKET_FOR_BULK_GET):
+        if i % 5 == 4:
+            object_name = 'a/b/c/d/Object_{}'.format(i)
+            bulk_get_prefix_to_object['a/b/c/d'].append(object_name)
+        elif i % 5 == 3:
+            object_name = 'a/b/c/Object_{}'.format(i)
+            bulk_get_prefix_to_object['a/b/c'].append(object_name)
+        elif i % 5 == 2:
+            object_name = 'a/b/Object_{}'.format(i)
+            bulk_get_prefix_to_object['a/b'].append(object_name)
+        elif i % 5 == 1:
+            # This is equivalent to a/ on the file system because we drop the leading slash (we drop path separators from the front to avoid unexpected results)
+            object_name = '/a/Object_{}'.format(i)
+            bulk_get_prefix_to_object['/a'].append(object_name)
+        else:
+            # At the root of the bucket
+            object_name = 'Object_{}'.format(i)
+            bulk_get_prefix_to_object[''].append(object_name)
+
+        object_content = generate_random_string(CONTENT_STRING_LENGTH)
+        object_storage_client.put_object(util.NAMESPACE, bucket_name, object_name, object_content)
+
+
+@util.skip_while_rerecording
+def test_bulk_delete_versions_when_no_objects_in_bucket(vcr_fixture, object_storage_client, debug, test_id):
+    bucket_name = 'ObjectStorageBulkDeleteVersions_{}'.format(test_id)
+    util.clear_test_data(object_storage_client, util.NAMESPACE, util.COMPARTMENT_ID, bucket_name)
+
+    # bucket create with versioning enabled
+    result = invoke(['os', 'bucket', 'create', '-ns', util.NAMESPACE, '--compartment-id', util.COMPARTMENT_ID, '--name',
+                     bucket_name, '--versioning', 'Enabled'], debug=debug)
+    validate_response(result, includes_debug_data=debug)
+
+    result = invoke(['os', 'object', 'bulk-delete-versions', '--namespace', util.NAMESPACE, '--bucket-name', bucket_name])
+    assert 'There are no objects to delete in {}'.format(bucket_name) in result.output
+
+    object_storage_client.delete_bucket(util.NAMESPACE, bucket_name)
+
+
+@util.skip_while_rerecording
+def test_bulk_delete_versions_dry_run(vcr_fixture, object_storage_client, debug, test_id):
+    bucket_name = 'ObjectStorageBulkDeleteVersions_{}'.format(test_id)
+    util.clear_test_data(object_storage_client, util.NAMESPACE, util.COMPARTMENT_ID, bucket_name)
+
+    # bucket create with versioning enabled
+    result = invoke(['os', 'bucket', 'create', '-ns', util.NAMESPACE, '--compartment-id', util.COMPARTMENT_ID, '--name',
+                     bucket_name, '--versioning', 'Enabled'], debug=debug)
+    validate_response(result, includes_debug_data=debug)
+
+    generate_data_bulk_delete_versions(object_storage_client, bucket_name)
+
+    num_versions_to_delete = get_number_of_versions_in_bucket(object_storage_client, bucket_name, None)
+
+    # Dry-run with both --object-name and --prefix; bulk-delete-versions doesn't support this operation
+    result = invoke(['os', 'object', 'bulk-delete-versions', '--namespace', util.NAMESPACE, '--bucket-name', bulk_get_bucket_name,
+                     '--object-name', 'Object_1', '--prefix', 'O', '--dry-run'])
+    assert 'UsageError' in result.output
+    assert 'The --object-name parameter cannot be combined with either --prefix or --include or --exclude' in result.output
+
+    # Dry-run against entire bucket
+    result = invoke(['os', 'object', 'bulk-delete-versions', '--namespace', util.NAMESPACE, '--bucket-name', bulk_get_bucket_name, '--dry-run'])
+    parsed_result = parse_json_response_from_mixed_output(result.output)
+    assert set(parsed_result['deleted-objects']) == set(bulk_get_object_to_content.keys())
+
+    # Dry-run against a folder and all subfolders
+    result = invoke(['os', 'object', 'bulk-delete-versions', '--namespace', util.NAMESPACE, '--bucket-name', bulk_get_bucket_name, '--prefix', 'a/b/', '--dry-run'])
+    parsed_result = parse_json_response_from_mixed_output(result.output)
+    expected_objects = set().union(bulk_get_prefix_to_object['a/b'], bulk_get_prefix_to_object['a/b/c'], bulk_get_prefix_to_object['a/b/c/d'])
+    assert set(parsed_result['deleted-objects']) == expected_objects
+
+    # Dry-run against a folder and no subfolders
+    result = invoke(['os', 'object', 'bulk-delete-versions', '--namespace', util.NAMESPACE, '--bucket-name', bulk_get_bucket_name, '--prefix', 'a/b/', '--delimiter', '/', '--dry-run'])
+    parsed_result = parse_json_response_from_mixed_output(result.output)
+    assert set(parsed_result['deleted-objects']) == set(bulk_get_prefix_to_object['a/b'])
+
+    # Dry-run with a single object-name
+    num_object_name_versions = get_number_of_versions_in_bucket(object_storage_client, bucket_name, 'Object_5')
+    result = invoke(['os', 'object', 'bulk-delete-versions', '--namespace', util.NAMESPACE, '--bucket-name', bulk_get_bucket_name,
+                     '--object-name', 'Object_5', '--dry-run'])
+    parsed_result = parse_json_response_from_mixed_output(result.output)
+    assert len(parsed_result['deleted-objects']) == num_object_name_versions
+
+    # delete-versions after --dry-run test
+    result = invoke(['os', 'object', 'bulk-delete-versions', '--namespace', util.NAMESPACE, '--bucket-name', bucket_name, '--force'])
+    parsed_result = parse_json_response_from_mixed_output(result.output)
+    assert parsed_result['delete-failures'] == {}
+    assert len(parsed_result['deleted-objects']) == num_versions_to_delete
+
+    object_storage_client.delete_bucket(util.NAMESPACE, bucket_name)
+
+
+# Test bulk-delete-versions full functionality
+@util.skip_while_rerecording
+def test_bulk_delete_versions(object_storage_client, debug, test_id):
+    bucket_name = 'ObjectStorageBulkDeleteVersions_{}'.format(test_id)
+    util.clear_test_data(object_storage_client, util.NAMESPACE, util.COMPARTMENT_ID, bucket_name)
+
+    # bucket create with versioning enabled
+    result = invoke(['os', 'bucket', 'create', '-ns', util.NAMESPACE, '--compartment-id', util.COMPARTMENT_ID, '--name',
+                     bucket_name, '--versioning', 'Enabled'], debug=debug)
+    validate_response(result, includes_debug_data=debug)
+
+    # generate object-names
+    generate_data_bulk_delete_versions(object_storage_client, bucket_name)
+    # generate versions
+    generate_data_bulk_delete_versions(object_storage_client, bucket_name)
+    num_versions_to_delete = get_number_of_versions_in_bucket(object_storage_client, bucket_name, None)
+
+    # Sanity check that the bucket has things in it
+    assert num_versions_to_delete > 0
+
+    # --- Delete rest of the versions
+    result = invoke(['os', 'object', 'bulk-delete-versions', '--namespace', util.NAMESPACE, '--bucket-name', bucket_name])
+    if num_versions_to_delete >= 1000:
+        confirm_prompt = 'WARNING: This command will delete at least {} object versions. Are you sure you wish to continue?'.format(num_versions_to_delete)
+    else:
+        confirm_prompt = 'WARNING: This command will delete {} object versions. Are you sure you wish to continue?'.format(num_versions_to_delete)
+    assert confirm_prompt in result.output
+
+    result = invoke(['os', 'object', 'bulk-delete-versions', '--namespace', util.NAMESPACE, '--bucket-name', bucket_name, '--force'])
+    parsed_result = parse_json_response_from_mixed_output(result.output)
+    assert parsed_result['delete-failures'] == {}
+    assert len(parsed_result['deleted-objects']) == num_versions_to_delete
+
+    # Check that the bucket is now empty
+    assert get_number_of_versions_in_bucket(object_storage_client, bucket_name, None) == 0
+
+    object_storage_client.delete_bucket(util.NAMESPACE, bucket_name)
+
+
+def test_basic_bulk_delete_versions_object_name(object_storage_client, debug, test_id):
+    bucket_name = 'ObjectStorageBulkDeleteVersions_{}'.format(test_id)
+    util.clear_test_data(object_storage_client, util.NAMESPACE, util.COMPARTMENT_ID, bucket_name)
+
+    result = invoke(['os', 'bucket', 'create', '-ns', util.NAMESPACE, '--compartment-id', util.COMPARTMENT_ID, '--name',
+                     bucket_name, '--versioning', 'Enabled'], debug=debug)
+    validate_response(result, includes_debug_data=debug)
+
+    object_content = generate_random_string(CONTENT_STRING_LENGTH_SHORT)
+    object_storage_client.put_object(util.NAMESPACE, bucket_name, 'Object_1', object_content)
+    object_storage_client.put_object(util.NAMESPACE, bucket_name, 'Object_2', object_content)
+    object_storage_client.put_object(util.NAMESPACE, bucket_name, 'Object_3', object_content)
+
+    result = invoke(['os', 'object', 'bulk-delete-versions', '--namespace', util.NAMESPACE, '--bucket-name', bucket_name,
+                     '--object-name', 'Object_1', '--force'])
+    parsed_result = parse_json_response_from_mixed_output(result.output)
+    assert parsed_result['delete-failures'] == {}
+    assert len(parsed_result['deleted-objects']) == 1
+
+    # test if only first object has been deleted
+    result = invoke(['os', 'object', 'list-object-versions', '-ns', util.NAMESPACE, '-bn', bucket_name])
+    assert "Object_2" in result.output
+    assert "Object_3" in result.output
+
+    result = invoke(['os', 'object', 'bulk-delete-versions', '--namespace', util.NAMESPACE, '--bucket-name', bucket_name, '--force'])
+    parsed_result = parse_json_response_from_mixed_output(result.output)
+    assert parsed_result['delete-failures'] == {}
+    assert len(parsed_result['deleted-objects']) == 2
+
+    # Check that the bucket is now empty
+    assert get_number_of_versions_in_bucket(object_storage_client, bucket_name, None) == 0
+
+    object_storage_client.delete_bucket(util.NAMESPACE, bucket_name)
+
+
+# Test bulk-delete-versions with ~ 1100 single object name (test for pagination)
+@util.skip_while_rerecording
+def test_bulk_delete_versions_paging(object_storage_client, debug, test_id):
+    bucket_name = 'ObjectStorageBulkDeleteVersions_{}'.format(test_id)
+    util.clear_test_data(object_storage_client, util.NAMESPACE, util.COMPARTMENT_ID, bucket_name)
+
+    # bucket create with versioning enabled
+    result = invoke(['os', 'bucket', 'create', '-ns', util.NAMESPACE, '--compartment-id', util.COMPARTMENT_ID, '--name',
+                     bucket_name, '--versioning', 'Enabled'], debug=debug)
+    validate_response(result, includes_debug_data=debug)
+
+    num_versions = 1100
+    object_name = 'Object_103'
+    object_content = generate_random_string(CONTENT_STRING_LENGTH_SHORT)
+    for i in range(num_versions):
+        object_storage_client.put_object(util.NAMESPACE, bucket_name, object_name, object_content)
+
+    num_versions_objname = get_number_of_versions_in_bucket(object_storage_client, bucket_name, object_name)
+    assert num_versions_objname == num_versions
+
+    result = invoke(['os', 'object', 'bulk-delete-versions', '--namespace', util.NAMESPACE, '--bucket-name', bucket_name,
+                     '--object-name', object_name, '--force'])
+    parsed_result = parse_json_response_from_mixed_output(result.output)
+    # delete-failure might contain a 404 due to retry. So not asserting it
+    # assert parsed_result['delete-failures'] == {}
+    assert len(parsed_result['deleted-objects']) == num_versions_objname
+
+    object_storage_client.delete_bucket(util.NAMESPACE, bucket_name)
+
+
 def invoke(commands, debug=False, ** args):
     if debug is True:
         commands = ['--debug'] + commands
@@ -979,7 +1181,6 @@ def parse_json_response_from_mixed_output(output):
         if object_begun or line.startswith('{'):
             object_begun = True
             json_str += line
-
     return json.loads(json_str)
 
 
@@ -1030,6 +1231,35 @@ def get_number_of_objects_in_bucket(object_storage_client, bucket_name):
     return num_objects_in_bucket
 
 
+def get_number_of_versions_in_bucket(object_storage_client, bucket_name, object_name):
+    list_object_versions_responses = oci_cli_object_storage.objectstorage_cli_extended.retrying_list_object_versions(
+        client=object_storage_client,
+        request_id=None,
+        namespace=util.NAMESPACE,
+        bucket_name=bucket_name,
+        prefix=None,
+        start=None,
+        end=None,
+        limit=1000,
+        delimiter=None,
+        page=None,
+        fields='name',
+        retrieve_all=True
+    )
+    num_versions_in_bucket = 0
+    for response in list_object_versions_responses:
+        # To avoid slowness if object_name is not provided
+        if object_name:
+            for obj in response.data.items:
+                if object_name != obj.name:
+                    continue
+                num_versions_in_bucket = num_versions_in_bucket + 1
+        else:
+            num_versions_in_bucket = num_versions_in_bucket + len(response.data.items)
+
+    return num_versions_in_bucket
+
+
 def verify_downloaded_folders_for_inclusion_exclusion_tests(expected_uploaded_files, source_folder, download_folder, download_prefix_no_slash):
     # Download uploaded files and check they are the same
     invoke(['os', 'object', 'bulk-download', '--namespace', util.NAMESPACE, '--bucket-name', bulk_put_bucket_name, '--download-dir', download_folder, '--prefix', download_prefix_no_slash + '/'])
@@ -1059,3 +1289,15 @@ def verify_downloaded_folders_for_inclusion_exclusion_tests(expected_uploaded_fi
 def generate_aes256_key_str():
     key = os.urandom(32)
     return base64.b64encode(key).decode('utf-8')
+
+
+def extra_response_validation(result):
+    assert 'opc-client-request-id' in result.output
+
+
+def validate_response(result, includes_debug_data=False, json_response_expected=True):
+    extra_validation = None
+    if includes_debug_data:
+        extra_validation = extra_response_validation
+    util.validate_response(result, extra_validation=extra_validation, includes_debug_data=includes_debug_data,
+                           json_response_expected=json_response_expected)

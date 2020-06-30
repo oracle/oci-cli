@@ -502,7 +502,7 @@ def create_database_from_another_database(ctx, **kwargs):
 
     create_db_home_with_system_details.source = 'DATABASE'
 
-    client = cli_util.build_client('database', ctx)
+    client = cli_util.build_client('database', 'database', ctx)
 
     result = client.create_db_home(create_db_home_with_system_details)
 
@@ -526,25 +526,35 @@ def create_database_from_another_database(ctx, **kwargs):
 
 @database_cli.database_group.command(name='patch', help="""Perform a patch action for a given patch and database.""")
 @cli_util.option('--database-id', required=True, help="""The OCID of the database.""")
-@cli_util.option('--patch-action', required=True, help="""The action to perform on the patch.""")
-@cli_util.option('--patch-id', required=True, help="""The OCID of the patch.""")
+@cli_util.option('--patch-action', required=False, help="""The action to perform on the patch.""")
+@cli_util.option('--patch-id', required=False, help="""The OCID of the patch.""")
+@cli_util.option('--one-off-patches', required=False, type=custom_types.CLI_COMPLEX_TYPE, help="""The list of one-off patches.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.pass_context
-@json_skeleton_utils.get_cli_json_input_option({})
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'Database'})
+@json_skeleton_utils.get_cli_json_input_option({'one-off-patches': {'module': 'database', 'class': 'list[string]'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'one-off-patches': {'module': 'database', 'class': 'list[string]'}}, output_type={'module': 'database', 'class': 'Database'})
 @cli_util.help_option
 @cli_util.wrap_exceptions
 def patch_database(ctx, **kwargs):
     client = cli_util.build_client('database', 'database', ctx)
 
+    if (kwargs['one_off_patches'] is not None and (kwargs['patch_id'] is not None or kwargs['patch_action'] is not None)) or \
+            (kwargs['one_off_patches'] is None and (kwargs['patch_id'] is None or kwargs['patch_action'] is None)):
+        click.echo(message="Specify either '--one-off-patches' or '--patch-id and --patch-action'. Requesting both is not supported.", file=sys.stderr)
+        sys.exit(1)
+
     response = client.get_database(kwargs['database_id'])
     db_home_id = response.data.db_home_id
 
-    patch_details = oci.database.models.PatchDetails()
-    patch_details.action = kwargs['patch_action']
-    patch_details.patch_id = kwargs['patch_id']
-
     update_db_home_details = oci.database.models.UpdateDbHomeDetails()
-    update_db_home_details.db_version = patch_details
+
+    if kwargs['one_off_patches'] is not None:
+        update_db_home_details.one_off_patches = cli_util.parse_json_parameter("one_off_patches", kwargs['one_off_patches'])
+
+    if kwargs['patch_id'] is not None and kwargs['patch_action'] is not None:
+        patch_details = oci.database.models.PatchDetails()
+        patch_details.action = kwargs['patch_action']
+        patch_details.patch_id = kwargs['patch_id']
+        update_db_home_details.db_version = patch_details
 
     client.update_db_home(db_home_id, update_db_home_details)
 
