@@ -115,54 +115,91 @@ For more information about secondary private IPs, see [IP Addresses]
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'PrivateIp'})
 @cli_util.wrap_exceptions
-def assign_private_ip(ctx, from_json, vnic_id, ip_address, display_name, hostname_label, unassign_if_already_assigned, defined_tags, freeform_tags):
+def assign_private_ip(ctx, from_json, vnic_id, vlan_id, ip_address, display_name, hostname_label, unassign_if_already_assigned, defined_tags, freeform_tags):
     networking_client = cli_util.build_client('core', 'virtual_network', ctx)
-
-    # First we get the VNIC because we need to know the subnet OCID for the ListPrivateIps call
-    vnic = networking_client.get_vnic(vnic_id).data
-    subnet_id = vnic.subnet_id
-
+    assign_private_ip_request_body = {}
     is_ip_reassignment = False
-    if ip_address is not None:
-        # Try and see whether the private IP is already in use by calling ListPrivateIps with the IP address and subnet. In this case, we don't
-        # worry about pagination because we expect at most 1 entry
-        list_private_ips_response = networking_client.list_private_ips(ip_address=ip_address, subnet_id=subnet_id)
-        list_private_ips_response_data = list_private_ips_response.data
 
-        if list_private_ips_response_data is not None:
-            if len(list_private_ips_response_data) == 1:
-                # If the IP is already on the VNIC, make this a no-op
-                if list_private_ips_response_data[0].vnic_id == vnic_id:
-                    click.echo('Taking no action as IP address {} is already assigned to VNIC {}'.format(ip_address, vnic_id), err=True)
-                    return
+    def _pre_strip(string):
+        if string is None:
+            return ""
+        elif isinstance(string, six.string_types):
+            return string.strip()
+        else:
+            raise click.UsageError('Unexpected format for string  {} '.format(string))
 
-                # The IP address exists and it can theoretically be moved since it isn't the primary IP and it is on a separate VNIC. However,
-                # if the user did not specify the --unassign-if-already-assigned flag then we do not proceed as they haven't explicitly
-                # said they want to do the reassignment
-                if not unassign_if_already_assigned:
+    vlan_id = _pre_strip(vlan_id)
+    vnic_id = _pre_strip(vnic_id)
+
+    if not any((vlan_id, vnic_id)):
+        raise click.UsageError(
+            'Parameter --vnic-id AND --vlan-id both cannot be whitespace or empty string. '
+            'You have to specify one and ONLY one of these')
+    elif all((vlan_id, vnic_id)):
+        raise click.UsageError(
+            'Parameter --vnic-id AND --vlan-id both cannot be specified at the same time. '
+            'You have to specify one and ONLY one of these')
+
+    if vlan_id:
+        if ip_address is not None:
+            # Try and see whether the private IP is already in use by calling ListPrivateIps with the IP address and subnet. In this case, we don't
+            # worry about pagination because we expect at most 1 entry
+            list_private_ips_response = networking_client.list_private_ips(ip_address=ip_address, vlan_id=vlan_id)
+            list_private_ips_response_data = list_private_ips_response.data
+
+            if list_private_ips_response_data is not None:
+                if len(list_private_ips_response_data) == 1:
+                    # If the IP is already on the VNIC, make this a no-op
+                    if list_private_ips_response_data[0].vlan_id == vlan_id:
+                        click.echo('Taking no action as IP address {} is already assigned to VLAN {}'.format(ip_address, vlan_id), err=True)
+                        return
+        assign_private_ip_request_body['vlanId'] = vlan_id
+    else:
+        # First we get the VNIC because we need to know the subnet OCID for the ListPrivateIps call
+        vnic = networking_client.get_vnic(vnic_id).data
+        subnet_id = vnic.subnet_id
+
+        if ip_address is not None:
+            # Try and see whether the private IP is already in use by calling ListPrivateIps with the IP address and subnet. In this case, we don't
+            # worry about pagination because we expect at most 1 entry
+            list_private_ips_response = networking_client.list_private_ips(ip_address=ip_address, subnet_id=subnet_id)
+            list_private_ips_response_data = list_private_ips_response.data
+
+            if list_private_ips_response_data is not None:
+                if len(list_private_ips_response_data) == 1:
+                    # If the IP is already on the VNIC, make this a no-op
+                    if list_private_ips_response_data[0].vnic_id == vnic_id:
+                        click.echo('Taking no action as IP address {} is already assigned to VNIC {}'.format(ip_address, vnic_id), err=True)
+                        return
+
+                    # The IP address exists and it can theoretically be moved since it isn't the primary IP and it is on a separate VNIC. However,
+                    # if the user did not specify the --unassign-if-already-assigned flag then we do not proceed as they haven't explicitly
+                    # said they want to do the reassignment
+                    if not unassign_if_already_assigned:
+                        sys.exit(
+                            'IP address {} is already assigned to a different VNIC: {}. To reassign it, re-run this command with the --unassign-if-already-assigned option'.format(
+                                ip_address, list_private_ips_response_data[0].vnic_id
+                            )
+                        )
+
+                    is_ip_reassignment = True
+                elif len(list_private_ips_response_data) > 1:
+                    # This would be unexpected as it means that the IP exists twice in the subnet
                     sys.exit(
-                        'IP address {} is already assigned to a different VNIC: {}. To reassign it, re-run this command with the --unassign-if-already-assigned option'.format(
-                            ip_address, list_private_ips_response_data[0].vnic_id
+                        'IP address {} appeared {} times in subnet with OCID {}. It is expected to appear at most once (Request ID: {})'.format(
+                            ip_address, len(list_private_ips_response_data), subnet_id, list_private_ips_response.request_id
                         )
                     )
 
-                is_ip_reassignment = True
-            elif len(list_private_ips_response_data) > 1:
-                # This would be unexpected as it means that the IP exists twice in the subnet
-                sys.exit(
-                    'IP address {} appeared {} times in subnet with OCID {}. It is expected to appear at most once (Request ID: {})'.format(
-                        ip_address, len(list_private_ips_response_data), subnet_id, list_private_ips_response.request_id
-                    )
-                )
-
-    assign_private_ip_request_body = {}
-    assign_private_ip_request_body['vnicId'] = vnic_id
+        assign_private_ip_request_body['vnicId'] = vnic_id
+        # These are optional in the request, so check whether we should set them or not.
+        if hostname_label is not None:
+            assign_private_ip_request_body['hostnameLabel'] = hostname_label
 
     # These are optional in the request, so check whether we should set them or not.
     if display_name is not None:
         assign_private_ip_request_body['displayName'] = display_name
-    if hostname_label is not None:
-        assign_private_ip_request_body['hostnameLabel'] = hostname_label
+
     if defined_tags is not None:
         assign_private_ip_request_body['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
     if freeform_tags is not None:

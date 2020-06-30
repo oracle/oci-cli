@@ -80,7 +80,7 @@ def pa_initialize_authentication(ctx, from_json, job_id, appliance_label, export
 
         click.echo("Retrieving the Appliance serial id from Oracle Cloud Infrastructure for Import job")
         # Get the Transfer Appliance serial number from the control plane
-        client = cli_util.build_client('transfer_appliance', ctx)
+        client = cli_util.build_client('dts', 'transfer_appliance', ctx)
         result = client.get_transfer_appliance(
             id=job_id,
             transfer_appliance_label=appliance_label,
@@ -93,7 +93,7 @@ def pa_initialize_authentication(ctx, from_json, job_id, appliance_label, export
             raise click.UsageError('Either use --export-job-id or a combination of --job-id and --appliance-label')
 
         click.echo("Retrieving the Appliance serial id from Oracle Cloud Infrastructure for Export Job")
-        client = cli_util.build_client('appliance_export_job', ctx)
+        client = cli_util.build_client('dts', 'appliance_export_job', ctx)
         kwargs_request = {'opc_request_id': cli_util.use_or_generate_request_id(ctx.obj['request_id'])}
         result = client.get_appliance_export_job(appliance_export_job_id=export_job_id, **kwargs_request)
         serial_number = result.data.appliance_serial_number

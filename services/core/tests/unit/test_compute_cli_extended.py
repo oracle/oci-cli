@@ -26,7 +26,25 @@ class TestCompute(unittest.TestCase):
         result = util.invoke_command(['compute', 'instance', 'attach-vnic', '--nsg-ids', 'dummy'])
         assert 'Error: Missing option(s)' in result.output
         assert 'instance-id' in result.output
-        assert 'subnet-id' in result.output
+
+        result = util.invoke_command(['compute', 'instance', 'attach-vnic', '--instance-id', 'dummy',
+                                      '--subnet-id', 'dummy',
+                                      '--vlan-id', 'dummy'])
+        assert 'UsageError' in result.output
+        assert 'This command accepts ONLY one option' in result.output
+        assert '--subnet-id' in result.output
+        assert '--vlan-id' in result.output
+
+        result = util.invoke_command(['compute', 'instance', 'attach-vnic', '--instance-id', 'dummy'])
+        assert 'UsageError' in result.output
+        assert 'At least one of the options' in result.output
+        assert '--subnet-id' in result.output
+        assert '--vlan-id' in result.output
+
+        result = util.invoke_command(['compute', 'instance', 'attach-vnic', '--instance-id', 'dummy',
+                                      '--subnet-id', 'dummy'])
+        assert 'UsageError' not in result.output
+        assert 'Error: Missing option(s)' not in result.output
 
     def test_volume_attachment(self):
         result = util.invoke_command(['compute', 'volume-attachment', 'attach-paravirtualized-volume'])

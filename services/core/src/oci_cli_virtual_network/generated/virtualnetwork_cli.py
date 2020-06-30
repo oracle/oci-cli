@@ -117,6 +117,8 @@ You can add *secondary private IPs* to a VNIC after it's created. For more infor
 
 **Note:** Only [ListPrivateIps] and [GetPrivateIp] work with *primary* private IPs. To create and update primary private IPs, you instead work with instance and VNIC operations. For example, a primary private IP's properties come from the values you specify in [CreateVnicDetails] when calling either [LaunchInstance] or [AttachVnic]. To update the hostname for a primary private IP, you use [UpdateVnic].
 
+`PrivateIp` objects that are created for use with the Oracle Cloud VMware Solution are assigned to a VLAN and not a VNIC in a subnet. See the descriptions of the relevant attributes in the `PrivateIp` object. Also see [Vlan].
+
 To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].
 
 **Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
@@ -162,6 +164,16 @@ See these related operations:
   * [GetTunnelCpeDeviceConfig]   * [GetTunnelCpeDeviceConfigContent]   * [GetIpsecCpeDeviceConfigContent]   * [GetCpeDeviceConfigContent]""")
 @cli_util.help_option_group
 def tunnel_cpe_device_config_group():
+    pass
+
+
+@click.command(cli_util.override('virtual_network.vlan_group.command_name', 'vlan'), cls=CommandGroupWithAlias, help="""A resource to be used only with the Oracle Cloud VMware Solution.
+
+Conceptually, a virtual LAN (VLAN) is a broadcast domain that is created by partitioning and isolating a network at the data link layer (a *layer 2 network*). VLANs work by using IEEE 802.1Q VLAN tags. Layer 2 traffic is forwarded within the VLAN based on MAC learning.
+
+In the Networking service, a VLAN is an object within a VCN. You use VLANs to partition the VCN at the data link layer (layer 2). A VLAN is analagous to a subnet, which is an object for partitioning the VCN at the IP layer (layer 3).""")
+@cli_util.help_option_group
+def vlan_group():
     pass
 
 
@@ -274,6 +286,8 @@ def network_security_group_vnic_group():
 @click.command(cli_util.override('virtual_network.vnic_group.command_name', 'vnic'), cls=CommandGroupWithAlias, help="""A virtual network interface card. Each VNIC resides in a subnet in a VCN. An instance attaches to a VNIC to obtain a network connection into the VCN through that subnet. Each instance has a *primary VNIC* that is automatically created and attached during launch. You can add *secondary VNICs* to an instance after it's launched. For more information, see [Virtual Network Interface Cards (VNICs)].
 
 Each VNIC has a *primary private IP* that is automatically assigned during launch. You can add *secondary private IPs* to a VNIC after it's created. For more information, see [CreatePrivateIp] and [IP Addresses].
+
+ If you are an Oracle Cloud VMware Solution customer, you will have secondary VNICs that reside in a VLAN instead of a subnet. These VNICs have other differences, which are called out in the descriptions of the relevant attributes in the `Vnic` object. Also see [Vlan].
 
 To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].
 
@@ -437,6 +451,7 @@ virtual_network_root_group.add_command(ip_sec_connection_tunnel_shared_secret_gr
 virtual_network_root_group.add_command(virtual_circuit_group)
 virtual_network_root_group.add_command(local_peering_gateway_group)
 virtual_network_root_group.add_command(tunnel_cpe_device_config_group)
+virtual_network_root_group.add_command(vlan_group)
 virtual_network_root_group.add_command(ipv6_group)
 virtual_network_root_group.add_command(cross_connect_port_speed_shape_group)
 virtual_network_root_group.add_command(drg_group)
@@ -1115,6 +1130,37 @@ def change_virtual_circuit_compartment(ctx, from_json, virtual_circuit_id, compa
     cli_util.render_response(result, ctx)
 
 
+@vlan_group.command(name=cli_util.override('virtual_network.change_vlan_compartment.command_name', 'change-compartment'), help=u"""Moves a VLAN into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].""")
+@cli_util.option('--vlan-id', required=True, help=u"""The [OCID] of the VLAN.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the VLAN to.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_vlan_compartment(ctx, from_json, vlan_id, compartment_id, if_match):
+
+    if isinstance(vlan_id, six.string_types) and len(vlan_id.strip()) == 0:
+        raise click.UsageError('Parameter --vlan-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('core', 'virtual_network', ctx)
+    result = client.change_vlan_compartment(
+        vlan_id=vlan_id,
+        change_vlan_compartment_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @local_peering_gateway_group.command(name=cli_util.override('virtual_network.connect_local_peering_gateways.command_name', 'connect'), help=u"""Connects this local peering gateway (LPG) to another one in the same region.
 
 This operation must be called by the VCN administrator who is designated as the *requestor* in the peering relationship. The *acceptor* must implement an Identity and Access Management (IAM) policy that gives the requestor permission to connect to LPGs in the acceptor's compartment. Without that permission, this operation will fail. For more information, see [VCN Peering].""")
@@ -1187,7 +1233,7 @@ You may optionally specify a *display name* for the CPE, otherwise a default is 
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to contain the CPE.""")
 @cli_util.option('--ip-address', required=True, help=u"""The public IP address of the on-premises router.
 
-Example: `143.19.23.16`""")
+Example: `203.0.113.2`""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1806,7 +1852,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--ip-address', help=u"""An IPv6 address of your choice. Must be an available IP address within the subnet's CIDR. If you don't specify a value, Oracle automatically assigns an IPv6 address from the subnet. The subnet is the one that contains the VNIC you specify in `vnicId`.
 
-Example: `2001:0db8:0123:1111:abcd:ef01:2345:6789`""")
+Example: `2001:DB8::`""")
 @cli_util.option('--is-internet-access-allowed', type=click.BOOL, help=u"""Whether the IPv6 can be used for internet communication. Allowed by default for an IPv6 in a public subnet. Never allowed for an IPv6 in a private subnet. If the value is `true`, the IPv6 uses its public IP address for internet communication.
 
 If `isInternetAccessAllowed` is set to `false`, the resulting `publicIpAddress` attribute for the Ipv6 is null.
@@ -2087,7 +2133,6 @@ def create_network_security_group(ctx, from_json, wait_for_state, max_wait_secon
 
 
 @private_ip_group.command(name=cli_util.override('virtual_network.create_private_ip.command_name', 'create'), help=u"""Creates a secondary private IP for the specified VNIC. For more information about secondary private IPs, see [IP Addresses].""")
-@cli_util.option('--vnic-id', required=True, help=u"""The OCID of the VNIC to assign the private IP to. The VNIC and private IP must be in the same subnet.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2103,17 +2148,20 @@ Example: `bminstance-1`""")
 @cli_util.option('--ip-address', help=u"""A private IP address of your choice. Must be an available IP address within the subnet's CIDR. If you don't specify a value, Oracle automatically assigns a private IP address from the subnet.
 
 Example: `10.0.3.3`""")
+@cli_util.option('--vnic-id', help=u"""The OCID of the VNIC to assign the private IP to. The VNIC and private IP must be in the same subnet.""")
+@cli_util.option('--vlan-id', help=u"""Use this attribute only with the Oracle Cloud VMware Solution.
+
+The OCID of the VLAN from which the private IP is to be drawn. The IP address, *if supplied*, must be valid for the given VLAN. See [Vlan].""")
 @json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'PrivateIp'})
 @cli_util.wrap_exceptions
-def create_private_ip(ctx, from_json, vnic_id, defined_tags, display_name, freeform_tags, hostname_label, ip_address):
+def create_private_ip(ctx, from_json, defined_tags, display_name, freeform_tags, hostname_label, ip_address, vnic_id, vlan_id):
 
     kwargs = {}
 
     _details = {}
-    _details['vnicId'] = vnic_id
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
@@ -2129,6 +2177,12 @@ def create_private_ip(ctx, from_json, vnic_id, defined_tags, display_name, freef
 
     if ip_address is not None:
         _details['ipAddress'] = ip_address
+
+    if vnic_id is not None:
+        _details['vnicId'] = vnic_id
+
+    if vlan_id is not None:
+        _details['vlanId'] = vlan_id
 
     client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.create_private_ip(
@@ -2529,7 +2583,7 @@ You may optionally specify a *display name* for the subnet, otherwise a default 
 You can also add a DNS label for the subnet, which is required if you want the Internet and VCN Resolver to resolve hostnames for instances in the subnet. For more information, see [DNS in Your Virtual Cloud Network].""")
 @cli_util.option('--cidr-block', required=True, help=u"""The CIDR IP address range of the subnet.
 
-Example: `172.16.1.0/24`""")
+Example: `10.0.1.0/24`""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to contain the subnet.""")
 @cli_util.option('--vcn-id', required=True, help=u"""The OCID of the VCN to contain the subnet.""")
 @cli_util.option('--availability-domain', help=u"""Controls whether the subnet is regional or specific to an availability domain. Oracle recommends creating regional subnets because they're more flexible and make it easier to implement failover across availability domains. Originally, AD-specific subnets were the only kind available to use.
@@ -2659,7 +2713,7 @@ The VCN automatically comes with a default route table, default security list, a
 The VCN and subnets you create are not accessible until you attach an internet gateway or set up an IPSec VPN or FastConnect. For more information, see [Overview of the Networking Service].""")
 @cli_util.option('--cidr-block', required=True, help=u"""The CIDR IP address block of the VCN.
 
-Example: `172.16.0.0/16`""")
+Example: `10.0.0.0/16`""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to contain the VCN.""")
 @cli_util.option('--ipv6-cidr-block', help=u"""If you enable IPv6 for the VCN (see `isIpv6Enabled`), you may optionally provide an IPv6 /48 CIDR block from the supported ranges (see [IPv6 Addresses]. The addresses in this block will be considered private and cannot be accessed from the internet. The documentation refers to this as a *custom CIDR* for the VCN.
 
@@ -2862,6 +2916,93 @@ def create_virtual_circuit(ctx, from_json, wait_for_state, max_wait_seconds, wai
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 result = oci.wait_until(client, client.get_virtual_circuit(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@vlan_group.command(name=cli_util.override('virtual_network.create_vlan.command_name', 'create'), help=u"""Creates a VLAN in the specified VCN and the specified compartment.""")
+@cli_util.option('--availability-domain', required=True, help=u"""The availability domain of the VLAN.
+
+Example: `Uocm:PHX-AD-1`""")
+@cli_util.option('--cidr-block', required=True, help=u"""The range of IPv4 addresses that will be used for layer 3 communication with hosts outside the VLAN.
+
+Example: `192.0.2.0/24`""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to contain the VLAN.""")
+@cli_util.option('--vcn-id', required=True, help=u"""The OCID of the VCN to contain the VLAN.""")
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help=u"""A descriptive name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of the OCIDs of the network security groups (NSGs) to add all VNICs in the VLAN to. For more information about NSGs, see [NetworkSecurityGroup].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--route-table-id', help=u"""The OCID of the route table the VLAN will use. If you don't provide a value, the VLAN uses the VCN's default route table.""")
+@cli_util.option('--vlan-tag', type=click.INT, help=u"""The IEEE 802.1Q VLAN tag for this VLAN. The value must be unique across all VLANs in the VCN. If you don't provide a value, Oracle assigns one. You cannot change the value later. VLAN tag 0 is reserved for use by Oracle.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED", "UPDATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'nsg-ids': {'module': 'core', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'nsg-ids': {'module': 'core', 'class': 'list[string]'}}, output_type={'module': 'core', 'class': 'Vlan'})
+@cli_util.wrap_exceptions
+def create_vlan(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, cidr_block, compartment_id, vcn_id, defined_tags, display_name, freeform_tags, nsg_ids, route_table_id, vlan_tag):
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['availabilityDomain'] = availability_domain
+    _details['cidrBlock'] = cidr_block
+    _details['compartmentId'] = compartment_id
+    _details['vcnId'] = vcn_id
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if nsg_ids is not None:
+        _details['nsgIds'] = cli_util.parse_json_parameter("nsg_ids", nsg_ids)
+
+    if route_table_id is not None:
+        _details['routeTableId'] = route_table_id
+
+    if vlan_tag is not None:
+        _details['vlanTag'] = vlan_tag
+
+    client = cli_util.build_client('core', 'virtual_network', ctx)
+    result = client.create_vlan(
+        create_vlan_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_vlan') and callable(getattr(client, 'get_vlan')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_vlan(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except oci.exceptions.MaximumWaitTimeExceeded as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -4154,6 +4295,70 @@ def delete_virtual_circuit(ctx, from_json, wait_for_state, max_wait_seconds, wai
     cli_util.render_response(result, ctx)
 
 
+@vlan_group.command(name=cli_util.override('virtual_network.delete_vlan.command_name', 'delete'), help=u"""Deletes the specified VLAN, but only if there are no VNICs in the VLAN.""")
+@cli_util.option('--vlan-id', required=True, help=u"""The [OCID] of the VLAN.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED", "UPDATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_vlan(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, vlan_id, if_match):
+
+    if isinstance(vlan_id, six.string_types) and len(vlan_id.strip()) == 0:
+        raise click.UsageError('Parameter --vlan-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('core', 'virtual_network', ctx)
+    result = client.delete_vlan(
+        vlan_id=vlan_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_vlan') and callable(getattr(client, 'get_vlan')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                oci.wait_until(client, client.get_vlan(vlan_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except oci.exceptions.ServiceError as e:
+                # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
+                # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
+                # will result in an exception that reflects a HTTP 404. In this case, we can exit with success (rather than raising
+                # the exception) since this would have been the behaviour in the waiter anyway (as for delete we provide the argument
+                # succeed_on_not_found=True to the waiter).
+                #
+                # Any non-404 should still result in the exception being thrown.
+                if e.status == 404:
+                    pass
+                else:
+                    raise
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @service_gateway_group.command(name=cli_util.override('virtual_network.detach_service_id.command_name', 'detach'), help=u"""Removes the specified [Service] from the list of enabled `Service` objects for the specified gateway. You do not need to remove any route rules that specify this `Service` object's `cidrBlock` as the destination CIDR. However, consider removing the rules if your intent is to permanently disable use of the `Service` through this service gateway.
 
 **Note:** The `DetachServiceId` operation is an easy way to remove an individual `Service` from the service gateway. Compare it with [UpdateServiceGateway], which replaces the entire existing list of enabled `Service` objects with the list that you provide in the `Update` call. `UpdateServiceGateway` also lets you block all traffic through the service gateway without having to remove each of the individual `Service` objects.""")
@@ -4825,7 +5030,7 @@ def get_private_ip(ctx, from_json, private_ip_id):
 
 @public_ip_group.command(name=cli_util.override('virtual_network.get_public_ip.command_name', 'get'), help=u"""Gets the specified public IP. You must specify the object's OCID.
 
-Alternatively, you can get the object by using [GetPublicIpByIpAddress] with the public IP address (for example, 129.146.2.1).
+Alternatively, you can get the object by using [GetPublicIpByIpAddress] with the public IP address (for example, 203.0.113.2).
 
 Or you can use [GetPublicIpByPrivateIpId] with the OCID of the private IP that the public IP is assigned to.
 
@@ -4850,10 +5055,10 @@ def get_public_ip(ctx, from_json, public_ip_id):
     cli_util.render_response(result, ctx)
 
 
-@public_ip_group.command(name=cli_util.override('virtual_network.get_public_ip_by_ip_address.command_name', 'get-public-ip-by-ip-address'), help=u"""Gets the public IP based on the public IP address (for example, 129.146.2.1).
+@public_ip_group.command(name=cli_util.override('virtual_network.get_public_ip_by_ip_address.command_name', 'get-public-ip-by-ip-address'), help=u"""Gets the public IP based on the public IP address (for example, 203.0.113.2).
 
 **Note:** If you're fetching a reserved public IP that is in the process of being moved to a different private IP, the service returns the public IP object with `lifecycleState` = ASSIGNING and `assignedEntityId` = OCID of the target private IP.""")
-@cli_util.option('--ip-address', required=True, help=u"""The public IP address. Example: 129.146.2.1""")
+@cli_util.option('--ip-address', required=True, help=u"""The public IP address. Example: 203.0.113.2""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -5144,6 +5349,28 @@ def get_virtual_circuit(ctx, from_json, virtual_circuit_id):
     client = cli_util.build_client('core', 'virtual_network', ctx)
     result = client.get_virtual_circuit(
         virtual_circuit_id=virtual_circuit_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@vlan_group.command(name=cli_util.override('virtual_network.get_vlan.command_name', 'get'), help=u"""Gets the specified VLAN's information.""")
+@cli_util.option('--vlan-id', required=True, help=u"""The [OCID] of the VLAN.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'Vlan'})
+@cli_util.wrap_exceptions
+def get_vlan(ctx, from_json, vlan_id):
+
+    if isinstance(vlan_id, six.string_types) and len(vlan_id.strip()) == 0:
+        raise click.UsageError('Parameter --vlan-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('core', 'virtual_network', ctx)
+    result = client.get_vlan(
+        vlan_id=vlan_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -6332,7 +6559,9 @@ def list_network_security_groups(ctx, from_json, all_pages, page_size, compartme
 
   - Subnet OCID.   - VNIC OCID.   - Both private IP address and subnet OCID: This lets   you get a `privateIP` object based on its private IP   address (for example, 10.0.3.3) and not its OCID. For comparison,   [GetPrivateIp]   requires the OCID.
 
-If you're listing all the private IPs associated with a given subnet or VNIC, the response includes both primary and secondary private IPs.""")
+If you're listing all the private IPs associated with a given subnet or VNIC, the response includes both primary and secondary private IPs.
+
+If you are an Oracle Cloud VMware Solution customer and have VLANs in your VCN, you can filter the list by VLAN OCID. See [Vlan].""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
@@ -6340,6 +6569,7 @@ Example: `50`""")
 @cli_util.option('--ip-address', help=u"""An IP address. This could be either IPv4 or IPv6, depending on the resource. Example: `10.0.3.3`""")
 @cli_util.option('--subnet-id', help=u"""The OCID of the subnet.""")
 @cli_util.option('--vnic-id', help=u"""The OCID of the VNIC.""")
+@cli_util.option('--vlan-id', help=u"""The [OCID] of the VLAN.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -6347,7 +6577,7 @@ Example: `50`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[PrivateIp]'})
 @cli_util.wrap_exceptions
-def list_private_ips(ctx, from_json, all_pages, page_size, limit, page, ip_address, subnet_id, vnic_id):
+def list_private_ips(ctx, from_json, all_pages, page_size, limit, page, ip_address, subnet_id, vnic_id, vlan_id):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -6363,6 +6593,8 @@ def list_private_ips(ctx, from_json, all_pages, page_size, limit, page, ip_addre
         kwargs['subnet_id'] = subnet_id
     if vnic_id is not None:
         kwargs['vnic_id'] = vnic_id
+    if vlan_id is not None:
+        kwargs['vlan_id'] = vlan_id
     client = cli_util.build_client('core', 'virtual_network', ctx)
     if all_pages:
         if page_size:
@@ -7015,6 +7247,74 @@ def list_virtual_circuits(ctx, from_json, all_pages, page_size, compartment_id, 
     else:
         result = client.list_virtual_circuits(
             compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@vlan_group.command(name=cli_util.override('virtual_network.list_vlans.command_name', 'list'), help=u"""Lists the VLANs in the specified VCN and the specified compartment.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
+@cli_util.option('--vcn-id', required=True, help=u"""The [OCID] of the VCN.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
+
+Example: `50`""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.
+
+**Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by availability domain if the scope of the resource type is within a single availability domain. If you call one of these \"List\" operations without specifying an availability domain, the resources are grouped by availability domain, then sorted.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The DISPLAYNAME sort order is case sensitive.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED", "UPDATING"]), help=u"""A filter to only return resources that match the given lifecycle state.  The state value is case-insensitive.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[Vlan]'})
+@cli_util.wrap_exceptions
+def list_vlans(ctx, from_json, all_pages, page_size, compartment_id, vcn_id, limit, page, display_name, sort_by, sort_order, lifecycle_state):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('core', 'virtual_network', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_vlans,
+            compartment_id=compartment_id,
+            vcn_id=vcn_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_vlans,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            vcn_id=vcn_id,
+            **kwargs
+        )
+    else:
+        result = client.list_vlans(
+            compartment_id=compartment_id,
+            vcn_id=vcn_id,
             **kwargs
         )
     cli_util.render_response(result, ctx)
@@ -7766,9 +8066,7 @@ def update_ip_sec_connection_tunnel(ctx, from_json, force, wait_for_state, max_w
 **Important:** If you change the shared secret, the tunnel will go down while it's reprovisioned.""")
 @cli_util.option('--ipsc-id', required=True, help=u"""The OCID of the IPSec connection.""")
 @cli_util.option('--tunnel-id', required=True, help=u"""The [OCID] of the tunnel.""")
-@cli_util.option('--shared-secret', help=u"""The shared secret (pre-shared key) to use for the tunnel. Only numbers, letters, and spaces are allowed.
-
-Example: `EXAMPLEToUis6j1cp8GdVQxcmdfMO0yXMLilZTbYCMDGu4V8o`""")
+@cli_util.option('--shared-secret', help=u"""The shared secret (pre-shared key) to use for the tunnel. Only numbers, letters, and spaces are allowed.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -9004,6 +9302,90 @@ def update_virtual_circuit(ctx, from_json, force, wait_for_state, max_wait_secon
     cli_util.render_response(result, ctx)
 
 
+@vlan_group.command(name=cli_util.override('virtual_network.update_vlan.command_name', 'update'), help=u"""Updates the specified VLAN. This could result in changes to all the VNICs in the VLAN, which can take time. During that transition period, the VLAN will be in the UPDATING state.""")
+@cli_util.option('--vlan-id', required=True, help=u"""The [OCID] of the VLAN.""")
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help=u"""A descriptive name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of the OCIDs of the network security groups (NSGs) to use with this VLAN. All VNICs in the VLAN will belong to these NSGs. For more information about NSGs, see [NetworkSecurityGroup].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--route-table-id', help=u"""The OCID of the route table the VLAN will use.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED", "UPDATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'nsg-ids': {'module': 'core', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'nsg-ids': {'module': 'core', 'class': 'list[string]'}}, output_type={'module': 'core', 'class': 'Vlan'})
+@cli_util.wrap_exceptions
+def update_vlan(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, vlan_id, defined_tags, display_name, freeform_tags, nsg_ids, route_table_id, if_match):
+
+    if isinstance(vlan_id, six.string_types) and len(vlan_id.strip()) == 0:
+        raise click.UsageError('Parameter --vlan-id cannot be whitespace or empty string')
+    if not force:
+        if defined_tags or freeform_tags or nsg_ids:
+            if not click.confirm("WARNING: Updates to defined-tags and freeform-tags and nsg-ids will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if nsg_ids is not None:
+        _details['nsgIds'] = cli_util.parse_json_parameter("nsg_ids", nsg_ids)
+
+    if route_table_id is not None:
+        _details['routeTableId'] = route_table_id
+
+    client = cli_util.build_client('core', 'virtual_network', ctx)
+    result = client.update_vlan(
+        vlan_id=vlan_id,
+        update_vlan_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_vlan') and callable(getattr(client, 'get_vlan')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_vlan(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @vnic_group.command(name=cli_util.override('virtual_network.update_vnic.command_name', 'update'), help=u"""Updates the specified VNIC.""")
 @cli_util.option('--vnic-id', required=True, help=u"""The OCID of the VNIC.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
@@ -9018,10 +9400,12 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 For more information, see [DNS in Your Virtual Cloud Network].""")
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of the OCIDs of the network security groups (NSGs) to add the VNIC to. Setting this as an empty array removes the VNIC from all network security groups.
 
-For more information about NSGs, see [NetworkSecurityGroup].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--skip-source-dest-check', type=click.BOOL, help=u"""Whether the source/destination check is disabled on the VNIC. Defaults to `false`, which means the check is performed.
+If the VNIC belongs to a VLAN as part of the Oracle Cloud VMware Solution (instead of belonging to a subnet), the value of the `nsgIds` attribute is ignored. Instead, the VNIC belongs to the NSGs that are associated with the VLAN itself. See [Vlan].
 
-For information about why you would skip the source/destination check, see [Using a Private IP as a Route Target]. Example: `true`""")
+For more information about NSGs, see [NetworkSecurityGroup].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--skip-source-dest-check', type=click.BOOL, help=u"""Whether the source/destination check is disabled on the VNIC. Defaults to `false`, which means the check is performed. For information about why you would skip the source/destination check, see [Using a Private IP as a Route Target].
+
+If the VNIC belongs to a VLAN as part of the Oracle Cloud VMware Solution (instead of belonging to a subnet), the value of the `skipSourceDestCheck` attribute is ignored. This is because the source/destination check is always disabled for VNICs in a VLAN. Example: `true`""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "TERMINATING", "TERMINATED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")

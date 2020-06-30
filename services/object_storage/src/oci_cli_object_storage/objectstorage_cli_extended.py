@@ -1599,6 +1599,271 @@ def object_bulk_delete(ctx, from_json, namespace, bucket_name, prefix, delimiter
         sys.exit(1)
 
 
+@objectstorage_cli.object_group.command(name='bulk-delete-versions')
+@cli_util.option('-ns', '--namespace', '--namespace-name', 'namespace', required=True, help='The top-level namespace used for the request.')
+@cli_util.option('-bn', '--bucket-name', required=True, help='The name of the bucket.')
+@cli_util.option('--prefix', help="Delete all object versions with the given prefix. "
+                                  "Only one of prefix or objectName can be given as input. "
+                                  "Omit this parameter to delete all objects in the bucket.")
+@cli_util.option('--object-name', help="Delete all versions of the given objectName. "
+                                       "Only one of prefix or objectName can be given as input. "
+                                       "Omit this parameter to delete all objects in the bucket.")
+@cli_util.option('--delimiter', help="When this parameter is set, only objects whose names do not contain the "
+                                     "delimiter character (after an optionally specified prefix) are deleted. "
+                                     "Scanned objects whose names contain the delimiter have part of their name "
+                                     "up to the last occurrence of the delimiter (after the optional prefix) "
+                                     "returned as a set of prefixes. Note: Only '/' is a supported delimiter "
+                                     "character at this time.")
+@cli_util.option('--dry-run', is_flag=True, help='Displays a list of objects which would be deleted by this command, if it were run without --dry-run. If --dry-run is passed, no objects will actually be deleted.')
+@cli_util.option('--force', is_flag=True, help='Do not ask for confirmation prior to performing the bulk delete.')
+@cli_util.option('--parallel-operations-count', type=click.INT, default=10, show_default=True,
+                 help='The number of parallel operations to perform. Decreasing this value will make bulk deletes less resource intensive but they may take longer. Increasing this value may improve bulk delete times, but the upload process will consume more system resources and network bandwidth.')
+@cli_util.option('--include', multiple=True, help="""Only delete objects which match the provided pattern. Patterns are taken relative to the bucket root. This option can be provided mulitple times to match on mulitple patterns. Supported pattern symbols are:
+\b
+{}
+""".format(INCLUDE_EXCLUDE_PATTERN))
+@cli_util.option('--exclude', multiple=True, help="""Only delete objects which do not match the provided pattern. Patterns are taken relative to the bucket root. This option can be provided mulitple times to match on mulitple patterns. Supported pattern symbols are:
+\b
+{}
+""".format(INCLUDE_EXCLUDE_PATTERN))
+@json_skeleton_utils.get_cli_json_input_option({})
+@help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@wrap_exceptions
+def object_bulk_delete_versions(ctx, from_json, namespace, bucket_name, prefix, delimiter, dry_run, force, include, exclude, parallel_operations_count, object_name):
+    """
+    Deletes all object versions in a bucket which match the provided criteria.
+
+
+    \b
+    Examples
+    ========
+
+    \b
+    Deleting all object versions in the bucket
+    ----------------------------------
+    oci os object bulk-delete-versions -ns mynamespace -bn mybucket
+
+    \b
+    Delete all object versions that match a given prefix
+    --------------------------------------------
+    oci os object bulk-delete-versions -ns mynamespace -bn mybucket --prefix level1/level2/ --prefix myprefix
+
+    \b
+    You can delete all object versions that match a given prefix by specifying the --prefix flag. In the above example, "--prefix myprefix" would
+    match object names such as myprefix_textfile1.txt, myprefix_myImage.png etc.
+
+    \b
+    If you have named your objects so that they exist in Object Storage as a hierarchy, e.g. level1/level2/level3/myobject.txt, then you
+    can delete objects at a given level (and all sub levels) by specifying a prefix:
+
+    \b
+    oci os object bulk-delete-versions -ns mynamespace -bn mybucket --prefix level1/level2/
+
+    \b
+    This will delete all objects of the form level1/level2/<object name>, level1/level2/leve3/<object name>,
+    level1/level2/leve3/level4/<object name> etc.
+
+    \b
+    Limiting deleted objects using a prefix and delimiter
+    -----------------------------------------------------
+    oci os object bulk-delete-versions -ns mynamespace -bn mybucket --prefix level1/level2/ --delimiter /
+
+    \b
+    If you have named your objects so that they exist in Object Storage as a hierarchy, e.g. level1/level2/level3/myobject.txt, and you only
+    want to delete objects at a given level of the hierarchy, e.g. example everything of the form level1/level2/<object name> but not
+    level1/level2/leve3/<object name> or any other sub-levels, you can specify a prefix and delimiter. Currently the only supported delimiter
+    is /
+
+    \b
+    Deleting all object versions using object name
+    ----------------------------------------------
+
+    oci os object bulk-delete-versions -ns mynamespace -bn mybucket --object-name <object name>
+
+    You can delete all object versions that match a given object name by specifying the --object-name flag. Both -object-name and -prefix cannot be given in the same command
+
+    \b
+    Previewing what would be deleted
+    ----------------------------
+    oci os object bulk-delete-versions -ns mynamespace -bn mybucket --dry-run
+    oci os object bulk-delete-versions -ns mynamespace -bn mybucket --prefix level1/level2/ --dry-run
+    oci os object bulk-delete-versions -ns mynamespace -bn mybucket --prefix level1/level2/ --delimiter / --dry-run
+
+    \b
+    For any bulk-delete command you can get a list of all objects which would be deleted, but without actually deleting them, by using the --dry-run
+    flag
+
+    \b
+    Do not prompt for delete
+    ------------------------
+    oci os object bulk-delete-versions -ns mynamespace -bn mybucket --force
+    oci os object bulk-delete-versions -ns mynamespace -bn mybucket --prefix level1/level2/ --force
+    oci os object bulk-delete-versions -ns mynamespace -bn mybucket --prefix level1/level2/ --delimiter / --force
+
+    \b
+    By default, the bulk-delete-versions command will prompt you prior to deleting objects. To suppress this prompt, pass the --force option.
+    """
+    if include and exclude:
+        raise click.UsageError('The --include and --exclude parameters cannot both be provided')
+
+    if object_name and (prefix or include or exclude):
+        raise click.UsageError('The --object-name parameter cannot be combined with either --prefix or --include or --exclude')
+
+    client = build_client('object_storage', 'object_storage', ctx)
+
+    output = BulkDeleteOperationOutput()
+
+    # When deleting objects, since the items (probably) don't exist on local disk there is no base directory to reference. However, here we
+    # use the bucket name as a fake base directory
+    file_filter_collection = _get_file_filter_collection(bucket_name, include, exclude, prefix)
+    if dry_run:
+        list_all_object_versions_responses = retrying_list_object_versions(
+            client=client,
+            request_id=ctx.obj['request_id'],
+            namespace=namespace,
+            bucket_name=bucket_name,
+            prefix=prefix,
+            start=object_name,
+            end=None,
+            limit=OBJECT_LIST_PAGE_SIZE_BULK_OPERATIONS,
+            delimiter=delimiter,
+            page=None,
+            fields='name',
+            retrieve_all=True
+        )
+
+        for response in list_all_object_versions_responses:
+            for obj in response.data.items:
+                if file_filter_collection:
+                    pseudo_path = os.path.join(bucket_name, obj.name)
+                    if file_filter_collection.get_action(pseudo_path) == BaseFileFilterCollection.EXCLUDE:
+                        continue
+                if object_name and object_name != obj.name:
+                    continue
+                output.add_deleted(obj.name)
+        render(data=output.get_output(ctx.obj['output'], dry_run=True), headers=None, ctx=ctx, nest_data_in_data_attribute=False)
+        sys.exit()
+
+    reusable_progress_bar = ProgressBar(100, '')
+
+    # Based on the rules for --force:
+    #
+    # CLI should do a list for 1000 items, and ask for confirmation with a message saying either that more than 1000 items will be deleted,
+    # or the exact number of items that will be deleted
+    #
+    # Moving transfer manager inside while loop since we should wait for pool completion after delete
+    # before list is called again
+    #
+    # Always list first page of versions that match given criteria and delete versions,
+    # next_page_exists is not used for anything except to find out if next page exists or not
+    #
+    while True:
+
+        transfer_manager = TransferManager(client, TransferManagerConfig(max_object_storage_requests=parallel_operations_count))
+        list_all_object_versions_responses = retrying_list_object_versions(
+            client=client,
+            request_id=ctx.obj['request_id'],
+            namespace=namespace,
+            bucket_name=bucket_name,
+            prefix=prefix,
+            start=object_name,
+            end=None,
+            limit=OBJECT_LIST_PAGE_SIZE_BULK_OPERATIONS,
+            delimiter=delimiter,
+            page=None,
+            fields='name',
+            retrieve_all=False
+        )
+
+        # if --object-name is provided, we should only delete objects that match
+        object_versions_to_delete = []
+        for response in list_all_object_versions_responses:
+            for obj in response.data.items:
+                if object_name and object_name != obj.name:
+                    continue
+                object_versions_to_delete.append(obj)
+
+        if not force:
+            if include or exclude:
+                # If we specify this, the approximate or exact objects to delete is not determinable without paging through the entire list (e.g. in the
+                # case that the only matching items are on the last few pages). So in this case just use a generic message
+                confirm_prompt = 'WARNING: This command will delete all matching object versions in the bucket. Please use --dry-run to list the objects which would be deleted. Are you sure you wish to continue?'
+            else:
+                if list_all_object_versions_responses[-1].headers.get('opc-next-page'):
+                    # There are more pages of data
+                    confirm_prompt = 'WARNING: This command will delete at least {} object versions. Are you sure you wish to continue?'.format(len(object_versions_to_delete))
+                else:
+                    if len(object_versions_to_delete) == 0:
+                        # There are no objects anyway, so just terminate here
+                        click.echo('There are no objects to delete in {}'.format(bucket_name), file=sys.stderr)
+                        sys.exit()
+                    else:
+                        confirm_prompt = 'WARNING: This command will delete {} object versions. Are you sure you wish to continue?'.format(len(object_versions_to_delete))
+
+            if not click.confirm(confirm_prompt):
+                ctx.abort()
+
+        for obj in object_versions_to_delete:
+            if file_filter_collection:
+                pseudo_path = os.path.join(bucket_name, obj.name)
+                if file_filter_collection.get_action(pseudo_path) == BaseFileFilterCollection.EXCLUDE:
+                    continue
+
+            try:
+                if ctx.obj['debug']:
+                    update_progress_kwargs = {'message': 'Deleted object {} , version_id {}'.format(obj.name, obj.version_id)}
+                    update_progress_callback = WorkPoolTaskCallback(_print_to_console, **update_progress_kwargs)
+                else:
+                    update_progress_kwargs = {'new_label': _get_progress_bar_label(None, obj.name + "," + obj.version_id, 'Deleted')}
+                    update_progress_callback = WorkPoolTaskCallback(reusable_progress_bar.update_label_to_end, **update_progress_kwargs)
+
+                add_to_deleted_kwargs = {'deleted': obj.name + "," + obj.version_id}
+                error_callback_kwargs = {'failed_item': obj.name + "," + obj.version_id}
+                add_to_deleted_objects_callback = WorkPoolTaskCallback(output.add_deleted, **add_to_deleted_kwargs)
+                add_to_delete_failures_callback = WorkPoolTaskErrorCallback(output.add_failure, **error_callback_kwargs)
+
+                callbacks_container = WorkPoolTaskCallbacksContainer(completion_callbacks=[update_progress_callback], success_callbacks=[add_to_deleted_objects_callback], error_callbacks=[add_to_delete_failures_callback])
+                delete_kwargs = {
+                    'namespace': namespace,
+                    'bucket_name': bucket_name,
+                    'object_name': obj.name,
+                    'if_match': None,
+                    'request_id': ctx.obj['request_id'],
+                    'version_id': obj.version_id
+                }
+                if ctx.obj['debug']:
+                    click.echo('Deleting object name {}, version-id {}'.format(obj.name, obj.version_id), file=sys.stderr)
+                else:
+                    reusable_progress_bar.reset_progress(100, _get_progress_bar_label(None, obj.name + "," + obj.version_id, 'Deleting'))
+
+                transfer_manager.delete_object(callbacks_container, **delete_kwargs)
+            except Exception as e:
+                # Don't let one get failure fail the entire batch, but store the error for output later
+                output.add_failure(obj.name + "," + obj.version_id, callback_exception=e)
+
+                if ctx.obj['debug']:
+                    click.echo('Failed to delete object name {}, version-id {} '.format(obj.name, obj.version_id), file=sys.stderr)
+
+        transfer_manager.wait_for_completion()
+
+        if list_all_object_versions_responses[-1].headers.get('opc-next-page') is None:
+            break
+
+        # Because we may not be deleting objects for a while when there are filters, show a dummy message so the caller still knows that there
+        # is progress
+        if include or exclude:
+            reusable_progress_bar.reset_progress(100, 'Searching for matching objects to delete')
+
+    reusable_progress_bar.render_finish()
+
+    render(data=output.get_output(ctx.obj['output']), headers=None, ctx=ctx, nest_data_in_data_attribute=False)
+
+    if output.has_failures():
+        sys.exit(1)
+
+
 @objectstorage_cli.object_group.command(name='resume-put')
 @cli_util.option('-ns', '--namespace', '--namespace-name', 'namespace', required=True, help='The top-level namespace used for the request.')
 @cli_util.option('-bn', '--bucket-name', required=True, help='The name of the bucket.')
@@ -1987,6 +2252,28 @@ def retrying_list_objects_single_page(client, request_id, namespace, bucket_name
     return _make_retrying_list_call(client, namespace, bucket_name, **args)
 
 
+# Retrieves a single page of object versions, retrying the call if we received a retryable exception. This will return the
+# raw response and it is up to the caller to handle pagination etc
+def retrying_list_object_versions_single_page(client, request_id, namespace, bucket_name, prefix, start, end, limit, delimiter, page, fields):
+    args = {
+        'fields': fields,
+        'opc_client_request_id': request_id,
+        'limit': limit
+    }
+    if delimiter is not None:
+        args['delimiter'] = delimiter
+    if prefix is not None:
+        args['prefix'] = prefix
+    if start is not None:
+        args['start'] = start
+    if end is not None:
+        args['end'] = end
+    if page is not None:
+        args['page'] = page
+
+    return _make_retrying_list_versions_call(client, namespace, bucket_name, **args)
+
+
 # Retrieves multiple pages of objects, retrying each list page call if we received a retryable exception. This will return a list of
 # the raw responses we received in the order we received them
 #
@@ -2020,6 +2307,38 @@ def retrying_list_objects(client, request_id, namespace, bucket_name, prefix, st
     return all_responses
 
 
+# Retrieves multiple pages of object versions, retrying each list page call if we received a retryable exception. This will return a list of
+# the raw responses we received in the order we received them
+#
+# This method can retrieve all matching object versions or only up to a given limit. The default is only to retrieve up to the given limit
+def retrying_list_object_versions(client, request_id, namespace, bucket_name, prefix, start, end, limit, delimiter, page, fields, retrieve_all=False):
+    all_responses = list()
+
+    if retrieve_all:
+        response = retrying_list_object_versions_single_page(client, request_id, namespace, bucket_name, prefix, start, end, limit, delimiter, page, fields)
+        all_responses.append(response)
+        page = response.headers.get('opc-next-page')
+
+        while page:
+            response = retrying_list_object_versions_single_page(client, request_id, namespace, bucket_name, prefix, start, end, limit, delimiter, page, fields)
+
+            all_responses.append(response)
+            page = response.headers.get('opc-next-page')
+    else:
+        while limit > 0:
+            response = retrying_list_object_versions_single_page(client, request_id, namespace, bucket_name, prefix, start, end, limit, delimiter, page, fields)
+
+            all_responses.append(response)
+            page = response.headers.get('opc-next-page')
+
+            if page:
+                limit -= len(response.data.items)
+            else:
+                limit = 0
+
+    return all_responses
+
+
 # Normalizes the object name path of an object we're going to upload to object storage (e.g. a/b/c/object.txt) so that
 # it uses the object storage delimiter character (/)
 #
@@ -2039,6 +2358,22 @@ def normalize_object_name_path_for_object_storage(object_name_path, path_separat
        retry_on_exception=retry_utils.retry_on_timeouts_connection_internal_server_and_throttles)
 def _make_retrying_list_call(client, namespace, bucket_name, **kwargs):
     return client.list_objects(
+        namespace,
+        bucket_name,
+        **kwargs
+    )
+
+
+# Calls list_object_versions with retries:
+#
+#    - Max of 3 attempts
+#    - Exponential back off of (2 ^ retries) seconds
+#    - Random jitter between retries of 0-2 seconds
+#    - Retry on timeouts, connection errors, internal server errors and throttles
+@retry(stop_max_attempt_number=3, wait_exponential_multiplier=1000, wait_exponential_max=10000, wait_jitter_max=2000,
+       retry_on_exception=retry_utils.retry_on_timeouts_connection_internal_server_and_throttles)
+def _make_retrying_list_versions_call(client, namespace, bucket_name, **kwargs):
+    return client.list_object_versions(
         namespace,
         bucket_name,
         **kwargs

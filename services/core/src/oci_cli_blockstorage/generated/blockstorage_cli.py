@@ -1175,7 +1175,7 @@ def create_volume_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 For more information about Oracle defined backup policies and user defined backup policies, see [Policy-Based Backups].""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name for the volume backup policy. Does not have to be unique and it's changeable. Avoid entering confidential information.""")
-@cli_util.option('--destination-region', help=u"""The paired destination region (pre-defined by oracle) for scheduled cross region backup calls. Example: `us-ashburn-1`""")
+@cli_util.option('--destination-region', help=u"""The paired destination region for copying scheduled backups to. Example: `us-ashburn-1`. See [Region Pairs] for details about paired regions.""")
 @cli_util.option('--schedules', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The collection of schedules for the volume backup policy. See see [Schedules] in [Policy-Based Backups] for more information.
 
 This option is a JSON list with items of type VolumeBackupSchedule.  For documentation on VolumeBackupSchedule please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/VolumeBackupSchedule.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -3148,7 +3148,7 @@ def update_volume_backup(ctx, from_json, force, wait_for_state, max_wait_seconds
  Avoid entering confidential information.""")
 @cli_util.option('--policy-id', required=True, help=u"""The OCID of the volume backup policy.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name for the volume backup policy. Does not have to be unique and it's changeable. Avoid entering confidential information.""")
-@cli_util.option('--destination-region', help=u"""The paired destination region (pre-defined by oracle) for scheduled cross region backup calls. Example: `us-ashburn-1`""")
+@cli_util.option('--destination-region', help=u"""The paired destination region for copying scheduled backups to. Example: `us-ashburn-1`. Specify `none` to reset the `destinationRegion` parameter. See [Region Pairs] for details about paired regions.""")
 @cli_util.option('--schedules', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The collection of schedules for the volume backup policy. See see [Schedules] in [Policy-Based Backups] for more information.
 
 This option is a JSON list with items of type VolumeBackupSchedule.  For documentation on VolumeBackupSchedule please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/VolumeBackupSchedule.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)

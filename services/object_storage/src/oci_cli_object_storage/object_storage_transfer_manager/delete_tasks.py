@@ -27,5 +27,6 @@ class DeleteObjectTask(WorkPoolTask):
             kwargs['bucket_name'],
             kwargs['object_name'],
             if_match=kwargs.get('if_match'),
-            opc_client_request_id=kwargs.get('request_id')
+            opc_client_request_id=kwargs.get('request_id'),
+            version_id=kwargs.get('version_id')
         )

@@ -5,6 +5,7 @@ api-gateway, work-request-log, list
 bv, boot-volume, create
 bv, volume, create
 compute, instance, launch
+db, database, patch
 iam, user, api-key, upload
 network, public-ip, get
 os, object, bulk-delete
@@ -12,9 +13,11 @@ os, object, bulk-download
 os, object, bulk-upload
 os, object, put
 os, object, resume-put
+os, object, bulk-delete-versions
 resource-manager, job, create-import-tf-state-job
 resource-manager, stack, create
 resource-manager, stack, update
 waas, policy-config, update
 waas, protection-settings, update
 dts, export, get-passphrase
+network, vnic, assign-private-ip

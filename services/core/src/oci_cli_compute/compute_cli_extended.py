@@ -493,9 +493,10 @@ def launch_instance_extended(ctx, **kwargs):
     ctx.invoke(compute_cli.launch_instance, **kwargs)
 
 
-@compute_cli.instance_group.command(name='attach-vnic', help="""Creates a secondary VNIC and attaches it to the specified instance. For more information about secondary VNICs, see [Virtual Network Interface Cards (VNICs)].""")
+@compute_cli.instance_group.command(name='attach-vnic', help="""Creates a secondary VNIC and attaches it to the specified instance. You can specify either --subnet-id or --vlan-id for this create request, but not both. For more information about secondary VNICs, see [Virtual Network Interface Cards (VNICs)].""")
 @cli_util.option('--instance-id', required=True, help="""The OCID of the instance.""")
-@cli_util.option('--subnet-id', required=True, help="""The OCID of the subnet to create the VNIC in.""")
+@cli_util.option('--subnet-id', help="""The OCID of the subnet to create the VNIC in. You can specify either this parameter or --vlan-id, but not both.""")
+@cli_util.option('--vlan-id', help="""The OCID of the VLAN to create the VNIC in. You can specify either this parameter or --subnet-id, but not both.""")
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of the [OCIDs] of the network security groups (NSGs) to add the VNIC to..""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--vnic-display-name', help="""A user-friendly name for the VNIC. Does not have to be unique.""")
 @cli_util.option('--assign-public-ip', type=click.BOOL, help="""Whether the VNIC should be assigned a public IP address. Defaults to whether the subnet is public or private. If not set and the VNIC is being created in a private subnet (i.e., where prohibitPublicIpOnVnic=true in the Subnet), then no public IP address is assigned. If not set and the subnet is public (prohibitPublicIpOnVnic=false), then a public IP address is assigned. If set to true and prohibitPublicIpOnVnic=true, an error is returned.""")
@@ -511,15 +512,28 @@ def launch_instance_extended(ctx, **kwargs):
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'nsg-ids': {'module': 'core', 'class': 'list[string]'}}, output_type={'module': 'core', 'class': 'Vnic'})
 @cli_util.wrap_exceptions
-def attach_vnic(ctx, from_json, instance_id, subnet_id, nsg_ids, vnic_display_name, assign_public_ip, private_ip, skip_source_dest_check, hostname_label, nic_index, wait, freeform_tags, defined_tags):
+def attach_vnic(ctx, from_json, instance_id, subnet_id, vlan_id, nsg_ids, vnic_display_name, assign_public_ip, private_ip, skip_source_dest_check, hostname_label, nic_index, wait, freeform_tags, defined_tags):
     kwargs = {}
 
+    if subnet_id is None and vlan_id is None:
+        raise click.UsageError('At least one of the options (--subnet-id or '
+                               '--vlan-id) MUST be specified')
+
+    if subnet_id is not None and vlan_id is not None:
+        raise click.UsageError('This command accepts ONLY one option: EITHER '
+                               '--subnet-id OR --vlan-id')
+
     vnic_details = {}
-    vnic_details['subnetId'] = subnet_id
     vnic_details['displayName'] = vnic_display_name
     vnic_details['assignPublicIp'] = assign_public_ip
     vnic_details['privateIp'] = private_ip
     vnic_details['hostnameLabel'] = hostname_label
+
+    if subnet_id is not None:
+        vnic_details['subnetId'] = subnet_id
+
+    if vlan_id is not None:
+        vnic_details['vlanId'] = vlan_id
 
     if nsg_ids is not None:
         vnic_details['nsgIds'] = cli_util.parse_json_parameter("nsg_ids", nsg_ids)

@@ -3,6 +3,8 @@
 # This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 import os
+import sys
+import re
 import json
 import click
 import pytest
@@ -12,9 +14,13 @@ from tests import util
 
 CASSETTE_LIBRARY_DIR = 'services/dts/tests/cassettes'
 
-# To test on R1, set this value to R1. By default, the region is DESKTOP so make sure you have the DTS control plane
-# running locally
-REGION = "DESKTOP"
+# To test on PHX, set PHX config to DEFAULT profile, change to R1 if needed
+REGION = "DEFAULT"
+BUCKET_NAME = "dtsIntegTestBucket"
+
+# Requires following env variables to be sourced:
+# export OCI_CLI_CONFIG_FILE=<path/to/.oci/config>
+# export OCI_CLI_COMPARTMENT_ID=<ocid-of-test-tenancy>
 
 
 @pytest.fixture(autouse=True, scope='module')
@@ -24,128 +30,91 @@ def vcr_fixture(request):
 
 
 class IntegTestDTS(unittest.TestCase):
-    class TestResult():
-        Success = 1
-        Skipped = 2
-        Failed = 3
 
     def setUp(self):
-        self.command_prefix = ["dts"]
         self.config = {
             "$COMPARTMENT": os.environ["OCI_CLI_COMPARTMENT_ID"],
-            "$PROFILE": "DESKTOP",
-            "$CERT_BUNDLE_PATH": "~/.oci/combined_r1.crt",
-            "$BUCKET": "production_bucket",
             "$JOB_ID": "NOT_POPULATED",
+            "$BUCKET": BUCKET_NAME,
             "$APPLIANCE_LABEL": "NOT_POPULATED",
             "$EXPORT_JOB_ID": "NOT_POPULATED",
         }
+        if REGION == "R1":
+            self.config.update({"$CERT_BUNDLE_PATH": "~/.oci/combined_r1.crt"})
 
         self.commands = [
             {"verb": "list",
              "command_data":
-                 ["job", "list", "--compartment-id", "$COMPARTMENT"]},
+                 ["dts", "job", "list", "--compartment-id", "$COMPARTMENT"]},
             {"verb": "create",
              "command_data":
-                 ["job", "create",
+                 ["dts", "job", "create",
                   "--compartment-id", "$COMPARTMENT", "--bucket", "$BUCKET", "--display-name", "oci-cli-test-job-1",
-                  "--device-type", "APPLIANCE"], "extract_from_output": {"id": "$JOB_ID"}},
+                  "--device-type", "APPLIANCE", '--skip-upload-user-check'], "extract_from_output": {"id": "$JOB_ID"}},
             {"verb": "update",
              "command_data":
-                 ["job", "update", "--job-id", "$JOB_ID", "--display-name", "oci-cli-test-job-2"]},
-            {"verb": "create",
-             "command_data":
-                 ["appliance", "request", "--job-id", "$JOB_ID", "--addressee",
-                  "John Doe", "--care-of", "Oracle", "--address1", "4110 Network Circle", "--address2",
-                  "Floor 3", "--address3", "Section 5", "--address4", "Cubicle 1234", "--city-or-locality",
-                  "Santa Clara", "--state-province-region", "CA", "--country", "USA", "--zip-postal-code",
-                  "95054", "--phone-number", "123-456-7890", "--email", "john.doe@or.com"],
-             "extract_from_output": {"label": "$APPLIANCE_LABEL"}},
-            {"verb": "list",
-             "command_data":
-                 ["appliance", "list", "--job-id", "$JOB_ID"]},
-            {"verb": "show",
-             "command_data":
-                 ["appliance", "show", "--job-id", "$JOB_ID", "--appliance-label", "$APPLIANCE_LABEL"]},
-            {"verb": "update",
-             "command_data":
-                 ["appliance", "update-shipping-address", "--job-id", "$JOB_ID", "--appliance-label",
-                  "$APPLIANCE_LABEL", "--addressee", "John New Doe", "--care-of", "Oracle New",
-                  "--address1", "4110 Network Circle New", "--address2", "Floor 3 New", "--address3", "Section 5 New",
-                  "--address4", "Cubicle 1234 New", "--city-or-locality", "Santa Clara New",
-                  "--state-province-region", "MI", "--country", "UK", "--zip-postal-code",
-                  "95057", "--phone-number", "123-456-7999", "--email", "john.doe.new@or.com", "--force"]},
+                 ["dts", "job", "update", "--job-id", "$JOB_ID", "--display-name", "oci-cli-test-job-2"]},
             {"verb": "delete",
              "command_data":
-                 ["appliance", "delete", "--force", "--job-id", "$JOB_ID", "--appliance-label", "$APPLIANCE_LABEL"]},
-            {"verb": "delete",
+                ["dts", "job", "delete", "--force", "--job-id", "$JOB_ID"]},
+
+            {"verb": "export-job-list",
              "command_data":
-                ["job", "delete", "--force", "--job-id", "$JOB_ID"]},
+                 ["dts", "export", "list", "--compartment-id", "$COMPARTMENT"]},
             {"verb": "export-job-create",
              "command_data":
-                 ["export", "create",
+                 ["dts", "export", "create",
                   "--compartment-id", "$COMPARTMENT", "--bucket-name", "$BUCKET", "--display-name", "oci-cli-test-export-job-1",
                   "--addressee", "John New Doe", "--care-of", "Oracle New", "--address1", "4110 Network Circle New",
                   "--city-or-locality", "Santa Clara New", "--state-province-region", "CA", "--country", "US", "--zip-postal-code",
-                  "95057", "--phone-number", "123-456-7999", "--email", "john.doe.new@or.com"], "extract_from_output": {"id": "$EXPORT_JOB_ID"}},
+                  "95057", "--phone-number", "123-456-7999", "--email", "john.doe.new@or.com", "--setup-notifications", 'False'],
+                 "extract_from_output": {"id": "$EXPORT_JOB_ID"}},
+            {"verb": "export-job-update",
+             "command_data":
+                 ["dts", "export", "update", "--job-id", "$EXPORT_JOB_ID", "--phone-number", "123-456-7890", "--force"]},
             {"verb": "export-job-delete",
              "command_data":
-                ["export", "delete", "--job-id", "$EXPORT_JOB_ID", "--force"]}
+                ["dts", "export", "delete", "--job-id", "$EXPORT_JOB_ID", "--force"]},
         ]
 
     def test_dts(self):
-        success_count = 0
-        failed_count = 0
-        skipped_count = 0
         click.echo("")
         for command in self.commands:
             command_data = command["command_data"]
-            if REGION == "DESKTOP":
-                command_data.append("--endpoint")
-                command_data.append("http://localhost:19000")
-
-            command_data.append("--cert-bundle")
-            command_data.append("$CERT_BUNDLE_PATH")
-            command_data.append("--profile")
-            command_data.append("$PROFILE")
+            if REGION == "R1":
+                command_data.append("--cert-bundle")
+                command_data.append("$CERT_BUNDLE_PATH")
             for i, val in enumerate(command_data):
                 if val in self.config:
                     command_data[i] = self.config[val]
-            ret, j = self._execute(command_data)
-            if ret == 0:
-                success_count += 1
-            else:
-                failed_count += 1
-                click.echo("command=%s, Error=%d, output=%s" % (command["verb"], ret, json.dumps(j, indent=2)))
-                continue
-            click.echo("%s-output=\n%s" % (command["verb"], json.dumps(j, indent=2)))
+            cmd_output = self._execute(command_data)
+            click.echo("%s-output=\n%s" % (command["verb"], json.dumps(cmd_output, indent=2)))
             try:
-                kv = command["extract_from_output"]
-            except Exception as e:
-                kv = {}
-            for k in kv:
-                if j is not None:
-                    self.config[kv[k]] = j["data"][k]
-                    click.echo("Extracted from output:%s=%s" % (kv[k], j["data"][k]))
-
-        click.echo("Tests: success=%d, failures=%d, skipped=%d" % (success_count, failed_count, skipped_count))
+                output_var = command["extract_from_output"]
+            except Exception as extract_output_var:
+                output_var = {}
+            for extract_key in output_var:
+                if cmd_output is not None:
+                    self.config[output_var[extract_key]] = cmd_output["data"][extract_key]
+                    click.echo(
+                        "Extracted from output:%s=%s" % (output_var[extract_key], cmd_output["data"][extract_key]))
+        click.echo("All tests passed successfully")
 
     def _execute(self, command):
-        j_out = {}
-        ret = 0
-        try:
-            command = self.command_prefix + command
-            click.echo("command=%s" % command)
-            result = util.invoke_command(command)
-            s = result.output
-            print("Output=%s" % (s))
-            if len(s) > 0:
-                try:
-                    j_out = json.loads(s.split('\n\n')[0])
-                except Exception as e:
-                    j_out = None
-        except Exception as e:
-            click.echo("_execute() Exception:%s" % (repr(e)))
-            ret = -1
-        finally:
-            return ret, j_out
+        click.echo("command=%s" % command)
+        result = util.invoke_command(command)
+        output = result.output
+        print("Raw Output=%s" % (output))
+        cmd_output = {}  # when output_str is empty. Applicable ONLY for delete operations
+
+        if result.exit_code == 0:
+            try:
+                json_match = re.search(r"({[\s\S]+\n})", output)
+                if json_match:
+                    cmd_output = json_match.group(0)
+                    cmd_output = json.loads(cmd_output)
+            except Exception as JSONDecodeError:
+                return cmd_output
+            return cmd_output
+        else:
+            sys.exit("Command %s\n  Exception:%s" % (command, result.exception))

@@ -210,7 +210,7 @@ def get_passphrase_export_job_extended(ctx, **kwargs):
     }
     ctx.endpoint = None
     ctx.obj['endpoint'] = None
-    client = cli_util.build_client('appliance_export_job', ctx)
+    client = cli_util.build_client('dts', 'appliance_export_job', ctx)
     result = client.get_appliance_export_job(
         appliance_export_job_id=kwargs['job_id'],
         **kwargs_request
