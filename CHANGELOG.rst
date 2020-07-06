@@ -6,6 +6,29 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.12.2 - 2020-07-07
+-------------------
+Added
+~~~~~
+* Support for Autonomous DataWarehouse and Autonomous Transaction Processing features to allow switching from Non PE to PE (and vice versa) for existing databases as a part of the Database Service for Autonomous Databases
+
+  * ``oci db autonomous-database update --private-endpoint-label ``
+  * ``oci db autonomous-database update --subnet-id ``
+
+* Support for private endpoint (ingress) and public endpoint whitelisting in Analytics Service
+
+  * ``oci analytics analytics-instance create --network-endpoint-details``
+  * ``oci analytics analytics-instance change-network-endpoint --network-endpoint-details``
+
+* Support for re-encrypting an object in the Object Storage Service, by introducing a command line option to specify a new encryption key.
+
+  * ``oci os object reencrypt``
+
+* Support to register and deregister autonomous dedicated databases with Datasafe
+
+  * ``oci db autonomous-database data-safe register``
+  * ``oci db autonomous-database data-safe deregister``
+
 2.12.1 - 2020-06-30
 -------------------
 Added

@@ -12,6 +12,7 @@ os, object, bulk-delete
 os, object, bulk-download
 os, object, bulk-upload
 os, object, put
+os, object, reencrypt
 os, object, resume-put
 os, object, bulk-delete-versions
 resource-manager, job, create-import-tf-state-job
