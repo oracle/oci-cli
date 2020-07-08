@@ -100,6 +100,7 @@ OBJECT_PUT_DISPLAY_HEADERS = {
 
 SSE_PARAMS = ['opc_sse_customer_algorithm', 'opc_sse_customer_key', 'opc_sse_customer_key_sha256']
 SOURCE_SSE_PARAMS = [hdr.replace('opc_', 'opc_source_') for hdr in SSE_PARAMS]
+SSE_REENCRYPT_OBJECT_PARAMS = ['sse_customer_key', 'source_sse_customer_key']
 SSE_ALGORITHM = "AES256"
 
 
@@ -143,6 +144,9 @@ get_param(objectstorage_cli.copy_object, 'namespace_name').opts.extend(['--names
 get_param(objectstorage_cli.copy_object, 'bucket_name').opts.extend(['-bn'])
 get_param(objectstorage_cli.reencrypt_bucket, 'namespace_name').opts.extend(['--namespace', '-ns'])
 get_param(objectstorage_cli.reencrypt_bucket, 'bucket_name').opts.extend(['-bn'])
+get_param(objectstorage_cli.reencrypt_object, 'namespace_name').opts.extend(['--namespace', '-ns'])
+get_param(objectstorage_cli.reencrypt_object, 'bucket_name').opts.extend(['-bn'])
+get_param(objectstorage_cli.reencrypt_object, 'object_name').opts.extend(['-on', '--name'])
 
 objectstorage_cli.object_group.commands.pop(objectstorage_cli.copy_object.name)
 objectstorage_cli.object_group.commands.pop(objectstorage_cli.get_object.name)
@@ -2114,6 +2118,30 @@ def create_replication_policy(ctx, **kwargs):
     ctx.invoke(objectstorage_cli.create_replication_policy, **kwargs)
 
 
+@cli_util.copy_params_from_generated_command(objectstorage_cli.reencrypt_object,
+                                             params_to_exclude=SSE_REENCRYPT_OBJECT_PARAMS)
+@objectstorage_cli.object_group.command(name='reencrypt', help=objectstorage_cli.reencrypt_object.help)
+@cli_util.option('--encryption-key-file', type=click.File(mode='r'),
+                 help="""A file containing the base64-encoded string of the AES-256 encryption key associated with the object.""")
+@cli_util.option('--source-encryption-key-file', type=click.File(mode='r'),
+                 help="""A file containing the base64-encoded string of the AES-256 encryption key associated with the source object.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def reencrypt_object(ctx, **kwargs):
+    if 'encryption_key_file' in kwargs:
+        sse_json = _get_sse_customer_key_details(kwargs['encryption_key_file'])
+        if sse_json:
+            kwargs.update({'sse_customer_key': sse_json})
+        del kwargs['encryption_key_file']
+    if 'source_encryption_key_file' in kwargs:
+        sse_json = _get_sse_customer_key_details(kwargs['source_encryption_key_file'])
+        if sse_json:
+            kwargs.update({'source_sse_customer_key': sse_json})
+        del kwargs['source_encryption_key_file']
+    ctx.invoke(objectstorage_cli.reencrypt_object, **kwargs)
+
+
 objectstorage_cli.make_bucket_writable.help += " If you are replicating to a destination bucket in a different region, you must specify the --region parameter."
 objectstorage_cli.list_replication_sources.help += " If you are replicating to a destination bucket in a different region, you must specify the --region parameter."
 
@@ -2483,6 +2511,21 @@ def _get_sse_params(data_file, param_names):
             param_names[0]: SSE_ALGORITHM,
             param_names[1]: key_data_base64_str,
             param_names[2]: key_sha256_base64_str
+        }
+    return None
+
+
+# Reads the base64-encoded AES key data from the specified file and computes its SHA256 checksum
+# and returns a json representing the SSECustomerKeyDetails of the ReencryptObject API payload
+def _get_sse_customer_key_details(data_file):
+    if data_file:
+        key_data_base64_str = data_file.read()
+        key_sha256 = hashlib.sha256(base64.b64decode(key_data_base64_str)).digest()
+        key_sha256_base64_str = base64.b64encode(key_sha256).decode('utf-8')
+        return {
+            'algorithm': SSE_ALGORITHM,
+            'key': key_data_base64_str,
+            'keySha256': key_sha256_base64_str
         }
     return None
 

@@ -2060,6 +2060,63 @@ def reencrypt_bucket(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
     cli_util.render_response(result, ctx)
 
 
+@object_group.command(name=cli_util.override('os.reencrypt_object.command_name', 'reencrypt'), help=u"""Re-encrypts the data encryption keys that encrypt the object and its chunks. By default, when you create a bucket, the Object Storage service manages the master encryption key used to encrypt each object's data encryption keys. The encryption mechanism that you specify for the bucket applies to the objects it contains.
+
+You can alternatively employ one of these encryption strategies for an object:
+
+- You can assign a key that you created and control through the Oracle Cloud Infrastructure Vault service.
+
+- You can encrypt an object using your own encryption key. The key you supply is known as a customer-provided encryption key (SSE-C).""")
+@cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
+@cli_util.option('--bucket-name', required=True, help=u"""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")
+@cli_util.option('--object-name', required=True, help=u"""The name of the object. Avoid entering confidential information. Example: `test/object1.log`""")
+@cli_util.option('--kms-key-id', help=u"""The [OCID] of the master encryption key used to call the Vault service to re-encrypt the data encryption keys associated with the object and its chunks. If the kmsKeyId value is empty, whether null or an empty string, the API will perform re-encryption by using the kmsKeyId associated with the bucket or the master encryption key managed by Oracle, depending on the bucket encryption mechanism.""")
+@cli_util.option('--sse-customer-key', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--source-sse-customer-key', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--version-id', help=u"""VersionId used to identify a particular version of the object""")
+@json_skeleton_utils.get_cli_json_input_option({'sse-customer-key': {'module': 'object_storage', 'class': 'SSECustomerKeyDetails'}, 'source-sse-customer-key': {'module': 'object_storage', 'class': 'SSECustomerKeyDetails'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'sse-customer-key': {'module': 'object_storage', 'class': 'SSECustomerKeyDetails'}, 'source-sse-customer-key': {'module': 'object_storage', 'class': 'SSECustomerKeyDetails'}})
+@cli_util.wrap_exceptions
+def reencrypt_object(ctx, from_json, namespace_name, bucket_name, object_name, kms_key_id, sse_customer_key, source_sse_customer_key, version_id):
+
+    if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
+        raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
+
+    if isinstance(bucket_name, six.string_types) and len(bucket_name.strip()) == 0:
+        raise click.UsageError('Parameter --bucket-name cannot be whitespace or empty string')
+
+    if isinstance(object_name, six.string_types) and len(object_name.strip()) == 0:
+        raise click.UsageError('Parameter --object-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    if version_id is not None:
+        kwargs['version_id'] = version_id
+    kwargs['opc_client_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if kms_key_id is not None:
+        _details['kmsKeyId'] = kms_key_id
+
+    if sse_customer_key is not None:
+        _details['sseCustomerKey'] = cli_util.parse_json_parameter("sse_customer_key", sse_customer_key)
+
+    if source_sse_customer_key is not None:
+        _details['sourceSseCustomerKey'] = cli_util.parse_json_parameter("source_sse_customer_key", source_sse_customer_key)
+
+    client = cli_util.build_client('object_storage', 'object_storage', ctx)
+    result = client.reencrypt_object(
+        namespace_name=namespace_name,
+        bucket_name=bucket_name,
+        object_name=object_name,
+        reencrypt_object_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @object_group.command(name=cli_util.override('os.rename_object.command_name', 'rename'), help=u"""Rename an object in the given Object Storage namespace.""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
 @cli_util.option('--bucket-name', required=True, help=u"""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")

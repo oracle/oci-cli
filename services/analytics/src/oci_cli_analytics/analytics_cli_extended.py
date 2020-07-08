@@ -24,7 +24,7 @@ from services.analytics.src.oci_cli_analytics.generated import analytics_cli
 @cli_util.option('--capacity-type', required=True, help=u"""The capacity model to use.""")
 @cli_util.option('--capacity-value', type=click.INT, required=True, help=u"""The capacity value selected (OLPU count, number of users, ...etc...). This parameter affects the number of CPUs, amount of memory or other resources allocated to the instance.""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'analytics', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'analytics', 'class': 'dict(str, string)'}}, output_type={'module': 'analytics', 'class': 'AnalyticsInstance'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'network-endpoint-details': {'module': 'analytics', 'class': 'NetworkEndpointDetails'}, 'defined-tags': {'module': 'analytics', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'analytics', 'class': 'dict(str, string)'}}, output_type={'module': 'analytics', 'class': 'AnalyticsInstance'})
 @cli_util.wrap_exceptions
 def create_analytics_instance_extended(ctx, **kwargs):
 
@@ -54,3 +54,17 @@ def create_analytics_instance_extended(ctx, **kwargs):
 
     # Invoke base method "create_analytics_instance"
     ctx.invoke(analytics_cli.create_analytics_instance, **kwargs)
+
+
+# Remove commands:
+#   change-analytics-instance-network-endpoint-private-endpoint-details
+#   change-analytics-instance-network-endpoint-public-endpoint-details
+#   create-analytics-instance-private-endpoint-details
+#   create-analytics-instance-public-endpoint-details
+analytics_cli.analytics_instance_group.commands.pop(analytics_cli.change_analytics_instance_network_endpoint_private_endpoint_details.name)
+analytics_cli.analytics_instance_group.commands.pop(analytics_cli.change_analytics_instance_network_endpoint_public_endpoint_details.name)
+analytics_cli.analytics_instance_group.commands.pop(analytics_cli.create_analytics_instance_private_endpoint_details.name)
+analytics_cli.analytics_instance_group.commands.pop(analytics_cli.create_analytics_instance_public_endpoint_details.name)
+
+# Rename command "change-analytics-instance-network-endpoint" to "change-network-endpoint"
+cli_util.rename_command(analytics_cli, analytics_cli.analytics_instance_group, analytics_cli.change_analytics_instance_network_endpoint, "change-network-endpoint")

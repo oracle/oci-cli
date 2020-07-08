@@ -10,6 +10,7 @@ from services.object_storage.src.oci_cli_object_storage.objectstorage_cli_extend
 from services.object_storage.src.oci_cli_object_storage.objectstorage_cli_extended import _get_progress_bar_label
 from services.object_storage.src.oci_cli_object_storage.objectstorage_cli_extended import _get_encryption_key_params
 from services.object_storage.src.oci_cli_object_storage.objectstorage_cli_extended import _get_source_encryption_key_params
+from services.object_storage.src.oci_cli_object_storage.objectstorage_cli_extended import _get_sse_customer_key_details
 import oci_cli
 from tests import util
 import tempfile
@@ -72,7 +73,8 @@ class TestObjectStorage(unittest.TestCase):
         """ Checks whether the auto generated sse encryption key params are masked out """
         sse_param_suffixes = ['sse-customer-algorithm', 'sse-customer-key', 'sse-customer-key-sha256']
         encryption_key_params = ['opc-' + p for p in sse_param_suffixes] + \
-                                ['opc-source-' + p for p in sse_param_suffixes]
+                                ['opc-source-' + p for p in sse_param_suffixes] + \
+                                ['sse-customer-key', 'source-sse-customer-key']
         results = {}
         commands = oci_cli.cli_util.collect_commands(oci_cli.cli_root.cli.commands.get('os'))
         for command in commands:
@@ -86,9 +88,10 @@ class TestObjectStorage(unittest.TestCase):
         """ Checks whether the encryption-key-file params are present for the relevant object commands """
         # Sorted lists of commands that should support --encryption-key-file and --source-encryption-file respectively
         encryption_key_file_cmd_list = sorted([
-            'object put', 'object bulk-upload', 'object get', 'object bulk-download', 'object head', 'object copy'
+            'object put', 'object bulk-upload', 'object get', 'object bulk-download', 'object head',
+            'object copy', 'object reencrypt'
         ])
-        source_encryption_key_file_cmd_list = sorted(['object copy'])
+        source_encryption_key_file_cmd_list = sorted(['object copy', 'object reencrypt'])
 
         # dictionary that holds the result of parsing the various commands looking for --encryption-key-file
         encryption_key_file_results = {}
@@ -142,6 +145,14 @@ class TestObjectStorage(unittest.TestCase):
         assert params['opc_sse_customer_algorithm'] == 'AES256'
         assert params['opc_sse_customer_key'] == test_key_b64_str
         assert params['opc_sse_customer_key_sha256'] == test_key_sha256
+
+        # Verify the JSON payload needed for 'object reencrypt'
+        sse_customer_key_details = _get_sse_customer_key_details(tf)
+        assert len(sse_customer_key_details) == 3
+        assert 'algorithm' in sse_customer_key_details
+        assert 'key' in sse_customer_key_details
+        assert 'keySha256' in sse_customer_key_details
+
         tf.close()
         os.unlink(tmp_file_name)
         shutil.rmtree(td)

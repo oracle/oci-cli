@@ -127,7 +127,7 @@ def availability_domain_group():
     pass
 
 
-@click.command(cli_util.override('iam.bulk_action_resource_type_collection_group.command_name', 'bulk-action-resource-type-collection'), cls=CommandGroupWithAlias, help="""Collection of resource types supported by bulk action.""")
+@click.command(cli_util.override('iam.bulk_action_resource_type_collection_group.command_name', 'bulk-action-resource-type-collection'), cls=CommandGroupWithAlias, help="""Collection of resource-types supported by a compartment bulk action.""")
 @cli_util.help_option_group
 def bulk_action_resource_type_collection_group():
     pass
@@ -446,7 +446,7 @@ def assemble_effective_tag_set(ctx, from_json, compartment_id, lifecycle_state):
     cli_util.render_response(result, ctx)
 
 
-@compartment_group.command(name=cli_util.override('iam.bulk_delete_resources.command_name', 'bulk-delete-resources'), help=u"""Bulk delete resources in the compartment. All resources must be in the same compartment. This API can only be invoked from tenancy's home region.""")
+@compartment_group.command(name=cli_util.override('iam.bulk_delete_resources.command_name', 'bulk-delete-resources'), help=u"""Deletes multiple resources in the compartment. All resources must be in the same compartment. You must have the appropriate permissions to delete the resources in the request. This API can only be invoked from the tenancy's [home region]. This operation creates a [WorkRequest]. Use the [GetWorkRequest] API to monitor the status of the bulk action.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
 @cli_util.option('--resources', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The resources to be deleted.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -559,7 +559,7 @@ def bulk_delete_tags(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
     cli_util.render_response(result, ctx)
 
 
-@compartment_group.command(name=cli_util.override('iam.bulk_move_resources.command_name', 'bulk-move-resources'), help=u"""Bulk move resources in the compartment. All resources must be in the same compartment. This API can only be invoked from tenancy's home region.""")
+@compartment_group.command(name=cli_util.override('iam.bulk_move_resources.command_name', 'bulk-move-resources'), help=u"""Moves multiple resources from one compartment to another. All resources must be in the same compartment. This API can only be invoked from the tenancy's [home region]. To move resources, you must have the appropriate permissions to move the resource in both the source and target compartments. This operation creates a [WorkRequest]. Use the [GetWorkRequest] API to monitor the status of the bulk action.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
 @cli_util.option('--resources', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The resources to be moved.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--target-compartment-id', required=True, help=u"""The [OCID] of the destination compartment into which to move the resources.""")
@@ -3342,8 +3342,8 @@ def list_availability_domains(ctx, from_json, all_pages, compartment_id):
     cli_util.render_response(result, ctx)
 
 
-@bulk_action_resource_type_collection_group.command(name=cli_util.override('iam.list_bulk_action_resource_types.command_name', 'list-bulk-action-resource-types'), help=u"""Lists the resource types supported by compartment bulk actions.""")
-@cli_util.option('--bulk-action-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["BULK_MOVE_RESOURCES", "BULK_DELETE_RESOURCES"]), help=u"""The type of the bulk action.""")
+@bulk_action_resource_type_collection_group.command(name=cli_util.override('iam.list_bulk_action_resource_types.command_name', 'list-bulk-action-resource-types'), help=u"""Lists the resource-types supported by compartment bulk actions. Use this API to help you provide the correct resource-type information to the [BulkDeleteResources] and [BulkMoveResources] operations. The returned list of resource-types provides the appropriate resource-type names to use with the bulk action operations along with the type of identifying information you'll need to provide for each resource-type. Most resource-types just require an [OCID] to identify a specific resource, but some resource-types, such as buckets, require you to provide other identifying information.""")
+@cli_util.option('--bulk-action-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["BULK_MOVE_RESOURCES", "BULK_DELETE_RESOURCES"]), help=u"""The type of bulk action.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")

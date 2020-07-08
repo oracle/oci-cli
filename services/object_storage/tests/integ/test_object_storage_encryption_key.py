@@ -146,6 +146,73 @@ def test_run_all_operations(runner, config_file, config_profile, debug):
                      '--encryption-key-file', GENERATED_ENC_KEY1_FILE], debug=debug)
     validate_response(result, includes_debug_data=debug)
 
+    # object reencrypt using the default/Oracle-managed key
+    result = invoke(runner, config_file, config_profile,
+                    ['object', 'reencrypt', '-ns', util.NAMESPACE, '-bn', bucket_name, '--name', object_name,
+                     '--source-encryption-key-file', GENERATED_ENC_KEY1_FILE], debug=debug)
+    validate_response(result, includes_debug_data=debug)
+
+    # reencrypting the object again using the default/Oracle-managed key should not fail (no-op)
+    result = invoke(runner, config_file, config_profile,
+                    ['object', 'reencrypt', '-ns', util.NAMESPACE, '-bn', bucket_name, '--name', object_name],
+                    debug=debug)
+    validate_response(result, includes_debug_data=debug)
+
+    # object head without any SSE-C data should succeed
+    result = invoke(runner, config_file, config_profile,
+                    ['object', 'head', '-ns', util.NAMESPACE, '-bn', bucket_name, '--name', object_name], debug=debug)
+    validate_response(result, includes_debug_data=debug)
+
+    # reencrypt the object using an SSE-C key
+    result = invoke(runner, config_file, config_profile,
+                    ['object', 'reencrypt', '-ns', util.NAMESPACE, '-bn', bucket_name, '--name', object_name,
+                     '--encryption-key-file', GENERATED_ENC_KEY1_FILE], debug=debug)
+    validate_response(result, includes_debug_data=debug)
+
+    # object head without any SSE-C data should fail
+    result = invoke(runner, config_file, config_profile,
+                    ['object', 'head', '-ns', util.NAMESPACE, '-bn', bucket_name, '--name', object_name], debug=debug)
+    util.validate_service_error(result, 'The service returned error code 400', debug)
+
+    # object head with the right SSE-C key should succeed
+    result = invoke(runner, config_file, config_profile,
+                    ['object', 'head', '-ns', util.NAMESPACE, '-bn', bucket_name, '--name', object_name,
+                     '--encryption-key-file', GENERATED_ENC_KEY1_FILE], debug=debug)
+    validate_response(result, includes_debug_data=debug)
+
+    # reencrypt the object using yet another SSE-C key
+    result = invoke(runner, config_file, config_profile,
+                    ['object', 'reencrypt', '-ns', util.NAMESPACE, '-bn', bucket_name, '--name', object_name,
+                     '--source-encryption-key-file', GENERATED_ENC_KEY1_FILE,
+                     '--encryption-key-file', GENERATED_ENC_KEY2_FILE],
+                    debug=debug)
+    validate_response(result, includes_debug_data=debug)
+
+    # object head without any SSE-C data should fail
+    result = invoke(runner, config_file, config_profile,
+                    ['object', 'head', '-ns', util.NAMESPACE, '-bn', bucket_name, '--name', object_name], debug=debug)
+    util.validate_service_error(result, 'The service returned error code 400', debug)
+
+    # object head with an incorrect SSE-C key should fail with 403
+    result = invoke(runner, config_file, config_profile,
+                    ['object', 'head', '-ns', util.NAMESPACE, '-bn', bucket_name, '--name', object_name,
+                     '--encryption-key-file', GENERATED_ENC_KEY1_FILE], debug=debug)
+    util.validate_service_error(result, 'The service returned error code 403', debug)
+
+    # object head with the right SSE-C key should succeed
+    result = invoke(runner, config_file, config_profile,
+                    ['object', 'head', '-ns', util.NAMESPACE, '-bn', bucket_name, '--name', object_name,
+                     '--encryption-key-file', GENERATED_ENC_KEY2_FILE], debug=debug)
+    validate_response(result, includes_debug_data=debug)
+
+    # specifying both KMS and SSE-C encryption keys to reencrypt the object should result in a 400 error
+    result = invoke(runner, config_file, config_profile,
+                    ['object', 'reencrypt', '-ns', util.NAMESPACE, '-bn', bucket_name, '--name', object_name,
+                     '--kms-key-id', 'kms123456',
+                     '--encryption-key-file', GENERATED_ENC_KEY1_FILE],
+                    debug=debug)
+    util.validate_service_error(result, 'The object re-encryption key must be specified either in the kmsKeyId field or in the sseCustomerKey field, but not in both', debug)
+
     # object list (doesn't require SSE-C information)
     result = invoke(runner, config_file, config_profile, ['object', 'list', '-ns', util.NAMESPACE, '-bn', bucket_name],
                     debug=debug)
