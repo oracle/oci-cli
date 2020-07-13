@@ -996,6 +996,7 @@ def test_bulk_delete_versions_when_no_objects_in_bucket(vcr_fixture, object_stor
 
 @util.skip_while_rerecording
 def test_bulk_delete_versions_dry_run(vcr_fixture, object_storage_client, debug, test_id):
+    pytest.skip('To allow Object Storage job')
     bucket_name = 'ObjectStorageBulkDeleteVersions_{}'.format(test_id)
     util.clear_test_data(object_storage_client, util.NAMESPACE, util.COMPARTMENT_ID, bucket_name)
 

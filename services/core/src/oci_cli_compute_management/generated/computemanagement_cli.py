@@ -1338,7 +1338,11 @@ def terminate_cluster_network(ctx, from_json, wait_for_state, max_wait_seconds, 
     cli_util.render_response(result, ctx)
 
 
-@instance_pool_group.command(name=cli_util.override('compute_management.terminate_instance_pool.command_name', 'terminate'), help=u"""Terminate the specified instance pool.""")
+@instance_pool_group.command(name=cli_util.override('compute_management.terminate_instance_pool.command_name', 'terminate'), help=u"""Terminate the specified instance pool.
+
+**Warning:** When you delete an instance pool, the resources that were created by the pool are permanently deleted, including associated instances, attached boot volumes, and block volumes.
+
+If an autoscaling configuration applies to the instance pool, the autoscaling configuration will be deleted asynchronously after the pool is deleted. You can also manually delete the autoscaling configuration using the `DeleteAutoScalingConfiguration` operation in the Autoscaling API.""")
 @cli_util.option('--instance-pool-id', required=True, help=u"""The [OCID] of the instance pool.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option

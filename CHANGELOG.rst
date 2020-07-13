@@ -6,6 +6,45 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.12.3 - 2020-07-14
+-------------------
+Added
+~~~~~
+* Support for Oracle Blockchain Platform, a comprehensive distributed ledger cloud platform
+
+  * ``oci blockchain``
+
+* Support for Gitlab configuration source provider as part of the Resource Manager service
+
+  * ``oci resource-manager configuration-source-provider``
+  * ``oci resource-manager stack create-from-git-provider``
+  * ``oci resource-manager stack update-from-git-provider``
+
+* Support for switching over an Autonomous Database that has Data Guard enabled
+
+  * ``oci db autonomous-database switchover --autonomous-database-id``
+
+* Support for specifying that an autonomous database should have Data Guard enabled
+
+  * ``oci db autonomous-database create --is-data-guard-enabled``
+  * ``oci db autonomous-database create-refreshable-clone --is-data-guard-enabled``
+  * ``oci db autonomous-database create-from-backup-id --is-data-guard-enabled``
+  * ``oci db autonomous-database create-from-backup-timestamp --is-data-guard-enabled``
+  * ``oci db autonomous-database create-from-clone --is-data-guard-enabled``
+  * ``oci db autonomous-database list --is-data-guard-enabled``
+  * ``oci db autonomous-database update --is-data-guard-enabled``
+
+Changed
+~~~~~~~
+* Virtual Cloud Network List Endpoints Required param --vcn-id has been made optional
+
+  * ``oci network dhcp-options list --vcn-id``
+  * ``oci network internet-gateway list --vcn-id``
+  * ``oci network local-peering-gateway list --vcn-id``
+  * ``oci network route-table list --vcn-id``
+  * ``oci network security-list list --vcn-id``
+  * ``oci network subnet list --vcn-id``
+
 2.12.2 - 2020-07-07
 -------------------
 Added

@@ -2581,7 +2581,9 @@ You may optionally associate a set of DHCP options with the subnet. If you don't
 You may optionally specify a *display name* for the subnet, otherwise a default is provided. It does not have to be unique, and you can change it. Avoid entering confidential information.
 
 You can also add a DNS label for the subnet, which is required if you want the Internet and VCN Resolver to resolve hostnames for instances in the subnet. For more information, see [DNS in Your Virtual Cloud Network].""")
-@cli_util.option('--cidr-block', required=True, help=u"""The CIDR IP address range of the subnet.
+@cli_util.option('--cidr-block', required=True, help=u"""The CIDR IP address range of the subnet. The CIDR must maintain the following rules -
+
+a. The CIDR block is valid and correctly formatted. b. The new range is within one of the parent VCN ranges.
 
 Example: `10.0.1.0/24`""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to contain the subnet.""")
@@ -2711,9 +2713,7 @@ You can also add a DNS label for the VCN, which is required if you want the inst
 The VCN automatically comes with a default route table, default security list, and default set of DHCP options. The OCID for each is returned in the response. You can't delete these default objects, but you can change their contents (that is, change the route rules, security list rules, and so on).
 
 The VCN and subnets you create are not accessible until you attach an internet gateway or set up an IPSec VPN or FastConnect. For more information, see [Overview of the Networking Service].""")
-@cli_util.option('--cidr-block', required=True, help=u"""The CIDR IP address block of the VCN.
-
-Example: `10.0.0.0/16`""")
+@cli_util.option('--cidr-block', required=True, help=u"""The CIDR IP address block of the VCN. Example: `10.0.0.0/16`""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to contain the VCN.""")
 @cli_util.option('--ipv6-cidr-block', help=u"""If you enable IPv6 for the VCN (see `isIpv6Enabled`), you may optionally provide an IPv6 /48 CIDR block from the supported ranges (see [IPv6 Addresses]. The addresses in this block will be considered private and cannot be accessed from the internet. The documentation refers to this as a *custom CIDR* for the VCN.
 
@@ -2934,7 +2934,9 @@ def create_virtual_circuit(ctx, from_json, wait_for_state, max_wait_seconds, wai
 @cli_util.option('--availability-domain', required=True, help=u"""The availability domain of the VLAN.
 
 Example: `Uocm:PHX-AD-1`""")
-@cli_util.option('--cidr-block', required=True, help=u"""The range of IPv4 addresses that will be used for layer 3 communication with hosts outside the VLAN.
+@cli_util.option('--cidr-block', required=True, help=u"""The range of IPv4 addresses that will be used for layer 3 communication with hosts outside the VLAN. The CIDR must maintain the following rules -
+
+a. The CIDR block is valid and correctly formatted.
 
 Example: `192.0.2.0/24`""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to contain the VLAN.""")
@@ -5742,9 +5744,9 @@ def list_crossconnect_port_speed_shapes(ctx, from_json, all_pages, page_size, co
     cli_util.render_response(result, ctx)
 
 
-@dhcp_options_group.command(name=cli_util.override('virtual_network.list_dhcp_options.command_name', 'list'), help=u"""Lists the sets of DHCP options in the specified VCN and specified compartment. The response includes the default set of options that automatically comes with each VCN, plus any other sets you've created.""")
+@dhcp_options_group.command(name=cli_util.override('virtual_network.list_dhcp_options.command_name', 'list'), help=u"""Lists the sets of DHCP options in the specified VCN and specified compartment. If the VCN ID is not provided, then the list includes the sets of DHCP options from all VCNs in the specified compartment. The response includes the default set of options that automatically comes with each VCN, plus any other sets you've created.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
-@cli_util.option('--vcn-id', required=True, help=u"""The [OCID] of the VCN.""")
+@cli_util.option('--vcn-id', help=u"""The [OCID] of the VCN.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
@@ -5768,6 +5770,8 @@ def list_dhcp_options(ctx, from_json, all_pages, page_size, compartment_id, vcn_
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
     kwargs = {}
+    if vcn_id is not None:
+        kwargs['vcn_id'] = vcn_id
     if limit is not None:
         kwargs['limit'] = limit
     if page is not None:
@@ -5788,7 +5792,6 @@ def list_dhcp_options(ctx, from_json, all_pages, page_size, compartment_id, vcn_
         result = cli_util.list_call_get_all_results(
             client.list_dhcp_options,
             compartment_id=compartment_id,
-            vcn_id=vcn_id,
             **kwargs
         )
     elif limit is not None:
@@ -5797,13 +5800,11 @@ def list_dhcp_options(ctx, from_json, all_pages, page_size, compartment_id, vcn_
             limit,
             page_size,
             compartment_id=compartment_id,
-            vcn_id=vcn_id,
             **kwargs
         )
     else:
         result = client.list_dhcp_options(
             compartment_id=compartment_id,
-            vcn_id=vcn_id,
             **kwargs
         )
     cli_util.render_response(result, ctx)
@@ -6020,9 +6021,9 @@ def list_fast_connect_provider_virtual_circuit_bandwidth_shapes(ctx, from_json, 
     cli_util.render_response(result, ctx)
 
 
-@internet_gateway_group.command(name=cli_util.override('virtual_network.list_internet_gateways.command_name', 'list'), help=u"""Lists the internet gateways in the specified VCN and the specified compartment.""")
+@internet_gateway_group.command(name=cli_util.override('virtual_network.list_internet_gateways.command_name', 'list'), help=u"""Lists the internet gateways in the specified VCN and the specified compartment. If the VCN ID is not provided, then the list includes the internet gateways from all VCNs in the specified compartment.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
-@cli_util.option('--vcn-id', required=True, help=u"""The [OCID] of the VCN.""")
+@cli_util.option('--vcn-id', help=u"""The [OCID] of the VCN.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
@@ -6046,6 +6047,8 @@ def list_internet_gateways(ctx, from_json, all_pages, page_size, compartment_id,
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
     kwargs = {}
+    if vcn_id is not None:
+        kwargs['vcn_id'] = vcn_id
     if limit is not None:
         kwargs['limit'] = limit
     if page is not None:
@@ -6066,7 +6069,6 @@ def list_internet_gateways(ctx, from_json, all_pages, page_size, compartment_id,
         result = cli_util.list_call_get_all_results(
             client.list_internet_gateways,
             compartment_id=compartment_id,
-            vcn_id=vcn_id,
             **kwargs
         )
     elif limit is not None:
@@ -6075,13 +6077,11 @@ def list_internet_gateways(ctx, from_json, all_pages, page_size, compartment_id,
             limit,
             page_size,
             compartment_id=compartment_id,
-            vcn_id=vcn_id,
             **kwargs
         )
     else:
         result = client.list_internet_gateways(
             compartment_id=compartment_id,
-            vcn_id=vcn_id,
             **kwargs
         )
     cli_util.render_response(result, ctx)
@@ -6251,13 +6251,13 @@ def list_ipv6s(ctx, from_json, all_pages, page_size, limit, page, ip_address, su
     cli_util.render_response(result, ctx)
 
 
-@local_peering_gateway_group.command(name=cli_util.override('virtual_network.list_local_peering_gateways.command_name', 'list'), help=u"""Lists the local peering gateways (LPGs) for the specified VCN and compartment (the LPG's compartment).""")
+@local_peering_gateway_group.command(name=cli_util.override('virtual_network.list_local_peering_gateways.command_name', 'list'), help=u"""Lists the local peering gateways (LPGs) for the specified VCN and specified compartment. If the VCN ID is not provided, then the list includes the LPGs from all VCNs in the specified compartment.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
-@cli_util.option('--vcn-id', required=True, help=u"""The [OCID] of the VCN.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--vcn-id', help=u"""The [OCID] of the VCN.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -6265,7 +6265,7 @@ Example: `50`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[LocalPeeringGateway]'})
 @cli_util.wrap_exceptions
-def list_local_peering_gateways(ctx, from_json, all_pages, page_size, compartment_id, vcn_id, limit, page):
+def list_local_peering_gateways(ctx, from_json, all_pages, page_size, compartment_id, limit, page, vcn_id):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -6275,6 +6275,8 @@ def list_local_peering_gateways(ctx, from_json, all_pages, page_size, compartmen
         kwargs['limit'] = limit
     if page is not None:
         kwargs['page'] = page
+    if vcn_id is not None:
+        kwargs['vcn_id'] = vcn_id
     client = cli_util.build_client('core', 'virtual_network', ctx)
     if all_pages:
         if page_size:
@@ -6283,7 +6285,6 @@ def list_local_peering_gateways(ctx, from_json, all_pages, page_size, compartmen
         result = cli_util.list_call_get_all_results(
             client.list_local_peering_gateways,
             compartment_id=compartment_id,
-            vcn_id=vcn_id,
             **kwargs
         )
     elif limit is not None:
@@ -6292,13 +6293,11 @@ def list_local_peering_gateways(ctx, from_json, all_pages, page_size, compartmen
             limit,
             page_size,
             compartment_id=compartment_id,
-            vcn_id=vcn_id,
             **kwargs
         )
     else:
         result = client.list_local_peering_gateways(
             compartment_id=compartment_id,
-            vcn_id=vcn_id,
             **kwargs
         )
     cli_util.render_response(result, ctx)
@@ -6743,13 +6742,13 @@ def list_remote_peering_connections(ctx, from_json, all_pages, page_size, compar
     cli_util.render_response(result, ctx)
 
 
-@route_table_group.command(name=cli_util.override('virtual_network.list_route_tables.command_name', 'list'), help=u"""Lists the route tables in the specified VCN and specified compartment. The response includes the default route table that automatically comes with each VCN, plus any route tables you've created.""")
+@route_table_group.command(name=cli_util.override('virtual_network.list_route_tables.command_name', 'list'), help=u"""Lists the route tables in the specified VCN and specified compartment. If the VCN ID is not provided, then the list includes the route tables from all VCNs in the specified compartment. The response includes the default route table that automatically comes with each VCN in the specified compartment, plus any route tables you've created.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
-@cli_util.option('--vcn-id', required=True, help=u"""The [OCID] of the VCN.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--vcn-id', help=u"""The [OCID] of the VCN.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.
 
@@ -6763,7 +6762,7 @@ Example: `50`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[RouteTable]'})
 @cli_util.wrap_exceptions
-def list_route_tables(ctx, from_json, all_pages, page_size, compartment_id, vcn_id, limit, page, display_name, sort_by, sort_order, lifecycle_state):
+def list_route_tables(ctx, from_json, all_pages, page_size, compartment_id, limit, page, vcn_id, display_name, sort_by, sort_order, lifecycle_state):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -6773,6 +6772,8 @@ def list_route_tables(ctx, from_json, all_pages, page_size, compartment_id, vcn_
         kwargs['limit'] = limit
     if page is not None:
         kwargs['page'] = page
+    if vcn_id is not None:
+        kwargs['vcn_id'] = vcn_id
     if display_name is not None:
         kwargs['display_name'] = display_name
     if sort_by is not None:
@@ -6789,7 +6790,6 @@ def list_route_tables(ctx, from_json, all_pages, page_size, compartment_id, vcn_
         result = cli_util.list_call_get_all_results(
             client.list_route_tables,
             compartment_id=compartment_id,
-            vcn_id=vcn_id,
             **kwargs
         )
     elif limit is not None:
@@ -6798,25 +6798,23 @@ def list_route_tables(ctx, from_json, all_pages, page_size, compartment_id, vcn_
             limit,
             page_size,
             compartment_id=compartment_id,
-            vcn_id=vcn_id,
             **kwargs
         )
     else:
         result = client.list_route_tables(
             compartment_id=compartment_id,
-            vcn_id=vcn_id,
             **kwargs
         )
     cli_util.render_response(result, ctx)
 
 
-@security_list_group.command(name=cli_util.override('virtual_network.list_security_lists.command_name', 'list'), help=u"""Lists the security lists in the specified VCN and compartment.""")
+@security_list_group.command(name=cli_util.override('virtual_network.list_security_lists.command_name', 'list'), help=u"""Lists the security lists in the specified VCN and compartment. If the VCN ID is not provided, then the list includes the security lists from all VCNs in the specified compartment.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
-@cli_util.option('--vcn-id', required=True, help=u"""The [OCID] of the VCN.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--vcn-id', help=u"""The [OCID] of the VCN.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.
 
@@ -6830,7 +6828,7 @@ Example: `50`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[SecurityList]'})
 @cli_util.wrap_exceptions
-def list_security_lists(ctx, from_json, all_pages, page_size, compartment_id, vcn_id, limit, page, display_name, sort_by, sort_order, lifecycle_state):
+def list_security_lists(ctx, from_json, all_pages, page_size, compartment_id, limit, page, vcn_id, display_name, sort_by, sort_order, lifecycle_state):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -6840,6 +6838,8 @@ def list_security_lists(ctx, from_json, all_pages, page_size, compartment_id, vc
         kwargs['limit'] = limit
     if page is not None:
         kwargs['page'] = page
+    if vcn_id is not None:
+        kwargs['vcn_id'] = vcn_id
     if display_name is not None:
         kwargs['display_name'] = display_name
     if sort_by is not None:
@@ -6856,7 +6856,6 @@ def list_security_lists(ctx, from_json, all_pages, page_size, compartment_id, vc
         result = cli_util.list_call_get_all_results(
             client.list_security_lists,
             compartment_id=compartment_id,
-            vcn_id=vcn_id,
             **kwargs
         )
     elif limit is not None:
@@ -6865,13 +6864,11 @@ def list_security_lists(ctx, from_json, all_pages, page_size, compartment_id, vc
             limit,
             page_size,
             compartment_id=compartment_id,
-            vcn_id=vcn_id,
             **kwargs
         )
     else:
         result = client.list_security_lists(
             compartment_id=compartment_id,
-            vcn_id=vcn_id,
             **kwargs
         )
     cli_util.render_response(result, ctx)
@@ -6985,13 +6982,13 @@ def list_services(ctx, from_json, all_pages, page_size, limit, page):
     cli_util.render_response(result, ctx)
 
 
-@subnet_group.command(name=cli_util.override('virtual_network.list_subnets.command_name', 'list'), help=u"""Lists the subnets in the specified VCN and the specified compartment.""")
+@subnet_group.command(name=cli_util.override('virtual_network.list_subnets.command_name', 'list'), help=u"""Lists the subnets in the specified VCN and the specified compartment. If the VCN ID is not provided, then the list includes the subnets from all VCNs in the specified compartment.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
-@cli_util.option('--vcn-id', required=True, help=u"""The [OCID] of the VCN.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--vcn-id', help=u"""The [OCID] of the VCN.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.
 
@@ -7005,7 +7002,7 @@ Example: `50`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[Subnet]'})
 @cli_util.wrap_exceptions
-def list_subnets(ctx, from_json, all_pages, page_size, compartment_id, vcn_id, limit, page, display_name, sort_by, sort_order, lifecycle_state):
+def list_subnets(ctx, from_json, all_pages, page_size, compartment_id, limit, page, vcn_id, display_name, sort_by, sort_order, lifecycle_state):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -7015,6 +7012,8 @@ def list_subnets(ctx, from_json, all_pages, page_size, compartment_id, vcn_id, l
         kwargs['limit'] = limit
     if page is not None:
         kwargs['page'] = page
+    if vcn_id is not None:
+        kwargs['vcn_id'] = vcn_id
     if display_name is not None:
         kwargs['display_name'] = display_name
     if sort_by is not None:
@@ -7031,7 +7030,6 @@ def list_subnets(ctx, from_json, all_pages, page_size, compartment_id, vcn_id, l
         result = cli_util.list_call_get_all_results(
             client.list_subnets,
             compartment_id=compartment_id,
-            vcn_id=vcn_id,
             **kwargs
         )
     elif limit is not None:
@@ -7040,13 +7038,11 @@ def list_subnets(ctx, from_json, all_pages, page_size, compartment_id, vcn_id, l
             limit,
             page_size,
             compartment_id=compartment_id,
-            vcn_id=vcn_id,
             **kwargs
         )
     else:
         result = client.list_subnets(
             compartment_id=compartment_id,
-            vcn_id=vcn_id,
             **kwargs
         )
     cli_util.render_response(result, ctx)
