@@ -477,7 +477,7 @@ def networking(network_client, suffix):
         subnet_ocid_2 = create_subnet("10.0.0.0/24", subnet_dns_label, vcn_ocid, network_client, suffix)
 
         # open up security list to allow data guard operations
-        response = network_client.list_security_lists(util.COMPARTMENT_ID, vcn_ocid)
+        response = network_client.list_security_lists(util.COMPARTMENT_ID, vcn_id=vcn_ocid)
 
         # we just created this VCN so assume there is only one security list and it is the default
         default_security_list = response.data[0]
@@ -515,7 +515,7 @@ def networking(network_client, suffix):
         ig_ocid = response.data.id
 
         # add rule targeting internet gateway to default route table (first and only route table in list)
-        response = network_client.list_route_tables(util.COMPARTMENT_ID, vcn_ocid)
+        response = network_client.list_route_tables(util.COMPARTMENT_ID, vcn_id=vcn_ocid)
         default_route_table = response.data[0]
 
         new_route_rule = oci.core.models.RouteRule()

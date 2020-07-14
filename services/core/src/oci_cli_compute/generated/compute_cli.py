@@ -2410,7 +2410,9 @@ To launch an instance using an image or a boot volume use the `sourceDetails` pa
 
 When you launch an instance, it is automatically attached to a virtual network interface card (VNIC), called the *primary VNIC*. The VNIC has a private IP address from the subnet's CIDR. You can either assign a private IP address of your choice or let Oracle automatically assign one. You can choose whether the instance has a public IP address. To retrieve the addresses, use the [ListVnicAttachments] operation to get the VNIC ID for the instance, and then call [GetVnic] with the VNIC ID.
 
-You can later add secondary VNICs to an instance. For more information, see [Virtual Network Interface Cards (VNICs)].""")
+You can later add secondary VNICs to an instance. For more information, see [Virtual Network Interface Cards (VNICs)].
+
+To launch an instance from a Marketplace image listing, you must provide the image ID of the listing resource version that you want, but you also must subscribe to the listing before you try to launch the instance. To subscribe to the listing, use the [GetAppCatalogListingAgreements] operation to get the signature for the terms of use agreement for the desired listing resource version. Then, call [CreateAppCatalogSubscription] with the signature. To get the image ID for the LaunchInstance operation, call [GetAppCatalogListingResourceVersion].""")
 @cli_util.option('--availability-domain', required=True, help=u"""The availability domain of the instance.
 
 Example: `Uocm:PHX-AD-1`""")
@@ -2419,7 +2421,7 @@ Example: `Uocm:PHX-AD-1`""")
 
 You can enumerate all available shapes by calling [ListShapes].""")
 @cli_util.option('--create-vnic-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Details for the primary VNIC, which is automatically created and attached when the instance is launched.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--dedicated-vm-host-id', help=u"""The OCID of dedicated VM host.""")
+@cli_util.option('--dedicated-vm-host-id', help=u"""The OCID of the dedicated VM host.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2452,7 +2454,7 @@ The default iPXE script connects to the instance's local boot volume over iSCSI 
 For more information about the Bring Your Own Image feature of Oracle Cloud Infrastructure, see [Bring Your Own Image].
 
 For more information about iPXE, see http://ipxe.org.""")
-@cli_util.option('--launch-options', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--launch-options', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Options for tuning the compatibility and performance of VM shapes. The values that you specify override any default values.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Custom metadata key/value pairs that you provide, such as the SSH public key required to connect to the instance.
 
 A metadata service runs on every launched instance. The service is an HTTP endpoint listening on 169.254.169.254. You can use the service to:
@@ -2594,7 +2596,9 @@ To launch an instance using an image or a boot volume use the `sourceDetails` pa
 
 When you launch an instance, it is automatically attached to a virtual network interface card (VNIC), called the *primary VNIC*. The VNIC has a private IP address from the subnet's CIDR. You can either assign a private IP address of your choice or let Oracle automatically assign one. You can choose whether the instance has a public IP address. To retrieve the addresses, use the [ListVnicAttachments] operation to get the VNIC ID for the instance, and then call [GetVnic] with the VNIC ID.
 
-You can later add secondary VNICs to an instance. For more information, see [Virtual Network Interface Cards (VNICs)].""")
+You can later add secondary VNICs to an instance. For more information, see [Virtual Network Interface Cards (VNICs)].
+
+To launch an instance from a Marketplace image listing, you must provide the image ID of the listing resource version that you want, but you also must subscribe to the listing before you try to launch the instance. To subscribe to the listing, use the [GetAppCatalogListingAgreements] operation to get the signature for the terms of use agreement for the desired listing resource version. Then, call [CreateAppCatalogSubscription] with the signature. To get the image ID for the LaunchInstance operation, call [GetAppCatalogListingResourceVersion].""")
 @cli_util.option('--availability-domain', required=True, help=u"""The availability domain of the instance.
 
 Example: `Uocm:PHX-AD-1`""")
@@ -2604,7 +2608,7 @@ Example: `Uocm:PHX-AD-1`""")
 You can enumerate all available shapes by calling [ListShapes].""")
 @cli_util.option('--source-details-image-id', required=True, help=u"""The OCID of the image used to boot the instance.""")
 @cli_util.option('--create-vnic-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Details for the primary VNIC, which is automatically created and attached when the instance is launched.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--dedicated-vm-host-id', help=u"""The OCID of dedicated VM host.""")
+@cli_util.option('--dedicated-vm-host-id', help=u"""The OCID of the dedicated VM host.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2637,7 +2641,7 @@ The default iPXE script connects to the instance's local boot volume over iSCSI 
 For more information about the Bring Your Own Image feature of Oracle Cloud Infrastructure, see [Bring Your Own Image].
 
 For more information about iPXE, see http://ipxe.org.""")
-@cli_util.option('--launch-options', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--launch-options', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Options for tuning the compatibility and performance of VM shapes. The values that you specify override any default values.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Custom metadata key/value pairs that you provide, such as the SSH public key required to connect to the instance.
 
 A metadata service runs on every launched instance. The service is an HTTP endpoint listening on 169.254.169.254. You can use the service to:
@@ -2783,7 +2787,9 @@ To launch an instance using an image or a boot volume use the `sourceDetails` pa
 
 When you launch an instance, it is automatically attached to a virtual network interface card (VNIC), called the *primary VNIC*. The VNIC has a private IP address from the subnet's CIDR. You can either assign a private IP address of your choice or let Oracle automatically assign one. You can choose whether the instance has a public IP address. To retrieve the addresses, use the [ListVnicAttachments] operation to get the VNIC ID for the instance, and then call [GetVnic] with the VNIC ID.
 
-You can later add secondary VNICs to an instance. For more information, see [Virtual Network Interface Cards (VNICs)].""")
+You can later add secondary VNICs to an instance. For more information, see [Virtual Network Interface Cards (VNICs)].
+
+To launch an instance from a Marketplace image listing, you must provide the image ID of the listing resource version that you want, but you also must subscribe to the listing before you try to launch the instance. To subscribe to the listing, use the [GetAppCatalogListingAgreements] operation to get the signature for the terms of use agreement for the desired listing resource version. Then, call [CreateAppCatalogSubscription] with the signature. To get the image ID for the LaunchInstance operation, call [GetAppCatalogListingResourceVersion].""")
 @cli_util.option('--availability-domain', required=True, help=u"""The availability domain of the instance.
 
 Example: `Uocm:PHX-AD-1`""")
@@ -2793,7 +2799,7 @@ Example: `Uocm:PHX-AD-1`""")
 You can enumerate all available shapes by calling [ListShapes].""")
 @cli_util.option('--source-details-boot-volume-id', required=True, help=u"""The OCID of the boot volume used to boot the instance.""")
 @cli_util.option('--create-vnic-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Details for the primary VNIC, which is automatically created and attached when the instance is launched.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--dedicated-vm-host-id', help=u"""The OCID of dedicated VM host.""")
+@cli_util.option('--dedicated-vm-host-id', help=u"""The OCID of the dedicated VM host.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2826,7 +2832,7 @@ The default iPXE script connects to the instance's local boot volume over iSCSI 
 For more information about the Bring Your Own Image feature of Oracle Cloud Infrastructure, see [Bring Your Own Image].
 
 For more information about iPXE, see http://ipxe.org.""")
-@cli_util.option('--launch-options', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--launch-options', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Options for tuning the compatibility and performance of VM shapes. The values that you specify override any default values.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Custom metadata key/value pairs that you provide, such as the SSH public key required to connect to the instance.
 
 A metadata service runs on every launched instance. The service is an HTTP endpoint listening on 169.254.169.254. You can use the service to:

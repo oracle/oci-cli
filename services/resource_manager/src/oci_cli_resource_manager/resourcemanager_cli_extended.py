@@ -214,6 +214,20 @@ def create_import_tf_state_job(ctx, **kwargs):
     ctx.invoke(resourcemanager_cli.create_job_create_import_tf_state_job_operation_details, **kwargs)
 
 
+# Shorten stack commands based on Git provider
+cli_util.rename_command(resourcemanager_cli, resourcemanager_cli.stack_group, resourcemanager_cli.create_stack_create_git_config_source_details, "create-from-git-provider")
+cli_util.rename_command(resourcemanager_cli, resourcemanager_cli.stack_group, resourcemanager_cli.update_stack_update_git_config_source_details, "update-from-git-provider")
+
+# Shorten configuration-source-provider commands based on Gitlab access token
+cli_util.rename_command(resourcemanager_cli, resourcemanager_cli.configuration_source_provider_group, resourcemanager_cli.create_configuration_source_provider_create_gitlab_access_token_configuration_source_provider_details, "create-gitlab-access-token-provider")
+cli_util.rename_command(resourcemanager_cli, resourcemanager_cli.configuration_source_provider_group, resourcemanager_cli.update_configuration_source_provider_update_gitlab_access_token_configuration_source_provider_details, "update-gitlab-access-token-provider")
+
+# Move `configuration-source-provider-summary list-configuration-source-providers` to `configuration-source-provider list`
+resourcemanager_cli.configuration_source_provider_summary_group.commands.pop(resourcemanager_cli.list_configuration_source_providers.name)
+resourcemanager_cli.configuration_source_provider_group.add_command(resourcemanager_cli.list_configuration_source_providers)
+cli_util.rename_command(resourcemanager_cli, resourcemanager_cli.configuration_source_provider_group, resourcemanager_cli.list_configuration_source_providers, "list")
+resourcemanager_cli.resource_manager_root_group.commands.pop(resourcemanager_cli.configuration_source_provider_summary_group.name)
+
 # Rename detect-stack-drift to detect-drift
 cli_util.rename_command(resourcemanager_cli, resourcemanager_cli.stack_group, resourcemanager_cli.detect_stack_drift, "detect-drift")
 
