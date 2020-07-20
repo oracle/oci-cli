@@ -41,9 +41,23 @@ def is_windows():
     return sys.platform == 'win32'
 
 
+def get_linux_distribution_name():
+    # An example of a line in /etc/os-release is NAME="Ubuntu"
+    try:
+        with open('/etc/os-release') as lines:
+            for line in lines:
+                if "=" in line:
+                    key, value = line.split("=", 1)
+                    if key.lower() == "name":
+                        return value.lower()
+            return None
+    except Exception as e:
+        return None
+
+
 def is_ubuntu_or_debian():
-    curr_platform = platform.platform().lower()
-    return any(x in curr_platform for x in ['ubuntu', 'debian'])
+    linux_distribution_name = get_linux_distribution_name()
+    return linux_distribution_name and any(x in linux_distribution_name for x in ['ubuntu', 'debian'])
 
 
 optional_feature_list = ['db (will install cx_Oracle)']

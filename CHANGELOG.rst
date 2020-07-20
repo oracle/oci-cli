@@ -6,6 +6,22 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.12.4 - 2020-07-21
+-------------------
+Added
+~~~~~~~~
+* Added Instance License Type support for OCE instances
+
+  * ``oci oce oce-instance create instance-license-type``
+  * ``oci oce oce-instance update instance-license-type``
+
+
+Fixed
+~~~~~
+* Bug fix in Key Management Service restore-from-file command to handle binary backup files
+
+  * ``oci kms management vault restore-from-file``
+  
 2.12.3 - 2020-07-14
 -------------------
 Added
@@ -51,8 +67,8 @@ Added
 ~~~~~
 * Support for Autonomous DataWarehouse and Autonomous Transaction Processing features to allow switching from Non PE to PE (and vice versa) for existing databases as a part of the Database Service for Autonomous Databases
 
-  * ``oci db autonomous-database update --private-endpoint-label ``
-  * ``oci db autonomous-database update --subnet-id ``
+  * ``oci db autonomous-database update --private-endpoint-label``
+  * ``oci db autonomous-database update --subnet-id``
 
 * Support for private endpoint (ingress) and public endpoint whitelisting in Analytics Service
 

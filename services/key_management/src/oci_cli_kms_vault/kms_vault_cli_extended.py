@@ -134,7 +134,7 @@ def restore_from_file(ctx, **kwargs):
     # Since the generated function expects the parameter name to be restore_vault_from_file_details
     del (kwargs['restore_vault_from_file_location'])
     try:
-        with open(file, 'r') as myfile:
+        with open(file, 'rb') as myfile:
             data = myfile.read()
             kwargs['restore_vault_from_file_details'] = data
         ctx.invoke(kmsvault_cli.restore_vault_from_file, **kwargs)

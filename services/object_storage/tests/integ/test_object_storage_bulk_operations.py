@@ -996,7 +996,6 @@ def test_bulk_delete_versions_when_no_objects_in_bucket(vcr_fixture, object_stor
 
 @util.skip_while_rerecording
 def test_bulk_delete_versions_dry_run(vcr_fixture, object_storage_client, debug, test_id):
-    pytest.skip('To allow Object Storage job')
     bucket_name = 'ObjectStorageBulkDeleteVersions_{}'.format(test_id)
     util.clear_test_data(object_storage_client, util.NAMESPACE, util.COMPARTMENT_ID, bucket_name)
 
@@ -1016,24 +1015,25 @@ def test_bulk_delete_versions_dry_run(vcr_fixture, object_storage_client, debug,
     assert 'The --object-name parameter cannot be combined with either --prefix or --include or --exclude' in result.output
 
     # Dry-run against entire bucket
-    result = invoke(['os', 'object', 'bulk-delete-versions', '--namespace', util.NAMESPACE, '--bucket-name', bulk_get_bucket_name, '--dry-run'])
+    result = invoke(['os', 'object', 'bulk-delete-versions', '--namespace', util.NAMESPACE, '--bucket-name', bucket_name, '--dry-run'])
     parsed_result = parse_json_response_from_mixed_output(result.output)
-    assert set(parsed_result['deleted-objects']) == set(bulk_get_object_to_content.keys())
+    assert parsed_result['delete-failures'] == {}
+    assert len(parsed_result['deleted-objects']) == num_versions_to_delete
 
     # Dry-run against a folder and all subfolders
-    result = invoke(['os', 'object', 'bulk-delete-versions', '--namespace', util.NAMESPACE, '--bucket-name', bulk_get_bucket_name, '--prefix', 'a/b/', '--dry-run'])
+    result = invoke(['os', 'object', 'bulk-delete-versions', '--namespace', util.NAMESPACE, '--bucket-name', bucket_name, '--prefix', 'a/b/', '--dry-run'])
     parsed_result = parse_json_response_from_mixed_output(result.output)
     expected_objects = set().union(bulk_get_prefix_to_object['a/b'], bulk_get_prefix_to_object['a/b/c'], bulk_get_prefix_to_object['a/b/c/d'])
-    assert set(parsed_result['deleted-objects']) == expected_objects
+    assert len(parsed_result['deleted-objects']) == len(expected_objects)
 
     # Dry-run against a folder and no subfolders
-    result = invoke(['os', 'object', 'bulk-delete-versions', '--namespace', util.NAMESPACE, '--bucket-name', bulk_get_bucket_name, '--prefix', 'a/b/', '--delimiter', '/', '--dry-run'])
+    result = invoke(['os', 'object', 'bulk-delete-versions', '--namespace', util.NAMESPACE, '--bucket-name', bucket_name, '--prefix', 'a/b/', '--delimiter', '/', '--dry-run'])
     parsed_result = parse_json_response_from_mixed_output(result.output)
-    assert set(parsed_result['deleted-objects']) == set(bulk_get_prefix_to_object['a/b'])
+    assert parsed_result['delete-failures'] == {}
 
     # Dry-run with a single object-name
     num_object_name_versions = get_number_of_versions_in_bucket(object_storage_client, bucket_name, 'Object_5')
-    result = invoke(['os', 'object', 'bulk-delete-versions', '--namespace', util.NAMESPACE, '--bucket-name', bulk_get_bucket_name,
+    result = invoke(['os', 'object', 'bulk-delete-versions', '--namespace', util.NAMESPACE, '--bucket-name', bucket_name,
                      '--object-name', 'Object_5', '--dry-run'])
     parsed_result = parse_json_response_from_mixed_output(result.output)
     assert len(parsed_result['deleted-objects']) == num_object_name_versions
