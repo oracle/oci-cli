@@ -1646,12 +1646,12 @@ def object_bulk_delete_versions(ctx, from_json, namespace, bucket_name, prefix, 
 
     \b
     Deleting all object versions in the bucket
-    ----------------------------------
+    ------------------------------------------
     oci os object bulk-delete-versions -ns mynamespace -bn mybucket
 
     \b
     Delete all object versions that match a given prefix
-    --------------------------------------------
+    ----------------------------------------------------
     oci os object bulk-delete-versions -ns mynamespace -bn mybucket --prefix level1/level2/ --prefix myprefix
 
     \b
@@ -1690,7 +1690,7 @@ def object_bulk_delete_versions(ctx, from_json, namespace, bucket_name, prefix, 
 
     \b
     Previewing what would be deleted
-    ----------------------------
+    --------------------------------
     oci os object bulk-delete-versions -ns mynamespace -bn mybucket --dry-run
     oci os object bulk-delete-versions -ns mynamespace -bn mybucket --prefix level1/level2/ --dry-run
     oci os object bulk-delete-versions -ns mynamespace -bn mybucket --prefix level1/level2/ --delimiter / --dry-run
@@ -1746,9 +1746,9 @@ def object_bulk_delete_versions(ctx, from_json, namespace, bucket_name, prefix, 
                         continue
                 if object_name and object_name != obj.name:
                     continue
-                output.add_deleted(obj.name)
+                output.add_deleted(obj.name + "," + obj.version_id)
         render(data=output.get_output(ctx.obj['output'], dry_run=True), headers=None, ctx=ctx, nest_data_in_data_attribute=False)
-        sys.exit()
+        ctx.exit()
 
     reusable_progress_bar = ProgressBar(100, '')
 
