@@ -6,10 +6,50 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.12.5 - 2020-07-28
+-------------------
+Added
+~~~~~
+* Support for specifying OS type and version when importing compute images in the Compute service
+
+  * ``oci compute image import from-object --operating-system --operating-system-version``
+  * ``oci compute image import from-object-uri --operating-system --operating-system-version``
+
+* Support to change the fault domain for VM instances in the Compute service
+ 
+  * ``oci compute instance update --fault-domain <fault-domain>``
+
+* Support to update VM instances with different launch options (networking type, boot volume attachment type, and in-transit encryption for the boot volume's paravirtualized attachment) in the Compute service
+ 
+  * ``oci compute instance update --launch-options <launch-options>``
+
+* Support for 'Patch Now' Maintenance Runs for Autonomous Exadata Infrastructure and Autonomous Container Database resources in the Database service
+ 
+  * ``oci db maintenance-run update --is-patch-now-enabled``
+
+* Support for automatic performance and cost tuning on volumes in the Block Storage service
+
+  * ``oci bv boot-volume create --is-auto-tune-enabled``
+  * ``oci bv boot-volume update --is-auto-tune-enabled`` 
+  * ``oci bv volume create --is-auto-tune-enabled``
+  * ``oci bv volume update --is-auto-tune-enabled``
+
+* Support for image capability schemas and schema versions as a part of the Compute Imaging Service
+ 
+  * ``oci compute global-image-capability-schema``
+  * ``oci compute global-image-capability-schema-version``
+  * ``oci compute image-capability-schema``
+
+* Support for calling Oracle Cloud Infrastructure services in the San Jose region (``--region us-sanjose-1``)
+
+Fixed
+~~~~~~~~
+* Remove access_token from GitlabAccessTokenConfigurationSourceProvider model in the Resource Manager service
+
 2.12.4 - 2020-07-21
 -------------------
 Added
-~~~~~~~~
+~~~~~
 * Added Instance License Type support for OCE instances
 
   * ``oci oce oce-instance create instance-license-type``
@@ -21,7 +61,7 @@ Fixed
 * Bug fix in Key Management Service restore-from-file command to handle binary backup files
 
   * ``oci kms management vault restore-from-file``
-  
+
 2.12.3 - 2020-07-14
 -------------------
 Added

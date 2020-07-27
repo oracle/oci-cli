@@ -9257,6 +9257,7 @@ def update_exadata_iorm_config(ctx, from_json, force, wait_for_state, max_wait_s
 @cli_util.option('--maintenance-run-id', required=True, help=u"""The Maintenance Run OCID.""")
 @cli_util.option('--is-enabled', type=click.BOOL, help=u"""If set to false, skips the Maintenance Run.""")
 @cli_util.option('--time-scheduled', type=custom_types.CLI_DATETIME, help=u"""The scheduled date and time of the Maintenance Run to update.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--is-patch-now-enabled', type=click.BOOL, help=u"""If set to `TRUE`, starts patching immediately.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["SCHEDULED", "IN_PROGRESS", "SUCCEEDED", "SKIPPED", "FAILED", "UPDATING", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -9266,7 +9267,7 @@ def update_exadata_iorm_config(ctx, from_json, force, wait_for_state, max_wait_s
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'MaintenanceRun'})
 @cli_util.wrap_exceptions
-def update_maintenance_run(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, maintenance_run_id, is_enabled, time_scheduled, if_match):
+def update_maintenance_run(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, maintenance_run_id, is_enabled, time_scheduled, is_patch_now_enabled, if_match):
 
     if isinstance(maintenance_run_id, six.string_types) and len(maintenance_run_id.strip()) == 0:
         raise click.UsageError('Parameter --maintenance-run-id cannot be whitespace or empty string')
@@ -9282,6 +9283,9 @@ def update_maintenance_run(ctx, from_json, wait_for_state, max_wait_seconds, wai
 
     if time_scheduled is not None:
         _details['timeScheduled'] = time_scheduled
+
+    if is_patch_now_enabled is not None:
+        _details['isPatchNowEnabled'] = is_patch_now_enabled
 
     client = cli_util.build_client('database', 'database', ctx)
     result = client.update_maintenance_run(

@@ -445,6 +445,7 @@ Allowed values:
   * `10`: Represents Balanced option.
 
   * `20`: Represents Higher Performance option.""")
+@cli_util.option('--is-auto-tune-enabled', type=click.BOOL, help=u"""Specifies whether the auto-tune performance is enabled for this boot volume.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "RESTORING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -453,7 +454,7 @@ Allowed values:
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'source-details': {'module': 'core', 'class': 'BootVolumeSourceDetails'}}, output_type={'module': 'core', 'class': 'BootVolume'})
 @cli_util.wrap_exceptions
-def create_boot_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, source_details, backup_policy_id, defined_tags, display_name, freeform_tags, kms_key_id, size_in_gbs, vpus_per_gb):
+def create_boot_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, source_details, backup_policy_id, defined_tags, display_name, freeform_tags, kms_key_id, size_in_gbs, vpus_per_gb, is_auto_tune_enabled):
 
     kwargs = {}
 
@@ -482,6 +483,9 @@ def create_boot_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
     if vpus_per_gb is not None:
         _details['vpusPerGB'] = vpus_per_gb
+
+    if is_auto_tune_enabled is not None:
+        _details['isAutoTuneEnabled'] = is_auto_tune_enabled
 
     client = cli_util.build_client('core', 'blockstorage', ctx)
     result = client.create_boot_volume(
@@ -537,6 +541,7 @@ Allowed values:
   * `10`: Represents Balanced option.
 
   * `20`: Represents Higher Performance option.""")
+@cli_util.option('--is-auto-tune-enabled', type=click.BOOL, help=u"""Specifies whether the auto-tune performance is enabled for this boot volume.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "RESTORING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -545,7 +550,7 @@ Allowed values:
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'BootVolume'})
 @cli_util.wrap_exceptions
-def create_boot_volume_boot_volume_source_from_boot_volume_backup_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, source_details_id, backup_policy_id, defined_tags, display_name, freeform_tags, kms_key_id, size_in_gbs, vpus_per_gb):
+def create_boot_volume_boot_volume_source_from_boot_volume_backup_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, source_details_id, backup_policy_id, defined_tags, display_name, freeform_tags, kms_key_id, size_in_gbs, vpus_per_gb, is_auto_tune_enabled):
 
     kwargs = {}
 
@@ -575,6 +580,9 @@ def create_boot_volume_boot_volume_source_from_boot_volume_backup_details(ctx, f
 
     if vpus_per_gb is not None:
         _details['vpusPerGB'] = vpus_per_gb
+
+    if is_auto_tune_enabled is not None:
+        _details['isAutoTuneEnabled'] = is_auto_tune_enabled
 
     _details['sourceDetails']['type'] = 'bootVolumeBackup'
 
@@ -632,6 +640,7 @@ Allowed values:
   * `10`: Represents Balanced option.
 
   * `20`: Represents Higher Performance option.""")
+@cli_util.option('--is-auto-tune-enabled', type=click.BOOL, help=u"""Specifies whether the auto-tune performance is enabled for this boot volume.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "RESTORING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -640,7 +649,7 @@ Allowed values:
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'BootVolume'})
 @cli_util.wrap_exceptions
-def create_boot_volume_boot_volume_source_from_boot_volume_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, source_details_id, backup_policy_id, defined_tags, display_name, freeform_tags, kms_key_id, size_in_gbs, vpus_per_gb):
+def create_boot_volume_boot_volume_source_from_boot_volume_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, source_details_id, backup_policy_id, defined_tags, display_name, freeform_tags, kms_key_id, size_in_gbs, vpus_per_gb, is_auto_tune_enabled):
 
     kwargs = {}
 
@@ -670,6 +679,9 @@ def create_boot_volume_boot_volume_source_from_boot_volume_details(ctx, from_jso
 
     if vpus_per_gb is not None:
         _details['vpusPerGB'] = vpus_per_gb
+
+    if is_auto_tune_enabled is not None:
+        _details['isAutoTuneEnabled'] = is_auto_tune_enabled
 
     _details['sourceDetails']['type'] = 'bootVolume'
 
@@ -805,6 +817,7 @@ Allowed values:
 @cli_util.option('--size-in-mbs', type=click.INT, help=u"""The size of the volume in MBs. The value must be a multiple of 1024. This field is deprecated. Use sizeInGBs instead.""")
 @cli_util.option('--source-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Specifies the volume source details for a new Block volume. The volume source is either another Block volume in the same availability domain or a Block volume backup. This is an optional field. If not specified or set to null, the new Block volume will be empty. When specified, the new Block volume will contain data from the source volume or backup.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--volume-backup-id', help=u"""The OCID of the volume backup from which the data should be restored on the newly created volume. This field is deprecated. Use the sourceDetails field instead to specify the backup for the volume.""")
+@cli_util.option('--is-auto-tune-enabled', type=click.BOOL, help=u"""Specifies whether the auto-tune performance is enabled for this volume.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "RESTORING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -813,7 +826,7 @@ Allowed values:
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'source-details': {'module': 'core', 'class': 'VolumeSourceDetails'}}, output_type={'module': 'core', 'class': 'Volume'})
 @cli_util.wrap_exceptions
-def create_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, backup_policy_id, defined_tags, display_name, freeform_tags, kms_key_id, vpus_per_gb, size_in_gbs, size_in_mbs, source_details, volume_backup_id):
+def create_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, backup_policy_id, defined_tags, display_name, freeform_tags, kms_key_id, vpus_per_gb, size_in_gbs, size_in_mbs, source_details, volume_backup_id, is_auto_tune_enabled):
 
     kwargs = {}
 
@@ -850,6 +863,9 @@ def create_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 
     if volume_backup_id is not None:
         _details['volumeBackupId'] = volume_backup_id
+
+    if is_auto_tune_enabled is not None:
+        _details['isAutoTuneEnabled'] = is_auto_tune_enabled
 
     client = cli_util.build_client('core', 'blockstorage', ctx)
     result = client.create_volume(
@@ -913,6 +929,7 @@ Allowed values:
 @cli_util.option('--size-in-gbs', type=click.INT, help=u"""The size of the volume in GBs.""")
 @cli_util.option('--size-in-mbs', type=click.INT, help=u"""The size of the volume in MBs. The value must be a multiple of 1024. This field is deprecated. Use sizeInGBs instead.""")
 @cli_util.option('--volume-backup-id', help=u"""The OCID of the volume backup from which the data should be restored on the newly created volume. This field is deprecated. Use the sourceDetails field instead to specify the backup for the volume.""")
+@cli_util.option('--is-auto-tune-enabled', type=click.BOOL, help=u"""Specifies whether the auto-tune performance is enabled for this volume.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "RESTORING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -921,7 +938,7 @@ Allowed values:
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'Volume'})
 @cli_util.wrap_exceptions
-def create_volume_volume_source_from_volume_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, source_details_id, backup_policy_id, defined_tags, display_name, freeform_tags, kms_key_id, vpus_per_gb, size_in_gbs, size_in_mbs, volume_backup_id):
+def create_volume_volume_source_from_volume_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, source_details_id, backup_policy_id, defined_tags, display_name, freeform_tags, kms_key_id, vpus_per_gb, size_in_gbs, size_in_mbs, volume_backup_id, is_auto_tune_enabled):
 
     kwargs = {}
 
@@ -957,6 +974,9 @@ def create_volume_volume_source_from_volume_details(ctx, from_json, wait_for_sta
 
     if volume_backup_id is not None:
         _details['volumeBackupId'] = volume_backup_id
+
+    if is_auto_tune_enabled is not None:
+        _details['isAutoTuneEnabled'] = is_auto_tune_enabled
 
     _details['sourceDetails']['type'] = 'volume'
 
@@ -1022,6 +1042,7 @@ Allowed values:
 @cli_util.option('--size-in-gbs', type=click.INT, help=u"""The size of the volume in GBs.""")
 @cli_util.option('--size-in-mbs', type=click.INT, help=u"""The size of the volume in MBs. The value must be a multiple of 1024. This field is deprecated. Use sizeInGBs instead.""")
 @cli_util.option('--volume-backup-id', help=u"""The OCID of the volume backup from which the data should be restored on the newly created volume. This field is deprecated. Use the sourceDetails field instead to specify the backup for the volume.""")
+@cli_util.option('--is-auto-tune-enabled', type=click.BOOL, help=u"""Specifies whether the auto-tune performance is enabled for this volume.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "RESTORING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -1030,7 +1051,7 @@ Allowed values:
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'Volume'})
 @cli_util.wrap_exceptions
-def create_volume_volume_source_from_volume_backup_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, source_details_id, backup_policy_id, defined_tags, display_name, freeform_tags, kms_key_id, vpus_per_gb, size_in_gbs, size_in_mbs, volume_backup_id):
+def create_volume_volume_source_from_volume_backup_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, source_details_id, backup_policy_id, defined_tags, display_name, freeform_tags, kms_key_id, vpus_per_gb, size_in_gbs, size_in_mbs, volume_backup_id, is_auto_tune_enabled):
 
     kwargs = {}
 
@@ -1066,6 +1087,9 @@ def create_volume_volume_source_from_volume_backup_details(ctx, from_json, wait_
 
     if volume_backup_id is not None:
         _details['volumeBackupId'] = volume_backup_id
+
+    if is_auto_tune_enabled is not None:
+        _details['isAutoTuneEnabled'] = is_auto_tune_enabled
 
     _details['sourceDetails']['type'] = 'volumeBackup'
 
@@ -2798,6 +2822,7 @@ Allowed values:
   * `10`: Represents Balanced option.
 
   * `20`: Represents Higher Performance option.""")
+@cli_util.option('--is-auto-tune-enabled', type=click.BOOL, help=u"""Specifies whether the auto-tune performance is enabled for this boot volume.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "RESTORING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -2808,7 +2833,7 @@ Allowed values:
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'BootVolume'})
 @cli_util.wrap_exceptions
-def update_boot_volume(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, boot_volume_id, defined_tags, display_name, freeform_tags, size_in_gbs, vpus_per_gb, if_match):
+def update_boot_volume(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, boot_volume_id, defined_tags, display_name, freeform_tags, size_in_gbs, vpus_per_gb, is_auto_tune_enabled, if_match):
 
     if isinstance(boot_volume_id, six.string_types) and len(boot_volume_id.strip()) == 0:
         raise click.UsageError('Parameter --boot-volume-id cannot be whitespace or empty string')
@@ -2837,6 +2862,9 @@ def update_boot_volume(ctx, from_json, force, wait_for_state, max_wait_seconds, 
 
     if vpus_per_gb is not None:
         _details['vpusPerGB'] = vpus_per_gb
+
+    if is_auto_tune_enabled is not None:
+        _details['isAutoTuneEnabled'] = is_auto_tune_enabled
 
     client = cli_util.build_client('core', 'blockstorage', ctx)
     result = client.update_boot_volume(
@@ -2996,6 +3024,7 @@ Allowed values:
 
   * `20`: Represents Higher Performance option.""")
 @cli_util.option('--size-in-gbs', type=click.INT, help=u"""The size to resize the volume to in GBs. Has to be larger than the current size.""")
+@cli_util.option('--is-auto-tune-enabled', type=click.BOOL, help=u"""Specifies whether the auto-tune performance is enabled for this volume.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "RESTORING", "AVAILABLE", "TERMINATING", "TERMINATED", "FAULTY"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -3006,7 +3035,7 @@ Allowed values:
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'Volume'})
 @cli_util.wrap_exceptions
-def update_volume(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, volume_id, defined_tags, display_name, freeform_tags, vpus_per_gb, size_in_gbs, if_match):
+def update_volume(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, volume_id, defined_tags, display_name, freeform_tags, vpus_per_gb, size_in_gbs, is_auto_tune_enabled, if_match):
 
     if isinstance(volume_id, six.string_types) and len(volume_id.strip()) == 0:
         raise click.UsageError('Parameter --volume-id cannot be whitespace or empty string')
@@ -3035,6 +3064,9 @@ def update_volume(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_
 
     if size_in_gbs is not None:
         _details['sizeInGBs'] = size_in_gbs
+
+    if is_auto_tune_enabled is not None:
+        _details['isAutoTuneEnabled'] = is_auto_tune_enabled
 
     client = cli_util.build_client('core', 'blockstorage', ctx)
     result = client.update_volume(

@@ -232,10 +232,16 @@ Avoid entering confidential information.
 @cli_util.option('-bn', '--bucket-name', required=True, help='The name of the bucket to import the image from.')
 @cli_util.option('--name', required=True, help='The name of the object identifying the image to import.')
 @cli_util.option('--source-image-type', type=custom_types.CliCaseInsensitiveChoice(["QCOW2", "VMDK"]), help='The format of the image to be imported. Exported Oracle images are QCOW2. Only monolithic images are supported.')
+@cli_util.option('--operating-system', help=u"""The image's operating system.
+
+Example: `Oracle Linux`""")
+@cli_util.option('--operating-system-version', help=u"""The image's operating system version.
+
+Example: `7.2`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'image-source-details': {'module': 'core', 'class': 'ImageSourceDetails'}}, output_type={'module': 'core', 'class': 'Image'})
 @cli_util.wrap_exceptions
-def import_image_from_object(ctx, from_json, compartment_id, display_name, namespace, bucket_name, name, source_image_type, launch_mode, defined_tags, freeform_tags):
+def import_image_from_object(ctx, from_json, compartment_id, display_name, namespace, bucket_name, name, source_image_type, operating_system, operating_system_version, launch_mode, defined_tags, freeform_tags):
     import_image_details = {}
     import_image_details['sourceType'] = 'objectStorageTuple'
     import_image_details['namespaceName'] = namespace
@@ -244,6 +250,12 @@ def import_image_from_object(ctx, from_json, compartment_id, display_name, names
 
     if source_image_type is not None:
         import_image_details['sourceImageType'] = source_image_type
+
+    if operating_system is not None:
+        import_image_details['operatingSystem'] = operating_system
+
+    if operating_system_version is not None:
+        import_image_details['operatingSystemVersion'] = operating_system_version
 
     import_image_internal(ctx, compartment_id, display_name, import_image_details, launch_mode, defined_tags, freeform_tags)
 
@@ -260,16 +272,28 @@ Avoid entering confidential information.
 """)
 @cli_util.option('--uri', required=True, help='The Object Storage URL to import the image from.')
 @cli_util.option('--source-image-type', type=custom_types.CliCaseInsensitiveChoice(["QCOW2", "VMDK"]), help='The format of the image to be imported. Exported Oracle images are QCOW2. Only monolithic images are supported.')
+@cli_util.option('--operating-system', help=u"""The image's operating system.
+
+Example: `Oracle Linux`""")
+@cli_util.option('--operating-system-version', help=u"""The image's operating system version.
+
+Example: `7.2`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'image-source-details': {'module': 'core', 'class': 'ImageSourceDetails'}}, output_type={'module': 'core', 'class': 'Image'})
 @cli_util.wrap_exceptions
-def import_image_from_uri(ctx, from_json, compartment_id, display_name, uri, source_image_type, launch_mode, defined_tags, freeform_tags):
+def import_image_from_uri(ctx, from_json, compartment_id, display_name, uri, source_image_type, operating_system, operating_system_version, launch_mode, defined_tags, freeform_tags):
     import_image_details = {}
     import_image_details['sourceType'] = 'objectStorageUri'
     import_image_details['sourceUri'] = uri
 
     if source_image_type is not None:
         import_image_details['sourceImageType'] = source_image_type
+
+    if operating_system is not None:
+        import_image_details['operatingSystem'] = operating_system
+
+    if operating_system_version is not None:
+        import_image_details['operatingSystemVersion'] = operating_system_version
 
     import_image_internal(ctx, compartment_id, display_name, import_image_details, launch_mode, defined_tags, freeform_tags)
 
@@ -792,3 +816,188 @@ def list_volume_attachments_extended(ctx, **kwargs):
         client = cli_util.build_client('core', 'compute', ctx)
         kwargs['compartment_id'] = client.get_instance(instance_id=kwargs['instance_id']).data.compartment_id
     ctx.invoke(compute_cli.list_volume_attachments, **kwargs)
+
+
+# Change the following
+# oci compute compute-global-image-capability-schema get
+# oci compute compute-global-image-capability-schema list
+# oci compute compute-global-image-capability-schema-version get
+# oci compute compute-global-image-capability-schema-version list
+# oci compute compute-image-capability-schema change-compartment
+# oci compute compute-image-capability-schema create
+# oci compute compute-image-capability-schema delete
+# oci compute compute-image-capability-schema get
+# oci compute compute-image-capability-schema list
+# oci compute compute-image-capability-schema update
+#
+# With these:
+# oci compute global-image-capability-schema get
+# oci compute global-image-capability-schema list
+# oci compute global-image-capability-schema-version get
+# oci compute global-image-capability-schema-version list
+# oci compute image-capability-schema change-compartment
+# oci compute image-capability-schema create
+# oci compute image-capability-schema delete
+# oci compute image-capability-schema get
+# oci compute image-capability-schema list
+# oci compute image-capability-schema update
+#
+# Change Parameters:
+# --compute-global-image-capability-schema-id
+# --compute-global-image-capability-schema-version-name
+# --compute-image-capability-schema-id
+#
+# With these:
+# --global-image-capability-schema-id
+# --global-image-capability-schema-version-name
+# --image-capability-schema-id
+compute_cli.compute_root_group.commands.pop(compute_cli.compute_global_image_capability_schema_group.name)
+compute_cli.compute_root_group.commands.pop(compute_cli.compute_global_image_capability_schema_version_group.name)
+compute_cli.compute_root_group.commands.pop(compute_cli.compute_image_capability_schema_group.name)
+
+
+@click.command('global-image-capability-schema', cls=CommandGroupWithAlias, help="""Global Image Capability Schema""")
+@cli_util.help_option_group
+def global_image_capability_schema_group():
+    pass
+
+
+@click.command('global-image-capability-schema-version', cls=CommandGroupWithAlias, help="""Global Image Capability Schema Version""")
+@cli_util.help_option_group
+def global_image_capability_schema_version_group():
+    pass
+
+
+@click.command('image-capability-schema', cls=CommandGroupWithAlias, help="""Image Capability Schema""")
+@cli_util.help_option_group
+def image_capability_schema_group():
+    pass
+
+
+compute_cli.compute_root_group.add_command(global_image_capability_schema_group)
+compute_cli.compute_root_group.add_command(global_image_capability_schema_version_group)
+compute_cli.compute_root_group.add_command(image_capability_schema_group)
+
+
+global_image_capability_schema_group.add_command(compute_cli.list_compute_global_image_capability_schemas)
+image_capability_schema_group.add_command(compute_cli.list_compute_image_capability_schemas)
+
+
+@cli_util.copy_params_from_generated_command(compute_cli.get_compute_global_image_capability_schema, params_to_exclude=['compute_global_image_capability_schema_id'])
+@global_image_capability_schema_group.command(name='get', help=compute_cli.get_compute_global_image_capability_schema.help)
+@cli_util.option('--global-image-capability-schema-id', required=True, help=u"""The [OCID] of the compute global image capability schema""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'ComputeGlobalImageCapabilitySchema'})
+@cli_util.wrap_exceptions
+def get_global_image_capability_schema(ctx, **kwargs):
+    if 'global_image_capability_schema_id' in kwargs:
+        kwargs['compute_global_image_capability_schema_id'] = kwargs['global_image_capability_schema_id']
+        kwargs.pop('global_image_capability_schema_id')
+    ctx.invoke(compute_cli.get_compute_global_image_capability_schema, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(compute_cli.list_compute_global_image_capability_schema_versions, params_to_exclude=['compute_global_image_capability_schema_id'])
+@global_image_capability_schema_version_group.command(name='list',
+                                                      help=compute_cli.list_compute_global_image_capability_schema_versions.help)
+@cli_util.option('--global-image-capability-schema-id', required=True, help=u"""The [OCID] of the compute global image capability schema""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[ComputeGlobalImageCapabilitySchemaVersionSummary]'})
+@cli_util.wrap_exceptions
+def list_global_image_capability_schema_versions(ctx, **kwargs):
+    if 'global_image_capability_schema_id' in kwargs:
+        kwargs['compute_global_image_capability_schema_id'] = kwargs['global_image_capability_schema_id']
+        kwargs.pop('global_image_capability_schema_id')
+    ctx.invoke(compute_cli.list_compute_global_image_capability_schema_versions, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(compute_cli.get_compute_global_image_capability_schema_version, params_to_exclude=['compute_global_image_capability_schema_id', 'compute_global_image_capability_schema_version_name'])
+@global_image_capability_schema_version_group.command(name='get',
+                                                      help=compute_cli.get_compute_global_image_capability_schema_version.help)
+@cli_util.option('--global-image-capability-schema-id', required=True, help=u"""The [OCID] of the compute global image capability schema""")
+@cli_util.option('--global-image-capability-schema-version-name', required=True, help=u"""The name of the compute global image capability schema version""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'ComputeGlobalImageCapabilitySchemaVersion'})
+@cli_util.wrap_exceptions
+def get_global_image_capability_schema_version(ctx, **kwargs):
+    if 'global_image_capability_schema_id' in kwargs:
+        kwargs['compute_global_image_capability_schema_id'] = kwargs['global_image_capability_schema_id']
+        kwargs.pop('global_image_capability_schema_id')
+    if 'global_image_capability_schema_version_name' in kwargs:
+        kwargs['compute_global_image_capability_schema_version_name'] = kwargs['global_image_capability_schema_version_name']
+        kwargs.pop('global_image_capability_schema_version_name')
+    ctx.invoke(compute_cli.get_compute_global_image_capability_schema_version, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(compute_cli.change_compute_image_capability_schema_compartment,
+                                             params_to_exclude=['compute_image_capability_schema_id'])
+@image_capability_schema_group.command(name='change-compartment',
+                                       help=compute_cli.change_compute_image_capability_schema_compartment.help)
+@cli_util.option('--image-capability-schema-id', required=True, help=u"""The [OCID] of the compute image capability schema""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler({})
+@cli_util.wrap_exceptions
+def change_image_capability_schema_compartment(ctx, **kwargs):
+    if 'image_capability_schema_id' in kwargs:
+        kwargs['compute_image_capability_schema_id'] = kwargs['image_capability_schema_id']
+        kwargs.pop('image_capability_schema_id')
+    ctx.invoke(compute_cli.change_compute_image_capability_schema_compartment, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(compute_cli.create_compute_image_capability_schema,
+                                             params_to_exclude=['compute_global_image_capability_schema_version_name'])
+@image_capability_schema_group.command(name='create',
+                                       help=compute_cli.create_compute_image_capability_schema.help)
+@cli_util.option('--global-image-capability-schema-version-name', required=True, help=u"""The name of the compute global image capability schema version""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'schema-data': {'module': 'core', 'class': 'dict(str, ImageCapabilitySchemaDescriptor)'}}, output_type={'module': 'core', 'class': 'ComputeImageCapabilitySchema'})
+@cli_util.wrap_exceptions
+def create_image_capability_schema(ctx, **kwargs):
+    if 'global_image_capability_schema_version_name' in kwargs:
+        kwargs['compute_global_image_capability_schema_version_name'] = kwargs['global_image_capability_schema_version_name']
+        kwargs.pop('global_image_capability_schema_version_name')
+    ctx.invoke(compute_cli.create_compute_image_capability_schema, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(compute_cli.delete_compute_image_capability_schema,
+                                             params_to_exclude=['compute_image_capability_schema_id'])
+@image_capability_schema_group.command(name='delete',
+                                       help=compute_cli.delete_compute_image_capability_schema.help)
+@cli_util.option('--image-capability-schema-id', required=True, help=u"""The [OCID] of the compute image capability schema""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler({})
+@cli_util.wrap_exceptions
+def delete_image_capability_schema(ctx, **kwargs):
+    if 'image_capability_schema_id' in kwargs:
+        kwargs['compute_image_capability_schema_id'] = kwargs['image_capability_schema_id']
+        kwargs.pop('image_capability_schema_id')
+    ctx.invoke(compute_cli.delete_compute_image_capability_schema, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(compute_cli.get_compute_image_capability_schema,
+                                             params_to_exclude=['compute_image_capability_schema_id'])
+@image_capability_schema_group.command(name='get',
+                                       help=compute_cli.get_compute_image_capability_schema.help)
+@cli_util.option('--image-capability-schema-id', required=True, help=u"""The [OCID] of the compute image capability schema""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'ComputeImageCapabilitySchema'})
+@cli_util.wrap_exceptions
+def get_image_capability_schema(ctx, **kwargs):
+    if 'image_capability_schema_id' in kwargs:
+        kwargs['compute_image_capability_schema_id'] = kwargs['image_capability_schema_id']
+        kwargs.pop('image_capability_schema_id')
+    ctx.invoke(compute_cli.get_compute_image_capability_schema, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(compute_cli.update_compute_image_capability_schema,
+                                             params_to_exclude=['compute_image_capability_schema_id'])
+@image_capability_schema_group.command(name='update',
+                                       help=compute_cli.update_compute_image_capability_schema.help)
+@cli_util.option('--image-capability-schema-id', required=True, help=u"""The [OCID] of the compute image capability schema""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'schema-data': {'module': 'core', 'class': 'dict(str, ImageCapabilitySchemaDescriptor)'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'core', 'class': 'ComputeImageCapabilitySchema'})
+@cli_util.wrap_exceptions
+def update_image_capability_schema(ctx, **kwargs):
+    if 'image_capability_schema_id' in kwargs:
+        kwargs['compute_image_capability_schema_id'] = kwargs['image_capability_schema_id']
+        kwargs.pop('image_capability_schema_id')
+    ctx.invoke(compute_cli.update_compute_image_capability_schema, **kwargs)
