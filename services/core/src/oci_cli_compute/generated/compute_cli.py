@@ -57,6 +57,12 @@ def shape_group():
     pass
 
 
+@click.command(cli_util.override('compute.compute_image_capability_schema_group.command_name', 'compute-image-capability-schema'), cls=CommandGroupWithAlias, help="""Compute Image Capability Schema is a set of capabilities that filter the compute global capability schema version for an image.""")
+@cli_util.help_option_group
+def compute_image_capability_schema_group():
+    pass
+
+
 @click.command(cli_util.override('compute.vnic_attachment_group.command_name', 'vnic-attachment'), cls=CommandGroupWithAlias, help="""Represents an attachment between a VNIC and an instance. For more information, see [Virtual Network Interface Cards (VNICs)].
 
 **Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
@@ -121,6 +127,12 @@ def instance_console_connection_group():
     pass
 
 
+@click.command(cli_util.override('compute.compute_global_image_capability_schema_version_group.command_name', 'compute-global-image-capability-schema-version'), cls=CommandGroupWithAlias, help="""Compute Global Image Capability Schema Version is a set of all possible capabilities for a collection of images.""")
+@cli_util.help_option_group
+def compute_global_image_capability_schema_version_group():
+    pass
+
+
 @click.command(cli_util.override('compute.dedicated_vm_host_instance_shape_group.command_name', 'dedicated-vm-host-instance-shape'), cls=CommandGroupWithAlias, help="""The shape used to launch instances associated with the dedicated VM host.""")
 @cli_util.help_option_group
 def dedicated_vm_host_instance_shape_group():
@@ -134,6 +146,12 @@ To use any of the API operations, you must be authorized in an IAM policy. If yo
 **Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
 @cli_util.help_option_group
 def volume_group():
+    pass
+
+
+@click.command(cli_util.override('compute.compute_global_image_capability_schema_group.command_name', 'compute-global-image-capability-schema'), cls=CommandGroupWithAlias, help="""Compute Global Image Capability Schema is a container for a set of compute global image capability schema versions""")
+@cli_util.help_option_group
+def compute_global_image_capability_schema_group():
     pass
 
 
@@ -184,6 +202,7 @@ compute_root_group.add_command(dedicated_vm_host_group)
 compute_root_group.add_command(image_group)
 compute_root_group.add_command(instance_group)
 compute_root_group.add_command(shape_group)
+compute_root_group.add_command(compute_image_capability_schema_group)
 compute_root_group.add_command(vnic_attachment_group)
 compute_root_group.add_command(volume_attachment_group)
 compute_root_group.add_command(app_catalog_listing_resource_version_group)
@@ -193,8 +212,10 @@ compute_root_group.add_command(app_catalog_listing_group)
 compute_root_group.add_command(app_catalog_subscription_group)
 compute_root_group.add_command(boot_volume_attachment_group)
 compute_root_group.add_command(instance_console_connection_group)
+compute_root_group.add_command(compute_global_image_capability_schema_version_group)
 compute_root_group.add_command(dedicated_vm_host_instance_shape_group)
 compute_root_group.add_command(volume_group)
+compute_root_group.add_command(compute_global_image_capability_schema_group)
 compute_root_group.add_command(instance_credentials_group)
 compute_root_group.add_command(boot_volume_group)
 compute_root_group.add_command(dedicated_vm_host_shape_group)
@@ -770,6 +791,37 @@ def capture_console_history(ctx, from_json, wait_for_state, max_wait_seconds, wa
     cli_util.render_response(result, ctx)
 
 
+@compute_image_capability_schema_group.command(name=cli_util.override('compute.change_compute_image_capability_schema_compartment.command_name', 'change-compartment'), help=u"""Moves a compute image capability schema into a different compartment within the same tenancy. For information about moving resources between compartments, see         [Moving Resources to a Different Compartment].""")
+@cli_util.option('--compute-image-capability-schema-id', required=True, help=u"""The id of the compute image capability schema or the image ocid""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the instance configuration to.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_compute_image_capability_schema_compartment(ctx, from_json, compute_image_capability_schema_id, compartment_id, if_match):
+
+    if isinstance(compute_image_capability_schema_id, six.string_types) and len(compute_image_capability_schema_id.strip()) == 0:
+        raise click.UsageError('Parameter --compute-image-capability-schema-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('core', 'compute', ctx)
+    result = client.change_compute_image_capability_schema_compartment(
+        compute_image_capability_schema_id=compute_image_capability_schema_id,
+        change_compute_image_capability_schema_compartment_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @dedicated_vm_host_group.command(name=cli_util.override('compute.change_dedicated_vm_host_compartment.command_name', 'change-compartment'), help=u"""Moves a dedicated virtual machine host from one compartment to another.""")
 @cli_util.option('--dedicated-vm-host-id', required=True, help=u"""The OCID of the dedicated VM host.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the dedicated virtual machine host to.""")
@@ -901,6 +953,50 @@ def create_app_catalog_subscription(ctx, from_json, compartment_id, listing_id, 
     cli_util.render_response(result, ctx)
 
 
+@compute_image_capability_schema_group.command(name=cli_util.override('compute.create_compute_image_capability_schema.command_name', 'create'), help=u"""Creates compute image capability schema.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the resource.""")
+@cli_util.option('--compute-global-image-capability-schema-version-name', required=True, help=u"""The name of the compute global image capability schema version""")
+@cli_util.option('--image-id', required=True, help=u"""The ocid of the image""")
+@cli_util.option('--schema-data', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The map of each capability name to its ImageCapabilitySchemaDescriptor.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--display-name', help=u"""A user-friendly name for the compute image capability schema""")
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'schema-data': {'module': 'core', 'class': 'dict(str, ImageCapabilitySchemaDescriptor)'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'schema-data': {'module': 'core', 'class': 'dict(str, ImageCapabilitySchemaDescriptor)'}}, output_type={'module': 'core', 'class': 'ComputeImageCapabilitySchema'})
+@cli_util.wrap_exceptions
+def create_compute_image_capability_schema(ctx, from_json, compartment_id, compute_global_image_capability_schema_version_name, image_id, schema_data, freeform_tags, display_name, defined_tags):
+
+    kwargs = {}
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['computeGlobalImageCapabilitySchemaVersionName'] = compute_global_image_capability_schema_version_name
+    _details['imageId'] = image_id
+    _details['schemaData'] = cli_util.parse_json_parameter("schema_data", schema_data)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('core', 'compute', ctx)
+    result = client.create_compute_image_capability_schema(
+        create_compute_image_capability_schema_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @dedicated_vm_host_group.command(name=cli_util.override('compute.create_dedicated_vm_host.command_name', 'create'), help=u"""Creates a new dedicated virtual machine host in the specified compartment and the specified availability domain. Dedicated virtual machine hosts enable you to run your Compute virtual machine (VM) instances on dedicated servers that are a single tenant and not shared with other customers. For more information, see [Dedicated Virtual Machine Hosts].""")
 @cli_util.option('--availability-domain', required=True, help=u"""The availability domain of the dedicated virtual machine host.
 
@@ -1009,7 +1105,7 @@ Example: `My Oracle Linux image`""")
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--image-source-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Details for creating an image through import""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--instance-id', help=u"""The OCID of the instance you want to use as the basis for the image.""")
-@cli_util.option('--launch-mode', type=custom_types.CliCaseInsensitiveChoice(["NATIVE", "EMULATED", "PARAVIRTUALIZED", "CUSTOM"]), help=u"""Specifies the configuration mode for launching virtual machine (VM) instances. The configuration modes are: * `NATIVE` - VM instances launch with paravirtualized boot and VFIO devices. The default value for Oracle-provided images. * `EMULATED` - VM instances launch with emulated devices, such as the E1000 network driver and emulated SCSI disk controller. * `PARAVIRTUALIZED` - VM instances launch with paravirtualized devices using virtio drivers. * `CUSTOM` - VM instances launch with custom configuration settings specified in the `LaunchOptions` parameter.""")
+@cli_util.option('--launch-mode', type=custom_types.CliCaseInsensitiveChoice(["NATIVE", "EMULATED", "PARAVIRTUALIZED", "CUSTOM"]), help=u"""Specifies the configuration mode for launching virtual machine (VM) instances. The configuration modes are: * `NATIVE` - VM instances launch with paravirtualized boot and VFIO devices. The default value for Oracle-provided images. * `EMULATED` - VM instances launch with emulated devices, such as the E1000 network driver and emulated SCSI disk controller. * `PARAVIRTUALIZED` - VM instances launch with paravirtualized devices using VirtIO drivers. * `CUSTOM` - VM instances launch with custom configuration settings specified in the `LaunchOptions` parameter.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "IMPORTING", "AVAILABLE", "EXPORTING", "DISABLED", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -1103,7 +1199,7 @@ Example: `My Oracle Linux image`""")
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--instance-id', help=u"""The OCID of the instance you want to use as the basis for the image.""")
-@cli_util.option('--launch-mode', type=custom_types.CliCaseInsensitiveChoice(["NATIVE", "EMULATED", "PARAVIRTUALIZED", "CUSTOM"]), help=u"""Specifies the configuration mode for launching virtual machine (VM) instances. The configuration modes are: * `NATIVE` - VM instances launch with paravirtualized boot and VFIO devices. The default value for Oracle-provided images. * `EMULATED` - VM instances launch with emulated devices, such as the E1000 network driver and emulated SCSI disk controller. * `PARAVIRTUALIZED` - VM instances launch with paravirtualized devices using virtio drivers. * `CUSTOM` - VM instances launch with custom configuration settings specified in the `LaunchOptions` parameter.""")
+@cli_util.option('--launch-mode', type=custom_types.CliCaseInsensitiveChoice(["NATIVE", "EMULATED", "PARAVIRTUALIZED", "CUSTOM"]), help=u"""Specifies the configuration mode for launching virtual machine (VM) instances. The configuration modes are: * `NATIVE` - VM instances launch with paravirtualized boot and VFIO devices. The default value for Oracle-provided images. * `EMULATED` - VM instances launch with emulated devices, such as the E1000 network driver and emulated SCSI disk controller. * `PARAVIRTUALIZED` - VM instances launch with paravirtualized devices using VirtIO drivers. * `CUSTOM` - VM instances launch with custom configuration settings specified in the `LaunchOptions` parameter.""")
 @cli_util.option('--image-source-details-operating-system', help=u"""""")
 @cli_util.option('--image-source-details-operating-system-version', help=u"""""")
 @cli_util.option('--image-source-details-source-image-type', type=custom_types.CliCaseInsensitiveChoice(["QCOW2", "VMDK"]), help=u"""The format of the image to be imported.  Only monolithic images are supported. This attribute is not used for exported Oracle images with the OCI image format.""")
@@ -1210,7 +1306,7 @@ Example: `My Oracle Linux image`""")
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--instance-id', help=u"""The OCID of the instance you want to use as the basis for the image.""")
-@cli_util.option('--launch-mode', type=custom_types.CliCaseInsensitiveChoice(["NATIVE", "EMULATED", "PARAVIRTUALIZED", "CUSTOM"]), help=u"""Specifies the configuration mode for launching virtual machine (VM) instances. The configuration modes are: * `NATIVE` - VM instances launch with paravirtualized boot and VFIO devices. The default value for Oracle-provided images. * `EMULATED` - VM instances launch with emulated devices, such as the E1000 network driver and emulated SCSI disk controller. * `PARAVIRTUALIZED` - VM instances launch with paravirtualized devices using virtio drivers. * `CUSTOM` - VM instances launch with custom configuration settings specified in the `LaunchOptions` parameter.""")
+@cli_util.option('--launch-mode', type=custom_types.CliCaseInsensitiveChoice(["NATIVE", "EMULATED", "PARAVIRTUALIZED", "CUSTOM"]), help=u"""Specifies the configuration mode for launching virtual machine (VM) instances. The configuration modes are: * `NATIVE` - VM instances launch with paravirtualized boot and VFIO devices. The default value for Oracle-provided images. * `EMULATED` - VM instances launch with emulated devices, such as the E1000 network driver and emulated SCSI disk controller. * `PARAVIRTUALIZED` - VM instances launch with paravirtualized devices using VirtIO drivers. * `CUSTOM` - VM instances launch with custom configuration settings specified in the `LaunchOptions` parameter.""")
 @cli_util.option('--image-source-details-operating-system', help=u"""""")
 @cli_util.option('--image-source-details-operating-system-version', help=u"""""")
 @cli_util.option('--image-source-details-source-image-type', type=custom_types.CliCaseInsensitiveChoice(["QCOW2", "VMDK"]), help=u"""The format of the image to be imported.  Only monolithic images are supported. This attribute is not used for exported Oracle images with the OCI image format.""")
@@ -1370,6 +1466,31 @@ def delete_app_catalog_subscription(ctx, from_json, listing_id, compartment_id, 
         listing_id=listing_id,
         compartment_id=compartment_id,
         resource_version=resource_version,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@compute_image_capability_schema_group.command(name=cli_util.override('compute.delete_compute_image_capability_schema.command_name', 'delete'), help=u"""Deletes the specified Compute Image Capability Schema""")
+@cli_util.option('--compute-image-capability-schema-id', required=True, help=u"""The id of the compute image capability schema or the image ocid""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_compute_image_capability_schema(ctx, from_json, compute_image_capability_schema_id, if_match):
+
+    if isinstance(compute_image_capability_schema_id, six.string_types) and len(compute_image_capability_schema_id.strip()) == 0:
+        raise click.UsageError('Parameter --compute-image-capability-schema-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    client = cli_util.build_client('core', 'compute', ctx)
+    result = client.delete_compute_image_capability_schema(
+        compute_image_capability_schema_id=compute_image_capability_schema_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -2110,6 +2231,77 @@ def get_boot_volume_attachment(ctx, from_json, boot_volume_attachment_id):
     cli_util.render_response(result, ctx)
 
 
+@compute_global_image_capability_schema_group.command(name=cli_util.override('compute.get_compute_global_image_capability_schema.command_name', 'get'), help=u"""Gets the specified Compute Global Image Capability Schema""")
+@cli_util.option('--compute-global-image-capability-schema-id', required=True, help=u"""The [OCID] of the compute global image capability schema""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'ComputeGlobalImageCapabilitySchema'})
+@cli_util.wrap_exceptions
+def get_compute_global_image_capability_schema(ctx, from_json, compute_global_image_capability_schema_id):
+
+    if isinstance(compute_global_image_capability_schema_id, six.string_types) and len(compute_global_image_capability_schema_id.strip()) == 0:
+        raise click.UsageError('Parameter --compute-global-image-capability-schema-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    client = cli_util.build_client('core', 'compute', ctx)
+    result = client.get_compute_global_image_capability_schema(
+        compute_global_image_capability_schema_id=compute_global_image_capability_schema_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@compute_global_image_capability_schema_version_group.command(name=cli_util.override('compute.get_compute_global_image_capability_schema_version.command_name', 'get'), help=u"""Gets the specified Compute Global Image Capability Schema Version""")
+@cli_util.option('--compute-global-image-capability-schema-id', required=True, help=u"""The [OCID] of the compute global image capability schema""")
+@cli_util.option('--compute-global-image-capability-schema-version-name', required=True, help=u"""The name of the compute global image capability schema version""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'ComputeGlobalImageCapabilitySchemaVersion'})
+@cli_util.wrap_exceptions
+def get_compute_global_image_capability_schema_version(ctx, from_json, compute_global_image_capability_schema_id, compute_global_image_capability_schema_version_name):
+
+    if isinstance(compute_global_image_capability_schema_id, six.string_types) and len(compute_global_image_capability_schema_id.strip()) == 0:
+        raise click.UsageError('Parameter --compute-global-image-capability-schema-id cannot be whitespace or empty string')
+
+    if isinstance(compute_global_image_capability_schema_version_name, six.string_types) and len(compute_global_image_capability_schema_version_name.strip()) == 0:
+        raise click.UsageError('Parameter --compute-global-image-capability-schema-version-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    client = cli_util.build_client('core', 'compute', ctx)
+    result = client.get_compute_global_image_capability_schema_version(
+        compute_global_image_capability_schema_id=compute_global_image_capability_schema_id,
+        compute_global_image_capability_schema_version_name=compute_global_image_capability_schema_version_name,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@compute_image_capability_schema_group.command(name=cli_util.override('compute.get_compute_image_capability_schema.command_name', 'get'), help=u"""Gets the specified Compute Image Capability Schema""")
+@cli_util.option('--compute-image-capability-schema-id', required=True, help=u"""The id of the compute image capability schema or the image ocid""")
+@cli_util.option('--is-merge-enabled', type=click.BOOL, help=u"""Merge the image capability schema with the global image capability schema""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'ComputeImageCapabilitySchema'})
+@cli_util.wrap_exceptions
+def get_compute_image_capability_schema(ctx, from_json, compute_image_capability_schema_id, is_merge_enabled):
+
+    if isinstance(compute_image_capability_schema_id, six.string_types) and len(compute_image_capability_schema_id.strip()) == 0:
+        raise click.UsageError('Parameter --compute-image-capability-schema-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if is_merge_enabled is not None:
+        kwargs['is_merge_enabled'] = is_merge_enabled
+    client = cli_util.build_client('core', 'compute', ctx)
+    result = client.get_compute_image_capability_schema(
+        compute_image_capability_schema_id=compute_image_capability_schema_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @console_history_group.command(name=cli_util.override('compute.get_console_history.command_name', 'get'), help=u"""Shows the metadata for the specified console history. See [CaptureConsoleHistory] for details about using the console history operations.""")
 @cli_util.option('--instance-console-history-id', required=True, help=u"""The OCID of the console history.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2428,14 +2620,16 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
 
 Example: `My bare metal instance`""")
-@cli_util.option('--extended-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Additional metadata key/value pairs that you provide. They serve the same purpose and functionality as fields in the 'metadata' object.
+@cli_util.option('--extended-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Additional metadata key/value pairs that you provide. They serve the same purpose and functionality as fields in the `metadata` object.
 
-They are distinguished from 'metadata' fields in that these can be nested JSON objects (whereas 'metadata' fields are string/string maps only).""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+They are distinguished from `metadata` fields in that these can be nested JSON objects (whereas `metadata` fields are string/string maps only).
+
+The combined size of the `metadata` and `extendedMetadata` objects can be a maximum of 32,000 bytes.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--fault-domain', help=u"""A fault domain is a grouping of hardware and infrastructure within an availability domain. Each availability domain contains three fault domains. Fault domains let you distribute your instances so that they are not on the same physical hardware within a single availability domain. A hardware failure or Compute hardware maintenance that affects one fault domain does not affect instances in other fault domains.
 
-If you do not specify the fault domain, the system selects one for you. To change the fault domain for an instance, terminate it and launch a new instance in the preferred fault domain.
+If you do not specify the fault domain, the system selects one for you.
 
-To get a list of fault domains, use the [ListFaultDomains] operation in the Identity and Access Management Service API.
+ To get a list of fault domains, use the [ListFaultDomains] operation in the Identity and Access Management Service API.
 
 Example: `FAULT-DOMAIN-1`""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
@@ -2479,7 +2673,9 @@ A metadata service runs on every launched instance. The service is an HTTP endpo
 
      curl -H \"Authorization: Bearer Oracle\" http://169.254.169.254/opc/v2/instance/      curl -H \"Authorization: Bearer Oracle\" http://169.254.169.254/opc/v2/instance/metadata/      curl -H \"Authorization: Bearer Oracle\" http://169.254.169.254/opc/v2/instance/metadata/<any-key-name>
 
- You'll get back a response that includes all the instance information; only the metadata information; or  the metadata information for the specified key name, respectively.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+ You'll get back a response that includes all the instance information; only the metadata information; or  the metadata information for the specified key name, respectively.
+
+ The combined size of the `metadata` and `extendedMetadata` objects can be a maximum of 32,000 bytes.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--agent-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--shape-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--source-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Details for creating an instance. Use this parameter to specify whether a boot volume or an image should be used to launch a new instance.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2615,14 +2811,16 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
 
 Example: `My bare metal instance`""")
-@cli_util.option('--extended-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Additional metadata key/value pairs that you provide. They serve the same purpose and functionality as fields in the 'metadata' object.
+@cli_util.option('--extended-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Additional metadata key/value pairs that you provide. They serve the same purpose and functionality as fields in the `metadata` object.
 
-They are distinguished from 'metadata' fields in that these can be nested JSON objects (whereas 'metadata' fields are string/string maps only).""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+They are distinguished from `metadata` fields in that these can be nested JSON objects (whereas `metadata` fields are string/string maps only).
+
+The combined size of the `metadata` and `extendedMetadata` objects can be a maximum of 32,000 bytes.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--fault-domain', help=u"""A fault domain is a grouping of hardware and infrastructure within an availability domain. Each availability domain contains three fault domains. Fault domains let you distribute your instances so that they are not on the same physical hardware within a single availability domain. A hardware failure or Compute hardware maintenance that affects one fault domain does not affect instances in other fault domains.
 
-If you do not specify the fault domain, the system selects one for you. To change the fault domain for an instance, terminate it and launch a new instance in the preferred fault domain.
+If you do not specify the fault domain, the system selects one for you.
 
-To get a list of fault domains, use the [ListFaultDomains] operation in the Identity and Access Management Service API.
+ To get a list of fault domains, use the [ListFaultDomains] operation in the Identity and Access Management Service API.
 
 Example: `FAULT-DOMAIN-1`""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
@@ -2666,7 +2864,9 @@ A metadata service runs on every launched instance. The service is an HTTP endpo
 
      curl -H \"Authorization: Bearer Oracle\" http://169.254.169.254/opc/v2/instance/      curl -H \"Authorization: Bearer Oracle\" http://169.254.169.254/opc/v2/instance/metadata/      curl -H \"Authorization: Bearer Oracle\" http://169.254.169.254/opc/v2/instance/metadata/<any-key-name>
 
- You'll get back a response that includes all the instance information; only the metadata information; or  the metadata information for the specified key name, respectively.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+ You'll get back a response that includes all the instance information; only the metadata information; or  the metadata information for the specified key name, respectively.
+
+ The combined size of the `metadata` and `extendedMetadata` objects can be a maximum of 32,000 bytes.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--agent-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--shape-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--subnet-id', help=u"""Deprecated. Instead use `subnetId` in [CreateVnicDetails]. At least one of them is required; if you provide both, the values must match.""")
@@ -2806,14 +3006,16 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
 
 Example: `My bare metal instance`""")
-@cli_util.option('--extended-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Additional metadata key/value pairs that you provide. They serve the same purpose and functionality as fields in the 'metadata' object.
+@cli_util.option('--extended-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Additional metadata key/value pairs that you provide. They serve the same purpose and functionality as fields in the `metadata` object.
 
-They are distinguished from 'metadata' fields in that these can be nested JSON objects (whereas 'metadata' fields are string/string maps only).""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+They are distinguished from `metadata` fields in that these can be nested JSON objects (whereas `metadata` fields are string/string maps only).
+
+The combined size of the `metadata` and `extendedMetadata` objects can be a maximum of 32,000 bytes.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--fault-domain', help=u"""A fault domain is a grouping of hardware and infrastructure within an availability domain. Each availability domain contains three fault domains. Fault domains let you distribute your instances so that they are not on the same physical hardware within a single availability domain. A hardware failure or Compute hardware maintenance that affects one fault domain does not affect instances in other fault domains.
 
-If you do not specify the fault domain, the system selects one for you. To change the fault domain for an instance, terminate it and launch a new instance in the preferred fault domain.
+If you do not specify the fault domain, the system selects one for you.
 
-To get a list of fault domains, use the [ListFaultDomains] operation in the Identity and Access Management Service API.
+ To get a list of fault domains, use the [ListFaultDomains] operation in the Identity and Access Management Service API.
 
 Example: `FAULT-DOMAIN-1`""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
@@ -2857,7 +3059,9 @@ A metadata service runs on every launched instance. The service is an HTTP endpo
 
      curl -H \"Authorization: Bearer Oracle\" http://169.254.169.254/opc/v2/instance/      curl -H \"Authorization: Bearer Oracle\" http://169.254.169.254/opc/v2/instance/metadata/      curl -H \"Authorization: Bearer Oracle\" http://169.254.169.254/opc/v2/instance/metadata/<any-key-name>
 
- You'll get back a response that includes all the instance information; only the metadata information; or  the metadata information for the specified key name, respectively.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+ You'll get back a response that includes all the instance information; only the metadata information; or  the metadata information for the specified key name, respectively.
+
+ The combined size of the `metadata` and `extendedMetadata` objects can be a maximum of 32,000 bytes.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--agent-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--shape-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--subnet-id', help=u"""Deprecated. Instead use `subnetId` in [CreateVnicDetails]. At least one of them is required; if you provide both, the values must match.""")
@@ -3190,6 +3394,190 @@ def list_boot_volume_attachments(ctx, from_json, all_pages, page_size, availabil
         result = client.list_boot_volume_attachments(
             availability_domain=availability_domain,
             compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@compute_global_image_capability_schema_version_group.command(name=cli_util.override('compute.list_compute_global_image_capability_schema_versions.command_name', 'list'), help=u"""Lists Compute Global Image Capability Schema versions in the specified compartment.""")
+@cli_util.option('--compute-global-image-capability-schema-id', required=True, help=u"""The [OCID] of the compute global image capability schema""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
+
+Example: `50`""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.
+
+**Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by availability domain if the scope of the resource type is within a single availability domain. If you call one of these \"List\" operations without specifying an availability domain, the resources are grouped by availability domain, then sorted.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The DISPLAYNAME sort order is case sensitive.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[ComputeGlobalImageCapabilitySchemaVersionSummary]'})
+@cli_util.wrap_exceptions
+def list_compute_global_image_capability_schema_versions(ctx, from_json, all_pages, page_size, compute_global_image_capability_schema_id, display_name, limit, page, sort_by, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(compute_global_image_capability_schema_id, six.string_types) and len(compute_global_image_capability_schema_id.strip()) == 0:
+        raise click.UsageError('Parameter --compute-global-image-capability-schema-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    client = cli_util.build_client('core', 'compute', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_compute_global_image_capability_schema_versions,
+            compute_global_image_capability_schema_id=compute_global_image_capability_schema_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_compute_global_image_capability_schema_versions,
+            limit,
+            page_size,
+            compute_global_image_capability_schema_id=compute_global_image_capability_schema_id,
+            **kwargs
+        )
+    else:
+        result = client.list_compute_global_image_capability_schema_versions(
+            compute_global_image_capability_schema_id=compute_global_image_capability_schema_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@compute_global_image_capability_schema_group.command(name=cli_util.override('compute.list_compute_global_image_capability_schemas.command_name', 'list'), help=u"""Lists Compute Global Image Capability Schema in the specified compartment.""")
+@cli_util.option('--compartment-id', help=u"""A filter to return only resources that match the given compartment OCID exactly.""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
+
+Example: `50`""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.
+
+**Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by availability domain if the scope of the resource type is within a single availability domain. If you call one of these \"List\" operations without specifying an availability domain, the resources are grouped by availability domain, then sorted.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The DISPLAYNAME sort order is case sensitive.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[ComputeGlobalImageCapabilitySchemaSummary]'})
+@cli_util.wrap_exceptions
+def list_compute_global_image_capability_schemas(ctx, from_json, all_pages, page_size, compartment_id, display_name, limit, page, sort_by, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    client = cli_util.build_client('core', 'compute', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_compute_global_image_capability_schemas,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_compute_global_image_capability_schemas,
+            limit,
+            page_size,
+            **kwargs
+        )
+    else:
+        result = client.list_compute_global_image_capability_schemas(
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@compute_image_capability_schema_group.command(name=cli_util.override('compute.list_compute_image_capability_schemas.command_name', 'list'), help=u"""Lists Compute Image Capability Schema in the specified compartment. You can also query by a specific imageId.""")
+@cli_util.option('--compartment-id', help=u"""A filter to return only resources that match the given compartment OCID exactly.""")
+@cli_util.option('--image-id', help=u"""The [OCID] of an image.""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
+@cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
+
+Example: `50`""")
+@cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. You can provide one sort order (`sortOrder`). Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. The DISPLAYNAME sort order is case sensitive.
+
+**Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by availability domain if the scope of the resource type is within a single availability domain. If you call one of these \"List\" operations without specifying an availability domain, the resources are grouped by availability domain, then sorted.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The DISPLAYNAME sort order is case sensitive.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'list[ComputeImageCapabilitySchemaSummary]'})
+@cli_util.wrap_exceptions
+def list_compute_image_capability_schemas(ctx, from_json, all_pages, page_size, compartment_id, image_id, display_name, limit, page, sort_by, sort_order):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    if image_id is not None:
+        kwargs['image_id'] = image_id
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    client = cli_util.build_client('core', 'compute', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_compute_image_capability_schemas,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_compute_image_capability_schemas,
+            limit,
+            page_size,
+            **kwargs
+        )
+    else:
+        result = client.list_compute_image_capability_schemas(
             **kwargs
         )
     cli_util.render_response(result, ctx)
@@ -4127,6 +4515,61 @@ def terminate_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     cli_util.render_response(result, ctx)
 
 
+@compute_image_capability_schema_group.command(name=cli_util.override('compute.update_compute_image_capability_schema.command_name', 'update'), help=u"""Updates the specified Compute Image Capability Schema""")
+@cli_util.option('--compute-image-capability-schema-id', required=True, help=u"""The id of the compute image capability schema or the image ocid""")
+@cli_util.option('--display-name', help=u"""A user-friendly name for the compute image capability schema""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--schema-data', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The map of each capability name to its ImageCapabilitySchemaDescriptor.
+
+This option is a JSON dictionary of type dict(str, ImageCapabilitySchemaDescriptor).  For documentation on ImageCapabilitySchemaDescriptor please see our API reference: https://docs.cloud.oracle.com/api/#/en/iaas/20160918/datatypes/ImageCapabilitySchemaDescriptor.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'schema-data': {'module': 'core', 'class': 'dict(str, ImageCapabilitySchemaDescriptor)'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'schema-data': {'module': 'core', 'class': 'dict(str, ImageCapabilitySchemaDescriptor)'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'core', 'class': 'ComputeImageCapabilitySchema'})
+@cli_util.wrap_exceptions
+def update_compute_image_capability_schema(ctx, from_json, force, compute_image_capability_schema_id, display_name, freeform_tags, schema_data, defined_tags, if_match):
+
+    if isinstance(compute_image_capability_schema_id, six.string_types) and len(compute_image_capability_schema_id.strip()) == 0:
+        raise click.UsageError('Parameter --compute-image-capability-schema-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or schema_data or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and schema-data and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+
+    _details = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if schema_data is not None:
+        _details['schemaData'] = cli_util.parse_json_parameter("schema_data", schema_data)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('core', 'compute', ctx)
+    result = client.update_compute_image_capability_schema(
+        compute_image_capability_schema_id=compute_image_capability_schema_id,
+        update_compute_image_capability_schema_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @console_history_group.command(name=cli_util.override('compute.update_console_history.command_name', 'update'), help=u"""Updates the specified console history metadata.""")
 @cli_util.option('--instance-console-history-id', required=True, help=u"""The OCID of the console history.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
@@ -4385,15 +4828,19 @@ Example: `My bare metal instance`""")
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--agent-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Instance agent configuration options to choose for updating the instance""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Custom metadata key/value string pairs that you provide. Any set of key/value pairs provided here will completely replace the current set of key/value pairs in the 'metadata' field on the instance.
+@cli_util.option('--metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Custom metadata key/value string pairs that you provide. Any set of key/value pairs provided here will completely replace the current set of key/value pairs in the `metadata` field on the instance.
 
-Both the 'user_data' and 'ssh_authorized_keys' fields cannot be changed after an instance has launched. Any request which updates, removes, or adds either of these fields will be rejected. You must provide the same values for 'user_data' and 'ssh_authorized_keys' that already exist on the instance.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--extended-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Additional metadata key/value pairs that you provide. They serve the same purpose and functionality as fields in the 'metadata' object.
+The \"user_data\" field and the \"ssh_authorized_keys\" field cannot be changed after an instance has launched. Any request that updates, removes, or adds either of these fields will be rejected. You must provide the same values for \"user_data\" and \"ssh_authorized_keys\" that already exist on the instance.
 
-They are distinguished from 'metadata' fields in that these can be nested JSON objects (whereas 'metadata' fields are string/string maps only).
+The combined size of the `metadata` and `extendedMetadata` objects can be a maximum of 32,000 bytes.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--extended-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Additional metadata key/value pairs that you provide. They serve the same purpose and functionality as fields in the `metadata` object.
 
-Both the 'user_data' and 'ssh_authorized_keys' fields cannot be changed after an instance has launched. Any request which updates, removes, or adds either of these fields will be rejected. You must provide the same values for 'user_data' and 'ssh_authorized_keys' that already exist on the instance.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--shape', help=u"""The shape of the instance. The shape determines the number of CPUs and the amount of memory allocated to the instance. For more information about how to change shapes, and a list of shapes that are supported, see [Changing the Shape of an Instance].
+They are distinguished from `metadata` fields in that these can be nested JSON objects (whereas `metadata` fields are string/string maps only).
+
+The \"user_data\" field and the \"ssh_authorized_keys\" field cannot be changed after an instance has launched. Any request that updates, removes, or adds either of these fields will be rejected. You must provide the same values for \"user_data\" and \"ssh_authorized_keys\" that already exist on the instance.
+
+The combined size of the `metadata` and `extendedMetadata` objects can be a maximum of 32,000 bytes.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--shape', help=u"""The shape of the instance. The shape determines the number of CPUs and the amount of memory allocated to the instance. For more information about how to change shapes, and a list of shapes that are supported, see [Editing an Instance].
 
 For details about the CPUs, memory, and other properties of each shape, see [Compute Shapes].
 
@@ -4403,23 +4850,29 @@ If the instance is running when you change the shape, the instance is rebooted.
 
 Example: `VM.Standard2.1`""")
 @cli_util.option('--shape-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--fault-domain', help=u"""A fault domain is a grouping of hardware and infrastructure within an availability domain. Each availability domain contains three fault domains. Fault domains let you distribute your instances so that they are not on the same physical hardware within a single availability domain. A hardware failure or Compute hardware maintenance that affects one fault domain does not affect instances in other fault domains.
+
+To get a list of fault domains, use the [ListFaultDomains] operation in the Identity and Access Management Service API.
+
+Example: `FAULT-DOMAIN-1`""")
+@cli_util.option('--launch-options', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Options for tuning the compatibility and performance of VM shapes.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["MOVING", "PROVISIONING", "RUNNING", "STARTING", "STOPPING", "STOPPED", "CREATING_IMAGE", "TERMINATING", "TERMINATED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'UpdateInstanceAgentConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'shape-config': {'module': 'core', 'class': 'UpdateInstanceShapeConfigDetails'}})
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'UpdateInstanceAgentConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'shape-config': {'module': 'core', 'class': 'UpdateInstanceShapeConfigDetails'}, 'launch-options': {'module': 'core', 'class': 'UpdateLaunchOptions'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'UpdateInstanceAgentConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'shape-config': {'module': 'core', 'class': 'UpdateInstanceShapeConfigDetails'}}, output_type={'module': 'core', 'class': 'Instance'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'UpdateInstanceAgentConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'shape-config': {'module': 'core', 'class': 'UpdateInstanceShapeConfigDetails'}, 'launch-options': {'module': 'core', 'class': 'UpdateLaunchOptions'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def update_instance(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_id, defined_tags, display_name, freeform_tags, agent_config, metadata, extended_metadata, shape, shape_config, if_match):
+def update_instance(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_id, defined_tags, display_name, freeform_tags, agent_config, metadata, extended_metadata, shape, shape_config, fault_domain, launch_options, if_match):
 
     if isinstance(instance_id, six.string_types) and len(instance_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-id cannot be whitespace or empty string')
     if not force:
-        if defined_tags or freeform_tags or agent_config or metadata or extended_metadata or shape_config:
-            if not click.confirm("WARNING: Updates to defined-tags and freeform-tags and agent-config and metadata and extended-metadata and shape-config will replace any existing values. Are you sure you want to continue?"):
+        if defined_tags or freeform_tags or agent_config or metadata or extended_metadata or shape_config or launch_options:
+            if not click.confirm("WARNING: Updates to defined-tags and freeform-tags and agent-config and metadata and extended-metadata and shape-config and launch-options will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -4451,6 +4904,12 @@ def update_instance(ctx, from_json, force, wait_for_state, max_wait_seconds, wai
 
     if shape_config is not None:
         _details['shapeConfig'] = cli_util.parse_json_parameter("shape_config", shape_config)
+
+    if fault_domain is not None:
+        _details['faultDomain'] = fault_domain
+
+    if launch_options is not None:
+        _details['launchOptions'] = cli_util.parse_json_parameter("launch_options", launch_options)
 
     client = cli_util.build_client('core', 'compute', ctx)
     result = client.update_instance(
