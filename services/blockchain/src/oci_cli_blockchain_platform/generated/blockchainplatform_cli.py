@@ -15,7 +15,7 @@ from oci_cli import custom_types  # noqa: F401
 from oci_cli.aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('blockchain.blockchain_root_group.command_name', 'blockchain'), cls=CommandGroupWithAlias, help=cli_util.override('blockchain.blockchain_root_group.help', """Blockchain Platform Plane API"""), short_help=cli_util.override('blockchain.blockchain_root_group.short_help', """Blockchain Platform Control Plane API"""))
+@cli.command(cli_util.override('blockchain.blockchain_root_group.command_name', 'blockchain'), cls=CommandGroupWithAlias, help=cli_util.override('blockchain.blockchain_root_group.help', """Blockchain Platform Control Plane API"""), short_help=cli_util.override('blockchain.blockchain_root_group.short_help', """Blockchain Platform Control Plane API"""))
 @cli_util.help_option_group
 def blockchain_root_group():
     pass

@@ -6,6 +6,32 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.12.6 - 2020-08-04
+-------------------
+NOTE: OCI CLI is now available for install through Homebrew
+
+  * ``brew update && brew install oci-cli``
+
+Added
+~~~~~
+
+* Support to allow a customer to create and manage private endpoints in data-flow service.
+
+  * ``oci data-flow application create private-endpoint-id``
+
+* Support for Big Data service Change Shape and restart BDS node
+
+  * ``oci bds instance change-shape``
+  * ``oci bds instance restart-node``
+
+* Support for Creating stacks from Compartment as part of Resource Manager service.
+  * ``oci resource-manager stack create-from-compartment --compartment-id --config-source-compartment-id --config-source-region --config-source-services-to-discover``
+  * ``oci resource-manager stack list-resource-discovery-services --compartment-id``
+
+* Support for additional versions in BDS model, e.g. CSQL version
+
+* Support for calling Oracle Cloud Infrastructure services in the Cardiff region (``--region uk-gov-cardiff-1``)
+
 2.12.5 - 2020-07-28
 -------------------
 Added
@@ -16,26 +42,26 @@ Added
   * ``oci compute image import from-object-uri --operating-system --operating-system-version``
 
 * Support to change the fault domain for VM instances in the Compute service
- 
+
   * ``oci compute instance update --fault-domain <fault-domain>``
 
 * Support to update VM instances with different launch options (networking type, boot volume attachment type, and in-transit encryption for the boot volume's paravirtualized attachment) in the Compute service
- 
+
   * ``oci compute instance update --launch-options <launch-options>``
 
 * Support for 'Patch Now' Maintenance Runs for Autonomous Exadata Infrastructure and Autonomous Container Database resources in the Database service
- 
+
   * ``oci db maintenance-run update --is-patch-now-enabled``
 
 * Support for automatic performance and cost tuning on volumes in the Block Storage service
 
   * ``oci bv boot-volume create --is-auto-tune-enabled``
-  * ``oci bv boot-volume update --is-auto-tune-enabled`` 
+  * ``oci bv boot-volume update --is-auto-tune-enabled``
   * ``oci bv volume create --is-auto-tune-enabled``
   * ``oci bv volume update --is-auto-tune-enabled``
 
 * Support for image capability schemas and schema versions as a part of the Compute Imaging Service
- 
+
   * ``oci compute global-image-capability-schema``
   * ``oci compute global-image-capability-schema-version``
   * ``oci compute image-capability-schema``
@@ -224,9 +250,9 @@ Added
 
 * Support for the new DNS format of the Data Transfer service
 
-* Support for Schedule-based Autoscaling via a new policy type (scheduled) in the Autoscaling service 
+* Support for Schedule-based Autoscaling via a new policy type (scheduled) in the Autoscaling service
 
-* Support for enabling/disabling individual policies in the Autoscaling service 
+* Support for enabling/disabling individual policies in the Autoscaling service
 
   * ``oci autoscaling policy update --is-enabled``
 
@@ -408,13 +434,13 @@ Added
 ~~~~~
 
 * Support for updating the license type of database systems in the Database service
- 
+
   * ``oci db system update --license-model``
 
-* Support for updating the version of 19c autonomous databases in the Database service 
+* Support for updating the version of 19c autonomous databases in the Database service
 
   * ``oci db autonomous-database update --db-version``
-  
+
 * Support for backup and restore functionality in the Key Management service
 
   * ``oci kms management vault backup``
@@ -605,7 +631,7 @@ Added
 
   * ``oci data-flow application update --class-name, --file-uri, --language, --spark-version``
 
-* Support for enabling and disabling the pod security policy admission controller in the Container Engine Service 
+* Support for enabling and disabling the pod security policy admission controller in the Container Engine Service
 
   * ``oci ce cluster create | update --options '{"admissionControllerOptions": {"isPodSecurityPolicyEnabled": true}}'``
 
@@ -641,7 +667,7 @@ Fixed
 Changed
 ~~~~~~~
 
-* The following operations within the Data Transfer Service 
+* The following operations within the Data Transfer Service
 
   * ``oci dts export configure-physical-appliance`` is now idempotent
 

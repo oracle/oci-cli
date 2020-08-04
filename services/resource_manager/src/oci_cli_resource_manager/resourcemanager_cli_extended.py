@@ -214,6 +214,9 @@ def create_import_tf_state_job(ctx, **kwargs):
     ctx.invoke(resourcemanager_cli.create_job_create_import_tf_state_job_operation_details, **kwargs)
 
 
+# Shorten stack commands based on compartment resource discovery
+cli_util.rename_command(resourcemanager_cli, resourcemanager_cli.stack_group, resourcemanager_cli.create_stack_create_compartment_config_source_details, "create-from-compartment")
+
 # Shorten stack commands based on Git provider
 cli_util.rename_command(resourcemanager_cli, resourcemanager_cli.stack_group, resourcemanager_cli.create_stack_create_git_config_source_details, "create-from-git-provider")
 cli_util.rename_command(resourcemanager_cli, resourcemanager_cli.stack_group, resourcemanager_cli.update_stack_update_git_config_source_details, "update-from-git-provider")
