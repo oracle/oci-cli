@@ -999,7 +999,7 @@ def get_work_request(ctx, from_json, work_request_id):
     cli_util.render_response(result, ctx)
 
 
-@managed_instance_group.command(name=cli_util.override('os_management.install_all_package_updates_on_managed_instance.command_name', 'install-all-package-updates-on'), help=u"""Install all of the available package updates for the managed instance.""")
+@managed_instance_group.command(name=cli_util.override('os_management.install_all_package_updates_on_managed_instance.command_name', 'install-all-package-updates'), help=u"""Install all of the available package updates for the managed instance.""")
 @cli_util.option('--managed-instance-id', required=True, help=u"""OCID for the managed instance""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELLING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -1047,7 +1047,7 @@ def install_all_package_updates_on_managed_instance(ctx, from_json, wait_for_sta
     cli_util.render_response(result, ctx)
 
 
-@managed_instance_group.command(name=cli_util.override('os_management.install_all_windows_updates_on_managed_instance.command_name', 'install-all-windows-updates-on'), help=u"""Install all of the available Windows updates for the managed instance.""")
+@managed_instance_group.command(name=cli_util.override('os_management.install_all_windows_updates_on_managed_instance.command_name', 'install-all-windows-updates'), help=u"""Install all of the available Windows updates for the managed instance.""")
 @cli_util.option('--managed-instance-id', required=True, help=u"""OCID for the managed instance""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELLING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -1095,7 +1095,7 @@ def install_all_windows_updates_on_managed_instance(ctx, from_json, wait_for_sta
     cli_util.render_response(result, ctx)
 
 
-@managed_instance_group.command(name=cli_util.override('os_management.install_package_on_managed_instance.command_name', 'install-package-on'), help=u"""Installs a package on a managed instance.""")
+@managed_instance_group.command(name=cli_util.override('os_management.install_package_on_managed_instance.command_name', 'install-package'), help=u"""Installs a package on a managed instance.""")
 @cli_util.option('--managed-instance-id', required=True, help=u"""OCID for the managed instance""")
 @cli_util.option('--software-package-name', required=True, help=u"""Package name""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELLING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -1145,7 +1145,7 @@ def install_package_on_managed_instance(ctx, from_json, wait_for_state, max_wait
     cli_util.render_response(result, ctx)
 
 
-@managed_instance_group.command(name=cli_util.override('os_management.install_package_update_on_managed_instance.command_name', 'install-package-update-on'), help=u"""Updates a package on a managed instance.""")
+@managed_instance_group.command(name=cli_util.override('os_management.install_package_update_on_managed_instance.command_name', 'install-package-update'), help=u"""Updates a package on a managed instance.""")
 @cli_util.option('--managed-instance-id', required=True, help=u"""OCID for the managed instance""")
 @cli_util.option('--software-package-name', required=True, help=u"""Package name""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELLING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -1195,7 +1195,7 @@ def install_package_update_on_managed_instance(ctx, from_json, wait_for_state, m
     cli_util.render_response(result, ctx)
 
 
-@managed_instance_group.command(name=cli_util.override('os_management.install_windows_update_on_managed_instance.command_name', 'install-windows-update-on'), help=u"""Installs a Windows update on a managed instance.""")
+@managed_instance_group.command(name=cli_util.override('os_management.install_windows_update_on_managed_instance.command_name', 'install-windows-update'), help=u"""Installs a Windows update on a managed instance.""")
 @cli_util.option('--managed-instance-id', required=True, help=u"""OCID for the managed instance""")
 @cli_util.option('--windows-update-name', required=True, help=u"""Unique identifier for the Windows update. NOTE - This is not an OCID, but is a unique identifier assigned by Microsoft. Example: `6981d463-cd91-4a26-b7c4-ea4ded9183ed`""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELLING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -1635,7 +1635,7 @@ def list_managed_instances(ctx, from_json, all_pages, page_size, compartment_id,
     cli_util.render_response(result, ctx)
 
 
-@managed_instance_group.command(name=cli_util.override('os_management.list_packages_installed_on_managed_instance.command_name', 'list-packages-installed-on'), help=u"""Returns a list of installed packages on the Managed Instance.""")
+@managed_instance_group.command(name=cli_util.override('os_management.list_packages_installed_on_managed_instance.command_name', 'list-packages-installed'), help=u"""Returns a list of installed packages on the Managed Instance.""")
 @cli_util.option('--managed-instance-id', required=True, help=u"""OCID for the managed instance""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable.
 
@@ -2036,7 +2036,7 @@ def list_windows_updates(ctx, from_json, all_pages, page_size, compartment_id, d
     cli_util.render_response(result, ctx)
 
 
-@managed_instance_group.command(name=cli_util.override('os_management.list_windows_updates_installed_on_managed_instance.command_name', 'list-windows-updates-installed-on'), help=u"""Returns a list of installed Windows updates for a Managed Instance. This is only applicable to Windows instances.""")
+@managed_instance_group.command(name=cli_util.override('os_management.list_windows_updates_installed_on_managed_instance.command_name', 'list-windows-updates-installed'), help=u"""Returns a list of installed Windows updates for a Managed Instance. This is only applicable to Windows instances.""")
 @cli_util.option('--managed-instance-id', required=True, help=u"""OCID for the managed instance""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable.
 

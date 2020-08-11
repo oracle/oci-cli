@@ -12,8 +12,8 @@ from oci_cli import json_skeleton_utils
 
 
 # remove update-incident stand-alone command
-incident_cli.support_root_group.commands.pop(incident_cli.update_incident_group.name)
-incident_cli.support_root_group.commands.pop(incident_cli.status_group.name)
+incident_cli.incident_root_group.commands.pop(incident_cli.update_incident_group.name)
+incident_cli.incident_root_group.commands.pop(incident_cli.status_group.name)
 
 
 # add command to incident group

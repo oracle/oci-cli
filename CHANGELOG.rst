@@ -6,6 +6,35 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.12.7 - 2020-08-11
+-------------------
+Added
+~~~~~
+
+* Support for additional list filtering in the Data Catalog service
+
+  * ``oci data-catalog <object type within catalog> list --display-name-contains``
+  * ``oci data-catalog job-definition list --job-execution-state``
+
+* Support for new db workload type AJD in the Autonomous Database service
+
+  * ``oci db autonomous-database --db-workload AJD``
+
+*  Support for script directory option for non-interactive installations on Mac, Linux, and Windows OS. (`Issue 282 <https://github.com/oracle/oci-cli/issues/282>`__) (`Issue 305 <https://github.com/oracle/oci-cli/issues/305>`__)
+
+  * ``./install.sh --script-dir <directory>``
+  * ``.\install.ps1 -ScriptDir <directory>``
+
+Changed
+~~~~~~~
+
+* Idna package has been removed from the requirements. (`Issue 295 <https://github.com/oracle/oci-cli/issues/295>`__)
+
+Fixed
+~~~~~
+
+* Bug fix in raw requests operations to correctly handle hyphens in headers. (`Issue 269 <https://github.com/oracle/oci-cli/issues/269>`__)
+
 2.12.6 - 2020-08-04
 -------------------
 NOTE: OCI CLI is now available for install through Homebrew

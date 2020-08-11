@@ -319,8 +319,8 @@ def create_config_and_signer_based_on_click_context(ctx):
     try:
         client_config = build_config(ctx.obj)
     except exceptions.ConfigFileNotFound as e:
-        # config file is not required to be present for instance principal auth
-        if not instance_principal_auth:
+        # config file is not required to be present for instance principal auth or resource principal auth
+        if not (instance_principal_auth or resource_principal_auth):
             sys.exit("ERROR: " + str(e))
         client_config["additional_user_agent"] = 'Oracle-PythonCLI/{}'.format(__version__)
         if ctx.obj['debug']:

@@ -273,7 +273,7 @@ def get_subscription(ctx, from_json, subscription_id):
     cli_util.render_response(result, ctx)
 
 
-@subscription_group.command(name=cli_util.override('notification_data_plane.get_unsubscription.command_name', 'get-un'), help=u"""Gets the unsubscription details for the specified subscription.
+@subscription_group.command(name=cli_util.override('notification_data_plane.get_unsubscription.command_name', 'get-unsubscription'), help=u"""Gets the unsubscription details for the specified subscription.
 
 Transactions Per Minute (TPM) per-tenancy limit for this operation: 60.""")
 @cli_util.option('--id', required=True, help=u"""The [OCID] of the subscription to unsubscribe from.""")

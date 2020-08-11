@@ -54,6 +54,14 @@ class TestInstall(unittest.TestCase):
         print(output)
         self.assertIn("dry-run: exec_dir=/tmp/oci-cli-exec-dir", output)
 
+    def test_install_script_dir(self):
+        print("\ntest_install_script_dir")
+        install_command = self.base_install_command[:]
+        install_command.extend(['--script-dir', '/tmp/oci-cli-script-dir'])
+        output = str(subprocess.check_output(install_command).strip())
+        print(output)
+        self.assertIn("dry-run: script_dir=/tmp/oci-cli-script-dir", output)
+
     def test_install_update_path_and_enable_tab_completion(self):
         print("\ntest_install_update_path_and_enable_tab_completion")
         install_command = self.base_install_command[:]
