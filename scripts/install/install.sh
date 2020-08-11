@@ -41,6 +41,8 @@ The following options are available:
         CLI installation is done.
     --exec-dir
         This input parameter allows the user to specify the directory where CLI executable is stored.
+    --script-dir
+        This input parameter allows the user to specify the directory where CLI scripts are stored.
     --update-path-and-enable-tab-completion
         If this flag is specified, the PATH environment variable is updated to
         include CLI executable and tab auto completion of CLI commands is enabled.
@@ -103,6 +105,12 @@ case $key in
     --exec-dir)
     CLI_EXECUTABLE_DIR="$2"
     install_args="$install_args --exec-dir $CLI_EXECUTABLE_DIR"
+    shift # past argument
+    shift # past value
+    ;;
+    --script-dir)
+    CLI_SCRIPT_DIR="$2"
+    install_args="$install_args --script-dir $CLI_SCRIPT_DIR"
     shift # past argument
     shift # past value
     ;;

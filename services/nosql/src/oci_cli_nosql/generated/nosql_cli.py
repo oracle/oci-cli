@@ -931,7 +931,7 @@ def prepare_statement(ctx, from_json, compartment_id, statement):
 @cli_util.option('--statement', required=True, help=u"""A NoSQL SQL query statement; or a Base64-encoded prepared statement.""")
 @cli_util.option('--is-prepared', type=click.BOOL, help=u"""If true, the statement is a prepared statement.""")
 @cli_util.option('--consistency', type=custom_types.CliCaseInsensitiveChoice(["EVENTUAL", "ABSOLUTE"]), help=u"""Consistency requirement for a read operation.""")
-@cli_util.option('--max-read-in-k-bs', type=click.INT, help=u"""A limit on the total amount of data read during this operation, in KB.""")
+@cli_util.option('--max-read-in-kbs', type=click.INT, help=u"""A limit on the total amount of data read during this operation, in KB.""")
 @cli_util.option('--variables', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A map of prepared statement variables to values.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--timeout-in-ms', type=click.INT, help=u"""Timeout setting for the query.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -941,7 +941,7 @@ def prepare_statement(ctx, from_json, compartment_id, statement):
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'variables': {'module': 'nosql', 'class': 'dict(str, object)'}}, output_type={'module': 'nosql', 'class': 'QueryResultCollection'})
 @cli_util.wrap_exceptions
-def query(ctx, from_json, compartment_id, statement, is_prepared, consistency, max_read_in_k_bs, variables, timeout_in_ms, limit, page):
+def query(ctx, from_json, compartment_id, statement, is_prepared, consistency, max_read_in_kbs, variables, timeout_in_ms, limit, page):
 
     kwargs = {}
     if limit is not None:
@@ -960,8 +960,8 @@ def query(ctx, from_json, compartment_id, statement, is_prepared, consistency, m
     if consistency is not None:
         _details['consistency'] = consistency
 
-    if max_read_in_k_bs is not None:
-        _details['maxReadInKBs'] = max_read_in_k_bs
+    if max_read_in_kbs is not None:
+        _details['maxReadInKBs'] = max_read_in_kbs
 
     if variables is not None:
         _details['variables'] = cli_util.parse_json_parameter("variables", variables)

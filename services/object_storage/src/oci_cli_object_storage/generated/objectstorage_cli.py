@@ -1875,6 +1875,8 @@ def make_bucket_writable(ctx, from_json, namespace_name, bucket_name):
 
 @object_group.command(name=cli_util.override('os.put_object.command_name', 'put'), help=u"""Creates a new object or overwrites an existing object with the same name. The maximum object size allowed by PutObject is 50 GiB.
 
+See [Object Names] for object naming requirements.
+
 See [Special Instructions for Object Storage PUT] for request signature requirements.""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
 @cli_util.option('--bucket-name', required=True, help=u"""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")
@@ -2117,7 +2119,9 @@ def reencrypt_object(ctx, from_json, namespace_name, bucket_name, object_name, k
     cli_util.render_response(result, ctx)
 
 
-@object_group.command(name=cli_util.override('os.rename_object.command_name', 'rename'), help=u"""Rename an object in the given Object Storage namespace.""")
+@object_group.command(name=cli_util.override('os.rename_object.command_name', 'rename'), help=u"""Rename an object in the given Object Storage namespace.
+
+See [Object Names] for object naming requirements.""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
 @cli_util.option('--bucket-name', required=True, help=u"""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")
 @cli_util.option('--source-name', required=True, help=u"""The name of the source object to be renamed.""")

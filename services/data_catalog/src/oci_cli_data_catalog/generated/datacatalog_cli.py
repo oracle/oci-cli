@@ -474,6 +474,10 @@ def change_catalog_private_endpoint_compartment(ctx, from_json, wait_for_state, 
 @cli_util.option('--position', type=click.INT, help=u"""Position of the attribute in the record definition.""")
 @cli_util.option('--precision', type=click.INT, help=u"""Precision of the attribute value usually applies to float data type.""")
 @cli_util.option('--scale', type=click.INT, help=u"""Scale of the attribute value usually applies to float data type.""")
+@cli_util.option('--min-collection-count', type=click.INT, help=u"""The minimum count for the number of instances of a given type stored in this collection type attribute,applicable if this attribute is a complex type.""")
+@cli_util.option('--max-collection-count', type=click.INT, help=u"""The maximum count for the number of instances of a given type stored in this collection type attribute,applicable if this attribute is a complex type. For type specifications in systems that specify only \"capacity\" without upper or lower bound , this property can also be used to just mean \"capacity\". Some examples are Varray size in Oracle , Occurs Clause in Cobol , capacity in XmlSchemaObjectCollection , maxOccurs in  Xml , maxItems in Json""")
+@cli_util.option('--external-datatype-entity-key', help=u"""External entity key that represents the datatype of this attribute , applicable if this attribute is a complex type.""")
+@cli_util.option('--external-parent-attribute-key', help=u"""External attribute key that represents the parent attribute  of this attribute , applicable if the parent attribute is of complex type.""")
 @cli_util.option('--properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A map of maps that contains the properties which are specific to the attribute type. Each attribute type definition defines it's set of required and optional properties. The map keys are category names and the values are maps of property name to property value. Every property is contained inside of a category. Most attributes have required properties within the \"default\" category. To determine the set of required and optional properties for an attribute type, a query can be done on '/types?type=attribute' that returns a collection of all attribute types. The appropriate attribute type, which will include definitions of all of it's properties, can be identified from this collection. Example: `{\"properties\": { \"default\": { \"key1\": \"value1\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED", "MOVING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -483,7 +487,7 @@ def change_catalog_private_endpoint_compartment(ctx, from_json, wait_for_state, 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'properties': {'module': 'data_catalog', 'class': 'dict(str, dict(str, string))'}}, output_type={'module': 'data_catalog', 'class': 'Attribute'})
 @cli_util.wrap_exceptions
-def create_attribute(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, data_asset_key, entity_key, display_name, external_data_type, time_external, description, is_incremental_data, is_nullable, length, position, precision, scale, properties):
+def create_attribute(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, data_asset_key, entity_key, display_name, external_data_type, time_external, description, is_incremental_data, is_nullable, length, position, precision, scale, min_collection_count, max_collection_count, external_datatype_entity_key, external_parent_attribute_key, properties):
 
     if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
@@ -522,6 +526,18 @@ def create_attribute(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 
     if scale is not None:
         _details['scale'] = scale
+
+    if min_collection_count is not None:
+        _details['minCollectionCount'] = min_collection_count
+
+    if max_collection_count is not None:
+        _details['maxCollectionCount'] = max_collection_count
+
+    if external_datatype_entity_key is not None:
+        _details['externalDatatypeEntityKey'] = external_datatype_entity_key
+
+    if external_parent_attribute_key is not None:
+        _details['externalParentAttributeKey'] = external_parent_attribute_key
 
     if properties is not None:
         _details['properties'] = cli_util.parse_json_parameter("properties", properties)
@@ -1420,7 +1436,7 @@ def create_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
 @job_definition_group.command(name=cli_util.override('data_catalog.create_job_definition.command_name', 'create'), help=u"""Creates a new job definition.""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly display name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
-@cli_util.option('--job-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["HARVEST", "PROFILING", "SAMPLING", "PREVIEW", "IMPORT", "EXPORT", "INTERNAL", "PURGE", "IMMEDIATE", "SCHEDULED", "IMMEDIATE_EXECUTION", "SCHEDULED_EXECUTION", "SCHEDULED_EXECUTION_INSTANCE"]), help=u"""Type of the job definition.""")
+@cli_util.option('--job-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["HARVEST", "PROFILING", "SAMPLING", "PREVIEW", "IMPORT", "EXPORT", "IMPORT_GLOSSARY", "EXPORT_GLOSSARY", "INTERNAL", "PURGE", "IMMEDIATE", "SCHEDULED", "IMMEDIATE_EXECUTION", "SCHEDULED_EXECUTION", "SCHEDULED_EXECUTION_INSTANCE"]), help=u"""Type of the job definition.""")
 @cli_util.option('--description', help=u"""Detailed description of the job definition.""")
 @cli_util.option('--is-incremental', type=click.BOOL, help=u"""Specifies if the job definition is incremental or full.""")
 @cli_util.option('--data-asset-key', help=u"""The key of the data asset for which the job is defined.""")
@@ -1505,7 +1521,7 @@ def create_job_definition(ctx, from_json, wait_for_state, max_wait_seconds, wait
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--job-key', required=True, help=u"""Unique job key.""")
 @cli_util.option('--sub-type', help=u"""Sub-type of this job execution.""")
-@cli_util.option('--job-type', type=custom_types.CliCaseInsensitiveChoice(["HARVEST", "PROFILING", "SAMPLING", "PREVIEW", "IMPORT", "EXPORT", "INTERNAL", "PURGE", "IMMEDIATE", "SCHEDULED", "IMMEDIATE_EXECUTION", "SCHEDULED_EXECUTION", "SCHEDULED_EXECUTION_INSTANCE"]), help=u"""Type of the job execution.""")
+@cli_util.option('--job-type', type=custom_types.CliCaseInsensitiveChoice(["HARVEST", "PROFILING", "SAMPLING", "PREVIEW", "IMPORT", "EXPORT", "IMPORT_GLOSSARY", "EXPORT_GLOSSARY", "INTERNAL", "PURGE", "IMMEDIATE", "SCHEDULED", "IMMEDIATE_EXECUTION", "SCHEDULED_EXECUTION", "SCHEDULED_EXECUTION_INSTANCE"]), help=u"""Type of the job execution.""")
 @cli_util.option('--parent-key', help=u"""The unique key of the parent execution or null if this job execution has no parent.""")
 @cli_util.option('--time-started', type=custom_types.CLI_DATETIME, help=u"""Time that job execution started. An [RFC3339] formatted datetime string.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-ended', type=custom_types.CLI_DATETIME, help=u"""Time that the job execution ended or null if it hasn't yet completed. An [RFC3339] formatted datetime string.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -2500,7 +2516,7 @@ def export_glossary(ctx, from_json, catalog_id, glossary_key, is_relationship_ex
 @cli_util.option('--data-asset-key', required=True, help=u"""Unique data asset key.""")
 @cli_util.option('--entity-key', required=True, help=u"""Unique entity key.""")
 @cli_util.option('--attribute-key', required=True, help=u"""Unique attribute key.""")
-@cli_util.option('--fields', type=custom_types.CliCaseInsensitiveChoice(["key", "displayName", "description", "entityKey", "lifecycleState", "timeCreated", "timeUpdated", "createdById", "updatedById", "externalDataType", "externalKey", "isIncrementalData", "isNullable", "length", "position", "precision", "scale", "timeExternal", "uri", "properties"]), multiple=True, help=u"""Specifies the fields to return in an entity attribute response.""")
+@cli_util.option('--fields', type=custom_types.CliCaseInsensitiveChoice(["key", "displayName", "description", "entityKey", "lifecycleState", "timeCreated", "timeUpdated", "createdById", "updatedById", "externalDataType", "externalKey", "isIncrementalData", "isNullable", "length", "position", "precision", "scale", "timeExternal", "uri", "properties", "path", "minCollectionCount", "maxCollectionCount", "datatypeEntityKey", "externalDatatypeEntityKey", "parentAttributeKey", "externalParentAttributeKey"]), multiple=True, help=u"""Specifies the fields to return in an entity attribute response.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -2728,7 +2744,7 @@ def get_data_asset_tag(ctx, from_json, catalog_id, data_asset_key, tag_key, fiel
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--data-asset-key', required=True, help=u"""Unique data asset key.""")
 @cli_util.option('--entity-key', required=True, help=u"""Unique entity key.""")
-@cli_util.option('--fields', type=custom_types.CliCaseInsensitiveChoice(["key", "displayName", "description", "dataAssetKey", "timeCreated", "timeUpdated", "createdById", "updatedById", "lifecycleState", "externalKey", "timeExternal", "timeStatusUpdated", "isLogical", "isPartition", "folderKey", "typeKey", "path", "harvestStatus", "lastJobKey", "uri", "properties"]), multiple=True, help=u"""Specifies the fields to return in an entity response.""")
+@cli_util.option('--fields', type=custom_types.CliCaseInsensitiveChoice(["key", "displayName", "description", "dataAssetKey", "timeCreated", "timeUpdated", "createdById", "updatedById", "lifecycleState", "externalKey", "timeExternal", "timeStatusUpdated", "isLogical", "isPartition", "folderKey", "folderName", "typeKey", "path", "harvestStatus", "lastJobKey", "uri", "properties"]), multiple=True, help=u"""Specifies the fields to return in an entity response.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -2907,7 +2923,7 @@ def get_glossary(ctx, from_json, catalog_id, glossary_key, fields):
 @job_group.command(name=cli_util.override('data_catalog.get_job.command_name', 'get'), help=u"""Gets a specific job by key within a data catalog.""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--job-key', required=True, help=u"""Unique job key.""")
-@cli_util.option('--fields', type=custom_types.CliCaseInsensitiveChoice(["key", "displayName", "description", "catalogId", "lifecycleState", "timeCreated", "timeUpdated", "jobType", "scheduleCronExpression", "timeScheduleBegin", "timeScheduleEnd", "scheduleType", "connectionKey", "jobDefinitionKey", "internalVersion", "executionCount", "timeOfLatestExecution", "executions", "createdById", "updatedById", "uri"]), multiple=True, help=u"""Specifies the fields to return in a job response.""")
+@cli_util.option('--fields', type=custom_types.CliCaseInsensitiveChoice(["key", "displayName", "description", "catalogId", "lifecycleState", "timeCreated", "timeUpdated", "jobType", "scheduleCronExpression", "timeScheduleBegin", "timeScheduleEnd", "scheduleType", "connectionKey", "jobDefinitionKey", "internalVersion", "executionCount", "timeOfLatestExecution", "executions", "createdById", "updatedById", "uri", "jobDefinitionName", "errorCode", "errorMessage"]), multiple=True, help=u"""Specifies the fields to return in a job response.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -2937,7 +2953,7 @@ def get_job(ctx, from_json, catalog_id, job_key, fields):
 @job_definition_group.command(name=cli_util.override('data_catalog.get_job_definition.command_name', 'get'), help=u"""Gets a specific job definition by key within a data catalog.""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--job-definition-key', required=True, help=u"""Unique job definition key.""")
-@cli_util.option('--fields', type=custom_types.CliCaseInsensitiveChoice(["key", "displayName", "description", "catalogId", "jobType", "isIncremental", "dataAssetKey", "connectionKey", "internalVersion", "lifecycleState", "timeCreated", "timeUpdated", "createdById", "updatedById", "uri", "isSampleDataExtracted", "sampleDataSizeInMBs", "properties"]), multiple=True, help=u"""Specifies the fields to return in a job definition response.""")
+@cli_util.option('--fields', type=custom_types.CliCaseInsensitiveChoice(["key", "displayName", "description", "catalogId", "jobType", "isIncremental", "dataAssetKey", "connectionKey", "internalVersion", "lifecycleState", "timeCreated", "timeUpdated", "createdById", "updatedById", "uri", "isSampleDataExtracted", "sampleDataSizeInMBs", "timeLatestExecutionStarted", "timeLatestExecutionEnded", "jobExecutionState", "scheduleType", "properties"]), multiple=True, help=u"""Specifies the fields to return in a job definition response.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -3388,6 +3404,7 @@ def list_attribute_tags(ctx, from_json, all_pages, page_size, catalog_id, data_a
 @cli_util.option('--data-asset-key', required=True, help=u"""Unique data asset key.""")
 @cli_util.option('--entity-key', required=True, help=u"""Unique entity key.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given. The match is not case sensitive.""")
+@cli_util.option('--display-name-contains', help=u"""A filter to return only resources that match display name pattern given. The match is not case sensitive. For Example : /folders?displayNameContains=Cu.* The above would match all folders with display name that starts with \"Cu\".""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED", "MOVING"]), help=u"""A filter to return only resources that match the specified lifecycle state. The value is case insensitive.""")
 @cli_util.option('--time-created', type=custom_types.CLI_DATETIME, help=u"""Time that the resource was created. An [RFC3339] formatted datetime string.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-updated', type=custom_types.CLI_DATETIME, help=u"""Time that the resource was updated. An [RFC3339] formatted datetime string.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -3402,7 +3419,7 @@ def list_attribute_tags(ctx, from_json, all_pages, page_size, catalog_id, data_a
 @cli_util.option('--position', type=click.INT, help=u"""Position of the attribute in the record definition.""")
 @cli_util.option('--precision', type=click.INT, help=u"""Precision of the attribute value usually applies to float data type.""")
 @cli_util.option('--scale', type=click.INT, help=u"""Scale of the attribute value usually applies to float data type.""")
-@cli_util.option('--fields', type=custom_types.CliCaseInsensitiveChoice(["key", "displayName", "description", "entityKey", "lifecycleState", "timeCreated", "externalDataType", "externalKey", "length", "isNullable", "uri"]), multiple=True, help=u"""Specifies the fields to return in an entity attribute summary response.""")
+@cli_util.option('--fields', type=custom_types.CliCaseInsensitiveChoice(["key", "displayName", "description", "entityKey", "lifecycleState", "timeCreated", "externalDataType", "externalKey", "length", "isNullable", "uri", "path", "minCollectionCount", "maxCollectionCount", "datatypeEntityKey", "externalDatatypeEntityKey", "parentAttributeKey", "externalParentAttributeKey"]), multiple=True, help=u"""Specifies the fields to return in an entity attribute summary response.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. If no value is specified TIMECREATED is default.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -3414,7 +3431,7 @@ def list_attribute_tags(ctx, from_json, all_pages, page_size, catalog_id, data_a
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_catalog', 'class': 'AttributeCollection'})
 @cli_util.wrap_exceptions
-def list_attributes(ctx, from_json, all_pages, page_size, catalog_id, data_asset_key, entity_key, display_name, lifecycle_state, time_created, time_updated, created_by_id, updated_by_id, external_key, time_external, external_type_name, is_incremental_data, is_nullable, length, position, precision, scale, fields, sort_by, sort_order, limit, page):
+def list_attributes(ctx, from_json, all_pages, page_size, catalog_id, data_asset_key, entity_key, display_name, display_name_contains, lifecycle_state, time_created, time_updated, created_by_id, updated_by_id, external_key, time_external, external_type_name, is_incremental_data, is_nullable, length, position, precision, scale, fields, sort_by, sort_order, limit, page):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -3431,6 +3448,8 @@ def list_attributes(ctx, from_json, all_pages, page_size, catalog_id, data_asset
     kwargs = {}
     if display_name is not None:
         kwargs['display_name'] = display_name
+    if display_name_contains is not None:
+        kwargs['display_name_contains'] = display_name_contains
     if lifecycle_state is not None:
         kwargs['lifecycle_state'] = lifecycle_state
     if time_created is not None:
@@ -3626,6 +3645,7 @@ def list_catalogs(ctx, from_json, all_pages, page_size, compartment_id, display_
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--data-asset-key', required=True, help=u"""Unique data asset key.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given. The match is not case sensitive.""")
+@cli_util.option('--display-name-contains', help=u"""A filter to return only resources that match display name pattern given. The match is not case sensitive. For Example : /folders?displayNameContains=Cu.* The above would match all folders with display name that starts with \"Cu\".""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED", "MOVING"]), help=u"""A filter to return only resources that match the specified lifecycle state. The value is case insensitive.""")
 @cli_util.option('--time-created', type=custom_types.CLI_DATETIME, help=u"""Time that the resource was created. An [RFC3339] formatted datetime string.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-updated', type=custom_types.CLI_DATETIME, help=u"""Time that the resource was updated. An [RFC3339] formatted datetime string.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -3646,7 +3666,7 @@ def list_catalogs(ctx, from_json, all_pages, page_size, compartment_id, display_
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_catalog', 'class': 'ConnectionCollection'})
 @cli_util.wrap_exceptions
-def list_connections(ctx, from_json, all_pages, page_size, catalog_id, data_asset_key, display_name, lifecycle_state, time_created, time_updated, created_by_id, updated_by_id, external_key, time_status_updated, is_default, fields, sort_by, sort_order, limit, page):
+def list_connections(ctx, from_json, all_pages, page_size, catalog_id, data_asset_key, display_name, display_name_contains, lifecycle_state, time_created, time_updated, created_by_id, updated_by_id, external_key, time_status_updated, is_default, fields, sort_by, sort_order, limit, page):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -3660,6 +3680,8 @@ def list_connections(ctx, from_json, all_pages, page_size, catalog_id, data_asse
     kwargs = {}
     if display_name is not None:
         kwargs['display_name'] = display_name
+    if display_name_contains is not None:
+        kwargs['display_name_contains'] = display_name_contains
     if lifecycle_state is not None:
         kwargs['lifecycle_state'] = lifecycle_state
     if time_created is not None:
@@ -3804,6 +3826,7 @@ def list_data_asset_tags(ctx, from_json, all_pages, page_size, catalog_id, data_
 @data_asset_collection_group.command(name=cli_util.override('data_catalog.list_data_assets.command_name', 'list-data-assets'), help=u"""Returns a list of data assets within a data catalog.""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given. The match is not case sensitive.""")
+@cli_util.option('--display-name-contains', help=u"""A filter to return only resources that match display name pattern given. The match is not case sensitive. For Example : /folders?displayNameContains=Cu.* The above would match all folders with display name that starts with \"Cu\".""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED", "MOVING"]), help=u"""A filter to return only resources that match the specified lifecycle state. The value is case insensitive.""")
 @cli_util.option('--time-created', type=custom_types.CLI_DATETIME, help=u"""Time that the resource was created. An [RFC3339] formatted datetime string.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-updated', type=custom_types.CLI_DATETIME, help=u"""Time that the resource was updated. An [RFC3339] formatted datetime string.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -3823,7 +3846,7 @@ def list_data_asset_tags(ctx, from_json, all_pages, page_size, catalog_id, data_
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_catalog', 'class': 'DataAssetCollection'})
 @cli_util.wrap_exceptions
-def list_data_assets(ctx, from_json, all_pages, page_size, catalog_id, display_name, lifecycle_state, time_created, time_updated, created_by_id, updated_by_id, external_key, type_key, fields, sort_by, sort_order, limit, page):
+def list_data_assets(ctx, from_json, all_pages, page_size, catalog_id, display_name, display_name_contains, lifecycle_state, time_created, time_updated, created_by_id, updated_by_id, external_key, type_key, fields, sort_by, sort_order, limit, page):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -3834,6 +3857,8 @@ def list_data_assets(ctx, from_json, all_pages, page_size, catalog_id, display_n
     kwargs = {}
     if display_name is not None:
         kwargs['display_name'] = display_name
+    if display_name_contains is not None:
+        kwargs['display_name_contains'] = display_name_contains
     if lifecycle_state is not None:
         kwargs['lifecycle_state'] = lifecycle_state
     if time_created is not None:
@@ -3889,6 +3914,7 @@ def list_data_assets(ctx, from_json, all_pages, page_size, catalog_id, display_n
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--data-asset-key', required=True, help=u"""Unique data asset key.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given. The match is not case sensitive.""")
+@cli_util.option('--display-name-contains', help=u"""A filter to return only resources that match display name pattern given. The match is not case sensitive. For Example : /folders?displayNameContains=Cu.* The above would match all folders with display name that starts with \"Cu\".""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED", "MOVING"]), help=u"""A filter to return only resources that match the specified lifecycle state. The value is case insensitive.""")
 @cli_util.option('--time-created', type=custom_types.CLI_DATETIME, help=u"""Time that the resource was created. An [RFC3339] formatted datetime string.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-updated', type=custom_types.CLI_DATETIME, help=u"""Time that the resource was updated. An [RFC3339] formatted datetime string.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -3903,7 +3929,7 @@ def list_data_assets(ctx, from_json, all_pages, page_size, catalog_id, display_n
 @cli_util.option('--path', help=u"""Full path of the resource for resources that support paths.""")
 @cli_util.option('--harvest-status', type=custom_types.CliCaseInsensitiveChoice(["COMPLETE", "ERROR", "IN_PROGRESS", "DEFERRED"]), help=u"""Harvest status of the harvestable resource as updated by the harvest process.""")
 @cli_util.option('--last-job-key', help=u"""Key of the last harvest process to update this resource.""")
-@cli_util.option('--fields', type=custom_types.CliCaseInsensitiveChoice(["key", "displayName", "description", "dataAssetKey", "timeCreated", "timeUpdated", "updatedById", "lifecycleState", "folderKey", "externalKey", "path", "uri"]), multiple=True, help=u"""Specifies the fields to return in an entity summary response.""")
+@cli_util.option('--fields', type=custom_types.CliCaseInsensitiveChoice(["key", "displayName", "description", "dataAssetKey", "timeCreated", "timeUpdated", "updatedById", "lifecycleState", "folderKey", "folderName", "externalKey", "path", "uri"]), multiple=True, help=u"""Specifies the fields to return in an entity summary response.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. If no value is specified TIMECREATED is default.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -3915,7 +3941,7 @@ def list_data_assets(ctx, from_json, all_pages, page_size, catalog_id, display_n
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_catalog', 'class': 'EntityCollection'})
 @cli_util.wrap_exceptions
-def list_entities(ctx, from_json, all_pages, page_size, catalog_id, data_asset_key, display_name, lifecycle_state, time_created, time_updated, created_by_id, updated_by_id, external_key, time_external, time_status_updated, is_logical, is_partition, folder_key, path, harvest_status, last_job_key, fields, sort_by, sort_order, limit, page):
+def list_entities(ctx, from_json, all_pages, page_size, catalog_id, data_asset_key, display_name, display_name_contains, lifecycle_state, time_created, time_updated, created_by_id, updated_by_id, external_key, time_external, time_status_updated, is_logical, is_partition, folder_key, path, harvest_status, last_job_key, fields, sort_by, sort_order, limit, page):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -3929,6 +3955,8 @@ def list_entities(ctx, from_json, all_pages, page_size, catalog_id, data_asset_k
     kwargs = {}
     if display_name is not None:
         kwargs['display_name'] = display_name
+    if display_name_contains is not None:
+        kwargs['display_name_contains'] = display_name_contains
     if lifecycle_state is not None:
         kwargs['lifecycle_state'] = lifecycle_state
     if time_created is not None:
@@ -4185,6 +4213,7 @@ def list_folder_tags(ctx, from_json, all_pages, page_size, catalog_id, data_asse
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--data-asset-key', required=True, help=u"""Unique data asset key.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given. The match is not case sensitive.""")
+@cli_util.option('--display-name-contains', help=u"""A filter to return only resources that match display name pattern given. The match is not case sensitive. For Example : /folders?displayNameContains=Cu.* The above would match all folders with display name that starts with \"Cu\".""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED", "MOVING"]), help=u"""A filter to return only resources that match the specified lifecycle state. The value is case insensitive.""")
 @cli_util.option('--parent-folder-key', help=u"""Unique folder key.""")
 @cli_util.option('--path', help=u"""Full path of the resource for resources that support paths.""")
@@ -4207,7 +4236,7 @@ def list_folder_tags(ctx, from_json, all_pages, page_size, catalog_id, data_asse
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_catalog', 'class': 'FolderCollection'})
 @cli_util.wrap_exceptions
-def list_folders(ctx, from_json, all_pages, page_size, catalog_id, data_asset_key, display_name, lifecycle_state, parent_folder_key, path, external_key, time_created, time_updated, created_by_id, updated_by_id, harvest_status, last_job_key, fields, sort_by, sort_order, limit, page):
+def list_folders(ctx, from_json, all_pages, page_size, catalog_id, data_asset_key, display_name, display_name_contains, lifecycle_state, parent_folder_key, path, external_key, time_created, time_updated, created_by_id, updated_by_id, harvest_status, last_job_key, fields, sort_by, sort_order, limit, page):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -4221,6 +4250,8 @@ def list_folders(ctx, from_json, all_pages, page_size, catalog_id, data_asset_ke
     kwargs = {}
     if display_name is not None:
         kwargs['display_name'] = display_name
+    if display_name_contains is not None:
+        kwargs['display_name_contains'] = display_name_contains
     if lifecycle_state is not None:
         kwargs['lifecycle_state'] = lifecycle_state
     if parent_folder_key is not None:
@@ -4284,6 +4315,7 @@ def list_folders(ctx, from_json, all_pages, page_size, catalog_id, data_asset_ke
 @glossary_group.command(name=cli_util.override('data_catalog.list_glossaries.command_name', 'list'), help=u"""Returns a list of all glossaries within a data catalog.""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given. The match is not case sensitive.""")
+@cli_util.option('--display-name-contains', help=u"""A filter to return only resources that match display name pattern given. The match is not case sensitive. For Example : /folders?displayNameContains=Cu.* The above would match all folders with display name that starts with \"Cu\".""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED", "MOVING"]), help=u"""A filter to return only resources that match the specified lifecycle state. The value is case insensitive.""")
 @cli_util.option('--time-created', type=custom_types.CLI_DATETIME, help=u"""Time that the resource was created. An [RFC3339] formatted datetime string.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-updated', type=custom_types.CLI_DATETIME, help=u"""Time that the resource was updated. An [RFC3339] formatted datetime string.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -4301,7 +4333,7 @@ def list_folders(ctx, from_json, all_pages, page_size, catalog_id, data_asset_ke
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_catalog', 'class': 'GlossaryCollection'})
 @cli_util.wrap_exceptions
-def list_glossaries(ctx, from_json, all_pages, page_size, catalog_id, display_name, lifecycle_state, time_created, time_updated, created_by_id, updated_by_id, fields, sort_by, sort_order, limit, page):
+def list_glossaries(ctx, from_json, all_pages, page_size, catalog_id, display_name, display_name_contains, lifecycle_state, time_created, time_updated, created_by_id, updated_by_id, fields, sort_by, sort_order, limit, page):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -4312,6 +4344,8 @@ def list_glossaries(ctx, from_json, all_pages, page_size, catalog_id, display_na
     kwargs = {}
     if display_name is not None:
         kwargs['display_name'] = display_name
+    if display_name_contains is not None:
+        kwargs['display_name_contains'] = display_name_contains
     if lifecycle_state is not None:
         kwargs['lifecycle_state'] = lifecycle_state
     if time_created is not None:
@@ -4362,8 +4396,10 @@ def list_glossaries(ctx, from_json, all_pages, page_size, catalog_id, display_na
 @job_definition_collection_group.command(name=cli_util.override('data_catalog.list_job_definitions.command_name', 'list-job-definitions'), help=u"""Returns a list of job definitions within a data catalog.""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given. The match is not case sensitive.""")
+@cli_util.option('--display-name-contains', help=u"""A filter to return only resources that match display name pattern given. The match is not case sensitive. For Example : /folders?displayNameContains=Cu.* The above would match all folders with display name that starts with \"Cu\".""")
+@cli_util.option('--job-execution-state', type=custom_types.CliCaseInsensitiveChoice(["CREATED", "IN_PROGRESS", "INACTIVE", "FAILED", "SUCCEEDED", "CANCELED"]), help=u"""Job execution state.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED", "MOVING"]), help=u"""A filter to return only resources that match the specified lifecycle state. The value is case insensitive.""")
-@cli_util.option('--job-type', type=custom_types.CliCaseInsensitiveChoice(["HARVEST", "PROFILING", "SAMPLING", "PREVIEW", "IMPORT", "EXPORT", "INTERNAL", "PURGE", "IMMEDIATE", "SCHEDULED", "IMMEDIATE_EXECUTION", "SCHEDULED_EXECUTION", "SCHEDULED_EXECUTION_INSTANCE"]), help=u"""Job type.""")
+@cli_util.option('--job-type', type=custom_types.CliCaseInsensitiveChoice(["HARVEST", "PROFILING", "SAMPLING", "PREVIEW", "IMPORT", "EXPORT", "IMPORT_GLOSSARY", "EXPORT_GLOSSARY", "INTERNAL", "PURGE", "IMMEDIATE", "SCHEDULED", "IMMEDIATE_EXECUTION", "SCHEDULED_EXECUTION", "SCHEDULED_EXECUTION_INSTANCE"]), help=u"""Job type.""")
 @cli_util.option('--is-incremental', type=click.BOOL, help=u"""Whether job definition is an incremental harvest (true) or a full harvest (false).""")
 @cli_util.option('--data-asset-key', help=u"""Unique data asset key.""")
 @cli_util.option('--connection-key', help=u"""Unique connection key.""")
@@ -4372,8 +4408,8 @@ def list_glossaries(ctx, from_json, all_pages, page_size, catalog_id, display_na
 @cli_util.option('--created-by-id', help=u"""OCID of the user who created the resource.""")
 @cli_util.option('--updated-by-id', help=u"""OCID of the user who updated the resource.""")
 @cli_util.option('--sample-data-size-in-mbs', help=u"""The sample data size in MB, specified as number of rows, for a metadata harvest.""")
-@cli_util.option('--fields', type=custom_types.CliCaseInsensitiveChoice(["key", "displayName", "description", "catalogId", "jobType", "lifecycleState", "timeCreated", "isSampleDataExtracted", "uri"]), multiple=True, help=u"""Specifies the fields to return in a job definition summary response.""")
-@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. If no value is specified TIMECREATED is default.""")
+@cli_util.option('--fields', type=custom_types.CliCaseInsensitiveChoice(["key", "displayName", "description", "catalogId", "jobType", "connectionKey", "lifecycleState", "timeCreated", "isSampleDataExtracted", "uri", "timeLatestExecutionStarted", "timeLatestExecutionEnded", "jobExecutionState", "scheduleType"]), multiple=True, help=u"""Specifies the fields to return in a job definition summary response.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME", "TIMELATESTEXECUTIONSTARTED"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. Default order for TIMELATESTEXECUTIONSTARTED is descending. If no value is specified TIMECREATED is default.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
@@ -4384,7 +4420,7 @@ def list_glossaries(ctx, from_json, all_pages, page_size, catalog_id, display_na
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_catalog', 'class': 'JobDefinitionCollection'})
 @cli_util.wrap_exceptions
-def list_job_definitions(ctx, from_json, all_pages, page_size, catalog_id, display_name, lifecycle_state, job_type, is_incremental, data_asset_key, connection_key, time_created, time_updated, created_by_id, updated_by_id, sample_data_size_in_mbs, fields, sort_by, sort_order, limit, page):
+def list_job_definitions(ctx, from_json, all_pages, page_size, catalog_id, display_name, display_name_contains, job_execution_state, lifecycle_state, job_type, is_incremental, data_asset_key, connection_key, time_created, time_updated, created_by_id, updated_by_id, sample_data_size_in_mbs, fields, sort_by, sort_order, limit, page):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -4395,6 +4431,10 @@ def list_job_definitions(ctx, from_json, all_pages, page_size, catalog_id, displ
     kwargs = {}
     if display_name is not None:
         kwargs['display_name'] = display_name
+    if display_name_contains is not None:
+        kwargs['display_name_contains'] = display_name_contains
+    if job_execution_state is not None:
+        kwargs['job_execution_state'] = job_execution_state
     if lifecycle_state is not None:
         kwargs['lifecycle_state'] = lifecycle_state
     if job_type is not None:
@@ -4460,7 +4500,7 @@ def list_job_definitions(ctx, from_json, all_pages, page_size, catalog_id, displ
 @cli_util.option('--time-updated', type=custom_types.CLI_DATETIME, help=u"""Time that the resource was updated. An [RFC3339] formatted datetime string.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--created-by-id', help=u"""OCID of the user who created the resource.""")
 @cli_util.option('--updated-by-id', help=u"""OCID of the user who updated the resource.""")
-@cli_util.option('--job-type', type=custom_types.CliCaseInsensitiveChoice(["HARVEST", "PROFILING", "SAMPLING", "PREVIEW", "IMPORT", "EXPORT", "INTERNAL", "PURGE", "IMMEDIATE", "SCHEDULED", "IMMEDIATE_EXECUTION", "SCHEDULED_EXECUTION", "SCHEDULED_EXECUTION_INSTANCE"]), help=u"""Job type.""")
+@cli_util.option('--job-type', type=custom_types.CliCaseInsensitiveChoice(["HARVEST", "PROFILING", "SAMPLING", "PREVIEW", "IMPORT", "EXPORT", "IMPORT_GLOSSARY", "EXPORT_GLOSSARY", "INTERNAL", "PURGE", "IMMEDIATE", "SCHEDULED", "IMMEDIATE_EXECUTION", "SCHEDULED_EXECUTION", "SCHEDULED_EXECUTION_INSTANCE"]), help=u"""Job type.""")
 @cli_util.option('--sub-type', help=u"""Sub-type of this job execution.""")
 @cli_util.option('--parent-key', help=u"""The unique key of the parent execution or null if this job execution has no parent.""")
 @cli_util.option('--time-start', type=custom_types.CLI_DATETIME, help=u"""Time that the job execution was started or in the case of a future time, the time when the job will start. An [RFC3339] formatted datetime string.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -4664,6 +4704,7 @@ def list_job_logs(ctx, from_json, all_pages, page_size, catalog_id, job_key, job
 @cli_util.option('--job-key', required=True, help=u"""Unique job key.""")
 @cli_util.option('--job-execution-key', required=True, help=u"""The key of the job execution.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given. The match is not case sensitive.""")
+@cli_util.option('--display-name-contains', help=u"""A filter to return only resources that match display name pattern given. The match is not case sensitive. For Example : /folders?displayNameContains=Cu.* The above would match all folders with display name that starts with \"Cu\".""")
 @cli_util.option('--category', help=u"""Category of this metric.""")
 @cli_util.option('--sub-category', help=u"""Sub category of this metric under the category. Used for aggregating values. May be null.""")
 @cli_util.option('--unit', help=u"""Unit of this metric.""")
@@ -4686,7 +4727,7 @@ def list_job_logs(ctx, from_json, all_pages, page_size, catalog_id, job_key, job
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_catalog', 'class': 'JobMetricCollection'})
 @cli_util.wrap_exceptions
-def list_job_metrics(ctx, from_json, all_pages, page_size, catalog_id, job_key, job_execution_key, display_name, category, sub_category, unit, value, batch_key, time_created, time_updated, time_inserted, created_by_id, updated_by_id, fields, sort_by, sort_order, limit, page):
+def list_job_metrics(ctx, from_json, all_pages, page_size, catalog_id, job_key, job_execution_key, display_name, display_name_contains, category, sub_category, unit, value, batch_key, time_created, time_updated, time_inserted, created_by_id, updated_by_id, fields, sort_by, sort_order, limit, page):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -4703,6 +4744,8 @@ def list_job_metrics(ctx, from_json, all_pages, page_size, catalog_id, job_key, 
     kwargs = {}
     if display_name is not None:
         kwargs['display_name'] = display_name
+    if display_name_contains is not None:
+        kwargs['display_name_contains'] = display_name_contains
     if category is not None:
         kwargs['category'] = category
     if sub_category is not None:
@@ -4769,19 +4812,20 @@ def list_job_metrics(ctx, from_json, all_pages, page_size, catalog_id, job_key, 
 @job_collection_group.command(name=cli_util.override('data_catalog.list_jobs.command_name', 'list-jobs'), help=u"""Returns a list of jobs within a data catalog.""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given. The match is not case sensitive.""")
+@cli_util.option('--display-name-contains', help=u"""A filter to return only resources that match display name pattern given. The match is not case sensitive. For Example : /folders?displayNameContains=Cu.* The above would match all folders with display name that starts with \"Cu\".""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE", "EXPIRED"]), help=u"""Job lifecycle state.""")
 @cli_util.option('--time-created', type=custom_types.CLI_DATETIME, help=u"""Time that the resource was created. An [RFC3339] formatted datetime string.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-updated', type=custom_types.CLI_DATETIME, help=u"""Time that the resource was updated. An [RFC3339] formatted datetime string.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--created-by-id', help=u"""OCID of the user who created the resource.""")
 @cli_util.option('--updated-by-id', help=u"""OCID of the user who updated the resource.""")
-@cli_util.option('--job-type', type=custom_types.CliCaseInsensitiveChoice(["HARVEST", "PROFILING", "SAMPLING", "PREVIEW", "IMPORT", "EXPORT", "INTERNAL", "PURGE", "IMMEDIATE", "SCHEDULED", "IMMEDIATE_EXECUTION", "SCHEDULED_EXECUTION", "SCHEDULED_EXECUTION_INSTANCE"]), help=u"""Job type.""")
+@cli_util.option('--job-type', type=custom_types.CliCaseInsensitiveChoice(["HARVEST", "PROFILING", "SAMPLING", "PREVIEW", "IMPORT", "EXPORT", "IMPORT_GLOSSARY", "EXPORT_GLOSSARY", "INTERNAL", "PURGE", "IMMEDIATE", "SCHEDULED", "IMMEDIATE_EXECUTION", "SCHEDULED_EXECUTION", "SCHEDULED_EXECUTION_INSTANCE"]), help=u"""Job type.""")
 @cli_util.option('--job-definition-key', help=u"""Unique job definition key.""")
 @cli_util.option('--schedule-cron-expression', help=u"""Schedule specified in the cron expression format that has seven fields for second, minute, hour, day-of-month, month, day-of-week, year. It can also include special characters like * for all and ? for any. There are also pre-defined schedules that can be specified using special strings. For example, @hourly will run the job every hour.""")
 @cli_util.option('--time-schedule-begin', type=custom_types.CLI_DATETIME, help=u"""Date that the schedule should be operational. An [RFC3339] formatted datetime string.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-schedule-end', type=custom_types.CLI_DATETIME, help=u"""Date that the schedule should end from being operational. An [RFC3339] formatted datetime string.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--schedule-type', type=custom_types.CliCaseInsensitiveChoice(["SCHEDULED", "IMMEDIATE"]), help=u"""Type of the job schedule.""")
 @cli_util.option('--connection-key', help=u"""Unique connection key.""")
-@cli_util.option('--fields', type=custom_types.CliCaseInsensitiveChoice(["key", "displayName", "description", "catalogId", "jobDefinitionKey", "lifecycleState", "timeCreated", "timeUpdated", "createdById", "updatedById", "jobType", "scheduleCronExpression", "timeScheduleBegin", "scheduleType", "executionCount", "timeOfLatestExecution", "executions", "uri"]), multiple=True, help=u"""Specifies the fields to return in a job summary response.""")
+@cli_util.option('--fields', type=custom_types.CliCaseInsensitiveChoice(["key", "displayName", "description", "catalogId", "jobDefinitionKey", "lifecycleState", "timeCreated", "timeUpdated", "createdById", "updatedById", "jobType", "scheduleCronExpression", "timeScheduleBegin", "scheduleType", "executionCount", "timeOfLatestExecution", "executions", "uri", "jobDefinitionName", "errorCode", "errorMessage"]), multiple=True, help=u"""Specifies the fields to return in a job summary response.""")
 @cli_util.option('--execution-count', type=click.INT, help=u"""The total number of executions for this job schedule.""")
 @cli_util.option('--time-of-latest-execution', type=custom_types.CLI_DATETIME, help=u"""The date and time the most recent execution for this job ,in the format defined by [RFC3339]. Example: `2019-03-25T21:10:29.600Z`""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. If no value is specified TIMECREATED is default.""")
@@ -4795,7 +4839,7 @@ def list_job_metrics(ctx, from_json, all_pages, page_size, catalog_id, job_key, 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_catalog', 'class': 'JobCollection'})
 @cli_util.wrap_exceptions
-def list_jobs(ctx, from_json, all_pages, page_size, catalog_id, display_name, lifecycle_state, time_created, time_updated, created_by_id, updated_by_id, job_type, job_definition_key, schedule_cron_expression, time_schedule_begin, time_schedule_end, schedule_type, connection_key, fields, execution_count, time_of_latest_execution, sort_by, sort_order, limit, page):
+def list_jobs(ctx, from_json, all_pages, page_size, catalog_id, display_name, display_name_contains, lifecycle_state, time_created, time_updated, created_by_id, updated_by_id, job_type, job_definition_key, schedule_cron_expression, time_schedule_begin, time_schedule_end, schedule_type, connection_key, fields, execution_count, time_of_latest_execution, sort_by, sort_order, limit, page):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -4806,6 +4850,8 @@ def list_jobs(ctx, from_json, all_pages, page_size, catalog_id, display_name, li
     kwargs = {}
     if display_name is not None:
         kwargs['display_name'] = display_name
+    if display_name_contains is not None:
+        kwargs['display_name_contains'] = display_name_contains
     if lifecycle_state is not None:
         kwargs['lifecycle_state'] = lifecycle_state
     if time_created is not None:
@@ -4874,6 +4920,7 @@ def list_jobs(ctx, from_json, all_pages, page_size, catalog_id, display_name, li
 @term_group.command(name=cli_util.override('data_catalog.list_tags.command_name', 'list-tags'), help=u"""Returns a list of all user created tags in the system.""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given. The match is not case sensitive.""")
+@cli_util.option('--display-name-contains', help=u"""A filter to return only resources that match display name pattern given. The match is not case sensitive. For Example : /folders?displayNameContains=Cu.* The above would match all folders with display name that starts with \"Cu\".""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED", "MOVING"]), help=u"""A filter to return only resources that match the specified lifecycle state. The value is case insensitive.""")
 @cli_util.option('--fields', type=custom_types.CliCaseInsensitiveChoice(["key", "displayName", "description", "glossaryKey", "parentTermKey", "isAllowedToHaveChildTerms", "path", "lifecycleState", "timeCreated", "workflowStatus", "associatedObjectCount", "uri"]), multiple=True, help=u"""Specifies the fields to return in a term summary response.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. If no value is specified TIMECREATED is default.""")
@@ -4887,7 +4934,7 @@ def list_jobs(ctx, from_json, all_pages, page_size, catalog_id, display_name, li
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_catalog', 'class': 'TermCollection'})
 @cli_util.wrap_exceptions
-def list_tags(ctx, from_json, all_pages, page_size, catalog_id, display_name, lifecycle_state, fields, sort_by, sort_order, limit, page):
+def list_tags(ctx, from_json, all_pages, page_size, catalog_id, display_name, display_name_contains, lifecycle_state, fields, sort_by, sort_order, limit, page):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -4898,6 +4945,8 @@ def list_tags(ctx, from_json, all_pages, page_size, catalog_id, display_name, li
     kwargs = {}
     if display_name is not None:
         kwargs['display_name'] = display_name
+    if display_name_contains is not None:
+        kwargs['display_name_contains'] = display_name_contains
     if lifecycle_state is not None:
         kwargs['lifecycle_state'] = lifecycle_state
     if fields is not None and len(fields) > 0:
@@ -4942,6 +4991,7 @@ def list_tags(ctx, from_json, all_pages, page_size, catalog_id, display_name, li
 @cli_util.option('--glossary-key', required=True, help=u"""Unique glossary key.""")
 @cli_util.option('--term-key', required=True, help=u"""Unique glossary term key.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given. The match is not case sensitive.""")
+@cli_util.option('--display-name-contains', help=u"""A filter to return only resources that match display name pattern given. The match is not case sensitive. For Example : /folders?displayNameContains=Cu.* The above would match all folders with display name that starts with \"Cu\".""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED", "MOVING"]), help=u"""A filter to return only resources that match the specified lifecycle state. The value is case insensitive.""")
 @cli_util.option('--fields', type=custom_types.CliCaseInsensitiveChoice(["key", "displayName", "description", "relatedTermKey", "relatedTermDisplayName", "parentTermKey", "parentTermDisplayName", "lifecycleState", "timeCreated", "uri"]), multiple=True, help=u"""Specifies the fields to return in a term relationship summary response.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. If no value is specified TIMECREATED is default.""")
@@ -4955,7 +5005,7 @@ def list_tags(ctx, from_json, all_pages, page_size, catalog_id, display_name, li
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_catalog', 'class': 'TermRelationshipCollection'})
 @cli_util.wrap_exceptions
-def list_term_relationships(ctx, from_json, all_pages, page_size, catalog_id, glossary_key, term_key, display_name, lifecycle_state, fields, sort_by, sort_order, limit, page):
+def list_term_relationships(ctx, from_json, all_pages, page_size, catalog_id, glossary_key, term_key, display_name, display_name_contains, lifecycle_state, fields, sort_by, sort_order, limit, page):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -4972,6 +5022,8 @@ def list_term_relationships(ctx, from_json, all_pages, page_size, catalog_id, gl
     kwargs = {}
     if display_name is not None:
         kwargs['display_name'] = display_name
+    if display_name_contains is not None:
+        kwargs['display_name_contains'] = display_name_contains
     if lifecycle_state is not None:
         kwargs['lifecycle_state'] = lifecycle_state
     if fields is not None and len(fields) > 0:
@@ -5021,6 +5073,7 @@ def list_term_relationships(ctx, from_json, all_pages, page_size, catalog_id, gl
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--glossary-key', required=True, help=u"""Unique glossary key.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given. The match is not case sensitive.""")
+@cli_util.option('--display-name-contains', help=u"""A filter to return only resources that match display name pattern given. The match is not case sensitive. For Example : /folders?displayNameContains=Cu.* The above would match all folders with display name that starts with \"Cu\".""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED", "MOVING"]), help=u"""A filter to return only resources that match the specified lifecycle state. The value is case insensitive.""")
 @cli_util.option('--parent-term-key', help=u"""Unique key of the parent term.""")
 @cli_util.option('--is-allowed-to-have-child-terms', type=click.BOOL, help=u"""Indicates whether a term may contain child terms.""")
@@ -5038,7 +5091,7 @@ def list_term_relationships(ctx, from_json, all_pages, page_size, catalog_id, gl
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_catalog', 'class': 'TermCollection'})
 @cli_util.wrap_exceptions
-def list_terms(ctx, from_json, all_pages, page_size, catalog_id, glossary_key, display_name, lifecycle_state, parent_term_key, is_allowed_to_have_child_terms, workflow_status, path, fields, sort_by, sort_order, limit, page):
+def list_terms(ctx, from_json, all_pages, page_size, catalog_id, glossary_key, display_name, display_name_contains, lifecycle_state, parent_term_key, is_allowed_to_have_child_terms, workflow_status, path, fields, sort_by, sort_order, limit, page):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -5052,6 +5105,8 @@ def list_terms(ctx, from_json, all_pages, page_size, catalog_id, glossary_key, d
     kwargs = {}
     if display_name is not None:
         kwargs['display_name'] = display_name
+    if display_name_contains is not None:
+        kwargs['display_name_contains'] = display_name_contains
     if lifecycle_state is not None:
         kwargs['lifecycle_state'] = lifecycle_state
     if parent_term_key is not None:
@@ -5522,6 +5577,10 @@ def test_connection(ctx, from_json, catalog_id, data_asset_key, connection_key):
 @cli_util.option('--precision', type=click.INT, help=u"""Precision of the attribute value usually applies to float data type.""")
 @cli_util.option('--scale', type=click.INT, help=u"""Scale of the attribute value usually applies to float data type.""")
 @cli_util.option('--time-external', type=custom_types.CLI_DATETIME, help=u"""Last modified timestamp of this object in the external system.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--min-collection-count', type=click.INT, help=u"""The minimum count for the number of instances of a given type stored in this collection type attribute,applicable if this attribute is a complex type.""")
+@cli_util.option('--max-collection-count', type=click.INT, help=u"""The maximum count for the number of instances of a given type stored in this collection type attribute,applicable if this attribute is a complex type. For type specifications in systems that specify only \"capacity\" without upper or lower bound , this property can also be used to just mean \"capacity\". Some examples are Varray size in Oracle , Occurs Clause in Cobol , capacity in XmlSchemaObjectCollection , maxOccurs in  Xml , maxItems in Json""")
+@cli_util.option('--external-datatype-entity-key', help=u"""External entity key that represents the datatype of this attribute , applicable if this attribute is a complex type.""")
+@cli_util.option('--external-parent-attribute-key', help=u"""External attribute key that represents the parent attribute  of this attribute , applicable if the parent attribute is of complex type.""")
 @cli_util.option('--properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A map of maps that contains the properties which are specific to the attribute type. Each attribute type definition defines it's set of required and optional properties. The map keys are category names and the values are maps of property name to property value. Every property is contained inside of a category. Most attributes have required properties within the \"default\" category. To determine the set of required and optional properties for an Attribute type, a query can be done on '/types?type=attribute' which returns a collection of all attribute types. The appropriate attribute type, which will include definitions of all of it's properties, can be identified from this collection. Example: `{\"properties\": { \"default\": { \"key1\": \"value1\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
@@ -5533,7 +5592,7 @@ def test_connection(ctx, from_json, catalog_id, data_asset_key, connection_key):
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'properties': {'module': 'data_catalog', 'class': 'dict(str, dict(str, string))'}}, output_type={'module': 'data_catalog', 'class': 'Attribute'})
 @cli_util.wrap_exceptions
-def update_attribute(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, data_asset_key, entity_key, attribute_key, display_name, description, external_data_type, is_incremental_data, is_nullable, length, position, precision, scale, time_external, properties, if_match):
+def update_attribute(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, data_asset_key, entity_key, attribute_key, display_name, description, external_data_type, is_incremental_data, is_nullable, length, position, precision, scale, time_external, min_collection_count, max_collection_count, external_datatype_entity_key, external_parent_attribute_key, properties, if_match):
 
     if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
@@ -5587,6 +5646,18 @@ def update_attribute(ctx, from_json, force, wait_for_state, max_wait_seconds, wa
 
     if time_external is not None:
         _details['timeExternal'] = time_external
+
+    if min_collection_count is not None:
+        _details['minCollectionCount'] = min_collection_count
+
+    if max_collection_count is not None:
+        _details['maxCollectionCount'] = max_collection_count
+
+    if external_datatype_entity_key is not None:
+        _details['externalDatatypeEntityKey'] = external_datatype_entity_key
+
+    if external_parent_attribute_key is not None:
+        _details['externalParentAttributeKey'] = external_parent_attribute_key
 
     if properties is not None:
         _details['properties'] = cli_util.parse_json_parameter("properties", properties)

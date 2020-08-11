@@ -17,6 +17,8 @@
     This input parameter allows the user to specify the directory where CLI installation is done.
 .PARAMETER ExecDir
     This input parameter allows the user to specify the directory where CLI executable is stored.
+.PARAMETER ScriptDir
+    This input parameter allows the user to specify the directory where CLI scripts are stored.
 .PARAMETER UpdatePathAndEnableTabCompletion
     If this flag is specified, the PATH environment variable is updated to include CLI executable and tab auto
     completion of CLI commands is enabled.
@@ -42,6 +44,7 @@ Param(
     [Parameter(Mandatory=$false)][string]$OptionalFeatures,
     [Parameter(Mandatory=$false)][string]$InstallDir,
     [Parameter(Mandatory=$false)][string]$ExecDir,
+    [Parameter(Mandatory=$false)][string]$ScriptDir,
     [Parameter(Mandatory=$false)][switch]$UpdatePathAndEnableTabCompletion,
     [Parameter(Mandatory=$false)][switch]$UseLocalCLiInstaller,
     [Parameter(Mandatory=$false)][string]$OciCliVersion
@@ -364,6 +367,9 @@ Try {
     if ($ExecDir) {
         $ArgumentList = "$ArgumentList --exec-dir $ExecDir"
     }
+    if ($ScriptDir) {
+        $ArgumentList = "$ArgumentList --script-dir $ScriptDir"
+    }
     if ($UpdatePathAndEnableTabCompletion) {
         $ArgumentList = "$ArgumentList --update-path-and-enable-tab-completion"
     }
@@ -373,7 +379,7 @@ Try {
     if ($OciCliVersion) {
         $ArgumentList = "$ArgumentList --oci-cli-version $OciCliVersion"
     }
-    LogOutput "$PythonInstallLocation $AcceptAllDefaults $InstallDir $ExecDir $UpdatePathAndEnableTabCompletion"
+    LogOutput "$PythonInstallLocation $AcceptAllDefaults $InstallDir $ExecDir $ScriptDir $UpdatePathAndEnableTabCompletion"
     LogOutput "Using Python executable: $PythonExecutable to run install script..."
     LogOutput "Arguments to python script: $ArgumentList"
 

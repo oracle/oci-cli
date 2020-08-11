@@ -33,6 +33,7 @@ Here are the parameters accepted by this script:
 --python-install-location  Optionally specifies where to install python on systems where it is not present. This must be an absolute path and it will be created if it does not exist. This value will only be used on systems with 'yum' where a valid version of Python is not present on the system PATH.
 --install-dir  This input parameter allows the user to specify the directory where CLI installation is done.
 --exec-dir  This input parameter allows the user to specify the directory where CLI executable is stored.
+--script-dir  This input parameter allows the user to specify the directory where CLI scripts are stored.
 --update-path-and-enable-tab-completion  If this flag is specified, the PATH environment variable is updated to include CLI executable and tab auto completion of CLI commands is enabled. It does require rc file path in NIX systems which can be either given interactively or using the --rc-file-path option.
 --rc-file-path  This input param is used in NIX systems to update the corresponding shell rc file with command auto completion and modification to PATH environment variable with CLI executable path. It requires shell's rc file path. e.g. ~/.bashrc. Ideally, should be used with the --update-path-and-enable-tab-completion option.
 --optional-features   This input param is used to specify any optional features that need to be installed as part of OCI CLI install.
@@ -66,6 +67,7 @@ Help can be obtained via "help .\install.ps1". Here are the parameters accepted 
 -OptionalFeatures  This input param is used to specify any optional features that need to be installed as part of OCI CLI install.
 -InstallDir  This input parameter allows the user to specify the directory where CLI installation is done.
 -ExecDir  This input parameter allows the user to specify the directory where CLI executable is stored.
+-ScriptDir  This input parameter allows the user to specify the directory where CLI scripts are stored.
 -UpdatePathAndEnableTabCompletion  If this flag is specified, the PATH environment variable is updated to include CLI executable and tab auto completion of CLI commands is enabled.
 -OciCliVersion  The version of CLI to install, e.g. 2.5.12. The default is the latest from pypi.
 

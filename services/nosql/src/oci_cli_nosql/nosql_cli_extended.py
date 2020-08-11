@@ -77,22 +77,8 @@ def update_row_extended(ctx, **kwargs):
     ctx.invoke(nosql_cli.update_row, **kwargs)
 
 
-# query query --max-read-in-kb-s -> query query --max-read-in-kbs
 # oci nosql query query -> oci nosql query execute
-@cli_util.copy_params_from_generated_command(nosql_cli.query, params_to_exclude=['max_read_in_k_bs'])
-@nosql_cli.query_result_collection_group.command(name='execute', help=nosql_cli.query.help)
-@cli_util.option('--max-read-in-kbs', type=click.INT, help="""A limit on the total amount of data read during this operation, in KB.""")
-@click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'variables': {'module': 'nosql', 'class': 'dict(str, object)'}}, output_type={'module': 'nosql', 'class': 'QueryResultCollection'})
-@cli_util.wrap_exceptions
-def query_extended(ctx, **kwargs):
-
-    if 'max_read_in_kbs' in kwargs:
-        kwargs['max_read_in_k_bs'] = kwargs['max_read_in_kbs']
-
-    del kwargs['max_read_in_kbs']
-
-    ctx.invoke(nosql_cli.query, **kwargs)
+cli_util.rename_command(nosql_cli, nosql_cli.query_result_collection_group, nosql_cli.query, "execute")
 
 
 # Override help for index group

@@ -52,12 +52,12 @@ def _make_raw_request(ctx, target_uri, http_method, request_body, request_header
     # Deliberately a bit open as we can permit an empty string through as an empty request body
     parsed_request_body = ''
     if request_body is not None and request_body.strip() != '':
-        request_body_as_dict = cli_util.parse_json_parameter('request_body', request_body)
+        request_body_as_dict = cli_util.parse_json_parameter('request_body', request_body, 'camelize_keys', False)
         parsed_request_body = json.dumps(request_body_as_dict)
 
     additional_headers = {}
     if request_headers:
-        additional_headers = cli_util.parse_json_parameter('request_headers', request_headers)
+        additional_headers = cli_util.parse_json_parameter('request_headers', request_headers, 'camelize_keys', False)
 
     retry_strategy = oci.retry.DEFAULT_RETRY_STRATEGY
     if ctx.obj['no_retry']:
