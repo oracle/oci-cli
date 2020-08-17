@@ -868,6 +868,34 @@ def create_data_guard_association_with_new_db_system(ctx, from_json, database_id
     cli_util.render_response(result, ctx)
 
 
+@cli_util.copy_params_from_generated_command(database_cli.create_data_guard_association, params_to_exclude=['wait_for_state', 'max_wait_seconds', 'wait_interval_seconds', 'creation_type'])
+@create_data_guard_association_group.command('from-existing-vm-cluster', help=u"""Creates a new Data Guard association.  A Data Guard association represents the replication relationship between the specified database and a peer database. For more information, see [Using Oracle Data Guard].
+
+All Oracle Cloud Infrastructure resources, including Data Guard associations, get an Oracle-assigned, unique ID called an Oracle Cloud Identifier (OCID). When you create a resource, you can find its OCID in the response. You can also retrieve a resource's OCID by using a List API operation on that resource type, or by viewing the resource in the Console. For more information, see [Resource Identifiers].""")
+@cli_util.option('--peer-vm-cluster-id', required=True, help=u"""The [OCID] of the VM Cluster in which to create the standby database. You must supply this value if creationType is `ExistingVmCluster`.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'DataGuardAssociation'})
+@cli_util.wrap_exceptions
+def create_data_guard_association_from_existing_vm_cluster(ctx, from_json, database_id, database_admin_password, protection_mode, transport_type, peer_vm_cluster_id):
+
+    kwargs = {}
+
+    details = {}
+    details['databaseAdminPassword'] = database_admin_password
+    details['protectionMode'] = protection_mode
+    details['transportType'] = transport_type
+    details['peerVmClusterId'] = peer_vm_cluster_id
+    details['creationType'] = 'ExistingVmCluster'
+
+    client = cli_util.build_client('database', 'database', ctx)
+    result = client.create_data_guard_association(
+        database_id=database_id,
+        create_data_guard_association_details=details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @database_cli.patch_group.command('get', cls=CommandGroupWithAlias, help=database_cli.get_db_home_patch.help)
 @cli_util.help_option_group
 def patch_get_group():
@@ -1021,6 +1049,7 @@ database_cli.db_system_group.commands.pop(database_cli.update_db_system.name)
 # Disable subclass command
 database_cli.data_guard_association_group.commands.pop(database_cli.create_data_guard_association_create_data_guard_association_to_existing_db_system_details.name)
 database_cli.data_guard_association_group.commands.pop(database_cli.create_data_guard_association_create_data_guard_association_with_new_db_system_details.name)
+database_cli.data_guard_association_group.commands.pop(database_cli.create_data_guard_association_create_data_guard_association_to_existing_vm_cluster_details.name)
 
 # we need to expose customized create / delete / list database commands in order to avoid exposing DbHomes
 database_cli.database_group.add_command(create_database)

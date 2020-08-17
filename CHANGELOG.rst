@@ -6,6 +6,32 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.12.8 - 2020-08-18
+-------------------
+Added
+~~~~~
+
+* Support for configuring VM instances for scheduled maintenance or hypervisor reboots in the Compute service
+
+  * ``oci compute instance launch --availability-config '{"recoveryAction": "STOP_INSTANCE"}'``
+  * ``oci compute instance update --availability-config '{"recoveryAction": "STOP_INSTANCE"}'``
+
+* Support for custom boot volume size and other node pool updates in the Container Engine for Kubernetes service
+
+  * ``oci ce node-pool create --node-source-details`` with bootVolumeSizeInGBs in the complex type
+  * ``oci ce node-pool create --node-boot-volume-size-in-gbs`` shortcut
+  * ``oci ce node-pool update --node-source-details`` with bootVolumeSizeInGBs in the complex type
+  * ``oci ce node-pool update --node-source-details --node-shape --node-metadata --ssh-public-key``
+
+* Support for Data Guard on Exadata Cloud at Customer VM clusters in the Database service
+ 
+  * ``oci db data-guard-association create from-existing-vm-cluster``
+
+Fixed
+~~~~~
+
+* Multipart upload using ``oci os object bulk-upload`` may fail with SSL bad write error
+
 2.12.7 - 2020-08-11
 -------------------
 Added
