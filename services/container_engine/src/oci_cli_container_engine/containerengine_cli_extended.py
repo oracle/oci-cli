@@ -10,6 +10,7 @@ from oci_cli import cli_constants  # noqa: F401
 from oci._vendor.requests import Request
 from oci.auth.signers import InstancePrincipalsDelegationTokenSigner
 import click
+import json
 import six
 import os
 import yaml
@@ -20,6 +21,7 @@ DEFAULT_KUBECONFIG_LOCATION = os.path.join('~', '.kube', 'config')
 cli_util.rename_command(containerengine_cli, containerengine_cli.work_request_log_entry_group, containerengine_cli.list_work_request_logs,
                         "list")
 containerengine_cli.node_pool_group.commands.pop(containerengine_cli.create_node_pool_node_source_via_image_details.name)
+containerengine_cli.node_pool_group.commands.pop(containerengine_cli.update_node_pool_node_source_via_image_details.name)
 
 
 @containerengine_cli.cluster_group.command(name=cli_util.override('generate_token.command_name', 'generate-token'),
@@ -143,10 +145,11 @@ def create_cluster(ctx, **kwargs):
 
 
 @cli_util.copy_params_from_generated_command(containerengine_cli.create_node_pool,
-                                             params_to_exclude=['node_config_details', 'node_source_details'], copy_from_json=False)
+                                             params_to_exclude=['node_config_details'], copy_from_json=False)
 @containerengine_cli.node_pool_group.command(name=cli_util.override('create_node_pool.command_name', 'create'),
                                              help="""Create a new node pool.""")
-@cli_util.option('--node-image-id', help="""The OCID of the image used to launch the node.""")
+@cli_util.option('--node-image-id', help="""The OCID of the image used to launch the node. This is a shortcut for specifying an image id via the --node-source-details complex JSON parameter. If this parameter is provided, you cannot provide the --node-source-details parameter""")
+@cli_util.option('--node-boot-volume-size-in-gbs', type=click.INT, help="""The size of the boot volume in GBs. This is a shortcut for specifying a boot volume size via the --node-source-details complex JSON parameter. If this parameter is provided, you cannot provide the --node-source-details parameter.""")
 @cli_util.option('--size', type=click.INT, help="""The number of nodes spread across placement configurations.""")
 @cli_util.option('--placement-configs', type=custom_types.CLI_COMPLEX_TYPE,
                  help="""The placement configurations that determine where the nodes will be placed.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -176,11 +179,25 @@ def create_node_pool(ctx, **kwargs):
                                                                                           kwargs['placement_configs'])
     kwargs.pop('placement_configs', None)
 
-    if 'node_image_id' in kwargs and kwargs['node_image_id'] is not None:
-        kwargs['node_source_details'] = {}
-        kwargs['node_source_details']['sourceType'] = 'IMAGE'
-        kwargs['node_source_details']['imageId'] = kwargs['node_image_id']
+    if kwargs.get('node_source_details') and (kwargs.get('node_image_id') or kwargs.get('node_boot_volume_size_in_gbs')):
+        raise click.UsageError(
+            'Cannot specify --node-source-details with any of: --node-image-id or --node-boot-volume-size-in-gbs'
+        )
+    if kwargs.get('node_boot_volume_size_in_gbs') and not kwargs.get('node_image_id'):
+        raise click.UsageError(
+            'Cannot specify --node-boot-volume-size-in-gbs without --node-image-id'
+        )
+
+    if kwargs.get('node_image_id'):
+        source_details = {'sourceType': 'IMAGE', 'imageId': kwargs['node_image_id']}
+        if kwargs.get('node_boot_volume_size_in_gbs'):
+            source_details['bootVolumeSizeInGBs'] = kwargs.get('node_boot_volume_size_in_gbs')
+
+        kwargs['node_source_details'] = json.dumps(source_details)
+
+    # Remove the shortcuts for node image id and boot volume size
     kwargs.pop('node_image_id', None)
+    kwargs.pop('node_boot_volume_size_in_gbs', None)
 
     ctx.invoke(containerengine_cli.create_node_pool, **kwargs)
 

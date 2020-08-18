@@ -200,13 +200,13 @@ def create_kubeconfig(ctx, from_json, file, cluster_id, token_version, expiratio
 @cli_util.option('--name', required=True, help=u"""The name of the node pool. Avoid entering confidential information.""")
 @cli_util.option('--kubernetes-version', required=True, help=u"""The version of Kubernetes to install on the nodes in the node pool.""")
 @cli_util.option('--node-shape', required=True, help=u"""The name of the node shape of the nodes in the node pool.""")
-@cli_util.option('--node-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of key/value pairs to add to each underlying OCI instance in the node pool.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--node-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of key/value pairs to add to each underlying OCI instance in the node pool on launch.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--node-image-name', help=u"""Deprecated. Use `nodeSourceDetails` instead. If you specify values for both, this value is ignored. The name of the image running on the nodes in the node pool.""")
 @cli_util.option('--node-source-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Specify the source to use to launch nodes in the node pool. Currently, image is the only supported source.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--initial-node-labels', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of key/value pairs to add to nodes after they join the Kubernetes cluster.
 
 This option is a JSON list with items of type KeyValue.  For documentation on KeyValue please see our API reference: https://docs.cloud.oracle.com/api/#/en/containerengine/20180222/datatypes/KeyValue.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--ssh-public-key', help=u"""The SSH public key to add to each node in the node pool.""")
+@cli_util.option('--ssh-public-key', help=u"""The SSH public key on each node in the node pool on launch.""")
 @cli_util.option('--quantity-per-subnet', type=click.INT, help=u"""Optional, default to 1. The number of nodes to create in each subnet specified in subnetIds property. When used, subnetIds is required. This property is deprecated, use nodeConfigDetails instead.""")
 @cli_util.option('--subnet-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The OCIDs of the subnets in which to place nodes for this node pool. When used, quantityPerSubnet can be provided. This property is deprecated, use nodeConfigDetails. Exactly one of the subnetIds or nodeConfigDetails properties must be specified.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--node-config-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The configuration of nodes in the node pool. Exactly one of the subnetIds or nodeConfigDetails properties must be specified.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -292,15 +292,16 @@ def create_node_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 @cli_util.option('--kubernetes-version', required=True, help=u"""The version of Kubernetes to install on the nodes in the node pool.""")
 @cli_util.option('--node-shape', required=True, help=u"""The name of the node shape of the nodes in the node pool.""")
 @cli_util.option('--node-source-details-image-id', required=True, help=u"""The OCID of the image used to boot the node.""")
-@cli_util.option('--node-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of key/value pairs to add to each underlying OCI instance in the node pool.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--node-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of key/value pairs to add to each underlying OCI instance in the node pool on launch.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--node-image-name', help=u"""Deprecated. Use `nodeSourceDetails` instead. If you specify values for both, this value is ignored. The name of the image running on the nodes in the node pool.""")
 @cli_util.option('--initial-node-labels', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of key/value pairs to add to nodes after they join the Kubernetes cluster.
 
 This option is a JSON list with items of type KeyValue.  For documentation on KeyValue please see our API reference: https://docs.cloud.oracle.com/api/#/en/containerengine/20180222/datatypes/KeyValue.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--ssh-public-key', help=u"""The SSH public key to add to each node in the node pool.""")
+@cli_util.option('--ssh-public-key', help=u"""The SSH public key on each node in the node pool on launch.""")
 @cli_util.option('--quantity-per-subnet', type=click.INT, help=u"""Optional, default to 1. The number of nodes to create in each subnet specified in subnetIds property. When used, subnetIds is required. This property is deprecated, use nodeConfigDetails instead.""")
 @cli_util.option('--subnet-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The OCIDs of the subnets in which to place nodes for this node pool. When used, quantityPerSubnet can be provided. This property is deprecated, use nodeConfigDetails. Exactly one of the subnetIds or nodeConfigDetails properties must be specified.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--node-config-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The configuration of nodes in the node pool. Exactly one of the subnetIds or nodeConfigDetails properties must be specified.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--node-source-details-boot-volume-size-in-gbs', type=click.INT, help=u"""The size of the boot volume in GBs. Minimum value is 50 GB. See [here] for max custom boot volume sizing and OS-specific requirements.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -309,7 +310,7 @@ This option is a JSON list with items of type KeyValue.  For documentation on Ke
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'node-metadata': {'module': 'container_engine', 'class': 'dict(str, string)'}, 'initial-node-labels': {'module': 'container_engine', 'class': 'list[KeyValue]'}, 'subnet-ids': {'module': 'container_engine', 'class': 'list[string]'}, 'node-config-details': {'module': 'container_engine', 'class': 'CreateNodePoolNodeConfigDetails'}})
 @cli_util.wrap_exceptions
-def create_node_pool_node_source_via_image_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, cluster_id, name, kubernetes_version, node_shape, node_source_details_image_id, node_metadata, node_image_name, initial_node_labels, ssh_public_key, quantity_per_subnet, subnet_ids, node_config_details):
+def create_node_pool_node_source_via_image_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, cluster_id, name, kubernetes_version, node_shape, node_source_details_image_id, node_metadata, node_image_name, initial_node_labels, ssh_public_key, quantity_per_subnet, subnet_ids, node_config_details, node_source_details_boot_volume_size_in_gbs):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -343,6 +344,9 @@ def create_node_pool_node_source_via_image_details(ctx, from_json, wait_for_stat
 
     if node_config_details is not None:
         _details['nodeConfigDetails'] = cli_util.parse_json_parameter("node_config_details", node_config_details)
+
+    if node_source_details_boot_volume_size_in_gbs is not None:
+        _details['nodeSourceDetails']['bootVolumeSizeInGBs'] = node_source_details_boot_volume_size_in_gbs
 
     _details['nodeSourceDetails']['sourceType'] = 'IMAGE'
 
@@ -941,23 +945,27 @@ This option is a JSON list with items of type KeyValue.  For documentation on Ke
 @cli_util.option('--quantity-per-subnet', type=click.INT, help=u"""The number of nodes to have in each subnet specified in the subnetIds property. This property is deprecated, use nodeConfigDetails instead. If the current value of quantityPerSubnet is greater than 0, you can only use quantityPerSubnet to scale the node pool. If the current value of quantityPerSubnet is equal to 0 and the current value of size in nodeConfigDetails is greater than 0, before you can use quantityPerSubnet, you must first scale the node pool to 0 nodes using nodeConfigDetails.""")
 @cli_util.option('--subnet-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The OCIDs of the subnets in which to place nodes for this node pool. This property is deprecated, use nodeConfigDetails instead. Only one of the subnetIds or nodeConfigDetails properties can be specified.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--node-config-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The configuration of nodes in the node pool. Only one of the subnetIds or nodeConfigDetails properties should be specified. If the current value of quantityPerSubnet is greater than 0, the node pool may still be scaled using quantityPerSubnet. Before you can use nodeConfigDetails, you must first scale the node pool to 0 nodes using quantityPerSubnet.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--node-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of key/value pairs to add to each underlying OCI instance in the node pool on launch.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--node-source-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Specify the source to use to launch nodes in the node pool. Currently, image is the only supported source.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--ssh-public-key', help=u"""The SSH public key to add to each node in the node pool on launch.""")
+@cli_util.option('--node-shape', help=u"""The name of the node shape of the nodes in the node pool used on launch.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'initial-node-labels': {'module': 'container_engine', 'class': 'list[KeyValue]'}, 'subnet-ids': {'module': 'container_engine', 'class': 'list[string]'}, 'node-config-details': {'module': 'container_engine', 'class': 'UpdateNodePoolNodeConfigDetails'}})
+@json_skeleton_utils.get_cli_json_input_option({'initial-node-labels': {'module': 'container_engine', 'class': 'list[KeyValue]'}, 'subnet-ids': {'module': 'container_engine', 'class': 'list[string]'}, 'node-config-details': {'module': 'container_engine', 'class': 'UpdateNodePoolNodeConfigDetails'}, 'node-metadata': {'module': 'container_engine', 'class': 'dict(str, string)'}, 'node-source-details': {'module': 'container_engine', 'class': 'NodeSourceDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'initial-node-labels': {'module': 'container_engine', 'class': 'list[KeyValue]'}, 'subnet-ids': {'module': 'container_engine', 'class': 'list[string]'}, 'node-config-details': {'module': 'container_engine', 'class': 'UpdateNodePoolNodeConfigDetails'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'initial-node-labels': {'module': 'container_engine', 'class': 'list[KeyValue]'}, 'subnet-ids': {'module': 'container_engine', 'class': 'list[string]'}, 'node-config-details': {'module': 'container_engine', 'class': 'UpdateNodePoolNodeConfigDetails'}, 'node-metadata': {'module': 'container_engine', 'class': 'dict(str, string)'}, 'node-source-details': {'module': 'container_engine', 'class': 'NodeSourceDetails'}})
 @cli_util.wrap_exceptions
-def update_node_pool(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, node_pool_id, name, kubernetes_version, initial_node_labels, quantity_per_subnet, subnet_ids, node_config_details, if_match):
+def update_node_pool(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, node_pool_id, name, kubernetes_version, initial_node_labels, quantity_per_subnet, subnet_ids, node_config_details, node_metadata, node_source_details, ssh_public_key, node_shape, if_match):
 
     if isinstance(node_pool_id, six.string_types) and len(node_pool_id.strip()) == 0:
         raise click.UsageError('Parameter --node-pool-id cannot be whitespace or empty string')
     if not force:
-        if initial_node_labels or subnet_ids or node_config_details:
-            if not click.confirm("WARNING: Updates to initial-node-labels and subnet-ids and node-config-details will replace any existing values. Are you sure you want to continue?"):
+        if initial_node_labels or subnet_ids or node_config_details or node_metadata or node_source_details:
+            if not click.confirm("WARNING: Updates to initial-node-labels and subnet-ids and node-config-details and node-metadata and node-source-details will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -984,6 +992,125 @@ def update_node_pool(ctx, from_json, force, wait_for_state, max_wait_seconds, wa
 
     if node_config_details is not None:
         _details['nodeConfigDetails'] = cli_util.parse_json_parameter("node_config_details", node_config_details)
+
+    if node_metadata is not None:
+        _details['nodeMetadata'] = cli_util.parse_json_parameter("node_metadata", node_metadata)
+
+    if node_source_details is not None:
+        _details['nodeSourceDetails'] = cli_util.parse_json_parameter("node_source_details", node_source_details)
+
+    if ssh_public_key is not None:
+        _details['sshPublicKey'] = ssh_public_key
+
+    if node_shape is not None:
+        _details['nodeShape'] = node_shape
+
+    client = cli_util.build_client('container_engine', 'container_engine', ctx)
+    result = client.update_node_pool(
+        node_pool_id=node_pool_id,
+        update_node_pool_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@node_pool_group.command(name=cli_util.override('ce.update_node_pool_node_source_via_image_details.command_name', 'update-node-pool-node-source-via-image-details'), help=u"""Update the details of a node pool.""")
+@cli_util.option('--node-pool-id', required=True, help=u"""The OCID of the node pool.""")
+@cli_util.option('--node-source-details-image-id', required=True, help=u"""The OCID of the image used to boot the node.""")
+@cli_util.option('--name', help=u"""The new name for the cluster. Avoid entering confidential information.""")
+@cli_util.option('--kubernetes-version', help=u"""The version of Kubernetes to which the nodes in the node pool should be upgraded.""")
+@cli_util.option('--initial-node-labels', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of key/value pairs to add to nodes after they join the Kubernetes cluster.
+
+This option is a JSON list with items of type KeyValue.  For documentation on KeyValue please see our API reference: https://docs.cloud.oracle.com/api/#/en/containerengine/20180222/datatypes/KeyValue.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--quantity-per-subnet', type=click.INT, help=u"""The number of nodes to have in each subnet specified in the subnetIds property. This property is deprecated, use nodeConfigDetails instead. If the current value of quantityPerSubnet is greater than 0, you can only use quantityPerSubnet to scale the node pool. If the current value of quantityPerSubnet is equal to 0 and the current value of size in nodeConfigDetails is greater than 0, before you can use quantityPerSubnet, you must first scale the node pool to 0 nodes using nodeConfigDetails.""")
+@cli_util.option('--subnet-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The OCIDs of the subnets in which to place nodes for this node pool. This property is deprecated, use nodeConfigDetails instead. Only one of the subnetIds or nodeConfigDetails properties can be specified.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--node-config-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The configuration of nodes in the node pool. Only one of the subnetIds or nodeConfigDetails properties should be specified. If the current value of quantityPerSubnet is greater than 0, the node pool may still be scaled using quantityPerSubnet. Before you can use nodeConfigDetails, you must first scale the node pool to 0 nodes using quantityPerSubnet.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--node-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of key/value pairs to add to each underlying OCI instance in the node pool on launch.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--ssh-public-key', help=u"""The SSH public key to add to each node in the node pool on launch.""")
+@cli_util.option('--node-shape', help=u"""The name of the node shape of the nodes in the node pool used on launch.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--node-source-details-boot-volume-size-in-gbs', type=click.INT, help=u"""The size of the boot volume in GBs. Minimum value is 50 GB. See [here] for max custom boot volume sizing and OS-specific requirements.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'initial-node-labels': {'module': 'container_engine', 'class': 'list[KeyValue]'}, 'subnet-ids': {'module': 'container_engine', 'class': 'list[string]'}, 'node-config-details': {'module': 'container_engine', 'class': 'UpdateNodePoolNodeConfigDetails'}, 'node-metadata': {'module': 'container_engine', 'class': 'dict(str, string)'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'initial-node-labels': {'module': 'container_engine', 'class': 'list[KeyValue]'}, 'subnet-ids': {'module': 'container_engine', 'class': 'list[string]'}, 'node-config-details': {'module': 'container_engine', 'class': 'UpdateNodePoolNodeConfigDetails'}, 'node-metadata': {'module': 'container_engine', 'class': 'dict(str, string)'}})
+@cli_util.wrap_exceptions
+def update_node_pool_node_source_via_image_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, node_pool_id, node_source_details_image_id, name, kubernetes_version, initial_node_labels, quantity_per_subnet, subnet_ids, node_config_details, node_metadata, ssh_public_key, node_shape, if_match, node_source_details_boot_volume_size_in_gbs):
+
+    if isinstance(node_pool_id, six.string_types) and len(node_pool_id.strip()) == 0:
+        raise click.UsageError('Parameter --node-pool-id cannot be whitespace or empty string')
+    if not force:
+        if initial_node_labels or subnet_ids or node_config_details or node_metadata:
+            if not click.confirm("WARNING: Updates to initial-node-labels and subnet-ids and node-config-details and node-metadata will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['nodeSourceDetails'] = {}
+    _details['nodeSourceDetails']['imageId'] = node_source_details_image_id
+
+    if name is not None:
+        _details['name'] = name
+
+    if kubernetes_version is not None:
+        _details['kubernetesVersion'] = kubernetes_version
+
+    if initial_node_labels is not None:
+        _details['initialNodeLabels'] = cli_util.parse_json_parameter("initial_node_labels", initial_node_labels)
+
+    if quantity_per_subnet is not None:
+        _details['quantityPerSubnet'] = quantity_per_subnet
+
+    if subnet_ids is not None:
+        _details['subnetIds'] = cli_util.parse_json_parameter("subnet_ids", subnet_ids)
+
+    if node_config_details is not None:
+        _details['nodeConfigDetails'] = cli_util.parse_json_parameter("node_config_details", node_config_details)
+
+    if node_metadata is not None:
+        _details['nodeMetadata'] = cli_util.parse_json_parameter("node_metadata", node_metadata)
+
+    if ssh_public_key is not None:
+        _details['sshPublicKey'] = ssh_public_key
+
+    if node_shape is not None:
+        _details['nodeShape'] = node_shape
+
+    if node_source_details_boot_volume_size_in_gbs is not None:
+        _details['nodeSourceDetails']['bootVolumeSizeInGBs'] = node_source_details_boot_volume_size_in_gbs
+
+    _details['nodeSourceDetails']['sourceType'] = 'IMAGE'
 
     client = cli_util.build_client('container_engine', 'container_engine', ctx)
     result = client.update_node_pool(
