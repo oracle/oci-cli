@@ -11,13 +11,15 @@ import logging
 from oci.util import Sentinel
 import six
 import importlib
-
+import re
 from .version import __version__
 from .aliasing import parameter_alias, CommandGroupWithAlias
 from . import help_text_producer
 from . import cli_util
 
 from . import cli_constants
+from collections import OrderedDict
+from oci._vendor import requests
 
 # Enable WARN logging to surface important warnings attached to loading
 # defaults, automatic coercion, or fallback values/endpoints that may impact
@@ -198,6 +200,79 @@ def get_section_without_defaults(parser_without_defaults, section_name):
     return parser_without_defaults.items(section_name)
 
 
+def find_latest_release_info(ctx, param, value):
+    if not value:
+        return
+    od = OrderedDict()
+    version = re.search(r'^(\d+(?:\.\d+)+)*', __version__).group(1)
+    try:
+        response = requests.get(cli_constants.CHANGE_LOG_URL)
+        # Raises stored HTTPError, if one occurred.
+        response.raise_for_status()
+    except requests.exceptions.HTTPError as errh:
+        click.echo(click.style("Unable to access Github. HTTP Error : {}").format(errh))
+    except requests.exceptions.ConnectionError as errc:
+        click.echo(click.style("Unable to access Github. Error Connecting: {}").format(errc))
+    except requests.exceptions.Timeout as errt:
+        click.echo(click.style("Unable to access Github. Timeout Error: {}").format(errt))
+    except requests.exceptions.RequestException as err:
+        click.echo(click.style("Unable to access Github. {}").format(err))
+    except Exception as e:
+        click.echo(click.style("Unexpected error. {}").format(e))
+    else:
+        matches = re.findall(r'^(\d+(?:\.\d+)+) +- +\d{4}-\d{2}-\d{2}\r?\n((?:(?!\d+\.\d).*(?:\r?\n|$))*)', response.content.decode("utf-8"), re.M)
+        for match in matches:
+            od[match[0].strip()] = match[1]
+        if version not in od:
+            click.echo(click.style("Version {} not found".format(version), fg='red'), file=sys.stderr)
+        else:
+            version_up_to_date = True
+            for key in od.keys():
+                if key == version:
+                    if version_up_to_date:
+                        click.echo(click.style("Version {} is up to date with latest release".format(version)))
+                    ctx.exit()
+                version_up_to_date = False
+                click.echo(key)
+                click.echo(od[key])
+    ctx.exit()
+
+
+def find_latest_release_version(ctx, param, value):
+    if not value:
+        return
+    current_version = re.search(r'^(\d+(?:\.\d+)+)*', __version__).group(1)
+    exit_code = 0
+    try:
+        response = requests.get(cli_constants.OCI_CLI_PYPI_URL)
+        # Raises stored HTTPError, if one occurred.
+        response.raise_for_status()
+        latest_version = response.json()['info']['version']
+    except requests.exceptions.HTTPError as errh:
+        click.echo(click.style("Unable to access Pypi. HTTP Error : {}").format(errh))
+        exit_code = 2
+    except requests.exceptions.ConnectionError as errc:
+        click.echo(click.style("Unable to access Pypi. Error Connecting: {}").format(errc))
+        exit_code = 2
+    except requests.exceptions.Timeout as errt:
+        click.echo(click.style("Unable to access Pypi. Timeout Error: {}").format(errt))
+        exit_code = 2
+    except requests.exceptions.RequestException as err:
+        click.echo(click.style("Unable to access Pypi. {}").format(err))
+        exit_code = 2
+    except Exception as e:
+        click.echo(click.style("Unexpected Error. {}").format(e))
+        exit_code = 2
+    else:
+        click.echo(latest_version)
+        if current_version.split(".") < latest_version.split("."):
+            click.echo(click.style("You are using OCI CLI version {}, however version {} is available. You should consider upgrading using"
+                                   " https://docs.cloud.oracle.com/en-us/iaas/Content/API/SDKDocs/cliupgrading.htm".format(current_version, latest_version), fg='red'))
+            exit_code = 1
+
+    ctx.exit(exit_code)
+
+
 @click.command(name='oci', cls=CommandGroupWithAlias, invoke_without_command=True,
                context_settings=dict(allow_interspersed_args=True, ignore_unknown_options=True),
                help="""Oracle Cloud Infrastructure command line interface, with support for Audit, Block Volume,
@@ -212,6 +287,10 @@ Output is in JSON format.
 
 For information on configuration, see https://docs.cloud.oracle.com/Content/API/Concepts/sdkconfig.htm.""")
 @click.version_option(__version__, '-v', '--version', message='%(version)s')
+@click.option('--release-info', is_flag=True, show_default=False, callback=find_latest_release_info,
+              expose_value=False, is_eager=True, help='Print latest release info. Please visit https://raw.githubusercontent.com/oracle/oci-cli/master/CHANGELOG.rst for more info')
+@click.option('--latest-version', is_flag=True, show_default=False, callback=find_latest_release_version,
+              expose_value=False, is_eager=True, help='Print latest release version.')
 @click.option('--config-file',
               default=DEFAULT_LOCATION, show_default=True, callback=read_values_from_env,
               help='The path to the config file.')
@@ -234,6 +313,7 @@ Queries can be entered directly on the command line or referenced from the [OCI_
 """)
 @click.option('--raw-output', is_flag=True, help='If the output of a given query is a single string value, this will return the string without surrounding quotes')
 @click.option('--auth', type=click.Choice(choices=OCI_CLI_AUTH_CHOICES), help='The type of auth to use for the API request. By default the API key in your config file will be used.  This value can also be provided in the {auth_env_var} environment variable.'.format(auth_env_var=cli_constants.OCI_CLI_AUTH_ENV_VAR))
+@click.option('--auth-purpose', help='The The auth purpose which can be used in conjunction with --auth.')
 @click.option('--generate-full-command-json-input', is_flag=True, is_eager=True, help="""Prints out a JSON document which represents all possible options that can be provided to this command.
 
 This JSON document can be saved to a file, modified with the appropriate option values, and then passed back via the --from-json option. This provides an alternative to typing options out on the command line.""")
@@ -244,7 +324,7 @@ When passed the name of an option which takes complex input, this will print out
 @click.option('-d', '--debug', is_flag=True, help='Show additional debug information.')
 @click.option('-?', '-h', '--help', is_flag=True, help='For detailed help on the individual OCI CLI command, enter <command> --help.')
 @click.pass_context
-def cli(ctx, config_file, profile, defaults_file, request_id, region, endpoint, cert_bundle, output, query, raw_output, auth, no_retry, generate_full_command_json_input, generate_param_json_input, debug, help):
+def cli(ctx, config_file, profile, defaults_file, request_id, region, endpoint, cert_bundle, output, query, raw_output, auth, auth_purpose, no_retry, generate_full_command_json_input, generate_param_json_input, debug, help):
     # Show help in any case if there are no subcommands, or if the help option
     # is used but there are subcommands, then set a flag for user later.
     if not ctx.invoked_subcommand:
@@ -289,7 +369,8 @@ def cli(ctx, config_file, profile, defaults_file, request_id, region, endpoint, 
         'generate_param_json_input': generate_param_json_input,
         'debug': debug,
         'no_retry': no_retry,
-        'auth': auth
+        'auth': auth,
+        'auth_purpose': auth_purpose
     }
 
     if not ctx.obj:

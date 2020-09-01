@@ -25,7 +25,7 @@ cli_util.rename_command(loadbalancer_cli, loadbalancer_cli.load_balancer_shape_g
 @loadbalancer_cli.load_balancer_group.command(name=cli_util.override('create_load_balancer.command_name', 'create'), help=loadbalancer_cli.create_load_balancer.help)
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The array of NSG [OCIDs] to be used by this Load Balancer.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'listeners': {'module': 'load_balancer', 'class': 'dict(str, ListenerDetails)'}, 'hostnames': {'module': 'load_balancer', 'class': 'dict(str, HostnameDetails)'}, 'backend-sets': {'module': 'load_balancer', 'class': 'dict(str, BackendSetDetails)'}, 'nsg-ids': {'module': 'load_balancer', 'class': 'list[string]'}, 'subnet-ids': {'module': 'load_balancer', 'class': 'list[string]'}, 'certificates': {'module': 'load_balancer', 'class': 'dict(str, CertificateDetails)'}, 'path-route-sets': {'module': 'load_balancer', 'class': 'dict(str, PathRouteSetDetails)'}, 'freeform-tags': {'module': 'load_balancer', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'load_balancer', 'class': 'dict(str, dict(str, object))'}, 'rule-sets': {'module': 'load_balancer', 'class': 'dict(str, RuleSetDetails)'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'listeners': {'module': 'load_balancer', 'class': 'dict(str, ListenerDetails)'}, 'hostnames': {'module': 'load_balancer', 'class': 'dict(str, HostnameDetails)'}, 'backend-sets': {'module': 'load_balancer', 'class': 'dict(str, BackendSetDetails)'}, 'nsg-ids': {'module': 'load_balancer', 'class': 'list[string]'}, 'subnet-ids': {'module': 'load_balancer', 'class': 'list[string]'}, 'certificates': {'module': 'load_balancer', 'class': 'dict(str, CertificateDetails)'}, 'ssl-cipher-suites': {'module': 'load_balancer', 'class': 'dict(str, SSLCipherSuiteDetails)'}, 'path-route-sets': {'module': 'load_balancer', 'class': 'dict(str, PathRouteSetDetails)'}, 'freeform-tags': {'module': 'load_balancer', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'load_balancer', 'class': 'dict(str, dict(str, object))'}, 'rule-sets': {'module': 'load_balancer', 'class': 'dict(str, RuleSetDetails)'}})
 @cli_util.wrap_exceptions
 def create_load_balancer_extended(ctx, **kwargs):
     if 'nsg_ids' in kwargs:
@@ -64,6 +64,24 @@ def process_ssl_configuration_kwargs(kwargs):
 
         ssl_configuration['verifyPeerCertificate'] = kwargs['ssl_verify_peer_certificate']
 
+    if kwargs['protocols'] is not None:
+        if kwargs['ssl_certificate_name'] is None:
+            raise click.UsageError('--ssl-certificate-name option must be provided if --protocols is provided')
+
+        ssl_configuration['protocols'] = cli_util.parse_json_parameter("protocols", kwargs['protocols'])
+
+    if kwargs['cipher_suite_name'] is not None:
+        if kwargs['ssl_certificate_name'] is None:
+            raise click.UsageError('--ssl-certificate-name option must be provided if --cipher-suite-name is provided')
+
+        ssl_configuration['cipherSuiteName'] = kwargs['cipher_suite_name']
+
+    if kwargs['server_order_preference'] is not None:
+        if kwargs['ssl_certificate_name'] is None:
+            raise click.UsageError('--ssl-certificate-name option must be provided if --server-order-preference is provided')
+
+        ssl_configuration['serverOrderPreference'] = kwargs['server_order_preference']
+
     if len(ssl_configuration) > 0:
         kwargs['ssl_configuration'] = json.dumps(ssl_configuration)
 
@@ -71,6 +89,9 @@ def process_ssl_configuration_kwargs(kwargs):
     kwargs.pop('ssl_certificate_name')
     kwargs.pop('ssl_verify_depth')
     kwargs.pop('ssl_verify_peer_certificate')
+    kwargs.pop('protocols')
+    kwargs.pop('cipher_suite_name')
+    kwargs.pop('server_order_preference')
 
 
 def process_connection_configuration_kwargs(kwargs):
@@ -197,10 +218,15 @@ def create_certificate(ctx, **kwargs):
 @cli_util.option('--ssl-certificate-name', type=click.STRING, help="""A friendly name for the certificate bundle. It must be unique and it cannot be changed. Valid certificate bundle names include only alphanumeric characters, dashes, and underscores. Certificate bundle names cannot contain spaces. Avoid entering confidential information.""")
 @cli_util.option('--ssl-verify-depth', type=click.INT, help="""The maximum depth for peer certificate chain verification.""")
 @cli_util.option('--ssl-verify-peer-certificate', type=click.BOOL, help="""Whether the load balancer listener should verify peer certificates.""")
+@cli_util.option('--protocols', type=custom_types.CLI_COMPLEX_TYPE, help="""A list of protocols to be configured for backend. It must be a list of strings.
+
+Example: ["TLSv1.1","TLSv1.2"]""")
+@cli_util.option('--cipher-suite-name', type=click.STRING, help="""Cipher suite name for backend.""")
+@cli_util.option('--server-order-preference', type=click.STRING, help="""Server order preference for backend.""")
 @json_skeleton_utils.get_cli_json_input_option({'backends': {'module': 'load_balancer', 'class': 'list[BackendDetails]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'backends': {'module': 'load_balancer', 'class': 'list[BackendDetails]'}, 'lb-cookie-session-persistence-configuration': {'module': 'load_balancer', 'class': 'LBCookieSessionPersistenceConfigurationDetails'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'backends': {'module': 'load_balancer', 'class': 'list[BackendDetails]'}, 'lb-cookie-session-persistence-configuration': {'module': 'load_balancer', 'class': 'LBCookieSessionPersistenceConfigurationDetails'}, 'protocols': {'module': 'load_balancer', 'class': 'list[string]'}})
 @cli_util.wrap_exceptions
 def create_backend_set(ctx, **kwargs):
     process_health_checker_kwargs(kwargs)
@@ -225,10 +251,15 @@ def create_backend_set(ctx, **kwargs):
 @cli_util.option('--ssl-certificate-name', type=click.STRING, help="""A friendly name for the certificate bundle. It must be unique and it cannot be changed. Valid certificate bundle names include only alphanumeric characters, dashes, and underscores. Certificate bundle names cannot contain spaces. Avoid entering confidential information.""")
 @cli_util.option('--ssl-verify-depth', type=click.INT, help="""The maximum depth for peer certificate chain verification.""")
 @cli_util.option('--ssl-verify-peer-certificate', type=click.BOOL, help="""Whether the load balancer listener should verify peer certificates.""")
+@cli_util.option('--protocols', type=custom_types.CLI_COMPLEX_TYPE, help="""A list of protocols to be configured for backend. It must be a list of strings.
+
+Example: ["TLSv1.1","TLSv1.2"]""")
+@cli_util.option('--cipher-suite-name', type=click.STRING, help="""Cipher suite name for backend.""")
+@cli_util.option('--server-order-preference', type=click.STRING, help="""Server order preference for backend.""")
 @json_skeleton_utils.get_cli_json_input_option({'backends': {'module': 'load_balancer', 'class': 'list[BackendDetails]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'backends': {'module': 'load_balancer', 'class': 'list[BackendDetails]'}, 'lb-cookie-session-persistence-configuration': {'module': 'load_balancer', 'class': 'LBCookieSessionPersistenceConfigurationDetails'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'backends': {'module': 'load_balancer', 'class': 'list[BackendDetails]'}, 'lb-cookie-session-persistence-configuration': {'module': 'load_balancer', 'class': 'LBCookieSessionPersistenceConfigurationDetails'}, 'protocols': {'module': 'load_balancer', 'class': 'list[string]'}})
 @cli_util.wrap_exceptions
 def update_backend_set(ctx, **kwargs):
     process_health_checker_kwargs(kwargs)
@@ -244,9 +275,14 @@ def update_backend_set(ctx, **kwargs):
 @cli_util.option('--ssl-verify-depth', type=click.INT, help="""The maximum depth for peer certificate chain verification.""")
 @cli_util.option('--ssl-verify-peer-certificate', type=click.BOOL, help="""Whether the load balancer listener should verify peer certificates.""")
 @cli_util.option('--connection-configuration-backend-tcp-proxy-protocol-version', type=click.INT, help="""Connection Configuration Backend TCP Proxy Protocol Version.""")
+@cli_util.option('--protocols', type=custom_types.CLI_COMPLEX_TYPE, help="""List of protocols to be configured for listener. It must be a list of strings.
+
+Example: ["TLSv1.1","TLSv1.2"]""")
+@cli_util.option('--cipher-suite-name', type=click.STRING, help="""Cipher suite name for listener.""")
+@cli_util.option('--server-order-preference', type=click.STRING, help="""Server order preference for listener.""")
 @cli_util.option('--connection-configuration-idle-timeout', type=click.INT, help="""The maximum idle time, in seconds, allowed between two successive receive or two successive send operations between the client and backend servers.""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'hostname-names': {'module': 'load_balancer', 'class': 'list[string]'}, 'rule-set-names': {'module': 'load_balancer', 'class': 'list[string]'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'hostname-names': {'module': 'load_balancer', 'class': 'list[string]'}, 'ssl-configuration': {'module': 'load_balancer', 'class': 'SSLConfigurationDetails'}, 'rule-set-names': {'module': 'load_balancer', 'class': 'list[string]'}, 'protocols': {'module': 'load_balancer', 'class': 'list[string]'}})
 @cli_util.wrap_exceptions
 def create_listener(ctx, **kwargs):
     process_ssl_configuration_kwargs(kwargs)
@@ -261,9 +297,14 @@ def create_listener(ctx, **kwargs):
 @cli_util.option('--ssl-verify-depth', type=click.INT, help="""The maximum depth for peer certificate chain verification.""")
 @cli_util.option('--ssl-verify-peer-certificate', type=click.BOOL, help="""Whether the load balancer listener should verify peer certificates.""")
 @cli_util.option('--connection-configuration-backend-tcp-proxy-protocol-version', type=click.INT, help="""Connection Configuration Backend TCP Proxy Protocol Version.""")
+@cli_util.option('--protocols', type=custom_types.CLI_COMPLEX_TYPE, help="""List of protocols to be configured for listener. It must be a list of strings.
+
+Example: ["TLSv1.1","TLSv1.2"]""")
+@cli_util.option('--cipher-suite-name', type=click.STRING, help="""Cipher suite name for listener.""")
+@cli_util.option('--server-order-preference', type=click.STRING, help="""Server order preference for listener.""")
 @cli_util.option('--connection-configuration-idle-timeout', type=click.INT, help="""The maximum idle time, in seconds, allowed between two successive receive or two successive send operations between the client and backend servers.""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'hostname-names': {'module': 'load_balancer', 'class': 'list[string]'}, 'rule-set-names': {'module': 'load_balancer', 'class': 'list[string]'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'hostname-names': {'module': 'load_balancer', 'class': 'list[string]'}, 'ssl-configuration': {'module': 'load_balancer', 'class': 'SSLConfigurationDetails'}, 'rule-set-names': {'module': 'load_balancer', 'class': 'list[string]'}, 'protocols': {'module': 'load_balancer', 'class': 'list[string]'}})
 @cli_util.wrap_exceptions
 def update_listener(ctx, **kwargs):
     process_ssl_configuration_kwargs(kwargs)

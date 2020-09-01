@@ -51,3 +51,25 @@ class TestLoadBalancer(unittest.TestCase):
         assert 'protocol' in result.output
         assert 'load-balancer-id' in result.output
         assert 'listener-name' in result.output
+
+    def test_lb_listener_options(self):
+        result = util.invoke_command(['lb', 'listener', 'update', '--generate-full-command-json-input'])
+        assert 'cipherSuiteName' in result.output
+        assert 'protocols' in result.output
+        assert 'serverOrderPreference' in result.output
+
+        result = util.invoke_command(['lb', 'listener', 'create', '--generate-full-command-json-input'])
+        assert 'cipherSuiteName' in result.output
+        assert 'protocols' in result.output
+        assert 'serverOrderPreference' in result.output
+
+    def test_lb_backendset_options(self):
+        result = util.invoke_command(['lb', 'backend-set', 'update', '--generate-full-command-json-input'])
+        assert 'cipherSuiteName' in result.output
+        assert 'protocols' in result.output
+        assert 'serverOrderPreference' in result.output
+
+        result = util.invoke_command(['lb', 'backend-set', 'create', '--generate-full-command-json-input'])
+        assert 'cipherSuiteName' in result.output
+        assert 'protocols' in result.output
+        assert 'serverOrderPreference' in result.output

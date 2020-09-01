@@ -44,6 +44,8 @@ cli_util.rename_command(database_cli, database_cli.backup_destination_group, dat
 database_cli.backup_destination_group.commands.pop(database_cli.create_backup_destination.name)
 database_cli.db_root_group.commands.pop(database_cli.backup_destination_summary_group.name)
 
+# Clone from Db System Rename for VM/BM
+cli_util.rename_command(database_cli, database_cli.db_system_group, database_cli.launch_db_system_launch_db_system_from_db_system_details, "launch-from-db-system")
 
 # OCPUs
 database_cli.exadata_infrastructure_group.add_command(database_cli.get_exadata_infrastructure_ocpus)
@@ -63,9 +65,15 @@ cli_util.rename_command(database_cli, database_cli.autonomous_database_wallet_gr
 cli_util.rename_command(database_cli, database_cli.autonomous_database_wallet_group, database_cli.update_autonomous_database_wallet, "rotate")
 cli_util.rename_command(database_cli, database_cli.autonomous_database_wallet_group, database_cli.update_autonomous_database_regional_wallet, "rotate-regional-wallet")
 
+# refreshable clone
+cli_util.rename_command(database_cli, database_cli.autonomous_database_group, database_cli.autonomous_database_manual_refresh, "manual-refresh")
+cli_util.rename_command(database_cli, database_cli.autonomous_database_group, database_cli.list_autonomous_database_clones, "list-clones")
+
 # Exadata shape prefix.
 # Example for Exadata shapes: Exadata.Quarter1.84, Exadata.Half1.168, ExadataCC.Base3.48, ExadataCC.Quarter3.100
 EXADATA_SHAPE_PREFIX = 'Exadata'
+
+cli_util.rename_command(database_cli, database_cli.autonomous_database_group, database_cli.create_autonomous_database_create_refreshable_autonomous_database_clone_details, "create-refreshable-clone")
 
 
 @cli_util.copy_params_from_generated_command(database_cli.get_autonomous_database_wallet, params_to_exclude=['autonomous_database_id'])

@@ -5,6 +5,7 @@
 import click
 import os
 import os.path
+import six
 import sys
 from services.resource_manager.src.oci_cli_resource_manager.generated import resourcemanager_cli
 from oci_cli import cli_util
@@ -212,6 +213,54 @@ def create_import_tf_state_job(ctx, **kwargs):
 
     # invoke generated command.
     ctx.invoke(resourcemanager_cli.create_job_create_import_tf_state_job_operation_details, **kwargs)
+
+
+# Add all pagination support for oci resource-manager job get-job-logs
+@cli_util.copy_params_from_generated_command(resourcemanager_cli.get_job_logs, params_to_exclude=[])
+@resourcemanager_cli.job_group.command(name='get-job-logs', help=resourcemanager_cli.get_job_logs.help)
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'resource_manager', 'class': 'list[LogEntry]'})
+@cli_util.wrap_exceptions
+def get_job_logs_extended(ctx, job_id, type, level_greater_than_or_equal_to, sort_order, limit, page, timestamp_greater_than_or_equal_to, timestamp_less_than_or_equal_to, all_pages, **kwargs):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(job_id, six.string_types) and len(job_id.strip()) == 0:
+        raise click.UsageError('Parameter --job-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if type is not None and len(type) > 0:
+        kwargs['type'] = type
+    if level_greater_than_or_equal_to is not None:
+        kwargs['level_greater_than_or_equal_to'] = level_greater_than_or_equal_to
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    if timestamp_greater_than_or_equal_to is not None:
+        kwargs['timestamp_greater_than_or_equal_to'] = timestamp_greater_than_or_equal_to
+    if timestamp_less_than_or_equal_to is not None:
+        kwargs['timestamp_less_than_or_equal_to'] = timestamp_less_than_or_equal_to
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('resource_manager', 'resource_manager', ctx)
+
+    if all_pages:
+        result = cli_util.list_call_get_all_results(
+            client.get_job_logs,
+            job_id=job_id,
+            **kwargs
+        )
+    # GetJobLogs operation already has built in support for limit
+    else:
+        result = client.get_job_logs(
+            job_id=job_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
 
 
 # Shorten stack commands based on compartment resource discovery

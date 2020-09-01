@@ -49,3 +49,5 @@ OCI_CLI_PARAM_TO_ENV_MAP = {
 }
 
 MEBIBYTE = 1024 * 1024
+CHANGE_LOG_URL = 'https://raw.githubusercontent.com/oracle/oci-cli/master/CHANGELOG.rst'
+OCI_CLI_PYPI_URL = 'https://pypi.org/pypi/oci-cli/json'

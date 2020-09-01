@@ -203,6 +203,7 @@ def create_kubeconfig(ctx, from_json, file, cluster_id, token_version, expiratio
 @cli_util.option('--node-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of key/value pairs to add to each underlying OCI instance in the node pool on launch.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--node-image-name', help=u"""Deprecated. Use `nodeSourceDetails` instead. If you specify values for both, this value is ignored. The name of the image running on the nodes in the node pool.""")
 @cli_util.option('--node-source-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Specify the source to use to launch nodes in the node pool. Currently, image is the only supported source.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--node-shape-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Specify the configuration of the shape to launch nodes in the node pool.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--initial-node-labels', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of key/value pairs to add to nodes after they join the Kubernetes cluster.
 
 This option is a JSON list with items of type KeyValue.  For documentation on KeyValue please see our API reference: https://docs.cloud.oracle.com/api/#/en/containerengine/20180222/datatypes/KeyValue.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -213,12 +214,12 @@ This option is a JSON list with items of type KeyValue.  For documentation on Ke
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'node-metadata': {'module': 'container_engine', 'class': 'dict(str, string)'}, 'node-source-details': {'module': 'container_engine', 'class': 'NodeSourceDetails'}, 'initial-node-labels': {'module': 'container_engine', 'class': 'list[KeyValue]'}, 'subnet-ids': {'module': 'container_engine', 'class': 'list[string]'}, 'node-config-details': {'module': 'container_engine', 'class': 'CreateNodePoolNodeConfigDetails'}})
+@json_skeleton_utils.get_cli_json_input_option({'node-metadata': {'module': 'container_engine', 'class': 'dict(str, string)'}, 'node-source-details': {'module': 'container_engine', 'class': 'NodeSourceDetails'}, 'node-shape-config': {'module': 'container_engine', 'class': 'CreateNodeShapeConfigDetails'}, 'initial-node-labels': {'module': 'container_engine', 'class': 'list[KeyValue]'}, 'subnet-ids': {'module': 'container_engine', 'class': 'list[string]'}, 'node-config-details': {'module': 'container_engine', 'class': 'CreateNodePoolNodeConfigDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'node-metadata': {'module': 'container_engine', 'class': 'dict(str, string)'}, 'node-source-details': {'module': 'container_engine', 'class': 'NodeSourceDetails'}, 'initial-node-labels': {'module': 'container_engine', 'class': 'list[KeyValue]'}, 'subnet-ids': {'module': 'container_engine', 'class': 'list[string]'}, 'node-config-details': {'module': 'container_engine', 'class': 'CreateNodePoolNodeConfigDetails'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'node-metadata': {'module': 'container_engine', 'class': 'dict(str, string)'}, 'node-source-details': {'module': 'container_engine', 'class': 'NodeSourceDetails'}, 'node-shape-config': {'module': 'container_engine', 'class': 'CreateNodeShapeConfigDetails'}, 'initial-node-labels': {'module': 'container_engine', 'class': 'list[KeyValue]'}, 'subnet-ids': {'module': 'container_engine', 'class': 'list[string]'}, 'node-config-details': {'module': 'container_engine', 'class': 'CreateNodePoolNodeConfigDetails'}})
 @cli_util.wrap_exceptions
-def create_node_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, cluster_id, name, kubernetes_version, node_shape, node_metadata, node_image_name, node_source_details, initial_node_labels, ssh_public_key, quantity_per_subnet, subnet_ids, node_config_details):
+def create_node_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, cluster_id, name, kubernetes_version, node_shape, node_metadata, node_image_name, node_source_details, node_shape_config, initial_node_labels, ssh_public_key, quantity_per_subnet, subnet_ids, node_config_details):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -238,6 +239,9 @@ def create_node_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 
     if node_source_details is not None:
         _details['nodeSourceDetails'] = cli_util.parse_json_parameter("node_source_details", node_source_details)
+
+    if node_shape_config is not None:
+        _details['nodeShapeConfig'] = cli_util.parse_json_parameter("node_shape_config", node_shape_config)
 
     if initial_node_labels is not None:
         _details['initialNodeLabels'] = cli_util.parse_json_parameter("initial_node_labels", initial_node_labels)
@@ -294,6 +298,7 @@ def create_node_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 @cli_util.option('--node-source-details-image-id', required=True, help=u"""The OCID of the image used to boot the node.""")
 @cli_util.option('--node-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of key/value pairs to add to each underlying OCI instance in the node pool on launch.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--node-image-name', help=u"""Deprecated. Use `nodeSourceDetails` instead. If you specify values for both, this value is ignored. The name of the image running on the nodes in the node pool.""")
+@cli_util.option('--node-shape-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Specify the configuration of the shape to launch nodes in the node pool.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--initial-node-labels', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of key/value pairs to add to nodes after they join the Kubernetes cluster.
 
 This option is a JSON list with items of type KeyValue.  For documentation on KeyValue please see our API reference: https://docs.cloud.oracle.com/api/#/en/containerengine/20180222/datatypes/KeyValue.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -305,12 +310,12 @@ This option is a JSON list with items of type KeyValue.  For documentation on Ke
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'node-metadata': {'module': 'container_engine', 'class': 'dict(str, string)'}, 'initial-node-labels': {'module': 'container_engine', 'class': 'list[KeyValue]'}, 'subnet-ids': {'module': 'container_engine', 'class': 'list[string]'}, 'node-config-details': {'module': 'container_engine', 'class': 'CreateNodePoolNodeConfigDetails'}})
+@json_skeleton_utils.get_cli_json_input_option({'node-metadata': {'module': 'container_engine', 'class': 'dict(str, string)'}, 'node-shape-config': {'module': 'container_engine', 'class': 'CreateNodeShapeConfigDetails'}, 'initial-node-labels': {'module': 'container_engine', 'class': 'list[KeyValue]'}, 'subnet-ids': {'module': 'container_engine', 'class': 'list[string]'}, 'node-config-details': {'module': 'container_engine', 'class': 'CreateNodePoolNodeConfigDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'node-metadata': {'module': 'container_engine', 'class': 'dict(str, string)'}, 'initial-node-labels': {'module': 'container_engine', 'class': 'list[KeyValue]'}, 'subnet-ids': {'module': 'container_engine', 'class': 'list[string]'}, 'node-config-details': {'module': 'container_engine', 'class': 'CreateNodePoolNodeConfigDetails'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'node-metadata': {'module': 'container_engine', 'class': 'dict(str, string)'}, 'node-shape-config': {'module': 'container_engine', 'class': 'CreateNodeShapeConfigDetails'}, 'initial-node-labels': {'module': 'container_engine', 'class': 'list[KeyValue]'}, 'subnet-ids': {'module': 'container_engine', 'class': 'list[string]'}, 'node-config-details': {'module': 'container_engine', 'class': 'CreateNodePoolNodeConfigDetails'}})
 @cli_util.wrap_exceptions
-def create_node_pool_node_source_via_image_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, cluster_id, name, kubernetes_version, node_shape, node_source_details_image_id, node_metadata, node_image_name, initial_node_labels, ssh_public_key, quantity_per_subnet, subnet_ids, node_config_details, node_source_details_boot_volume_size_in_gbs):
+def create_node_pool_node_source_via_image_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, cluster_id, name, kubernetes_version, node_shape, node_source_details_image_id, node_metadata, node_image_name, node_shape_config, initial_node_labels, ssh_public_key, quantity_per_subnet, subnet_ids, node_config_details, node_source_details_boot_volume_size_in_gbs):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -329,6 +334,9 @@ def create_node_pool_node_source_via_image_details(ctx, from_json, wait_for_stat
 
     if node_image_name is not None:
         _details['nodeImageName'] = node_image_name
+
+    if node_shape_config is not None:
+        _details['nodeShapeConfig'] = cli_util.parse_json_parameter("node_shape_config", node_shape_config)
 
     if initial_node_labels is not None:
         _details['initialNodeLabels'] = cli_util.parse_json_parameter("initial_node_labels", initial_node_labels)
@@ -949,23 +957,24 @@ This option is a JSON list with items of type KeyValue.  For documentation on Ke
 @cli_util.option('--node-source-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Specify the source to use to launch nodes in the node pool. Currently, image is the only supported source.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--ssh-public-key', help=u"""The SSH public key to add to each node in the node pool on launch.""")
 @cli_util.option('--node-shape', help=u"""The name of the node shape of the nodes in the node pool used on launch.""")
+@cli_util.option('--node-shape-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Specify the configuration of the shape to launch nodes in the node pool.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'initial-node-labels': {'module': 'container_engine', 'class': 'list[KeyValue]'}, 'subnet-ids': {'module': 'container_engine', 'class': 'list[string]'}, 'node-config-details': {'module': 'container_engine', 'class': 'UpdateNodePoolNodeConfigDetails'}, 'node-metadata': {'module': 'container_engine', 'class': 'dict(str, string)'}, 'node-source-details': {'module': 'container_engine', 'class': 'NodeSourceDetails'}})
+@json_skeleton_utils.get_cli_json_input_option({'initial-node-labels': {'module': 'container_engine', 'class': 'list[KeyValue]'}, 'subnet-ids': {'module': 'container_engine', 'class': 'list[string]'}, 'node-config-details': {'module': 'container_engine', 'class': 'UpdateNodePoolNodeConfigDetails'}, 'node-metadata': {'module': 'container_engine', 'class': 'dict(str, string)'}, 'node-source-details': {'module': 'container_engine', 'class': 'NodeSourceDetails'}, 'node-shape-config': {'module': 'container_engine', 'class': 'UpdateNodeShapeConfigDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'initial-node-labels': {'module': 'container_engine', 'class': 'list[KeyValue]'}, 'subnet-ids': {'module': 'container_engine', 'class': 'list[string]'}, 'node-config-details': {'module': 'container_engine', 'class': 'UpdateNodePoolNodeConfigDetails'}, 'node-metadata': {'module': 'container_engine', 'class': 'dict(str, string)'}, 'node-source-details': {'module': 'container_engine', 'class': 'NodeSourceDetails'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'initial-node-labels': {'module': 'container_engine', 'class': 'list[KeyValue]'}, 'subnet-ids': {'module': 'container_engine', 'class': 'list[string]'}, 'node-config-details': {'module': 'container_engine', 'class': 'UpdateNodePoolNodeConfigDetails'}, 'node-metadata': {'module': 'container_engine', 'class': 'dict(str, string)'}, 'node-source-details': {'module': 'container_engine', 'class': 'NodeSourceDetails'}, 'node-shape-config': {'module': 'container_engine', 'class': 'UpdateNodeShapeConfigDetails'}})
 @cli_util.wrap_exceptions
-def update_node_pool(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, node_pool_id, name, kubernetes_version, initial_node_labels, quantity_per_subnet, subnet_ids, node_config_details, node_metadata, node_source_details, ssh_public_key, node_shape, if_match):
+def update_node_pool(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, node_pool_id, name, kubernetes_version, initial_node_labels, quantity_per_subnet, subnet_ids, node_config_details, node_metadata, node_source_details, ssh_public_key, node_shape, node_shape_config, if_match):
 
     if isinstance(node_pool_id, six.string_types) and len(node_pool_id.strip()) == 0:
         raise click.UsageError('Parameter --node-pool-id cannot be whitespace or empty string')
     if not force:
-        if initial_node_labels or subnet_ids or node_config_details or node_metadata or node_source_details:
-            if not click.confirm("WARNING: Updates to initial-node-labels and subnet-ids and node-config-details and node-metadata and node-source-details will replace any existing values. Are you sure you want to continue?"):
+        if initial_node_labels or subnet_ids or node_config_details or node_metadata or node_source_details or node_shape_config:
+            if not click.confirm("WARNING: Updates to initial-node-labels and subnet-ids and node-config-details and node-metadata and node-source-details and node-shape-config will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -1004,6 +1013,9 @@ def update_node_pool(ctx, from_json, force, wait_for_state, max_wait_seconds, wa
 
     if node_shape is not None:
         _details['nodeShape'] = node_shape
+
+    if node_shape_config is not None:
+        _details['nodeShapeConfig'] = cli_util.parse_json_parameter("node_shape_config", node_shape_config)
 
     client = cli_util.build_client('container_engine', 'container_engine', ctx)
     result = client.update_node_pool(
@@ -1051,24 +1063,25 @@ This option is a JSON list with items of type KeyValue.  For documentation on Ke
 @cli_util.option('--node-metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of key/value pairs to add to each underlying OCI instance in the node pool on launch.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--ssh-public-key', help=u"""The SSH public key to add to each node in the node pool on launch.""")
 @cli_util.option('--node-shape', help=u"""The name of the node shape of the nodes in the node pool used on launch.""")
+@cli_util.option('--node-shape-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Specify the configuration of the shape to launch nodes in the node pool.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--node-source-details-boot-volume-size-in-gbs', type=click.INT, help=u"""The size of the boot volume in GBs. Minimum value is 50 GB. See [here] for max custom boot volume sizing and OS-specific requirements.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'initial-node-labels': {'module': 'container_engine', 'class': 'list[KeyValue]'}, 'subnet-ids': {'module': 'container_engine', 'class': 'list[string]'}, 'node-config-details': {'module': 'container_engine', 'class': 'UpdateNodePoolNodeConfigDetails'}, 'node-metadata': {'module': 'container_engine', 'class': 'dict(str, string)'}})
+@json_skeleton_utils.get_cli_json_input_option({'initial-node-labels': {'module': 'container_engine', 'class': 'list[KeyValue]'}, 'subnet-ids': {'module': 'container_engine', 'class': 'list[string]'}, 'node-config-details': {'module': 'container_engine', 'class': 'UpdateNodePoolNodeConfigDetails'}, 'node-metadata': {'module': 'container_engine', 'class': 'dict(str, string)'}, 'node-shape-config': {'module': 'container_engine', 'class': 'UpdateNodeShapeConfigDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'initial-node-labels': {'module': 'container_engine', 'class': 'list[KeyValue]'}, 'subnet-ids': {'module': 'container_engine', 'class': 'list[string]'}, 'node-config-details': {'module': 'container_engine', 'class': 'UpdateNodePoolNodeConfigDetails'}, 'node-metadata': {'module': 'container_engine', 'class': 'dict(str, string)'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'initial-node-labels': {'module': 'container_engine', 'class': 'list[KeyValue]'}, 'subnet-ids': {'module': 'container_engine', 'class': 'list[string]'}, 'node-config-details': {'module': 'container_engine', 'class': 'UpdateNodePoolNodeConfigDetails'}, 'node-metadata': {'module': 'container_engine', 'class': 'dict(str, string)'}, 'node-shape-config': {'module': 'container_engine', 'class': 'UpdateNodeShapeConfigDetails'}})
 @cli_util.wrap_exceptions
-def update_node_pool_node_source_via_image_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, node_pool_id, node_source_details_image_id, name, kubernetes_version, initial_node_labels, quantity_per_subnet, subnet_ids, node_config_details, node_metadata, ssh_public_key, node_shape, if_match, node_source_details_boot_volume_size_in_gbs):
+def update_node_pool_node_source_via_image_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, node_pool_id, node_source_details_image_id, name, kubernetes_version, initial_node_labels, quantity_per_subnet, subnet_ids, node_config_details, node_metadata, ssh_public_key, node_shape, node_shape_config, if_match, node_source_details_boot_volume_size_in_gbs):
 
     if isinstance(node_pool_id, six.string_types) and len(node_pool_id.strip()) == 0:
         raise click.UsageError('Parameter --node-pool-id cannot be whitespace or empty string')
     if not force:
-        if initial_node_labels or subnet_ids or node_config_details or node_metadata:
-            if not click.confirm("WARNING: Updates to initial-node-labels and subnet-ids and node-config-details and node-metadata will replace any existing values. Are you sure you want to continue?"):
+        if initial_node_labels or subnet_ids or node_config_details or node_metadata or node_shape_config:
+            if not click.confirm("WARNING: Updates to initial-node-labels and subnet-ids and node-config-details and node-metadata and node-shape-config will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -1106,6 +1119,9 @@ def update_node_pool_node_source_via_image_details(ctx, from_json, force, wait_f
 
     if node_shape is not None:
         _details['nodeShape'] = node_shape
+
+    if node_shape_config is not None:
+        _details['nodeShapeConfig'] = cli_util.parse_json_parameter("node_shape_config", node_shape_config)
 
     if node_source_details_boot_volume_size_in_gbs is not None:
         _details['nodeSourceDetails']['bootVolumeSizeInGBs'] = node_source_details_boot_volume_size_in_gbs

@@ -82,6 +82,34 @@ def path_route_set_group():
     pass
 
 
+@click.command(cli_util.override('lb.ssl_cipher_suite_group.command_name', 'ssl-cipher-suite'), cls=CommandGroupWithAlias, help="""The configuration details of an SSL cipher suite.
+
+The algorithms that compose a cipher suite help you secure Transport Layer Security (TLS) or Secure Socket Layer (SSL) network connections. A cipher suite defines the list of security algorithms your load balancer uses to negotiate with peers while sending and receiving information. The cipher suites you use affect the security level, performance, and compatibility of your data traffic.
+
+**Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.
+
+Oracle created the following predefined cipher suites that you can specify when you define a resource's [SSL configuration]. You can [create custom cipher suites] if the predefined cipher suites do not meet your requirements.
+
+ *  __oci-default-ssl-cipher-suite-v1__
+
+        \"DHE-RSA-AES128-GCM-SHA256\"         \"DHE-RSA-AES128-SHA256\"         \"DHE-RSA-AES256-GCM-SHA384\"         \"DHE-RSA-AES256-SHA256\"         \"ECDHE-RSA-AES128-GCM-SHA256\"         \"ECDHE-RSA-AES128-SHA256\"         \"ECDHE-RSA-AES256-GCM-SHA384\"         \"ECDHE-RSA-AES256-SHA384\"
+
+*  __oci-modern-ssl-cipher-suite-v1__
+
+        \"AES128-GCM-SHA256\"         \"AES128-SHA256\"         \"AES256-GCM-SHA384\"         \"AES256-SHA256\"         \"DHE-RSA-AES128-GCM-SHA256\"         \"DHE-RSA-AES128-SHA256\"         \"DHE-RSA-AES256-GCM-SHA384\"         \"DHE-RSA-AES256-SHA256\"         \"ECDHE-ECDSA-AES128-GCM-SHA256\"         \"ECDHE-ECDSA-AES128-SHA256\"         \"ECDHE-ECDSA-AES256-GCM-SHA384\"         \"ECDHE-ECDSA-AES256-SHA384\"         \"ECDHE-RSA-AES128-GCM-SHA256\"         \"ECDHE-RSA-AES128-SHA256\"         \"ECDHE-RSA-AES256-GCM-SHA384\"         \"ECDHE-RSA-AES256-SHA384\"
+
+*  __oci-compatible-ssl-cipher-suite-v1__
+
+        \"AES128-GCM-SHA256\"         \"AES128-SHA\"         \"AES128-SHA256\"         \"AES256-GCM-SHA384\"         \"AES256-SHA\"         \"AES256-SHA256\"         \"DHE-RSA-AES128-GCM-SHA256\"         \"DHE-RSA-AES128-SHA256\"         \"DHE-RSA-AES256-GCM-SHA384\"         \"DHE-RSA-AES256-SHA256\"         \"ECDHE-ECDSA-AES128-GCM-SHA256\"         \"ECDHE-ECDSA-AES128-SHA\"         \"ECDHE-ECDSA-AES128-SHA256\"         \"ECDHE-ECDSA-AES256-GCM-SHA384\"         \"ECDHE-ECDSA-AES256-SHA\"         \"ECDHE-ECDSA-AES256-SHA384\"         \"ECDHE-RSA-AES128-GCM-SHA256\"         \"ECDHE-RSA-AES128-SHA\"         \"ECDHE-RSA-AES128-SHA256\"         \"ECDHE-RSA-AES256-GCM-SHA384\"         \"ECDHE-RSA-AES256-SHA\"         \"ECDHE-RSA-AES256-SHA384\"
+
+*  __oci-wider-compatible-ssl-cipher-suite-v1__
+
+        \"AES128-GCM-SHA256\"         \"AES128-SHA\"         \"AES128-SHA256\"         \"AES256-GCM-SHA384\"         \"AES256-SHA\"         \"AES256-SHA256\"         \"CAMELLIA128-SHA\"         \"CAMELLIA256-SHA\"         \"DES-CBC3-SHA\"         \"DH-DSS-AES128-GCM-SHA256\"         \"DH-DSS-AES128-SHA\"         \"DH-DSS-AES128-SHA256\"         \"DH-DSS-AES256-GCM-SHA384\"         \"DH-DSS-AES256-SHA\"         \"DH-DSS-AES256-SHA256\"         \"DH-DSS-CAMELLIA128-SHA\"         \"DH-DSS-CAMELLIA256-SHA\"         \"DH-DSS-DES-CBC3-SHAv\"         \"DH-DSS-SEED-SHA\"         \"DH-RSA-AES128-GCM-SHA256\"         \"DH-RSA-AES128-SHA\"         \"DH-RSA-AES128-SHA256\"         \"DH-RSA-AES256-GCM-SHA384\"         \"DH-RSA-AES256-SHA\"         \"DH-RSA-AES256-SHA256\"         \"DH-RSA-CAMELLIA128-SHA\"         \"DH-RSA-CAMELLIA256-SHA\"         \"DH-RSA-DES-CBC3-SHA\"         \"DH-RSA-SEED-SHA\"         \"DHE-DSS-AES128-GCM-SHA256\"         \"DHE-DSS-AES128-SHA\"         \"DHE-DSS-AES128-SHA256\"         \"DHE-DSS-AES256-GCM-SHA384\"         \"DHE-DSS-AES256-SHA\"         \"DHE-DSS-AES256-SHA256\"         \"DHE-DSS-CAMELLIA128-SHA\"         \"DHE-DSS-CAMELLIA256-SHA\"         \"DHE-DSS-DES-CBC3-SHA\"         \"DHE-DSS-SEED-SHA\"         \"DHE-RSA-AES128-GCM-SHA256\"         \"DHE-RSA-AES128-SHA\"         \"DHE-RSA-AES128-SHA256\"         \"DHE-RSA-AES256-GCM-SHA384\"         \"DHE-RSA-AES256-SHA\"         \"DHE-RSA-AES256-SHA256\"         \"DHE-RSA-CAMELLIA128-SHA\"         \"DHE-RSA-CAMELLIA256-SHA\"         \"DHE-RSA-DES-CBC3-SHA\"         \"DHE-RSA-SEED-SHA\"         \"ECDH-ECDSA-AES128-GCM-SHA256\"         \"ECDH-ECDSA-AES128-SHA\"         \"ECDH-ECDSA-AES128-SHA256\"         \"ECDH-ECDSA-AES256-GCM-SHA384\"         \"ECDH-ECDSA-AES256-SHA\"         \"ECDH-ECDSA-AES256-SHA384\"         \"ECDH-ECDSA-DES-CBC3-SHA\"         \"ECDH-ECDSA-RC4-SHA\"         \"ECDH-RSA-AES128-GCM-SHA256\"         \"ECDH-RSA-AES128-SHA\"         \"ECDH-RSA-AES128-SHA256\"         \"ECDH-RSA-AES256-GCM-SHA384\"         \"ECDH-RSA-AES256-SHA\"         \"ECDH-RSA-AES256-SHA384\"         \"ECDH-RSA-DES-CBC3-SHA\"         \"ECDH-RSA-RC4-SHA\"         \"ECDHE-ECDSA-AES128-GCM-SHA256\"         \"ECDHE-ECDSA-AES128-SHA\"         \"ECDHE-ECDSA-AES128-SHA256\"         \"ECDHE-ECDSA-AES256-GCM-SHA384\"         \"ECDHE-ECDSA-AES256-SHA\"         \"ECDHE-ECDSA-AES256-SHA384\"         \"ECDHE-ECDSA-DES-CBC3-SHA\"         \"ECDHE-ECDSA-RC4-SHA\"         \"ECDHE-RSA-AES128-GCM-SHA256\"         \"ECDHE-RSA-AES128-SHA\"         \"ECDHE-RSA-AES128-SHA256\"         \"ECDHE-RSA-AES256-GCM-SHA384\"         \"ECDHE-RSA-AES256-SHA\"         \"ECDHE-RSA-AES256-SHA384\"         \"ECDHE-RSA-DES-CBC3-SHA\"         \"ECDHE-RSA-RC4-SHA\"         \"IDEA-CBC-SHA\"         \"KRB5-DES-CBC3-MD5\"         \"KRB5-DES-CBC3-SHA\"         \"KRB5-IDEA-CBC-MD5\"         \"KRB5-IDEA-CBC-SHA\"         \"KRB5-RC4-MD5\"         \"KRB5-RC4-SHA\"         \"PSK-3DES-EDE-CBC-SHA\"         \"PSK-AES128-CBC-SHA\"         \"PSK-AES256-CBC-SHA\"         \"PSK-RC4-SHA\"         \"RC4-MD5\"         \"RC4-SHA\"         \"SEED-SHA\"""")
+@cli_util.help_option_group
+def ssl_cipher_suite_group():
+    pass
+
+
 @click.command(cli_util.override('lb.load_balancer_protocol_group.command_name', 'load-balancer-protocol'), cls=CommandGroupWithAlias, help="""A protocol that defines the type of traffic accepted by a listener.""")
 @cli_util.help_option_group
 def load_balancer_protocol_group():
@@ -158,6 +186,7 @@ lb_root_group.add_command(work_request_group)
 lb_root_group.add_command(backend_set_health_group)
 lb_root_group.add_command(health_checker_group)
 lb_root_group.add_command(path_route_set_group)
+lb_root_group.add_command(ssl_cipher_suite_group)
 lb_root_group.add_command(load_balancer_protocol_group)
 lb_root_group.add_command(listener_rule_group)
 lb_root_group.add_command(load_balancer_health_group)
@@ -700,6 +729,9 @@ Example: `[\"ocid1.nsg.oc1.phx.unique_ID\"]`""" + custom_types.cli_complex_type.
 @cli_util.option('--certificates', type=custom_types.CLI_COMPLEX_TYPE, help=u"""
 
 This option is a JSON dictionary of type dict(str, CertificateDetails).  For documentation on CertificateDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/loadbalancer/20170115/datatypes/CertificateDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--ssl-cipher-suites', type=custom_types.CLI_COMPLEX_TYPE, help=u"""
+
+This option is a JSON dictionary of type dict(str, SSLCipherSuiteDetails).  For documentation on SSLCipherSuiteDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/loadbalancer/20170115/datatypes/SSLCipherSuiteDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--path-route-sets', type=custom_types.CLI_COMPLEX_TYPE, help=u"""
 
 This option is a JSON dictionary of type dict(str, PathRouteSetDetails).  For documentation on PathRouteSetDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/loadbalancer/20170115/datatypes/PathRouteSetDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -715,12 +747,12 @@ This option is a JSON dictionary of type dict(str, RuleSetDetails).  For documen
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'listeners': {'module': 'load_balancer', 'class': 'dict(str, ListenerDetails)'}, 'hostnames': {'module': 'load_balancer', 'class': 'dict(str, HostnameDetails)'}, 'backend-sets': {'module': 'load_balancer', 'class': 'dict(str, BackendSetDetails)'}, 'network-security-group-ids': {'module': 'load_balancer', 'class': 'list[string]'}, 'subnet-ids': {'module': 'load_balancer', 'class': 'list[string]'}, 'certificates': {'module': 'load_balancer', 'class': 'dict(str, CertificateDetails)'}, 'path-route-sets': {'module': 'load_balancer', 'class': 'dict(str, PathRouteSetDetails)'}, 'freeform-tags': {'module': 'load_balancer', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'load_balancer', 'class': 'dict(str, dict(str, object))'}, 'rule-sets': {'module': 'load_balancer', 'class': 'dict(str, RuleSetDetails)'}})
+@json_skeleton_utils.get_cli_json_input_option({'listeners': {'module': 'load_balancer', 'class': 'dict(str, ListenerDetails)'}, 'hostnames': {'module': 'load_balancer', 'class': 'dict(str, HostnameDetails)'}, 'backend-sets': {'module': 'load_balancer', 'class': 'dict(str, BackendSetDetails)'}, 'network-security-group-ids': {'module': 'load_balancer', 'class': 'list[string]'}, 'subnet-ids': {'module': 'load_balancer', 'class': 'list[string]'}, 'certificates': {'module': 'load_balancer', 'class': 'dict(str, CertificateDetails)'}, 'ssl-cipher-suites': {'module': 'load_balancer', 'class': 'dict(str, SSLCipherSuiteDetails)'}, 'path-route-sets': {'module': 'load_balancer', 'class': 'dict(str, PathRouteSetDetails)'}, 'freeform-tags': {'module': 'load_balancer', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'load_balancer', 'class': 'dict(str, dict(str, object))'}, 'rule-sets': {'module': 'load_balancer', 'class': 'dict(str, RuleSetDetails)'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'listeners': {'module': 'load_balancer', 'class': 'dict(str, ListenerDetails)'}, 'hostnames': {'module': 'load_balancer', 'class': 'dict(str, HostnameDetails)'}, 'backend-sets': {'module': 'load_balancer', 'class': 'dict(str, BackendSetDetails)'}, 'network-security-group-ids': {'module': 'load_balancer', 'class': 'list[string]'}, 'subnet-ids': {'module': 'load_balancer', 'class': 'list[string]'}, 'certificates': {'module': 'load_balancer', 'class': 'dict(str, CertificateDetails)'}, 'path-route-sets': {'module': 'load_balancer', 'class': 'dict(str, PathRouteSetDetails)'}, 'freeform-tags': {'module': 'load_balancer', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'load_balancer', 'class': 'dict(str, dict(str, object))'}, 'rule-sets': {'module': 'load_balancer', 'class': 'dict(str, RuleSetDetails)'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'listeners': {'module': 'load_balancer', 'class': 'dict(str, ListenerDetails)'}, 'hostnames': {'module': 'load_balancer', 'class': 'dict(str, HostnameDetails)'}, 'backend-sets': {'module': 'load_balancer', 'class': 'dict(str, BackendSetDetails)'}, 'network-security-group-ids': {'module': 'load_balancer', 'class': 'list[string]'}, 'subnet-ids': {'module': 'load_balancer', 'class': 'list[string]'}, 'certificates': {'module': 'load_balancer', 'class': 'dict(str, CertificateDetails)'}, 'ssl-cipher-suites': {'module': 'load_balancer', 'class': 'dict(str, SSLCipherSuiteDetails)'}, 'path-route-sets': {'module': 'load_balancer', 'class': 'dict(str, PathRouteSetDetails)'}, 'freeform-tags': {'module': 'load_balancer', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'load_balancer', 'class': 'dict(str, dict(str, object))'}, 'rule-sets': {'module': 'load_balancer', 'class': 'dict(str, RuleSetDetails)'}})
 @cli_util.wrap_exceptions
-def create_load_balancer(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, shape_name, subnet_ids, is_private, ip_mode, listeners, hostnames, backend_sets, network_security_group_ids, certificates, path_route_sets, freeform_tags, defined_tags, rule_sets):
+def create_load_balancer(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, shape_name, subnet_ids, is_private, ip_mode, listeners, hostnames, backend_sets, network_security_group_ids, certificates, ssl_cipher_suites, path_route_sets, freeform_tags, defined_tags, rule_sets):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -751,6 +783,9 @@ def create_load_balancer(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 
     if certificates is not None:
         _details['certificates'] = cli_util.parse_json_parameter("certificates", certificates)
+
+    if ssl_cipher_suites is not None:
+        _details['sslCipherSuites'] = cli_util.parse_json_parameter("ssl_cipher_suites", ssl_cipher_suites)
 
     if path_route_sets is not None:
         _details['pathRouteSets'] = cli_util.parse_json_parameter("path_route_sets", path_route_sets)
@@ -885,6 +920,80 @@ def create_rule_set(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
     result = client.create_rule_set(
         load_balancer_id=load_balancer_id,
         create_rule_set_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@ssl_cipher_suite_group.command(name=cli_util.override('lb.create_ssl_cipher_suite.command_name', 'create'), help=u"""Creates a custom SSL cipher suite.""")
+@cli_util.option('--name', required=True, help=u"""A friendly name for the SSL cipher suite. It must be unique and it cannot be changed.
+
+**Note:** The name of your user-defined cipher suite must not be the same as any of Oracle's predefined or           reserved SSL cipher suite names:
+
+* oci-default-ssl-cipher-suite-v1 * oci-modern-ssl-cipher-suite-v1 * oci-compatible-ssl-cipher-suite-v1 * oci-wider-compatible-ssl-cipher-suite-v1 * oci-customized-ssl-cipher-suite
+
+example: `example_cipher_suite`""")
+@cli_util.option('--ciphers', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of SSL ciphers the load balancer must support for HTTPS or SSL connections.
+
+The following ciphers are valid values for this property:
+
+*  __TLSv1.2 ciphers__
+
+        \"AES128-GCM-SHA256\"         \"AES128-SHA256\"         \"AES256-GCM-SHA384\"         \"AES256-SHA256\"         \"DH-DSS-AES128-GCM-SHA256\"         \"DH-DSS-AES128-SHA256\"         \"DH-DSS-AES256-GCM-SHA384\"         \"DH-DSS-AES256-SHA256\"         \"DH-RSA-AES128-GCM-SHA256\"         \"DH-RSA-AES128-SHA256\"         \"DH-RSA-AES256-GCM-SHA384\"         \"DH-RSA-AES256-SHA256\"         \"DHE-DSS-AES128-GCM-SHA256\"         \"DHE-DSS-AES128-SHA256\"         \"DHE-DSS-AES256-GCM-SHA384\"         \"DHE-DSS-AES256-SHA256\"         \"DHE-RSA-AES128-GCM-SHA256\"         \"DHE-RSA-AES128-SHA256\"         \"DHE-RSA-AES256-GCM-SHA384\"         \"DHE-RSA-AES256-SHA256\"         \"ECDH-ECDSA-AES128-GCM-SHA256\"         \"ECDH-ECDSA-AES128-SHA256\"         \"ECDH-ECDSA-AES256-GCM-SHA384\"         \"ECDH-ECDSA-AES256-SHA384\"         \"ECDH-RSA-AES128-GCM-SHA256\"         \"ECDH-RSA-AES128-SHA256\"         \"ECDH-RSA-AES256-GCM-SHA384\"         \"ECDH-RSA-AES256-SHA384\"         \"ECDHE-ECDSA-AES128-GCM-SHA256\"         \"ECDHE-ECDSA-AES128-SHA256\"         \"ECDHE-ECDSA-AES256-GCM-SHA384\"         \"ECDHE-ECDSA-AES256-SHA384\"         \"ECDHE-RSA-AES128-GCM-SHA256\"         \"ECDHE-RSA-AES128-SHA256\"         \"ECDHE-RSA-AES256-GCM-SHA384\"         \"ECDHE-RSA-AES256-SHA384\"
+
+*  __TLSv1 ciphers also supported by TLSv1.2__
+
+        \"AES128-SHA\"         \"AES256-SHA\"         \"CAMELLIA128-SHA\"         \"CAMELLIA256-SHA\"         \"DES-CBC3-SHA\"         \"DH-DSS-AES128-SHA\"         \"DH-DSS-AES256-SHA\"         \"DH-DSS-CAMELLIA128-SHA\"         \"DH-DSS-CAMELLIA256-SHA\"         \"DH-DSS-DES-CBC3-SHAv\"         \"DH-DSS-SEED-SHA\"         \"DH-RSA-AES128-SHA\"         \"DH-RSA-AES256-SHA\"         \"DH-RSA-CAMELLIA128-SHA\"         \"DH-RSA-CAMELLIA256-SHA\"         \"DH-RSA-DES-CBC3-SHA\"         \"DH-RSA-SEED-SHA\"         \"DHE-DSS-AES128-SHA\"         \"DHE-DSS-AES256-SHA\"         \"DHE-DSS-CAMELLIA128-SHA\"         \"DHE-DSS-CAMELLIA256-SHA\"         \"DHE-DSS-DES-CBC3-SHA\"         \"DHE-DSS-SEED-SHA\"         \"DHE-RSA-AES128-SHA\"         \"DHE-RSA-AES256-SHA\"         \"DHE-RSA-CAMELLIA128-SHA\"         \"DHE-RSA-CAMELLIA256-SHA\"         \"DHE-RSA-DES-CBC3-SHA\"         \"DHE-RSA-SEED-SHA\"         \"ECDH-ECDSA-AES128-SHA\"         \"ECDH-ECDSA-AES256-SHA\"         \"ECDH-ECDSA-DES-CBC3-SHA\"         \"ECDH-ECDSA-RC4-SHA\"         \"ECDH-RSA-AES128-SHA\"         \"ECDH-RSA-AES256-SHA\"         \"ECDH-RSA-DES-CBC3-SHA\"         \"ECDH-RSA-RC4-SHA\"         \"ECDHE-ECDSA-AES128-SHA\"         \"ECDHE-ECDSA-AES256-SHA\"         \"ECDHE-ECDSA-DES-CBC3-SHA\"         \"ECDHE-ECDSA-RC4-SHA\"         \"ECDHE-RSA-AES128-SHA\"         \"ECDHE-RSA-AES256-SHA\"         \"ECDHE-RSA-DES-CBC3-SHA\"         \"ECDHE-RSA-RC4-SHA\"         \"IDEA-CBC-SHA\"         \"KRB5-DES-CBC3-MD5\"         \"KRB5-DES-CBC3-SHA\"         \"KRB5-IDEA-CBC-MD5\"         \"KRB5-IDEA-CBC-SHA\"         \"KRB5-RC4-MD5\"         \"KRB5-RC4-SHA\"         \"PSK-3DES-EDE-CBC-SHA\"         \"PSK-AES128-CBC-SHA\"         \"PSK-AES256-CBC-SHA\"         \"PSK-RC4-SHA\"         \"RC4-MD5\"         \"RC4-SHA\"         \"SEED-SHA\"
+
+example: `[\"ECDHE-RSA-AES256-GCM-SHA384\",\"ECDHE-ECDSA-AES256-GCM-SHA384\",\"ECDHE-RSA-AES128-GCM-SHA256\"]`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the associated load balancer.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'ciphers': {'module': 'load_balancer', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'ciphers': {'module': 'load_balancer', 'class': 'list[string]'}})
+@cli_util.wrap_exceptions
+def create_ssl_cipher_suite(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, ciphers, load_balancer_id):
+
+    if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
+        raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['name'] = name
+    _details['ciphers'] = cli_util.parse_json_parameter("ciphers", ciphers)
+
+    client = cli_util.build_client('load_balancer', 'load_balancer', ctx)
+    result = client.create_ssl_cipher_suite(
+        load_balancer_id=load_balancer_id,
+        create_ssl_cipher_suite_details=_details,
         **kwargs
     )
     if wait_for_state:
@@ -1367,6 +1476,62 @@ def delete_rule_set(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
     cli_util.render_response(result, ctx)
 
 
+@ssl_cipher_suite_group.command(name=cli_util.override('lb.delete_ssl_cipher_suite.command_name', 'delete'), help=u"""Deletes an SSL cipher suite from a load balancer.""")
+@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the associated load balancer.""")
+@cli_util.option('--name', required=True, help=u"""The name of the SSL cipher suite to delete.
+
+example: `example_cipher_suite`""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_ssl_cipher_suite(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, load_balancer_id, name):
+
+    if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
+        raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
+
+    if isinstance(name, six.string_types) and len(name.strip()) == 0:
+        raise click.UsageError('Parameter --name cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('load_balancer', 'load_balancer', ctx)
+    result = client.delete_ssl_cipher_suite(
+        load_balancer_id=load_balancer_id,
+        name=name,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @backend_group.command(name=cli_util.override('lb.get_backend.command_name', 'get'), help=u"""Gets the specified backend server's configuration information.""")
 @cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer associated with the backend set and server.""")
 @cli_util.option('--backend-set-name', required=True, help=u"""The name of the backend set that includes the backend server.
@@ -1652,6 +1817,35 @@ def get_rule_set(ctx, from_json, load_balancer_id, rule_set_name):
     result = client.get_rule_set(
         load_balancer_id=load_balancer_id,
         rule_set_name=rule_set_name,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@ssl_cipher_suite_group.command(name=cli_util.override('lb.get_ssl_cipher_suite.command_name', 'get'), help=u"""Gets the specified SSL cipher suite's configuration information.""")
+@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the associated load balancer.""")
+@cli_util.option('--name', required=True, help=u"""The name of the SSL cipher suite to retrieve.
+
+example: `example_cipher_suite`""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'load_balancer', 'class': 'SSLCipherSuite'})
+@cli_util.wrap_exceptions
+def get_ssl_cipher_suite(ctx, from_json, load_balancer_id, name):
+
+    if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
+        raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
+
+    if isinstance(name, six.string_types) and len(name.strip()) == 0:
+        raise click.UsageError('Parameter --name cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('load_balancer', 'load_balancer', ctx)
+    result = client.get_ssl_cipher_suite(
+        load_balancer_id=load_balancer_id,
+        name=name,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -2132,6 +2326,29 @@ def list_shapes(ctx, from_json, all_pages, page_size, compartment_id, limit, pag
             compartment_id=compartment_id,
             **kwargs
         )
+    cli_util.render_response(result, ctx)
+
+
+@ssl_cipher_suite_group.command(name=cli_util.override('lb.list_ssl_cipher_suites.command_name', 'list'), help=u"""Lists all SSL cipher suites associated with the specified load balancer.""")
+@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the associated load balancer.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'load_balancer', 'class': 'list[SSLCipherSuite]'})
+@cli_util.wrap_exceptions
+def list_ssl_cipher_suites(ctx, from_json, all_pages, load_balancer_id):
+
+    if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
+        raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('load_balancer', 'load_balancer', ctx)
+    result = client.list_ssl_cipher_suites(
+        load_balancer_id=load_balancer_id,
+        **kwargs
+    )
     cli_util.render_response(result, ctx)
 
 
@@ -2870,6 +3087,84 @@ def update_rule_set(ctx, from_json, force, wait_for_state, max_wait_seconds, wai
         load_balancer_id=load_balancer_id,
         rule_set_name=rule_set_name,
         update_rule_set_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@ssl_cipher_suite_group.command(name=cli_util.override('lb.update_ssl_cipher_suite.command_name', 'update'), help=u"""Updates an existing SSL cipher suite for the specified load balancer.""")
+@cli_util.option('--ciphers', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of SSL ciphers the load balancer must support for HTTPS or SSL connections.
+
+The following ciphers are valid values for this property:
+
+*  __TLSv1.2 ciphers__
+
+        \"AES128-GCM-SHA256\"         \"AES128-SHA256\"         \"AES256-GCM-SHA384\"         \"AES256-SHA256\"         \"DH-DSS-AES128-GCM-SHA256\"         \"DH-DSS-AES128-SHA256\"         \"DH-DSS-AES256-GCM-SHA384\"         \"DH-DSS-AES256-SHA256\"         \"DH-RSA-AES128-GCM-SHA256\"         \"DH-RSA-AES128-SHA256\"         \"DH-RSA-AES256-GCM-SHA384\"         \"DH-RSA-AES256-SHA256\"         \"DHE-DSS-AES128-GCM-SHA256\"         \"DHE-DSS-AES128-SHA256\"         \"DHE-DSS-AES256-GCM-SHA384\"         \"DHE-DSS-AES256-SHA256\"         \"DHE-RSA-AES128-GCM-SHA256\"         \"DHE-RSA-AES128-SHA256\"         \"DHE-RSA-AES256-GCM-SHA384\"         \"DHE-RSA-AES256-SHA256\"         \"ECDH-ECDSA-AES128-GCM-SHA256\"         \"ECDH-ECDSA-AES128-SHA256\"         \"ECDH-ECDSA-AES256-GCM-SHA384\"         \"ECDH-ECDSA-AES256-SHA384\"         \"ECDH-RSA-AES128-GCM-SHA256\"         \"ECDH-RSA-AES128-SHA256\"         \"ECDH-RSA-AES256-GCM-SHA384\"         \"ECDH-RSA-AES256-SHA384\"         \"ECDHE-ECDSA-AES128-GCM-SHA256\"         \"ECDHE-ECDSA-AES128-SHA256\"         \"ECDHE-ECDSA-AES256-GCM-SHA384\"         \"ECDHE-ECDSA-AES256-SHA384\"         \"ECDHE-RSA-AES128-GCM-SHA256\"         \"ECDHE-RSA-AES128-SHA256\"         \"ECDHE-RSA-AES256-GCM-SHA384\"         \"ECDHE-RSA-AES256-SHA384\"
+
+*  __TLSv1 ciphers also supported by TLSv1.2__
+
+        \"AES128-SHA\"         \"AES256-SHA\"         \"CAMELLIA128-SHA\"         \"CAMELLIA256-SHA\"         \"DES-CBC3-SHA\"         \"DH-DSS-AES128-SHA\"         \"DH-DSS-AES256-SHA\"         \"DH-DSS-CAMELLIA128-SHA\"         \"DH-DSS-CAMELLIA256-SHA\"         \"DH-DSS-DES-CBC3-SHAv\"         \"DH-DSS-SEED-SHA\"         \"DH-RSA-AES128-SHA\"         \"DH-RSA-AES256-SHA\"         \"DH-RSA-CAMELLIA128-SHA\"         \"DH-RSA-CAMELLIA256-SHA\"         \"DH-RSA-DES-CBC3-SHA\"         \"DH-RSA-SEED-SHA\"         \"DHE-DSS-AES128-SHA\"         \"DHE-DSS-AES256-SHA\"         \"DHE-DSS-CAMELLIA128-SHA\"         \"DHE-DSS-CAMELLIA256-SHA\"         \"DHE-DSS-DES-CBC3-SHA\"         \"DHE-DSS-SEED-SHA\"         \"DHE-RSA-AES128-SHA\"         \"DHE-RSA-AES256-SHA\"         \"DHE-RSA-CAMELLIA128-SHA\"         \"DHE-RSA-CAMELLIA256-SHA\"         \"DHE-RSA-DES-CBC3-SHA\"         \"DHE-RSA-SEED-SHA\"         \"ECDH-ECDSA-AES128-SHA\"         \"ECDH-ECDSA-AES256-SHA\"         \"ECDH-ECDSA-DES-CBC3-SHA\"         \"ECDH-ECDSA-RC4-SHA\"         \"ECDH-RSA-AES128-SHA\"         \"ECDH-RSA-AES256-SHA\"         \"ECDH-RSA-DES-CBC3-SHA\"         \"ECDH-RSA-RC4-SHA\"         \"ECDHE-ECDSA-AES128-SHA\"         \"ECDHE-ECDSA-AES256-SHA\"         \"ECDHE-ECDSA-DES-CBC3-SHA\"         \"ECDHE-ECDSA-RC4-SHA\"         \"ECDHE-RSA-AES128-SHA\"         \"ECDHE-RSA-AES256-SHA\"         \"ECDHE-RSA-DES-CBC3-SHA\"         \"ECDHE-RSA-RC4-SHA\"         \"IDEA-CBC-SHA\"         \"KRB5-DES-CBC3-MD5\"         \"KRB5-DES-CBC3-SHA\"         \"KRB5-IDEA-CBC-MD5\"         \"KRB5-IDEA-CBC-SHA\"         \"KRB5-RC4-MD5\"         \"KRB5-RC4-SHA\"         \"PSK-3DES-EDE-CBC-SHA\"         \"PSK-AES128-CBC-SHA\"         \"PSK-AES256-CBC-SHA\"         \"PSK-RC4-SHA\"         \"RC4-MD5\"         \"RC4-SHA\"         \"SEED-SHA\"
+
+example: `[\"ECDHE-RSA-AES256-GCM-SHA384\",\"ECDHE-ECDSA-AES256-GCM-SHA384\",\"ECDHE-RSA-AES128-GCM-SHA256\"]`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the associated load balancer.""")
+@cli_util.option('--name', required=True, help=u"""The name of the SSL cipher suite to update.
+
+example: `example_cipher_suite`""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'ciphers': {'module': 'load_balancer', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'ciphers': {'module': 'load_balancer', 'class': 'list[string]'}})
+@cli_util.wrap_exceptions
+def update_ssl_cipher_suite(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, ciphers, load_balancer_id, name):
+
+    if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
+        raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
+
+    if isinstance(name, six.string_types) and len(name.strip()) == 0:
+        raise click.UsageError('Parameter --name cannot be whitespace or empty string')
+    if not force:
+        if ciphers:
+            if not click.confirm("WARNING: Updates to ciphers will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['ciphers'] = cli_util.parse_json_parameter("ciphers", ciphers)
+
+    client = cli_util.build_client('load_balancer', 'load_balancer', ctx)
+    result = client.update_ssl_cipher_suite(
+        load_balancer_id=load_balancer_id,
+        name=name,
+        update_ssl_cipher_suite_details=_details,
         **kwargs
     )
     if wait_for_state:
