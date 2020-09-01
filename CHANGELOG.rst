@@ -6,6 +6,60 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.12.9 - 2020-09-01
+-------------------
+Added
+~~~~~
+
+* Support for customers to find the latest CLI version
+
+  * ``oci --latest-version``
+
+* Support for customers to view changelog entries for newer CLI versions
+
+  * ``oci --release-info``
+
+* Support for returning all results for Resource Manager job logs
+
+  * ``oci resource-manager job get-job-logs --all``
+
+* Improvement for DB System, Cloud VMCluster and Cloud Exadata Infrastructure by introducing lifecycle state MAINTENANCE_IN_PROGRESS in Database Service
+
+  * ``oci db system``
+  * ``oci db vm-cluster``
+  * ``oci db exadata-infrastructure``
+
+* VM DB cloning - clone dbSystem from a source dbSystem
+
+  * ``oci db system launch-from-db-system``
+
+* Option private-ip for other type of dbSystem launches
+
+  * ``oci db system launch --private-ip``
+  * ``oci db system launch-from-backup --private-ip``
+  * ``oci db system launch-from-database --private-ip``
+
+* Support for Network Sources in Authentication Policy in Identity Service
+
+  * ``oci iam authentication-policy update``
+
+* Support for AMD Flexible Shapes with configurable CPU to the Container Engine for Kubernetes service
+
+  * ``oci ce node-pool create --node-shape-config``
+  * ``oci ce node-pool update --node-shape-config``
+
+* New options for listener and backendset to specify ssl protocols, ssl ciphersuite and server order preference in Load Balancer Service
+
+  * ``oci lb backend-set``
+  * ``oci lb listener``
+  * ``oci lb load-balancer``
+  * ``oci lb ssl-cipher-suite``
+
+Changed
+~~~~~~~
+
+* jmespath package requirement bumped to 0.10.0
+
 2.12.8 - 2020-08-18
 -------------------
 Added

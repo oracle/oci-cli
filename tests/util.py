@@ -625,6 +625,8 @@ def ensure_test_data(api, namespace, compartment, bucket_prefix):
             raise error
 
     api.put_object(namespace, test_data_metadata_bucket, test_data_version_object, TEST_DATA_VERSION)
+    print("Cleaning test data.")
+    clear_test_data(api, namespace, compartment, bucket_prefix + 'ReadOnlyTestBucket')
 
 
 def create_bucket(api, namespace, compartment, bucket_name, metadata=None, objects=None):

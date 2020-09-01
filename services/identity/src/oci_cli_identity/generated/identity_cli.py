@@ -1541,11 +1541,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-cost-tracking', type=click.BOOL, help=u"""Indicates whether the tag is enabled for cost tracking.""")
-@cli_util.option('--validator', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The tag must have a value type, which is specified with a validator. Tags can use either a static value or a list of possible values. Static values are entered by a user applying the tag to a resource. Lists are created by you and the user must apply a value from the list. Lists are validiated.
-
-If you use the default validiator (or don't define a validator), the user applying the tag enters a value. No additional validation is performed.
-
-To clear the validator, call UpdateTag with [DefaultTagDefinitionValidator].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--validator', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -4847,21 +4843,22 @@ def update_auth_token(ctx, from_json, user_id, auth_token_id, description, if_ma
 
 @authentication_policy_group.command(name=cli_util.override('iam.update_authentication_policy.command_name', 'update'), help=u"""Updates authentication policy for the specified tenancy""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
-@cli_util.option('--password-policy', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Password policy.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--password-policy', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--network-policy', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
-@json_skeleton_utils.get_cli_json_input_option({'password-policy': {'module': 'identity', 'class': 'PasswordPolicy'}})
+@json_skeleton_utils.get_cli_json_input_option({'password-policy': {'module': 'identity', 'class': 'PasswordPolicy'}, 'network-policy': {'module': 'identity', 'class': 'NetworkPolicy'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'password-policy': {'module': 'identity', 'class': 'PasswordPolicy'}}, output_type={'module': 'identity', 'class': 'AuthenticationPolicy'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'password-policy': {'module': 'identity', 'class': 'PasswordPolicy'}, 'network-policy': {'module': 'identity', 'class': 'NetworkPolicy'}}, output_type={'module': 'identity', 'class': 'AuthenticationPolicy'})
 @cli_util.wrap_exceptions
-def update_authentication_policy(ctx, from_json, force, compartment_id, password_policy, if_match):
+def update_authentication_policy(ctx, from_json, force, compartment_id, password_policy, network_policy, if_match):
 
     if isinstance(compartment_id, six.string_types) and len(compartment_id.strip()) == 0:
         raise click.UsageError('Parameter --compartment-id cannot be whitespace or empty string')
     if not force:
-        if password_policy:
-            if not click.confirm("WARNING: Updates to password-policy will replace any existing values. Are you sure you want to continue?"):
+        if password_policy or network_policy:
+            if not click.confirm("WARNING: Updates to password-policy and network-policy will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -4872,6 +4869,9 @@ def update_authentication_policy(ctx, from_json, force, compartment_id, password
 
     if password_policy is not None:
         _details['passwordPolicy'] = cli_util.parse_json_parameter("password_policy", password_policy)
+
+    if network_policy is not None:
+        _details['networkPolicy'] = cli_util.parse_json_parameter("network_policy", network_policy)
 
     client = cli_util.build_client('identity', 'identity', ctx)
     result = client.update_authentication_policy(
@@ -5645,11 +5645,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-cost-tracking', type=click.BOOL, help=u"""Indicates whether the tag is enabled for cost tracking.""")
-@cli_util.option('--validator', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The tag must have a value type, which is specified with a validator. Tags can use either a static value or a list of possible values. Static values are entered by a user applying the tag to a resource. Lists are created by you and the user must apply a value from the list. Lists are validiated.
-
-If you use the default validiator (or don't define a validator), the user applying the tag enters a value. No additional validation is performed.
-
-To clear the validator, call UpdateTag with [DefaultTagDefinitionValidator].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--validator', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")

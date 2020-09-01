@@ -244,7 +244,7 @@ def override(key, default):
     return OVERRIDES.get(key, default)
 
 
-def get_instance_principal_signer(ctx, client_config, delegation_token_auth):
+def get_instance_principal_signer(ctx, client_config):
     signer = None
     try:
         signer_kwargs = {}
@@ -254,7 +254,7 @@ def get_instance_principal_signer(ctx, client_config, delegation_token_auth):
             # If we don't set this then constructed clients will try and pluck the region from the instance principals signer, which may
             # conflict with the caller intent (since they *DID* explicitly pass a region)
             client_config['region'] = ctx.obj['region']
-        if delegation_token_auth:
+        if 'auth_type' in client_config and client_config['auth_type'] == cli_constants.OCI_CLI_AUTH_INSTANCE_OBO_USER:
             delegation_token = None
             delegation_token_location = client_config.get('delegation_token_file')
             if delegation_token_location is None:
@@ -269,6 +269,8 @@ def get_instance_principal_signer(ctx, client_config, delegation_token_auth):
                 raise ValueError('ERROR: delegation_token was not provided.')
             signer = oci.auth.signers.InstancePrincipalsDelegationTokenSigner(**signer_kwargs)
         else:
+            if 'auth_purpose' in client_config and client_config['auth_purpose'] is not None:
+                signer_kwargs['purpose'] = client_config['auth_purpose'].upper()
             # Normal instance principals
             signer = oci.auth.signers.InstancePrincipalsSecurityTokenSigner(**signer_kwargs)
     except (ValueError, IOError) as ex:
@@ -332,7 +334,10 @@ def create_config_and_signer_based_on_click_context(ctx):
             # This way we can differentiate between requests coming from CLI and Cloud shell.
             if 'OCI_CLI_CLOUD_SHELL' in os.environ:
                 client_config["additional_user_agent"] += ' Cloud-Shell'
-        signer = get_instance_principal_signer(ctx, client_config, delegation_token_auth)
+            client_config["auth_type"] = cli_constants.OCI_CLI_AUTH_INSTANCE_OBO_USER
+        elif "auth_purpose" in ctx.obj:
+            client_config["auth_purpose"] = ctx.obj["auth_purpose"]
+        signer = get_instance_principal_signer(ctx, client_config)
     elif session_token_auth:
         signer = get_session_token_signer(client_config)
     elif resource_principal_auth:
