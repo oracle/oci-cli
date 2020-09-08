@@ -6,6 +6,69 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.12.10 - 2020-09-08
+-------------------
+Added
+~~~~~
+
+* Support for searching Oracle Cloud resources across tenancies in the Search Service
+
+  * ``oci search resource free-text-search --tenant-id``
+  * ``oci search resource structured-search --tenant-id``
+
+* Support for Management Agent Cloud Service
+
+  * ``oci management-agent``
+
+* Support for sending diagnostic interrupt to a VM instance in the Compute Service
+
+  * ``oci compute instance action --action SENDDIAGNOSTICINTERRUPT --instance-id``
+
+* Support for custom Database Software Images in the Database Service
+
+  * ``oci db database-software-image``
+
+* Support for Management Dashboard Service
+
+  * ``oci management-dashboard``
+
+* Support for Logging Analytics Service
+
+  * `oci log-analytics`
+
+* Support for Logging Service
+
+  * ``oci logging``
+
+* Support for Logging Ingestion Service
+
+  * ``oci logging-ingestion``
+
+* Support for Logging Search Service
+
+  * ``oci logging-search``
+
+* Support for Service Connector Hub service
+
+  * ``oci sch``
+
+* Support for getting and listing container database patches for Autonomous Container Database resources in the Database Service
+
+  * ``oci db autonomous-patch get --autonomous-patch-id``
+  * ``oci db autonomous-patch list-container-database-patches --autonomous-container-database-id``
+
+* Support for updating patch id on maintenance run for Autonomous Container Database resources in the Database Service
+
+  * ``oci db maintenance-run update --patch-id``
+
+Changed
+~~~~~~~
+
+* Support for Policy based Request/Response transformation
+
+  * ``oci api-gateway deployment``
+
+
 2.12.9 - 2020-09-01
 -------------------
 Added
@@ -55,10 +118,13 @@ Added
   * ``oci lb load-balancer``
   * ``oci lb ssl-cipher-suite``
 
+* Support for calling Oracle Cloud Infrastructure services in the Chiyoda region (``--region ap-chiyoda-1``)
+
 Changed
 ~~~~~~~
 
 * jmespath package requirement bumped to 0.10.0
+
 
 2.12.8 - 2020-08-18
 -------------------

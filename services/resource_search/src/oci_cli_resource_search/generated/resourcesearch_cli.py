@@ -103,23 +103,26 @@ def list_resource_types(ctx, from_json, all_pages, page_size, limit, page):
     cli_util.render_response(result, ctx)
 
 
-@resource_summary_group.command(name=cli_util.override('search.search_resources.command_name', 'search-resources'), help=u"""Queries any and all compartments in the tenancy to find resources that match the specified criteria. Results include resources that you have permission to view and can span different resource types. You can also sort results based on a specified resource attribute.""")
+@resource_summary_group.command(name=cli_util.override('search.search_resources.command_name', 'search-resources'), help=u"""Queries any and all compartments in the specified tenancy to find resources that match the specified criteria. Results include resources that you have permission to view and can span different resource types. You can also sort results based on a specified resource attribute.""")
 @cli_util.option('--type', required=True, help=u"""The type of SearchDetails, whether `FreeText` or `Structured`.""")
 @cli_util.option('--matching-context-type', type=custom_types.CliCaseInsensitiveChoice(["NONE", "HIGHLIGHTS"]), help=u"""The type of matching context returned in the response. If you specify `HIGHLIGHTS`, then the service will highlight fragments in its response. (For more information, see ResourceSummary.searchContext and SearchContext.) The default setting is `NONE`.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return. The value must be between 1 and 1000.""")
 @cli_util.option('--page', help=u"""The page at which to start retrieving results.""")
+@cli_util.option('--tenant-id', help=u"""The tenancy ID, which can be used to specify a different tenancy (for cross-tenancy authorization) when searching for resources in a different tenancy.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'resource_search', 'class': 'ResourceSummaryCollection'})
 @cli_util.wrap_exceptions
-def search_resources(ctx, from_json, type, matching_context_type, limit, page):
+def search_resources(ctx, from_json, type, matching_context_type, limit, page, tenant_id):
 
     kwargs = {}
     if limit is not None:
         kwargs['limit'] = limit
     if page is not None:
         kwargs['page'] = page
+    if tenant_id is not None:
+        kwargs['tenant_id'] = tenant_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
@@ -136,23 +139,26 @@ def search_resources(ctx, from_json, type, matching_context_type, limit, page):
     cli_util.render_response(result, ctx)
 
 
-@resource_summary_group.command(name=cli_util.override('search.search_resources_structured_search_details.command_name', 'search-resources-structured-search-details'), help=u"""Queries any and all compartments in the tenancy to find resources that match the specified criteria. Results include resources that you have permission to view and can span different resource types. You can also sort results based on a specified resource attribute.""")
+@resource_summary_group.command(name=cli_util.override('search.search_resources_structured_search_details.command_name', 'search-resources-structured-search-details'), help=u"""Queries any and all compartments in the specified tenancy to find resources that match the specified criteria. Results include resources that you have permission to view and can span different resource types. You can also sort results based on a specified resource attribute.""")
 @cli_util.option('--query-parameterconflict', required=True, help=u"""The structured query describing which resources to search for.""")
 @cli_util.option('--matching-context-type', type=custom_types.CliCaseInsensitiveChoice(["NONE", "HIGHLIGHTS"]), help=u"""The type of matching context returned in the response. If you specify `HIGHLIGHTS`, then the service will highlight fragments in its response. (For more information, see ResourceSummary.searchContext and SearchContext.) The default setting is `NONE`.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return. The value must be between 1 and 1000.""")
 @cli_util.option('--page', help=u"""The page at which to start retrieving results.""")
+@cli_util.option('--tenant-id', help=u"""The tenancy ID, which can be used to specify a different tenancy (for cross-tenancy authorization) when searching for resources in a different tenancy.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'resource_search', 'class': 'ResourceSummaryCollection'})
 @cli_util.wrap_exceptions
-def search_resources_structured_search_details(ctx, from_json, query_parameterconflict, matching_context_type, limit, page):
+def search_resources_structured_search_details(ctx, from_json, query_parameterconflict, matching_context_type, limit, page, tenant_id):
 
     kwargs = {}
     if limit is not None:
         kwargs['limit'] = limit
     if page is not None:
         kwargs['page'] = page
+    if tenant_id is not None:
+        kwargs['tenant_id'] = tenant_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
@@ -171,23 +177,26 @@ def search_resources_structured_search_details(ctx, from_json, query_parameterco
     cli_util.render_response(result, ctx)
 
 
-@resource_summary_group.command(name=cli_util.override('search.search_resources_free_text_search_details.command_name', 'search-resources-free-text-search-details'), help=u"""Queries any and all compartments in the tenancy to find resources that match the specified criteria. Results include resources that you have permission to view and can span different resource types. You can also sort results based on a specified resource attribute.""")
+@resource_summary_group.command(name=cli_util.override('search.search_resources_free_text_search_details.command_name', 'search-resources-free-text-search-details'), help=u"""Queries any and all compartments in the specified tenancy to find resources that match the specified criteria. Results include resources that you have permission to view and can span different resource types. You can also sort results based on a specified resource attribute.""")
 @cli_util.option('--text', required=True, help=u"""The text to search for.""")
 @cli_util.option('--matching-context-type', type=custom_types.CliCaseInsensitiveChoice(["NONE", "HIGHLIGHTS"]), help=u"""The type of matching context returned in the response. If you specify `HIGHLIGHTS`, then the service will highlight fragments in its response. (For more information, see ResourceSummary.searchContext and SearchContext.) The default setting is `NONE`.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return. The value must be between 1 and 1000.""")
 @cli_util.option('--page', help=u"""The page at which to start retrieving results.""")
+@cli_util.option('--tenant-id', help=u"""The tenancy ID, which can be used to specify a different tenancy (for cross-tenancy authorization) when searching for resources in a different tenancy.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'resource_search', 'class': 'ResourceSummaryCollection'})
 @cli_util.wrap_exceptions
-def search_resources_free_text_search_details(ctx, from_json, text, matching_context_type, limit, page):
+def search_resources_free_text_search_details(ctx, from_json, text, matching_context_type, limit, page, tenant_id):
 
     kwargs = {}
     if limit is not None:
         kwargs['limit'] = limit
     if page is not None:
         kwargs['page'] = page
+    if tenant_id is not None:
+        kwargs['tenant_id'] = tenant_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
