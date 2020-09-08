@@ -95,17 +95,16 @@ class TestDBCliExtended(unittest.TestCase):
         assert 'Error: Missing option(s)' in result.output
         assert '--database-id' in result.output
 
-        # Test by not providing both RU and one-off patch, which shall fail as none to patch provided
+        # Test by not providing RU, one-off patch, or database-software-image-id which shall fail as none to patch provided
         result = util.invoke_command(['db', 'database', 'patch', '--database-id', 'databaseId'])
-        assert 'Specify either \'--one-off-patches\' or \'--patch-id and --patch-action\'. Requesting both is not supported.' in result.output
-
+        assert 'Please specify one of the three options. 1. \'--one-off-patches\',  2. \'--database-software-image-id and --patch-action\' or 3. \'--patch-id and --patch-action\'.' in result.output
         result = util.invoke_command(['db', 'database', 'patch', '--database-id', 'databaseId', '--one-off-patches', 'oneOff', '--patch-id', 'patchId'])
-        assert 'Specify either \'--one-off-patches\' or \'--patch-id and --patch-action\'. Requesting both is not supported.' in result.output
+        assert 'Please specify one of the three options. 1. \'--one-off-patches\',  2. \'--database-software-image-id and --patch-action\' or 3. \'--patch-id and --patch-action\'.' in result.output
         result = util.invoke_command(['db', 'database', 'patch', '--database-id', 'databaseId', '--one-off-patches', 'oneOff', '--patch-action', 'patchAction'])
-        assert 'Specify either \'--one-off-patches\' or \'--patch-id and --patch-action\'. Requesting both is not supported.' in result.output
+        assert 'Please specify one of the three options. 1. \'--one-off-patches\',  2. \'--database-software-image-id and --patch-action\' or 3. \'--patch-id and --patch-action\'.' in result.output
         result = util.invoke_command(['db', 'database', 'patch', '--database-id', 'databaseId', '--one-off-patches', 'oneOff', '--patch-id', 'patchId', '--patch-action', 'patchAction'])
-        assert 'Specify either \'--one-off-patches\' or \'--patch-id and --patch-action\'. Requesting both is not supported.' in result.output
+        assert 'Please specify one of the three options. 1. \'--one-off-patches\',  2. \'--database-software-image-id and --patch-action\' or 3. \'--patch-id and --patch-action\'.' in result.output
         result = util.invoke_command(['db', 'database', 'patch', '--database-id', 'databaseId', '--patch-action', 'patchAction'])
-        assert 'Specify either \'--one-off-patches\' or \'--patch-id and --patch-action\'. Requesting both is not supported.' in result.output
+        assert 'Please specify one of the three options. 1. \'--one-off-patches\',  2. \'--database-software-image-id and --patch-action\' or 3. \'--patch-id and --patch-action\'.' in result.output
         result = util.invoke_command(['db', 'database', 'patch', '--database-id', 'databaseId', '--patch-id', 'patchId'])
-        assert 'Specify either \'--one-off-patches\' or \'--patch-id and --patch-action\'. Requesting both is not supported.' in result.output
+        assert 'Please specify one of the three options. 1. \'--one-off-patches\',  2. \'--database-software-image-id and --patch-action\' or 3. \'--patch-id and --patch-action\'.' in result.output

@@ -141,6 +141,7 @@ cli_util.rename_command(database_cli, autonomous_database_data_safe_group, datab
 @cli_util.option('--recovery-window-in-days', type=click.IntRange(1, 60), help="""The number of days between the current and the earliest point of recoverability covered by automatic backups (1 to 60).""")
 @cli_util.option('--ssh-authorized-keys-file', required=True, type=click.File('r'), help="""A file containing one or more public SSH keys to use for SSH access to the DB System. Use a newline character to separate multiple keys. The length of the combined keys cannot exceed 10,000 characters.""")
 @cli_util.option('--storage-management', type=custom_types.CliCaseInsensitiveChoice(["LVM", "ASM"]), help="""Option for storage management for the database system. Allowed values are: LVM, ASM.""")
+@cli_util.option('--database-software-image-id', required=False, help="""The OCID of database software image. This Custom Database Software Image will be used to create the database instead of Oracle-published Database Software Images""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'fault-domains': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'backup-network-nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'maintenance-window-details': {'module': 'database', 'class': 'MaintenanceWindow'}}, output_type={'module': 'database', 'class': 'DbSystem'})
 @cli_util.wrap_exceptions
@@ -150,6 +151,9 @@ def launch_db_system_extended(ctx, **kwargs):
 
     if 'db_version' in kwargs and kwargs['db_version']:
         create_db_home_details['dbVersion'] = kwargs['db_version']
+
+    if 'database_software_image_id' in kwargs and kwargs['database_software_image_id']:
+        create_db_home_details['databaseSoftwareImageId'] = kwargs['database_software_image_id']
 
     create_database_details = {}
     if 'admin_password' in kwargs and kwargs['admin_password']:
@@ -207,6 +211,7 @@ def launch_db_system_extended(ctx, **kwargs):
     del kwargs['auto_backup_enabled']
     del kwargs['recovery_window_in_days']
     del kwargs['storage_management']
+    del kwargs['database_software_image_id']
 
     ctx.invoke(database_cli.launch_db_system_launch_db_system_details, **kwargs)
 
@@ -305,6 +310,9 @@ def create_database(ctx, **kwargs):
         else:
             click.echo(message="Missing a required parameter. Either --db-system-id or --vm-cluster-id must be specified.", file=sys.stderr)
             sys.exit(1)
+
+    if 'database_software_image_id' in kwargs and kwargs['database_software_image_id']:
+        create_db_home_details.database_software_image_id = kwargs['database_software_image_id']
 
     db_backup_config = oci.database.models.DbBackupConfig()
 
@@ -415,6 +423,9 @@ def create_database_from_backup(ctx, **kwargs):
     if 'db_system_id' in kwargs and kwargs['db_system_id']:
         create_db_home_with_system_details.db_system_id = kwargs['db_system_id']
 
+    if 'database_software_image_id' in kwargs and kwargs['database_software_image_id']:
+        create_db_home_with_system_details.database_software_image_id = kwargs['database_software_image_id']
+
     create_db_home_with_system_details.source = 'DB_BACKUP'
 
     client = cli_util.build_client('database', 'database', ctx)
@@ -508,6 +519,9 @@ def create_database_from_another_database(ctx, **kwargs):
     if 'db_system_id' in kwargs and kwargs['db_system_id']:
         create_db_home_with_system_details.db_system_id = kwargs['db_system_id']
 
+    if 'database_software_image_id' in kwargs and kwargs['database_software_image_id']:
+        create_db_home_with_system_details.database_software_image_id = kwargs['database_software_image_id']
+
     create_db_home_with_system_details.source = 'DATABASE'
 
     client = cli_util.build_client('database', 'database', ctx)
@@ -537,6 +551,7 @@ def create_database_from_another_database(ctx, **kwargs):
 @cli_util.option('--patch-action', required=False, help="""The action to perform on the patch.""")
 @cli_util.option('--patch-id', required=False, help="""The OCID of the patch.""")
 @cli_util.option('--one-off-patches', required=False, type=custom_types.CLI_COMPLEX_TYPE, help="""The list of one-off patches.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--database-software-image-id', required=False, help="""The OCID of the database software image.""")
 @click.pass_context
 @json_skeleton_utils.get_cli_json_input_option({'one-off-patches': {'module': 'database', 'class': 'list[string]'}})
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'one-off-patches': {'module': 'database', 'class': 'list[string]'}}, output_type={'module': 'database', 'class': 'Database'})
@@ -545,15 +560,23 @@ def create_database_from_another_database(ctx, **kwargs):
 def patch_database(ctx, **kwargs):
     client = cli_util.build_client('database', 'database', ctx)
 
-    if (kwargs['one_off_patches'] is not None and (kwargs['patch_id'] is not None or kwargs['patch_action'] is not None)) or \
-            (kwargs['one_off_patches'] is None and (kwargs['patch_id'] is None or kwargs['patch_action'] is None)):
-        click.echo(message="Specify either '--one-off-patches' or '--patch-id and --patch-action'. Requesting both is not supported.", file=sys.stderr)
+    if (kwargs['one_off_patches'] is not None and (kwargs['database_software_image_id'] is not None or kwargs['patch_id'] is not None or kwargs['patch_action'] is not None)) or \
+            (kwargs['database_software_image_id'] is not None and (kwargs['patch_action'] is None or kwargs['one_off_patches'] is not None or kwargs['patch_id'] is not None)) or \
+            (kwargs['patch_id'] is not None and (kwargs['patch_action'] is None or kwargs['one_off_patches'] is not None or kwargs['database_software_image_id'] is not None)) or \
+            (kwargs['patch_id'] is None and kwargs['one_off_patches'] is None and kwargs['database_software_image_id'] is None):
+        click.echo(message="Please specify one of the three options. 1. '--one-off-patches',  2. '--database-software-image-id and --patch-action' or 3. '--patch-id and --patch-action'.", file=sys.stderr)
         sys.exit(1)
 
     response = client.get_database(kwargs['database_id'])
     db_home_id = response.data.db_home_id
 
     update_db_home_details = oci.database.models.UpdateDbHomeDetails()
+
+    if kwargs['database_software_image_id'] is not None and kwargs['patch_action'] is not None:
+        patch_details = oci.database.models.PatchDetails()
+        patch_details.action = kwargs['patch_action']
+        patch_details.database_software_image_id = kwargs['database_software_image_id']
+        update_db_home_details.db_version = patch_details
 
     if kwargs['one_off_patches'] is not None:
         update_db_home_details.one_off_patches = cli_util.parse_json_parameter("one_off_patches", kwargs['one_off_patches'])
@@ -1014,6 +1037,8 @@ def create_db_home(ctx, **kwargs):
     db_home_details = oci.database.models.CreateDbHomeWithDbSystemIdDetails()
     db_home_details.db_system_id = kwargs['db_system_id']
     db_home_details.db_version = kwargs['db_version']
+    if kwargs['database_software_image_id'] is not None:
+        db_home_details.database_software_image_id = kwargs['database_software_image_id']
     if kwargs['display_name'] is not None:
         db_home_details.display_name = kwargs['display_name']
     client = cli_util.build_client('database', 'database', ctx)

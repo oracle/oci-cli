@@ -101,7 +101,9 @@ def change_gateway_compartment(ctx, from_json, wait_for_state, max_wait_seconds,
 
 @gateway_group.command(name=cli_util.override('gateway.create_gateway.command_name', 'create'), help=u"""Creates a new gateway.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which the resource is created.""")
-@cli_util.option('--endpoint-type', required=True, help=u"""Gateway endpoint type.""")
+@cli_util.option('--endpoint-type', required=True, help=u"""Gateway endpoint type. `PUBLIC` will have a public ip address assigned to it, while `PRIVATE` will only be accessible on a private IP address on the subnet.
+
+Example: `PUBLIC` or `PRIVATE`""")
 @cli_util.option('--subnet-id', required=True, help=u"""The [OCID] of the subnet in which related resources are created.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
 

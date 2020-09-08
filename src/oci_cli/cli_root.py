@@ -265,7 +265,9 @@ def find_latest_release_version(ctx, param, value):
         exit_code = 2
     else:
         click.echo(latest_version)
-        if current_version.split(".") < latest_version.split("."):
+        current_version_list = [int(x) for x in current_version.split(".")]
+        latest_version_list = [int(x) for x in latest_version.split(".")]
+        if current_version_list < latest_version_list:
             click.echo(click.style("You are using OCI CLI version {}, however version {} is available. You should consider upgrading using"
                                    " https://docs.cloud.oracle.com/en-us/iaas/Content/API/SDKDocs/cliupgrading.htm".format(current_version, latest_version), fg='red'))
             exit_code = 1

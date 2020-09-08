@@ -422,6 +422,10 @@ def build_raw_requests_session(ctx):
 
 
 def build_client(spec_name, service_name, ctx):
+
+    if 'OCI_CLI_USE_INSTANCE_METADATA_SERVICE' in os.environ:
+        oci.regions.enable_instance_metadata_service()
+
     config_and_signer = create_config_and_signer_based_on_click_context(ctx)
     signer = config_and_signer.signer
     client_config = config_and_signer.config
@@ -748,6 +752,7 @@ def wrap_exceptions(func):
             # if there are missing required params we want to show that notice, not prompt the user for deletion confirmation
             if 'prompt_for_deletion' in ctx.obj and ctx.obj['prompt_for_deletion']:
                 value = click.confirm("Are you sure you want to delete this resource?")
+                ctx.obj['prompt_for_deletion'] = False
                 if not value:
                     ctx.abort()
 
