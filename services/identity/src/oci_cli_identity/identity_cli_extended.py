@@ -15,6 +15,8 @@ from oci_cli.cli_util import get_tenancy_from_config
 import oci_cli.cli_root as cli_root
 import oci_cli.final_command_processor as final_command_processor
 from oci_cli.aliasing import CommandGroupWithAlias
+import oci
+import time
 
 
 def get_iam_commands_that_use_tenancy_defaults():
@@ -68,7 +70,6 @@ final_command_processor.SERVICE_FUNCTIONS_TO_EXECUTE.append(set_iam_default_tena
 
 
 identity_cli.iam_root_group.commands.pop(identity_cli.idp_group_mapping_group.name)
-identity_cli.iam_root_group.commands.pop(identity_cli.tenancy_group.name)
 identity_cli.iam_root_group.commands.pop(identity_cli.user_group_membership_group.name)
 identity_cli.iam_root_group.commands.pop(identity_cli.api_key_group.name)
 identity_cli.iam_root_group.commands.pop(identity_cli.swift_password_group.name)
@@ -550,6 +551,59 @@ def list_compartments(ctx, from_json, all_pages, page_size, compartment_id, page
 
         result.data.insert(0, tenancy_result.data)
 
+    cli_util.render_response(result, ctx)
+
+
+@cli_util.copy_params_from_generated_command(identity_cli.create_compartment)
+@identity_cli.compartment_group.command(name='create', help=identity_cli.create_compartment.help)
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'identity', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'identity', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'identity', 'class': 'Compartment'})
+@cli_util.wrap_exceptions
+def create_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, name, description, freeform_tags, defined_tags):
+
+    kwargs = {}
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+    _details['name'] = name
+    _details['description'] = description
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('identity', 'identity', ctx)
+    result = client.create_compartment(
+        create_compartment_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_compartment') and callable(getattr(client, 'get_compartment')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                # There is a delay to get_compartment after create_compartment. Please see DEX-9701
+                time.sleep(10)
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_compartment(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 

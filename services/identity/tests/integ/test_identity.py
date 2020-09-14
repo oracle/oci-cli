@@ -35,6 +35,7 @@ class TestIdentity(unittest.TestCase):
         """Successfully calls every operation with basic options.  Exceptions are region list, region-subscription list region-subscription create"""
         try:
             self.subtest_availability_domain_operations()
+            self.subtest_create_compartment()
             self.subtest_compartment_operations()
             self.subtest_compartment_rename()
             self.subtest_user_operations()
@@ -48,6 +49,16 @@ class TestIdentity(unittest.TestCase):
             self.subtest_region_subscription_operations()
         finally:
             self.subtest_cleanup()
+
+    def subtest_create_compartment(self):
+        result = self.invoke(['compartment', 'create', '--name', 'PythonCLITest124', '--description', 'Create Compartment for CLI testing using wait for state ACTIVE', '--compartment-id', util.COMPARTMENT_ID, '--wait-for-state', 'ACTIVE'])
+        self.validate_response(result, json_response_expected=False)
+        assert 'NotAuthorizedOrNotFound' not in result.output
+        created_compartment = util.get_json_from_mixed_string(result.output)
+        assert created_compartment['data']['compartment-id'] == util.COMPARTMENT_ID
+        assert created_compartment['data']['lifecycle-state'] == 'ACTIVE'
+        result = self.invoke(['compartment', 'delete', '--compartment-id', created_compartment['data']['id'], '--force'])
+        assert result.exit_code == 0
 
     def subtest_availability_domain_operations(self):
         result = self.invoke(['availability-domain', 'list', '--compartment-id', util.TENANT_ID])

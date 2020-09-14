@@ -2910,6 +2910,62 @@ def update_load_balancer(ctx, from_json, force, wait_for_state, max_wait_seconds
     cli_util.render_response(result, ctx)
 
 
+@load_balancer_group.command(name=cli_util.override('lb.update_load_balancer_shape.command_name', 'update-load-balancer-shape'), help=u"""Update the shape of a load balancer. The new shape can be larger or smaller compared to existing shape of the LB. The service will try to perform this operation in the least disruptive way to existing connections, but there is a possibility that they might be lost during the LB resizing process. The new shape becomes effective as soon as the related work request completes successfully, i.e. when reshaping to a larger shape, the LB will start accepting larger bandwidth and when reshaping to a smaller one, the LB will be accepting smaller bandwidth.""")
+@cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer whose shape will be updated.""")
+@cli_util.option('--shape-name', required=True, help=u"""A template that determines the total pre-provisioned bandwidth (ingress plus egress). To get a list of available shapes, use the [ListShapes] operation.
+
+Example: `100Mbps`""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def update_load_balancer_shape(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, load_balancer_id, shape_name):
+
+    if isinstance(load_balancer_id, six.string_types) and len(load_balancer_id.strip()) == 0:
+        raise click.UsageError('Parameter --load-balancer-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['shapeName'] = shape_name
+
+    client = cli_util.build_client('load_balancer', 'load_balancer', ctx)
+    result = client.update_load_balancer_shape(
+        load_balancer_id=load_balancer_id,
+        update_load_balancer_shape_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @network_security_groups_group.command(name=cli_util.override('lb.update_network_security_groups.command_name', 'update'), help=u"""Updates the network security groups associated with the specified load balancer.""")
 @cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer to update the NSGs for.""")
 @cli_util.option('--network-security-group-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of NSG [OCIDs] associated with the load balancer.
