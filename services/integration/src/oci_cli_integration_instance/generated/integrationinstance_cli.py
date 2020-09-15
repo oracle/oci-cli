@@ -119,6 +119,7 @@ def change_integration_instance_compartment(ctx, from_json, wait_for_state, max_
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Usage of predefined tag keys. These predefined keys are scoped to namespaces. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--idcs-at', help=u"""IDCS Authentication token. This is is required for pre-UCPIS cloud accounts, but not UCPIS, hence not a required parameter""")
+@cli_util.option('--consumption-model', type=custom_types.CliCaseInsensitiveChoice(["UCM", "GOV", "OIC4SAAS"]), help=u"""Optional parameter specifying which entitlement to use for billing purposes. Only required if the account possesses more than one entitlement.""")
 @cli_util.option('--is-file-server-enabled', type=click.BOOL, help=u"""The file server is enabled or not.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -128,7 +129,7 @@ def change_integration_instance_compartment(ctx, from_json, wait_for_state, max_
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'integration', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'integration', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def create_integration_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, integration_instance_type, is_byol, message_packs, freeform_tags, defined_tags, idcs_at, is_file_server_enabled):
+def create_integration_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, compartment_id, integration_instance_type, is_byol, message_packs, freeform_tags, defined_tags, idcs_at, consumption_model, is_file_server_enabled):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -148,6 +149,9 @@ def create_integration_instance(ctx, from_json, wait_for_state, max_wait_seconds
 
     if idcs_at is not None:
         _details['idcsAt'] = idcs_at
+
+    if consumption_model is not None:
+        _details['consumptionModel'] = consumption_model
 
     if is_file_server_enabled is not None:
         _details['isFileServerEnabled'] = is_file_server_enabled

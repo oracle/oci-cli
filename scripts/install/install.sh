@@ -53,6 +53,8 @@ The following options are available:
         auto completion and modification to PATH environment variable with CLI executable path. It
         requires shell's rc file path. e.g. ~/.bashrc. Ideally, should be used with the
         --update-path-and-enable-tab-completion option.
+    --no-tty
+        If this flag is specified, CLI will not be installed with tty
     --oci-cli-version
         The version of CLI to install, e.g. 2.5.12. The default is the latest from pypi.
     --help
@@ -123,6 +125,10 @@ case $key in
     install_args="$install_args --rc-file-path $RC_FILE_PATH"
     shift # past argument
     shift # past value
+    ;;
+    --no-tty)
+    NO_TTY_REQUIRED=true
+    shift # past argument
     ;;
     --optional-features)
     OPTIONAL_PACKAGE_NAME="$2"
@@ -330,7 +336,7 @@ fi
 chmod 775 $install_script
 echo "Running install script."
 echo "$python_exe $install_script $install_args"
-if [ "${ACCEPT_ALL_DEFAULTS}" == "true" ];then
+if [ "${ACCEPT_ALL_DEFAULTS}" == "true" ] || [ "${NO_TTY_REQUIRED}" == "true" ];then
     # By removing the tty requirement, users will be able to install non-interactively over ssh
     # and in docker containers more easily.
     $python_exe $install_script $install_args

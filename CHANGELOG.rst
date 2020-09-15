@@ -6,8 +6,41 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.12.11 - 2020-09-15
+--------------------
+Added
+~~~~~
+
+* Support for specifying desired consumption models when creating instances in the Integration service
+
+  * ``oci integration integration-instance create --consumption-model``
+
+* Support for updating load balancer shape in the Load Balancing service
+  
+  * ``oci lb load-balancer update-load-balancer-shape``
+
+* Support for the Cloud Guard Service
+  
+  * ``oci cloud-guard``
+
+*  Support for no tty option for non-interactive installation on non-Windows systems (`Issue 282 <https://github.com/oracle/oci-cli/issues/321>`__)
+  
+  * ``./install.sh --no-tty``
+
+* Support for retrieving specified tenancy information in Identity Service
+
+  * ``oci iam tenancy get``
+
+Fixed
+~~~~~
+
+* Error when using wait-for-state for creating a compartment
+
+  * ``oci iam compartment create --wait-for-state``
+
+
 2.12.10 - 2020-09-08
--------------------
+--------------------
 Added
 ~~~~~
 
@@ -34,7 +67,7 @@ Added
 
 * Support for Logging Analytics Service
 
-  * `oci log-analytics`
+  * ``oci log-analytics``
 
 * Support for Logging Service
 
