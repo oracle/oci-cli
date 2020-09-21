@@ -6,6 +6,51 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.12.12 - 2020-09-22
+--------------------
+Added
+~~~~~
+
+* Support for Software Keys in Key Management Service
+
+  * ``oci kms management key create --protection-mode SOFTWARE``
+  * ``oci kms management key import --protection-mode SOFTWARE``
+  * ``oci kms management key list --protection-mode SOFTWARE``
+
+* Support for exporting software keys in Key Management Service
+
+  * ``oci kms crypto key export``
+
+* Support to update open mode and permission level for Autonomous Database
+
+  * ``oci db autonomous-database update --open-mode``
+  * ``oci db autonomous-database update --permission-level``
+
+* Support to specify number of memory in GB when launching or updating a Compute instance
+
+  * ``oci compute instance launch --shape-config "shapeConfig":{"memoryInGBs": 0.0, "ocpus": 0.0}``
+  * ``oci compute instance update --shape-config``
+
+* Support for managing shape compatibility entries with memory constraints for Compute images
+
+  * ``oci compute image-shape-compatibility-entry``
+
+* Added new parameter to specify the allow memory in GB range per ocpu for Compute shapes
+
+  * ``oci compute shape list --max-per-ocpu-in-gbs, --min-per-ocpu-in-gbs``
+
+* Pagination support for listing announcements from Announce service (`Issue 311 <https://github.com/oracle/oci-cli/issues/311>`__)
+
+  * ``oci announce announcements list --all, --limits, --page-size``
+
+Changed
+~~~~~~~
+
+* Support specifying customer contacts when creating or updating an exadata infrastructure
+
+  * ``oci db exadata-infrastructure create --contacts <json with contacts>``
+  * ``oci db exadata-infrastructure update --contacts <json with contacts>``
+
 2.12.11 - 2020-09-15
 --------------------
 Added

@@ -227,14 +227,15 @@ compute_root_group.add_command(console_history_group)
 @image_shape_compatibility_entry_group.command(name=cli_util.override('compute.add_image_shape_compatibility_entry.command_name', 'add'), help=u"""Adds a shape to the compatible shapes list for the image.""")
 @cli_util.option('--image-id', required=True, help=u"""The [OCID] of the image.""")
 @cli_util.option('--shape-name', required=True, help=u"""Shape name.""")
+@cli_util.option('--memory-constraints', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--ocpu-constraints', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
-@json_skeleton_utils.get_cli_json_input_option({'ocpu-constraints': {'module': 'core', 'class': 'ImageOcpuConstraints'}})
+@json_skeleton_utils.get_cli_json_input_option({'memory-constraints': {'module': 'core', 'class': 'ImageMemoryConstraints'}, 'ocpu-constraints': {'module': 'core', 'class': 'ImageOcpuConstraints'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'ocpu-constraints': {'module': 'core', 'class': 'ImageOcpuConstraints'}}, output_type={'module': 'core', 'class': 'ImageShapeCompatibilityEntry'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'memory-constraints': {'module': 'core', 'class': 'ImageMemoryConstraints'}, 'ocpu-constraints': {'module': 'core', 'class': 'ImageOcpuConstraints'}}, output_type={'module': 'core', 'class': 'ImageShapeCompatibilityEntry'})
 @cli_util.wrap_exceptions
-def add_image_shape_compatibility_entry(ctx, from_json, force, image_id, shape_name, ocpu_constraints):
+def add_image_shape_compatibility_entry(ctx, from_json, force, image_id, shape_name, memory_constraints, ocpu_constraints):
 
     if isinstance(image_id, six.string_types) and len(image_id.strip()) == 0:
         raise click.UsageError('Parameter --image-id cannot be whitespace or empty string')
@@ -242,13 +243,16 @@ def add_image_shape_compatibility_entry(ctx, from_json, force, image_id, shape_n
     if isinstance(shape_name, six.string_types) and len(shape_name.strip()) == 0:
         raise click.UsageError('Parameter --shape-name cannot be whitespace or empty string')
     if not force:
-        if ocpu_constraints:
-            if not click.confirm("WARNING: Updates to ocpu-constraints will replace any existing values. Are you sure you want to continue?"):
+        if memory_constraints or ocpu_constraints:
+            if not click.confirm("WARNING: Updates to memory-constraints and ocpu-constraints will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
 
     _details = {}
+
+    if memory_constraints is not None:
+        _details['memoryConstraints'] = cli_util.parse_json_parameter("memory_constraints", memory_constraints)
 
     if ocpu_constraints is not None:
         _details['ocpuConstraints'] = cli_util.parse_json_parameter("ocpu_constraints", ocpu_constraints)

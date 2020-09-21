@@ -15,9 +15,16 @@ from oci_cli.aliasing import CommandGroupWithAlias
 from services.key_management.src.oci_cli_key_management.generated import kms_service_cli
 
 
-@click.command(cli_util.override('kms_crypto.kms_crypto_root_group.command_name', 'kms-crypto'), cls=CommandGroupWithAlias, help=cli_util.override('kms_crypto.kms_crypto_root_group.help', """API for managing and performing operations with keys and vaults."""), short_help=cli_util.override('kms_crypto.kms_crypto_root_group.short_help', """Key Management Service API"""))
+@click.command(cli_util.override('kms_crypto.kms_crypto_root_group.command_name', 'kms-crypto'), cls=CommandGroupWithAlias, help=cli_util.override('kms_crypto.kms_crypto_root_group.help', """API for managing and performing operations with keys and vaults. (For the API for managing secrets, see the Vault Service
+Secret Management API. For the API for retrieving secrets, see the Vault Service Secret Retrieval API.)"""), short_help=cli_util.override('kms_crypto.kms_crypto_root_group.short_help', """Vault Service Key Management API"""))
 @cli_util.help_option_group
 def kms_crypto_root_group():
+    pass
+
+
+@click.command(cli_util.override('kms_crypto.exported_key_data_group.command_name', 'exported-key-data'), cls=CommandGroupWithAlias, help="""The response to a request to export key material.""")
+@cli_util.help_option_group
+def exported_key_data_group():
     pass
 
 
@@ -40,6 +47,7 @@ def encrypted_data_group():
 
 
 kms_service_cli.kms_service_group.add_command(kms_crypto_root_group)
+kms_crypto_root_group.add_command(exported_key_data_group)
 kms_crypto_root_group.add_command(decrypted_data_group)
 kms_crypto_root_group.add_command(generated_key_group)
 kms_crypto_root_group.add_command(encrypted_data_group)
@@ -110,6 +118,42 @@ def encrypt(ctx, from_json, key_id, plaintext, associated_data, logging_context)
     client = cli_util.build_client('key_management', 'kms_crypto', ctx)
     result = client.encrypt(
         encrypt_data_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@exported_key_data_group.command(name=cli_util.override('kms_crypto.export_key.command_name', 'export-key'), help=u"""Exports a specific version of a master encryption key according to the details of the request. For their protection, keys that you create and store on a hardware security module (HSM) can never leave the HSM. You can only export keys stored on the server. For export, the key version is encrypted by an RSA public key that you provide.
+
+The top level --endpoint parameter must be supplied for this operation.""")
+@cli_util.option('--key-id', required=True, help=u"""The OCID of the master encryption key associated with the key version you want to export.""")
+@cli_util.option('--algorithm', required=True, type=custom_types.CliCaseInsensitiveChoice(["RSA_OAEP_AES_SHA256", "RSA_OAEP_SHA256"]), help=u"""The encryption algorithm to use to encrypt exportable key material from a software-backed key. Specifying `RSA_OAEP_AES_SHA256` invokes the RSA AES key wrap mechanism, which generates a temporary AES key. The temporary AES key is wrapped by the RSA public wrapping key provided along with the request, creating a wrapped temporary AES key. The temporary AES key is also used to wrap the exportable key material. The wrapped temporary AES key and the wrapped exportable key material are concatenated, producing concatenated blob output that jointly represents them. Specifying `RSA_OAEP_SHA256` means that the software key is wrapped by the RSA public wrapping key provided along with the request.""")
+@cli_util.option('--public-key', required=True, help=u"""The PEM format of the 2048-bit, 3072-bit, or 4096-bit RSA wrapping key in your possession that you want to use to encrypt the key.""")
+@cli_util.option('--key-version-id', help=u"""The OCID of the specific key version to export. If not specified, the service exports the current key version.""")
+@cli_util.option('--logging-context', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Information that provides context for audit logging. You can provide this additional data as key-value pairs to include in the audit logs when audit logging is enabled.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@json_skeleton_utils.get_cli_json_input_option({'logging-context': {'module': 'key_management', 'class': 'dict(str, string)'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'logging-context': {'module': 'key_management', 'class': 'dict(str, string)'}}, output_type={'module': 'key_management', 'class': 'ExportedKeyData'})
+@cli_util.wrap_exceptions
+def export_key(ctx, from_json, key_id, algorithm, public_key, key_version_id, logging_context):
+
+    kwargs = {}
+
+    _details = {}
+    _details['keyId'] = key_id
+    _details['algorithm'] = algorithm
+    _details['publicKey'] = public_key
+
+    if key_version_id is not None:
+        _details['keyVersionId'] = key_version_id
+
+    if logging_context is not None:
+        _details['loggingContext'] = cli_util.parse_json_parameter("logging_context", logging_context)
+
+    client = cli_util.build_client('key_management', 'kms_crypto', ctx)
+    result = client.export_key(
+        export_key_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)

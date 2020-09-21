@@ -35,9 +35,12 @@
 #    export DEFINED_TAG_PAIR = # <optional defined tag namespace and key value pairs for resource creation API>
 #    export LOGGING_CONTEXT = # <optional logging context for kms crypto audit logging. An example: '{"loggingContextKey":"loggingContextValue"}'>
 #    export TARGET_COMPARTMENT_ID - Target compartment for key/vault move operation
+#    export ALGORITHM = # <Encryption algorithm to be used to encrypt the software key. An example: 'RSA_OAEP_SHA256'>
+#    export PUBLIC_KEY = # <PEM format of RSA2048/RSA3072/RSA4096 Public Key, to be used to encrypt the key.>
 # Requirements for running this script:
 #   - OCI CLI v2.4.31 or later (you can check this by running oci --version)
 #   - Please make sure the user and tenancy used by the CLI have the appropriate permissions for these operations
+
 
 set -e
 
@@ -168,3 +171,7 @@ oci kms crypto decrypt --key-id $KEY_OCID --ciphertext $CIPHERTEXT --endpoint $C
 # Generate DataEncryptionKey (A key that you can use to encrypt or decrypt data).
 echo "Generating DataEncryptionKey (DEK) with Key with OCID: $KEY_OCID"
 oci kms crypto generate-data-encryption-key --key-id $KEY_OCID --include-plaintext-key true --key-shape $KEY_SHAPE --endpoint $CRYPTO_ENDPOINT
+
+# Export Key from KMS. (This operation is only supported for Software Keys)
+echo "Export Key with OCID: $KEY_OCID"
+oci kms crypto key export --algorithm $ALGORITHM --key-id $KEY_OCID --public-key $PUBLIC_KEY --endpoint $CRYPTO_ENDPOINT

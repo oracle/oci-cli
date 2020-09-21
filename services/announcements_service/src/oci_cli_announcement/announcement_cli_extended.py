@@ -7,7 +7,6 @@ from services.announcements_service.src.oci_cli_announcement.generated import an
 from oci_cli import cli_util
 import click
 from oci_cli.aliasing import CommandGroupWithAlias
-from oci_cli import json_skeleton_utils
 
 
 '''
@@ -48,16 +47,6 @@ user_status_group.add_command(announcement_cli.update_announcement_user_status)
 cli_util.rename_command(announcement_cli, user_status_group, announcement_cli.get_announcement_user_status, "get")
 
 
-@cli_util.copy_params_from_generated_command(announcement_cli.list_announcements, params_to_exclude=['all_pages', 'limit', 'page_size'])
-@announcements_group.command(name='list', help="""Gets a list of `Announcement` objects for the current tenancy""")
-@click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'announcements_service', 'class': 'AnnouncementsCollection'})
-@cli_util.wrap_exceptions
-def list_announcements_extended(ctx, **kwargs):
-    if kwargs.get('all_pages'):
-        kwargs.pop('all_pages')
-    if kwargs.get('limit'):
-        kwargs.pop('limit')
-    if kwargs.get('page_size'):
-        kwargs.pop('page_size')
-    ctx.invoke(announcement_cli.list_announcements, **kwargs)
+announcements_group.add_command(announcement_cli.list_announcements)
+cli_util.rename_command(announcement_cli, announcements_group, announcement_cli.list_announcements, "list")
+announcement_cli.list_announcements.help = "Gets a list of `Announcement` objects for the current tenancy"
