@@ -26,6 +26,7 @@ import struct
 import base64
 import logging
 from .formatting import render_config_errors
+from itertools import chain
 from terminaltables import AsciiTable
 from timeit import default_timer as timer
 from oci_cli.util import pymd5
@@ -1729,6 +1730,7 @@ def list_call_get_up_to_limit(list_func_ref, record_limit, page_size, **func_kwa
     remaining_items_to_fetch = record_limit
     call_result = None
     aggregated_results = []
+    aggregated_results_dict = {}
     wrapped_array_pagination = False
 
     # if the user explicitly sets limit to 0 we will still call the service once with limit=0
@@ -1743,10 +1745,12 @@ def list_call_get_up_to_limit(list_func_ref, record_limit, page_size, **func_kwa
 
         call_result = list_func_ref(**func_kwargs)
 
-        if not isinstance(call_result.data, list) and hasattr(call_result.data, 'items'):
+        # If the result is not a list, we want to return all the values of the object and not just `items`
+        if not isinstance(call_result.data, list):
             wrapped_array_pagination = True
-            aggregated_results.extend(call_result.data.items)
-            remaining_items_to_fetch -= len(call_result.data.items)
+            for key in sorted(call_result.data.attribute_map.keys()):
+                aggregated_results_dict.setdefault(key.replace("_", "-"), []).append(getattr(call_result.data, key))
+                remaining_items_to_fetch -= len(getattr(call_result.data, key))
         else:
             aggregated_results.extend(call_result.data)
             remaining_items_to_fetch -= len(call_result.data)
@@ -1756,12 +1760,22 @@ def list_call_get_up_to_limit(list_func_ref, record_limit, page_size, **func_kwa
 
         keep_paginating = call_result.has_next_page
 
+    if wrapped_array_pagination:
+        limit_items = record_limit
+        for key in sorted(aggregated_results_dict.keys()):
+            if limit_items > 0:
+                aggregated_results_dict[key] = list(chain.from_iterable(aggregated_results_dict[key]))
+                aggregated_results_dict[key] = aggregated_results_dict[key][:limit_items]
+                limit_items -= len(aggregated_results_dict[key])
+            else:
+                aggregated_results_dict.pop(key, None)
+
     # Truncate the list to the first limit items, as potentially we could have gotten more than what the caller asked for
     if wrapped_array_pagination:
         final_response = Response(
             call_result.status,
             call_result.headers,
-            {"items": aggregated_results[:record_limit]},
+            aggregated_results_dict,
             call_result.request
         )
     else:
@@ -1774,6 +1788,7 @@ def list_call_get_all_results(list_func_ref, ctx=None, is_json=False, stream_out
     keep_paginating = True
     call_result = None
     aggregated_results = []
+    aggregated_results_dict = {}
     wrapped_array_pagination = False
 
     page_index = 1
@@ -1788,9 +1803,11 @@ def list_call_get_all_results(list_func_ref, ctx=None, is_json=False, stream_out
         while keep_paginating:
             call_result = list_func_ref(**func_kwargs)
             start = timer()
-            if not isinstance(call_result.data, list) and hasattr(call_result.data, 'items'):
+            # If the result is not a list, we want to return all the values of the object and not just `items`
+            if not isinstance(call_result.data, list):
                 wrapped_array_pagination = True
-                aggregated_results.extend(call_result.data.items)
+                for key in sorted(call_result.data.attribute_map.keys()):
+                    aggregated_results_dict.setdefault(key.replace("_", "-"), []).append(getattr(call_result.data, key))
             else:
                 if stream_output:
                     previous_page_has_data = stream_page(is_json, page_index, call_result, ctx, previous_page_has_data)
@@ -1812,6 +1829,8 @@ def list_call_get_all_results(list_func_ref, ctx=None, is_json=False, stream_out
         ex = e
         raise e
     finally:
+        for key in aggregated_results_dict.keys():
+            aggregated_results_dict[key] = list(chain.from_iterable(aggregated_results_dict[key]))
         if stream_output:
             if ex and ctx and ctx.obj['debug']:
                 print(str(ex).replace("'", '"'), file=sys.stderr)
@@ -1840,19 +1859,23 @@ def list_call_get_all_results(list_func_ref, ctx=None, is_json=False, stream_out
             if 'sort_order' in func_kwargs:
                 sort_direction = func_kwargs['sort_order'].upper()
 
-            post_processed_results = sorted(aggregated_results, key=lambda r: retrieve_attribute_for_sort(r, 'display_name'), reverse=(sort_direction == 'DESC'))
+            post_processed_results = sorted(aggregated_results,
+                                            key=lambda r: retrieve_attribute_for_sort(r, 'display_name'),
+                                            reverse=(sort_direction == 'DESC'))
         elif func_kwargs['sort_by'].upper() == 'TIMECREATED':
             sort_direction = 'DESC'
             if 'sort_order' in func_kwargs:
                 sort_direction = func_kwargs['sort_order'].upper()
 
-                post_processed_results = sorted(aggregated_results, key=lambda r: retrieve_attribute_for_sort(r, 'time_created'), reverse=(sort_direction == 'DESC'))
+                post_processed_results = sorted(aggregated_results,
+                                                key=lambda r: retrieve_attribute_for_sort(r, 'time_created'),
+                                                reverse=(sort_direction == 'DESC'))
 
     # Most of this is just dummy since we're discarding the intermediate requests
 
     return Response(call_result.status,
                     call_result.headers,
-                    {"items": post_processed_results},
+                    aggregated_results_dict,
                     call_result.request) if wrapped_array_pagination \
         else Response(call_result.status,
                       call_result.headers,

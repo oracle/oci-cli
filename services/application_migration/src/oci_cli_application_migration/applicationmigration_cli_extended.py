@@ -3,7 +3,12 @@
 # This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 from __future__ import print_function
+import click
 from services.application_migration.src.oci_cli_application_migration.generated import applicationmigration_cli
+from oci_cli import cli_util
+from oci_cli import json_skeleton_utils
+from oci_cli import custom_types
+
 
 '''
 Drop following commands:
@@ -53,3 +58,23 @@ applicationmigration_cli.source_group.commands.pop(applicationmigration_cli.upda
 applicationmigration_cli.source_group.commands.pop(applicationmigration_cli.update_source_internal_source_details.name)
 applicationmigration_cli.source_group.commands.pop(applicationmigration_cli.update_source_ocic_authorization_details.name)
 applicationmigration_cli.source_group.commands.pop(applicationmigration_cli.update_source_ocic_source_details.name)
+
+
+@cli_util.copy_params_from_generated_command(applicationmigration_cli.list_migrations, params_to_exclude=['lifecycle_state'])
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "SUCCEEDED", "DELETING", "DELETED"]), help=u"""Filter results on lifecycleState.""")
+@applicationmigration_cli.migration_group.command(name=cli_util.override('application_migration.list_migrations.command_name', 'list'), help=applicationmigration_cli.list_migrations.help)
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'application_migration', 'class': 'list[MigrationSummary]'})
+@cli_util.wrap_exceptions
+def list_migrations_extended(ctx, **kwargs):
+    ctx.invoke(applicationmigration_cli.list_migrations, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(applicationmigration_cli.list_sources, params_to_exclude=['lifecycle_state'])
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "DELETING", "UPDATING", "ACTIVE", "INACTIVE", "DELETED"]), help=u"""Filter results on lifecycleState.""")
+@applicationmigration_cli.source_group.command(name=cli_util.override('application_migration.list_sources.command_name', 'list'), help=applicationmigration_cli.list_sources.help)
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'application_migration', 'class': 'list[SourceSummary]'})
+@cli_util.wrap_exceptions
+def list_sources_extended(ctx, **kwargs):
+    ctx.invoke(applicationmigration_cli.list_sources, **kwargs)

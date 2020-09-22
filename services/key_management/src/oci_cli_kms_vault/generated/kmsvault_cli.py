@@ -15,7 +15,8 @@ from oci_cli.aliasing import CommandGroupWithAlias
 from services.key_management.src.oci_cli_key_management.generated import kms_service_cli
 
 
-@click.command(cli_util.override('kms_vault.kms_vault_root_group.command_name', 'kms-vault'), cls=CommandGroupWithAlias, help=cli_util.override('kms_vault.kms_vault_root_group.help', """API for managing and performing operations with keys and vaults."""), short_help=cli_util.override('kms_vault.kms_vault_root_group.short_help', """Key Management Service API"""))
+@click.command(cli_util.override('kms_vault.kms_vault_root_group.command_name', 'kms-vault'), cls=CommandGroupWithAlias, help=cli_util.override('kms_vault.kms_vault_root_group.help', """API for managing and performing operations with keys and vaults. (For the API for managing secrets, see the Vault Service
+Secret Management API. For the API for retrieving secrets, see the Vault Service Secret Retrieval API.)"""), short_help=cli_util.override('kms_vault.kms_vault_root_group.short_help', """Vault Service Key Management API"""))
 @cli_util.help_option_group
 def kms_vault_root_group():
     pass
