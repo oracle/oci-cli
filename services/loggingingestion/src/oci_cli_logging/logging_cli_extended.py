@@ -10,6 +10,9 @@ from oci_cli import cli_util
 from oci_cli import json_skeleton_utils
 from oci_cli import custom_types
 
+# Override the name of the service for top-level index
+logging_cli.logging_ingestion_root_group.short_help = "Logging Ingestion"
+
 # oci logging-ingestion log-entry put-logs -> oci logging-ingestion put-logs
 logging_cli.logging_ingestion_root_group.commands.pop(logging_cli.log_entry_group.name)
 logging_cli.logging_ingestion_root_group.add_command(logging_cli.put_logs)

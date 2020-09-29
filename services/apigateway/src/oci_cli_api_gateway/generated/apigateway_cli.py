@@ -15,47 +15,40 @@ from oci_cli.aliasing import CommandGroupWithAlias
 from services.apigateway.src.oci_cli_apigateway.generated import api_gateway_service_cli
 
 
-@click.command(cli_util.override('gateway.gateway_root_group.command_name', 'gateway'), cls=CommandGroupWithAlias, help=cli_util.override('gateway.gateway_root_group.help', """API for the API Gateway service. Use this API to manage gateways, deployments, and related items.
+@click.command(cli_util.override('api_gateway.api_gateway_root_group.command_name', 'api-gateway'), cls=CommandGroupWithAlias, help=cli_util.override('api_gateway.api_gateway_root_group.help', """API for the API Gateway service. Use this API to manage gateways, deployments, and related items.
 For more information, see
-[Overview of API Gateway]."""), short_help=cli_util.override('gateway.gateway_root_group.short_help', """API Gateway API"""))
+[Overview of API Gateway]."""), short_help=cli_util.override('api_gateway.api_gateway_root_group.short_help', """API Gateway API"""))
 @cli_util.help_option_group
-def gateway_root_group():
+def api_gateway_root_group():
     pass
 
 
-@click.command(cli_util.override('gateway.gateway_summary_group.command_name', 'gateway-summary'), cls=CommandGroupWithAlias, help="""A summary of the gateway.""")
+@click.command(cli_util.override('api_gateway.certificate_group.command_name', 'certificate'), cls=CommandGroupWithAlias, help="""A certificate contains information to be installed on a gateway to secure the traffic going through it. For more information, see [API Gateway Concepts].""")
 @cli_util.help_option_group
-def gateway_summary_group():
+def certificate_group():
     pass
 
 
-@click.command(cli_util.override('gateway.gateway_group.command_name', 'gateway'), cls=CommandGroupWithAlias, help="""A gateway is a virtual network appliance in a regional subnet. A gateway routes inbound traffic to back-end services including public, private, and partner HTTP APIs, as well as Oracle Functions. Avoid entering confidential information. For more information, see [API Gateway Concepts].""")
-@cli_util.help_option_group
-def gateway_group():
-    pass
+api_gateway_service_cli.api_gateway_service_group.add_command(api_gateway_root_group)
+api_gateway_root_group.add_command(certificate_group)
+# oci api_gateway api_gateway --> oci api_gateway
+api_gateway_service_cli.api_gateway_service_group.commands.pop(api_gateway_root_group.name)
+api_gateway_service_cli.api_gateway_service_group.add_command(certificate_group)
 
 
-api_gateway_service_cli.api_gateway_service_group.add_command(gateway_root_group)
-gateway_root_group.add_command(gateway_summary_group)
-gateway_root_group.add_command(gateway_group)
-
-
-@gateway_group.command(name=cli_util.override('gateway.change_gateway_compartment.command_name', 'change-compartment'), help=u"""Changes the gateway compartment.""")
-@cli_util.option('--gateway-id', required=True, help=u"""The ocid of the gateway.""")
+@certificate_group.command(name=cli_util.override('api_gateway.change_certificate_compartment.command_name', 'change-compartment'), help=u"""Changes the certificate compartment.""")
+@cli_util.option('--certificate-id', required=True, help=u"""The ocid of the certificate.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which the resource is created.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
-@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
-@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def change_gateway_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, gateway_id, compartment_id, if_match):
+def change_certificate_compartment(ctx, from_json, certificate_id, compartment_id, if_match):
 
-    if isinstance(gateway_id, six.string_types) and len(gateway_id.strip()) == 0:
-        raise click.UsageError('Parameter --gateway-id cannot be whitespace or empty string')
+    if isinstance(certificate_id, six.string_types) and len(certificate_id.strip()) == 0:
+        raise click.UsageError('Parameter --certificate-id cannot be whitespace or empty string')
 
     kwargs = {}
     if if_match is not None:
@@ -65,50 +58,23 @@ def change_gateway_compartment(ctx, from_json, wait_for_state, max_wait_seconds,
     _details = {}
     _details['compartmentId'] = compartment_id
 
-    client = cli_util.build_client('apigateway', 'gateway', ctx)
-    result = client.change_gateway_compartment(
-        gateway_id=gateway_id,
-        change_gateway_compartment_details=_details,
+    client = cli_util.build_client('apigateway', 'api_gateway', ctx)
+    result = client.change_certificate_compartment(
+        certificate_id=certificate_id,
+        change_certificate_compartment_details=_details,
         **kwargs
     )
-    if wait_for_state:
-
-        client = cli_util.build_client('apigateway', 'work_requests', ctx)
-
-        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
-            try:
-                wait_period_kwargs = {}
-                if max_wait_seconds is not None:
-                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
-                if wait_interval_seconds is not None:
-                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
-
-                click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
-            except oci.exceptions.MaximumWaitTimeExceeded as e:
-                # If we fail, we should show an error, but we should still provide the information to the customer
-                click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
-                cli_util.render_response(result, ctx)
-                sys.exit(2)
-            except Exception:
-                click.echo('Encountered error while waiting for work request to enter the specified state. Outputting last known resource state', file=sys.stderr)
-                cli_util.render_response(result, ctx)
-                raise
-        else:
-            click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
-@gateway_group.command(name=cli_util.override('gateway.create_gateway.command_name', 'create'), help=u"""Creates a new gateway.""")
+@certificate_group.command(name=cli_util.override('api_gateway.create_certificate.command_name', 'create'), help=u"""Creates a new Certificate.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which the resource is created.""")
-@cli_util.option('--endpoint-type', required=True, help=u"""Gateway endpoint type. `PUBLIC` will have a public ip address assigned to it, while `PRIVATE` will only be accessible on a private IP address on the subnet.
-
-Example: `PUBLIC` or `PRIVATE`""")
-@cli_util.option('--subnet-id', required=True, help=u"""The [OCID] of the subnet in which related resources are created.""")
+@cli_util.option('--private-key', required=True, help=u"""The private key associated with the certificate in pem format.""")
+@cli_util.option('--certificate', required=True, help=u"""The data of the leaf certificate in pem format.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
 
 Example: `My new resource`""")
-@cli_util.option('--certificate-id', help=u"""The [OCID] of the resource.""")
+@cli_util.option('--intermediate-certificates', help=u"""The intermediate certificate data associated with the certificate in pem format.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -121,23 +87,23 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'apigateway', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apigateway', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'apigateway', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apigateway', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'apigateway', 'class': 'Gateway'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'apigateway', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apigateway', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'apigateway', 'class': 'Certificate'})
 @cli_util.wrap_exceptions
-def create_gateway(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, endpoint_type, subnet_id, display_name, certificate_id, freeform_tags, defined_tags):
+def create_certificate(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, private_key, certificate, display_name, intermediate_certificates, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
     _details['compartmentId'] = compartment_id
-    _details['endpointType'] = endpoint_type
-    _details['subnetId'] = subnet_id
+    _details['privateKey'] = private_key
+    _details['certificate'] = certificate
 
     if display_name is not None:
         _details['displayName'] = display_name
 
-    if certificate_id is not None:
-        _details['certificateId'] = certificate_id
+    if intermediate_certificates is not None:
+        _details['intermediateCertificates'] = intermediate_certificates
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -145,9 +111,9 @@ def create_gateway(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('apigateway', 'gateway', ctx)
-    result = client.create_gateway(
-        create_gateway_details=_details,
+    client = cli_util.build_client('apigateway', 'api_gateway', ctx)
+    result = client.create_certificate(
+        create_certificate_details=_details,
         **kwargs
     )
     if wait_for_state:
@@ -178,8 +144,8 @@ def create_gateway(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
     cli_util.render_response(result, ctx)
 
 
-@gateway_group.command(name=cli_util.override('gateway.delete_gateway.command_name', 'delete'), help=u"""Deletes the gateway with the given identifier.""")
-@cli_util.option('--gateway-id', required=True, help=u"""The ocid of the gateway.""")
+@certificate_group.command(name=cli_util.override('api_gateway.delete_certificate.command_name', 'delete'), help=u"""Deletes the certificate with the given identifier.""")
+@cli_util.option('--certificate-id', required=True, help=u"""The ocid of the certificate.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -190,18 +156,18 @@ def create_gateway(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def delete_gateway(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, gateway_id, if_match):
+def delete_certificate(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, certificate_id, if_match):
 
-    if isinstance(gateway_id, six.string_types) and len(gateway_id.strip()) == 0:
-        raise click.UsageError('Parameter --gateway-id cannot be whitespace or empty string')
+    if isinstance(certificate_id, six.string_types) and len(certificate_id.strip()) == 0:
+        raise click.UsageError('Parameter --certificate-id cannot be whitespace or empty string')
 
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('apigateway', 'gateway', ctx)
-    result = client.delete_gateway(
-        gateway_id=gateway_id,
+    client = cli_util.build_client('apigateway', 'api_gateway', ctx)
+    result = client.delete_certificate(
+        certificate_id=certificate_id,
         **kwargs
     )
     if wait_for_state:
@@ -232,37 +198,36 @@ def delete_gateway(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
     cli_util.render_response(result, ctx)
 
 
-@gateway_group.command(name=cli_util.override('gateway.get_gateway.command_name', 'get'), help=u"""Gets a gateway by identifier.""")
-@cli_util.option('--gateway-id', required=True, help=u"""The ocid of the gateway.""")
+@certificate_group.command(name=cli_util.override('api_gateway.get_certificate.command_name', 'get'), help=u"""Gets a certificate by identifier.""")
+@cli_util.option('--certificate-id', required=True, help=u"""The ocid of the certificate.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'apigateway', 'class': 'Gateway'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'apigateway', 'class': 'Certificate'})
 @cli_util.wrap_exceptions
-def get_gateway(ctx, from_json, gateway_id):
+def get_certificate(ctx, from_json, certificate_id):
 
-    if isinstance(gateway_id, six.string_types) and len(gateway_id.strip()) == 0:
-        raise click.UsageError('Parameter --gateway-id cannot be whitespace or empty string')
+    if isinstance(certificate_id, six.string_types) and len(certificate_id.strip()) == 0:
+        raise click.UsageError('Parameter --certificate-id cannot be whitespace or empty string')
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('apigateway', 'gateway', ctx)
-    result = client.get_gateway(
-        gateway_id=gateway_id,
+    client = cli_util.build_client('apigateway', 'api_gateway', ctx)
+    result = client.get_certificate(
+        certificate_id=certificate_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
 
 
-@gateway_summary_group.command(name=cli_util.override('gateway.list_gateways.command_name', 'list-gateways'), help=u"""Returns a list of gateways.""")
+@certificate_group.command(name=cli_util.override('api_gateway.list_certificates.command_name', 'list'), help=u"""Returns a list of certificates.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The ocid of the compartment in which to list resources.""")
-@cli_util.option('--certificate-id', help=u"""Filter gateways by the certificate ocid.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable.
 
 Example: `My new resource`""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources that match the given lifecycle state.
 
-Example: `SUCCEEDED`""")
+Example: `ACTIVE` or `DELETED`""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'. The default order depends on the sortBy value.""")
@@ -272,16 +237,14 @@ Example: `SUCCEEDED`""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'apigateway', 'class': 'GatewayCollection'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'apigateway', 'class': 'CertificateCollection'})
 @cli_util.wrap_exceptions
-def list_gateways(ctx, from_json, all_pages, page_size, compartment_id, certificate_id, display_name, lifecycle_state, limit, page, sort_order, sort_by):
+def list_certificates(ctx, from_json, all_pages, page_size, compartment_id, display_name, lifecycle_state, limit, page, sort_order, sort_by):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
 
     kwargs = {}
-    if certificate_id is not None:
-        kwargs['certificate_id'] = certificate_id
     if display_name is not None:
         kwargs['display_name'] = display_name
     if lifecycle_state is not None:
@@ -295,38 +258,37 @@ def list_gateways(ctx, from_json, all_pages, page_size, compartment_id, certific
     if sort_by is not None:
         kwargs['sort_by'] = sort_by
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
-    client = cli_util.build_client('apigateway', 'gateway', ctx)
+    client = cli_util.build_client('apigateway', 'api_gateway', ctx)
     if all_pages:
         if page_size:
             kwargs['limit'] = page_size
 
         result = cli_util.list_call_get_all_results(
-            client.list_gateways,
+            client.list_certificates,
             compartment_id=compartment_id,
             **kwargs
         )
     elif limit is not None:
         result = cli_util.list_call_get_up_to_limit(
-            client.list_gateways,
+            client.list_certificates,
             limit,
             page_size,
             compartment_id=compartment_id,
             **kwargs
         )
     else:
-        result = client.list_gateways(
+        result = client.list_certificates(
             compartment_id=compartment_id,
             **kwargs
         )
     cli_util.render_response(result, ctx)
 
 
-@gateway_group.command(name=cli_util.override('gateway.update_gateway.command_name', 'update'), help=u"""Updates the gateway with the given identifier.""")
-@cli_util.option('--gateway-id', required=True, help=u"""The ocid of the gateway.""")
+@certificate_group.command(name=cli_util.override('api_gateway.update_certificate.command_name', 'update'), help=u"""Updates a certificate with the given identifier""")
+@cli_util.option('--certificate-id', required=True, help=u"""The ocid of the certificate.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
 
 Example: `My new resource`""")
-@cli_util.option('--certificate-id', help=u"""The [OCID] of the resource.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -343,10 +305,10 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'apigateway', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'apigateway', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def update_gateway(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, gateway_id, display_name, certificate_id, freeform_tags, defined_tags, if_match):
+def update_certificate(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, certificate_id, display_name, freeform_tags, defined_tags, if_match):
 
-    if isinstance(gateway_id, six.string_types) and len(gateway_id.strip()) == 0:
-        raise click.UsageError('Parameter --gateway-id cannot be whitespace or empty string')
+    if isinstance(certificate_id, six.string_types) and len(certificate_id.strip()) == 0:
+        raise click.UsageError('Parameter --certificate-id cannot be whitespace or empty string')
     if not force:
         if freeform_tags or defined_tags:
             if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
@@ -362,19 +324,16 @@ def update_gateway(ctx, from_json, force, wait_for_state, max_wait_seconds, wait
     if display_name is not None:
         _details['displayName'] = display_name
 
-    if certificate_id is not None:
-        _details['certificateId'] = certificate_id
-
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
 
-    client = cli_util.build_client('apigateway', 'gateway', ctx)
-    result = client.update_gateway(
-        gateway_id=gateway_id,
-        update_gateway_details=_details,
+    client = cli_util.build_client('apigateway', 'api_gateway', ctx)
+    result = client.update_certificate(
+        certificate_id=certificate_id,
+        update_certificate_details=_details,
         **kwargs
     )
     if wait_for_state:

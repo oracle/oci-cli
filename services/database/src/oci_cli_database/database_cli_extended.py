@@ -1057,7 +1057,6 @@ def create_db_home(ctx, **kwargs):
 # database_cli.db_root_group.commands.pop(database_cli.db_home_group.name)
 
 # db-home update is excluded from the db-home command group
-database_cli.db_home_group.commands.pop(database_cli.update_db_home.name)
 database_cli.db_home_group.commands.pop(database_cli.create_db_home.name)
 database_cli.db_home_group.commands.pop(database_cli.create_db_home_create_db_home_with_db_system_id_from_backup_details.name)
 database_cli.db_home_group.commands.pop(database_cli.create_db_home_create_db_home_with_db_system_id_details.name)

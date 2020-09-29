@@ -2653,7 +2653,7 @@ For more information about the Bring Your Own Image feature of Oracle Cloud Infr
 
 For more information about iPXE, see http://ipxe.org.""")
 @cli_util.option('--launch-options', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Options for tuning the compatibility and performance of VM shapes. The values that you specify override any default values.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--availability-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--availability-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Options for defining the availability of a VM instance after a maintenance event that impacts the underlying hardware.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Custom metadata key/value pairs that you provide, such as the SSH public key required to connect to the instance.
 
 A metadata service runs on every launched instance. The service is an HTTP endpoint listening on 169.254.169.254. You can use the service to:
@@ -2848,7 +2848,7 @@ For more information about the Bring Your Own Image feature of Oracle Cloud Infr
 
 For more information about iPXE, see http://ipxe.org.""")
 @cli_util.option('--launch-options', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Options for tuning the compatibility and performance of VM shapes. The values that you specify override any default values.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--availability-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--availability-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Options for defining the availability of a VM instance after a maintenance event that impacts the underlying hardware.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Custom metadata key/value pairs that you provide, such as the SSH public key required to connect to the instance.
 
 A metadata service runs on every launched instance. The service is an HTTP endpoint listening on 169.254.169.254. You can use the service to:
@@ -3047,7 +3047,7 @@ For more information about the Bring Your Own Image feature of Oracle Cloud Infr
 
 For more information about iPXE, see http://ipxe.org.""")
 @cli_util.option('--launch-options', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Options for tuning the compatibility and performance of VM shapes. The values that you specify override any default values.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--availability-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--availability-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Options for defining the availability of a VM instance after a maintenance event that impacts the underlying hardware.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Custom metadata key/value pairs that you provide, such as the SSH public key required to connect to the instance.
 
 A metadata service runs on every launched instance. The service is an HTTP endpoint listening on 169.254.169.254. You can use the service to:
@@ -4872,7 +4872,7 @@ To get a list of fault domains, use the [ListFaultDomains] operation in the Iden
 
 Example: `FAULT-DOMAIN-1`""")
 @cli_util.option('--launch-options', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Options for tuning the compatibility and performance of VM shapes.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--availability-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--availability-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Options for defining the availability of a VM instance after a maintenance event that impacts the underlying hardware.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["MOVING", "PROVISIONING", "RUNNING", "STARTING", "STOPPING", "STOPPED", "CREATING_IMAGE", "TERMINATING", "TERMINATED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -4949,6 +4949,78 @@ def update_instance(ctx, from_json, force, wait_for_state, max_wait_seconds, wai
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 result = oci.wait_until(client, client.get_instance(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@instance_console_connection_group.command(name=cli_util.override('compute.update_instance_console_connection.command_name', 'update'), help=u"""Updates the defined tags and free-form tags for the specified instance console connection.""")
+@cli_util.option('--instance-console-connection-id', required=True, help=u"""The OCID of the instance console connection.""")
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "DELETED", "DELETING", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}}, output_type={'module': 'core', 'class': 'InstanceConsoleConnection'})
+@cli_util.wrap_exceptions
+def update_instance_console_connection(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_console_connection_id, defined_tags, freeform_tags, if_match):
+
+    if isinstance(instance_console_connection_id, six.string_types) and len(instance_console_connection_id.strip()) == 0:
+        raise click.UsageError('Parameter --instance-console-connection-id cannot be whitespace or empty string')
+    if not force:
+        if defined_tags or freeform_tags:
+            if not click.confirm("WARNING: Updates to defined-tags and freeform-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    client = cli_util.build_client('core', 'compute', ctx)
+    result = client.update_instance_console_connection(
+        instance_console_connection_id=instance_console_connection_id,
+        update_instance_console_connection_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_instance_console_connection') and callable(getattr(client, 'get_instance_console_connection')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_instance_console_connection(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except oci.exceptions.MaximumWaitTimeExceeded as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)

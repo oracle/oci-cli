@@ -958,12 +958,18 @@ def get_object_etag(client, namespace, bucket_name, name, client_request_id, if_
                  help='The number of parallel operations to perform when downloading an object in multiple parts. Decreasing this value will make multipart downloads less resource intensive but they may take longer. Increasing this value may improve download times, but the download process will consume more system resources and network bandwidth.')
 @cli_util.option('--encryption-key-file', type=click.File(mode='r'),
                  help="""A file containing the base64-encoded string of the AES-256 encryption key associated with the object.""")
+@cli_util.option('--http-response-content-disposition', help=u"""This value will be used in Content-Disposition header of the response.""")
+@cli_util.option('--http-response-cache-control', help=u"""This value will be used in Cache-Control header of the response.""")
+@cli_util.option('--http-response-content-type', help=u"""This value will be used in Content-Type header of the response.""")
+@cli_util.option('--http-response-content-language', help=u"""This value will be used in Content-Language header of the response.""")
+@cli_util.option('--http-response-content-encoding', help=u"""This value will be used in Content-Encoding header of the response""")
+@cli_util.option('--http-response-expires', help=u"""This value will be used in Expires header of the response""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @wrap_exceptions
-def object_get(ctx, from_json, namespace, bucket_name, name, file, version_id, if_match, if_none_match, range, multipart_download_threshold, part_size, parallel_download_count, encryption_key_file):
+def object_get(ctx, from_json, namespace, bucket_name, name, file, version_id, if_match, if_none_match, range, multipart_download_threshold, part_size, parallel_download_count, encryption_key_file, http_response_content_disposition, http_response_cache_control, http_response_content_type, http_response_content_language, http_response_content_encoding, http_response_expires):
     """
     Gets the metadata and body of an object.
 
@@ -1012,7 +1018,14 @@ def object_get(ctx, from_json, namespace, bucket_name, name, file, version_id, i
             range=range,
             opc_client_request_id=ctx.obj['request_id'],
             version_id=version_id,
-            **encryption_key_params)
+            http_response_content_disposition=http_response_content_disposition,
+            http_response_cache_control=http_response_cache_control,
+            http_response_content_type=http_response_content_type,
+            http_response_content_language=http_response_content_language,
+            http_response_content_encoding=http_response_content_encoding,
+            http_response_expires=http_response_expires,
+            **encryption_key_params
+        )
 
         # Stream using the raw urllib3.HTTPResponse, since using the Requests response
         # will automatically try to decode.
@@ -1034,7 +1047,13 @@ def object_get(ctx, from_json, namespace, bucket_name, name, file, version_id, i
             'part_size': part_size,
             'multipart_download_threshold': multipart_download_threshold,
             'total_size': object_size_bytes,
-            'version_id': version_id
+            'version_id': version_id,
+            'http_response_content_disposition': http_response_content_disposition,
+            'http_response_cache_control': http_response_cache_control,
+            'http_response_content_type': http_response_content_type,
+            'http_response_content_language': http_response_content_language,
+            'http_response_content_encoding': http_response_content_encoding,
+            'http_response_expires': http_response_expires
         }
         get_object_multipart_kwargs.update(encryption_key_params)
 
