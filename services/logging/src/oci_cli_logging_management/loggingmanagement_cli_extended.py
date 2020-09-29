@@ -10,6 +10,9 @@ from oci_cli import cli_util
 from oci_cli import json_skeleton_utils
 from oci_cli import custom_types
 
+# Override the name of the service for top-level index
+loggingmanagement_cli.logging_root_group.short_help = "Logging Management"
+
 ##################################
 # rename commands
 ##################################

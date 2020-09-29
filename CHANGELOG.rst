@@ -6,6 +6,35 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.12.13 - 2020-09-29
+--------------------
+Added
+~~~~~
+
+* Support for Custom SSL Certificates for Gateways as part of the API Gateway Service
+
+  * ``oci api-gateway certificate create``
+  * ``oci api-gateway certificate delete``
+  * ``oci api-gateway gateway create --certificate-id``
+  * ``oci api-gateway gateway update --certificate-id``
+
+* Support for specifying custom content dispositions when downloading objects in the Object Storage service
+
+  * ``oci os object get``
+
+* Support for updating the tags of an instance console connection in Compute Service
+
+  * ``oci compute instance-console-connection update``
+
+* Support for the “bring your own IP address” feature in the Virtual Networking service
+
+  * ``oci network byoip-range``
+  * ``oci network public-ip-pool``
+
+* Support for db-home update in Database Service
+
+  * ``oci db db-home update --db-home-id <Db Home OCID> --db-version <DB Home Patch Details>``
+
 2.12.12 - 2020-09-22
 --------------------
 Added

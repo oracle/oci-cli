@@ -873,12 +873,18 @@ def get_namespace_metadata(ctx, from_json, namespace_name):
 @cli_util.option('--opc-sse-customer-algorithm', help=u"""The optional header that specifies \"AES256\" as the encryption algorithm. For more information, see [Using Your Own Keys for Server-Side Encryption].""")
 @cli_util.option('--opc-sse-customer-key', help=u"""The optional header that specifies the base64-encoded 256-bit encryption key to use to encrypt or decrypt the data. For more information, see [Using Your Own Keys for Server-Side Encryption].""")
 @cli_util.option('--opc-sse-customer-key-sha256', help=u"""The optional header that specifies the base64-encoded SHA256 hash of the encryption key. This value is used to check the integrity of the encryption key. For more information, see [Using Your Own Keys for Server-Side Encryption].""")
+@cli_util.option('--http-response-content-disposition', help=u"""This value will be used in Content-Disposition header of the response.""")
+@cli_util.option('--http-response-cache-control', help=u"""This value will be used in Cache-Control header of the response.""")
+@cli_util.option('--http-response-content-type', help=u"""This value will be used in Content-Type header of the response.""")
+@cli_util.option('--http-response-content-language', help=u"""This value will be used in Content-Language header of the response.""")
+@cli_util.option('--http-response-content-encoding', help=u"""This value will be used in Content-Encoding header of the response""")
+@cli_util.option('--http-response-expires', help=u"""This value will be used in Expires header of the response""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def get_object(ctx, from_json, file, namespace_name, bucket_name, object_name, version_id, if_match, if_none_match, range, opc_sse_customer_algorithm, opc_sse_customer_key, opc_sse_customer_key_sha256):
+def get_object(ctx, from_json, file, namespace_name, bucket_name, object_name, version_id, if_match, if_none_match, range, opc_sse_customer_algorithm, opc_sse_customer_key, opc_sse_customer_key_sha256, http_response_content_disposition, http_response_cache_control, http_response_content_type, http_response_content_language, http_response_content_encoding, http_response_expires):
 
     if isinstance(namespace_name, six.string_types) and len(namespace_name.strip()) == 0:
         raise click.UsageError('Parameter --namespace-name cannot be whitespace or empty string')
@@ -904,6 +910,18 @@ def get_object(ctx, from_json, file, namespace_name, bucket_name, object_name, v
         kwargs['opc_sse_customer_key'] = opc_sse_customer_key
     if opc_sse_customer_key_sha256 is not None:
         kwargs['opc_sse_customer_key_sha256'] = opc_sse_customer_key_sha256
+    if http_response_content_disposition is not None:
+        kwargs['http_response_content_disposition'] = http_response_content_disposition
+    if http_response_cache_control is not None:
+        kwargs['http_response_cache_control'] = http_response_cache_control
+    if http_response_content_type is not None:
+        kwargs['http_response_content_type'] = http_response_content_type
+    if http_response_content_language is not None:
+        kwargs['http_response_content_language'] = http_response_content_language
+    if http_response_content_encoding is not None:
+        kwargs['http_response_content_encoding'] = http_response_content_encoding
+    if http_response_expires is not None:
+        kwargs['http_response_expires'] = http_response_expires
     kwargs['opc_client_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('object_storage', 'object_storage', ctx)
     result = client.get_object(
