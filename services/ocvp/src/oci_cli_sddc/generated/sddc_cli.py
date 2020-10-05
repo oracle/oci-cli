@@ -47,7 +47,7 @@ sddc_root_group.add_command(supported_vmware_software_version_summary_group)
 sddc_root_group.add_command(sddc_summary_group)
 
 
-@sddc_group.command(name=cli_util.override('sddc.change_sddc_compartment.command_name', 'change-compartment'), help=u"""Moves an SDDC into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].""")
+@sddc_group.command(name=cli_util.override('sddc.change_sddc_compartment.command_name', 'change-compartment'), help=u"""Moves an SDDC into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeSddcCompartment)""")
 @cli_util.option('--sddc-id', required=True, help=u"""The [OCID] of the SDDC.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the SDDC to.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -80,7 +80,7 @@ def change_sddc_compartment(ctx, from_json, sddc_id, compartment_id, if_match):
 
 @sddc_group.command(name=cli_util.override('sddc.create_sddc.command_name', 'create'), help=u"""Creates a software-defined data center (SDDC).
 
-Use the [WorkRequest] operations to track the creation of the SDDC.""")
+Use the [WorkRequest] operations to track the creation of the SDDC. \n[Command Reference](createSddc)""")
 @cli_util.option('--compute-availability-domain', required=True, help=u"""The availability domain to create the SDDC's ESXi hosts in.""")
 @cli_util.option('--vmware-software-version', required=True, help=u"""The VMware software bundle to install on the ESXi hosts in the SDDC. To get a list of the available versions, use [ListSupportedVmwareSoftwareVersions].""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to contain the SDDC.""")
@@ -183,7 +183,7 @@ def create_sddc(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 
 @sddc_group.command(name=cli_util.override('sddc.delete_sddc.command_name', 'delete'), help=u"""Deletes the specified SDDC, along with the other resources that were created with the SDDC. For example: the Compute instances, DNS records, and so on.
 
-Use the [WorkRequest] operations to track the deletion of the SDDC.""")
+Use the [WorkRequest] operations to track the deletion of the SDDC. \n[Command Reference](deleteSddc)""")
 @cli_util.option('--sddc-id', required=True, help=u"""The [OCID] of the SDDC.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -235,7 +235,7 @@ def delete_sddc(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
     cli_util.render_response(result, ctx)
 
 
-@sddc_group.command(name=cli_util.override('sddc.get_sddc.command_name', 'get'), help=u"""Gets the specified SDDC's information.""")
+@sddc_group.command(name=cli_util.override('sddc.get_sddc.command_name', 'get'), help=u"""Gets the specified SDDC's information. \n[Command Reference](getSddc)""")
 @cli_util.option('--sddc-id', required=True, help=u"""The [OCID] of the SDDC.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -257,7 +257,7 @@ def get_sddc(ctx, from_json, sddc_id):
     cli_util.render_response(result, ctx)
 
 
-@sddc_summary_group.command(name=cli_util.override('sddc.list_sddcs.command_name', 'list-sddcs'), help=u"""Lists the SDDCs in the specified compartment. The list can be filtered by display name or availability domain.""")
+@sddc_summary_group.command(name=cli_util.override('sddc.list_sddcs.command_name', 'list-sddcs'), help=u"""Lists the SDDCs in the specified compartment. The list can be filtered by display name or availability domain. \n[Command Reference](listSddcs)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--compute-availability-domain', help=u"""The name of the availability domain that the Compute instances are running in.
 
@@ -324,7 +324,7 @@ def list_sddcs(ctx, from_json, all_pages, page_size, compartment_id, compute_ava
     cli_util.render_response(result, ctx)
 
 
-@supported_vmware_software_version_summary_group.command(name=cli_util.override('sddc.list_supported_vmware_software_versions.command_name', 'list-supported-vmware-software-versions'), help=u"""Lists the versions of bundled VMware software supported by the Oracle Cloud VMware Solution.""")
+@supported_vmware_software_version_summary_group.command(name=cli_util.override('sddc.list_supported_vmware_software_versions.command_name', 'list-supported-vmware-software-versions'), help=u"""Lists the versions of bundled VMware software supported by the Oracle Cloud VMware Solution. \n[Command Reference](listSupportedVmwareSoftwareVersions)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the `opc-next-page` response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
@@ -374,7 +374,7 @@ def list_supported_vmware_software_versions(ctx, from_json, all_pages, page_size
 
 @sddc_group.command(name=cli_util.override('sddc.update_sddc.command_name', 'update'), help=u"""Updates the specified SDDC.
 
-**Important:** Updating an SDDC affects only certain attributes in the `Sddc` object and does not affect the VMware environment currently running in the SDDC. For more information, see [UpdateSddcDetails].""")
+**Important:** Updating an SDDC affects only certain attributes in the `Sddc` object and does not affect the VMware environment currently running in the SDDC. For more information, see [UpdateSddcDetails]. \n[Command Reference](updateSddc)""")
 @cli_util.option('--sddc-id', required=True, help=u"""The [OCID] of the SDDC.""")
 @cli_util.option('--display-name', help=u"""The [OCID] of the SDDC.""")
 @cli_util.option('--vmware-software-version', help=u"""The version of bundled VMware software that the Oracle Cloud VMware Solution will install on any new ESXi hosts that you add to this SDDC in the future.

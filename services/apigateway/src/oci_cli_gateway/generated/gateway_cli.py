@@ -40,7 +40,7 @@ gateway_root_group.add_command(gateway_summary_group)
 gateway_root_group.add_command(gateway_group)
 
 
-@gateway_group.command(name=cli_util.override('gateway.change_gateway_compartment.command_name', 'change-compartment'), help=u"""Changes the gateway compartment.""")
+@gateway_group.command(name=cli_util.override('gateway.change_gateway_compartment.command_name', 'change-compartment'), help=u"""Changes the gateway compartment. \n[Command Reference](changeGatewayCompartment)""")
 @cli_util.option('--gateway-id', required=True, help=u"""The ocid of the gateway.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which the resource is created.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -99,7 +99,7 @@ def change_gateway_compartment(ctx, from_json, wait_for_state, max_wait_seconds,
     cli_util.render_response(result, ctx)
 
 
-@gateway_group.command(name=cli_util.override('gateway.create_gateway.command_name', 'create'), help=u"""Creates a new gateway.""")
+@gateway_group.command(name=cli_util.override('gateway.create_gateway.command_name', 'create'), help=u"""Creates a new gateway. \n[Command Reference](createGateway)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which the resource is created.""")
 @cli_util.option('--endpoint-type', required=True, help=u"""Gateway endpoint type. `PUBLIC` will have a public ip address assigned to it, while `PRIVATE` will only be accessible on a private IP address on the subnet.
 
@@ -178,7 +178,7 @@ def create_gateway(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
     cli_util.render_response(result, ctx)
 
 
-@gateway_group.command(name=cli_util.override('gateway.delete_gateway.command_name', 'delete'), help=u"""Deletes the gateway with the given identifier.""")
+@gateway_group.command(name=cli_util.override('gateway.delete_gateway.command_name', 'delete'), help=u"""Deletes the gateway with the given identifier. \n[Command Reference](deleteGateway)""")
 @cli_util.option('--gateway-id', required=True, help=u"""The ocid of the gateway.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -232,7 +232,7 @@ def delete_gateway(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
     cli_util.render_response(result, ctx)
 
 
-@gateway_group.command(name=cli_util.override('gateway.get_gateway.command_name', 'get'), help=u"""Gets a gateway by identifier.""")
+@gateway_group.command(name=cli_util.override('gateway.get_gateway.command_name', 'get'), help=u"""Gets a gateway by identifier. \n[Command Reference](getGateway)""")
 @cli_util.option('--gateway-id', required=True, help=u"""The ocid of the gateway.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -254,7 +254,7 @@ def get_gateway(ctx, from_json, gateway_id):
     cli_util.render_response(result, ctx)
 
 
-@gateway_summary_group.command(name=cli_util.override('gateway.list_gateways.command_name', 'list-gateways'), help=u"""Returns a list of gateways.""")
+@gateway_summary_group.command(name=cli_util.override('gateway.list_gateways.command_name', 'list-gateways'), help=u"""Returns a list of gateways. \n[Command Reference](listGateways)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The ocid of the compartment in which to list resources.""")
 @cli_util.option('--certificate-id', help=u"""Filter gateways by the certificate ocid.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable.
@@ -321,7 +321,7 @@ def list_gateways(ctx, from_json, all_pages, page_size, compartment_id, certific
     cli_util.render_response(result, ctx)
 
 
-@gateway_group.command(name=cli_util.override('gateway.update_gateway.command_name', 'update'), help=u"""Updates the gateway with the given identifier.""")
+@gateway_group.command(name=cli_util.override('gateway.update_gateway.command_name', 'update'), help=u"""Updates the gateway with the given identifier. \n[Command Reference](updateGateway)""")
 @cli_util.option('--gateway-id', required=True, help=u"""The ocid of the gateway.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
 

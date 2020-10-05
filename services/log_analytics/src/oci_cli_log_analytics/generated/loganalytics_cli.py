@@ -268,7 +268,7 @@ log_analytics_root_group.add_command(log_analytics_association_group)
 log_analytics_root_group.add_command(binary_group)
 
 
-@log_analytics_entity_group.command(name=cli_util.override('log_analytics.add_entity_association.command_name', 'add'), help=u"""Adds association between input source log analytics entity and destination entities.""")
+@log_analytics_entity_group.command(name=cli_util.override('log_analytics.add_entity_association.command_name', 'add'), help=u"""Adds association between input source log analytics entity and destination entities. \n[Command Reference](addEntityAssociation)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--log-analytics-entity-id', required=True, help=u"""The log analytics entity OCID.""")
 @cli_util.option('--association-entities', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Destination entities OCIDs with which associations are to be added.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -304,7 +304,7 @@ def add_entity_association(ctx, from_json, namespace_name, log_analytics_entity_
     cli_util.render_response(result, ctx)
 
 
-@log_analytics_label_group.command(name=cli_util.override('log_analytics.batch_get_basic_info.command_name', 'batch-get-basic-info'), help=u"""get basic information about a specified set of labels""")
+@log_analytics_label_group.command(name=cli_util.override('log_analytics.batch_get_basic_info.command_name', 'batch-get-basic-info'), help=u"""get basic information about a specified set of labels \n[Command Reference](batchGetBasicInfo)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--is-include-deleted', required=True, type=click.BOOL, help=u"""flag for whether or not to include information on deleted labels""")
 @cli_util.option('--label-names', type=custom_types.CLI_COMPLEX_TYPE, help=u"""string list""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -348,7 +348,7 @@ def batch_get_basic_info(ctx, from_json, namespace_name, is_include_deleted, lab
     cli_util.render_response(result, ctx)
 
 
-@query_work_request_group.command(name=cli_util.override('log_analytics.cancel_query_work_request.command_name', 'cancel'), help=u"""Cancel/Remove query job work request.""")
+@query_work_request_group.command(name=cli_util.override('log_analytics.cancel_query_work_request.command_name', 'cancel'), help=u"""Cancel/Remove query job work request. \n[Command Reference](cancelQueryWorkRequest)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--work-request-id', required=True, help=u"""Work Request Identifier [OCID]  for the asynchronous request.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -379,7 +379,7 @@ def cancel_query_work_request(ctx, from_json, namespace_name, work_request_id, i
     cli_util.render_response(result, ctx)
 
 
-@log_analytics_entity_group.command(name=cli_util.override('log_analytics.change_log_analytics_entity_compartment.command_name', 'change-compartment'), help=u"""Update the compartment of the log analytics entity with the given id.""")
+@log_analytics_entity_group.command(name=cli_util.override('log_analytics.change_log_analytics_entity_compartment.command_name', 'change-compartment'), help=u"""Update the compartment of the log analytics entity with the given id. \n[Command Reference](changeLogAnalyticsEntityCompartment)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--log-analytics-entity-id', required=True, help=u"""The log analytics entity OCID.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where the log analytics entity should be moved.""")
@@ -415,7 +415,7 @@ def change_log_analytics_entity_compartment(ctx, from_json, namespace_name, log_
     cli_util.render_response(result, ctx)
 
 
-@log_analytics_log_group_group.command(name=cli_util.override('log_analytics.change_log_analytics_log_group_compartment.command_name', 'change-compartment'), help=u"""Updates the compartment of the Log-Analytics group with the given id.""")
+@log_analytics_log_group_group.command(name=cli_util.override('log_analytics.change_log_analytics_log_group_compartment.command_name', 'change-compartment'), help=u"""Updates the compartment of the Log-Analytics group with the given id. \n[Command Reference](changeLogAnalyticsLogGroupCompartment)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--log-analytics-log-group-id', required=True, help=u"""unique logAnalytics log group identifier""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where the log analytics entity should be moved.""")
@@ -451,7 +451,7 @@ def change_log_analytics_log_group_compartment(ctx, from_json, namespace_name, l
     cli_util.render_response(result, ctx)
 
 
-@log_analytics_object_collection_rule_group.command(name=cli_util.override('log_analytics.change_log_analytics_object_collection_rule_compartment.command_name', 'change-compartment'), help=u"""Move the rule from it's current compartment to given compartment.""")
+@log_analytics_object_collection_rule_group.command(name=cli_util.override('log_analytics.change_log_analytics_object_collection_rule_compartment.command_name', 'change-compartment'), help=u"""Move the rule from it's current compartment to given compartment. \n[Command Reference](changeLogAnalyticsObjectCollectionRuleCompartment)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--log-analytics-object-collection-rule-id', required=True, help=u"""The log analytics os collection rule [OCID]""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the rule should be moved.""")
@@ -487,7 +487,7 @@ def change_log_analytics_object_collection_rule_compartment(ctx, from_json, name
     cli_util.render_response(result, ctx)
 
 
-@scheduled_task_group.command(name=cli_util.override('log_analytics.change_scheduled_task_compartment.command_name', 'change-compartment'), help=u"""Move the scheduled task into a different compartment within the same tenancy.""")
+@scheduled_task_group.command(name=cli_util.override('log_analytics.change_scheduled_task_compartment.command_name', 'change-compartment'), help=u"""Move the scheduled task into a different compartment within the same tenancy. \n[Command Reference](changeScheduledTaskCompartment)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--scheduled-task-id', required=True, help=u"""Unique scheduledTask id returned from task create. If invalid will lead to a 404 not found.""")
 @cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier [OCID] .""")
@@ -523,7 +523,7 @@ def change_scheduled_task_compartment(ctx, from_json, namespace_name, scheduled_
     cli_util.render_response(result, ctx)
 
 
-@scheduled_task_group.command(name=cli_util.override('log_analytics.clean.command_name', 'clean'), help=u"""Clean accumulated acceleration data stored for the accelerated saved search. The ScheduledTask taskType must be ACCELERATION.""")
+@scheduled_task_group.command(name=cli_util.override('log_analytics.clean.command_name', 'clean'), help=u"""Clean accumulated acceleration data stored for the accelerated saved search. The ScheduledTask taskType must be ACCELERATION. \n[Command Reference](clean)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--scheduled-task-id', required=True, help=u"""Unique scheduledTask id returned from task create. If invalid will lead to a 404 not found.""")
 @cli_util.option('--time-start', type=custom_types.CLI_DATETIME, help=u"""Optional parameter to specify start of time range, in the format defined by RFC3339. Default value is beginning of time.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -556,7 +556,7 @@ def clean(ctx, from_json, namespace_name, scheduled_task_id, time_start, time_en
     cli_util.render_response(result, ctx)
 
 
-@log_analytics_entity_group.command(name=cli_util.override('log_analytics.create_log_analytics_entity.command_name', 'create'), help=u"""Create a new log analytics entity.""")
+@log_analytics_entity_group.command(name=cli_util.override('log_analytics.create_log_analytics_entity.command_name', 'create'), help=u"""Create a new log analytics entity. \n[Command Reference](createLogAnalyticsEntity)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--name', required=True, help=u"""Log analytics entity name. The name must be unique, within the tenancy, and cannot be changed.""")
 @cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier [OCID] .""")
@@ -646,7 +646,7 @@ def create_log_analytics_entity(ctx, from_json, wait_for_state, max_wait_seconds
     cli_util.render_response(result, ctx)
 
 
-@log_analytics_entity_type_group.command(name=cli_util.override('log_analytics.create_log_analytics_entity_type.command_name', 'create'), help=u"""Add custom log analytics entity type.""")
+@log_analytics_entity_type_group.command(name=cli_util.override('log_analytics.create_log_analytics_entity_type.command_name', 'create'), help=u"""Add custom log analytics entity type. \n[Command Reference](createLogAnalyticsEntityType)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--name', required=True, help=u"""Log analytics entity type name.""")
 @cli_util.option('--category', help=u"""Log analytics entity type category. Category will be used for grouping and filtering.""")
@@ -684,7 +684,7 @@ def create_log_analytics_entity_type(ctx, from_json, namespace_name, name, categ
     cli_util.render_response(result, ctx)
 
 
-@log_analytics_log_group_group.command(name=cli_util.override('log_analytics.create_log_analytics_log_group.command_name', 'create'), help=u"""Creates a new Log-Analytics group.""")
+@log_analytics_log_group_group.command(name=cli_util.override('log_analytics.create_log_analytics_log_group.command_name', 'create'), help=u"""Creates a new Log-Analytics group. \n[Command Reference](createLogAnalyticsLogGroup)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name that is changeable and that does not have to be unique. Format: a leading alphanumeric, followed by zero or more alphanumerics, underscores, spaces, backslashes, or hyphens in any order). No trailing spaces allowed.""")
 @cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier [OCID] .""")
@@ -726,7 +726,7 @@ def create_log_analytics_log_group(ctx, from_json, namespace_name, display_name,
     cli_util.render_response(result, ctx)
 
 
-@log_analytics_object_collection_rule_group.command(name=cli_util.override('log_analytics.create_log_analytics_object_collection_rule.command_name', 'create'), help=u"""Create a configuration to collect logs from object storage bucket.""")
+@log_analytics_object_collection_rule_group.command(name=cli_util.override('log_analytics.create_log_analytics_object_collection_rule.command_name', 'create'), help=u"""Create a configuration to collect logs from object storage bucket. \n[Command Reference](createLogAnalyticsObjectCollectionRule)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--name', required=True, help=u"""A unique name given to the rule. The name must be unique within the tenancy, and cannot be modified.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to which this rule belongs.""")
@@ -826,7 +826,7 @@ def create_log_analytics_object_collection_rule(ctx, from_json, wait_for_state, 
     cli_util.render_response(result, ctx)
 
 
-@scheduled_task_group.command(name=cli_util.override('log_analytics.create_scheduled_task.command_name', 'create'), help=u"""Schedule a task as specified and return task info.""")
+@scheduled_task_group.command(name=cli_util.override('log_analytics.create_scheduled_task.command_name', 'create'), help=u"""Schedule a task as specified and return task info. \n[Command Reference](createScheduledTask)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--kind', required=True, type=custom_types.CliCaseInsensitiveChoice(["ACCELERATION", "STANDARD"]), help=u"""Discriminator.""")
 @cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier [OCID] .""")
@@ -894,7 +894,7 @@ def create_scheduled_task(ctx, from_json, wait_for_state, max_wait_seconds, wait
     cli_util.render_response(result, ctx)
 
 
-@scheduled_task_group.command(name=cli_util.override('log_analytics.create_scheduled_task_create_standard_task_details.command_name', 'create-scheduled-task-create-standard-task-details'), help=u"""Schedule a task as specified and return task info.""")
+@scheduled_task_group.command(name=cli_util.override('log_analytics.create_scheduled_task_create_standard_task_details.command_name', 'create-scheduled-task-create-standard-task-details'), help=u"""Schedule a task as specified and return task info. \n[Command Reference](createScheduledTask)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier [OCID] .""")
 @cli_util.option('--task-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["SAVED_SEARCH", "ACCELERATION", "PURGE", "ACCELERATION_MAINTENANCE"]), help=u"""Task type.""")
@@ -968,7 +968,7 @@ def create_scheduled_task_create_standard_task_details(ctx, from_json, wait_for_
     cli_util.render_response(result, ctx)
 
 
-@scheduled_task_group.command(name=cli_util.override('log_analytics.create_scheduled_task_create_acceleration_task_details.command_name', 'create-scheduled-task-create-acceleration-task-details'), help=u"""Schedule a task as specified and return task info.""")
+@scheduled_task_group.command(name=cli_util.override('log_analytics.create_scheduled_task_create_acceleration_task_details.command_name', 'create-scheduled-task-create-acceleration-task-details'), help=u"""Schedule a task as specified and return task info. \n[Command Reference](createScheduledTask)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier [OCID] .""")
 @cli_util.option('--saved-search-id', required=True, help=u"""The ManagementSavedSearch id [OCID] to be accelerated.""")
@@ -1038,7 +1038,7 @@ def create_scheduled_task_create_acceleration_task_details(ctx, from_json, wait_
     cli_util.render_response(result, ctx)
 
 
-@error_details_group.command(name=cli_util.override('log_analytics.delete_associations.command_name', 'delete-associations'), help=u"""delete associations""")
+@error_details_group.command(name=cli_util.override('log_analytics.delete_associations.command_name', 'delete-associations'), help=u"""delete associations \n[Command Reference](deleteAssociations)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--compartment-id', help=u"""compartmentId""")
 @cli_util.option('--items', type=custom_types.CLI_COMPLEX_TYPE, help=u"""list of rule entity association details
@@ -1074,7 +1074,7 @@ def delete_associations(ctx, from_json, namespace_name, compartment_id, items):
     cli_util.render_response(result, ctx)
 
 
-@log_analytics_field_group.command(name=cli_util.override('log_analytics.delete_field.command_name', 'delete-field'), help=u"""delete field with specified name""")
+@log_analytics_field_group.command(name=cli_util.override('log_analytics.delete_field.command_name', 'delete-field'), help=u"""delete field with specified name \n[Command Reference](deleteField)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--field-name', required=True, help=u"""name of the field to get""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -1105,7 +1105,7 @@ def delete_field(ctx, from_json, namespace_name, field_name, if_match):
     cli_util.render_response(result, ctx)
 
 
-@log_analytics_label_group.command(name=cli_util.override('log_analytics.delete_label.command_name', 'delete-label'), help=u"""delete a label""")
+@log_analytics_label_group.command(name=cli_util.override('log_analytics.delete_label.command_name', 'delete-label'), help=u"""delete a label \n[Command Reference](deleteLabel)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--label-name', required=True, help=u"""name of the label to get""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -1136,7 +1136,7 @@ def delete_label(ctx, from_json, namespace_name, label_name, if_match):
     cli_util.render_response(result, ctx)
 
 
-@log_analytics_entity_group.command(name=cli_util.override('log_analytics.delete_log_analytics_entity.command_name', 'delete'), help=u"""Delete log analytics entity with the given id.""")
+@log_analytics_entity_group.command(name=cli_util.override('log_analytics.delete_log_analytics_entity.command_name', 'delete'), help=u"""Delete log analytics entity with the given id. \n[Command Reference](deleteLogAnalyticsEntity)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--log-analytics-entity-id', required=True, help=u"""The log analytics entity OCID.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -1167,7 +1167,7 @@ def delete_log_analytics_entity(ctx, from_json, namespace_name, log_analytics_en
     cli_util.render_response(result, ctx)
 
 
-@log_analytics_entity_type_group.command(name=cli_util.override('log_analytics.delete_log_analytics_entity_type.command_name', 'delete'), help=u"""Delete the log analytics entity type with the given name.""")
+@log_analytics_entity_type_group.command(name=cli_util.override('log_analytics.delete_log_analytics_entity_type.command_name', 'delete'), help=u"""Delete the log analytics entity type with the given name. \n[Command Reference](deleteLogAnalyticsEntityType)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--entity-type-name', required=True, help=u"""Log analytics entity type name.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -1198,7 +1198,7 @@ def delete_log_analytics_entity_type(ctx, from_json, namespace_name, entity_type
     cli_util.render_response(result, ctx)
 
 
-@log_analytics_log_group_group.command(name=cli_util.override('log_analytics.delete_log_analytics_log_group.command_name', 'delete'), help=u"""Deletes the Log-Analytics group with the given id.""")
+@log_analytics_log_group_group.command(name=cli_util.override('log_analytics.delete_log_analytics_log_group.command_name', 'delete'), help=u"""Deletes the Log-Analytics group with the given id. \n[Command Reference](deleteLogAnalyticsLogGroup)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--log-analytics-log-group-id', required=True, help=u"""unique logAnalytics log group identifier""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -1229,7 +1229,7 @@ def delete_log_analytics_log_group(ctx, from_json, namespace_name, log_analytics
     cli_util.render_response(result, ctx)
 
 
-@log_analytics_object_collection_rule_group.command(name=cli_util.override('log_analytics.delete_log_analytics_object_collection_rule.command_name', 'delete'), help=u"""Deletes a configured object storage bucket based collection rule to stop the log collection of the configured bucket . It will not delete the already collected log data from the configured bucket.""")
+@log_analytics_object_collection_rule_group.command(name=cli_util.override('log_analytics.delete_log_analytics_object_collection_rule.command_name', 'delete'), help=u"""Deletes a configured object storage bucket based collection rule to stop the log collection of the configured bucket . It will not delete the already collected log data from the configured bucket. \n[Command Reference](deleteLogAnalyticsObjectCollectionRule)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--log-analytics-object-collection-rule-id', required=True, help=u"""The log analytics os collection rule [OCID]""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -1260,7 +1260,7 @@ def delete_log_analytics_object_collection_rule(ctx, from_json, namespace_name, 
     cli_util.render_response(result, ctx)
 
 
-@log_analytics_parser_group.command(name=cli_util.override('log_analytics.delete_parser.command_name', 'delete-parser'), help=u"""delete parser with specified name""")
+@log_analytics_parser_group.command(name=cli_util.override('log_analytics.delete_parser.command_name', 'delete-parser'), help=u"""delete parser with specified name \n[Command Reference](deleteParser)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--parser-name', required=True, help=u"""parserName""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -1291,7 +1291,7 @@ def delete_parser(ctx, from_json, namespace_name, parser_name, if_match):
     cli_util.render_response(result, ctx)
 
 
-@scheduled_task_group.command(name=cli_util.override('log_analytics.delete_scheduled_task.command_name', 'delete'), help=u"""Delete the scheduled task.""")
+@scheduled_task_group.command(name=cli_util.override('log_analytics.delete_scheduled_task.command_name', 'delete'), help=u"""Delete the scheduled task. \n[Command Reference](deleteScheduledTask)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--scheduled-task-id', required=True, help=u"""Unique scheduledTask id returned from task create. If invalid will lead to a 404 not found.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -1322,7 +1322,7 @@ def delete_scheduled_task(ctx, from_json, namespace_name, scheduled_task_id, if_
     cli_util.render_response(result, ctx)
 
 
-@log_analytics_source_group.command(name=cli_util.override('log_analytics.delete_source.command_name', 'delete-source'), help=u"""delete source with specified ID""")
+@log_analytics_source_group.command(name=cli_util.override('log_analytics.delete_source.command_name', 'delete-source'), help=u"""delete source with specified ID \n[Command Reference](deleteSource)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--source-name', required=True, help=u"""source name""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -1353,7 +1353,7 @@ def delete_source(ctx, from_json, namespace_name, source_name, if_match):
     cli_util.render_response(result, ctx)
 
 
-@upload_group.command(name=cli_util.override('log_analytics.delete_upload.command_name', 'delete'), help=u"""Deletes an Upload by its reference. It deletes all the logs in storage asscoiated with the upload and the corresponding upload metadata.""")
+@upload_group.command(name=cli_util.override('log_analytics.delete_upload.command_name', 'delete'), help=u"""Deletes an Upload by its reference. It deletes all the logs in storage asscoiated with the upload and the corresponding upload metadata. \n[Command Reference](deleteUpload)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--upload-reference', required=True, help=u"""Unique internal identifier to refer to upload container""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -1384,7 +1384,7 @@ def delete_upload(ctx, from_json, namespace_name, upload_reference, if_match):
     cli_util.render_response(result, ctx)
 
 
-@upload_group.command(name=cli_util.override('log_analytics.delete_upload_file.command_name', 'delete-upload-file'), help=u"""Deletes a specific log file inside an upload by providing upload file reference. It deletes all the logs in storage asscoiated with the upload file and the corresponding upload metadata.""")
+@upload_group.command(name=cli_util.override('log_analytics.delete_upload_file.command_name', 'delete-upload-file'), help=u"""Deletes a specific log file inside an upload by providing upload file reference. It deletes all the logs in storage asscoiated with the upload file and the corresponding upload metadata. \n[Command Reference](deleteUploadFile)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--upload-reference', required=True, help=u"""Unique internal identifier to refer to upload container""")
 @cli_util.option('--file-reference', required=True, help=u"""Unique internal identifier to refer to upload file""")
@@ -1417,7 +1417,7 @@ def delete_upload_file(ctx, from_json, namespace_name, upload_reference, file_re
     cli_util.render_response(result, ctx)
 
 
-@upload_group.command(name=cli_util.override('log_analytics.delete_upload_warning.command_name', 'delete-upload-warning'), help=u"""Suppresses a specific warning inside an upload.""")
+@upload_group.command(name=cli_util.override('log_analytics.delete_upload_warning.command_name', 'delete-upload-warning'), help=u"""Suppresses a specific warning inside an upload. \n[Command Reference](deleteUploadWarning)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--upload-reference', required=True, help=u"""Unique internal identifier to refer to upload container""")
 @cli_util.option('--warning-reference', required=True, help=u"""Unique internal identifier to refer to upload warning""")
@@ -1450,7 +1450,7 @@ def delete_upload_warning(ctx, from_json, namespace_name, upload_reference, warn
     cli_util.render_response(result, ctx)
 
 
-@success_group.command(name=cli_util.override('log_analytics.disable_archiving.command_name', 'disable-archiving'), help=u"""disable archiving""")
+@success_group.command(name=cli_util.override('log_analytics.disable_archiving.command_name', 'disable-archiving'), help=u"""disable archiving \n[Command Reference](disableArchiving)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1475,7 +1475,7 @@ def disable_archiving(ctx, from_json, namespace_name, if_match):
     cli_util.render_response(result, ctx)
 
 
-@success_group.command(name=cli_util.override('log_analytics.enable_archiving.command_name', 'enable-archiving'), help=u"""enable archiving.""")
+@success_group.command(name=cli_util.override('log_analytics.enable_archiving.command_name', 'enable-archiving'), help=u"""enable archiving. \n[Command Reference](enableArchiving)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1500,7 +1500,7 @@ def enable_archiving(ctx, from_json, namespace_name, if_match):
     cli_util.render_response(result, ctx)
 
 
-@estimate_purge_data_size_result_group.command(name=cli_util.override('log_analytics.estimate_purge_data_size.command_name', 'estimate-purge-data-size'), help=u"""estimate the size of data to be purged based on query parameters.""")
+@estimate_purge_data_size_result_group.command(name=cli_util.override('log_analytics.estimate_purge_data_size.command_name', 'estimate-purge-data-size'), help=u"""estimate the size of data to be purged based on query parameters. \n[Command Reference](estimatePurgeDataSize)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--compartment-id', required=True, help=u"""the compartment OCID under which the data will be purged""")
 @cli_util.option('--time-data-ended', required=True, type=custom_types.CLI_DATETIME, help=u"""the time before which data will be purged""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -1545,7 +1545,7 @@ def estimate_purge_data_size(ctx, from_json, namespace_name, compartment_id, tim
     cli_util.render_response(result, ctx)
 
 
-@binary_group.command(name=cli_util.override('log_analytics.export_custom_content.command_name', 'export-custom-content'), help=u"""export""")
+@binary_group.command(name=cli_util.override('log_analytics.export_custom_content.command_name', 'export-custom-content'), help=u"""export \n[Command Reference](exportCustomContent)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
 @cli_util.option('--field-names', type=custom_types.CLI_COMPLEX_TYPE, help=u"""fieldNames""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1606,7 +1606,7 @@ def export_custom_content(ctx, from_json, file, namespace_name, field_names, par
         file.close()
 
 
-@query_group.command(name=cli_util.override('log_analytics.export_query_result.command_name', 'export-query-result'), help=u"""Export data based on query. Endpoint returns a stream of data. Endpoint is synchronous. Queries must deliver first result within 60 seconds or calls are subject to timeout.""")
+@query_group.command(name=cli_util.override('log_analytics.export_query_result.command_name', 'export-query-result'), help=u"""Export data based on query. Endpoint returns a stream of data. Endpoint is synchronous. Queries must deliver first result within 60 seconds or calls are subject to timeout. \n[Command Reference](exportQueryResult)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier [OCID] .""")
 @cli_util.option('--query-string', required=True, help=u"""Query to perform.""")
@@ -1703,7 +1703,7 @@ def export_query_result(ctx, from_json, file, namespace_name, compartment_id, qu
         file.close()
 
 
-@log_analytics_parser_group.command(name=cli_util.override('log_analytics.extract_structured_log_field_paths.command_name', 'extract-structured-log-field-paths'), help=u"""structured log fieldpaths""")
+@log_analytics_parser_group.command(name=cli_util.override('log_analytics.extract_structured_log_field_paths.command_name', 'extract-structured-log-field-paths'), help=u"""structured log fieldpaths \n[Command Reference](extractStructuredLogFieldPaths)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--content', help=u"""content""")
 @cli_util.option('--description', help=u"""description""")
@@ -1856,7 +1856,7 @@ def extract_structured_log_field_paths(ctx, from_json, namespace_name, content, 
     cli_util.render_response(result, ctx)
 
 
-@log_analytics_parser_group.command(name=cli_util.override('log_analytics.extract_structured_log_header_paths.command_name', 'extract-structured-log-header-paths'), help=u"""structured log header paths""")
+@log_analytics_parser_group.command(name=cli_util.override('log_analytics.extract_structured_log_header_paths.command_name', 'extract-structured-log-header-paths'), help=u"""structured log header paths \n[Command Reference](extractStructuredLogHeaderPaths)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--content', help=u"""content""")
 @cli_util.option('--description', help=u"""description""")
@@ -2009,7 +2009,7 @@ def extract_structured_log_header_paths(ctx, from_json, namespace_name, content,
     cli_util.render_response(result, ctx)
 
 
-@query_group.command(name=cli_util.override('log_analytics.filter.command_name', 'filter'), help=u"""Each filter specifies an operator, a field and one or more values.""")
+@query_group.command(name=cli_util.override('log_analytics.filter.command_name', 'filter'), help=u"""Each filter specifies an operator, a field and one or more values. \n[Command Reference](filter)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--query-string', required=True, help=u"""Query to update.""")
 @cli_util.option('--sub-system', required=True, type=custom_types.CliCaseInsensitiveChoice(["LOG"]), help=u"""Default subsystem to qualify fields with in the queryString if not specified.""")
@@ -2045,7 +2045,7 @@ def filter(ctx, from_json, namespace_name, query_string, sub_system, filters):
     cli_util.render_response(result, ctx)
 
 
-@association_summary_report_group.command(name=cli_util.override('log_analytics.get_association_summary.command_name', 'get-association-summary'), help=u"""association summary""")
+@association_summary_report_group.command(name=cli_util.override('log_analytics.get_association_summary.command_name', 'get-association-summary'), help=u"""association summary \n[Command Reference](getAssociationSummary)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2069,7 +2069,7 @@ def get_association_summary(ctx, from_json, namespace_name, compartment_id):
     cli_util.render_response(result, ctx)
 
 
-@log_analytics_source_group.command(name=cli_util.override('log_analytics.get_column_names.command_name', 'get-column-names'), help=u"""extract column names from SQL query""")
+@log_analytics_source_group.command(name=cli_util.override('log_analytics.get_column_names.command_name', 'get-column-names'), help=u"""extract column names from SQL query \n[Command Reference](getColumnNames)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--sql-query', required=True, help=u"""sql query to get the columns""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2093,7 +2093,7 @@ def get_column_names(ctx, from_json, namespace_name, sql_query):
     cli_util.render_response(result, ctx)
 
 
-@log_analytics_config_work_request_group.command(name=cli_util.override('log_analytics.get_config_work_request.command_name', 'get-config-work-request'), help=u"""association summary by source""")
+@log_analytics_config_work_request_group.command(name=cli_util.override('log_analytics.get_config_work_request.command_name', 'get-config-work-request'), help=u"""association summary by source \n[Command Reference](getConfigWorkRequest)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--work-request-id', required=True, help=u"""Work Request Identifier [OCID]  for the asynchronous request.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2120,7 +2120,7 @@ def get_config_work_request(ctx, from_json, namespace_name, work_request_id):
     cli_util.render_response(result, ctx)
 
 
-@log_analytics_field_group.command(name=cli_util.override('log_analytics.get_field.command_name', 'get-field'), help=u"""get common field with specified name""")
+@log_analytics_field_group.command(name=cli_util.override('log_analytics.get_field.command_name', 'get-field'), help=u"""get common field with specified name \n[Command Reference](getField)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--field-name', required=True, help=u"""name of the field to get""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2147,7 +2147,7 @@ def get_field(ctx, from_json, namespace_name, field_name):
     cli_util.render_response(result, ctx)
 
 
-@log_analytics_field_group.command(name=cli_util.override('log_analytics.get_fields_summary.command_name', 'get-fields-summary'), help=u"""get field summary""")
+@log_analytics_field_group.command(name=cli_util.override('log_analytics.get_fields_summary.command_name', 'get-fields-summary'), help=u"""get field summary \n[Command Reference](getFieldsSummary)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--is-show-detail', type=click.BOOL, help=u"""show detail flag""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2172,7 +2172,7 @@ def get_fields_summary(ctx, from_json, namespace_name, is_show_detail):
     cli_util.render_response(result, ctx)
 
 
-@log_analytics_label_group.command(name=cli_util.override('log_analytics.get_label.command_name', 'get-label'), help=u"""get label with specified name""")
+@log_analytics_label_group.command(name=cli_util.override('log_analytics.get_label.command_name', 'get-label'), help=u"""get label with specified name \n[Command Reference](getLabel)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--label-name', required=True, help=u"""name of the label to get""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2199,7 +2199,7 @@ def get_label(ctx, from_json, namespace_name, label_name):
     cli_util.render_response(result, ctx)
 
 
-@log_analytics_label_group.command(name=cli_util.override('log_analytics.get_label_summary.command_name', 'get-label-summary'), help=u"""get total count""")
+@log_analytics_label_group.command(name=cli_util.override('log_analytics.get_label_summary.command_name', 'get-label-summary'), help=u"""get total count \n[Command Reference](getLabelSummary)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -2221,7 +2221,7 @@ def get_label_summary(ctx, from_json, namespace_name):
     cli_util.render_response(result, ctx)
 
 
-@log_analytics_entity_group.command(name=cli_util.override('log_analytics.get_log_analytics_entities_summary.command_name', 'get-log-analytics-entities-summary'), help=u"""Returns log analytics entities count summary.""")
+@log_analytics_entity_group.command(name=cli_util.override('log_analytics.get_log_analytics_entities_summary.command_name', 'get-log-analytics-entities-summary'), help=u"""Returns log analytics entities count summary. \n[Command Reference](getLogAnalyticsEntitiesSummary)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2245,7 +2245,7 @@ def get_log_analytics_entities_summary(ctx, from_json, namespace_name, compartme
     cli_util.render_response(result, ctx)
 
 
-@log_analytics_entity_group.command(name=cli_util.override('log_analytics.get_log_analytics_entity.command_name', 'get'), help=u"""Retrieve the log analytics entity with the given id.""")
+@log_analytics_entity_group.command(name=cli_util.override('log_analytics.get_log_analytics_entity.command_name', 'get'), help=u"""Retrieve the log analytics entity with the given id. \n[Command Reference](getLogAnalyticsEntity)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--log-analytics-entity-id', required=True, help=u"""The log analytics entity OCID.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2272,7 +2272,7 @@ def get_log_analytics_entity(ctx, from_json, namespace_name, log_analytics_entit
     cli_util.render_response(result, ctx)
 
 
-@log_analytics_entity_type_group.command(name=cli_util.override('log_analytics.get_log_analytics_entity_type.command_name', 'get'), help=u"""Retrieve the log analytics entity type with the given name.""")
+@log_analytics_entity_type_group.command(name=cli_util.override('log_analytics.get_log_analytics_entity_type.command_name', 'get'), help=u"""Retrieve the log analytics entity type with the given name. \n[Command Reference](getLogAnalyticsEntityType)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--entity-type-name', required=True, help=u"""Log analytics entity type name.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2299,7 +2299,7 @@ def get_log_analytics_entity_type(ctx, from_json, namespace_name, entity_type_na
     cli_util.render_response(result, ctx)
 
 
-@log_analytics_log_group_group.command(name=cli_util.override('log_analytics.get_log_analytics_log_group.command_name', 'get'), help=u"""Retrieves the Log-Analytics group with the given id.""")
+@log_analytics_log_group_group.command(name=cli_util.override('log_analytics.get_log_analytics_log_group.command_name', 'get'), help=u"""Retrieves the Log-Analytics group with the given id. \n[Command Reference](getLogAnalyticsLogGroup)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--log-analytics-log-group-id', required=True, help=u"""unique logAnalytics log group identifier""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2326,7 +2326,7 @@ def get_log_analytics_log_group(ctx, from_json, namespace_name, log_analytics_lo
     cli_util.render_response(result, ctx)
 
 
-@log_analytics_log_group_group.command(name=cli_util.override('log_analytics.get_log_analytics_log_groups_summary.command_name', 'get-log-analytics-log-groups-summary'), help=u"""Returns a count of Log-Analytics groups.""")
+@log_analytics_log_group_group.command(name=cli_util.override('log_analytics.get_log_analytics_log_groups_summary.command_name', 'get-log-analytics-log-groups-summary'), help=u"""Returns a count of Log-Analytics groups. \n[Command Reference](getLogAnalyticsLogGroupsSummary)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2350,7 +2350,7 @@ def get_log_analytics_log_groups_summary(ctx, from_json, namespace_name, compart
     cli_util.render_response(result, ctx)
 
 
-@log_analytics_object_collection_rule_group.command(name=cli_util.override('log_analytics.get_log_analytics_object_collection_rule.command_name', 'get'), help=u"""Gets a configured object storage based collection rule by given id""")
+@log_analytics_object_collection_rule_group.command(name=cli_util.override('log_analytics.get_log_analytics_object_collection_rule.command_name', 'get'), help=u"""Gets a configured object storage based collection rule by given id \n[Command Reference](getLogAnalyticsObjectCollectionRule)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--log-analytics-object-collection-rule-id', required=True, help=u"""The log analytics os collection rule [OCID]""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2377,7 +2377,7 @@ def get_log_analytics_object_collection_rule(ctx, from_json, namespace_name, log
     cli_util.render_response(result, ctx)
 
 
-@namespace_group.command(name=cli_util.override('log_analytics.get_namespace.command_name', 'get'), help=u"""Get Namespace of a tenancy already onboarded in Log Analytics Application""")
+@namespace_group.command(name=cli_util.override('log_analytics.get_namespace.command_name', 'get'), help=u"""Get Namespace of a tenancy already onboarded in Log Analytics Application \n[Command Reference](getNamespace)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -2399,7 +2399,7 @@ def get_namespace(ctx, from_json, namespace_name):
     cli_util.render_response(result, ctx)
 
 
-@log_analytics_parser_group.command(name=cli_util.override('log_analytics.get_parser.command_name', 'get-parser'), help=u"""get parser with fields by Name""")
+@log_analytics_parser_group.command(name=cli_util.override('log_analytics.get_parser.command_name', 'get-parser'), help=u"""get parser with fields by Name \n[Command Reference](getParser)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--parser-name', required=True, help=u"""parserName""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2426,7 +2426,7 @@ def get_parser(ctx, from_json, namespace_name, parser_name):
     cli_util.render_response(result, ctx)
 
 
-@log_analytics_parser_group.command(name=cli_util.override('log_analytics.get_parser_summary.command_name', 'get-parser-summary'), help=u"""parser summary""")
+@log_analytics_parser_group.command(name=cli_util.override('log_analytics.get_parser_summary.command_name', 'get-parser-summary'), help=u"""parser summary \n[Command Reference](getParserSummary)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -2448,7 +2448,7 @@ def get_parser_summary(ctx, from_json, namespace_name):
     cli_util.render_response(result, ctx)
 
 
-@query_group.command(name=cli_util.override('log_analytics.get_query_result.command_name', 'get-query-result'), help=u"""Returns the intermediate results for a query that was specified to run asynchronously if the query has not completed, otherwise the final query results identified by a queryWorkRequestId returned when submitting the query execute asynchronously.""")
+@query_group.command(name=cli_util.override('log_analytics.get_query_result.command_name', 'get-query-result'), help=u"""Returns the intermediate results for a query that was specified to run asynchronously if the query has not completed, otherwise the final query results identified by a queryWorkRequestId returned when submitting the query execute asynchronously. \n[Command Reference](getQueryResult)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--work-request-id', required=True, help=u"""Work Request Identifier [OCID]  for the asynchronous request.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
@@ -2487,7 +2487,7 @@ def get_query_result(ctx, from_json, namespace_name, work_request_id, page, limi
     cli_util.render_response(result, ctx)
 
 
-@query_work_request_group.command(name=cli_util.override('log_analytics.get_query_work_request.command_name', 'get'), help=u"""Retrieve work request details by workRequestId. This endpoint can be polled for status tracking of work request. Clients should poll using the interval returned in the retry-after header.""")
+@query_work_request_group.command(name=cli_util.override('log_analytics.get_query_work_request.command_name', 'get'), help=u"""Retrieve work request details by workRequestId. This endpoint can be polled for status tracking of work request. Clients should poll using the interval returned in the retry-after header. \n[Command Reference](getQueryWorkRequest)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--work-request-id', required=True, help=u"""Work Request Identifier [OCID]  for the asynchronous request.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2514,7 +2514,7 @@ def get_query_work_request(ctx, from_json, namespace_name, work_request_id):
     cli_util.render_response(result, ctx)
 
 
-@scheduled_task_group.command(name=cli_util.override('log_analytics.get_scheduled_task.command_name', 'get'), help=u"""Get the scheduled task for the specified task identifier.""")
+@scheduled_task_group.command(name=cli_util.override('log_analytics.get_scheduled_task.command_name', 'get'), help=u"""Get the scheduled task for the specified task identifier. \n[Command Reference](getScheduledTask)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--scheduled-task-id', required=True, help=u"""Unique scheduledTask id returned from task create. If invalid will lead to a 404 not found.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2541,7 +2541,7 @@ def get_scheduled_task(ctx, from_json, namespace_name, scheduled_task_id):
     cli_util.render_response(result, ctx)
 
 
-@log_analytics_source_group.command(name=cli_util.override('log_analytics.get_source.command_name', 'get-source'), help=u"""get source with specified name""")
+@log_analytics_source_group.command(name=cli_util.override('log_analytics.get_source.command_name', 'get-source'), help=u"""get source with specified name \n[Command Reference](getSource)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--source-name', required=True, help=u"""source name""")
 @cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
@@ -2570,7 +2570,7 @@ def get_source(ctx, from_json, namespace_name, source_name, compartment_id):
     cli_util.render_response(result, ctx)
 
 
-@log_analytics_source_group.command(name=cli_util.override('log_analytics.get_source_summary.command_name', 'get-source-summary'), help=u"""source summary""")
+@log_analytics_source_group.command(name=cli_util.override('log_analytics.get_source_summary.command_name', 'get-source-summary'), help=u"""source summary \n[Command Reference](getSourceSummary)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -2592,7 +2592,7 @@ def get_source_summary(ctx, from_json, namespace_name):
     cli_util.render_response(result, ctx)
 
 
-@storage_group.command(name=cli_util.override('log_analytics.get_storage.command_name', 'get'), help=u"""Storage configuration and status.""")
+@storage_group.command(name=cli_util.override('log_analytics.get_storage.command_name', 'get'), help=u"""Storage configuration and status. \n[Command Reference](getStorage)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -2614,7 +2614,7 @@ def get_storage(ctx, from_json, namespace_name):
     cli_util.render_response(result, ctx)
 
 
-@storage_usage_group.command(name=cli_util.override('log_analytics.get_storage_usage.command_name', 'get'), help=u"""Storage usage info includes active, archived or recalled data.  The unit of return value is in bytes.""")
+@storage_usage_group.command(name=cli_util.override('log_analytics.get_storage_usage.command_name', 'get'), help=u"""Storage usage info includes active, archived or recalled data.  The unit of return value is in bytes. \n[Command Reference](getStorageUsage)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -2636,7 +2636,7 @@ def get_storage_usage(ctx, from_json, namespace_name):
     cli_util.render_response(result, ctx)
 
 
-@storage_work_request_group.command(name=cli_util.override('log_analytics.get_storage_work_request.command_name', 'get'), help=u"""Retrieve work request details by key. This endpoint can be polled for status tracking of work request. Clients should poll using the interval returned in retry-after header.""")
+@storage_work_request_group.command(name=cli_util.override('log_analytics.get_storage_work_request.command_name', 'get'), help=u"""Retrieve work request details by key. This endpoint can be polled for status tracking of work request. Clients should poll using the interval returned in retry-after header. \n[Command Reference](getStorageWorkRequest)""")
 @cli_util.option('--work-request-id', required=True, help=u"""Work Request Identifier [OCID]  for the asynchronous request.""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2663,7 +2663,7 @@ def get_storage_work_request(ctx, from_json, work_request_id, namespace_name):
     cli_util.render_response(result, ctx)
 
 
-@upload_group.command(name=cli_util.override('log_analytics.get_upload.command_name', 'get'), help=u"""Gets an On-Demand Upload info by reference""")
+@upload_group.command(name=cli_util.override('log_analytics.get_upload.command_name', 'get'), help=u"""Gets an On-Demand Upload info by reference \n[Command Reference](getUpload)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--upload-reference', required=True, help=u"""Unique internal identifier to refer to upload container""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2690,7 +2690,7 @@ def get_upload(ctx, from_json, namespace_name, upload_reference):
     cli_util.render_response(result, ctx)
 
 
-@work_request_group.command(name=cli_util.override('log_analytics.get_work_request.command_name', 'get'), help=u"""Gets the status of the work request with the given ID.""")
+@work_request_group.command(name=cli_util.override('log_analytics.get_work_request.command_name', 'get'), help=u"""Gets the status of the work request with the given ID. \n[Command Reference](getWorkRequest)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--work-request-id', required=True, help=u"""Work Request Identifier [OCID]  for the asynchronous request.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2717,7 +2717,7 @@ def get_work_request(ctx, from_json, namespace_name, work_request_id):
     cli_util.render_response(result, ctx)
 
 
-@log_analytics_import_custom_content_group.command(name=cli_util.override('log_analytics.import_custom_content.command_name', 'import-custom-content'), help=u"""register custom content""")
+@log_analytics_import_custom_content_group.command(name=cli_util.override('log_analytics.import_custom_content.command_name', 'import-custom-content'), help=u"""register custom content \n[Command Reference](importCustomContent)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--import-custom-content-file-body', required=True, help=u"""The file to upload which contains the custom content.""")
 @cli_util.option('--is-overwrite', type=click.BOOL, help=u"""is overwrite""")
@@ -2748,7 +2748,7 @@ def import_custom_content(ctx, from_json, namespace_name, import_custom_content_
     cli_util.render_response(result, ctx)
 
 
-@log_analytics_associated_entity_collection_group.command(name=cli_util.override('log_analytics.list_associated_entities.command_name', 'list-associated-entities'), help=u"""list of entities that have been associated to at least one source""")
+@log_analytics_associated_entity_collection_group.command(name=cli_util.override('log_analytics.list_associated_entities.command_name', 'list-associated-entities'), help=u"""list of entities that have been associated to at least one source \n[Command Reference](listAssociatedEntities)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--entity-id', help=u"""The entity OCID.""")
@@ -2818,7 +2818,7 @@ def list_associated_entities(ctx, from_json, all_pages, page_size, namespace_nam
     cli_util.render_response(result, ctx)
 
 
-@log_analytics_config_work_request_collection_group.command(name=cli_util.override('log_analytics.list_config_work_requests.command_name', 'list-config-work-requests'), help=u"""association summary by source""")
+@log_analytics_config_work_request_collection_group.command(name=cli_util.override('log_analytics.list_config_work_requests.command_name', 'list-config-work-requests'), help=u"""association summary by source \n[Command Reference](listConfigWorkRequests)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
@@ -2878,7 +2878,7 @@ def list_config_work_requests(ctx, from_json, all_pages, page_size, namespace_na
     cli_util.render_response(result, ctx)
 
 
-@log_analytics_entity_group.command(name=cli_util.override('log_analytics.list_entity_associations.command_name', 'list-entity-associations'), help=u"""Return a list of log analytics entities associated with input source log analytics entity.""")
+@log_analytics_entity_group.command(name=cli_util.override('log_analytics.list_entity_associations.command_name', 'list-entity-associations'), help=u"""Return a list of log analytics entities associated with input source log analytics entity. \n[Command Reference](listEntityAssociations)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--log-analytics-entity-id', required=True, help=u"""The log analytics entity OCID.""")
 @cli_util.option('--direct-or-all-associations', type=custom_types.CliCaseInsensitiveChoice(["DIRECT", "ALL"]), help=u"""Indicates whether to return direct associated entities or direct and inferred associated entities.""")
@@ -2945,7 +2945,7 @@ def list_entity_associations(ctx, from_json, all_pages, page_size, namespace_nam
     cli_util.render_response(result, ctx)
 
 
-@log_analytics_association_collection_group.command(name=cli_util.override('log_analytics.list_entity_source_associations.command_name', 'list-entity-source-associations'), help=u"""entity associations summary""")
+@log_analytics_association_collection_group.command(name=cli_util.override('log_analytics.list_entity_source_associations.command_name', 'list-entity-source-associations'), help=u"""entity associations summary \n[Command Reference](listEntitySourceAssociations)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--entity-id', help=u"""The entity OCID.""")
@@ -3021,7 +3021,7 @@ def list_entity_source_associations(ctx, from_json, all_pages, page_size, namesp
     cli_util.render_response(result, ctx)
 
 
-@log_analytics_field_group.command(name=cli_util.override('log_analytics.list_fields.command_name', 'list-fields'), help=u"""get all common field with specified display name and description""")
+@log_analytics_field_group.command(name=cli_util.override('log_analytics.list_fields.command_name', 'list-fields'), help=u"""get all common field with specified display name and description \n[Command Reference](listFields)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--is-match-all', type=click.BOOL, help=u"""isMatchAll""")
 @cli_util.option('--source-ids', help=u"""comma delimited list of source ids""")
@@ -3102,7 +3102,7 @@ def list_fields(ctx, from_json, all_pages, page_size, namespace_name, is_match_a
     cli_util.render_response(result, ctx)
 
 
-@log_analytics_label_group.command(name=cli_util.override('log_analytics.list_label_priorities.command_name', 'list-label-priorities'), help=u"""get list of priorities""")
+@log_analytics_label_group.command(name=cli_util.override('log_analytics.list_label_priorities.command_name', 'list-label-priorities'), help=u"""get list of priorities \n[Command Reference](listLabelPriorities)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
@@ -3153,7 +3153,7 @@ def list_label_priorities(ctx, from_json, all_pages, page_size, namespace_name, 
     cli_util.render_response(result, ctx)
 
 
-@log_analytics_label_group.command(name=cli_util.override('log_analytics.list_label_source_details.command_name', 'list-label-source-details'), help=u"""get details of sources using the label""")
+@log_analytics_label_group.command(name=cli_util.override('log_analytics.list_label_source_details.command_name', 'list-label-source-details'), help=u"""get details of sources using the label \n[Command Reference](listLabelSourceDetails)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--label-name', help=u"""label name""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -3213,7 +3213,7 @@ def list_label_source_details(ctx, from_json, all_pages, page_size, namespace_na
     cli_util.render_response(result, ctx)
 
 
-@log_analytics_label_group.command(name=cli_util.override('log_analytics.list_labels.command_name', 'list-labels'), help=u"""get labels passing specified filter""")
+@log_analytics_label_group.command(name=cli_util.override('log_analytics.list_labels.command_name', 'list-labels'), help=u"""get labels passing specified filter \n[Command Reference](listLabels)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--label-name', help=u"""label name""")
 @cli_util.option('--label-display-text', help=u"""search by label display name or description""")
@@ -3288,7 +3288,7 @@ def list_labels(ctx, from_json, all_pages, page_size, namespace_name, label_name
     cli_util.render_response(result, ctx)
 
 
-@log_analytics_entity_group.command(name=cli_util.override('log_analytics.list_log_analytics_entities.command_name', 'list'), help=u"""Return a list of log analytics entities.""")
+@log_analytics_entity_group.command(name=cli_util.override('log_analytics.list_log_analytics_entities.command_name', 'list'), help=u"""Return a list of log analytics entities. \n[Command Reference](listLogAnalyticsEntities)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--name', help=u"""A filter to return only log analytics entities whose name matches the entire name given. The match is case-insensitive.""")
@@ -3379,7 +3379,7 @@ def list_log_analytics_entities(ctx, from_json, all_pages, page_size, namespace_
     cli_util.render_response(result, ctx)
 
 
-@log_analytics_entity_type_group.command(name=cli_util.override('log_analytics.list_log_analytics_entity_types.command_name', 'list'), help=u"""Return a list of log analytics entity types.""")
+@log_analytics_entity_type_group.command(name=cli_util.override('log_analytics.list_log_analytics_entity_types.command_name', 'list'), help=u"""Return a list of log analytics entity types. \n[Command Reference](listLogAnalyticsEntityTypes)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--name', help=u"""A filter to return only log analytics entity types whose name matches the entire name given. The match is case-insensitive.""")
 @cli_util.option('--name-contains', help=u"""A filter to return only log analytics entity types whose name or internalName contains name given. The match is case-insensitive.""")
@@ -3448,7 +3448,7 @@ def list_log_analytics_entity_types(ctx, from_json, all_pages, page_size, namesp
     cli_util.render_response(result, ctx)
 
 
-@log_analytics_log_group_group.command(name=cli_util.override('log_analytics.list_log_analytics_log_groups.command_name', 'list'), help=u"""Returns a list of Log-Analytics groups.""")
+@log_analytics_log_group_group.command(name=cli_util.override('log_analytics.list_log_analytics_log_groups.command_name', 'list'), help=u"""Returns a list of Log-Analytics groups. \n[Command Reference](listLogAnalyticsLogGroups)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--display-name', help=u"""A filter to return only log analytics entities whose displayName matches the entire display name given. The match is case-insensitive.""")
@@ -3512,7 +3512,7 @@ def list_log_analytics_log_groups(ctx, from_json, all_pages, page_size, namespac
     cli_util.render_response(result, ctx)
 
 
-@log_analytics_object_collection_rule_group.command(name=cli_util.override('log_analytics.list_log_analytics_object_collection_rules.command_name', 'list'), help=u"""Gets list of configuration details of Object Storage based collection rules.""")
+@log_analytics_object_collection_rule_group.command(name=cli_util.override('log_analytics.list_log_analytics_object_collection_rules.command_name', 'list'), help=u"""Gets list of configuration details of Object Storage based collection rules. \n[Command Reference](listLogAnalyticsObjectCollectionRules)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--name', help=u"""A filter to return rules only matching with this name.""")
@@ -3579,7 +3579,7 @@ def list_log_analytics_object_collection_rules(ctx, from_json, all_pages, page_s
     cli_util.render_response(result, ctx)
 
 
-@log_analytics_source_group.command(name=cli_util.override('log_analytics.list_meta_source_types.command_name', 'list-meta-source-types'), help=u"""get all meta source types""")
+@log_analytics_source_group.command(name=cli_util.override('log_analytics.list_meta_source_types.command_name', 'list-meta-source-types'), help=u"""get all meta source types \n[Command Reference](listMetaSourceTypes)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
@@ -3636,7 +3636,7 @@ def list_meta_source_types(ctx, from_json, all_pages, page_size, namespace_name,
     cli_util.render_response(result, ctx)
 
 
-@namespace_group.command(name=cli_util.override('log_analytics.list_namespaces.command_name', 'list'), help=u"""List Namespaces.""")
+@namespace_group.command(name=cli_util.override('log_analytics.list_namespaces.command_name', 'list'), help=u"""List Namespaces. \n[Command Reference](listNamespaces)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -3656,7 +3656,7 @@ def list_namespaces(ctx, from_json, all_pages, compartment_id):
     cli_util.render_response(result, ctx)
 
 
-@log_analytics_parser_group.command(name=cli_util.override('log_analytics.list_parser_functions.command_name', 'list-parser-functions'), help=u"""get pre-process plugin instance""")
+@log_analytics_parser_group.command(name=cli_util.override('log_analytics.list_parser_functions.command_name', 'list-parser-functions'), help=u"""get pre-process plugin instance \n[Command Reference](listParserFunctions)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--parser-name', help=u"""parserName""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -3716,7 +3716,7 @@ def list_parser_functions(ctx, from_json, all_pages, page_size, namespace_name, 
     cli_util.render_response(result, ctx)
 
 
-@log_analytics_parser_group.command(name=cli_util.override('log_analytics.list_parser_meta_plugins.command_name', 'list-parser-meta-plugins'), help=u"""get pre-process Meta plugins""")
+@log_analytics_parser_group.command(name=cli_util.override('log_analytics.list_parser_meta_plugins.command_name', 'list-parser-meta-plugins'), help=u"""get pre-process Meta plugins \n[Command Reference](listParserMetaPlugins)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
@@ -3773,7 +3773,7 @@ def list_parser_meta_plugins(ctx, from_json, all_pages, page_size, namespace_nam
     cli_util.render_response(result, ctx)
 
 
-@log_analytics_parser_group.command(name=cli_util.override('log_analytics.list_parsers.command_name', 'list-parsers'), help=u"""List parsers passing specified filter""")
+@log_analytics_parser_group.command(name=cli_util.override('log_analytics.list_parsers.command_name', 'list-parsers'), help=u"""List parsers passing specified filter \n[Command Reference](listParsers)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--is-match-all', type=click.BOOL, help=u"""isMatchAll""")
 @cli_util.option('--source-type', type=custom_types.CliCaseInsensitiveChoice(["OS_FILE", "SYSLOG", "ODL", "OS_WINDOWS_SYS"]), help=u"""source type""")
@@ -3848,7 +3848,7 @@ def list_parsers(ctx, from_json, all_pages, page_size, namespace_name, is_match_
     cli_util.render_response(result, ctx)
 
 
-@query_work_request_group.command(name=cli_util.override('log_analytics.list_query_work_requests.command_name', 'list'), help=u"""List active asynchronous queries.""")
+@query_work_request_group.command(name=cli_util.override('log_analytics.list_query_work_requests.command_name', 'list'), help=u"""List active asynchronous queries. \n[Command Reference](listQueryWorkRequests)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--mode', type=custom_types.CliCaseInsensitiveChoice(["ALL", "FOREGROUND", "BACKGROUND"]), help=u"""Filter based on job execution mode""")
@@ -3912,7 +3912,7 @@ def list_query_work_requests(ctx, from_json, all_pages, page_size, namespace_nam
     cli_util.render_response(result, ctx)
 
 
-@scheduled_task_group.command(name=cli_util.override('log_analytics.list_scheduled_tasks.command_name', 'list'), help=u"""Lists scheduled tasks.""")
+@scheduled_task_group.command(name=cli_util.override('log_analytics.list_scheduled_tasks.command_name', 'list'), help=u"""Lists scheduled tasks. \n[Command Reference](listScheduledTasks)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--task-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["SAVED_SEARCH", "ACCELERATION", "PURGE", "ACCELERATION_MAINTENANCE"]), help=u"""Required parameter to specify schedule task type.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
@@ -3980,7 +3980,7 @@ def list_scheduled_tasks(ctx, from_json, all_pages, page_size, namespace_name, t
     cli_util.render_response(result, ctx)
 
 
-@log_analytics_association_collection_group.command(name=cli_util.override('log_analytics.list_source_associations.command_name', 'list-source-associations'), help=u"""association summary by source""")
+@log_analytics_association_collection_group.command(name=cli_util.override('log_analytics.list_source_associations.command_name', 'list-source-associations'), help=u"""association summary by source \n[Command Reference](listSourceAssociations)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--source-name', required=True, help=u"""sourceName""")
 @cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
@@ -4054,7 +4054,7 @@ def list_source_associations(ctx, from_json, all_pages, page_size, namespace_nam
     cli_util.render_response(result, ctx)
 
 
-@log_analytics_source_group.command(name=cli_util.override('log_analytics.list_source_extended_field_definitions.command_name', 'list-source-extended-field-definitions'), help=u"""get source extended fields for source with specified Id""")
+@log_analytics_source_group.command(name=cli_util.override('log_analytics.list_source_extended_field_definitions.command_name', 'list-source-extended-field-definitions'), help=u"""get source extended fields for source with specified Id \n[Command Reference](listSourceExtendedFieldDefinitions)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--source-name', required=True, help=u"""source name""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -4118,7 +4118,7 @@ def list_source_extended_field_definitions(ctx, from_json, all_pages, page_size,
     cli_util.render_response(result, ctx)
 
 
-@log_analytics_source_group.command(name=cli_util.override('log_analytics.list_source_label_operators.command_name', 'list-source-label-operators'), help=u"""list source label operators""")
+@log_analytics_source_group.command(name=cli_util.override('log_analytics.list_source_label_operators.command_name', 'list-source-label-operators'), help=u"""list source label operators \n[Command Reference](listSourceLabelOperators)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
@@ -4175,7 +4175,7 @@ def list_source_label_operators(ctx, from_json, all_pages, page_size, namespace_
     cli_util.render_response(result, ctx)
 
 
-@log_analytics_source_group.command(name=cli_util.override('log_analytics.list_source_meta_functions.command_name', 'list-source-meta-functions'), help=u"""get source meta functions""")
+@log_analytics_source_group.command(name=cli_util.override('log_analytics.list_source_meta_functions.command_name', 'list-source-meta-functions'), help=u"""get source meta functions \n[Command Reference](listSourceMetaFunctions)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
@@ -4232,7 +4232,7 @@ def list_source_meta_functions(ctx, from_json, all_pages, page_size, namespace_n
     cli_util.render_response(result, ctx)
 
 
-@log_analytics_source_group.command(name=cli_util.override('log_analytics.list_source_patterns.command_name', 'list-source-patterns'), help=u"""get source patterns for source with specified Id""")
+@log_analytics_source_group.command(name=cli_util.override('log_analytics.list_source_patterns.command_name', 'list-source-patterns'), help=u"""get source patterns for source with specified Id \n[Command Reference](listSourcePatterns)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--source-name', required=True, help=u"""source name""")
 @cli_util.option('--is-include', type=click.BOOL, help=u"""is included source patterns""")
@@ -4299,7 +4299,7 @@ def list_source_patterns(ctx, from_json, all_pages, page_size, namespace_name, s
     cli_util.render_response(result, ctx)
 
 
-@log_analytics_source_group.command(name=cli_util.override('log_analytics.list_sources.command_name', 'list-sources'), help=u"""source list""")
+@log_analytics_source_group.command(name=cli_util.override('log_analytics.list_sources.command_name', 'list-sources'), help=u"""source list \n[Command Reference](listSources)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--entity-type', help=u"""entityType""")
@@ -4378,7 +4378,7 @@ def list_sources(ctx, from_json, all_pages, page_size, namespace_name, compartme
     cli_util.render_response(result, ctx)
 
 
-@work_request_error_group.command(name=cli_util.override('log_analytics.list_storage_work_request_errors.command_name', 'list-storage'), help=u"""Retrieve work request errors if any""")
+@work_request_error_group.command(name=cli_util.override('log_analytics.list_storage_work_request_errors.command_name', 'list-storage'), help=u"""Retrieve work request errors if any \n[Command Reference](listStorageWorkRequestErrors)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--work-request-id', required=True, help=u"""Work Request Identifier [OCID]  for the asynchronous request.""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
@@ -4446,7 +4446,7 @@ def list_storage_work_request_errors(ctx, from_json, all_pages, page_size, compa
     cli_util.render_response(result, ctx)
 
 
-@storage_work_request_group.command(name=cli_util.override('log_analytics.list_storage_work_requests.command_name', 'list'), help=u"""List non-expired storage manager work requests.""")
+@storage_work_request_group.command(name=cli_util.override('log_analytics.list_storage_work_requests.command_name', 'list'), help=u"""List non-expired storage manager work requests. \n[Command Reference](listStorageWorkRequests)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -4525,7 +4525,7 @@ def list_storage_work_requests(ctx, from_json, all_pages, page_size, compartment
     cli_util.render_response(result, ctx)
 
 
-@char_encoding_collection_group.command(name=cli_util.override('log_analytics.list_supported_char_encodings.command_name', 'list-supported-char-encodings'), help=u"""Gets the list of character encodings supported for log files.""")
+@char_encoding_collection_group.command(name=cli_util.override('log_analytics.list_supported_char_encodings.command_name', 'list-supported-char-encodings'), help=u"""Gets the list of character encodings supported for log files. \n[Command Reference](listSupportedCharEncodings)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
@@ -4576,7 +4576,7 @@ def list_supported_char_encodings(ctx, from_json, all_pages, page_size, namespac
     cli_util.render_response(result, ctx)
 
 
-@timezone_collection_group.command(name=cli_util.override('log_analytics.list_supported_timezones.command_name', 'list-supported-timezones'), help=u"""Gets timezones that are supported when performing uploads.""")
+@timezone_collection_group.command(name=cli_util.override('log_analytics.list_supported_timezones.command_name', 'list-supported-timezones'), help=u"""Gets timezones that are supported when performing uploads. \n[Command Reference](listSupportedTimezones)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
@@ -4627,7 +4627,7 @@ def list_supported_timezones(ctx, from_json, all_pages, page_size, namespace_nam
     cli_util.render_response(result, ctx)
 
 
-@upload_group.command(name=cli_util.override('log_analytics.list_upload_files.command_name', 'list-upload-files'), help=u"""Gets list of files in an upload.""")
+@upload_group.command(name=cli_util.override('log_analytics.list_upload_files.command_name', 'list-upload-files'), help=u"""Gets list of files in an upload. \n[Command Reference](listUploadFiles)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--upload-reference', required=True, help=u"""Unique internal identifier to refer to upload container""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -4697,7 +4697,7 @@ def list_upload_files(ctx, from_json, all_pages, page_size, namespace_name, uplo
     cli_util.render_response(result, ctx)
 
 
-@upload_group.command(name=cli_util.override('log_analytics.list_upload_warnings.command_name', 'list-upload-warnings'), help=u"""Gets list of warnings in an upload explaining the failures due to incorrect configuration.""")
+@upload_group.command(name=cli_util.override('log_analytics.list_upload_warnings.command_name', 'list-upload-warnings'), help=u"""Gets list of warnings in an upload explaining the failures due to incorrect configuration. \n[Command Reference](listUploadWarnings)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--upload-reference', required=True, help=u"""Unique internal identifier to refer to upload container""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -4755,7 +4755,7 @@ def list_upload_warnings(ctx, from_json, all_pages, page_size, namespace_name, u
     cli_util.render_response(result, ctx)
 
 
-@upload_group.command(name=cli_util.override('log_analytics.list_uploads.command_name', 'list'), help=u"""Gets a list of all On-demand uploads. To use this and other API operations, you must be authorized in an IAM policy.""")
+@upload_group.command(name=cli_util.override('log_analytics.list_uploads.command_name', 'list'), help=u"""Gets a list of all On-demand uploads. To use this and other API operations, you must be authorized in an IAM policy. \n[Command Reference](listUploads)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--name', help=u"""Name of the upload container.""")
 @cli_util.option('--name-contains', help=u"""A filter to return only uploads whose name contains the given name.""")
@@ -4818,7 +4818,7 @@ def list_uploads(ctx, from_json, all_pages, page_size, namespace_name, name, nam
     cli_util.render_response(result, ctx)
 
 
-@work_request_error_group.command(name=cli_util.override('log_analytics.list_work_request_errors.command_name', 'list'), help=u"""Return a (paginated) list of errors for a given work request.""")
+@work_request_error_group.command(name=cli_util.override('log_analytics.list_work_request_errors.command_name', 'list'), help=u"""Return a (paginated) list of errors for a given work request. \n[Command Reference](listWorkRequestErrors)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--work-request-id', required=True, help=u"""Work Request Identifier [OCID]  for the asynchronous request.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
@@ -4876,7 +4876,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, namespace_nam
     cli_util.render_response(result, ctx)
 
 
-@work_request_log_group.command(name=cli_util.override('log_analytics.list_work_request_logs.command_name', 'list'), help=u"""Return a (paginated) list of logs for a given work request.""")
+@work_request_log_group.command(name=cli_util.override('log_analytics.list_work_request_logs.command_name', 'list'), help=u"""Return a (paginated) list of logs for a given work request. \n[Command Reference](listWorkRequestLogs)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--work-request-id', required=True, help=u"""Work Request Identifier [OCID]  for the asynchronous request.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
@@ -4934,7 +4934,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, namespace_name,
     cli_util.render_response(result, ctx)
 
 
-@work_request_group.command(name=cli_util.override('log_analytics.list_work_requests.command_name', 'list'), help=u"""Lists the work requests in a compartment.""")
+@work_request_group.command(name=cli_util.override('log_analytics.list_work_requests.command_name', 'list'), help=u"""Lists the work requests in a compartment. \n[Command Reference](listWorkRequests)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
@@ -4989,7 +4989,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, namespace_name, com
     cli_util.render_response(result, ctx)
 
 
-@namespace_group.command(name=cli_util.override('log_analytics.offboard_namespace.command_name', 'offboard'), help=u"""Off-boards a tenant from Logging Analytics""")
+@namespace_group.command(name=cli_util.override('log_analytics.offboard_namespace.command_name', 'offboard'), help=u"""Off-boards a tenant from Logging Analytics \n[Command Reference](offboardNamespace)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -5037,7 +5037,7 @@ def offboard_namespace(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     cli_util.render_response(result, ctx)
 
 
-@namespace_group.command(name=cli_util.override('log_analytics.onboard_namespace.command_name', 'onboard'), help=u"""On-boards a tenant to Logging Analytics.""")
+@namespace_group.command(name=cli_util.override('log_analytics.onboard_namespace.command_name', 'onboard'), help=u"""On-boards a tenant to Logging Analytics. \n[Command Reference](onboardNamespace)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -5085,7 +5085,7 @@ def onboard_namespace(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
     cli_util.render_response(result, ctx)
 
 
-@query_group.command(name=cli_util.override('log_analytics.parse_query.command_name', 'parse'), help=u"""Describe query""")
+@query_group.command(name=cli_util.override('log_analytics.parse_query.command_name', 'parse'), help=u"""Describe query \n[Command Reference](parseQuery)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--query-string', required=True, help=u"""Query to parse.""")
 @cli_util.option('--sub-system', required=True, type=custom_types.CliCaseInsensitiveChoice(["LOG"]), help=u"""Default subsystem to qualify fields with in the queryString if not specified.""")
@@ -5115,7 +5115,7 @@ def parse_query(ctx, from_json, namespace_name, query_string, sub_system):
     cli_util.render_response(result, ctx)
 
 
-@storage_work_request_group.command(name=cli_util.override('log_analytics.purge_storage_data.command_name', 'purge-storage-data'), help=u"""submit work requests to purge old data based on the type.""")
+@storage_work_request_group.command(name=cli_util.override('log_analytics.purge_storage_data.command_name', 'purge-storage-data'), help=u"""submit work requests to purge old data based on the type. \n[Command Reference](purgeStorageData)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--compartment-id', required=True, help=u"""the compartment OCID under which the data will be purged and required permission will be checked""")
 @cli_util.option('--time-data-ended', required=True, type=custom_types.CLI_DATETIME, help=u"""the end of the time interval""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -5186,7 +5186,7 @@ def purge_storage_data(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     cli_util.render_response(result, ctx)
 
 
-@query_work_request_group.command(name=cli_util.override('log_analytics.put_query_work_request_background.command_name', 'put-query-work-request-background'), help=u"""Put the work request specified by {workRequestId} into the background.""")
+@query_work_request_group.command(name=cli_util.override('log_analytics.put_query_work_request_background.command_name', 'put-query-work-request-background'), help=u"""Put the work request specified by {workRequestId} into the background. \n[Command Reference](putQueryWorkRequestBackground)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--work-request-id', required=True, help=u"""Work Request Identifier [OCID]  for the asynchronous request.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -5216,7 +5216,7 @@ def put_query_work_request_background(ctx, from_json, namespace_name, work_reque
     cli_util.render_response(result, ctx)
 
 
-@query_group.command(name=cli_util.override('log_analytics.query.command_name', 'query'), help=u"""Performs a log analytics search, if shouldRunAsync is false returns the query results once they become available subject to 60 second timeout. If a query is subject to exceed that time then it should be run asynchronously. Asynchronous query submissions return the queryWorkRequestId to use for execution tracking, query submission lifecycle actions and to poll for query results.""")
+@query_group.command(name=cli_util.override('log_analytics.query.command_name', 'query'), help=u"""Performs a log analytics search, if shouldRunAsync is false returns the query results once they become available subject to 60 second timeout. If a query is subject to exceed that time then it should be run asynchronously. Asynchronous query submissions return the queryWorkRequestId to use for execution tracking, query submission lifecycle actions and to poll for query results. \n[Command Reference](query)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier [OCID] .""")
 @cli_util.option('--query-string', required=True, help=u"""Query to perform.""")
@@ -5330,7 +5330,7 @@ def query(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_second
     cli_util.render_response(result, ctx)
 
 
-@storage_work_request_group.command(name=cli_util.override('log_analytics.recall_archived_data.command_name', 'recall-archived-data'), help=u"""submit work requests to recall archived data.""")
+@storage_work_request_group.command(name=cli_util.override('log_analytics.recall_archived_data.command_name', 'recall-archived-data'), help=u"""submit work requests to recall archived data. \n[Command Reference](recallArchivedData)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--compartment-id', required=True, help=u"""the compartment OCID for permission checking""")
 @cli_util.option('--time-data-ended', required=True, type=custom_types.CLI_DATETIME, help=u"""the end of the time interval""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -5395,7 +5395,7 @@ def recall_archived_data(ctx, from_json, wait_for_state, max_wait_seconds, wait_
     cli_util.render_response(result, ctx)
 
 
-@log_analytics_lookup_group.command(name=cli_util.override('log_analytics.register_lookup.command_name', 'register-lookup'), help=u"""register lookup""")
+@log_analytics_lookup_group.command(name=cli_util.override('log_analytics.register_lookup.command_name', 'register-lookup'), help=u"""register lookup \n[Command Reference](registerLookup)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["Lookup", "Dictionary"]), help=u"""type - possible values are Lookup or Dictionary""")
 @cli_util.option('--register-lookup-content-file-body', required=True, help=u"""file containing data for lookup creation""")
@@ -5437,7 +5437,7 @@ def register_lookup(ctx, from_json, namespace_name, type, register_lookup_conten
     cli_util.render_response(result, ctx)
 
 
-@storage_work_request_group.command(name=cli_util.override('log_analytics.release_recalled_data.command_name', 'release-recalled-data'), help=u"""submit work requests to release recalled data.""")
+@storage_work_request_group.command(name=cli_util.override('log_analytics.release_recalled_data.command_name', 'release-recalled-data'), help=u"""submit work requests to release recalled data. \n[Command Reference](releaseRecalledData)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--compartment-id', required=True, help=u"""the compartment OCID for permission checking""")
 @cli_util.option('--time-data-ended', required=True, type=custom_types.CLI_DATETIME, help=u"""the end of the time interval""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -5502,7 +5502,7 @@ def release_recalled_data(ctx, from_json, wait_for_state, max_wait_seconds, wait
     cli_util.render_response(result, ctx)
 
 
-@log_analytics_entity_group.command(name=cli_util.override('log_analytics.remove_entity_associations.command_name', 'remove'), help=u"""Delete association between input source log analytics entity and destination entities.""")
+@log_analytics_entity_group.command(name=cli_util.override('log_analytics.remove_entity_associations.command_name', 'remove'), help=u"""Delete association between input source log analytics entity and destination entities. \n[Command Reference](removeEntityAssociations)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--log-analytics-entity-id', required=True, help=u"""The log analytics entity OCID.""")
 @cli_util.option('--association-entities', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Destination entities OCIDs with which associations are to be deleted""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -5538,7 +5538,7 @@ def remove_entity_associations(ctx, from_json, namespace_name, log_analytics_ent
     cli_util.render_response(result, ctx)
 
 
-@scheduled_task_group.command(name=cli_util.override('log_analytics.run.command_name', 'run'), help=u"""Execute the saved search acceleration task in the foreground. The ScheduledTask taskType must be ACCELERATION. Optionally specify time range (timeStart and timeEnd). The default is all time.""")
+@scheduled_task_group.command(name=cli_util.override('log_analytics.run.command_name', 'run'), help=u"""Execute the saved search acceleration task in the foreground. The ScheduledTask taskType must be ACCELERATION. Optionally specify time range (timeStart and timeEnd). The default is all time. \n[Command Reference](run)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--scheduled-task-id', required=True, help=u"""Unique scheduledTask id returned from task create. If invalid will lead to a 404 not found.""")
 @cli_util.option('--time-start', type=custom_types.CLI_DATETIME, help=u"""Optional parameter to specify start of time range, in the format defined by RFC3339. Default value is beginning of time.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -5571,7 +5571,7 @@ def run(ctx, from_json, namespace_name, scheduled_task_id, time_start, time_end)
     cli_util.render_response(result, ctx)
 
 
-@query_group.command(name=cli_util.override('log_analytics.suggest.command_name', 'suggest'), help=u"""Returns a context specific list of either commands, fields, or values to add to the end of the query string.""")
+@query_group.command(name=cli_util.override('log_analytics.suggest.command_name', 'suggest'), help=u"""Returns a context specific list of either commands, fields, or values to add to the end of the query string. \n[Command Reference](suggest)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier [OCID] .""")
 @cli_util.option('--query-string', required=True, help=u"""Query seeking suggestions for.""")
@@ -5607,7 +5607,7 @@ def suggest(ctx, from_json, namespace_name, compartment_id, query_string, sub_sy
     cli_util.render_response(result, ctx)
 
 
-@log_analytics_parser_group.command(name=cli_util.override('log_analytics.test_parser.command_name', 'test-parser'), help=u"""test parser""")
+@log_analytics_parser_group.command(name=cli_util.override('log_analytics.test_parser.command_name', 'test-parser'), help=u"""test parser \n[Command Reference](testParser)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--content', help=u"""content""")
 @cli_util.option('--description', help=u"""description""")
@@ -5739,7 +5739,7 @@ def test_parser(ctx, from_json, namespace_name, content, description, display_na
     cli_util.render_response(result, ctx)
 
 
-@log_analytics_entity_group.command(name=cli_util.override('log_analytics.update_log_analytics_entity.command_name', 'update'), help=u"""Update the log analytics entity with the given id.""")
+@log_analytics_entity_group.command(name=cli_util.override('log_analytics.update_log_analytics_entity.command_name', 'update'), help=u"""Update the log analytics entity with the given id. \n[Command Reference](updateLogAnalyticsEntity)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--log-analytics-entity-id', required=True, help=u"""The log analytics entity OCID.""")
 @cli_util.option('--name', help=u"""Log analytics entity name. The name must be unique, within the tenancy, and cannot be changed.""")
@@ -5832,7 +5832,7 @@ def update_log_analytics_entity(ctx, from_json, force, wait_for_state, max_wait_
     cli_util.render_response(result, ctx)
 
 
-@log_analytics_entity_type_group.command(name=cli_util.override('log_analytics.update_log_analytics_entity_type.command_name', 'update'), help=u"""Update custom log analytics entity type. Out of box entity types cannot be udpated.""")
+@log_analytics_entity_type_group.command(name=cli_util.override('log_analytics.update_log_analytics_entity_type.command_name', 'update'), help=u"""Update custom log analytics entity type. Out of box entity types cannot be udpated. \n[Command Reference](updateLogAnalyticsEntityType)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--entity-type-name', required=True, help=u"""Log analytics entity type name.""")
 @cli_util.option('--category', help=u"""Log analytics entity type category. Category will be used for grouping and filtering.""")
@@ -5881,7 +5881,7 @@ def update_log_analytics_entity_type(ctx, from_json, force, namespace_name, enti
     cli_util.render_response(result, ctx)
 
 
-@log_analytics_log_group_group.command(name=cli_util.override('log_analytics.update_log_analytics_log_group.command_name', 'update'), help=u"""Updates the Log-Analytics group with the given id.""")
+@log_analytics_log_group_group.command(name=cli_util.override('log_analytics.update_log_analytics_log_group.command_name', 'update'), help=u"""Updates the Log-Analytics group with the given id. \n[Command Reference](updateLogAnalyticsLogGroup)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--log-analytics-log-group-id', required=True, help=u"""unique logAnalytics log group identifier""")
 @cli_util.option('--display-name', help=u"""A user-friendly name that is changeable and that does not have to be unique. Format: a leading alphanumeric, followed by zero or more alphanumerics, underscores, spaces, backslashes, or hyphens in any order). No trailing spaces allowed.""")
@@ -5936,7 +5936,7 @@ def update_log_analytics_log_group(ctx, from_json, force, namespace_name, log_an
     cli_util.render_response(result, ctx)
 
 
-@log_analytics_object_collection_rule_group.command(name=cli_util.override('log_analytics.update_log_analytics_object_collection_rule.command_name', 'update'), help=u"""Update the rule with the given id.""")
+@log_analytics_object_collection_rule_group.command(name=cli_util.override('log_analytics.update_log_analytics_object_collection_rule.command_name', 'update'), help=u"""Update the rule with the given id. \n[Command Reference](updateLogAnalyticsObjectCollectionRule)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--log-analytics-object-collection-rule-id', required=True, help=u"""The log analytics os collection rule [OCID]""")
 @cli_util.option('--description', help=u"""A string that describes the details of the rule. Avoid entering confidential information.""")
@@ -6033,7 +6033,7 @@ def update_log_analytics_object_collection_rule(ctx, from_json, force, wait_for_
     cli_util.render_response(result, ctx)
 
 
-@scheduled_task_group.command(name=cli_util.override('log_analytics.update_scheduled_task.command_name', 'update'), help=u"""Update the scheduled task. Schedules may be updated only for taskType SAVED_SEARCH and PURGE.""")
+@scheduled_task_group.command(name=cli_util.override('log_analytics.update_scheduled_task.command_name', 'update'), help=u"""Update the scheduled task. Schedules may be updated only for taskType SAVED_SEARCH and PURGE. \n[Command Reference](updateScheduledTask)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--scheduled-task-id', required=True, help=u"""Unique scheduledTask id returned from task create. If invalid will lead to a 404 not found.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name that is changeable and that does not have to be unique. Format: a leading alphanumeric, followed by zero or more alphanumerics, underscores, spaces, backslashes, or hyphens in any order). No trailing spaces allowed.""")
@@ -6116,7 +6116,7 @@ def update_scheduled_task(ctx, from_json, force, wait_for_state, max_wait_second
     cli_util.render_response(result, ctx)
 
 
-@storage_group.command(name=cli_util.override('log_analytics.update_storage.command_name', 'update'), help=u"""update the archiving configuration""")
+@storage_group.command(name=cli_util.override('log_analytics.update_storage.command_name', 'update'), help=u"""update the archiving configuration \n[Command Reference](updateStorage)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--archiving-configuration', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -6152,7 +6152,7 @@ def update_storage(ctx, from_json, force, namespace_name, archiving_configuratio
     cli_util.render_response(result, ctx)
 
 
-@upload_group.command(name=cli_util.override('log_analytics.upload_log_file.command_name', 'upload-log-file'), help=u"""Accepts log data for processing by Log Analytics.""")
+@upload_group.command(name=cli_util.override('log_analytics.upload_log_file.command_name', 'upload-log-file'), help=u"""Accepts log data for processing by Log Analytics. \n[Command Reference](uploadLogFile)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--upload-name', required=True, help=u"""The name of the upload. This can be considered as a container name where different kind of logs will be collected and searched together. This upload name/id can further be used for retrieving the details of the upload, including its status or deleting the upload.""")
 @cli_util.option('--log-source-name', required=True, help=u"""Name of the log source that will be used to process the files being uploaded.""")
@@ -6214,7 +6214,7 @@ def upload_log_file(ctx, from_json, namespace_name, upload_name, log_source_name
     cli_util.render_response(result, ctx)
 
 
-@log_analytics_association_group.command(name=cli_util.override('log_analytics.upsert_associations.command_name', 'upsert-associations'), help=u"""create or update associations for a source""")
+@log_analytics_association_group.command(name=cli_util.override('log_analytics.upsert_associations.command_name', 'upsert-associations'), help=u"""create or update associations for a source \n[Command Reference](upsertAssociations)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--compartment-id', help=u"""compartmentId""")
 @cli_util.option('--items', type=custom_types.CLI_COMPLEX_TYPE, help=u"""list of rule entity association details
@@ -6279,7 +6279,7 @@ def upsert_associations(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     cli_util.render_response(result, ctx)
 
 
-@log_analytics_field_group.command(name=cli_util.override('log_analytics.upsert_field.command_name', 'upsert-field'), help=u"""Defines or update a field.""")
+@log_analytics_field_group.command(name=cli_util.override('log_analytics.upsert_field.command_name', 'upsert-field'), help=u"""Defines or update a field. \n[Command Reference](upsertField)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--data-type', help=u"""data type""")
 @cli_util.option('--is-multi-valued', type=click.BOOL, help=u"""is multi-valued flag""")
@@ -6328,7 +6328,7 @@ def upsert_field(ctx, from_json, namespace_name, data_type, is_multi_valued, des
     cli_util.render_response(result, ctx)
 
 
-@log_analytics_label_group.command(name=cli_util.override('log_analytics.upsert_label.command_name', 'upsert-label'), help=u"""Define or update a label.""")
+@log_analytics_label_group.command(name=cli_util.override('log_analytics.upsert_label.command_name', 'upsert-label'), help=u"""Define or update a label. \n[Command Reference](upsertLabel)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--aliases', type=custom_types.CLI_COMPLEX_TYPE, help=u"""alias list
 
@@ -6403,7 +6403,7 @@ def upsert_label(ctx, from_json, namespace_name, aliases, suggest_type, descript
     cli_util.render_response(result, ctx)
 
 
-@log_analytics_parser_group.command(name=cli_util.override('log_analytics.upsert_parser.command_name', 'upsert-parser'), help=u"""Define or update parser""")
+@log_analytics_parser_group.command(name=cli_util.override('log_analytics.upsert_parser.command_name', 'upsert-parser'), help=u"""Define or update parser \n[Command Reference](upsertParser)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--content', help=u"""content""")
 @cli_util.option('--description', help=u"""description""")
@@ -6524,7 +6524,7 @@ def upsert_parser(ctx, from_json, namespace_name, content, description, display_
     cli_util.render_response(result, ctx)
 
 
-@log_analytics_source_group.command(name=cli_util.override('log_analytics.upsert_source.command_name', 'upsert-source'), help=u"""Define or update a source""")
+@log_analytics_source_group.command(name=cli_util.override('log_analytics.upsert_source.command_name', 'upsert-source'), help=u"""Define or update a source \n[Command Reference](upsertSource)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--label-conditions', type=custom_types.CLI_COMPLEX_TYPE, help=u"""source label conditions
 
@@ -6704,7 +6704,7 @@ def upsert_source(ctx, from_json, namespace_name, label_conditions, data_filter_
     cli_util.render_response(result, ctx)
 
 
-@log_analytics_association_parameter_collection_group.command(name=cli_util.override('log_analytics.validate_association_parameters.command_name', 'validate-association-parameters'), help=u"""association parameter validation""")
+@log_analytics_association_parameter_collection_group.command(name=cli_util.override('log_analytics.validate_association_parameters.command_name', 'validate-association-parameters'), help=u"""association parameter validation \n[Command Reference](validateAssociationParameters)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--compartment-id', help=u"""compartmentId""")
 @cli_util.option('--items', type=custom_types.CLI_COMPLEX_TYPE, help=u"""list of rule entity association details
@@ -6752,7 +6752,7 @@ def validate_association_parameters(ctx, from_json, namespace_name, compartment_
     cli_util.render_response(result, ctx)
 
 
-@upload_group.command(name=cli_util.override('log_analytics.validate_file.command_name', 'validate-file'), help=u"""Validates a log file to check whether it is eligible to upload or not.""")
+@upload_group.command(name=cli_util.override('log_analytics.validate_file.command_name', 'validate-file'), help=u"""Validates a log file to check whether it is eligible to upload or not. \n[Command Reference](validateFile)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--object-location', required=True, help=u"""Location of the log file""")
 @cli_util.option('--filename', required=True, help=u"""The name of the file being uploaded. The extension of the filename part will be used to detect the type of file (like zip, tar).""")
@@ -6778,7 +6778,7 @@ def validate_file(ctx, from_json, namespace_name, object_location, filename):
     cli_util.render_response(result, ctx)
 
 
-@log_analytics_source_group.command(name=cli_util.override('log_analytics.validate_source.command_name', 'validate-source'), help=u"""Pre-define or update a source""")
+@log_analytics_source_group.command(name=cli_util.override('log_analytics.validate_source.command_name', 'validate-source'), help=u"""Pre-define or update a source \n[Command Reference](validateSource)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--label-conditions', type=custom_types.CLI_COMPLEX_TYPE, help=u"""source label conditions
 
@@ -6955,7 +6955,7 @@ def validate_source(ctx, from_json, namespace_name, label_conditions, data_filte
     cli_util.render_response(result, ctx)
 
 
-@extended_fields_validation_result_group.command(name=cli_util.override('log_analytics.validate_source_extended_field_details.command_name', 'validate-source-extended-field-details'), help=u"""test extended fields""")
+@extended_fields_validation_result_group.command(name=cli_util.override('log_analytics.validate_source_extended_field_details.command_name', 'validate-source-extended-field-details'), help=u"""test extended fields \n[Command Reference](validateSourceExtendedFieldDetails)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--label-conditions', type=custom_types.CLI_COMPLEX_TYPE, help=u"""alert conditions
 
@@ -7153,7 +7153,7 @@ def validate_source_extended_field_details(ctx, from_json, namespace_name, label
     cli_util.render_response(result, ctx)
 
 
-@upload_group.command(name=cli_util.override('log_analytics.validate_source_mapping.command_name', 'validate-source-mapping'), help=u"""Validates the source mapping for given file and provides match status and parsed representation of log data.""")
+@upload_group.command(name=cli_util.override('log_analytics.validate_source_mapping.command_name', 'validate-source-mapping'), help=u"""Validates the source mapping for given file and provides match status and parsed representation of log data. \n[Command Reference](validateSourceMapping)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Log Analytics namespace used for the request.""")
 @cli_util.option('--object-location', required=True, help=u"""Location of the log file""")
 @cli_util.option('--filename', required=True, help=u"""The name of the file being uploaded. The extension of the filename part will be used to detect the type of file (like zip, tar).""")

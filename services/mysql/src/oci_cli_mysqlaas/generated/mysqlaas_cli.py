@@ -45,7 +45,7 @@ mysqlaas_root_group.add_command(configuration_group)
 mysqlaas_root_group.add_command(version_group)
 
 
-@configuration_group.command(name=cli_util.override('mysqlaas.create_configuration.command_name', 'create'), help=u"""Creates a new Configuration.""")
+@configuration_group.command(name=cli_util.override('mysqlaas.create_configuration.command_name', 'create'), help=u"""Creates a new Configuration. \n[Command Reference](createConfiguration)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
 @cli_util.option('--shape-name', required=True, help=u"""The name of the associated Shape.""")
 @cli_util.option('--variables', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -120,7 +120,7 @@ def create_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_
     cli_util.render_response(result, ctx)
 
 
-@configuration_group.command(name=cli_util.override('mysqlaas.delete_configuration.command_name', 'delete'), help=u"""Deletes a Configuration. The Configuration must not be in use by any DB Systems.""")
+@configuration_group.command(name=cli_util.override('mysqlaas.delete_configuration.command_name', 'delete'), help=u"""Deletes a Configuration. The Configuration must not be in use by any DB Systems. \n[Command Reference](deleteConfiguration)""")
 @cli_util.option('--configuration-id', required=True, help=u"""The OCID of the Configuration.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `If-Match` header to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -184,7 +184,7 @@ def delete_configuration(ctx, from_json, wait_for_state, max_wait_seconds, wait_
     cli_util.render_response(result, ctx)
 
 
-@configuration_group.command(name=cli_util.override('mysqlaas.get_configuration.command_name', 'get'), help=u"""Get the full details of the specified Configuration, including the list of MySQL Variables and their values.""")
+@configuration_group.command(name=cli_util.override('mysqlaas.get_configuration.command_name', 'get'), help=u"""Get the full details of the specified Configuration, including the list of MySQL Variables and their values. \n[Command Reference](getConfiguration)""")
 @cli_util.option('--configuration-id', required=True, help=u"""The OCID of the Configuration.""")
 @cli_util.option('--if-none-match', help=u"""For conditional requests. In the GET call for a resource, set the `If-None-Match` header to the value of the ETag from a previous GET (or POST or PUT) response for that resource. The server will return with either a 304 Not Modified response if the resource has not changed, or a 200 OK response with the updated representation.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -213,7 +213,7 @@ def get_configuration(ctx, from_json, configuration_id, if_none_match):
 
 This may include DEFAULT configurations per Shape and CUSTOM configurations.
 
-The default sort order is a multi-part sort by:   - shapeName, ascending   - DEFAULT-before-CUSTOM   - displayName ascending""")
+The default sort order is a multi-part sort by:   - shapeName, ascending   - DEFAULT-before-CUSTOM   - displayName ascending \n[Command Reference](listConfigurations)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
 @cli_util.option('--configuration-id', help=u"""The requested Configuration instance.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED"]), help=u"""Configuration Lifecycle State""")
@@ -282,7 +282,7 @@ def list_configurations(ctx, from_json, all_pages, page_size, compartment_id, co
     cli_util.render_response(result, ctx)
 
 
-@shape_group.command(name=cli_util.override('mysqlaas.list_shapes.command_name', 'list'), help=u"""Gets a list of the shapes you can use to create a new MySQL DB System. The shape determines the resources allocated to the DB System: CPU cores and memory for VM shapes; CPU cores, memory and storage for non-VM (or bare metal) shapes.""")
+@shape_group.command(name=cli_util.override('mysqlaas.list_shapes.command_name', 'list'), help=u"""Gets a list of the shapes you can use to create a new MySQL DB System. The shape determines the resources allocated to the DB System: CPU cores and memory for VM shapes; CPU cores, memory and storage for non-VM (or bare metal) shapes. \n[Command Reference](listShapes)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
 @cli_util.option('--availability-domain', help=u"""The name of the Availability Domain.""")
 @cli_util.option('--name', help=u"""Name""")
@@ -310,7 +310,7 @@ def list_shapes(ctx, from_json, all_pages, compartment_id, availability_domain, 
 
 @version_group.command(name=cli_util.override('mysqlaas.list_versions.command_name', 'list'), help=u"""Get a list of supported and available MySQL database major versions.
 
-The list is sorted by version family.""")
+The list is sorted by version family. \n[Command Reference](listVersions)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -330,7 +330,7 @@ def list_versions(ctx, from_json, all_pages, compartment_id):
     cli_util.render_response(result, ctx)
 
 
-@configuration_group.command(name=cli_util.override('mysqlaas.update_configuration.command_name', 'update'), help=u"""Updates the Configuration details.""")
+@configuration_group.command(name=cli_util.override('mysqlaas.update_configuration.command_name', 'update'), help=u"""Updates the Configuration details. \n[Command Reference](updateConfiguration)""")
 @cli_util.option('--configuration-id', required=True, help=u"""The OCID of the Configuration.""")
 @cli_util.option('--description', help=u"""User-provided data about the Configuration.""")
 @cli_util.option('--display-name', help=u"""A new display name for the Configuration.""")

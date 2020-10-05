@@ -52,7 +52,7 @@ transfer_appliance_root_group.add_command(transfer_appliance_public_key_group)
 transfer_appliance_root_group.add_command(transfer_appliance_encryption_passphrase_group)
 
 
-@transfer_appliance_group.command(name=cli_util.override('transfer_appliance.create_transfer_appliance.command_name', 'create'), help=u"""Create a new Transfer Appliance""")
+@transfer_appliance_group.command(name=cli_util.override('transfer_appliance.create_transfer_appliance.command_name', 'create'), help=u"""Create a new Transfer Appliance \n[Command Reference](createTransferAppliance)""")
 @cli_util.option('--id', required=True, help=u"""ID of the Transfer Job""")
 @cli_util.option('--customer-shipping-address', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["REQUESTED", "ORACLE_PREPARING", "SHIPPING", "DELIVERED", "PREPARING", "FINALIZED", "RETURN_DELAYED", "RETURN_SHIPPED", "RETURN_SHIPPED_CANCELLED", "ORACLE_RECEIVED", "ORACLE_RECEIVED_CANCELLED", "PROCESSING", "COMPLETE", "CUSTOMER_NEVER_RECEIVED", "ORACLE_NEVER_RECEIVED", "CUSTOMER_LOST", "CANCELLED", "DELETED", "REJECTED", "ERROR"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -107,7 +107,7 @@ def create_transfer_appliance(ctx, from_json, wait_for_state, max_wait_seconds, 
     cli_util.render_response(result, ctx)
 
 
-@transfer_appliance_public_key_group.command(name=cli_util.override('transfer_appliance.create_transfer_appliance_admin_credentials.command_name', 'create-transfer-appliance-admin-credentials'), help=u"""Creates an X.509 certificate from a public key""")
+@transfer_appliance_public_key_group.command(name=cli_util.override('transfer_appliance.create_transfer_appliance_admin_credentials.command_name', 'create-transfer-appliance-admin-credentials'), help=u"""Creates an X.509 certificate from a public key \n[Command Reference](createTransferApplianceAdminCredentials)""")
 @cli_util.option('--id', required=True, help=u"""ID of the Transfer Job""")
 @cli_util.option('--transfer-appliance-label', required=True, help=u"""Label of the Transfer Appliance""")
 @cli_util.option('--public-key', help=u"""""")
@@ -141,7 +141,7 @@ def create_transfer_appliance_admin_credentials(ctx, from_json, id, transfer_app
     cli_util.render_response(result, ctx)
 
 
-@transfer_appliance_group.command(name=cli_util.override('transfer_appliance.delete_transfer_appliance.command_name', 'delete'), help=u"""deletes a transfer Appliance""")
+@transfer_appliance_group.command(name=cli_util.override('transfer_appliance.delete_transfer_appliance.command_name', 'delete'), help=u"""deletes a transfer Appliance \n[Command Reference](deleteTransferAppliance)""")
 @cli_util.option('--id', required=True, help=u"""ID of the Transfer Job""")
 @cli_util.option('--transfer-appliance-label', required=True, help=u"""Label of the Transfer Appliance""")
 @cli_util.confirm_delete_option
@@ -168,7 +168,7 @@ def delete_transfer_appliance(ctx, from_json, id, transfer_appliance_label):
     cli_util.render_response(result, ctx)
 
 
-@transfer_appliance_group.command(name=cli_util.override('transfer_appliance.get_transfer_appliance.command_name', 'get'), help=u"""Describes a transfer appliance in detail""")
+@transfer_appliance_group.command(name=cli_util.override('transfer_appliance.get_transfer_appliance.command_name', 'get'), help=u"""Describes a transfer appliance in detail \n[Command Reference](getTransferAppliance)""")
 @cli_util.option('--id', required=True, help=u"""ID of the Transfer Job""")
 @cli_util.option('--transfer-appliance-label', required=True, help=u"""Label of the Transfer Appliance""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -194,7 +194,7 @@ def get_transfer_appliance(ctx, from_json, id, transfer_appliance_label):
     cli_util.render_response(result, ctx)
 
 
-@transfer_appliance_certificate_group.command(name=cli_util.override('transfer_appliance.get_transfer_appliance_certificate_authority_certificate.command_name', 'get-transfer-appliance-certificate-authority-certificate'), help=u"""Gets the x.509 certificate for the Transfer Appliance's dedicated Certificate Authority (CA)""")
+@transfer_appliance_certificate_group.command(name=cli_util.override('transfer_appliance.get_transfer_appliance_certificate_authority_certificate.command_name', 'get-transfer-appliance-certificate-authority-certificate'), help=u"""Gets the x.509 certificate for the Transfer Appliance's dedicated Certificate Authority (CA) \n[Command Reference](getTransferApplianceCertificateAuthorityCertificate)""")
 @cli_util.option('--id', required=True, help=u"""ID of the Transfer Job""")
 @cli_util.option('--transfer-appliance-label', required=True, help=u"""Label of the Transfer Appliance""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -220,7 +220,7 @@ def get_transfer_appliance_certificate_authority_certificate(ctx, from_json, id,
     cli_util.render_response(result, ctx)
 
 
-@transfer_appliance_encryption_passphrase_group.command(name=cli_util.override('transfer_appliance.get_transfer_appliance_encryption_passphrase.command_name', 'get'), help=u"""Describes a transfer appliance encryptionPassphrase in detail""")
+@transfer_appliance_encryption_passphrase_group.command(name=cli_util.override('transfer_appliance.get_transfer_appliance_encryption_passphrase.command_name', 'get'), help=u"""Describes a transfer appliance encryptionPassphrase in detail \n[Command Reference](getTransferApplianceEncryptionPassphrase)""")
 @cli_util.option('--id', required=True, help=u"""ID of the Transfer Job""")
 @cli_util.option('--transfer-appliance-label', required=True, help=u"""Label of the Transfer Appliance""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -246,7 +246,7 @@ def get_transfer_appliance_encryption_passphrase(ctx, from_json, id, transfer_ap
     cli_util.render_response(result, ctx)
 
 
-@transfer_appliance_group.command(name=cli_util.override('transfer_appliance.list_transfer_appliances.command_name', 'list'), help=u"""Lists Transfer Appliances associated with a transferJob""")
+@transfer_appliance_group.command(name=cli_util.override('transfer_appliance.list_transfer_appliances.command_name', 'list'), help=u"""Lists Transfer Appliances associated with a transferJob \n[Command Reference](listTransferAppliances)""")
 @cli_util.option('--id', required=True, help=u"""ID of the Transfer Job""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["REQUESTED", "ORACLE_PREPARING", "SHIPPING", "DELIVERED", "PREPARING", "FINALIZED", "RETURN_DELAYED", "RETURN_SHIPPED", "RETURN_SHIPPED_CANCELLED", "ORACLE_RECEIVED", "ORACLE_RECEIVED_CANCELLED", "PROCESSING", "COMPLETE", "CUSTOMER_NEVER_RECEIVED", "ORACLE_NEVER_RECEIVED", "CUSTOMER_LOST", "CANCELLED", "DELETED", "REJECTED", "ERROR"]), help=u"""filtering by lifecycleState""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
@@ -271,7 +271,7 @@ def list_transfer_appliances(ctx, from_json, all_pages, id, lifecycle_state):
     cli_util.render_response(result, ctx)
 
 
-@transfer_appliance_group.command(name=cli_util.override('transfer_appliance.update_transfer_appliance.command_name', 'update'), help=u"""Updates a Transfer Appliance""")
+@transfer_appliance_group.command(name=cli_util.override('transfer_appliance.update_transfer_appliance.command_name', 'update'), help=u"""Updates a Transfer Appliance \n[Command Reference](updateTransferAppliance)""")
 @cli_util.option('--id', required=True, help=u"""ID of the Transfer Job""")
 @cli_util.option('--transfer-appliance-label', required=True, help=u"""Label of the Transfer Appliance""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["PREPARING", "FINALIZED", "DELETED", "CUSTOMER_NEVER_RECEIVED", "CANCELLED"]), help=u"""""")

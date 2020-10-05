@@ -69,6 +69,12 @@ def listing_group():
     pass
 
 
+@click.command(cli_util.override('marketplace.tax_summary_group.command_name', 'tax-summary'), cls=CommandGroupWithAlias, help="""Tax implication that current tenant may be eligible while using specific listing""")
+@cli_util.help_option_group
+def tax_summary_group():
+    pass
+
+
 @click.command(cli_util.override('marketplace.report_collection_group.command_name', 'report-collection'), cls=CommandGroupWithAlias, help="""A collection of reports that match the parameters of the request.""")
 @cli_util.help_option_group
 def report_collection_group():
@@ -83,10 +89,11 @@ marketplace_root_group.add_command(publisher_group)
 marketplace_root_group.add_command(report_type_collection_group)
 marketplace_root_group.add_command(accepted_agreement_group)
 marketplace_root_group.add_command(listing_group)
+marketplace_root_group.add_command(tax_summary_group)
 marketplace_root_group.add_command(report_collection_group)
 
 
-@accepted_agreement_group.command(name=cli_util.override('marketplace.create_accepted_agreement.command_name', 'create'), help=u"""Accepts a terms of use agreement for a specific package version of a listing. You must accept all terms of use for a package before you can deploy the package.""")
+@accepted_agreement_group.command(name=cli_util.override('marketplace.create_accepted_agreement.command_name', 'create'), help=u"""Accepts a terms of use agreement for a specific package version of a listing. You must accept all terms of use for a package before you can deploy the package. \n[Command Reference](createAcceptedAgreement)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The unique identifier for the compartment where the agreement will be accepted.""")
 @cli_util.option('--listing-id', required=True, help=u"""The unique identifier for the listing associated with the agreement.""")
 @cli_util.option('--package-version', required=True, help=u"""The package version associated with the agreement.""")
@@ -129,9 +136,9 @@ def create_accepted_agreement(ctx, from_json, compartment_id, listing_id, packag
     cli_util.render_response(result, ctx)
 
 
-@accepted_agreement_group.command(name=cli_util.override('marketplace.delete_accepted_agreement.command_name', 'delete'), help=u"""Removes a previously accepted terms of use agreement from the list of agreements that Marketplace checks before initiating a deployment. Listings in the Marketplace that require acceptance of the specified terms of use can no longer be deployed, but existing deployments aren't affected.""")
+@accepted_agreement_group.command(name=cli_util.override('marketplace.delete_accepted_agreement.command_name', 'delete'), help=u"""Removes a previously accepted terms of use agreement from the list of agreements that Marketplace checks before initiating a deployment. Listings in the Marketplace that require acceptance of the specified terms of use can no longer be deployed, but existing deployments aren't affected. \n[Command Reference](deleteAcceptedAgreement)""")
 @cli_util.option('--accepted-agreement-id', required=True, help=u"""The unique identifier for the accepted terms of use agreement.""")
-@cli_util.option('--signature', help=u"""Deprecated. The signature value is ignored.""")
+@cli_util.option('--signature', help=u"""Previously, the signature generated for the listing package terms of use agreement, but now deprecated and ignored.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -158,7 +165,7 @@ def delete_accepted_agreement(ctx, from_json, accepted_agreement_id, signature, 
     cli_util.render_response(result, ctx)
 
 
-@accepted_agreement_group.command(name=cli_util.override('marketplace.get_accepted_agreement.command_name', 'get'), help=u"""Gets the details of a specific, previously accepted terms of use agreement.""")
+@accepted_agreement_group.command(name=cli_util.override('marketplace.get_accepted_agreement.command_name', 'get'), help=u"""Gets the details of a specific, previously accepted terms of use agreement. \n[Command Reference](getAcceptedAgreement)""")
 @cli_util.option('--accepted-agreement-id', required=True, help=u"""The unique identifier for the accepted terms of use agreement.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -180,7 +187,7 @@ def get_accepted_agreement(ctx, from_json, accepted_agreement_id):
     cli_util.render_response(result, ctx)
 
 
-@agreement_group.command(name=cli_util.override('marketplace.get_agreement.command_name', 'get'), help=u"""Returns a terms of use agreement for a package with a time-based signature that can be used to accept the agreement.""")
+@agreement_group.command(name=cli_util.override('marketplace.get_agreement.command_name', 'get'), help=u"""Returns a terms of use agreement for a package with a time-based signature that can be used to accept the agreement. \n[Command Reference](getAgreement)""")
 @cli_util.option('--listing-id', required=True, help=u"""The unique identifier for the listing.""")
 @cli_util.option('--package-version', required=True, help=u"""The version of the package. Package versions are unique within a listing.""")
 @cli_util.option('--agreement-id', required=True, help=u"""The unique identifier for the agreement.""")
@@ -221,7 +228,7 @@ If you plan to launch an instance from an image listing, you must first subscrib
 
 Subscribing to the listing requires you to first get a signature from the terms of use agreement for the listing resource version. To get the signature, issue a [GetAppCatalogListingAgreements] API call. The [AppCatalogListingResourceVersionAgreements] object, including its signature, is returned in the response. With the signature for the terms of use agreement for the desired listing resource version, create a subscription by issuing a [CreateAppCatalogSubscription] API call.
 
-To get the image ID to launch an instance, issue a [GetAppCatalogListingResourceVersion] API call. Lastly, to launch the instance, use the image ID of the listing resource version to issue a [LaunchInstance] API call.""")
+To get the image ID to launch an instance, issue a [GetAppCatalogListingResourceVersion] API call. Lastly, to launch the instance, use the image ID of the listing resource version to issue a [LaunchInstance] API call. \n[Command Reference](getListing)""")
 @cli_util.option('--listing-id', required=True, help=u"""The unique identifier for the listing.""")
 @cli_util.option('--compartment-id', help=u"""The unique identifier for the compartment.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -252,7 +259,7 @@ If you plan to launch an instance from an image listing, you must first subscrib
 
 Subscribing to the listing requires you to first get a signature from the terms of use agreement for the listing resource version. To get the signature, issue a [GetAppCatalogListingAgreements] API call. The [AppCatalogListingResourceVersionAgreements] object, including its signature, is returned in the response. With the signature for the terms of use agreement for the desired listing resource version, create a subscription by issuing a [CreateAppCatalogSubscription] API call.
 
-To get the image ID to launch an instance, issue a [GetAppCatalogListingResourceVersion] API call. Lastly, to launch the instance, use the image ID of the listing resource version to issue a [LaunchInstance] API call.""")
+To get the image ID to launch an instance, issue a [GetAppCatalogListingResourceVersion] API call. Lastly, to launch the instance, use the image ID of the listing resource version to issue a [LaunchInstance] API call. \n[Command Reference](getPackage)""")
 @cli_util.option('--listing-id', required=True, help=u"""The unique identifier for the listing.""")
 @cli_util.option('--package-version', required=True, help=u"""The version of the package. Package versions are unique within a listing.""")
 @cli_util.option('--compartment-id', help=u"""The unique identifier for the compartment.""")
@@ -282,7 +289,7 @@ def get_package(ctx, from_json, listing_id, package_version, compartment_id):
     cli_util.render_response(result, ctx)
 
 
-@accepted_agreement_group.command(name=cli_util.override('marketplace.list_accepted_agreements.command_name', 'list'), help=u"""Lists the terms of use agreements that have been accepted in the specified compartment. You can filter results by specifying query parameters.""")
+@accepted_agreement_group.command(name=cli_util.override('marketplace.list_accepted_agreements.command_name', 'list'), help=u"""Lists the terms of use agreements that have been accepted in the specified compartment. You can filter results by specifying query parameters. \n[Command Reference](listAcceptedAgreements)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The unique identifier for the compartment.""")
 @cli_util.option('--display-name', help=u"""The display name of the resource.""")
 @cli_util.option('--listing-id', help=u"""The unique identifier for the listing.""")
@@ -348,7 +355,7 @@ def list_accepted_agreements(ctx, from_json, all_pages, page_size, compartment_i
     cli_util.render_response(result, ctx)
 
 
-@agreement_group.command(name=cli_util.override('marketplace.list_agreements.command_name', 'list'), help=u"""Returns the terms of use agreements that must be accepted before you can deploy the specified version of a package.""")
+@agreement_group.command(name=cli_util.override('marketplace.list_agreements.command_name', 'list'), help=u"""Returns the terms of use agreements that must be accepted before you can deploy the specified version of a package. \n[Command Reference](listAgreements)""")
 @cli_util.option('--listing-id', required=True, help=u"""The unique identifier for the listing.""")
 @cli_util.option('--package-version', required=True, help=u"""The version of the package. Package versions are unique within a listing.""")
 @cli_util.option('--limit', type=click.INT, help=u"""How many records to return. Specify a value greater than zero and less than or equal to 1000. The default is 30.""")
@@ -409,7 +416,7 @@ def list_agreements(ctx, from_json, all_pages, page_size, listing_id, package_ve
     cli_util.render_response(result, ctx)
 
 
-@category_summary_group.command(name=cli_util.override('marketplace.list_categories.command_name', 'list-categories'), help=u"""Gets the list of all the categories for listings published to Oracle Cloud Infrastructure Marketplace. Categories apply to the software product provided by the listing.""")
+@category_summary_group.command(name=cli_util.override('marketplace.list_categories.command_name', 'list-categories'), help=u"""Gets the list of all the categories for listings published to Oracle Cloud Infrastructure Marketplace. Categories apply to the software product provided by the listing. \n[Command Reference](listCategories)""")
 @cli_util.option('--limit', type=click.INT, help=u"""How many records to return. Specify a value greater than zero and less than or equal to 1000. The default is 30.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @cli_util.option('--compartment-id', help=u"""The unique identifier for the compartment.""")
@@ -462,7 +469,7 @@ If you plan to launch an instance from an image listing, you must first subscrib
 
 Subscribing to the listing requires you to first get a signature from the terms of use agreement for the listing resource version. To get the signature, issue a [GetAppCatalogListingAgreements] API call. The [AppCatalogListingResourceVersionAgreements] object, including its signature, is returned in the response. With the signature for the terms of use agreement for the desired listing resource version, create a subscription by issuing a [CreateAppCatalogSubscription] API call.
 
-To get the image ID to launch an instance, issue a [GetAppCatalogListingResourceVersion] API call. Lastly, to launch the instance, use the image ID of the listing resource version to issue a [LaunchInstance] API call.""")
+To get the image ID to launch an instance, issue a [GetAppCatalogListingResourceVersion] API call. Lastly, to launch the instance, use the image ID of the listing resource version to issue a [LaunchInstance] API call. \n[Command Reference](listListings)""")
 @cli_util.option('--name', multiple=True, help=u"""The name of the listing.""")
 @cli_util.option('--listing-id', help=u"""The unique identifier for the listing.""")
 @cli_util.option('--publisher-id', help=u"""Limit results to just this publisher.""")
@@ -542,7 +549,7 @@ If you plan to launch an instance from an image listing, you must first subscrib
 
 Subscribing to the listing requires you to first get a signature from the terms of use agreement for the listing resource version. To get the signature, issue a [GetAppCatalogListingAgreements] API call. The [AppCatalogListingResourceVersionAgreements] object, including its signature, is returned in the response. With the signature for the terms of use agreement for the desired listing resource version, create a subscription by issuing a [CreateAppCatalogSubscription] API call.
 
-To get the image ID to launch an instance, issue a [GetAppCatalogListingResourceVersion] API call. Lastly, to launch the instance, use the image ID of the listing resource version to issue a [LaunchInstance] API call.""")
+To get the image ID to launch an instance, issue a [GetAppCatalogListingResourceVersion] API call. Lastly, to launch the instance, use the image ID of the listing resource version to issue a [LaunchInstance] API call. \n[Command Reference](listPackages)""")
 @cli_util.option('--listing-id', required=True, help=u"""The unique identifier for the listing.""")
 @cli_util.option('--package-version', help=u"""The version of the package. Package versions are unique within a listing.""")
 @cli_util.option('--package-type', help=u"""A filter to return only packages that match the given package type exactly.""")
@@ -608,7 +615,7 @@ def list_packages(ctx, from_json, all_pages, page_size, listing_id, package_vers
     cli_util.render_response(result, ctx)
 
 
-@publisher_group.command(name=cli_util.override('marketplace.list_publishers.command_name', 'list'), help=u"""Gets the list of all the publishers of listings available in Oracle Cloud Infrastructure Marketplace.""")
+@publisher_group.command(name=cli_util.override('marketplace.list_publishers.command_name', 'list'), help=u"""Gets the list of all the publishers of listings available in Oracle Cloud Infrastructure Marketplace. \n[Command Reference](listPublishers)""")
 @cli_util.option('--publisher-id', help=u"""Limit results to just this publisher.""")
 @cli_util.option('--limit', type=click.INT, help=u"""How many records to return. Specify a value greater than zero and less than or equal to 1000. The default is 30.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
@@ -658,7 +665,7 @@ def list_publishers(ctx, from_json, all_pages, page_size, publisher_id, limit, p
     cli_util.render_response(result, ctx)
 
 
-@report_type_collection_group.command(name=cli_util.override('marketplace.list_report_types.command_name', 'list-report-types'), help=u"""Lists available types of reports for the compartment.""")
+@report_type_collection_group.command(name=cli_util.override('marketplace.list_report_types.command_name', 'list-report-types'), help=u"""Lists available types of reports for the compartment. \n[Command Reference](listReportTypes)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The unique identifier for the compartment.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
@@ -688,7 +695,7 @@ def list_report_types(ctx, from_json, all_pages, compartment_id, page):
     cli_util.render_response(result, ctx)
 
 
-@report_collection_group.command(name=cli_util.override('marketplace.list_reports.command_name', 'list-reports'), help=u"""Lists reports in the compartment that match the specified report type and date.""")
+@report_collection_group.command(name=cli_util.override('marketplace.list_reports.command_name', 'list-reports'), help=u"""Lists reports in the compartment that match the specified report type and date. \n[Command Reference](listReports)""")
 @cli_util.option('--report-type', required=True, help=u"""The type of the report.""")
 @cli_util.option('--date', required=True, type=custom_types.CLI_DATETIME, help=u"""Date, expressed in `YYYYMMDD` format, where `Y` represents the year, `M` represents the month, and `D` represents the day.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--compartment-id', required=True, help=u"""The unique identifier for the compartment.""")
@@ -724,7 +731,33 @@ def list_reports(ctx, from_json, all_pages, report_type, date, compartment_id, p
     cli_util.render_response(result, ctx)
 
 
-@accepted_agreement_group.command(name=cli_util.override('marketplace.update_accepted_agreement.command_name', 'update'), help=u"""Updates the display name or tags associated with a listing's previously accepted terms of use agreement.""")
+@tax_summary_group.command(name=cli_util.override('marketplace.list_taxes.command_name', 'list-taxes'), help=u"""Returns list of all tax implications that current tenant may be liable to once they launch the listing. \n[Command Reference](listTaxes)""")
+@cli_util.option('--listing-id', required=True, help=u"""The unique identifier for the listing.""")
+@cli_util.option('--compartment-id', help=u"""The unique identifier for the compartment.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'marketplace', 'class': 'list[TaxSummary]'})
+@cli_util.wrap_exceptions
+def list_taxes(ctx, from_json, all_pages, listing_id, compartment_id):
+
+    if isinstance(listing_id, six.string_types) and len(listing_id.strip()) == 0:
+        raise click.UsageError('Parameter --listing-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if compartment_id is not None:
+        kwargs['compartment_id'] = compartment_id
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('marketplace', 'marketplace', ctx)
+    result = client.list_taxes(
+        listing_id=listing_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@accepted_agreement_group.command(name=cli_util.override('marketplace.update_accepted_agreement.command_name', 'update'), help=u"""Updates the display name or tags associated with a listing's previously accepted terms of use agreement. \n[Command Reference](updateAcceptedAgreement)""")
 @cli_util.option('--accepted-agreement-id', required=True, help=u"""The unique identifier for the accepted terms of use agreement.""")
 @cli_util.option('--display-name', help=u"""A display name for the accepted agreement.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The defined tags associated with this resource, if any. Each key is predefined and scoped to namespaces. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)

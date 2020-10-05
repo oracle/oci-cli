@@ -57,7 +57,7 @@ sch_root_group.add_command(work_request_group)
 
 @service_connector_group.command(name=cli_util.override('sch.activate_service_connector.command_name', 'activate'), help=u"""Activates the specified service connector.
 
-After you send your request, the service connector's state is temporarily UPDATING. When the state changes to ACTIVE, data begins transferring from the source service to the target service. For instructions on deactivating and activating service connectors, see [To activate or deactivate a service connector].""")
+After you send your request, the service connector's state is temporarily UPDATING. When the state changes to ACTIVE, data begins transferring from the source service to the target service. For instructions on deactivating and activating service connectors, see [To activate or deactivate a service connector]. \n[Command Reference](activateServiceConnector)""")
 @cli_util.option('--service-connector-id', required=True, help=u"""The [OCID] of the service connector.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -110,7 +110,7 @@ def activate_service_connector(ctx, from_json, wait_for_state, max_wait_seconds,
 
 @service_connector_group.command(name=cli_util.override('sch.change_service_connector_compartment.command_name', 'change-compartment'), help=u"""Moves a service connector into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].
 
-When provided, If-Match is checked against ETag values of the resource.""")
+When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeServiceConnectorCompartment)""")
 @cli_util.option('--service-connector-id', required=True, help=u"""The [OCID] of the service connector.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the service connector to.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -171,7 +171,7 @@ def change_service_connector_compartment(ctx, from_json, wait_for_state, max_wai
 
 For purposes of access control, you must provide the [OCID] of the compartment where you want the service connector to reside. Notice that the service connector doesn't have to be in the same compartment as the source or target services. For information about access control and compartments, see [Overview of the IAM Service].
 
-After you send your request, the new service connector's state is temporarily CREATING. When the state changes to ACTIVE, data begins transferring from the source service to the target service. For instructions on deactivating and activating service connectors, see [To activate or deactivate a service connector].""")
+After you send your request, the new service connector's state is temporarily CREATING. When the state changes to ACTIVE, data begins transferring from the source service to the target service. For instructions on deactivating and activating service connectors, see [To activate or deactivate a service connector]. \n[Command Reference](createServiceConnector)""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name. It does not have to be unique, and it is changeable. Avoid entering confidential information.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the comparment to create the service connector in.""")
 @cli_util.option('--source', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -248,7 +248,7 @@ def create_service_connector(ctx, from_json, wait_for_state, max_wait_seconds, w
 
 For purposes of access control, you must provide the [OCID] of the compartment where you want the service connector to reside. Notice that the service connector doesn't have to be in the same compartment as the source or target services. For information about access control and compartments, see [Overview of the IAM Service].
 
-After you send your request, the new service connector's state is temporarily CREATING. When the state changes to ACTIVE, data begins transferring from the source service to the target service. For instructions on deactivating and activating service connectors, see [To activate or deactivate a service connector].""")
+After you send your request, the new service connector's state is temporarily CREATING. When the state changes to ACTIVE, data begins transferring from the source service to the target service. For instructions on deactivating and activating service connectors, see [To activate or deactivate a service connector]. \n[Command Reference](createServiceConnector)""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name. It does not have to be unique, and it is changeable. Avoid entering confidential information.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the comparment to create the service connector in.""")
 @cli_util.option('--target', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -328,7 +328,7 @@ def create_service_connector_logging_source_details(ctx, from_json, wait_for_sta
 
 For purposes of access control, you must provide the [OCID] of the compartment where you want the service connector to reside. Notice that the service connector doesn't have to be in the same compartment as the source or target services. For information about access control and compartments, see [Overview of the IAM Service].
 
-After you send your request, the new service connector's state is temporarily CREATING. When the state changes to ACTIVE, data begins transferring from the source service to the target service. For instructions on deactivating and activating service connectors, see [To activate or deactivate a service connector].""")
+After you send your request, the new service connector's state is temporarily CREATING. When the state changes to ACTIVE, data begins transferring from the source service to the target service. For instructions on deactivating and activating service connectors, see [To activate or deactivate a service connector]. \n[Command Reference](createServiceConnector)""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name. It does not have to be unique, and it is changeable. Avoid entering confidential information.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the comparment to create the service connector in.""")
 @cli_util.option('--source', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -408,7 +408,7 @@ def create_service_connector_notifications_target_details(ctx, from_json, wait_f
 
 For purposes of access control, you must provide the [OCID] of the compartment where you want the service connector to reside. Notice that the service connector doesn't have to be in the same compartment as the source or target services. For information about access control and compartments, see [Overview of the IAM Service].
 
-After you send your request, the new service connector's state is temporarily CREATING. When the state changes to ACTIVE, data begins transferring from the source service to the target service. For instructions on deactivating and activating service connectors, see [To activate or deactivate a service connector].""")
+After you send your request, the new service connector's state is temporarily CREATING. When the state changes to ACTIVE, data begins transferring from the source service to the target service. For instructions on deactivating and activating service connectors, see [To activate or deactivate a service connector]. \n[Command Reference](createServiceConnector)""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name. It does not have to be unique, and it is changeable. Avoid entering confidential information.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the comparment to create the service connector in.""")
 @cli_util.option('--source', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -496,7 +496,7 @@ def create_service_connector_object_storage_target_details(ctx, from_json, wait_
 
 For purposes of access control, you must provide the [OCID] of the compartment where you want the service connector to reside. Notice that the service connector doesn't have to be in the same compartment as the source or target services. For information about access control and compartments, see [Overview of the IAM Service].
 
-After you send your request, the new service connector's state is temporarily CREATING. When the state changes to ACTIVE, data begins transferring from the source service to the target service. For instructions on deactivating and activating service connectors, see [To activate or deactivate a service connector].""")
+After you send your request, the new service connector's state is temporarily CREATING. When the state changes to ACTIVE, data begins transferring from the source service to the target service. For instructions on deactivating and activating service connectors, see [To activate or deactivate a service connector]. \n[Command Reference](createServiceConnector)""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name. It does not have to be unique, and it is changeable. Avoid entering confidential information.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the comparment to create the service connector in.""")
 @cli_util.option('--source', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -584,7 +584,7 @@ def create_service_connector_monitoring_target_details(ctx, from_json, wait_for_
 
 For purposes of access control, you must provide the [OCID] of the compartment where you want the service connector to reside. Notice that the service connector doesn't have to be in the same compartment as the source or target services. For information about access control and compartments, see [Overview of the IAM Service].
 
-After you send your request, the new service connector's state is temporarily CREATING. When the state changes to ACTIVE, data begins transferring from the source service to the target service. For instructions on deactivating and activating service connectors, see [To activate or deactivate a service connector].""")
+After you send your request, the new service connector's state is temporarily CREATING. When the state changes to ACTIVE, data begins transferring from the source service to the target service. For instructions on deactivating and activating service connectors, see [To activate or deactivate a service connector]. \n[Command Reference](createServiceConnector)""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name. It does not have to be unique, and it is changeable. Avoid entering confidential information.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the comparment to create the service connector in.""")
 @cli_util.option('--source', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -664,7 +664,7 @@ def create_service_connector_functions_target_details(ctx, from_json, wait_for_s
 
 For purposes of access control, you must provide the [OCID] of the compartment where you want the service connector to reside. Notice that the service connector doesn't have to be in the same compartment as the source or target services. For information about access control and compartments, see [Overview of the IAM Service].
 
-After you send your request, the new service connector's state is temporarily CREATING. When the state changes to ACTIVE, data begins transferring from the source service to the target service. For instructions on deactivating and activating service connectors, see [To activate or deactivate a service connector].""")
+After you send your request, the new service connector's state is temporarily CREATING. When the state changes to ACTIVE, data begins transferring from the source service to the target service. For instructions on deactivating and activating service connectors, see [To activate or deactivate a service connector]. \n[Command Reference](createServiceConnector)""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name. It does not have to be unique, and it is changeable. Avoid entering confidential information.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the comparment to create the service connector in.""")
 @cli_util.option('--source', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -742,7 +742,7 @@ def create_service_connector_streaming_target_details(ctx, from_json, wait_for_s
 
 @service_connector_group.command(name=cli_util.override('sch.deactivate_service_connector.command_name', 'deactivate'), help=u"""Deactivates the specified service connector.
 
-After you send your request, the service connector's state is temporarily UPDATING and any data transfer stops. The state then changes to INACTIVE. For instructions on deactivating and activating service connectors, see [To activate or deactivate a service connector].""")
+After you send your request, the service connector's state is temporarily UPDATING and any data transfer stops. The state then changes to INACTIVE. For instructions on deactivating and activating service connectors, see [To activate or deactivate a service connector]. \n[Command Reference](deactivateServiceConnector)""")
 @cli_util.option('--service-connector-id', required=True, help=u"""The [OCID] of the service connector.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -795,7 +795,7 @@ def deactivate_service_connector(ctx, from_json, wait_for_state, max_wait_second
 
 @service_connector_group.command(name=cli_util.override('sch.delete_service_connector.command_name', 'delete'), help=u"""Deletes the specified service connector.
 
-After you send your request, the service connector's state is temporarily DELETING and any data transfer stops. The state then changes to DELETED.""")
+After you send your request, the service connector's state is temporarily DELETING and any data transfer stops. The state then changes to DELETED. \n[Command Reference](deleteServiceConnector)""")
 @cli_util.option('--service-connector-id', required=True, help=u"""The [OCID] of the service connector.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -847,7 +847,7 @@ def delete_service_connector(ctx, from_json, wait_for_state, max_wait_seconds, w
     cli_util.render_response(result, ctx)
 
 
-@service_connector_group.command(name=cli_util.override('sch.get_service_connector.command_name', 'get'), help=u"""Gets the specified service connector's configuration information.""")
+@service_connector_group.command(name=cli_util.override('sch.get_service_connector.command_name', 'get'), help=u"""Gets the specified service connector's configuration information. \n[Command Reference](getServiceConnector)""")
 @cli_util.option('--service-connector-id', required=True, help=u"""The [OCID] of the service connector.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -869,7 +869,7 @@ def get_service_connector(ctx, from_json, service_connector_id):
     cli_util.render_response(result, ctx)
 
 
-@work_request_group.command(name=cli_util.override('sch.get_work_request.command_name', 'get'), help=u"""Gets the details of the specified work request.""")
+@work_request_group.command(name=cli_util.override('sch.get_work_request.command_name', 'get'), help=u"""Gets the details of the specified work request. \n[Command Reference](getWorkRequest)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The [OCID] of the work request.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -891,7 +891,7 @@ def get_work_request(ctx, from_json, work_request_id):
     cli_util.render_response(result, ctx)
 
 
-@service_connector_group.command(name=cli_util.override('sch.list_service_connectors.command_name', 'list'), help=u"""Lists service connectors in the specified compartment.""")
+@service_connector_group.command(name=cli_util.override('sch.list_service_connectors.command_name', 'list'), help=u"""Lists service connectors in the specified compartment. \n[Command Reference](listServiceConnectors)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment for this request.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "UPDATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only resources that match the given lifecycle state.
 
@@ -955,7 +955,7 @@ def list_service_connectors(ctx, from_json, all_pages, page_size, compartment_id
     cli_util.render_response(result, ctx)
 
 
-@work_request_error_group.command(name=cli_util.override('sch.list_work_request_errors.command_name', 'list'), help=u"""Lists work request errors for the specified work request. Results are paginated.""")
+@work_request_error_group.command(name=cli_util.override('sch.list_work_request_errors.command_name', 'list'), help=u"""Lists work request errors for the specified work request. Results are paginated. \n[Command Reference](listWorkRequestErrors)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The [OCID] of the work request.""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the opc-next-page response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
@@ -1006,7 +1006,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     cli_util.render_response(result, ctx)
 
 
-@work_request_log_entry_group.command(name=cli_util.override('sch.list_work_request_logs.command_name', 'list-work-request-logs'), help=u"""Lists logs for the specified work request. Results are paginated.""")
+@work_request_log_entry_group.command(name=cli_util.override('sch.list_work_request_logs.command_name', 'list-work-request-logs'), help=u"""Lists logs for the specified work request. Results are paginated. \n[Command Reference](listWorkRequestLogs)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The [OCID] of the work request.""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the opc-next-page response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
@@ -1057,7 +1057,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     cli_util.render_response(result, ctx)
 
 
-@work_request_group.command(name=cli_util.override('sch.list_work_requests.command_name', 'list'), help=u"""Lists the work requests in the specified compartment.""")
+@work_request_group.command(name=cli_util.override('sch.list_work_requests.command_name', 'list'), help=u"""Lists the work requests in the specified compartment. \n[Command Reference](listWorkRequests)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment for this request.""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the opc-next-page response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].""")
@@ -1107,7 +1107,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, pag
 
 @service_connector_group.command(name=cli_util.override('sch.update_service_connector.command_name', 'update'), help=u"""Updates the configuration information for the specified service connector.
 
-After you send your request, the service connector's state is temporarily UPDATING and any data transfer pauses. The state then changes back to its original value: if ACTIVE, then data transfer resumes.""")
+After you send your request, the service connector's state is temporarily UPDATING and any data transfer pauses. The state then changes back to its original value: if ACTIVE, then data transfer resumes. \n[Command Reference](updateServiceConnector)""")
 @cli_util.option('--service-connector-id', required=True, help=u"""The [OCID] of the service connector.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. It does not have to be unique, and it is changeable. Avoid entering confidential information.""")
 @cli_util.option('--description', help=u"""The description of the resource. Avoid entering confidential information.""")
@@ -1199,7 +1199,7 @@ def update_service_connector(ctx, from_json, force, wait_for_state, max_wait_sec
 
 @service_connector_group.command(name=cli_util.override('sch.update_service_connector_logging_source_details.command_name', 'update-service-connector-logging-source-details'), help=u"""Updates the configuration information for the specified service connector.
 
-After you send your request, the service connector's state is temporarily UPDATING and any data transfer pauses. The state then changes back to its original value: if ACTIVE, then data transfer resumes.""")
+After you send your request, the service connector's state is temporarily UPDATING and any data transfer pauses. The state then changes back to its original value: if ACTIVE, then data transfer resumes. \n[Command Reference](updateServiceConnector)""")
 @cli_util.option('--service-connector-id', required=True, help=u"""The [OCID] of the service connector.""")
 @cli_util.option('--source-log-sources', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The resources affected by this work request.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""A user-friendly name. It does not have to be unique, and it is changeable. Avoid entering confidential information.""")
@@ -1292,7 +1292,7 @@ def update_service_connector_logging_source_details(ctx, from_json, force, wait_
 
 @service_connector_group.command(name=cli_util.override('sch.update_service_connector_notifications_target_details.command_name', 'update-service-connector-notifications-target-details'), help=u"""Updates the configuration information for the specified service connector.
 
-After you send your request, the service connector's state is temporarily UPDATING and any data transfer pauses. The state then changes back to its original value: if ACTIVE, then data transfer resumes.""")
+After you send your request, the service connector's state is temporarily UPDATING and any data transfer pauses. The state then changes back to its original value: if ACTIVE, then data transfer resumes. \n[Command Reference](updateServiceConnector)""")
 @cli_util.option('--service-connector-id', required=True, help=u"""The [OCID] of the service connector.""")
 @cli_util.option('--target-topic-id', required=True, help=u"""The [OCID] of the topic.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. It does not have to be unique, and it is changeable. Avoid entering confidential information.""")
@@ -1385,7 +1385,7 @@ def update_service_connector_notifications_target_details(ctx, from_json, force,
 
 @service_connector_group.command(name=cli_util.override('sch.update_service_connector_object_storage_target_details.command_name', 'update-service-connector-object-storage-target-details'), help=u"""Updates the configuration information for the specified service connector.
 
-After you send your request, the service connector's state is temporarily UPDATING and any data transfer pauses. The state then changes back to its original value: if ACTIVE, then data transfer resumes.""")
+After you send your request, the service connector's state is temporarily UPDATING and any data transfer pauses. The state then changes back to its original value: if ACTIVE, then data transfer resumes. \n[Command Reference](updateServiceConnector)""")
 @cli_util.option('--service-connector-id', required=True, help=u"""The [OCID] of the service connector.""")
 @cli_util.option('--target-bucket-name', required=True, help=u"""The name of the bucket. Avoid entering confidential information.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. It does not have to be unique, and it is changeable. Avoid entering confidential information.""")
@@ -1486,7 +1486,7 @@ def update_service_connector_object_storage_target_details(ctx, from_json, force
 
 @service_connector_group.command(name=cli_util.override('sch.update_service_connector_monitoring_target_details.command_name', 'update-service-connector-monitoring-target-details'), help=u"""Updates the configuration information for the specified service connector.
 
-After you send your request, the service connector's state is temporarily UPDATING and any data transfer pauses. The state then changes back to its original value: if ACTIVE, then data transfer resumes.""")
+After you send your request, the service connector's state is temporarily UPDATING and any data transfer pauses. The state then changes back to its original value: if ACTIVE, then data transfer resumes. \n[Command Reference](updateServiceConnector)""")
 @cli_util.option('--service-connector-id', required=True, help=u"""The [OCID] of the service connector.""")
 @cli_util.option('--target-compartment-id', required=True, help=u"""The [OCID] of the compartment containing the metric.""")
 @cli_util.option('--target-metric-namespace', required=True, help=u"""The namespace of the metric.
@@ -1587,7 +1587,7 @@ def update_service_connector_monitoring_target_details(ctx, from_json, force, wa
 
 @service_connector_group.command(name=cli_util.override('sch.update_service_connector_functions_target_details.command_name', 'update-service-connector-functions-target-details'), help=u"""Updates the configuration information for the specified service connector.
 
-After you send your request, the service connector's state is temporarily UPDATING and any data transfer pauses. The state then changes back to its original value: if ACTIVE, then data transfer resumes.""")
+After you send your request, the service connector's state is temporarily UPDATING and any data transfer pauses. The state then changes back to its original value: if ACTIVE, then data transfer resumes. \n[Command Reference](updateServiceConnector)""")
 @cli_util.option('--service-connector-id', required=True, help=u"""The [OCID] of the service connector.""")
 @cli_util.option('--target-function-id', required=True, help=u"""The [OCID] of the function.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. It does not have to be unique, and it is changeable. Avoid entering confidential information.""")
@@ -1680,7 +1680,7 @@ def update_service_connector_functions_target_details(ctx, from_json, force, wai
 
 @service_connector_group.command(name=cli_util.override('sch.update_service_connector_streaming_target_details.command_name', 'update-service-connector-streaming-target-details'), help=u"""Updates the configuration information for the specified service connector.
 
-After you send your request, the service connector's state is temporarily UPDATING and any data transfer pauses. The state then changes back to its original value: if ACTIVE, then data transfer resumes.""")
+After you send your request, the service connector's state is temporarily UPDATING and any data transfer pauses. The state then changes back to its original value: if ACTIVE, then data transfer resumes. \n[Command Reference](updateServiceConnector)""")
 @cli_util.option('--service-connector-id', required=True, help=u"""The [OCID] of the service connector.""")
 @cli_util.option('--target-stream-id', required=True, help=u"""The [OCID] of the stream.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. It does not have to be unique, and it is changeable. Avoid entering confidential information.""")

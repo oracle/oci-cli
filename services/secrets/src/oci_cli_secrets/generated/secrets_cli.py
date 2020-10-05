@@ -37,7 +37,7 @@ secrets_root_group.add_command(secret_bundle_version_summary_group)
 secrets_root_group.add_command(secret_bundle_group)
 
 
-@secret_bundle_group.command(name=cli_util.override('secrets.get_secret_bundle.command_name', 'get'), help=u"""Gets a secret bundle that matches either the specified `stage`, `label`, or `versionNumber` parameter. If none of these parameters are provided, the bundle for the secret version marked as `CURRENT` will be returned.""")
+@secret_bundle_group.command(name=cli_util.override('secrets.get_secret_bundle.command_name', 'get'), help=u"""Gets a secret bundle that matches either the specified `stage`, `label`, or `versionNumber` parameter. If none of these parameters are provided, the bundle for the secret version marked as `CURRENT` will be returned. \n[Command Reference](getSecretBundle)""")
 @cli_util.option('--secret-id', required=True, help=u"""The OCID of the secret.""")
 @cli_util.option('--version-number', type=click.INT, help=u"""The version number of the secret.""")
 @cli_util.option('--secret-version-name', help=u"""The name of the secret. (This might be referred to as the name of the secret version. Names are unique across the different versions of a secret.)""")
@@ -68,7 +68,7 @@ def get_secret_bundle(ctx, from_json, secret_id, version_number, secret_version_
     cli_util.render_response(result, ctx)
 
 
-@secret_bundle_version_summary_group.command(name=cli_util.override('secrets.list_secret_bundle_versions.command_name', 'list-secret-bundle-versions'), help=u"""Lists all secret bundle versions for the specified secret.""")
+@secret_bundle_version_summary_group.command(name=cli_util.override('secrets.list_secret_bundle_versions.command_name', 'list-secret-bundle-versions'), help=u"""Lists all secret bundle versions for the specified secret. \n[Command Reference](listSecretBundleVersions)""")
 @cli_util.option('--secret-id', required=True, help=u"""The OCID of the secret.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call. For information about pagination, see [List Pagination].""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call. For information about pagination, see [List Pagination].""")

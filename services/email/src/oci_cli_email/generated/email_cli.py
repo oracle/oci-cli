@@ -41,7 +41,7 @@ email_root_group.add_command(sender_group)
 email_root_group.add_command(suppression_group)
 
 
-@sender_group.command(name=cli_util.override('email.change_sender_compartment.command_name', 'change-compartment'), help=u"""Moves a sender into a different compartment. When provided, If-Match is checked against ETag values of the resource.""")
+@sender_group.command(name=cli_util.override('email.change_sender_compartment.command_name', 'change-compartment'), help=u"""Moves a sender into a different compartment. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeSenderCompartment)""")
 @cli_util.option('--sender-id', required=True, help=u"""The unique OCID of the sender.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the sender should be moved.""")
 @cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -72,7 +72,7 @@ def change_sender_compartment(ctx, from_json, sender_id, compartment_id, if_matc
     cli_util.render_response(result, ctx)
 
 
-@sender_group.command(name=cli_util.override('email.create_sender.command_name', 'create'), help=u"""Creates a sender for a tenancy in a given compartment.""")
+@sender_group.command(name=cli_util.override('email.create_sender.command_name', 'create'), help=u"""Creates a sender for a tenancy in a given compartment. \n[Command Reference](createSender)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the sender.""")
 @cli_util.option('--email-address', required=True, help=u"""The email address of the sender.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -131,7 +131,7 @@ def create_sender(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
     cli_util.render_response(result, ctx)
 
 
-@suppression_group.command(name=cli_util.override('email.create_suppression.command_name', 'create'), help=u"""Adds recipient email addresses to the suppression list for a tenancy. Addresses added to the suppression list via the API are denoted as \"MANUAL\" in the `reason` field. *Note:* All email addresses added to the suppression list are normalized to include only lowercase letters.""")
+@suppression_group.command(name=cli_util.override('email.create_suppression.command_name', 'create'), help=u"""Adds recipient email addresses to the suppression list for a tenancy. Addresses added to the suppression list via the API are denoted as \"MANUAL\" in the `reason` field. *Note:* All email addresses added to the suppression list are normalized to include only lowercase letters. \n[Command Reference](createSuppression)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to contain the suppression. Since suppressions are at the customer level, this must be the tenancy OCID.""")
 @cli_util.option('--email-address', required=True, help=u"""The recipient email address of the suppression.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -156,7 +156,7 @@ def create_suppression(ctx, from_json, compartment_id, email_address):
     cli_util.render_response(result, ctx)
 
 
-@sender_group.command(name=cli_util.override('email.delete_sender.command_name', 'delete'), help=u"""Deletes an approved sender for a tenancy in a given compartment for a provided `senderId`.""")
+@sender_group.command(name=cli_util.override('email.delete_sender.command_name', 'delete'), help=u"""Deletes an approved sender for a tenancy in a given compartment for a provided `senderId`. \n[Command Reference](deleteSender)""")
 @cli_util.option('--sender-id', required=True, help=u"""The unique OCID of the sender.""")
 @cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the update or delete call for a resource, set the `if-match` parameter to the value of the etag from a previous get, create, or update response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -220,7 +220,7 @@ def delete_sender(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
     cli_util.render_response(result, ctx)
 
 
-@suppression_group.command(name=cli_util.override('email.delete_suppression.command_name', 'delete'), help=u"""Removes a suppressed recipient email address from the suppression list for a tenancy in a given compartment for a provided `suppressionId`.""")
+@suppression_group.command(name=cli_util.override('email.delete_suppression.command_name', 'delete'), help=u"""Removes a suppressed recipient email address from the suppression list for a tenancy in a given compartment for a provided `suppressionId`. \n[Command Reference](deleteSuppression)""")
 @cli_util.option('--suppression-id', required=True, help=u"""The unique OCID of the suppression.""")
 @cli_util.confirm_delete_option
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -243,7 +243,7 @@ def delete_suppression(ctx, from_json, suppression_id):
     cli_util.render_response(result, ctx)
 
 
-@sender_group.command(name=cli_util.override('email.get_sender.command_name', 'get'), help=u"""Gets an approved sender for a given `senderId`.""")
+@sender_group.command(name=cli_util.override('email.get_sender.command_name', 'get'), help=u"""Gets an approved sender for a given `senderId`. \n[Command Reference](getSender)""")
 @cli_util.option('--sender-id', required=True, help=u"""The unique OCID of the sender.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -265,7 +265,7 @@ def get_sender(ctx, from_json, sender_id):
     cli_util.render_response(result, ctx)
 
 
-@suppression_group.command(name=cli_util.override('email.get_suppression.command_name', 'get'), help=u"""Gets the details of a suppressed recipient email address for a given `suppressionId`. Each suppression is given a unique OCID.""")
+@suppression_group.command(name=cli_util.override('email.get_suppression.command_name', 'get'), help=u"""Gets the details of a suppressed recipient email address for a given `suppressionId`. Each suppression is given a unique OCID. \n[Command Reference](getSuppression)""")
 @cli_util.option('--suppression-id', required=True, help=u"""The unique OCID of the suppression.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -287,7 +287,7 @@ def get_suppression(ctx, from_json, suppression_id):
     cli_util.render_response(result, ctx)
 
 
-@sender_group.command(name=cli_util.override('email.list_senders.command_name', 'list'), help=u"""Gets a collection of approved sender email addresses and sender IDs.""")
+@sender_group.command(name=cli_util.override('email.list_senders.command_name', 'list'), help=u"""Gets a collection of approved sender email addresses and sender IDs. \n[Command Reference](listSenders)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID for the compartment.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED"]), help=u"""The current state of a sender.""")
 @cli_util.option('--email-address', help=u"""The email address of the approved sender.""")
@@ -347,7 +347,7 @@ def list_senders(ctx, from_json, all_pages, page_size, compartment_id, lifecycle
     cli_util.render_response(result, ctx)
 
 
-@suppression_group.command(name=cli_util.override('email.list_suppressions.command_name', 'list'), help=u"""Gets a list of suppressed recipient email addresses for a user. The `compartmentId` for suppressions must be a tenancy OCID. The returned list is sorted by creation time in descending order.""")
+@suppression_group.command(name=cli_util.override('email.list_suppressions.command_name', 'list'), help=u"""Gets a list of suppressed recipient email addresses for a user. The `compartmentId` for suppressions must be a tenancy OCID. The returned list is sorted by creation time in descending order. \n[Command Reference](listSuppressions)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID for the compartment.""")
 @cli_util.option('--email-address', help=u"""The email address of the suppression.""")
 @cli_util.option('--time-created-greater-than-or-equal-to', type=custom_types.CLI_DATETIME, help=u"""Search for suppressions that were created within a specific date range, using this parameter to specify the earliest creation date for the returned list (inclusive). Specifying this parameter without the corresponding `timeCreatedLessThan` parameter will retrieve suppressions created from the given `timeCreatedGreaterThanOrEqualTo` to the current time, in \"YYYY-MM-ddThh:mmZ\" format with a Z offset, as defined by RFC 3339.
@@ -414,7 +414,7 @@ def list_suppressions(ctx, from_json, all_pages, page_size, compartment_id, emai
     cli_util.render_response(result, ctx)
 
 
-@sender_group.command(name=cli_util.override('email.update_sender.command_name', 'update'), help=u"""Replaces the set of tags for a sender with the tags provided. If either freeform or defined tags are omitted, the tags for that set remain the same. Each set must include the full set of tags for the sender, partial updates are not permitted. For more information about tagging, see [Resource Tags].""")
+@sender_group.command(name=cli_util.override('email.update_sender.command_name', 'update'), help=u"""Replaces the set of tags for a sender with the tags provided. If either freeform or defined tags are omitted, the tags for that set remain the same. Each set must include the full set of tags for the sender, partial updates are not permitted. For more information about tagging, see [Resource Tags]. \n[Command Reference](updateSender)""")
 @cli_util.option('--sender-id', required=True, help=u"""The unique OCID of the sender.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)

@@ -41,7 +41,7 @@ notification_data_plane_root_group.add_command(notification_topic_group)
 
 @subscription_group.command(name=cli_util.override('notification_data_plane.change_subscription_compartment.command_name', 'change-compartment'), help=u"""Moves a subscription into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].
 
-Transactions Per Minute (TPM) per-tenancy limit for this operation: 60.""")
+Transactions Per Minute (TPM) per-tenancy limit for this operation: 60. \n[Command Reference](changeSubscriptionCompartment)""")
 @cli_util.option('--subscription-id', required=True, help=u"""The [OCID] of the subscription to move.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the specified topic or subscription to.""")
 @cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -74,7 +74,7 @@ def change_subscription_compartment(ctx, from_json, subscription_id, compartment
 
 @subscription_group.command(name=cli_util.override('notification_data_plane.create_subscription.command_name', 'create'), help=u"""Creates a subscription for the specified topic and sends a subscription confirmation URL to the endpoint. The subscription remains in \"Pending\" status until it has been confirmed. For information about confirming subscriptions, see [To confirm a subscription].
 
-Transactions Per Minute (TPM) per-tenancy limit for this operation: 60.""")
+Transactions Per Minute (TPM) per-tenancy limit for this operation: 60. \n[Command Reference](createSubscription)""")
 @cli_util.option('--topic-id', required=True, help=u"""The [OCID] of the topic for the subscription.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment for the subscription.""")
 @cli_util.option('--protocol', required=True, help=u"""The protocol used for the subscription.
@@ -153,7 +153,7 @@ def create_subscription(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 
 @subscription_group.command(name=cli_util.override('notification_data_plane.delete_subscription.command_name', 'delete'), help=u"""Deletes the specified subscription.
 
-Transactions Per Minute (TPM) per-tenancy limit for this operation: 60.""")
+Transactions Per Minute (TPM) per-tenancy limit for this operation: 60. \n[Command Reference](deleteSubscription)""")
 @cli_util.option('--subscription-id', required=True, help=u"""The [OCID] of the subscription to delete.""")
 @cli_util.option('--if-match', help=u"""Used for optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -219,7 +219,7 @@ def delete_subscription(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 
 @subscription_group.command(name=cli_util.override('notification_data_plane.get_confirm_subscription.command_name', 'get-confirm'), help=u"""Gets the confirmation details for the specified subscription.
 
-Transactions Per Minute (TPM) per-tenancy limit for this operation: 60.""")
+Transactions Per Minute (TPM) per-tenancy limit for this operation: 60. \n[Command Reference](getConfirmSubscription)""")
 @cli_util.option('--id', required=True, help=u"""The [OCID] of the subscription to get the confirmation details for.""")
 @cli_util.option('--token', required=True, help=u"""The subscription confirmation token.""")
 @cli_util.option('--protocol', required=True, help=u"""The protocol used for the subscription.
@@ -251,7 +251,7 @@ def get_confirm_subscription(ctx, from_json, id, token, protocol):
 
 @subscription_group.command(name=cli_util.override('notification_data_plane.get_subscription.command_name', 'get'), help=u"""Gets the specified subscription's configuration information.
 
-Transactions Per Minute (TPM) per-tenancy limit for this operation: 60.""")
+Transactions Per Minute (TPM) per-tenancy limit for this operation: 60. \n[Command Reference](getSubscription)""")
 @cli_util.option('--subscription-id', required=True, help=u"""The [OCID] of the subscription to retrieve.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -275,7 +275,7 @@ def get_subscription(ctx, from_json, subscription_id):
 
 @subscription_group.command(name=cli_util.override('notification_data_plane.get_unsubscription.command_name', 'get-unsubscription'), help=u"""Gets the unsubscription details for the specified subscription.
 
-Transactions Per Minute (TPM) per-tenancy limit for this operation: 60.""")
+Transactions Per Minute (TPM) per-tenancy limit for this operation: 60. \n[Command Reference](getUnsubscription)""")
 @cli_util.option('--id', required=True, help=u"""The [OCID] of the subscription to unsubscribe from.""")
 @cli_util.option('--token', required=True, help=u"""The subscription confirmation token.""")
 @cli_util.option('--protocol', required=True, help=u"""The protocol used for the subscription.
@@ -307,7 +307,7 @@ def get_unsubscription(ctx, from_json, id, token, protocol):
 
 @subscription_group.command(name=cli_util.override('notification_data_plane.list_subscriptions.command_name', 'list'), help=u"""Lists the subscriptions in the specified compartment or topic.
 
-Transactions Per Minute (TPM) per-tenancy limit for this operation: 60.""")
+Transactions Per Minute (TPM) per-tenancy limit for this operation: 60. \n[Command Reference](listSubscriptions)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--topic-id', help=u"""Return all subscriptions that are subscribed to the given topic OCID. Either this query parameter or the compartmentId query parameter must be set.""")
 @cli_util.option('--page', help=u"""For list pagination. The value of the opc-next-page response header from the previous \"List\" call. For important details about how pagination works, see [List Pagination].""")
@@ -370,7 +370,7 @@ Message delivery rate limit per endpoint: 60 messages per minute for HTTP-based 
 
 Transactions Per Minute (TPM) per-tenancy limit for this operation: 60 per topic.
 
-For more information about publishing messages, see [Publishing Messages]. For steps to request a limit increase, see [Requesting a Service Limit Increase].""")
+For more information about publishing messages, see [Publishing Messages]. For steps to request a limit increase, see [Requesting a Service Limit Increase]. \n[Command Reference](publishMessage)""")
 @cli_util.option('--topic-id', required=True, help=u"""The [OCID] of the topic.""")
 @cli_util.option('--body', required=True, help=u"""The body of the message to be published. For `messageType` of JSON, a default key-value pair is required. Example: `{\"default\": \"Alarm breached\", \"Email\": \"Alarm breached: <url>\"}.` Avoid entering confidential information.""")
 @cli_util.option('--title', help=u"""The title of the message to be published. Avoid entering confidential information.""")
@@ -407,7 +407,7 @@ def publish_message(ctx, from_json, topic_id, body, title, message_type):
 
 @subscription_group.command(name=cli_util.override('notification_data_plane.resend_subscription_confirmation.command_name', 'resend-subscription-confirmation'), help=u"""Resends the confirmation details for the specified subscription.
 
-Transactions Per Minute (TPM) per-tenancy limit for this operation: 60.""")
+Transactions Per Minute (TPM) per-tenancy limit for this operation: 60. \n[Command Reference](resendSubscriptionConfirmation)""")
 @cli_util.option('--id', required=True, help=u"""The [OCID] of the subscription to resend the confirmation for.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -431,7 +431,7 @@ def resend_subscription_confirmation(ctx, from_json, id):
 
 @subscription_group.command(name=cli_util.override('notification_data_plane.update_subscription.command_name', 'update'), help=u"""Updates the specified subscription's configuration.
 
-Transactions Per Minute (TPM) per-tenancy limit for this operation: 60.""")
+Transactions Per Minute (TPM) per-tenancy limit for this operation: 60. \n[Command Reference](updateSubscription)""")
 @cli_util.option('--subscription-id', required=True, help=u"""The [OCID] of the subscription to update.""")
 @cli_util.option('--delivery-policy', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The delivery policy of the subscription. Stored as a JSON string.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].

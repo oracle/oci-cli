@@ -31,7 +31,7 @@ dts_service_cli.dts_service_group.add_command(transfer_device_root_group)
 transfer_device_root_group.add_command(transfer_device_group)
 
 
-@transfer_device_group.command(name=cli_util.override('transfer_device.create_transfer_device.command_name', 'create'), help=u"""Create a new Transfer Device""")
+@transfer_device_group.command(name=cli_util.override('transfer_device.create_transfer_device.command_name', 'create'), help=u"""Create a new Transfer Device \n[Command Reference](createTransferDevice)""")
 @cli_util.option('--id', required=True, help=u"""ID of the Transfer Job""")
 @cli_util.option('--serial-number', help=u"""""")
 @cli_util.option('--iscsi-iqn', help=u"""""")
@@ -64,7 +64,7 @@ def create_transfer_device(ctx, from_json, id, serial_number, iscsi_iqn):
     cli_util.render_response(result, ctx)
 
 
-@transfer_device_group.command(name=cli_util.override('transfer_device.delete_transfer_device.command_name', 'delete'), help=u"""deletes a transfer Device""")
+@transfer_device_group.command(name=cli_util.override('transfer_device.delete_transfer_device.command_name', 'delete'), help=u"""deletes a transfer Device \n[Command Reference](deleteTransferDevice)""")
 @cli_util.option('--id', required=True, help=u"""ID of the Transfer Job""")
 @cli_util.option('--transfer-device-label', required=True, help=u"""Label of the Transfer Device""")
 @cli_util.confirm_delete_option
@@ -91,7 +91,7 @@ def delete_transfer_device(ctx, from_json, id, transfer_device_label):
     cli_util.render_response(result, ctx)
 
 
-@transfer_device_group.command(name=cli_util.override('transfer_device.get_transfer_device.command_name', 'get'), help=u"""Describes a transfer package in detail""")
+@transfer_device_group.command(name=cli_util.override('transfer_device.get_transfer_device.command_name', 'get'), help=u"""Describes a transfer package in detail \n[Command Reference](getTransferDevice)""")
 @cli_util.option('--id', required=True, help=u"""ID of the Transfer Job""")
 @cli_util.option('--transfer-device-label', required=True, help=u"""Label of the Transfer Device""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -117,7 +117,7 @@ def get_transfer_device(ctx, from_json, id, transfer_device_label):
     cli_util.render_response(result, ctx)
 
 
-@transfer_device_group.command(name=cli_util.override('transfer_device.list_transfer_devices.command_name', 'list'), help=u"""Lists Transfer Devices associated with a transferJob""")
+@transfer_device_group.command(name=cli_util.override('transfer_device.list_transfer_devices.command_name', 'list'), help=u"""Lists Transfer Devices associated with a transferJob \n[Command Reference](listTransferDevices)""")
 @cli_util.option('--id', required=True, help=u"""ID of the Transfer Job""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["PREPARING", "READY", "PACKAGED", "ACTIVE", "PROCESSING", "COMPLETE", "MISSING", "ERROR", "DELETED", "CANCELLED"]), help=u"""filtering by lifecycleState""")
 @cli_util.option('--display-name', help=u"""filtering by displayName""")
@@ -145,7 +145,7 @@ def list_transfer_devices(ctx, from_json, all_pages, id, lifecycle_state, displa
     cli_util.render_response(result, ctx)
 
 
-@transfer_device_group.command(name=cli_util.override('transfer_device.update_transfer_device.command_name', 'update'), help=u"""Updates a Transfer Device""")
+@transfer_device_group.command(name=cli_util.override('transfer_device.update_transfer_device.command_name', 'update'), help=u"""Updates a Transfer Device \n[Command Reference](updateTransferDevice)""")
 @cli_util.option('--id', required=True, help=u"""ID of the Transfer Job""")
 @cli_util.option('--transfer-device-label', required=True, help=u"""Label of the Transfer Device""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["PREPARING", "READY", "CANCELLED"]), help=u"""""")

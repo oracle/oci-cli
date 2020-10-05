@@ -61,7 +61,7 @@ nosql_root_group.add_command(work_request_group)
 nosql_root_group.add_command(table_group)
 
 
-@table_group.command(name=cli_util.override('nosql.change_table_compartment.command_name', 'change-compartment'), help=u"""Change a table's compartment.""")
+@table_group.command(name=cli_util.override('nosql.change_table_compartment.command_name', 'change-compartment'), help=u"""Change a table's compartment. \n[Command Reference](changeTableCompartment)""")
 @cli_util.option('--table-name-or-id', required=True, help=u"""A table name within the compartment, or a table OCID.""")
 @cli_util.option('--to-compartment-id', required=True, help=u"""The OCID of the table's new compartment.""")
 @cli_util.option('--from-compartment-id', help=u"""The OCID of the table's current compartment.  Required if the tableNameOrId path parameter is a table name. Optional if tableNameOrId is an OCID.  If tableNameOrId is an OCID, and fromCompartmentId is supplied, the latter must match the identified table's current compartmentId.""")
@@ -122,7 +122,7 @@ def change_table_compartment(ctx, from_json, wait_for_state, max_wait_seconds, w
     cli_util.render_response(result, ctx)
 
 
-@index_group.command(name=cli_util.override('nosql.create_index.command_name', 'create'), help=u"""Create a new index on the table identified by tableNameOrId.""")
+@index_group.command(name=cli_util.override('nosql.create_index.command_name', 'create'), help=u"""Create a new index on the table identified by tableNameOrId. \n[Command Reference](createIndex)""")
 @cli_util.option('--table-name-or-id', required=True, help=u"""A table name within the compartment, or a table OCID.""")
 @cli_util.option('--name', required=True, help=u"""Index name.""")
 @cli_util.option('--keys', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""A set of keys for a secondary index.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -186,7 +186,7 @@ def create_index(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
     cli_util.render_response(result, ctx)
 
 
-@table_group.command(name=cli_util.override('nosql.create_table.command_name', 'create'), help=u"""Create a new table.""")
+@table_group.command(name=cli_util.override('nosql.create_table.command_name', 'create'), help=u"""Create a new table. \n[Command Reference](createTable)""")
 @cli_util.option('--name', required=True, help=u"""Table name.""")
 @cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier.""")
 @cli_util.option('--ddl-statement', required=True, help=u"""Complete CREATE TABLE DDL statement.""")
@@ -249,7 +249,7 @@ def create_table(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
     cli_util.render_response(result, ctx)
 
 
-@index_group.command(name=cli_util.override('nosql.delete_index.command_name', 'delete'), help=u"""Delete an index from the table identified by tableNameOrId.""")
+@index_group.command(name=cli_util.override('nosql.delete_index.command_name', 'delete'), help=u"""Delete an index from the table identified by tableNameOrId. \n[Command Reference](deleteIndex)""")
 @cli_util.option('--table-name-or-id', required=True, help=u"""A table name within the compartment, or a table OCID.""")
 @cli_util.option('--index-name', required=True, help=u"""The name of a table's index.""")
 @cli_util.option('--compartment-id', help=u"""The ID of a table's compartment. When a table is identified by name, the compartmentId is often needed to provide context for interpreting the name.""")
@@ -312,7 +312,7 @@ def delete_index(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
     cli_util.render_response(result, ctx)
 
 
-@row_group.command(name=cli_util.override('nosql.delete_row.command_name', 'delete'), help=u"""Delete a single row from the table, by primary key.""")
+@row_group.command(name=cli_util.override('nosql.delete_row.command_name', 'delete'), help=u"""Delete a single row from the table, by primary key. \n[Command Reference](deleteRow)""")
 @cli_util.option('--table-name-or-id', required=True, help=u"""A table name within the compartment, or a table OCID.""")
 @cli_util.option('--key', required=True, multiple=True, help=u"""An array of strings, each of the format \"column-name:value\", representing the primary key of the row.""")
 @cli_util.option('--compartment-id', help=u"""The ID of a table's compartment. When a table is identified by name, the compartmentId is often needed to provide context for interpreting the name.""")
@@ -349,7 +349,7 @@ def delete_row(ctx, from_json, table_name_or_id, key, compartment_id, is_get_ret
     cli_util.render_response(result, ctx)
 
 
-@table_group.command(name=cli_util.override('nosql.delete_table.command_name', 'delete'), help=u"""Delete a table by tableNameOrId.""")
+@table_group.command(name=cli_util.override('nosql.delete_table.command_name', 'delete'), help=u"""Delete a table by tableNameOrId. \n[Command Reference](deleteTable)""")
 @cli_util.option('--table-name-or-id', required=True, help=u"""A table name within the compartment, or a table OCID.""")
 @cli_util.option('--compartment-id', help=u"""The ID of a table's compartment. When a table is identified by name, the compartmentId is often needed to provide context for interpreting the name.""")
 @cli_util.option('--is-if-exists', type=click.BOOL, help=u"""Set as true to select \"if exists\" behavior.""")
@@ -407,7 +407,7 @@ def delete_table(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
     cli_util.render_response(result, ctx)
 
 
-@work_request_group.command(name=cli_util.override('nosql.delete_work_request.command_name', 'delete'), help=u"""Cancel a work request operation with the given ID.""")
+@work_request_group.command(name=cli_util.override('nosql.delete_work_request.command_name', 'delete'), help=u"""Cancel a work request operation with the given ID. \n[Command Reference](deleteWorkRequest)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The ID of the asynchronous request.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -459,7 +459,7 @@ def delete_work_request(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     cli_util.render_response(result, ctx)
 
 
-@index_group.command(name=cli_util.override('nosql.get_index.command_name', 'get'), help=u"""Get information about a single index.""")
+@index_group.command(name=cli_util.override('nosql.get_index.command_name', 'get'), help=u"""Get information about a single index. \n[Command Reference](getIndex)""")
 @cli_util.option('--table-name-or-id', required=True, help=u"""A table name within the compartment, or a table OCID.""")
 @cli_util.option('--index-name', required=True, help=u"""The name of a table's index.""")
 @cli_util.option('--compartment-id', help=u"""The ID of a table's compartment. When a table is identified by name, the compartmentId is often needed to provide context for interpreting the name.""")
@@ -489,7 +489,7 @@ def get_index(ctx, from_json, table_name_or_id, index_name, compartment_id):
     cli_util.render_response(result, ctx)
 
 
-@row_group.command(name=cli_util.override('nosql.get_row.command_name', 'get'), help=u"""Get a single row from the table by primary key.""")
+@row_group.command(name=cli_util.override('nosql.get_row.command_name', 'get'), help=u"""Get a single row from the table by primary key. \n[Command Reference](getRow)""")
 @cli_util.option('--table-name-or-id', required=True, help=u"""A table name within the compartment, or a table OCID.""")
 @cli_util.option('--key', required=True, multiple=True, help=u"""An array of strings, each of the format \"column-name:value\", representing the primary key of the row.""")
 @cli_util.option('--compartment-id', help=u"""The ID of a table's compartment. When a table is identified by name, the compartmentId is often needed to provide context for interpreting the name.""")
@@ -522,7 +522,7 @@ def get_row(ctx, from_json, table_name_or_id, key, compartment_id, consistency, 
     cli_util.render_response(result, ctx)
 
 
-@table_group.command(name=cli_util.override('nosql.get_table.command_name', 'get'), help=u"""Get table info by identifier.""")
+@table_group.command(name=cli_util.override('nosql.get_table.command_name', 'get'), help=u"""Get table info by identifier. \n[Command Reference](getTable)""")
 @cli_util.option('--table-name-or-id', required=True, help=u"""A table name within the compartment, or a table OCID.""")
 @cli_util.option('--compartment-id', help=u"""The ID of a table's compartment. When a table is identified by name, the compartmentId is often needed to provide context for interpreting the name.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -547,7 +547,7 @@ def get_table(ctx, from_json, table_name_or_id, compartment_id):
     cli_util.render_response(result, ctx)
 
 
-@work_request_group.command(name=cli_util.override('nosql.get_work_request.command_name', 'get'), help=u"""Get the status of the work request with the given ID.""")
+@work_request_group.command(name=cli_util.override('nosql.get_work_request.command_name', 'get'), help=u"""Get the status of the work request with the given ID. \n[Command Reference](getWorkRequest)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The ID of the asynchronous request.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -569,7 +569,7 @@ def get_work_request(ctx, from_json, work_request_id):
     cli_util.render_response(result, ctx)
 
 
-@index_group.command(name=cli_util.override('nosql.list_indexes.command_name', 'list'), help=u"""Get a list of indexes on a table.""")
+@index_group.command(name=cli_util.override('nosql.list_indexes.command_name', 'list'), help=u"""Get a list of indexes on a table. \n[Command Reference](listIndexes)""")
 @cli_util.option('--table-name-or-id', required=True, help=u"""A table name within the compartment, or a table OCID.""")
 @cli_util.option('--compartment-id', help=u"""The ID of a table's compartment. When a table is identified by name, the compartmentId is often needed to provide context for interpreting the name.""")
 @cli_util.option('--name', help=u"""A shell-globbing-style (*?[]) filter for names.""")
@@ -635,7 +635,7 @@ def list_indexes(ctx, from_json, all_pages, page_size, table_name_or_id, compart
     cli_util.render_response(result, ctx)
 
 
-@table_group.command(name=cli_util.override('nosql.list_table_usage.command_name', 'list-table-usage'), help=u"""Get table usage info.""")
+@table_group.command(name=cli_util.override('nosql.list_table_usage.command_name', 'list-table-usage'), help=u"""Get table usage info. \n[Command Reference](listTableUsage)""")
 @cli_util.option('--table-name-or-id', required=True, help=u"""A table name within the compartment, or a table OCID.""")
 @cli_util.option('--compartment-id', help=u"""The ID of a table's compartment. When a table is identified by name, the compartmentId is often needed to provide context for interpreting the name.""")
 @cli_util.option('--time-start', type=custom_types.CLI_DATETIME, help=u"""The start time to use for the request. If no time range is set for this request, the most recent complete usage record is returned.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -695,7 +695,7 @@ def list_table_usage(ctx, from_json, all_pages, page_size, table_name_or_id, com
     cli_util.render_response(result, ctx)
 
 
-@table_group.command(name=cli_util.override('nosql.list_tables.command_name', 'list'), help=u"""Get a list of tables in a compartment.""")
+@table_group.command(name=cli_util.override('nosql.list_tables.command_name', 'list'), help=u"""Get a list of tables in a compartment. \n[Command Reference](listTables)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The ID of a table's compartment.""")
 @cli_util.option('--name', help=u"""A shell-globbing-style (*?[]) filter for names.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -755,7 +755,7 @@ def list_tables(ctx, from_json, all_pages, page_size, compartment_id, name, limi
     cli_util.render_response(result, ctx)
 
 
-@work_request_group.command(name=cli_util.override('nosql.list_work_request_errors.command_name', 'list-work-request-errors'), help=u"""Return a (paginated) list of errors for a given work request.""")
+@work_request_group.command(name=cli_util.override('nosql.list_work_request_errors.command_name', 'list-work-request-errors'), help=u"""Return a (paginated) list of errors for a given work request. \n[Command Reference](listWorkRequestErrors)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The ID of the asynchronous request.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -806,7 +806,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     cli_util.render_response(result, ctx)
 
 
-@work_request_group.command(name=cli_util.override('nosql.list_work_request_logs.command_name', 'list-work-request-logs'), help=u"""Return a (paginated) list of logs for a given work request.""")
+@work_request_group.command(name=cli_util.override('nosql.list_work_request_logs.command_name', 'list-work-request-logs'), help=u"""Return a (paginated) list of logs for a given work request. \n[Command Reference](listWorkRequestLogs)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The ID of the asynchronous request.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -857,7 +857,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     cli_util.render_response(result, ctx)
 
 
-@work_request_group.command(name=cli_util.override('nosql.list_work_requests.command_name', 'list'), help=u"""List the work requests in a compartment.""")
+@work_request_group.command(name=cli_util.override('nosql.list_work_requests.command_name', 'list'), help=u"""List the work requests in a compartment. \n[Command Reference](listWorkRequests)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The ID of a table's compartment.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -905,7 +905,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, pag
     cli_util.render_response(result, ctx)
 
 
-@query_result_collection_group.command(name=cli_util.override('nosql.prepare_statement.command_name', 'prepare-statement'), help=u"""Prepare a SQL statement for use in a query with variable substitution.""")
+@query_result_collection_group.command(name=cli_util.override('nosql.prepare_statement.command_name', 'prepare-statement'), help=u"""Prepare a SQL statement for use in a query with variable substitution. \n[Command Reference](prepareStatement)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The ID of a table's compartment.""")
 @cli_util.option('--statement', required=True, help=u"""A NoSQL SQL statement.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -926,7 +926,7 @@ def prepare_statement(ctx, from_json, compartment_id, statement):
     cli_util.render_response(result, ctx)
 
 
-@query_result_collection_group.command(name=cli_util.override('nosql.query.command_name', 'query'), help=u"""Execute a SQL query.""")
+@query_result_collection_group.command(name=cli_util.override('nosql.query.command_name', 'query'), help=u"""Execute a SQL query. \n[Command Reference](query)""")
 @cli_util.option('--compartment-id', required=True, help=u"""Compartment OCID, to provide context for a table name in the given statement.""")
 @cli_util.option('--statement', required=True, help=u"""A NoSQL SQL query statement; or a Base64-encoded prepared statement.""")
 @cli_util.option('--is-prepared', type=click.BOOL, help=u"""If true, the statement is a prepared statement.""")
@@ -977,7 +977,7 @@ def query(ctx, from_json, compartment_id, statement, is_prepared, consistency, m
     cli_util.render_response(result, ctx)
 
 
-@query_result_collection_group.command(name=cli_util.override('nosql.summarize_statement.command_name', 'summarize-statement'), help=u"""Check the syntax and return a brief summary of a SQL statement.""")
+@query_result_collection_group.command(name=cli_util.override('nosql.summarize_statement.command_name', 'summarize-statement'), help=u"""Check the syntax and return a brief summary of a SQL statement. \n[Command Reference](summarizeStatement)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The ID of a table's compartment.""")
 @cli_util.option('--statement', required=True, help=u"""A NoSQL SQL statement.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -998,7 +998,7 @@ def summarize_statement(ctx, from_json, compartment_id, statement):
     cli_util.render_response(result, ctx)
 
 
-@row_group.command(name=cli_util.override('nosql.update_row.command_name', 'update'), help=u"""Write a single row into the table.""")
+@row_group.command(name=cli_util.override('nosql.update_row.command_name', 'update'), help=u"""Write a single row into the table. \n[Command Reference](updateRow)""")
 @cli_util.option('--table-name-or-id', required=True, help=u"""A table name within the compartment, or a table OCID.""")
 @cli_util.option('--value', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The map of values from a row.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--compartment-id', help=u"""The OCID of the table's compartment.  Required if the tableNameOrId path parameter is a table name. Optional if tableNameOrId is an OCID.  If tableNameOrId is an OCID, and compartmentId is supplied, the latter must match the identified table's compartmentId.""")
@@ -1066,7 +1066,7 @@ def update_row(ctx, from_json, force, table_name_or_id, value, compartment_id, o
     cli_util.render_response(result, ctx)
 
 
-@table_group.command(name=cli_util.override('nosql.update_table.command_name', 'update'), help=u"""Alter the table identified by tableNameOrId, changing schema, limits, or tags""")
+@table_group.command(name=cli_util.override('nosql.update_table.command_name', 'update'), help=u"""Alter the table identified by tableNameOrId, changing schema, limits, or tags \n[Command Reference](updateTable)""")
 @cli_util.option('--table-name-or-id', required=True, help=u"""A table name within the compartment, or a table OCID.""")
 @cli_util.option('--compartment-id', help=u"""The OCID of the table's current compartment.  Required if the tableNameOrId path parameter is a table name. Optional if tableNameOrId is an OCID.  If tableNameOrId is an OCID, and compartmentId is supplied, the latter must match the identified table's compartmentId.""")
 @cli_util.option('--ddl-statement', help=u"""Complete ALTER TABLE DDL statement.""")

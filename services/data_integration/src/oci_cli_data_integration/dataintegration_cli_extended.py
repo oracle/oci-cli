@@ -23,7 +23,7 @@ create_connection_args = [
     'description',
     'object_status',
     'connection_properties',
-    'registry_metadata',
+    'registry_metadata'
 ]
 
 
@@ -82,6 +82,26 @@ def create_connection_extended(ctx, **kwargs):
             }
         )
         ctx.invoke(dataintegration_cli.create_connection_create_connection_from_oracle, **oracle_db_args)
+    elif 'model_type' in kwargs and kwargs['model_type'] == 'MYSQL_CONNECTION':
+        mysql_args = {}
+        mysql_args.update(common_args)
+        mysql_args.update(
+            {
+                'username': kwargs['username'],
+                'password': kwargs['password']
+            }
+        )
+        ctx.invoke(dataintegration_cli.create_connection_create_connection_from_my_sql, **mysql_args)
+    elif 'model_type' in kwargs and kwargs['model_type'] == 'GENERIC_JDBC_CONNECTION':
+        generic_jdbc_args = {}
+        generic_jdbc_args.update(common_args)
+        generic_jdbc_args.update(
+            {
+                'username': kwargs['username'],
+                'password': kwargs['password']
+            }
+        )
+        ctx.invoke(dataintegration_cli.create_connection_create_connection_from_jdbc, **generic_jdbc_args)
 
 
 dataintegration_cli.connection_group.commands.pop(dataintegration_cli.update_connection_update_connection_from_object_storage.name)
@@ -164,6 +184,26 @@ def update_connection_extended(ctx, **kwargs):
             }
         )
         ctx.invoke(dataintegration_cli.update_connection_update_connection_from_oracle, **oracle_db_args)
+    elif 'model_type' in kwargs and kwargs['model_type'] == 'MYSQL_CONNECTION':
+        mysql_args = {}
+        mysql_args.update(common_args)
+        mysql_args.update(
+            {
+                'username': kwargs['username'],
+                'password': kwargs['password']
+            }
+        )
+        ctx.invoke(dataintegration_cli.update_connection_update_connection_from_my_sql, **mysql_args)
+    elif 'model_type' in kwargs and kwargs['model_type'] == 'GENERIC_JDBC_CONNECTION':
+        generic_jdbc_args = {}
+        generic_jdbc_args.update(common_args)
+        generic_jdbc_args.update(
+            {
+                'username': kwargs['username'],
+                'password': kwargs['password']
+            }
+        )
+        ctx.invoke(dataintegration_cli.update_connection_update_connection_from_jdbc, **generic_jdbc_args)
 
 
 dataintegration_cli.data_asset_group.commands.pop(dataintegration_cli.create_data_asset_create_data_asset_from_object_storage.name)
@@ -196,6 +236,7 @@ create_data_asset_args = [
 @cli_util.option('--host', help=copy_help_from_generated_code(dataintegration_cli.create_data_asset_create_data_asset_from_oracle, 'host', remove_required=True))
 @cli_util.option('--port', help=copy_help_from_generated_code(dataintegration_cli.create_data_asset_create_data_asset_from_oracle, 'port', remove_required=True))
 @cli_util.option('--sid', help=copy_help_from_generated_code(dataintegration_cli.create_data_asset_create_data_asset_from_oracle, 'sid', remove_required=True))
+@cli_util.option('--data-asset-type', help=u"""The data asset type for the generic JDBC data asset.""")
 @dataintegration_cli.data_asset_group.command(name=cli_util.override('data_integration.create_data_asset.command_name', 'create'), help=u"""Creates a data asset with default connection.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'asset-properties': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'default-connection': {'module': 'data_integration', 'class': 'CreateConnectionFromObjectStorage'}}, output_type={'module': 'data_integration', 'class': 'DataAsset'})
@@ -253,6 +294,30 @@ def create_data_asset_extended(ctx, **kwargs):
             }
         )
         ctx.invoke(dataintegration_cli.create_data_asset_create_data_asset_from_oracle, **oracle_db_args)
+    elif 'model_type' in kwargs and kwargs['model_type'] == 'MYSQL_DATA_ASSET':
+        mysql_args = {}
+        mysql_args.update(common_args)
+        mysql_args.update(
+            {
+                'host': kwargs['host'],
+                'port': kwargs['port'],
+                'service_name': kwargs['service_name'],
+                'default_connection': kwargs['default_connection']
+            }
+        )
+        ctx.invoke(dataintegration_cli.create_data_asset_create_data_asset_from_my_sql, **mysql_args)
+    elif 'model_type' in kwargs and kwargs['model_type'] == 'GENERIC_JDBC_DATA_ASSET':
+        generic_jdbc_args = {}
+        generic_jdbc_args.update(common_args)
+        generic_jdbc_args.update(
+            {
+                'host': kwargs['host'],
+                'port': kwargs['port'],
+                'data_asset_type': kwargs['data_asset_type'],
+                'default_connection': kwargs['default_connection']
+            }
+        )
+        ctx.invoke(dataintegration_cli.create_data_asset_create_data_asset_from_jdbc, **generic_jdbc_args)
 
 
 dataintegration_cli.data_asset_group.commands.pop(dataintegration_cli.update_data_asset_update_data_asset_from_object_storage.name)
@@ -290,6 +355,7 @@ update_data_asset_args = [
 @cli_util.option('--host', help=copy_help_from_generated_code(dataintegration_cli.update_data_asset_update_data_asset_from_oracle, 'host', remove_required=True))
 @cli_util.option('--port', help=copy_help_from_generated_code(dataintegration_cli.update_data_asset_update_data_asset_from_oracle, 'port', remove_required=True))
 @cli_util.option('--sid', help=copy_help_from_generated_code(dataintegration_cli.update_data_asset_update_data_asset_from_oracle, 'sid', remove_required=True))
+@cli_util.option('--data-asset-type', help=u"""The data asset type for the generic JDBC data asset.""")
 @dataintegration_cli.data_asset_group.command(name=cli_util.override('data_integration.update_data_asset.command_name', 'update'), help=u"""Updates a specific data asset with default connection.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'asset-properties': {'module': 'data_integration', 'class': 'dict(str, string)'}, 'registry-metadata': {'module': 'data_integration', 'class': 'RegistryMetadata'}, 'default-connection': {'module': 'data_integration', 'class': 'CreateConnectionFromObjectStorage'}}, output_type={'module': 'data_integration', 'class': 'DataAsset'})
@@ -347,6 +413,30 @@ def update_data_asset_extended(ctx, **kwargs):
             }
         )
         ctx.invoke(dataintegration_cli.update_data_asset_update_data_asset_from_oracle, **oracle_db_args)
+    elif 'model_type' in kwargs and kwargs['model_type'] == 'MYSQL_DATA_ASSET':
+        mysql_args = {}
+        mysql_args.update(common_args)
+        mysql_args.update(
+            {
+                'host': kwargs['host'],
+                'port': kwargs['port'],
+                'service_name': kwargs['service_name'],
+                'default_connection': kwargs['default_connection']
+            }
+        )
+        ctx.invoke(dataintegration_cli.update_data_asset_update_data_asset_from_my_sql, **mysql_args)
+    elif 'model_type' in kwargs and kwargs['model_type'] == 'GENERIC_JDBC_DATA_ASSET':
+        generic_jdbc_args = {}
+        generic_jdbc_args.update(common_args)
+        generic_jdbc_args.update(
+            {
+                'host': kwargs['host'],
+                'port': kwargs['port'],
+                'data_asset_type': kwargs['data_asset_type'],
+                'default_connection': kwargs['default_connection']
+            }
+        )
+        ctx.invoke(dataintegration_cli.update_data_asset_update_data_asset_from_jdbc, **generic_jdbc_args)
 
 
 @cli_util.copy_params_from_generated_command(dataintegration_cli.delete_connection_validation, params_to_exclude=['connection_validation_key'])
@@ -438,3 +528,15 @@ dataintegration_cli.connection_validation_group.commands.pop(dataintegration_cli
 dataintegration_cli.connection_validation_group.commands.pop(dataintegration_cli.create_connection_validation_create_connection_from_adwc.name)
 dataintegration_cli.connection_validation_group.commands.pop(dataintegration_cli.create_connection_validation_create_connection_from_oracle.name)
 dataintegration_cli.connection_validation_group.commands.pop(dataintegration_cli.create_connection_validation_create_connection_from_object_storage.name)
+dataintegration_cli.connection_validation_group.commands.pop(dataintegration_cli.create_connection_validation_create_connection_from_my_sql.name)
+dataintegration_cli.connection_validation_group.commands.pop(dataintegration_cli.create_connection_validation_create_connection_from_jdbc.name)
+dataintegration_cli.connection_validation_group.commands.pop(dataintegration_cli.create_connection_validation_create_data_asset_from_my_sql.name)
+dataintegration_cli.connection_validation_group.commands.pop(dataintegration_cli.create_connection_validation_create_data_asset_from_jdbc.name)
+dataintegration_cli.connection_group.commands.pop(dataintegration_cli.create_connection_create_connection_from_jdbc.name)
+dataintegration_cli.connection_group.commands.pop(dataintegration_cli.create_connection_create_connection_from_my_sql.name)
+dataintegration_cli.connection_group.commands.pop(dataintegration_cli.update_connection_update_connection_from_jdbc.name)
+dataintegration_cli.connection_group.commands.pop(dataintegration_cli.update_connection_update_connection_from_my_sql.name)
+dataintegration_cli.data_asset_group.commands.pop(dataintegration_cli.create_data_asset_create_data_asset_from_jdbc.name)
+dataintegration_cli.data_asset_group.commands.pop(dataintegration_cli.create_data_asset_create_data_asset_from_my_sql.name)
+dataintegration_cli.data_asset_group.commands.pop(dataintegration_cli.update_data_asset_update_data_asset_from_jdbc.name)
+dataintegration_cli.data_asset_group.commands.pop(dataintegration_cli.update_data_asset_update_data_asset_from_my_sql.name)

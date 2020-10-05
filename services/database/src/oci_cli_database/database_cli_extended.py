@@ -57,6 +57,8 @@ database_cli.db_root_group.commands.pop(database_cli.ocp_us_group.name)
 cli_util.rename_command(database_cli, database_cli.autonomous_database_group, database_cli.create_autonomous_database_create_autonomous_database_from_backup_details, "create-from-backup-id")
 cli_util.rename_command(database_cli, database_cli.autonomous_database_group, database_cli.create_autonomous_database_create_autonomous_database_from_backup_timestamp_details, "create-from-backup-timestamp")
 
+cli_util.rename_command(database_cli, database_cli.autonomous_container_database_group, database_cli.rotate_autonomous_container_database_encryption_key, "rotate-key")
+cli_util.rename_command(database_cli, database_cli.autonomous_database_group, database_cli.rotate_autonomous_database_encryption_key, "rotate-key")
 
 # wallet commands
 
@@ -72,6 +74,10 @@ cli_util.rename_command(database_cli, database_cli.autonomous_database_group, da
 # Exadata shape prefix.
 # Example for Exadata shapes: Exadata.Quarter1.84, Exadata.Half1.168, ExadataCC.Base3.48, ExadataCC.Quarter3.100
 EXADATA_SHAPE_PREFIX = 'Exadata'
+
+# Cloud Vm Cluster id prefix
+CLOUD_VM_CLUSTER_PREFIX = 'cloudvmcluster'
+DB_SYSTEM_PREFIX = 'dbsystem'
 
 cli_util.rename_command(database_cli, database_cli.autonomous_database_group, database_cli.create_autonomous_database_create_refreshable_autonomous_database_clone_details, "create-refreshable-clone")
 
@@ -391,7 +397,8 @@ def create_database(ctx, **kwargs):
 
 @cli_util.copy_params_from_generated_command(database_cli.create_db_home, params_to_exclude=['database', 'display_name', 'db_version', 'source'])
 @database_cli.database_group.command(name='create-from-backup', help="""Creates a new database in the given DB System from a backup.""")
-@cli_util.option('--db-system-id', required=False, help="""The Db System Id to restore this database under.""")
+@cli_util.option('--vm-cluster-id', required=False, help="""The Vm Cluster Id to create this database under. Either --db-system-id or --vm-cluster-id must be specified, but if both are passed, --vm-cluster-id will be ignored.""")
+@cli_util.option('--db-system-id', required=False, help="""The Db System Id to restore this database under. Either --db-system-id or --vm-cluster-id must be specified, but if both are passed, --vm-cluster-id will be ignored.""")
 @cli_util.option('--admin-password', required=True, help="""A strong password for SYS, SYSTEM, and PDB Admin. The password must be at least nine characters and contain at least two uppercase, two lowercase, two numbers, and two special characters. The special characters must be _, #, or -.""")
 @cli_util.option('--backup-id', required=True, help="""The backup OCID.""")
 @cli_util.option('--backup-tde-password', required=True, help="""The password to open the TDE wallet.""")
@@ -401,7 +408,21 @@ def create_database(ctx, **kwargs):
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'DatabaseSummary'})
 @cli_util.wrap_exceptions
 def create_database_from_backup(ctx, **kwargs):
-    create_db_home_with_system_details = oci.database.models.CreateDbHomeWithDbSystemIdFromBackupDetails()
+
+    if 'db_system_id' in kwargs and kwargs['db_system_id']:
+        create_db_home_with_system_details = oci.database.models.CreateDbHomeWithDbSystemIdFromBackupDetails()
+        create_db_home_with_system_details.db_system_id = kwargs['db_system_id']
+        create_db_home_with_system_details.source = 'DB_BACKUP'
+
+    else:
+        if 'vm_cluster_id' in kwargs and kwargs['vm_cluster_id']:
+            create_db_home_with_system_details = oci.database.models.CreateDbHomeWithVmClusterIdFromBackupDetails()
+            create_db_home_with_system_details.vm_cluster_id = kwargs['vm_cluster_id']
+            create_db_home_with_system_details.source = 'VM_CLUSTER_BACKUP'
+        else:
+            click.echo(message="Missing a required parameter. Either --db-system-id or --vm-cluster-id must be specified.", file=sys.stderr)
+            sys.exit(1)
+
     create_database_details = oci.database.models.CreateDatabaseFromBackupDetails()
     if 'admin_password' in kwargs and kwargs['admin_password']:
         create_database_details.admin_password = kwargs['admin_password']
@@ -418,15 +439,10 @@ def create_database_from_backup(ctx, **kwargs):
     if 'db_unique_name' in kwargs and kwargs['db_unique_name']:
         create_database_details.db_unique_name = kwargs['db_unique_name']
 
-    create_db_home_with_system_details.database = create_database_details
-
-    if 'db_system_id' in kwargs and kwargs['db_system_id']:
-        create_db_home_with_system_details.db_system_id = kwargs['db_system_id']
-
     if 'database_software_image_id' in kwargs and kwargs['database_software_image_id']:
         create_db_home_with_system_details.database_software_image_id = kwargs['database_software_image_id']
 
-    create_db_home_with_system_details.source = 'DB_BACKUP'
+    create_db_home_with_system_details.database = create_database_details
 
     client = cli_util.build_client('database', 'database', ctx)
 
@@ -443,8 +459,7 @@ def create_database_from_backup(ctx, **kwargs):
         click.echo("Failed retrieving database info after successfully creation.  You can view the status of databases in this DB system by executing: oci db database list -c {comp_id} --db-system-id {db_sys_id} ".format(comp_id=compartment_id, db_sys_id=kwargs['db_system_id']), file=sys.stderr)
         sys.exit(1)
 
-    # there is only one database per db-home
-    # so just return the first database in this newly created db-home
+    # Return the first database in this newly created db-home
     database = result.data[0]
 
     cli_util.render(database, None, ctx)
@@ -617,13 +632,23 @@ def delete_database(ctx, **kwargs):
     # available deletes the entire db-home, so check to make sure
     # this is the only database in the db-home before deleting
     response = client.get_db_home(db_home_id)
+    vm_cluster_id = response.data.vm_cluster_id
+    if vm_cluster_id is not None:
+        if CLOUD_VM_CLUSTER_PREFIX in vm_cluster_id or DB_SYSTEM_PREFIX in vm_cluster_id:
+            # If vm_cluster_id is not null and includes 'cloudvmcluster' or 'dbsystem' for migrated case
+            # It is a cloud vm cluster and shape will be Exadata only
+            db_system_shape = EXADATA_SHAPE_PREFIX
 
-    # For Exacc db homes, vm_cluster_id will be not null while for other type of db homes, db_system_id will be not null
-    if response.data.vm_cluster_id is not None:
-        get_db_system_response = client.get_vm_cluster(response.data.vm_cluster_id)
+        else:
+            # For Exacc db homes, vm_cluster_id will be not null
+            get_db_system_response = client.get_vm_cluster(response.data.vm_cluster_id)
+            db_system_shape = get_db_system_response.data.shape
+
     else:
+        # For dbSystem db homes, db_system_id will be not null
         get_db_system_response = client.get_db_system(response.data.db_system_id)
-    db_system_shape = get_db_system_response.data.shape
+        db_system_shape = get_db_system_response.data.shape
+
     response = client.list_databases(db_home_id=db_home_id, compartment_id=compartment_id)
     # For Exadata systems delete database is called
     if EXADATA_SHAPE_PREFIX in db_system_shape:
@@ -1025,24 +1050,188 @@ def list_patch_history_entries_by_database(ctx, **kwargs):
     ctx.invoke(database_cli.list_db_home_patch_history_entries, **kwargs)
 
 
+# Rename Exacs New resource model names
+cli_util.rename_command(database_cli, database_cli.db_root_group, database_cli.cloud_exadata_infrastructure_group, "cloud-exa-infra")
+cli_util.rename_command(database_cli, database_cli.cloud_vm_cluster_group, database_cli.get_cloud_vm_cluster_iorm_config, "get-exadata-iorm-config")
+cli_util.rename_command(database_cli, database_cli.cloud_vm_cluster_group, database_cli.update_cloud_vm_cluster_iorm_config, "update-exadata-iorm-config")
+cli_util.rename_command(database_cli, database_cli.db_system_group, database_cli.migrate_exadata_db_system_resource_model, "switch")
+
+# move update, update-history to cloud vm cluster group
+cli_util.rename_command(database_cli, database_cli.update_group, database_cli.get_cloud_vm_cluster_update, "get-update")
+cli_util.rename_command(database_cli, database_cli.update_group, database_cli.list_cloud_vm_cluster_updates, "list-updates")
+cli_util.rename_command(database_cli, database_cli.update_history_entry_group, database_cli.get_cloud_vm_cluster_update_history_entry, "get-update-history")
+cli_util.rename_command(database_cli, database_cli.update_history_entry_group, database_cli.list_cloud_vm_cluster_update_history_entries, "list-update-histories")
+database_cli.cloud_vm_cluster_group.add_command(database_cli.get_cloud_vm_cluster_update)
+database_cli.cloud_vm_cluster_group.add_command(database_cli.list_cloud_vm_cluster_updates)
+database_cli.cloud_vm_cluster_group.add_command(database_cli.get_cloud_vm_cluster_update_history_entry)
+database_cli.cloud_vm_cluster_group.add_command(database_cli.list_cloud_vm_cluster_update_history_entries)
+database_cli.db_root_group.commands.pop(database_cli.update_group.name)
+database_cli.db_root_group.commands.pop(database_cli.update_history_entry_group.name)
+
+
+@cli_util.copy_params_from_generated_command(database_cli.create_cloud_vm_cluster, params_to_exclude=['cloud_exadata_infrastructure_id', 'is_sparse_diskgroup_enabled', 'is_local_backup_enabled', 'ssh_public_keys'])
+@database_cli.cloud_vm_cluster_group.command('create', help=database_cli.create_cloud_vm_cluster.help)
+@cli_util.option('--cloud-exa-infra-id', required=True, help=u"""The [OCID] of the cloud Exadata infrastructure.""")
+@cli_util.option('--is-sparse-diskgroup', type=click.BOOL, help=u"""If true, the sparse disk group is configured for the cloud VM cluster. If false, the sparse disk group is not created.""")
+@cli_util.option('--is-local-backup', type=click.BOOL, help=u"""If true, database backup on local Exadata storage is configured for the cloud VM cluster. If false, database backup on local Exadata storage is not available in the cloud VM cluster.""")
+@cli_util.option('--ssh-authorized-keys-file', required=True, type=click.File('r'), help="""A file containing one or more public SSH keys to use for SSH access to the Cloud VM Cluster. Use a newline character to separate multiple keys. The length of the combined keys cannot exceed 10,000 characters.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'ssh-public-keys': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'backup-network-nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'CloudVmCluster'})
+@cli_util.wrap_exceptions
+def create_cloud_vm_cluster(ctx, **kwargs):
+    kwargs['cloud_exadata_infrastructure_id'] = kwargs['cloud_exa_infra_id']
+    kwargs['is_sparse_diskgroup_enabled'] = kwargs['is_sparse_diskgroup']
+    kwargs['is_local_backup_enabled'] = kwargs['is_local_backup']
+
+    if 'ssh_authorized_keys_file' in kwargs and kwargs['ssh_authorized_keys_file']:
+        content = [line.rstrip('\n') for line in kwargs['ssh_authorized_keys_file']]
+        kwargs['ssh_public_keys'] = json.dumps(content)
+
+    kwargs.pop('cloud_exa_infra_id')
+    kwargs.pop('is_sparse_diskgroup')
+    kwargs.pop('is_local_backup')
+    kwargs.pop('ssh_authorized_keys_file')
+
+    ctx.invoke(database_cli.create_cloud_vm_cluster, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(database_cli.change_cloud_exadata_infrastructure_compartment, params_to_exclude=['cloud_exadata_infrastructure_id'])
+@database_cli.cloud_exadata_infrastructure_group.command('change-compartment', help=database_cli.change_cloud_exadata_infrastructure_compartment.help)
+@cli_util.option('--cloud-exa-infra-id', required=True, help=u"""The [OCID] of the cloud Exadata infrastructure.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_cloud_exadata_infrastructure_compartment(ctx, **kwargs):
+    kwargs['cloud_exadata_infrastructure_id'] = kwargs['cloud_exa_infra_id']
+    kwargs.pop('cloud_exa_infra_id')
+
+    ctx.invoke(database_cli.change_cloud_exadata_infrastructure_compartment, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(database_cli.list_cloud_vm_clusters, params_to_exclude=['cloud_exadata_infrastructure_id'])
+@database_cli.cloud_vm_cluster_group.command('list', help=database_cli.list_cloud_vm_clusters.help)
+@cli_util.option('--cloud-exa-infra-id', help=u"""If provided, filters the results for the given Cloud Exadata Infrastructure.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'list[CloudVmClusterSummary]'})
+@cli_util.wrap_exceptions
+def list_cloud_vm_clusters(ctx, **kwargs):
+    kwargs['cloud_exadata_infrastructure_id'] = kwargs['cloud_exa_infra_id']
+    kwargs.pop('cloud_exa_infra_id')
+
+    ctx.invoke(database_cli.list_cloud_vm_clusters, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(database_cli.update_cloud_vm_cluster, params_to_exclude=['ssh_public_keys', 'update_details'])
+@database_cli.cloud_vm_cluster_group.command(name='update', help=database_cli.update_cloud_vm_cluster.help)
+@cli_util.option('--update-action', help="""The action to perform on the update.""")
+@cli_util.option('--update-id', help="""The [OCID](/Content/General/Concepts/identifiers.htm) of the maintenance update.""")
+@cli_util.option('--ssh-authorized-keys-file', type=click.File('r'), help="""A file containing one or more public SSH keys to use for SSH access to the cloud VM cluster. Use a newline character to separate multiple keys. The length of the combined keys cannot exceed 10,000 characters.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'ssh-public-keys': {'module': 'database', 'class': 'list[string]'}, 'update-details': {'module': 'database', 'class': 'UpdateDetails'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'backup-network-nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'compute-nodes': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'CloudVmCluster'})
+@cli_util.wrap_exceptions
+def update_cloud_vm_cluster(ctx, **kwargs):
+    if 'ssh_authorized_keys_file' in kwargs and kwargs['ssh_authorized_keys_file']:
+        content = [line.rstrip('\n') for line in kwargs['ssh_authorized_keys_file']]
+        kwargs['ssh_public_keys'] = json.dumps(content)
+
+    update_action = kwargs.get('update_action')
+    update_id = kwargs.get('update_id')
+    if update_action and not update_id:
+        raise click.UsageError('--update-id is required if --update-action is specified')
+    elif update_id and not update_action:
+        raise click.UsageError('--update-action is required if --update-id is specified')
+    elif update_id and update_action:
+        kwargs['update_details'] = {
+            "updateAction": update_action,
+            "updateId": update_id
+        }
+
+    # remove kwargs that update cloud vm cluster wont recognize
+    del kwargs['ssh_authorized_keys_file']
+    del kwargs['update_action']
+    del kwargs['update_id']
+
+    ctx.invoke(database_cli.update_cloud_vm_cluster, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(database_cli.delete_cloud_exadata_infrastructure, params_to_exclude=['cloud_exadata_infrastructure_id'])
+@database_cli.cloud_exadata_infrastructure_group.command('delete', help=database_cli.delete_cloud_exadata_infrastructure.help)
+@cli_util.option('--cloud-exa-infra-id', required=True, help=u"""The [OCID] of the cloud Exadata infrastructure.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_cloud_exadata_infrastructure(ctx, **kwargs):
+    kwargs['cloud_exadata_infrastructure_id'] = kwargs['cloud_exa_infra_id']
+    kwargs.pop('cloud_exa_infra_id')
+
+    ctx.invoke(database_cli.delete_cloud_exadata_infrastructure, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(database_cli.get_cloud_exadata_infrastructure, params_to_exclude=['cloud_exadata_infrastructure_id'])
+@database_cli.cloud_exadata_infrastructure_group.command('get', help=database_cli.get_cloud_exadata_infrastructure.help)
+@cli_util.option('--cloud-exa-infra-id', required=True, help=u"""The [OCID] of the cloud Exadata infrastructure.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'CloudExadataInfrastructure'})
+@cli_util.wrap_exceptions
+def get_cloud_exadata_infrastructure(ctx, **kwargs):
+    kwargs['cloud_exadata_infrastructure_id'] = kwargs['cloud_exa_infra_id']
+    kwargs.pop('cloud_exa_infra_id')
+
+    ctx.invoke(database_cli.get_cloud_exadata_infrastructure, **kwargs)
+
+
+@cli_util.copy_params_from_generated_command(database_cli.update_cloud_exadata_infrastructure, params_to_exclude=['cloud_exadata_infrastructure_id'])
+@database_cli.cloud_exadata_infrastructure_group.command('update', help=database_cli.update_cloud_exadata_infrastructure.help)
+@cli_util.option('--cloud-exa-infra-id', required=True, help=u"""The [OCID] of the cloud Exadata infrastructure.""")
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'maintenance-window': {'module': 'database', 'class': 'MaintenanceWindow'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'CloudExadataInfrastructure'})
+@cli_util.wrap_exceptions
+def update_cloud_exadata_infrastructure(ctx, **kwargs):
+    kwargs['cloud_exadata_infrastructure_id'] = kwargs['cloud_exa_infra_id']
+    kwargs.pop('cloud_exa_infra_id')
+
+    ctx.invoke(database_cli.update_cloud_exadata_infrastructure, **kwargs)
+
+
 @cli_util.copy_params_from_generated_command(database_cli.create_db_home, params_to_exclude=['database', 'db_version'])
-@database_cli.db_home_group.command(name='create', help="""Creates a new database in the given DB System.""")
-@cli_util.option('--db-system-id', required=True, help="""The Db System Id to create this Db Home under.""")
-@cli_util.option('--db-version', required=True, help="""A valid Oracle database version. To get a list of supported versions, use the command 'oci db version list'.""")
+@database_cli.db_home_group.command(name='create', help="""Creates a new database in the given DB System or VM Cluster.""")
+@cli_util.option('--vm-cluster-id', required=False, help="""The Vm Cluster Id to create this Db Home under. Either --db-system-id or --vm-cluster-id must be specified, but if both are passed, --vm-cluster-id will be ignored.""")
+@cli_util.option('--db-system-id', required=False, help="""The Db System Id to restore this Db Home under. Either --db-system-id or --vm-cluster-id must be specified, but if both are passed, --vm-cluster-id will be ignored.""")
+@cli_util.option('--db-version', required=False, help="""A valid Oracle database version. To get a list of supported versions, use the command 'oci db version list'.""")
 @cli_util.option('--display-name', help=u"""The user-provided name of the database home.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'backup-destination': {'module': 'database', 'class': 'list[BackupDestinationDetails]'}}, output_type={'module': 'database', 'class': 'DatabaseSummary'})
 @cli_util.wrap_exceptions
 def create_db_home(ctx, **kwargs):
-    db_home_details = oci.database.models.CreateDbHomeWithDbSystemIdDetails()
-    db_home_details.db_system_id = kwargs['db_system_id']
-    db_home_details.db_version = kwargs['db_version']
+    client = cli_util.build_client('database', 'database', ctx)
+
+    if 'db_system_id' in kwargs and kwargs['db_system_id']:
+        db_home_details = oci.database.models.CreateDbHomeWithDbSystemIdDetails()
+        db_home_details.db_system_id = kwargs['db_system_id']
+        get_db_system_response = client.get_db_system(kwargs['db_system_id'])
+
+    else:
+        if 'vm_cluster_id' in kwargs and kwargs['vm_cluster_id']:
+            vm_cluster_id = kwargs['vm_cluster_id']
+            db_home_details = oci.database.models.CreateDbHomeWithVmClusterIdDetails()
+            db_home_details.vm_cluster_id = vm_cluster_id
+            if CLOUD_VM_CLUSTER_PREFIX in vm_cluster_id or DB_SYSTEM_PREFIX in vm_cluster_id:
+                # Call get_cloud_vm_cluster for (migrated) cloud vm cluster
+                get_db_system_response = client.get_cloud_vm_cluster(vm_cluster_id)
+            else:
+                # Call get_vm_cluster for exacc vm cluster
+                get_db_system_response = client.get_vm_cluster(vm_cluster_id)
+
+        else:
+            click.echo(message="Missing a required parameter. Either --db-system-id or --vm-cluster-id must be specified.", file=sys.stderr)
+            sys.exit(1)
+
+    if kwargs['db_version'] is not None:
+        db_home_details.db_version = kwargs['db_version']
     if kwargs['database_software_image_id'] is not None:
         db_home_details.database_software_image_id = kwargs['database_software_image_id']
     if kwargs['display_name'] is not None:
         db_home_details.display_name = kwargs['display_name']
-    client = cli_util.build_client('database', 'database', ctx)
-    get_db_system_response = client.get_db_system(kwargs['db_system_id'])
     db_system_shape = get_db_system_response.data.shape
     # For Exadata systems create db home is called
     if EXADATA_SHAPE_PREFIX in db_system_shape:
@@ -1059,6 +1248,7 @@ def create_db_home(ctx, **kwargs):
 # db-home update is excluded from the db-home command group
 database_cli.db_home_group.commands.pop(database_cli.create_db_home.name)
 database_cli.db_home_group.commands.pop(database_cli.create_db_home_create_db_home_with_db_system_id_from_backup_details.name)
+database_cli.db_home_group.commands.pop(database_cli.create_db_home_create_db_home_with_vm_cluster_id_from_backup_details.name)
 database_cli.db_home_group.commands.pop(database_cli.create_db_home_create_db_home_with_db_system_id_details.name)
 database_cli.db_home_group.commands.pop(database_cli.create_db_home_create_db_home_with_vm_cluster_id_details.name)
 database_cli.db_home_group.commands.pop(database_cli.create_db_home_create_db_home_with_db_system_id_from_database_details.name)

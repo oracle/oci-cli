@@ -31,7 +31,7 @@ support_service_cli.support_service_group.add_command(user_root_group)
 user_root_group.add_command(user_group)
 
 
-@user_group.command(name=cli_util.override('user.create_user.command_name', 'create'), help=u"""Create user to request Customer Support Identifier(CSI) to Customer User Administrator(CUA).""")
+@user_group.command(name=cli_util.override('user.create_user.command_name', 'create'), help=u"""Create user to request Customer Support Identifier(CSI) to Customer User Administrator(CUA). \n[Command Reference](createUser)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the tenancy.""")
 @cli_util.option('--first-name', required=True, help=u"""First name of the user.""")
 @cli_util.option('--last-name', required=True, help=u"""Last name of the user.""")

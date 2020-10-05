@@ -55,7 +55,7 @@ kms_crypto_root_group.add_command(encrypted_data_group)
 
 @decrypted_data_group.command(name=cli_util.override('kms_crypto.decrypt.command_name', 'decrypt'), help=u"""Decrypts data using the given [DecryptDataDetails] resource.
 
-The top level --endpoint parameter must be supplied for this operation.""")
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](decrypt)""")
 @cli_util.option('--ciphertext', required=True, help=u"""The encrypted data to decrypt.""")
 @cli_util.option('--key-id', required=True, help=u"""The OCID of the key used to encrypt the ciphertext.""")
 @cli_util.option('--associated-data', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Information that can be used to provide an encryption context for the encrypted data. The length of the string representation of the associated data must be fewer than 4096 characters.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -90,7 +90,7 @@ def decrypt(ctx, from_json, ciphertext, key_id, associated_data, logging_context
 
 @encrypted_data_group.command(name=cli_util.override('kms_crypto.encrypt.command_name', 'encrypt'), help=u"""Encrypts data using the given [EncryptDataDetails] resource. Plaintext included in the example request is a base64-encoded value of a UTF-8 string.
 
-The top level --endpoint parameter must be supplied for this operation.""")
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](encrypt)""")
 @cli_util.option('--key-id', required=True, help=u"""The OCID of the key to encrypt with.""")
 @cli_util.option('--plaintext', required=True, help=u"""The plaintext data to encrypt.""")
 @cli_util.option('--associated-data', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Information that can be used to provide an encryption context for the encrypted data. The length of the string representation of the associated data must be fewer than 4096 characters.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -125,7 +125,7 @@ def encrypt(ctx, from_json, key_id, plaintext, associated_data, logging_context)
 
 @exported_key_data_group.command(name=cli_util.override('kms_crypto.export_key.command_name', 'export-key'), help=u"""Exports a specific version of a master encryption key according to the details of the request. For their protection, keys that you create and store on a hardware security module (HSM) can never leave the HSM. You can only export keys stored on the server. For export, the key version is encrypted by an RSA public key that you provide.
 
-The top level --endpoint parameter must be supplied for this operation.""")
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](exportKey)""")
 @cli_util.option('--key-id', required=True, help=u"""The OCID of the master encryption key associated with the key version you want to export.""")
 @cli_util.option('--algorithm', required=True, type=custom_types.CliCaseInsensitiveChoice(["RSA_OAEP_AES_SHA256", "RSA_OAEP_SHA256"]), help=u"""The encryption algorithm to use to encrypt exportable key material from a software-backed key. Specifying `RSA_OAEP_AES_SHA256` invokes the RSA AES key wrap mechanism, which generates a temporary AES key. The temporary AES key is wrapped by the RSA public wrapping key provided along with the request, creating a wrapped temporary AES key. The temporary AES key is also used to wrap the exportable key material. The wrapped temporary AES key and the wrapped exportable key material are concatenated, producing concatenated blob output that jointly represents them. Specifying `RSA_OAEP_SHA256` means that the software key is wrapped by the RSA public wrapping key provided along with the request.""")
 @cli_util.option('--public-key', required=True, help=u"""The PEM format of the 2048-bit, 3072-bit, or 4096-bit RSA wrapping key in your possession that you want to use to encrypt the key.""")
@@ -161,7 +161,7 @@ def export_key(ctx, from_json, key_id, algorithm, public_key, key_version_id, lo
 
 @generated_key_group.command(name=cli_util.override('kms_crypto.generate_data_encryption_key.command_name', 'generate-data-encryption-key'), help=u"""Generates a key that you can use to encrypt or decrypt data.
 
-The top level --endpoint parameter must be supplied for this operation.""")
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](generateDataEncryptionKey)""")
 @cli_util.option('--include-plaintext-key', required=True, type=click.BOOL, help=u"""If true, the generated key is also returned unencrypted.""")
 @cli_util.option('--key-id', required=True, help=u"""The OCID of the master encryption key to encrypt the generated data encryption key with.""")
 @cli_util.option('--key-shape', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)

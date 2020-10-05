@@ -48,7 +48,7 @@ kms_management_root_group.add_command(key_group)
 
 @key_group.command(name=cli_util.override('kms_management.backup_key.command_name', 'backup'), help=u"""Backs up an encrypted file that contains all key versions and metadata of the specified key so that you can restore the key later. The file also contains the metadata of the vault that the key belonged to.
 
-The top level --endpoint parameter must be supplied for this operation.""")
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](backupKey)""")
 @cli_util.option('--key-id', required=True, help=u"""The OCID of the key.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--backup-location', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -109,7 +109,7 @@ def backup_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
 
 @key_group.command(name=cli_util.override('kms_management.backup_key_backup_location_bucket.command_name', 'backup-key-backup-location-bucket'), help=u"""Backs up an encrypted file that contains all key versions and metadata of the specified key so that you can restore the key later. The file also contains the metadata of the vault that the key belonged to.
 
-The top level --endpoint parameter must be supplied for this operation.""")
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](backupKey)""")
 @cli_util.option('--key-id', required=True, help=u"""The OCID of the key.""")
 @cli_util.option('--backup-location-namespace', required=True, help=u"""""")
 @cli_util.option('--backup-location-bucket-name', required=True, help=u"""""")
@@ -175,7 +175,7 @@ def backup_key_backup_location_bucket(ctx, from_json, wait_for_state, max_wait_s
 
 @key_group.command(name=cli_util.override('kms_management.backup_key_backup_location_uri.command_name', 'backup-key-backup-location-uri'), help=u"""Backs up an encrypted file that contains all key versions and metadata of the specified key so that you can restore the key later. The file also contains the metadata of the vault that the key belonged to.
 
-The top level --endpoint parameter must be supplied for this operation.""")
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](backupKey)""")
 @cli_util.option('--key-id', required=True, help=u"""The OCID of the key.""")
 @cli_util.option('--backup-location-uri', required=True, help=u"""""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -239,7 +239,7 @@ def backup_key_backup_location_uri(ctx, from_json, wait_for_state, max_wait_seco
 
 As a provisioning operation, this call is subject to a Key Management limit that applies to the total number of requests across all provisioning write operations. Key Management might throttle this call to reject an otherwise valid request when the total rate of provisioning write operations exceeds 10 requests per second for a given tenancy.
 
-The top level --endpoint parameter must be supplied for this operation.""")
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](cancelKeyDeletion)""")
 @cli_util.option('--key-id', required=True, help=u"""The OCID of the key.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ENABLING", "ENABLED", "DISABLING", "DISABLED", "DELETING", "DELETED", "PENDING_DELETION", "SCHEDULING_DELETION", "CANCELLING_DELETION", "UPDATING", "BACKUP_IN_PROGRESS", "RESTORING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -294,7 +294,7 @@ def cancel_key_deletion(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 
 As a provisioning operation, this call is subject to a Key Management limit that applies to the total number of requests across all provisioning write operations. Key Management might throttle this call to reject an otherwise valid request when the total rate of provisioning write operations exceeds 10 requests per second for a given tenancy.
 
-The top level --endpoint parameter must be supplied for this operation.""")
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](cancelKeyVersionDeletion)""")
 @cli_util.option('--key-id', required=True, help=u"""The OCID of the key.""")
 @cli_util.option('--key-version-id', required=True, help=u"""The OCID of the key version.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -356,7 +356,7 @@ When provided, if-match is checked against the ETag values of the key.
 
 As a provisioning operation, this call is subject to a Key Management limit that applies to the total number of requests across all provisioning write operations. Key Management might throttle this call to reject an otherwise valid request when the total rate of provisioning write operations exceeds 10 requests per second for a given tenancy.
 
-The top level --endpoint parameter must be supplied for this operation.""")
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](changeKeyCompartment)""")
 @cli_util.option('--key-id', required=True, help=u"""The OCID of the key.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment that you want to move the key to.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -391,7 +391,7 @@ def change_key_compartment(ctx, from_json, key_id, compartment_id, if_match):
 
 As a management operation, this call is subject to a Key Management limit that applies to the total number of requests across all management write operations. Key Management might throttle this call to reject an otherwise valid request when the total rate of management write operations exceeds 10 requests per second for a given tenancy.
 
-The top level --endpoint parameter must be supplied for this operation.""")
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](createKey)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where you want to create the master encryption key.""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name for the key. It does not have to be unique, and it is changeable. Avoid entering confidential information.""")
 @cli_util.option('--key-shape', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -460,7 +460,7 @@ def create_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
 
 As a management operation, this call is subject to a Key Management limit that applies to the total number of requests across all  management write operations. Key Management might throttle this call to reject an otherwise valid request when the total rate of management write operations exceeds 10 requests per second for a given tenancy.
 
-The top level --endpoint parameter must be supplied for this operation.""")
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](createKeyVersion)""")
 @cli_util.option('--key-id', required=True, help=u"""The OCID of the key.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ENABLING", "ENABLED", "DISABLING", "DISABLED", "DELETING", "DELETED", "PENDING_DELETION", "SCHEDULING_DELETION", "CANCELLING_DELETION"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -512,7 +512,7 @@ def create_key_version(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
 As a management operation, this call is subject to a Key Management limit that applies to the total number of requests across all management write operations. Key Management might throttle this call to reject an otherwise valid request when the total rate of management write operations exceeds 10 requests per second for a given tenancy.
 
-The top level --endpoint parameter must be supplied for this operation.""")
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](disableKey)""")
 @cli_util.option('--key-id', required=True, help=u"""The OCID of the key.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ENABLING", "ENABLED", "DISABLING", "DISABLED", "DELETING", "DELETED", "PENDING_DELETION", "SCHEDULING_DELETION", "CANCELLING_DELETION", "UPDATING", "BACKUP_IN_PROGRESS", "RESTORING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -567,7 +567,7 @@ def disable_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 
 As a management operation, this call is subject to a Key Management limit that applies to the total number of requests across all management write operations. Key Management might throttle this call to reject an otherwise valid request when the total rate of management write operations exceeds 10 requests per second for a given tenancy.
 
-The top level --endpoint parameter must be supplied for this operation.""")
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](enableKey)""")
 @cli_util.option('--key-id', required=True, help=u"""The OCID of the key.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ENABLING", "ENABLED", "DISABLING", "DISABLED", "DELETING", "DELETED", "PENDING_DELETION", "SCHEDULING_DELETION", "CANCELLING_DELETION", "UPDATING", "BACKUP_IN_PROGRESS", "RESTORING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -622,7 +622,7 @@ def enable_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
 
 As a management operation, this call is subject to a Key Management limit that applies to the total number of requests across all management read operations. Key Management might throttle this call to reject an otherwise valid request when the total rate of management read operations exceeds 10 requests per second for a given tenancy.
 
-The top level --endpoint parameter must be supplied for this operation.""")
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](getKey)""")
 @cli_util.option('--key-id', required=True, help=u"""The OCID of the key.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -648,7 +648,7 @@ def get_key(ctx, from_json, key_id):
 
 As a management operation, this call is subject to a Key Management limit that applies to the total number of requests across all management read operations. Key Management might throttle this call to reject an otherwise valid request when the total rate of management read operations exceeds 10 requests per second for a given tenancy.
 
-The top level --endpoint parameter must be supplied for this operation.""")
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](getKeyVersion)""")
 @cli_util.option('--key-id', required=True, help=u"""The OCID of the key.""")
 @cli_util.option('--key-version-id', required=True, help=u"""The OCID of the key version.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -677,7 +677,7 @@ def get_key_version(ctx, from_json, key_id, key_version_id):
 
 @wrapping_key_group.command(name=cli_util.override('kms_management.get_wrapping_key.command_name', 'get'), help=u"""Gets details about the public RSA wrapping key associated with the vault in the endpoint. Each vault has an RSA key-pair that wraps and unwraps AES key material for import into Key Management.
 
-The top level --endpoint parameter must be supplied for this operation.""")
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](getWrappingKey)""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -696,7 +696,7 @@ def get_wrapping_key(ctx, from_json, ):
 
 @key_group.command(name=cli_util.override('kms_management.import_key.command_name', 'import'), help=u"""Imports AES key material to create a new key with. The key material must be base64-encoded and wrapped by the vault's public RSA wrapping key before you can import it. Key Management supports AES symmetric keys that are exactly 16, 24, or 32 bytes. Furthermore, the key length must match what you specify at the time of import.
 
-The top level --endpoint parameter must be supplied for this operation.""")
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](importKey)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains this key.""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name for the key. It does not have to be unique, and it is changeable. Avoid entering confidential information.""")
 @cli_util.option('--key-shape', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -739,7 +739,7 @@ def import_key(ctx, from_json, compartment_id, display_name, key_shape, wrapped_
 
 @key_version_group.command(name=cli_util.override('kms_management.import_key_version.command_name', 'import'), help=u"""Imports AES key material to create a new key version with, and then rotates the key to begin using the new key version. The key material must be base64-encoded and wrapped by the vault's public RSA wrapping key before you can import it. Key Management supports AES symmetric keys that are exactly 16, 24, or 32 bytes. Furthermore, the key length must match the length of the specified key and what you specify as the length at the time of import.
 
-The top level --endpoint parameter must be supplied for this operation.""")
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](importKeyVersion)""")
 @cli_util.option('--key-id', required=True, help=u"""The OCID of the key.""")
 @cli_util.option('--wrapped-import-key', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -779,7 +779,7 @@ def import_key_version(ctx, from_json, key_id, wrapped_import_key, defined_tags,
 
 As a management operation, this call is subject to a Key Management limit that applies to the total number of requests across all management read operations. Key Management might throttle this call to reject an otherwise valid request when the total rate of management read operations exceeds 10 requests per second for a given tenancy.
 
-The top level --endpoint parameter must be supplied for this operation.""")
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](listKeyVersions)""")
 @cli_util.option('--key-id', required=True, help=u"""The OCID of the key.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
@@ -840,7 +840,7 @@ def list_key_versions(ctx, from_json, all_pages, page_size, key_id, limit, page,
 
 As a management operation, this call is subject to a Key Management limit that applies to the total number of requests across all management read operations. Key Management might throttle this call to reject an otherwise valid request when the total rate of management read operations exceeds 10 requests per second for a given tenancy.
 
-The top level --endpoint parameter must be supplied for this operation.""")
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](listKeys)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
@@ -899,7 +899,7 @@ def list_keys(ctx, from_json, all_pages, page_size, compartment_id, limit, page,
 
 @key_group.command(name=cli_util.override('kms_management.restore_key_from_file.command_name', 'restore-key-from-file'), help=u"""Restores the specified key to the specified vault, based on information in the backup file provided. If the vault doesn't exist, the operation returns a response with a 404 HTTP status error code. You need to first restore the vault associated with the key.
 
-The top level --endpoint parameter must be supplied for this operation.""")
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](restoreKeyFromFile)""")
 @cli_util.option('--restore-key-from-file-details', required=True, help=u"""The encrypted backup file to upload to restore the key.""")
 @cli_util.option('--content-length', type=click.INT, help=u"""The content length of the body.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -933,7 +933,7 @@ def restore_key_from_file(ctx, from_json, restore_key_from_file_details, content
 
 @key_group.command(name=cli_util.override('kms_management.restore_key_from_object_store.command_name', 'restore-key-from-object-store'), help=u"""Restores the specified key to the specified vault from an Oracle Cloud Infrastructure Object Storage location. If the vault doesn't exist, the operation returns a response with a 404 HTTP status error code. You need to first restore the vault associated with the key.
 
-The top level --endpoint parameter must be supplied for this operation.""")
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](restoreKeyFromObjectStore)""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--backup-location', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'backup-location': {'module': 'key_management', 'class': 'BackupLocation'}})
@@ -963,7 +963,7 @@ def restore_key_from_object_store(ctx, from_json, if_match, backup_location):
 
 @key_group.command(name=cli_util.override('kms_management.restore_key_from_object_store_backup_location_bucket.command_name', 'restore-key-from-object-store-backup-location-bucket'), help=u"""Restores the specified key to the specified vault from an Oracle Cloud Infrastructure Object Storage location. If the vault doesn't exist, the operation returns a response with a 404 HTTP status error code. You need to first restore the vault associated with the key.
 
-The top level --endpoint parameter must be supplied for this operation.""")
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](restoreKeyFromObjectStore)""")
 @cli_util.option('--backup-location-namespace', required=True, help=u"""""")
 @cli_util.option('--backup-location-bucket-name', required=True, help=u"""""")
 @cli_util.option('--backup-location-object-name', required=True, help=u"""""")
@@ -998,7 +998,7 @@ def restore_key_from_object_store_backup_location_bucket(ctx, from_json, backup_
 
 @key_group.command(name=cli_util.override('kms_management.restore_key_from_object_store_backup_location_uri.command_name', 'restore-key-from-object-store-backup-location-uri'), help=u"""Restores the specified key to the specified vault from an Oracle Cloud Infrastructure Object Storage location. If the vault doesn't exist, the operation returns a response with a 404 HTTP status error code. You need to first restore the vault associated with the key.
 
-The top level --endpoint parameter must be supplied for this operation.""")
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](restoreKeyFromObjectStore)""")
 @cli_util.option('--backup-location-uri', required=True, help=u"""""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1031,7 +1031,7 @@ def restore_key_from_object_store_backup_location_uri(ctx, from_json, backup_loc
 
 As a provisioning operation, this call is subject to a Key Management limit that applies to the total number of requests across all provisioning write operations. Key Management might throttle this call to reject an otherwise valid request when the total rate of provisioning write operations exceeds 10 requests per second for a given tenancy.
 
-The top level --endpoint parameter must be supplied for this operation.""")
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](scheduleKeyDeletion)""")
 @cli_util.option('--key-id', required=True, help=u"""The OCID of the key.""")
 @cli_util.option('--time-of-deletion', type=custom_types.CLI_DATETIME, help=u"""An optional property to indicate when to delete the vault, expressed in [RFC 3339] timestamp format. The specified time must be between 7 and 30 days from when the request is received. If this property is missing, it will be set to 30 days from the time of the request by default.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -1094,7 +1094,7 @@ def schedule_key_deletion(ctx, from_json, wait_for_state, max_wait_seconds, wait
 
 As a provisioning operation, this call is subject to a Key Management limit that applies to the total number of requests across all provisioning write operations. Key Management might throttle this call to reject an otherwise valid request when the total rate of provisioning write operations exceeds 10 requests per second for a given tenancy.
 
-The top level --endpoint parameter must be supplied for this operation.""")
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](scheduleKeyVersionDeletion)""")
 @cli_util.option('--key-id', required=True, help=u"""The OCID of the key.""")
 @cli_util.option('--key-version-id', required=True, help=u"""The OCID of the key version.""")
 @cli_util.option('--time-of-deletion', type=custom_types.CLI_DATETIME, help=u"""An optional property to indicate when to delete the key version, expressed in [RFC 3339] timestamp format. The specified time must be between 7 and 30 days from the time when the request is received. If this property is missing, it will be set to 30 days from the time of the request by default.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -1162,7 +1162,7 @@ def schedule_key_version_deletion(ctx, from_json, wait_for_state, max_wait_secon
 
 As a management operation, this call is subject to a Key Management limit that applies to the total number of requests across all management write operations. Key Management might throttle this call to reject an otherwise valid request when the total rate of management write operations exceeds 10 requests per second for a given tenancy.
 
-The top level --endpoint parameter must be supplied for this operation.""")
+The top level --endpoint parameter must be supplied for this operation. \n[Command Reference](updateKey)""")
 @cli_util.option('--key-id', required=True, help=u"""The OCID of the key.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""A user-friendly name for the key. It does not have to be unique, and it is changeable. Avoid entering confidential information.""")

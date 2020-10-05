@@ -59,7 +59,7 @@ incident_root_group.add_command(incident_group)
 incident_root_group.add_command(status_group)
 
 
-@incident_group.command(name=cli_util.override('incident.create_incident.command_name', 'create'), help=u"""Enables the customer to create an support ticket.""")
+@incident_group.command(name=cli_util.override('incident.create_incident.command_name', 'create'), help=u"""Enables the customer to create an support ticket. \n[Command Reference](createIncident)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the tenancy.""")
 @cli_util.option('--ticket', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--problem-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["LIMIT", "LEGACY_LIMIT", "TECH", "ACCOUNT"]), help=u"""The kind of support ticket, such as a technical issue request.""")
@@ -105,7 +105,7 @@ def create_incident(ctx, from_json, compartment_id, ticket, problem_type, ocid, 
     cli_util.render_response(result, ctx)
 
 
-@incident_group.command(name=cli_util.override('incident.get_incident.command_name', 'get'), help=u"""Gets the details of the support ticket.""")
+@incident_group.command(name=cli_util.override('incident.get_incident.command_name', 'get'), help=u"""Gets the details of the support ticket. \n[Command Reference](getIncident)""")
 @cli_util.option('--incident-key', required=True, help=u"""Unique identifier for the support ticket.""")
 @cli_util.option('--csi', required=True, help=u"""The Customer Support Identifier associated with the support account.""")
 @cli_util.option('--ocid', required=True, help=u"""User OCID for Oracle Identity Cloud Service (IDCS) users who also have a federated Oracle Cloud Infrastructure account.""")
@@ -137,7 +137,7 @@ def get_incident(ctx, from_json, incident_key, csi, ocid, homeregion, problem_ty
     cli_util.render_response(result, ctx)
 
 
-@status_group.command(name=cli_util.override('incident.get_status.command_name', 'get'), help=u"""Gets the status of the service.""")
+@status_group.command(name=cli_util.override('incident.get_status.command_name', 'get'), help=u"""Gets the status of the service. \n[Command Reference](getStatus)""")
 @cli_util.option('--source', required=True, help=u"""The system that generated the support ticket, such as My Oracle Support.""")
 @cli_util.option('--ocid', required=True, help=u"""User OCID for Oracle Identity Cloud Service (IDCS) users who also have a federated Oracle Cloud Infrastructure account.""")
 @cli_util.option('--homeregion', help=u"""The region of the tenancy.""")
@@ -164,7 +164,7 @@ def get_status(ctx, from_json, source, ocid, homeregion):
     cli_util.render_response(result, ctx)
 
 
-@incident_resource_type_group.command(name=cli_util.override('incident.list_incident_resource_types.command_name', 'list'), help=u"""During support ticket creation, returns the list of all possible products that Oracle Cloud Infrastructure supports.""")
+@incident_resource_type_group.command(name=cli_util.override('incident.list_incident_resource_types.command_name', 'list'), help=u"""During support ticket creation, returns the list of all possible products that Oracle Cloud Infrastructure supports. \n[Command Reference](listIncidentResourceTypes)""")
 @cli_util.option('--problem-type', required=True, help=u"""The kind of support request.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the tenancy.""")
 @cli_util.option('--csi', required=True, help=u"""The Customer Support Identifier associated with the support account.""")
@@ -236,7 +236,7 @@ def list_incident_resource_types(ctx, from_json, all_pages, page_size, problem_t
     cli_util.render_response(result, ctx)
 
 
-@incident_group.command(name=cli_util.override('incident.list_incidents.command_name', 'list'), help=u"""Returns the list of support tickets raised by the tenancy.""")
+@incident_group.command(name=cli_util.override('incident.list_incidents.command_name', 'list'), help=u"""Returns the list of support tickets raised by the tenancy. \n[Command Reference](listIncidents)""")
 @cli_util.option('--csi', required=True, help=u"""The Customer Support Identifier associated with the support account.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the tenancy.""")
 @cli_util.option('--ocid', required=True, help=u"""User OCID for Oracle Identity Cloud Service (IDCS) users who also have a federated Oracle Cloud Infrastructure account.""")
@@ -307,7 +307,7 @@ def list_incidents(ctx, from_json, all_pages, page_size, csi, compartment_id, oc
     cli_util.render_response(result, ctx)
 
 
-@update_incident_group.command(name=cli_util.override('incident.update_incident.command_name', 'update-incident'), help=u"""Updates the specified support ticket's information.""")
+@update_incident_group.command(name=cli_util.override('incident.update_incident.command_name', 'update-incident'), help=u"""Updates the specified support ticket's information. \n[Command Reference](updateIncident)""")
 @cli_util.option('--incident-key', required=True, help=u"""Unique identifier for the support ticket.""")
 @cli_util.option('--csi', required=True, help=u"""The Customer Support Identifier associated with the support account.""")
 @cli_util.option('--ticket', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -350,7 +350,7 @@ def update_incident(ctx, from_json, force, incident_key, csi, ticket, ocid, if_m
     cli_util.render_response(result, ctx)
 
 
-@validation_response_group.command(name=cli_util.override('incident.validate_user.command_name', 'validate-user'), help=u"""Checks whether the requested user is valid.""")
+@validation_response_group.command(name=cli_util.override('incident.validate_user.command_name', 'validate-user'), help=u"""Checks whether the requested user is valid. \n[Command Reference](validateUser)""")
 @cli_util.option('--csi', required=True, help=u"""The Customer Support Identifier number for the support account.""")
 @cli_util.option('--ocid', required=True, help=u"""User OCID for Oracle Identity Cloud Service (IDCS) users who also have a federated Oracle Cloud Infrastructure account.""")
 @cli_util.option('--problem-type', help=u"""The kind of support request.""")

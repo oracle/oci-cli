@@ -80,7 +80,7 @@ os_management_root_group.add_command(work_request_summary_group)
 os_management_root_group.add_command(work_request_group)
 
 
-@software_source_group.command(name=cli_util.override('os_management.add_packages_to_software_source.command_name', 'add'), help=u"""Adds a given list of Software Packages to a specific Software Source.""")
+@software_source_group.command(name=cli_util.override('os_management.add_packages_to_software_source.command_name', 'add'), help=u"""Adds a given list of Software Packages to a specific Software Source. \n[Command Reference](addPackagesToSoftwareSource)""")
 @cli_util.option('--software-source-id', required=True, help=u"""The OCID of the software source.""")
 @cli_util.option('--package-names', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""the list of package names""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'package-names': {'module': 'os_management', 'class': 'list[string]'}})
@@ -108,7 +108,7 @@ def add_packages_to_software_source(ctx, from_json, software_source_id, package_
     cli_util.render_response(result, ctx)
 
 
-@managed_instance_group.command(name=cli_util.override('os_management.attach_child_software_source_to_managed_instance.command_name', 'attach'), help=u"""Adds a child software source to a managed instance. After the software source has been added, then packages from that software source can be installed on the managed instance.""")
+@managed_instance_group.command(name=cli_util.override('os_management.attach_child_software_source_to_managed_instance.command_name', 'attach'), help=u"""Adds a child software source to a managed instance. After the software source has been added, then packages from that software source can be installed on the managed instance. \n[Command Reference](attachChildSoftwareSourceToManagedInstance)""")
 @cli_util.option('--managed-instance-id', required=True, help=u"""OCID for the managed instance""")
 @cli_util.option('--software-source-id', required=True, help=u"""OCID for the Software Source""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -136,7 +136,7 @@ def attach_child_software_source_to_managed_instance(ctx, from_json, managed_ins
     cli_util.render_response(result, ctx)
 
 
-@managed_instance_group_group.command(name=cli_util.override('os_management.attach_managed_instance_to_managed_instance_group.command_name', 'attach'), help=u"""Adds a Managed Instance to a Managed Instance Group. After the Managed Instance has been added, then operations can be performed on the Managed Instance Group which will then apply to all Managed Instances in the group.""")
+@managed_instance_group_group.command(name=cli_util.override('os_management.attach_managed_instance_to_managed_instance_group.command_name', 'attach'), help=u"""Adds a Managed Instance to a Managed Instance Group. After the Managed Instance has been added, then operations can be performed on the Managed Instance Group which will then apply to all Managed Instances in the group. \n[Command Reference](attachManagedInstanceToManagedInstanceGroup)""")
 @cli_util.option('--managed-instance-group-id', required=True, help=u"""OCID for the managed instance group""")
 @cli_util.option('--managed-instance-id', required=True, help=u"""OCID for the managed instance""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -160,7 +160,7 @@ def attach_managed_instance_to_managed_instance_group(ctx, from_json, managed_in
     cli_util.render_response(result, ctx)
 
 
-@managed_instance_group.command(name=cli_util.override('os_management.attach_parent_software_source_to_managed_instance.command_name', 'attach'), help=u"""Adds a parent software source to a managed instance. After the software source has been added, then packages from that software source can be installed on the managed instance. Software sources that have this software source as a parent will be able to be added to this managed instance.""")
+@managed_instance_group.command(name=cli_util.override('os_management.attach_parent_software_source_to_managed_instance.command_name', 'attach'), help=u"""Adds a parent software source to a managed instance. After the software source has been added, then packages from that software source can be installed on the managed instance. Software sources that have this software source as a parent will be able to be added to this managed instance. \n[Command Reference](attachParentSoftwareSourceToManagedInstance)""")
 @cli_util.option('--managed-instance-id', required=True, help=u"""OCID for the managed instance""")
 @cli_util.option('--software-source-id', required=True, help=u"""OCID for the Software Source""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -188,7 +188,7 @@ def attach_parent_software_source_to_managed_instance(ctx, from_json, managed_in
     cli_util.render_response(result, ctx)
 
 
-@managed_instance_group_group.command(name=cli_util.override('os_management.change_managed_instance_group_compartment.command_name', 'change-compartment'), help=u"""Moves a resource into a different compartment. When provided, If-Match is checked against ETag values of the resource.""")
+@managed_instance_group_group.command(name=cli_util.override('os_management.change_managed_instance_group_compartment.command_name', 'change-compartment'), help=u"""Moves a resource into a different compartment. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeManagedInstanceGroupCompartment)""")
 @cli_util.option('--managed-instance-group-id', required=True, help=u"""OCID for the managed instance group""")
 @cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment into which the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -221,7 +221,7 @@ def change_managed_instance_group_compartment(ctx, from_json, managed_instance_g
     cli_util.render_response(result, ctx)
 
 
-@scheduled_job_group.command(name=cli_util.override('os_management.change_scheduled_job_compartment.command_name', 'change-compartment'), help=u"""Moves a resource into a different compartment. When provided, If-Match is checked against ETag values of the resource.""")
+@scheduled_job_group.command(name=cli_util.override('os_management.change_scheduled_job_compartment.command_name', 'change-compartment'), help=u"""Moves a resource into a different compartment. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeScheduledJobCompartment)""")
 @cli_util.option('--scheduled-job-id', required=True, help=u"""The ID of the scheduled job.""")
 @cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment into which the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -254,7 +254,7 @@ def change_scheduled_job_compartment(ctx, from_json, scheduled_job_id, compartme
     cli_util.render_response(result, ctx)
 
 
-@software_source_group.command(name=cli_util.override('os_management.change_software_source_compartment.command_name', 'change-compartment'), help=u"""Moves a resource into a different compartment. When provided, If-Match is checked against ETag values of the resource.""")
+@software_source_group.command(name=cli_util.override('os_management.change_software_source_compartment.command_name', 'change-compartment'), help=u"""Moves a resource into a different compartment. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changeSoftwareSourceCompartment)""")
 @cli_util.option('--software-source-id', required=True, help=u"""The OCID of the software source.""")
 @cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment into which the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -287,7 +287,7 @@ def change_software_source_compartment(ctx, from_json, software_source_id, compa
     cli_util.render_response(result, ctx)
 
 
-@managed_instance_group_group.command(name=cli_util.override('os_management.create_managed_instance_group.command_name', 'create'), help=u"""Creates a new Managed Instance Group on the management system. This will not contain any managed instances after it is first created, and they must be added later.""")
+@managed_instance_group_group.command(name=cli_util.override('os_management.create_managed_instance_group.command_name', 'create'), help=u"""Creates a new Managed Instance Group on the management system. This will not contain any managed instances after it is first created, and they must be added later. \n[Command Reference](createManagedInstanceGroup)""")
 @cli_util.option('--display-name', required=True, help=u"""Managed Instance Group identifier""")
 @cli_util.option('--compartment-id', required=True, help=u"""OCID for the Compartment""")
 @cli_util.option('--description', help=u"""Information specified by the user about the managed instance group""")
@@ -354,7 +354,7 @@ def create_managed_instance_group(ctx, from_json, wait_for_state, max_wait_secon
     cli_util.render_response(result, ctx)
 
 
-@scheduled_job_group.command(name=cli_util.override('os_management.create_scheduled_job.command_name', 'create'), help=u"""Creates a new Scheduled Job to perform a specific package operation on a set of managed instances or managed instance groups.  Can be created as a one-time execution in the future, or as a recurring execution that repeats on a defined interval.""")
+@scheduled_job_group.command(name=cli_util.override('os_management.create_scheduled_job.command_name', 'create'), help=u"""Creates a new Scheduled Job to perform a specific package operation on a set of managed instances or managed instance groups.  Can be created as a one-time execution in the future, or as a recurring execution that repeats on a defined interval. \n[Command Reference](createScheduledJob)""")
 @cli_util.option('--compartment-id', required=True, help=u"""OCID for the Compartment""")
 @cli_util.option('--display-name', required=True, help=u"""Scheduled Job name""")
 @cli_util.option('--schedule-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["ONETIME", "RECURRING"]), help=u"""the type of scheduling this Scheduled Job follows""")
@@ -461,7 +461,7 @@ def create_scheduled_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_
     cli_util.render_response(result, ctx)
 
 
-@software_source_group.command(name=cli_util.override('os_management.create_software_source.command_name', 'create'), help=u"""Creates a new custom Software Source on the management system. This will not contain any packages after it is first created, and they must be added later.""")
+@software_source_group.command(name=cli_util.override('os_management.create_software_source.command_name', 'create'), help=u"""Creates a new custom Software Source on the management system. This will not contain any packages after it is first created, and they must be added later. \n[Command Reference](createSoftwareSource)""")
 @cli_util.option('--compartment-id', required=True, help=u"""OCID for the Compartment""")
 @cli_util.option('--display-name', required=True, help=u"""User friendly name for the software source""")
 @cli_util.option('--arch-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["IA_32", "X86_64", "AARCH64", "SPARC", "AMD64_DEBIAN"]), help=u"""The architecture type supported by the Software Source""")
@@ -546,7 +546,7 @@ def create_software_source(ctx, from_json, wait_for_state, max_wait_seconds, wai
     cli_util.render_response(result, ctx)
 
 
-@managed_instance_group_group.command(name=cli_util.override('os_management.delete_managed_instance_group.command_name', 'delete'), help=u"""Deletes a Managed Instance Group from the management system""")
+@managed_instance_group_group.command(name=cli_util.override('os_management.delete_managed_instance_group.command_name', 'delete'), help=u"""Deletes a Managed Instance Group from the management system \n[Command Reference](deleteManagedInstanceGroup)""")
 @cli_util.option('--managed-instance-group-id', required=True, help=u"""OCID for the managed instance group""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -610,7 +610,7 @@ def delete_managed_instance_group(ctx, from_json, wait_for_state, max_wait_secon
     cli_util.render_response(result, ctx)
 
 
-@scheduled_job_group.command(name=cli_util.override('os_management.delete_scheduled_job.command_name', 'delete'), help=u"""Cancels an existing Scheduled Job on the management system""")
+@scheduled_job_group.command(name=cli_util.override('os_management.delete_scheduled_job.command_name', 'delete'), help=u"""Cancels an existing Scheduled Job on the management system \n[Command Reference](deleteScheduledJob)""")
 @cli_util.option('--scheduled-job-id', required=True, help=u"""The ID of the scheduled job.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -674,7 +674,7 @@ def delete_scheduled_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_
     cli_util.render_response(result, ctx)
 
 
-@software_source_group.command(name=cli_util.override('os_management.delete_software_source.command_name', 'delete'), help=u"""Deletes a custom Software Source on the management system""")
+@software_source_group.command(name=cli_util.override('os_management.delete_software_source.command_name', 'delete'), help=u"""Deletes a custom Software Source on the management system \n[Command Reference](deleteSoftwareSource)""")
 @cli_util.option('--software-source-id', required=True, help=u"""The OCID of the software source.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -738,7 +738,7 @@ def delete_software_source(ctx, from_json, wait_for_state, max_wait_seconds, wai
     cli_util.render_response(result, ctx)
 
 
-@managed_instance_group.command(name=cli_util.override('os_management.detach_child_software_source_from_managed_instance.command_name', 'detach'), help=u"""Removes a child software source from a managed instance. Packages will no longer be able to be installed from these software sources.""")
+@managed_instance_group.command(name=cli_util.override('os_management.detach_child_software_source_from_managed_instance.command_name', 'detach'), help=u"""Removes a child software source from a managed instance. Packages will no longer be able to be installed from these software sources. \n[Command Reference](detachChildSoftwareSourceFromManagedInstance)""")
 @cli_util.option('--managed-instance-id', required=True, help=u"""OCID for the managed instance""")
 @cli_util.option('--software-source-id', required=True, help=u"""OCID for the Software Source""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -766,7 +766,7 @@ def detach_child_software_source_from_managed_instance(ctx, from_json, managed_i
     cli_util.render_response(result, ctx)
 
 
-@managed_instance_group_group.command(name=cli_util.override('os_management.detach_managed_instance_from_managed_instance_group.command_name', 'detach'), help=u"""Removes a Managed Instance from a Managed Instance Group.""")
+@managed_instance_group_group.command(name=cli_util.override('os_management.detach_managed_instance_from_managed_instance_group.command_name', 'detach'), help=u"""Removes a Managed Instance from a Managed Instance Group. \n[Command Reference](detachManagedInstanceFromManagedInstanceGroup)""")
 @cli_util.option('--managed-instance-group-id', required=True, help=u"""OCID for the managed instance group""")
 @cli_util.option('--managed-instance-id', required=True, help=u"""OCID for the managed instance""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -790,7 +790,7 @@ def detach_managed_instance_from_managed_instance_group(ctx, from_json, managed_
     cli_util.render_response(result, ctx)
 
 
-@managed_instance_group.command(name=cli_util.override('os_management.detach_parent_software_source_from_managed_instance.command_name', 'detach'), help=u"""Removes a software source from a managed instance. All child software sources will also be removed from the managed instance. Packages will no longer be able to be installed from these software sources.""")
+@managed_instance_group.command(name=cli_util.override('os_management.detach_parent_software_source_from_managed_instance.command_name', 'detach'), help=u"""Removes a software source from a managed instance. All child software sources will also be removed from the managed instance. Packages will no longer be able to be installed from these software sources. \n[Command Reference](detachParentSoftwareSourceFromManagedInstance)""")
 @cli_util.option('--managed-instance-id', required=True, help=u"""OCID for the managed instance""")
 @cli_util.option('--software-source-id', required=True, help=u"""OCID for the Software Source""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -818,7 +818,7 @@ def detach_parent_software_source_from_managed_instance(ctx, from_json, managed_
     cli_util.render_response(result, ctx)
 
 
-@erratum_group.command(name=cli_util.override('os_management.get_erratum.command_name', 'get'), help=u"""Returns a specific erratum.""")
+@erratum_group.command(name=cli_util.override('os_management.get_erratum.command_name', 'get'), help=u"""Returns a specific erratum. \n[Command Reference](getErratum)""")
 @cli_util.option('--erratum-id', required=True, help=u"""The OCID of the erratum.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -840,7 +840,7 @@ def get_erratum(ctx, from_json, erratum_id):
     cli_util.render_response(result, ctx)
 
 
-@managed_instance_group.command(name=cli_util.override('os_management.get_managed_instance.command_name', 'get'), help=u"""Returns a specific Managed Instance.""")
+@managed_instance_group.command(name=cli_util.override('os_management.get_managed_instance.command_name', 'get'), help=u"""Returns a specific Managed Instance. \n[Command Reference](getManagedInstance)""")
 @cli_util.option('--managed-instance-id', required=True, help=u"""OCID for the managed instance""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -862,7 +862,7 @@ def get_managed_instance(ctx, from_json, managed_instance_id):
     cli_util.render_response(result, ctx)
 
 
-@managed_instance_group_group.command(name=cli_util.override('os_management.get_managed_instance_group.command_name', 'get'), help=u"""Returns a specific Managed Instance Group.""")
+@managed_instance_group_group.command(name=cli_util.override('os_management.get_managed_instance_group.command_name', 'get'), help=u"""Returns a specific Managed Instance Group. \n[Command Reference](getManagedInstanceGroup)""")
 @cli_util.option('--managed-instance-group-id', required=True, help=u"""OCID for the managed instance group""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -884,7 +884,7 @@ def get_managed_instance_group(ctx, from_json, managed_instance_group_id):
     cli_util.render_response(result, ctx)
 
 
-@scheduled_job_group.command(name=cli_util.override('os_management.get_scheduled_job.command_name', 'get'), help=u"""Gets the detailed information for the Scheduled Job with the given ID.""")
+@scheduled_job_group.command(name=cli_util.override('os_management.get_scheduled_job.command_name', 'get'), help=u"""Gets the detailed information for the Scheduled Job with the given ID. \n[Command Reference](getScheduledJob)""")
 @cli_util.option('--scheduled-job-id', required=True, help=u"""The ID of the scheduled job.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -906,7 +906,7 @@ def get_scheduled_job(ctx, from_json, scheduled_job_id):
     cli_util.render_response(result, ctx)
 
 
-@software_source_group.command(name=cli_util.override('os_management.get_software_package.command_name', 'get-software-package'), help=u"""Returns a specific Software Package.""")
+@software_source_group.command(name=cli_util.override('os_management.get_software_package.command_name', 'get-software-package'), help=u"""Returns a specific Software Package. \n[Command Reference](getSoftwarePackage)""")
 @cli_util.option('--software-source-id', required=True, help=u"""The OCID of the software source.""")
 @cli_util.option('--software-package-name', required=True, help=u"""The id of the software package.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -933,7 +933,7 @@ def get_software_package(ctx, from_json, software_source_id, software_package_na
     cli_util.render_response(result, ctx)
 
 
-@software_source_group.command(name=cli_util.override('os_management.get_software_source.command_name', 'get'), help=u"""Returns a specific Software Source.""")
+@software_source_group.command(name=cli_util.override('os_management.get_software_source.command_name', 'get'), help=u"""Returns a specific Software Source. \n[Command Reference](getSoftwareSource)""")
 @cli_util.option('--software-source-id', required=True, help=u"""The OCID of the software source.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -955,7 +955,7 @@ def get_software_source(ctx, from_json, software_source_id):
     cli_util.render_response(result, ctx)
 
 
-@windows_update_group.command(name=cli_util.override('os_management.get_windows_update.command_name', 'get'), help=u"""Returns a Windows Update object.""")
+@windows_update_group.command(name=cli_util.override('os_management.get_windows_update.command_name', 'get'), help=u"""Returns a Windows Update object. \n[Command Reference](getWindowsUpdate)""")
 @cli_util.option('--windows-update', required=True, help=u"""The Windows Update""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -977,7 +977,7 @@ def get_windows_update(ctx, from_json, windows_update):
     cli_util.render_response(result, ctx)
 
 
-@work_request_group.command(name=cli_util.override('os_management.get_work_request.command_name', 'get'), help=u"""Gets the detailed information for the work request with the given ID.""")
+@work_request_group.command(name=cli_util.override('os_management.get_work_request.command_name', 'get'), help=u"""Gets the detailed information for the work request with the given ID. \n[Command Reference](getWorkRequest)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The ID of the asynchronous request.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -999,7 +999,7 @@ def get_work_request(ctx, from_json, work_request_id):
     cli_util.render_response(result, ctx)
 
 
-@managed_instance_group.command(name=cli_util.override('os_management.install_all_package_updates_on_managed_instance.command_name', 'install-all-package-updates'), help=u"""Install all of the available package updates for the managed instance.""")
+@managed_instance_group.command(name=cli_util.override('os_management.install_all_package_updates_on_managed_instance.command_name', 'install-all-package-updates'), help=u"""Install all of the available package updates for the managed instance. \n[Command Reference](installAllPackageUpdatesOnManagedInstance)""")
 @cli_util.option('--managed-instance-id', required=True, help=u"""OCID for the managed instance""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELLING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -1047,7 +1047,7 @@ def install_all_package_updates_on_managed_instance(ctx, from_json, wait_for_sta
     cli_util.render_response(result, ctx)
 
 
-@managed_instance_group.command(name=cli_util.override('os_management.install_all_windows_updates_on_managed_instance.command_name', 'install-all-windows-updates'), help=u"""Install all of the available Windows updates for the managed instance.""")
+@managed_instance_group.command(name=cli_util.override('os_management.install_all_windows_updates_on_managed_instance.command_name', 'install-all-windows-updates'), help=u"""Install all of the available Windows updates for the managed instance. \n[Command Reference](installAllWindowsUpdatesOnManagedInstance)""")
 @cli_util.option('--managed-instance-id', required=True, help=u"""OCID for the managed instance""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELLING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -1095,7 +1095,7 @@ def install_all_windows_updates_on_managed_instance(ctx, from_json, wait_for_sta
     cli_util.render_response(result, ctx)
 
 
-@managed_instance_group.command(name=cli_util.override('os_management.install_package_on_managed_instance.command_name', 'install-package'), help=u"""Installs a package on a managed instance.""")
+@managed_instance_group.command(name=cli_util.override('os_management.install_package_on_managed_instance.command_name', 'install-package'), help=u"""Installs a package on a managed instance. \n[Command Reference](installPackageOnManagedInstance)""")
 @cli_util.option('--managed-instance-id', required=True, help=u"""OCID for the managed instance""")
 @cli_util.option('--software-package-name', required=True, help=u"""Package name""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELLING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -1145,7 +1145,7 @@ def install_package_on_managed_instance(ctx, from_json, wait_for_state, max_wait
     cli_util.render_response(result, ctx)
 
 
-@managed_instance_group.command(name=cli_util.override('os_management.install_package_update_on_managed_instance.command_name', 'install-package-update'), help=u"""Updates a package on a managed instance.""")
+@managed_instance_group.command(name=cli_util.override('os_management.install_package_update_on_managed_instance.command_name', 'install-package-update'), help=u"""Updates a package on a managed instance. \n[Command Reference](installPackageUpdateOnManagedInstance)""")
 @cli_util.option('--managed-instance-id', required=True, help=u"""OCID for the managed instance""")
 @cli_util.option('--software-package-name', required=True, help=u"""Package name""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELLING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -1195,7 +1195,7 @@ def install_package_update_on_managed_instance(ctx, from_json, wait_for_state, m
     cli_util.render_response(result, ctx)
 
 
-@managed_instance_group.command(name=cli_util.override('os_management.install_windows_update_on_managed_instance.command_name', 'install-windows-update'), help=u"""Installs a Windows update on a managed instance.""")
+@managed_instance_group.command(name=cli_util.override('os_management.install_windows_update_on_managed_instance.command_name', 'install-windows-update'), help=u"""Installs a Windows update on a managed instance. \n[Command Reference](installWindowsUpdateOnManagedInstance)""")
 @cli_util.option('--managed-instance-id', required=True, help=u"""OCID for the managed instance""")
 @cli_util.option('--windows-update-name', required=True, help=u"""Unique identifier for the Windows update. NOTE - This is not an OCID, but is a unique identifier assigned by Microsoft. Example: `6981d463-cd91-4a26-b7c4-ea4ded9183ed`""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELLING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -1245,7 +1245,7 @@ def install_windows_update_on_managed_instance(ctx, from_json, wait_for_state, m
     cli_util.render_response(result, ctx)
 
 
-@managed_instance_group.command(name=cli_util.override('os_management.list_available_packages_for_managed_instance.command_name', 'list-available-packages-for'), help=u"""Returns a list of packages available for install on the Managed Instance.""")
+@managed_instance_group.command(name=cli_util.override('os_management.list_available_packages_for_managed_instance.command_name', 'list-available-packages-for'), help=u"""Returns a list of packages available for install on the Managed Instance. \n[Command Reference](listAvailablePackagesForManagedInstance)""")
 @cli_util.option('--managed-instance-id', required=True, help=u"""OCID for the managed instance""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable.
 
@@ -1310,7 +1310,7 @@ def list_available_packages_for_managed_instance(ctx, from_json, all_pages, page
     cli_util.render_response(result, ctx)
 
 
-@managed_instance_group.command(name=cli_util.override('os_management.list_available_software_sources_for_managed_instance.command_name', 'list-available-software-sources-for'), help=u"""Returns a list of available software sources for a Managed Instance.""")
+@managed_instance_group.command(name=cli_util.override('os_management.list_available_software_sources_for_managed_instance.command_name', 'list-available-software-sources-for'), help=u"""Returns a list of available software sources for a Managed Instance. \n[Command Reference](listAvailableSoftwareSourcesForManagedInstance)""")
 @cli_util.option('--managed-instance-id', required=True, help=u"""OCID for the managed instance""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable.
 
@@ -1375,7 +1375,7 @@ def list_available_software_sources_for_managed_instance(ctx, from_json, all_pag
     cli_util.render_response(result, ctx)
 
 
-@managed_instance_group.command(name=cli_util.override('os_management.list_available_updates_for_managed_instance.command_name', 'list-available-updates-for'), help=u"""Returns a list of available updates for a Managed Instance.""")
+@managed_instance_group.command(name=cli_util.override('os_management.list_available_updates_for_managed_instance.command_name', 'list-available-updates-for'), help=u"""Returns a list of available updates for a Managed Instance. \n[Command Reference](listAvailableUpdatesForManagedInstance)""")
 @cli_util.option('--managed-instance-id', required=True, help=u"""OCID for the managed instance""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable.
 
@@ -1440,7 +1440,7 @@ def list_available_updates_for_managed_instance(ctx, from_json, all_pages, page_
     cli_util.render_response(result, ctx)
 
 
-@managed_instance_group.command(name=cli_util.override('os_management.list_available_windows_updates_for_managed_instance.command_name', 'list-available-windows-updates-for'), help=u"""Returns a list of available Windows updates for a Managed Instance. This is only applicable to Windows instances.""")
+@managed_instance_group.command(name=cli_util.override('os_management.list_available_windows_updates_for_managed_instance.command_name', 'list-available-windows-updates-for'), help=u"""Returns a list of available Windows updates for a Managed Instance. This is only applicable to Windows instances. \n[Command Reference](listAvailableWindowsUpdatesForManagedInstance)""")
 @cli_util.option('--managed-instance-id', required=True, help=u"""OCID for the managed instance""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable.
 
@@ -1508,7 +1508,7 @@ def list_available_windows_updates_for_managed_instance(ctx, from_json, all_page
     cli_util.render_response(result, ctx)
 
 
-@managed_instance_group_group.command(name=cli_util.override('os_management.list_managed_instance_groups.command_name', 'list'), help=u"""Returns a list of all Managed Instance Groups.""")
+@managed_instance_group_group.command(name=cli_util.override('os_management.list_managed_instance_groups.command_name', 'list'), help=u"""Returns a list of all Managed Instance Groups. \n[Command Reference](listManagedInstanceGroups)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable.
 
@@ -1573,7 +1573,7 @@ def list_managed_instance_groups(ctx, from_json, all_pages, page_size, compartme
     cli_util.render_response(result, ctx)
 
 
-@managed_instance_group.command(name=cli_util.override('os_management.list_managed_instances.command_name', 'list'), help=u"""Returns a list of all Managed Instances.""")
+@managed_instance_group.command(name=cli_util.override('os_management.list_managed_instances.command_name', 'list'), help=u"""Returns a list of all Managed Instances. \n[Command Reference](listManagedInstances)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable.
 
@@ -1635,7 +1635,7 @@ def list_managed_instances(ctx, from_json, all_pages, page_size, compartment_id,
     cli_util.render_response(result, ctx)
 
 
-@managed_instance_group.command(name=cli_util.override('os_management.list_packages_installed_on_managed_instance.command_name', 'list-packages-installed'), help=u"""Returns a list of installed packages on the Managed Instance.""")
+@managed_instance_group.command(name=cli_util.override('os_management.list_packages_installed_on_managed_instance.command_name', 'list-packages-installed'), help=u"""Returns a list of installed packages on the Managed Instance. \n[Command Reference](listPackagesInstalledOnManagedInstance)""")
 @cli_util.option('--managed-instance-id', required=True, help=u"""OCID for the managed instance""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable.
 
@@ -1700,7 +1700,7 @@ def list_packages_installed_on_managed_instance(ctx, from_json, all_pages, page_
     cli_util.render_response(result, ctx)
 
 
-@scheduled_job_group.command(name=cli_util.override('os_management.list_scheduled_jobs.command_name', 'list'), help=u"""Returns a list of all of the currently active Scheduled Jobs in the system""")
+@scheduled_job_group.command(name=cli_util.override('os_management.list_scheduled_jobs.command_name', 'list'), help=u"""Returns a list of all of the currently active Scheduled Jobs in the system \n[Command Reference](listScheduledJobs)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable.
 
@@ -1774,7 +1774,7 @@ def list_scheduled_jobs(ctx, from_json, all_pages, page_size, compartment_id, di
     cli_util.render_response(result, ctx)
 
 
-@software_source_group.command(name=cli_util.override('os_management.list_software_source_packages.command_name', 'list-software-source-packages'), help=u"""Lists Software Packages in a Software Source""")
+@software_source_group.command(name=cli_util.override('os_management.list_software_source_packages.command_name', 'list-software-source-packages'), help=u"""Lists Software Packages in a Software Source \n[Command Reference](listSoftwareSourcePackages)""")
 @cli_util.option('--software-source-id', required=True, help=u"""The OCID of the software source.""")
 @cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources. This parameter is optional and in some cases may have no effect.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable.
@@ -1839,7 +1839,7 @@ def list_software_source_packages(ctx, from_json, all_pages, page_size, software
     cli_util.render_response(result, ctx)
 
 
-@software_source_group.command(name=cli_util.override('os_management.list_software_sources.command_name', 'list'), help=u"""Returns a list of all Software Sources.""")
+@software_source_group.command(name=cli_util.override('os_management.list_software_sources.command_name', 'list'), help=u"""Returns a list of all Software Sources. \n[Command Reference](listSoftwareSources)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable.
 
@@ -1901,7 +1901,7 @@ def list_software_sources(ctx, from_json, all_pages, page_size, compartment_id, 
     cli_util.render_response(result, ctx)
 
 
-@scheduled_job_group.command(name=cli_util.override('os_management.list_upcoming_scheduled_jobs.command_name', 'list-upcoming'), help=u"""Returns a list of all of the Scheduled Jobs whose next execution time is at or before the specified time.""")
+@scheduled_job_group.command(name=cli_util.override('os_management.list_upcoming_scheduled_jobs.command_name', 'list-upcoming'), help=u"""Returns a list of all of the Scheduled Jobs whose next execution time is at or before the specified time. \n[Command Reference](listUpcomingScheduledJobs)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--time-end', required=True, type=custom_types.CLI_DATETIME, help=u"""The cut-off time before which to list all upcoming schedules, in ISO 8601 format
 
@@ -1978,7 +1978,7 @@ def list_upcoming_scheduled_jobs(ctx, from_json, all_pages, page_size, compartme
     cli_util.render_response(result, ctx)
 
 
-@windows_update_group.command(name=cli_util.override('os_management.list_windows_updates.command_name', 'list'), help=u"""Returns a list of Windows Updates.""")
+@windows_update_group.command(name=cli_util.override('os_management.list_windows_updates.command_name', 'list'), help=u"""Returns a list of Windows Updates. \n[Command Reference](listWindowsUpdates)""")
 @cli_util.option('--compartment-id', help=u"""The ID of the compartment in which to list resources. This parameter is optional and in some cases may have no effect.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable.
 
@@ -2036,7 +2036,7 @@ def list_windows_updates(ctx, from_json, all_pages, page_size, compartment_id, d
     cli_util.render_response(result, ctx)
 
 
-@managed_instance_group.command(name=cli_util.override('os_management.list_windows_updates_installed_on_managed_instance.command_name', 'list-windows-updates-installed'), help=u"""Returns a list of installed Windows updates for a Managed Instance. This is only applicable to Windows instances.""")
+@managed_instance_group.command(name=cli_util.override('os_management.list_windows_updates_installed_on_managed_instance.command_name', 'list-windows-updates-installed'), help=u"""Returns a list of installed Windows updates for a Managed Instance. This is only applicable to Windows instances. \n[Command Reference](listWindowsUpdatesInstalledOnManagedInstance)""")
 @cli_util.option('--managed-instance-id', required=True, help=u"""OCID for the managed instance""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable.
 
@@ -2101,7 +2101,7 @@ def list_windows_updates_installed_on_managed_instance(ctx, from_json, all_pages
     cli_util.render_response(result, ctx)
 
 
-@work_request_group.command(name=cli_util.override('os_management.list_work_request_errors.command_name', 'list-work-request-errors'), help=u"""Gets the errors for the work request with the given ID.""")
+@work_request_group.command(name=cli_util.override('os_management.list_work_request_errors.command_name', 'list-work-request-errors'), help=u"""Gets the errors for the work request with the given ID. \n[Command Reference](listWorkRequestErrors)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The ID of the asynchronous request.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
@@ -2158,7 +2158,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     cli_util.render_response(result, ctx)
 
 
-@work_request_group.command(name=cli_util.override('os_management.list_work_request_logs.command_name', 'list-work-request-logs'), help=u"""Lists the log entries for the work request with the given ID.""")
+@work_request_group.command(name=cli_util.override('os_management.list_work_request_logs.command_name', 'list-work-request-logs'), help=u"""Lists the log entries for the work request with the given ID. \n[Command Reference](listWorkRequestLogs)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The ID of the asynchronous request.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
@@ -2215,7 +2215,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     cli_util.render_response(result, ctx)
 
 
-@work_request_summary_group.command(name=cli_util.override('os_management.list_work_requests.command_name', 'list-work-requests'), help=u"""Lists the work requests in a compartment.""")
+@work_request_summary_group.command(name=cli_util.override('os_management.list_work_requests.command_name', 'list-work-requests'), help=u"""Lists the work requests in a compartment. \n[Command Reference](listWorkRequests)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable.
 
@@ -2280,7 +2280,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, dis
     cli_util.render_response(result, ctx)
 
 
-@managed_instance_group.command(name=cli_util.override('os_management.remove_package_from_managed_instance.command_name', 'remove'), help=u"""Removes an installed package from a managed instance.""")
+@managed_instance_group.command(name=cli_util.override('os_management.remove_package_from_managed_instance.command_name', 'remove'), help=u"""Removes an installed package from a managed instance. \n[Command Reference](removePackageFromManagedInstance)""")
 @cli_util.option('--managed-instance-id', required=True, help=u"""OCID for the managed instance""")
 @cli_util.option('--software-package-name', required=True, help=u"""Package name""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELLING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -2330,7 +2330,7 @@ def remove_package_from_managed_instance(ctx, from_json, wait_for_state, max_wai
     cli_util.render_response(result, ctx)
 
 
-@software_source_group.command(name=cli_util.override('os_management.remove_packages_from_software_source.command_name', 'remove'), help=u"""Removes a given list of Software Packages from a specific Software Source.""")
+@software_source_group.command(name=cli_util.override('os_management.remove_packages_from_software_source.command_name', 'remove'), help=u"""Removes a given list of Software Packages from a specific Software Source. \n[Command Reference](removePackagesFromSoftwareSource)""")
 @cli_util.option('--software-source-id', required=True, help=u"""The OCID of the software source.""")
 @cli_util.option('--package-names', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""the list of package names""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'package-names': {'module': 'os_management', 'class': 'list[string]'}})
@@ -2358,7 +2358,7 @@ def remove_packages_from_software_source(ctx, from_json, software_source_id, pac
     cli_util.render_response(result, ctx)
 
 
-@scheduled_job_group.command(name=cli_util.override('os_management.run_scheduled_job_now.command_name', 'run-scheduled-job-now'), help=u"""This will trigger an already created Scheduled Job to being executing immediately instead of waiting for its next regularly scheduled time.""")
+@scheduled_job_group.command(name=cli_util.override('os_management.run_scheduled_job_now.command_name', 'run-scheduled-job-now'), help=u"""This will trigger an already created Scheduled Job to being executing immediately instead of waiting for its next regularly scheduled time. \n[Command Reference](runScheduledJobNow)""")
 @cli_util.option('--scheduled-job-id', required=True, help=u"""The ID of the scheduled job.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2383,7 +2383,7 @@ def run_scheduled_job_now(ctx, from_json, scheduled_job_id, if_match):
     cli_util.render_response(result, ctx)
 
 
-@software_source_group.command(name=cli_util.override('os_management.search_software_packages.command_name', 'search-software-packages'), help=u"""Searches all of the available Software Sources and returns any/all Software Packages matching the search criteria.""")
+@software_source_group.command(name=cli_util.override('os_management.search_software_packages.command_name', 'search-software-packages'), help=u"""Searches all of the available Software Sources and returns any/all Software Packages matching the search criteria. \n[Command Reference](searchSoftwarePackages)""")
 @cli_util.option('--software-package-name', help=u"""the identifier for the software package (not an OCID)""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable.
 
@@ -2423,7 +2423,7 @@ def search_software_packages(ctx, from_json, software_package_name, display_name
     cli_util.render_response(result, ctx)
 
 
-@scheduled_job_group.command(name=cli_util.override('os_management.skip_next_scheduled_job_execution.command_name', 'skip-next-scheduled-job-execution'), help=u"""This will force an already created Scheduled Job to skip its next regularly scheduled execution""")
+@scheduled_job_group.command(name=cli_util.override('os_management.skip_next_scheduled_job_execution.command_name', 'skip-next-scheduled-job-execution'), help=u"""This will force an already created Scheduled Job to skip its next regularly scheduled execution \n[Command Reference](skipNextScheduledJobExecution)""")
 @cli_util.option('--scheduled-job-id', required=True, help=u"""The ID of the scheduled job.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2448,7 +2448,7 @@ def skip_next_scheduled_job_execution(ctx, from_json, scheduled_job_id, if_match
     cli_util.render_response(result, ctx)
 
 
-@managed_instance_group_group.command(name=cli_util.override('os_management.update_managed_instance_group.command_name', 'update'), help=u"""Updates a specific Managed Instance Group.""")
+@managed_instance_group_group.command(name=cli_util.override('os_management.update_managed_instance_group.command_name', 'update'), help=u"""Updates a specific Managed Instance Group. \n[Command Reference](updateManagedInstanceGroup)""")
 @cli_util.option('--managed-instance-group-id', required=True, help=u"""OCID for the managed instance group""")
 @cli_util.option('--display-name', help=u"""Managed Instance Group identifier""")
 @cli_util.option('--description', help=u"""Information specified by the user about the managed instance group""")
@@ -2524,7 +2524,7 @@ def update_managed_instance_group(ctx, from_json, force, wait_for_state, max_wai
     cli_util.render_response(result, ctx)
 
 
-@scheduled_job_group.command(name=cli_util.override('os_management.update_scheduled_job.command_name', 'update'), help=u"""Updates an existing Scheduled Job on the management system.""")
+@scheduled_job_group.command(name=cli_util.override('os_management.update_scheduled_job.command_name', 'update'), help=u"""Updates an existing Scheduled Job on the management system. \n[Command Reference](updateScheduledJob)""")
 @cli_util.option('--scheduled-job-id', required=True, help=u"""The ID of the scheduled job.""")
 @cli_util.option('--display-name', help=u"""Scheduled Job name""")
 @cli_util.option('--description', help=u"""Details describing the Scheduled Job.""")
@@ -2634,7 +2634,7 @@ def update_scheduled_job(ctx, from_json, force, wait_for_state, max_wait_seconds
     cli_util.render_response(result, ctx)
 
 
-@software_source_group.command(name=cli_util.override('os_management.update_software_source.command_name', 'update'), help=u"""Updates an existing custom Software Source on the management system.""")
+@software_source_group.command(name=cli_util.override('os_management.update_software_source.command_name', 'update'), help=u"""Updates an existing custom Software Source on the management system. \n[Command Reference](updateSoftwareSource)""")
 @cli_util.option('--software-source-id', required=True, help=u"""The OCID of the software source.""")
 @cli_util.option('--display-name', help=u"""User friendly name for the software source""")
 @cli_util.option('--description', help=u"""Information specified by the user about the software source""")

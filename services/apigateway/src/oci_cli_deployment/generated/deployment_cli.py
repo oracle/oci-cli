@@ -40,7 +40,7 @@ deployment_root_group.add_command(deployment_summary_group)
 deployment_root_group.add_command(deployment_group)
 
 
-@deployment_group.command(name=cli_util.override('deployment.change_deployment_compartment.command_name', 'change-compartment'), help=u"""Changes the deployment compartment.""")
+@deployment_group.command(name=cli_util.override('deployment.change_deployment_compartment.command_name', 'change-compartment'), help=u"""Changes the deployment compartment. \n[Command Reference](changeDeploymentCompartment)""")
 @cli_util.option('--deployment-id', required=True, help=u"""The ocid of the deployment.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which the resource is created.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -99,7 +99,7 @@ def change_deployment_compartment(ctx, from_json, wait_for_state, max_wait_secon
     cli_util.render_response(result, ctx)
 
 
-@deployment_group.command(name=cli_util.override('deployment.create_deployment.command_name', 'create'), help=u"""Creates a new deployment.""")
+@deployment_group.command(name=cli_util.override('deployment.create_deployment.command_name', 'create'), help=u"""Creates a new deployment. \n[Command Reference](createDeployment)""")
 @cli_util.option('--gateway-id', required=True, help=u"""The [OCID] of the resource.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which the resource is created.""")
 @cli_util.option('--path-prefix', required=True, help=u"""A path on which to deploy all routes contained in the API deployment specification. For more information, see [Deploying an API on an API Gateway by Creating an API Deployment].""")
@@ -174,7 +174,7 @@ def create_deployment(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
     cli_util.render_response(result, ctx)
 
 
-@deployment_group.command(name=cli_util.override('deployment.delete_deployment.command_name', 'delete'), help=u"""Deletes the deployment with the given identifier.""")
+@deployment_group.command(name=cli_util.override('deployment.delete_deployment.command_name', 'delete'), help=u"""Deletes the deployment with the given identifier. \n[Command Reference](deleteDeployment)""")
 @cli_util.option('--deployment-id', required=True, help=u"""The ocid of the deployment.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -228,7 +228,7 @@ def delete_deployment(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
     cli_util.render_response(result, ctx)
 
 
-@deployment_group.command(name=cli_util.override('deployment.get_deployment.command_name', 'get'), help=u"""Gets a deployment by identifier.""")
+@deployment_group.command(name=cli_util.override('deployment.get_deployment.command_name', 'get'), help=u"""Gets a deployment by identifier. \n[Command Reference](getDeployment)""")
 @cli_util.option('--deployment-id', required=True, help=u"""The ocid of the deployment.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -250,7 +250,7 @@ def get_deployment(ctx, from_json, deployment_id):
     cli_util.render_response(result, ctx)
 
 
-@deployment_summary_group.command(name=cli_util.override('deployment.list_deployments.command_name', 'list-deployments'), help=u"""Returns a list of deployments.""")
+@deployment_summary_group.command(name=cli_util.override('deployment.list_deployments.command_name', 'list-deployments'), help=u"""Returns a list of deployments. \n[Command Reference](listDeployments)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The ocid of the compartment in which to list resources.""")
 @cli_util.option('--gateway-id', help=u"""Filter deployments by the gateway ocid.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable.
@@ -317,7 +317,7 @@ def list_deployments(ctx, from_json, all_pages, page_size, compartment_id, gatew
     cli_util.render_response(result, ctx)
 
 
-@deployment_group.command(name=cli_util.override('deployment.update_deployment.command_name', 'update'), help=u"""Updates the deployment with the given identifier.""")
+@deployment_group.command(name=cli_util.override('deployment.update_deployment.command_name', 'update'), help=u"""Updates the deployment with the given identifier. \n[Command Reference](updateDeployment)""")
 @cli_util.option('--deployment-id', required=True, help=u"""The ocid of the deployment.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
 

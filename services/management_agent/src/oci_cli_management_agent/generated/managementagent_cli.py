@@ -72,7 +72,7 @@ management_agent_root_group.add_command(work_request_group)
 management_agent_root_group.add_command(management_agent_image_group)
 
 
-@management_agent_install_key_group.command(name=cli_util.override('management_agent.create_management_agent_install_key.command_name', 'create'), help=u"""User creates a new install key as part of this API.""")
+@management_agent_install_key_group.command(name=cli_util.override('management_agent.create_management_agent_install_key.command_name', 'create'), help=u"""User creates a new install key as part of this API. \n[Command Reference](createManagementAgentInstallKey)""")
 @cli_util.option('--display-name', required=True, help=u"""Management Agent install Key Name""")
 @cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier""")
 @cli_util.option('--allowed-key-install-count', type=click.INT, help=u"""Total number of install for this keys""")
@@ -131,7 +131,7 @@ def create_management_agent_install_key(ctx, from_json, wait_for_state, max_wait
     cli_util.render_response(result, ctx)
 
 
-@management_agent_group.command(name=cli_util.override('management_agent.delete_management_agent.command_name', 'delete'), help=u"""Deletes a Management Agent resource by identifier""")
+@management_agent_group.command(name=cli_util.override('management_agent.delete_management_agent.command_name', 'delete'), help=u"""Deletes a Management Agent resource by identifier \n[Command Reference](deleteManagementAgent)""")
 @cli_util.option('--management-agent-id', required=True, help=u"""Unique Management Agent identifier""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -195,7 +195,7 @@ def delete_management_agent(ctx, from_json, wait_for_state, max_wait_seconds, wa
     cli_util.render_response(result, ctx)
 
 
-@management_agent_install_key_group.command(name=cli_util.override('management_agent.delete_management_agent_install_key.command_name', 'delete'), help=u"""Deletes a Management Agent install Key resource by identifier""")
+@management_agent_install_key_group.command(name=cli_util.override('management_agent.delete_management_agent_install_key.command_name', 'delete'), help=u"""Deletes a Management Agent install Key resource by identifier \n[Command Reference](deleteManagementAgentInstallKey)""")
 @cli_util.option('--management-agent-install-key-id', required=True, help=u"""Unique Management Agent Install Key identifier""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -259,7 +259,7 @@ def delete_management_agent_install_key(ctx, from_json, wait_for_state, max_wait
     cli_util.render_response(result, ctx)
 
 
-@work_request_group.command(name=cli_util.override('management_agent.delete_work_request.command_name', 'delete'), help=u"""Cancel the work request with the given ID.""")
+@work_request_group.command(name=cli_util.override('management_agent.delete_work_request.command_name', 'delete'), help=u"""Cancel the work request with the given ID. \n[Command Reference](deleteWorkRequest)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The ID of the asynchronous request.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -285,7 +285,7 @@ def delete_work_request(ctx, from_json, work_request_id, if_match):
     cli_util.render_response(result, ctx)
 
 
-@management_agent_group.command(name=cli_util.override('management_agent.deploy_plugins.command_name', 'deploy-plugins'), help=u"""Deploys Plugins to a given list of agentIds.""")
+@management_agent_group.command(name=cli_util.override('management_agent.deploy_plugins.command_name', 'deploy-plugins'), help=u"""Deploys Plugins to a given list of agentIds. \n[Command Reference](deployPlugins)""")
 @cli_util.option('--plugin-ids', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Plugin Id""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--agent-compartment-id', required=True, help=u"""Management Agent Compartment Identifier""")
 @cli_util.option('--agent-ids', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of Agent identifiers""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -338,7 +338,7 @@ def deploy_plugins(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
     cli_util.render_response(result, ctx)
 
 
-@management_agent_group.command(name=cli_util.override('management_agent.get_management_agent.command_name', 'get'), help=u"""Gets complete details of the inventory of a given agent id""")
+@management_agent_group.command(name=cli_util.override('management_agent.get_management_agent.command_name', 'get'), help=u"""Gets complete details of the inventory of a given agent id \n[Command Reference](getManagementAgent)""")
 @cli_util.option('--management-agent-id', required=True, help=u"""Unique Management Agent identifier""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -360,7 +360,7 @@ def get_management_agent(ctx, from_json, management_agent_id):
     cli_util.render_response(result, ctx)
 
 
-@management_agent_install_key_group.command(name=cli_util.override('management_agent.get_management_agent_install_key.command_name', 'get'), help=u"""Gets complete details of the Agent install Key for a given key id""")
+@management_agent_install_key_group.command(name=cli_util.override('management_agent.get_management_agent_install_key.command_name', 'get'), help=u"""Gets complete details of the Agent install Key for a given key id \n[Command Reference](getManagementAgentInstallKey)""")
 @cli_util.option('--management-agent-install-key-id', required=True, help=u"""Unique Management Agent Install Key identifier""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -382,7 +382,7 @@ def get_management_agent_install_key(ctx, from_json, management_agent_install_ke
     cli_util.render_response(result, ctx)
 
 
-@management_agent_install_key_group.command(name=cli_util.override('management_agent.get_management_agent_install_key_content.command_name', 'get-management-agent-install-key-content'), help=u"""Returns a file with Management Agent install Key in it""")
+@management_agent_install_key_group.command(name=cli_util.override('management_agent.get_management_agent_install_key_content.command_name', 'get-management-agent-install-key-content'), help=u"""Returns a file with Management Agent install Key in it \n[Command Reference](getManagementAgentInstallKeyContent)""")
 @cli_util.option('--management-agent-install-key-id', required=True, help=u"""Unique Management Agent Install Key identifier""")
 @cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
 @cli_util.option('--plugin-name', multiple=True, help=u"""Filter to return input plugin names uncommented in the output.""")
@@ -430,7 +430,7 @@ def get_management_agent_install_key_content(ctx, from_json, file, management_ag
         file.close()
 
 
-@work_request_group.command(name=cli_util.override('management_agent.get_work_request.command_name', 'get'), help=u"""Gets the status of the work request with the given ID.""")
+@work_request_group.command(name=cli_util.override('management_agent.get_work_request.command_name', 'get'), help=u"""Gets the status of the work request with the given ID. \n[Command Reference](getWorkRequest)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The ID of the asynchronous request.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -452,7 +452,7 @@ def get_work_request(ctx, from_json, work_request_id):
     cli_util.render_response(result, ctx)
 
 
-@management_agent_image_group.command(name=cli_util.override('management_agent.list_management_agent_images.command_name', 'list'), help=u"""Get supported agent image information""")
+@management_agent_image_group.command(name=cli_util.override('management_agent.list_management_agent_images.command_name', 'list'), help=u"""Get supported agent image information \n[Command Reference](listManagementAgentImages)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment from which the Management Agents to be listed.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
@@ -512,7 +512,7 @@ def list_management_agent_images(ctx, from_json, all_pages, page_size, compartme
     cli_util.render_response(result, ctx)
 
 
-@management_agent_install_key_group.command(name=cli_util.override('management_agent.list_management_agent_install_keys.command_name', 'list'), help=u"""Returns a list of Management Agent installed Keys.""")
+@management_agent_install_key_group.command(name=cli_util.override('management_agent.list_management_agent_install_keys.command_name', 'list'), help=u"""Returns a list of Management Agent installed Keys. \n[Command Reference](listManagementAgentInstallKeys)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment from which the Management Agents to be listed.""")
 @cli_util.option('--compartment-id-in-subtree', type=click.BOOL, help=u"""if set to true then it fetches install key for all compartments where user has access to else only on the compartment specified.""")
 @cli_util.option('--access-level', help=u"""Value of this is always \"ACCESSIBLE\" and any other value is not supported.""")
@@ -560,7 +560,7 @@ def list_management_agent_install_keys(ctx, from_json, all_pages, compartment_id
     cli_util.render_response(result, ctx)
 
 
-@management_agent_plugin_group.command(name=cli_util.override('management_agent.list_management_agent_plugins.command_name', 'list'), help=u"""Returns a list of managementAgentPlugins.""")
+@management_agent_plugin_group.command(name=cli_util.override('management_agent.list_management_agent_plugins.command_name', 'list'), help=u"""Returns a list of managementAgentPlugins. \n[Command Reference](listManagementAgentPlugins)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment from which the Management Agents to be listed.""")
 @cli_util.option('--display-name', help=u"""Filter to return only Management Agent Plugins having the particular display name.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -620,7 +620,7 @@ def list_management_agent_plugins(ctx, from_json, all_pages, page_size, compartm
     cli_util.render_response(result, ctx)
 
 
-@management_agent_group.command(name=cli_util.override('management_agent.list_management_agents.command_name', 'list'), help=u"""Returns a list of Management Agent.""")
+@management_agent_group.command(name=cli_util.override('management_agent.list_management_agents.command_name', 'list'), help=u"""Returns a list of Management Agent. \n[Command Reference](listManagementAgents)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment from which the Management Agents to be listed.""")
 @cli_util.option('--plugin-name', help=u"""Filter to return only Management Agents having the particular Plugin installed.""")
 @cli_util.option('--version-parameterconflict', help=u"""Filter to return only Management Agents having the particular agent version.""")
@@ -689,7 +689,7 @@ def list_management_agents(ctx, from_json, all_pages, page_size, compartment_id,
     cli_util.render_response(result, ctx)
 
 
-@work_request_error_group.command(name=cli_util.override('management_agent.list_work_request_errors.command_name', 'list'), help=u"""Return a (paginated) list of errors for a given work request.""")
+@work_request_error_group.command(name=cli_util.override('management_agent.list_work_request_errors.command_name', 'list'), help=u"""Return a (paginated) list of errors for a given work request. \n[Command Reference](listWorkRequestErrors)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The ID of the asynchronous request.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -746,7 +746,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     cli_util.render_response(result, ctx)
 
 
-@work_request_log_entry_group.command(name=cli_util.override('management_agent.list_work_request_logs.command_name', 'list-work-request-logs'), help=u"""Return a (paginated) list of logs for a given work request.""")
+@work_request_log_entry_group.command(name=cli_util.override('management_agent.list_work_request_logs.command_name', 'list-work-request-logs'), help=u"""Return a (paginated) list of logs for a given work request. \n[Command Reference](listWorkRequestLogs)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The ID of the asynchronous request.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -803,7 +803,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     cli_util.render_response(result, ctx)
 
 
-@work_request_group.command(name=cli_util.override('management_agent.list_work_requests.command_name', 'list'), help=u"""Lists the work requests in a compartment.""")
+@work_request_group.command(name=cli_util.override('management_agent.list_work_requests.command_name', 'list'), help=u"""Lists the work requests in a compartment. \n[Command Reference](listWorkRequests)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment from which the Management Agents to be listed.""")
 @cli_util.option('--agent-id', help=u"""The ManagementAgentID of the agent from which the Management Agents to be filtered.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
@@ -866,7 +866,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, age
     cli_util.render_response(result, ctx)
 
 
-@management_agent_group.command(name=cli_util.override('management_agent.update_management_agent.command_name', 'update'), help=u"""API to update the console managed properties of the Management Agent.""")
+@management_agent_group.command(name=cli_util.override('management_agent.update_management_agent.command_name', 'update'), help=u"""API to update the console managed properties of the Management Agent. \n[Command Reference](updateManagementAgent)""")
 @cli_util.option('--management-agent-id', required=True, help=u"""Unique Management Agent identifier""")
 @cli_util.option('--is-agent-auto-upgradable', type=click.BOOL, help=u"""true if the agent can be upgraded automatically; false if it must be upgraded manually. true is currently unsupported.""")
 @cli_util.option('--display-name', help=u"""New displayName of Agent.""")
@@ -942,7 +942,7 @@ def update_management_agent(ctx, from_json, force, wait_for_state, max_wait_seco
     cli_util.render_response(result, ctx)
 
 
-@management_agent_install_key_group.command(name=cli_util.override('management_agent.update_management_agent_install_key.command_name', 'update'), help=u"""API to update the modifiable properties of the Management Agent install key.""")
+@management_agent_install_key_group.command(name=cli_util.override('management_agent.update_management_agent_install_key.command_name', 'update'), help=u"""API to update the modifiable properties of the Management Agent install key. \n[Command Reference](updateManagementAgentInstallKey)""")
 @cli_util.option('--management-agent-install-key-id', required=True, help=u"""Unique Management Agent Install Key identifier""")
 @cli_util.option('--is-key-active', type=click.BOOL, help=u"""if set to true the install key state would be set to Active and if false to Inactive""")
 @cli_util.option('--display-name', help=u"""New displayName of Agent install key.""")

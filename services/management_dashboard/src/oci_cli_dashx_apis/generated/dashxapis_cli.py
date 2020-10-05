@@ -45,7 +45,7 @@ management_dashboard_root_group.add_command(management_dashboard_import_details_
 management_dashboard_root_group.add_command(management_dashboard_group)
 
 
-@management_dashboard_group.command(name=cli_util.override('management_dashboard.change_management_dashboards_compartment.command_name', 'change-compartment'), help=u"""Move the dashboard from existing compartment to a new compartment.""")
+@management_dashboard_group.command(name=cli_util.override('management_dashboard.change_management_dashboards_compartment.command_name', 'change-compartment'), help=u"""Move the dashboard from existing compartment to a new compartment. \n[Command Reference](changeManagementDashboardsCompartment)""")
 @cli_util.option('--management-dashboard-id', required=True, help=u"""unique dashboard identifier""")
 @cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -76,7 +76,7 @@ def change_management_dashboards_compartment(ctx, from_json, management_dashboar
     cli_util.render_response(result, ctx)
 
 
-@management_saved_search_group.command(name=cli_util.override('management_dashboard.change_management_saved_searches_compartment.command_name', 'change-compartment'), help=u"""Move the saved search from existing compartment to a new compartment.""")
+@management_saved_search_group.command(name=cli_util.override('management_dashboard.change_management_saved_searches_compartment.command_name', 'change-compartment'), help=u"""Move the saved search from existing compartment to a new compartment. \n[Command Reference](changeManagementSavedSearchesCompartment)""")
 @cli_util.option('--management-saved-search-id', required=True, help=u"""unique saved search identifier""")
 @cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -107,7 +107,7 @@ def change_management_saved_searches_compartment(ctx, from_json, management_save
     cli_util.render_response(result, ctx)
 
 
-@management_dashboard_group.command(name=cli_util.override('management_dashboard.create_management_dashboard.command_name', 'create'), help=u"""Creates a new dashboard.  Limit for number of saved searches in a dashboard is 20.""")
+@management_dashboard_group.command(name=cli_util.override('management_dashboard.create_management_dashboard.command_name', 'create'), help=u"""Creates a new dashboard.  Limit for number of saved searches in a dashboard is 20. \n[Command Reference](createManagementDashboard)""")
 @cli_util.option('--provider-id', required=True, help=u"""Provider Id.""")
 @cli_util.option('--provider-name', required=True, help=u"""Provider name.""")
 @cli_util.option('--provider-version', required=True, help=u"""Provider version.""")
@@ -174,7 +174,7 @@ def create_management_dashboard(ctx, from_json, provider_id, provider_name, prov
     cli_util.render_response(result, ctx)
 
 
-@management_saved_search_group.command(name=cli_util.override('management_dashboard.create_management_saved_search.command_name', 'create'), help=u"""Creates a new saved search.""")
+@management_saved_search_group.command(name=cli_util.override('management_dashboard.create_management_saved_search.command_name', 'create'), help=u"""Creates a new saved search. \n[Command Reference](createManagementSavedSearch)""")
 @cli_util.option('--id', required=True, help=u"""id for saved search.  Must be provided if OOB, otherwise must not be provided.""")
 @cli_util.option('--display-name', required=True, help=u"""Display name for saved search.""")
 @cli_util.option('--provider-id', required=True, help=u"""Id for application (LA, APM, etc.) that owners this saved search.  Each owner has a unique Id.""")
@@ -235,7 +235,7 @@ def create_management_saved_search(ctx, from_json, id, display_name, provider_id
     cli_util.render_response(result, ctx)
 
 
-@management_dashboard_group.command(name=cli_util.override('management_dashboard.delete_management_dashboard.command_name', 'delete'), help=u"""Deletes a Dashboard by id.""")
+@management_dashboard_group.command(name=cli_util.override('management_dashboard.delete_management_dashboard.command_name', 'delete'), help=u"""Deletes a Dashboard by id. \n[Command Reference](deleteManagementDashboard)""")
 @cli_util.option('--management-dashboard-id', required=True, help=u"""unique dashboard identifier""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -261,7 +261,7 @@ def delete_management_dashboard(ctx, from_json, management_dashboard_id, if_matc
     cli_util.render_response(result, ctx)
 
 
-@management_saved_search_group.command(name=cli_util.override('management_dashboard.delete_management_saved_search.command_name', 'delete'), help=u"""Deletes a saved search by Id""")
+@management_saved_search_group.command(name=cli_util.override('management_dashboard.delete_management_saved_search.command_name', 'delete'), help=u"""Deletes a saved search by Id \n[Command Reference](deleteManagementSavedSearch)""")
 @cli_util.option('--management-saved-search-id', required=True, help=u"""unique saved search identifier""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -287,7 +287,7 @@ def delete_management_saved_search(ctx, from_json, management_saved_search_id, i
     cli_util.render_response(result, ctx)
 
 
-@management_dashboard_import_details_group.command(name=cli_util.override('management_dashboard.export_dashboard.command_name', 'export-dashboard'), help=u"""Exports an array of dashboards and their saved searches.""")
+@management_dashboard_import_details_group.command(name=cli_util.override('management_dashboard.export_dashboard.command_name', 'export-dashboard'), help=u"""Exports an array of dashboards and their saved searches. \n[Command Reference](exportDashboard)""")
 @cli_util.option('--export-dashboard-id', required=True, help=u"""{\"dashboardIds\":[\"dashboardId1\", \"dashboardId2\", ...]}""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -309,7 +309,7 @@ def export_dashboard(ctx, from_json, export_dashboard_id):
     cli_util.render_response(result, ctx)
 
 
-@management_dashboard_group.command(name=cli_util.override('management_dashboard.get_management_dashboard.command_name', 'get'), help=u"""Get a Dashboard and its saved searches by id.  Deleted or unauthorized saved searches are marked by tile's state property.""")
+@management_dashboard_group.command(name=cli_util.override('management_dashboard.get_management_dashboard.command_name', 'get'), help=u"""Get a Dashboard and its saved searches by id.  Deleted or unauthorized saved searches are marked by tile's state property. \n[Command Reference](getManagementDashboard)""")
 @cli_util.option('--management-dashboard-id', required=True, help=u"""unique dashboard identifier""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -331,7 +331,7 @@ def get_management_dashboard(ctx, from_json, management_dashboard_id):
     cli_util.render_response(result, ctx)
 
 
-@management_saved_search_group.command(name=cli_util.override('management_dashboard.get_management_saved_search.command_name', 'get'), help=u"""Get a saved search by Id.""")
+@management_saved_search_group.command(name=cli_util.override('management_dashboard.get_management_saved_search.command_name', 'get'), help=u"""Get a saved search by Id. \n[Command Reference](getManagementSavedSearch)""")
 @cli_util.option('--management-saved-search-id', required=True, help=u"""unique saved search identifier""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -353,7 +353,7 @@ def get_management_saved_search(ctx, from_json, management_saved_search_id):
     cli_util.render_response(result, ctx)
 
 
-@management_dashboard_import_details_group.command(name=cli_util.override('management_dashboard.import_dashboard.command_name', 'import-dashboard'), help=u"""Import an array of dashboards and their saved searches.""")
+@management_dashboard_import_details_group.command(name=cli_util.override('management_dashboard.import_dashboard.command_name', 'import-dashboard'), help=u"""Import an array of dashboards and their saved searches. \n[Command Reference](importDashboard)""")
 @cli_util.option('--dashboards', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Array of dashboards""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -387,7 +387,7 @@ def import_dashboard(ctx, from_json, dashboards, freeform_tags, defined_tags, if
     cli_util.render_response(result, ctx)
 
 
-@management_dashboard_group.command(name=cli_util.override('management_dashboard.list_management_dashboards.command_name', 'list'), help=u"""Gets list of dashboards and their saved searches for compartment with pagination.  Returned properties are a summary.""")
+@management_dashboard_group.command(name=cli_util.override('management_dashboard.list_management_dashboards.command_name', 'list'), help=u"""Gets list of dashboards and their saved searches for compartment with pagination.  Returned properties are a summary. \n[Command Reference](listManagementDashboards)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -444,7 +444,7 @@ def list_management_dashboards(ctx, from_json, all_pages, page_size, compartment
     cli_util.render_response(result, ctx)
 
 
-@management_saved_search_group.command(name=cli_util.override('management_dashboard.list_management_saved_searches.command_name', 'list'), help=u"""Gets list of saved searches with pagination.  Returned properties are a summary.""")
+@management_saved_search_group.command(name=cli_util.override('management_dashboard.list_management_saved_searches.command_name', 'list'), help=u"""Gets list of saved searches with pagination.  Returned properties are a summary. \n[Command Reference](listManagementSavedSearches)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -501,7 +501,7 @@ def list_management_saved_searches(ctx, from_json, all_pages, page_size, compart
     cli_util.render_response(result, ctx)
 
 
-@management_dashboard_group.command(name=cli_util.override('management_dashboard.update_management_dashboard.command_name', 'update'), help=u"""Updates an existing dashboard identified by id path parameter.  Limit for number of saved searches in a dashboard is 20.""")
+@management_dashboard_group.command(name=cli_util.override('management_dashboard.update_management_dashboard.command_name', 'update'), help=u"""Updates an existing dashboard identified by id path parameter.  Limit for number of saved searches in a dashboard is 20. \n[Command Reference](updateManagementDashboard)""")
 @cli_util.option('--management-dashboard-id', required=True, help=u"""unique dashboard identifier""")
 @cli_util.option('--provider-id', help=u"""Provider Id.""")
 @cli_util.option('--provider-name', help=u"""Provider name.""")
@@ -613,7 +613,7 @@ def update_management_dashboard(ctx, from_json, force, management_dashboard_id, 
     cli_util.render_response(result, ctx)
 
 
-@management_saved_search_group.command(name=cli_util.override('management_dashboard.update_management_saved_search.command_name', 'update'), help=u"""Update an existing saved search.  Id cannot be updated.""")
+@management_saved_search_group.command(name=cli_util.override('management_dashboard.update_management_saved_search.command_name', 'update'), help=u"""Update an existing saved search.  Id cannot be updated. \n[Command Reference](updateManagementSavedSearch)""")
 @cli_util.option('--management-saved-search-id', required=True, help=u"""unique saved search identifier""")
 @cli_util.option('--display-name', help=u"""Display name for saved search.""")
 @cli_util.option('--provider-id', help=u"""Id for application (LA, APM, etc.) that owners this saved search.  Each owner has a unique Id.""")

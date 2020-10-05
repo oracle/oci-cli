@@ -33,7 +33,7 @@ waas_service_cli.waas_service_group.add_command(redirect_root_group)
 redirect_root_group.add_command(http_redirect_group)
 
 
-@http_redirect_group.command(name=cli_util.override('redirect.change_http_redirect_compartment.command_name', 'change-compartment'), help=u"""Moves HTTP Redirect into a different compartment. When provided, If-Match is checked against ETag values of the WAAS policy.""")
+@http_redirect_group.command(name=cli_util.override('redirect.change_http_redirect_compartment.command_name', 'change-compartment'), help=u"""Moves HTTP Redirect into a different compartment. When provided, If-Match is checked against ETag values of the WAAS policy. \n[Command Reference](changeHttpRedirectCompartment)""")
 @cli_util.option('--http-redirect-id', required=True, help=u"""The [OCID] of the HTTP Redirect.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the `PUT` or `DELETE` call for a resource, set the `if-match` parameter to the value of the etag from a previous `GET` or `POST` response for that resource. The resource will be updated or deleted only if the etag provided matches the resource's current etag value.""")
@@ -64,7 +64,7 @@ def change_http_redirect_compartment(ctx, from_json, http_redirect_id, compartme
     cli_util.render_response(result, ctx)
 
 
-@http_redirect_group.command(name=cli_util.override('redirect.create_http_redirect.command_name', 'create'), help=u"""Creates a new HTTP Redirect on the WAF edge.""")
+@http_redirect_group.command(name=cli_util.override('redirect.create_http_redirect.command_name', 'create'), help=u"""Creates a new HTTP Redirect on the WAF edge. \n[Command Reference](createHttpRedirect)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the HTTP Redirects compartment.""")
 @cli_util.option('--domain', required=True, help=u"""The domain from which traffic will be redirected.""")
 @cli_util.option('--target', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The redirect target object including all the redirect data.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -137,7 +137,7 @@ def create_http_redirect(ctx, from_json, wait_for_state, max_wait_seconds, wait_
     cli_util.render_response(result, ctx)
 
 
-@http_redirect_group.command(name=cli_util.override('redirect.delete_http_redirect.command_name', 'delete'), help=u"""Deletes a redirect.""")
+@http_redirect_group.command(name=cli_util.override('redirect.delete_http_redirect.command_name', 'delete'), help=u"""Deletes a redirect. \n[Command Reference](deleteHttpRedirect)""")
 @cli_util.option('--http-redirect-id', required=True, help=u"""The [OCID] of the HTTP Redirect.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the `PUT` or `DELETE` call for a resource, set the `if-match` parameter to the value of the etag from a previous `GET` or `POST` response for that resource. The resource will be updated or deleted only if the etag provided matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -189,7 +189,7 @@ def delete_http_redirect(ctx, from_json, wait_for_state, max_wait_seconds, wait_
     cli_util.render_response(result, ctx)
 
 
-@http_redirect_group.command(name=cli_util.override('redirect.get_http_redirect.command_name', 'get'), help=u"""Gets the details of a HTTP Redirect.""")
+@http_redirect_group.command(name=cli_util.override('redirect.get_http_redirect.command_name', 'get'), help=u"""Gets the details of a HTTP Redirect. \n[Command Reference](getHttpRedirect)""")
 @cli_util.option('--http-redirect-id', required=True, help=u"""The [OCID] of the HTTP Redirect.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -211,7 +211,7 @@ def get_http_redirect(ctx, from_json, http_redirect_id):
     cli_util.render_response(result, ctx)
 
 
-@http_redirect_group.command(name=cli_util.override('redirect.list_http_redirects.command_name', 'list'), help=u"""Gets a list of HTTP Redirects.""")
+@http_redirect_group.command(name=cli_util.override('redirect.list_http_redirects.command_name', 'list'), help=u"""Gets a list of HTTP Redirects. \n[Command Reference](listHttpRedirects)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment. This number is generated when the compartment is created.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated call. If unspecified, defaults to `10`.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous paginated call.""")
@@ -280,7 +280,7 @@ def list_http_redirects(ctx, from_json, all_pages, page_size, compartment_id, li
     cli_util.render_response(result, ctx)
 
 
-@http_redirect_group.command(name=cli_util.override('redirect.update_http_redirect.command_name', 'update'), help=u"""Updates the details of a HTTP Redirect, including target and tags. Only the fields specified in the request body will be updated; all other properties will remain unchanged.""")
+@http_redirect_group.command(name=cli_util.override('redirect.update_http_redirect.command_name', 'update'), help=u"""Updates the details of a HTTP Redirect, including target and tags. Only the fields specified in the request body will be updated; all other properties will remain unchanged. \n[Command Reference](updateHttpRedirect)""")
 @cli_util.option('--http-redirect-id', required=True, help=u"""The [OCID] of the HTTP Redirect.""")
 @cli_util.option('--display-name', help=u"""The user-friendly name of the HTTP Redirect. The name can be changed and does not need to be unique.""")
 @cli_util.option('--target', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The redirect target object including all the redirect data.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)

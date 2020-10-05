@@ -31,7 +31,7 @@ dts_service_cli.dts_service_group.add_command(transfer_appliance_entitlement_roo
 transfer_appliance_entitlement_root_group.add_command(transfer_appliance_entitlement_group)
 
 
-@transfer_appliance_entitlement_group.command(name=cli_util.override('transfer_appliance_entitlement.create_transfer_appliance_entitlement.command_name', 'create'), help=u"""Create the Entitlement to use a Transfer Appliance. It requires some offline process of review and signatures before request is granted.""")
+@transfer_appliance_entitlement_group.command(name=cli_util.override('transfer_appliance_entitlement.create_transfer_appliance_entitlement.command_name', 'create'), help=u"""Create the Entitlement to use a Transfer Appliance. It requires some offline process of review and signatures before request is granted. \n[Command Reference](createTransferApplianceEntitlement)""")
 @cli_util.option('--compartment-id', help=u"""""")
 @cli_util.option('--display-name', help=u"""""")
 @cli_util.option('--requestor-name', help=u"""""")
@@ -106,7 +106,7 @@ def create_transfer_appliance_entitlement(ctx, from_json, wait_for_state, max_wa
     cli_util.render_response(result, ctx)
 
 
-@transfer_appliance_entitlement_group.command(name=cli_util.override('transfer_appliance_entitlement.get_transfer_appliance_entitlement.command_name', 'get'), help=u"""Describes the Transfer Appliance Entitlement in detail""")
+@transfer_appliance_entitlement_group.command(name=cli_util.override('transfer_appliance_entitlement.get_transfer_appliance_entitlement.command_name', 'get'), help=u"""Describes the Transfer Appliance Entitlement in detail \n[Command Reference](getTransferApplianceEntitlement)""")
 @cli_util.option('--id', required=True, help=u"""Id of the Transfer Appliance Entitlement""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -128,7 +128,7 @@ def get_transfer_appliance_entitlement(ctx, from_json, id):
     cli_util.render_response(result, ctx)
 
 
-@transfer_appliance_entitlement_group.command(name=cli_util.override('transfer_appliance_entitlement.list_transfer_appliance_entitlement.command_name', 'list'), help=u"""Lists Transfer Transfer Appliance Entitlement""")
+@transfer_appliance_entitlement_group.command(name=cli_util.override('transfer_appliance_entitlement.list_transfer_appliance_entitlement.command_name', 'list'), help=u"""Lists Transfer Transfer Appliance Entitlement \n[Command Reference](listTransferApplianceEntitlement)""")
 @cli_util.option('--compartment-id', required=True, help=u"""compartment id""")
 @cli_util.option('--id', help=u"""filtering by Transfer Appliance Entitlement id""")
 @cli_util.option('--display-name', help=u"""filtering by displayName""")

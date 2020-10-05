@@ -38,7 +38,7 @@ transfer_job_root_group.add_command(detach_devices_details_group)
 transfer_job_root_group.add_command(transfer_job_group)
 
 
-@detach_devices_details_group.command(name=cli_util.override('transfer_job.change_transfer_job_compartment.command_name', 'change-compartment'), help=u"""Moves a TransferJob into a different compartment.""")
+@detach_devices_details_group.command(name=cli_util.override('transfer_job.change_transfer_job_compartment.command_name', 'change-compartment'), help=u"""Moves a TransferJob into a different compartment. \n[Command Reference](changeTransferJobCompartment)""")
 @cli_util.option('--transfer-job-id', required=True, help=u"""ID of the Transfer Job""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID]  of the compartment into which the resources should be moved.""")
 @cli_util.option('--if-match', help=u"""The entity tag to match. Optional, if set, the update will be successful only if the object's tag matches the tag specified in the request.""")
@@ -69,7 +69,7 @@ def change_transfer_job_compartment(ctx, from_json, transfer_job_id, compartment
     cli_util.render_response(result, ctx)
 
 
-@transfer_job_group.command(name=cli_util.override('transfer_job.create_transfer_job.command_name', 'create'), help=u"""Create a new Transfer Job that corresponds with customer's logical dataset e.g. a DB or a filesystem.""")
+@transfer_job_group.command(name=cli_util.override('transfer_job.create_transfer_job.command_name', 'create'), help=u"""Create a new Transfer Job that corresponds with customer's logical dataset e.g. a DB or a filesystem. \n[Command Reference](createTransferJob)""")
 @cli_util.option('--compartment-id', help=u"""""")
 @cli_util.option('--upload-bucket-name', help=u"""""")
 @cli_util.option('--display-name', help=u"""""")
@@ -144,7 +144,7 @@ def create_transfer_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     cli_util.render_response(result, ctx)
 
 
-@transfer_job_group.command(name=cli_util.override('transfer_job.delete_transfer_job.command_name', 'delete'), help=u"""deletes a transfer job""")
+@transfer_job_group.command(name=cli_util.override('transfer_job.delete_transfer_job.command_name', 'delete'), help=u"""deletes a transfer job \n[Command Reference](deleteTransferJob)""")
 @cli_util.option('--id', required=True, help=u"""ID of the Transfer Job""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["INITIATED", "PREPARING", "ACTIVE", "DELETED", "CLOSED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -205,7 +205,7 @@ def delete_transfer_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     cli_util.render_response(result, ctx)
 
 
-@transfer_job_group.command(name=cli_util.override('transfer_job.get_transfer_job.command_name', 'get'), help=u"""Describes a transfer job in detail""")
+@transfer_job_group.command(name=cli_util.override('transfer_job.get_transfer_job.command_name', 'get'), help=u"""Describes a transfer job in detail \n[Command Reference](getTransferJob)""")
 @cli_util.option('--id', required=True, help=u"""OCID of the Transfer Job""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -227,7 +227,7 @@ def get_transfer_job(ctx, from_json, id):
     cli_util.render_response(result, ctx)
 
 
-@transfer_job_group.command(name=cli_util.override('transfer_job.list_transfer_jobs.command_name', 'list'), help=u"""Lists Transfer Jobs in a given compartment""")
+@transfer_job_group.command(name=cli_util.override('transfer_job.list_transfer_jobs.command_name', 'list'), help=u"""Lists Transfer Jobs in a given compartment \n[Command Reference](listTransferJobs)""")
 @cli_util.option('--compartment-id', required=True, help=u"""compartment id""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["INITIATED", "PREPARING", "ACTIVE", "DELETED", "CLOSED"]), help=u"""filtering by lifecycleState""")
 @cli_util.option('--display-name', help=u"""filtering by displayName""")
@@ -283,7 +283,7 @@ def list_transfer_jobs(ctx, from_json, all_pages, page_size, compartment_id, lif
     cli_util.render_response(result, ctx)
 
 
-@transfer_job_group.command(name=cli_util.override('transfer_job.update_transfer_job.command_name', 'update'), help=u"""Updates a Transfer Job that corresponds with customer's logical dataset e.g. a DB or a filesystem.""")
+@transfer_job_group.command(name=cli_util.override('transfer_job.update_transfer_job.command_name', 'update'), help=u"""Updates a Transfer Job that corresponds with customer's logical dataset e.g. a DB or a filesystem. \n[Command Reference](updateTransferJob)""")
 @cli_util.option('--id', required=True, help=u"""ID of the Transfer Job""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CLOSED"]), help=u"""""")
 @cli_util.option('--display-name', help=u"""""")

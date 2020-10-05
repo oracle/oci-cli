@@ -1964,6 +1964,41 @@ def stream_page(is_json, page_index, call_result, ctx, previous_page_has_data):
     return previous_page_has_data
 
 
+# If you want to generalize this to all object responses, consider iterating through data.attribute_map.keys()
+# to retrieve all keys from the object response.
+def stream_page_object(page_index, call_result, previous_page_has_data, data_key):
+    # Each page is like this [ {. . .}, {. . .} ]
+    # but we want this:
+    # first page:       [ {. . .}, {. . .
+    # subsequent pages:   }, {. . .}, {. . .
+    # last page:          }, {. . .}, {. . .} ]
+    json_page_matcher = re.compile("(^[\s\S]*\[\s)([\s\S]*?)(}\s*\]\s*}$)")  # noqa: W605
+
+    display_dictionary = {}
+    display_dictionary['data'] = to_dict(getattr(call_result.data, data_key))
+    json_data = pretty_print_format(display_dictionary)
+
+    # group 1="["; group2="{. . .}, {. . .},";  group3="]"
+    page_parts = json_page_matcher.search(json_data)
+    if page_parts:
+        if page_index > 1:
+            if previous_page_has_data:
+                print("    },")
+                print(page_parts.group(2))  # print data minus last }
+            else:  # This case happens when the data in the first pages were filtered out by the --query option
+                print(page_parts.group(1), page_parts.group(2))  # print [ with data
+        else:
+            print(page_parts.group(1), page_parts.group(2))  # print [ with data
+        previous_page_has_data = True
+
+    # Object Storage specific, otherwise use call_result.next_page
+    if call_result.data.next_start_with is None:
+        if previous_page_has_data:
+            print("    }")
+            print("  ],")
+    return previous_page_has_data
+
+
 def build_query_expression(ctx):
     expression = None
     search_path = resolve_jmespath_query(ctx, ctx.obj['query'])

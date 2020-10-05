@@ -259,3 +259,39 @@ class TestDataIntegration(unittest.TestCase):
     def test_data_loader_task_validation_create(self):
         result = util.invoke_command(['data-integration', 'task-validation', 'create-from-data-loader-task'])
         assert 'workspace-id' in result.output
+
+    def test_mysql_connection_create_old(self):
+        result = util.invoke_command(['data-integration', 'connection', 'create-connection-create-connection-from-my-sql'])
+        assert 'Error: No such command "create-connection-create-connection-from-my-sql".' in result.output
+
+    def test_jdbc_connection_create_old(self):
+        result = util.invoke_command(['data-integration', 'connection', 'create-connection-create-connection-from-jdbc'])
+        assert 'Error: No such command "create-connection-create-connection-from-jdbc".' in result.output
+
+    def test_mysql_connection_update_old(self):
+        result = util.invoke_command(['data-integration', 'connection', 'update-connection-update-connection-from-my-sql'])
+        assert 'Error: No such command "update-connection-update-connection-from-my-sql".' in result.output
+
+    def test_jdbc_connection_update_old(self):
+        result = util.invoke_command(['data-integration', 'connection', 'update-connection-update-connection-from-jdbc'])
+        assert 'Error: No such command "update-connection-update-connection-from-jdbc".' in result.output
+
+    def test_mysql_data_asset_create_old(self):
+        result = util.invoke_command(
+            ['data-integration', 'data-asset', 'create-data-asset-create-data-asset-from-my-sql'])
+        assert 'Error: No such command "create-data-asset-create-data-asset-from-my-sql".' in result.output
+
+    def test_jdbc_data_asset_create_old(self):
+        result = util.invoke_command(
+            ['data-integration', 'data-asset', 'create-data-asset-create-data-asset-from-jdbc'])
+        assert 'Error: No such command "create-data-asset-create-data-asset-from-jdbc".' in result.output
+
+    def test_mysql_data_asset_update_old(self):
+        result = util.invoke_command(
+            ['data-integration', 'data-asset', 'update-data-asset-update-data-asset-from-my-sql'])
+        assert 'Error: No such command "update-data-asset-update-data-asset-from-my-sql".' in result.output
+
+    def test_jdbc_data_asset_update_old(self):
+        result = util.invoke_command(
+            ['data-integration', 'data-asset', 'update-data-asset-update-data-asset-from-jdbc'])
+        assert 'Error: No such command "update-data-asset-update-data-asset-from-jdbc".' in result.output

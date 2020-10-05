@@ -108,7 +108,7 @@ os_root_group.add_command(namespace_group)
 os_root_group.add_command(object_group)
 
 
-@multipart_upload_group.command(name=cli_util.override('os.abort_multipart_upload.command_name', 'abort'), help=u"""Aborts an in-progress multipart upload and deletes all parts that have been uploaded.""")
+@multipart_upload_group.command(name=cli_util.override('os.abort_multipart_upload.command_name', 'abort'), help=u"""Aborts an in-progress multipart upload and deletes all parts that have been uploaded. \n[Command Reference](abortMultipartUpload)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
 @cli_util.option('--bucket-name', required=True, help=u"""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")
 @cli_util.option('--object-name', required=True, help=u"""The name of the object. Avoid entering confidential information. Example: `test/object1.log`""")
@@ -143,7 +143,7 @@ def abort_multipart_upload(ctx, from_json, namespace_name, bucket_name, object_n
     cli_util.render_response(result, ctx)
 
 
-@work_request_group.command(name=cli_util.override('os.cancel_work_request.command_name', 'cancel'), help=u"""Cancels a work request.""")
+@work_request_group.command(name=cli_util.override('os.cancel_work_request.command_name', 'cancel'), help=u"""Cancels a work request. \n[Command Reference](cancelWorkRequest)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The ID of the asynchronous request.""")
 @cli_util.confirm_delete_option
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -166,7 +166,7 @@ def cancel_work_request(ctx, from_json, work_request_id):
     cli_util.render_response(result, ctx)
 
 
-@multipart_upload_group.command(name=cli_util.override('os.commit_multipart_upload.command_name', 'commit'), help=u"""Commits a multipart upload, which involves checking part numbers and entity tags (ETags) of the parts, to create an aggregate object.""")
+@multipart_upload_group.command(name=cli_util.override('os.commit_multipart_upload.command_name', 'commit'), help=u"""Commits a multipart upload, which involves checking part numbers and entity tags (ETags) of the parts, to create an aggregate object. \n[Command Reference](commitMultipartUpload)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
 @cli_util.option('--bucket-name', required=True, help=u"""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")
 @cli_util.option('--object-name', required=True, help=u"""The name of the object. Avoid entering confidential information. Example: `test/object1.log`""")
@@ -216,7 +216,7 @@ def commit_multipart_upload(ctx, from_json, namespace_name, bucket_name, object_
     cli_util.render_response(result, ctx)
 
 
-@object_group.command(name=cli_util.override('os.copy_object.command_name', 'copy'), help=u"""Creates a request to copy an object within a region or to another region.""")
+@object_group.command(name=cli_util.override('os.copy_object.command_name', 'copy'), help=u"""Creates a request to copy an object within a region or to another region. \n[Command Reference](copyObject)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
 @cli_util.option('--bucket-name', required=True, help=u"""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")
 @cli_util.option('--source-object-name', required=True, help=u"""The name of the object to be copied.""")
@@ -321,7 +321,7 @@ def copy_object(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
     cli_util.render_response(result, ctx)
 
 
-@bucket_group.command(name=cli_util.override('os.create_bucket.command_name', 'create'), help=u"""Creates a bucket in the given namespace with a bucket name and optional user-defined metadata. Avoid entering confidential information in bucket names.""")
+@bucket_group.command(name=cli_util.override('os.create_bucket.command_name', 'create'), help=u"""Creates a bucket in the given namespace with a bucket name and optional user-defined metadata. Avoid entering confidential information in bucket names. \n[Command Reference](createBucket)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
 @cli_util.option('--name', required=True, help=u"""The name of the bucket. Valid characters are uppercase or lowercase letters, numbers, hyphens, underscores, and periods. Bucket names must be unique within an Object Storage namespace. Avoid entering confidential information. example: Example: my-new-bucket1""")
 @cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to create the bucket.""")
@@ -383,7 +383,7 @@ def create_bucket(ctx, from_json, namespace_name, name, compartment_id, metadata
     cli_util.render_response(result, ctx)
 
 
-@multipart_upload_group.command(name=cli_util.override('os.create_multipart_upload.command_name', 'create'), help=u"""Starts a new multipart upload to a specific object in the given bucket in the given namespace.""")
+@multipart_upload_group.command(name=cli_util.override('os.create_multipart_upload.command_name', 'create'), help=u"""Starts a new multipart upload to a specific object in the given bucket in the given namespace. \n[Command Reference](createMultipartUpload)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
 @cli_util.option('--bucket-name', required=True, help=u"""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")
 @cli_util.option('--object', required=True, help=u"""The name of the object to which this multi-part upload is targeted. Avoid entering confidential information. Example: test/object1.log""")
@@ -455,7 +455,7 @@ def create_multipart_upload(ctx, from_json, namespace_name, bucket_name, object,
     cli_util.render_response(result, ctx)
 
 
-@preauthenticated_request_group.command(name=cli_util.override('os.create_preauthenticated_request.command_name', 'create'), help=u"""Creates a pre-authenticated request specific to the bucket.""")
+@preauthenticated_request_group.command(name=cli_util.override('os.create_preauthenticated_request.command_name', 'create'), help=u"""Creates a pre-authenticated request specific to the bucket. \n[Command Reference](createPreauthenticatedRequest)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
 @cli_util.option('--bucket-name', required=True, help=u"""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")
 @cli_util.option('--name', required=True, help=u"""A user-specified name for the pre-authenticated request. Names can be helpful in managing pre-authenticated requests.""")
@@ -496,7 +496,7 @@ def create_preauthenticated_request(ctx, from_json, namespace_name, bucket_name,
     cli_util.render_response(result, ctx)
 
 
-@replication_group.command(name=cli_util.override('os.create_replication_policy.command_name', 'create-replication-policy'), help=u"""Creates a replication policy for the specified bucket.""")
+@replication_group.command(name=cli_util.override('os.create_replication_policy.command_name', 'create-replication-policy'), help=u"""Creates a replication policy for the specified bucket. \n[Command Reference](createReplicationPolicy)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
 @cli_util.option('--bucket-name', required=True, help=u"""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")
 @cli_util.option('--name', required=True, help=u"""The name of the policy.""")
@@ -533,7 +533,7 @@ def create_replication_policy(ctx, from_json, namespace_name, bucket_name, name,
     cli_util.render_response(result, ctx)
 
 
-@retention_rule_group.command(name=cli_util.override('os.create_retention_rule.command_name', 'create'), help=u"""Creates a new retention rule in the specified bucket. The new rule will take effect typically within 30 seconds. Note that a maximum of 100 rules are supported on a bucket.""")
+@retention_rule_group.command(name=cli_util.override('os.create_retention_rule.command_name', 'create'), help=u"""Creates a new retention rule in the specified bucket. The new rule will take effect typically within 30 seconds. Note that a maximum of 100 rules are supported on a bucket. \n[Command Reference](createRetentionRule)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
 @cli_util.option('--bucket-name', required=True, help=u"""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")
 @cli_util.option('--display-name', help=u"""A user-specified name for the retention rule. Names can be helpful in identifying retention rules.""")
@@ -576,7 +576,7 @@ def create_retention_rule(ctx, from_json, namespace_name, bucket_name, display_n
     cli_util.render_response(result, ctx)
 
 
-@bucket_group.command(name=cli_util.override('os.delete_bucket.command_name', 'delete'), help=u"""Deletes a bucket if the bucket is already empty. If the bucket is not empty, use [DeleteObject] first. In addition, you cannot delete a bucket that has a multipart upload in progress or a pre-authenticated request associated with that bucket.""")
+@bucket_group.command(name=cli_util.override('os.delete_bucket.command_name', 'delete'), help=u"""Deletes a bucket if the bucket is already empty. If the bucket is not empty, use [DeleteObject] first. In addition, you cannot delete a bucket that has a multipart upload in progress or a pre-authenticated request associated with that bucket. \n[Command Reference](deleteBucket)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
 @cli_util.option('--bucket-name', required=True, help=u"""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")
 @cli_util.option('--if-match', help=u"""The entity tag (ETag) to match. For creating and committing a multipart upload to an object, this is the entity tag of the target object. For uploading a part, this is the entity tag of the target part.""")
@@ -607,7 +607,7 @@ def delete_bucket(ctx, from_json, namespace_name, bucket_name, if_match):
     cli_util.render_response(result, ctx)
 
 
-@object_group.command(name=cli_util.override('os.delete_object.command_name', 'delete'), help=u"""Deletes an object.""")
+@object_group.command(name=cli_util.override('os.delete_object.command_name', 'delete'), help=u"""Deletes an object. \n[Command Reference](deleteObject)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
 @cli_util.option('--bucket-name', required=True, help=u"""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")
 @cli_util.option('--object-name', required=True, help=u"""The name of the object. Avoid entering confidential information. Example: `test/object1.log`""")
@@ -646,7 +646,7 @@ def delete_object(ctx, from_json, namespace_name, bucket_name, object_name, if_m
     cli_util.render_response(result, ctx)
 
 
-@object_lifecycle_policy_group.command(name=cli_util.override('os.delete_object_lifecycle_policy.command_name', 'delete'), help=u"""Deletes the object lifecycle policy for the bucket.""")
+@object_lifecycle_policy_group.command(name=cli_util.override('os.delete_object_lifecycle_policy.command_name', 'delete'), help=u"""Deletes the object lifecycle policy for the bucket. \n[Command Reference](deleteObjectLifecyclePolicy)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
 @cli_util.option('--bucket-name', required=True, help=u"""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")
 @cli_util.option('--if-match', help=u"""The entity tag (ETag) to match. For creating and committing a multipart upload to an object, this is the entity tag of the target object. For uploading a part, this is the entity tag of the target part.""")
@@ -677,7 +677,7 @@ def delete_object_lifecycle_policy(ctx, from_json, namespace_name, bucket_name, 
     cli_util.render_response(result, ctx)
 
 
-@preauthenticated_request_group.command(name=cli_util.override('os.delete_preauthenticated_request.command_name', 'delete'), help=u"""Deletes the pre-authenticated request for the bucket.""")
+@preauthenticated_request_group.command(name=cli_util.override('os.delete_preauthenticated_request.command_name', 'delete'), help=u"""Deletes the pre-authenticated request for the bucket. \n[Command Reference](deletePreauthenticatedRequest)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
 @cli_util.option('--bucket-name', required=True, help=u"""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")
 @cli_util.option('--par-id', required=True, help=u"""The unique identifier for the pre-authenticated request. This can be used to manage operations against the pre-authenticated request, such as GET or DELETE.""")
@@ -710,7 +710,7 @@ def delete_preauthenticated_request(ctx, from_json, namespace_name, bucket_name,
     cli_util.render_response(result, ctx)
 
 
-@replication_group.command(name=cli_util.override('os.delete_replication_policy.command_name', 'delete-replication-policy'), help=u"""Deletes the replication policy associated with the source bucket.""")
+@replication_group.command(name=cli_util.override('os.delete_replication_policy.command_name', 'delete-replication-policy'), help=u"""Deletes the replication policy associated with the source bucket. \n[Command Reference](deleteReplicationPolicy)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
 @cli_util.option('--bucket-name', required=True, help=u"""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")
 @cli_util.option('--replication-id', required=True, help=u"""The ID of the replication policy.""")
@@ -743,7 +743,7 @@ def delete_replication_policy(ctx, from_json, namespace_name, bucket_name, repli
     cli_util.render_response(result, ctx)
 
 
-@retention_rule_group.command(name=cli_util.override('os.delete_retention_rule.command_name', 'delete'), help=u"""Deletes the specified rule. The deletion takes effect typically within 30 seconds.""")
+@retention_rule_group.command(name=cli_util.override('os.delete_retention_rule.command_name', 'delete'), help=u"""Deletes the specified rule. The deletion takes effect typically within 30 seconds. \n[Command Reference](deleteRetentionRule)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
 @cli_util.option('--bucket-name', required=True, help=u"""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")
 @cli_util.option('--retention-rule-id', required=True, help=u"""The ID of the retention rule.""")
@@ -779,7 +779,7 @@ def delete_retention_rule(ctx, from_json, namespace_name, bucket_name, retention
     cli_util.render_response(result, ctx)
 
 
-@bucket_group.command(name=cli_util.override('os.get_bucket.command_name', 'get'), help=u"""Gets the current representation of the given bucket in the given Object Storage namespace.""")
+@bucket_group.command(name=cli_util.override('os.get_bucket.command_name', 'get'), help=u"""Gets the current representation of the given bucket in the given Object Storage namespace. \n[Command Reference](getBucket)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
 @cli_util.option('--bucket-name', required=True, help=u"""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")
 @cli_util.option('--if-match', help=u"""The entity tag (ETag) to match. For creating and committing a multipart upload to an object, this is the entity tag of the target object. For uploading a part, this is the entity tag of the target part.""")
@@ -817,7 +817,7 @@ def get_bucket(ctx, from_json, namespace_name, bucket_name, if_match, if_none_ma
 
 @namespace_group.command(name=cli_util.override('os.get_namespace.command_name', 'get'), help=u"""Each Oracle Cloud Infrastructure tenant is assigned one unique and uneditable Object Storage namespace. The namespace is a system-generated string assigned during account creation. For some older tenancies, the namespace string may be the tenancy name in all lower-case letters. You cannot edit a namespace.
 
-GetNamespace returns the name of the Object Storage namespace for the user making the request. If an optional compartmentId query parameter is provided, GetNamespace returns the namespace name of the corresponding tenancy, provided the user has access to it.""")
+GetNamespace returns the name of the Object Storage namespace for the user making the request. If an optional compartmentId query parameter is provided, GetNamespace returns the namespace name of the corresponding tenancy, provided the user has access to it. \n[Command Reference](getNamespace)""")
 @cli_util.option('--compartment-id', help=u"""This is an optional field representing either the tenancy [OCID] or the compartment [OCID] within the tenancy whose Object Storage namespace is to be retrieved.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -839,7 +839,7 @@ def get_namespace(ctx, from_json, compartment_id):
 
 @namespace_group.command(name=cli_util.override('os.get_namespace_metadata.command_name', 'get-namespace-metadata'), help=u"""Gets the metadata for the Object Storage namespace, which contains defaultS3CompartmentId and defaultSwiftCompartmentId.
 
-Any user with the OBJECTSTORAGE_NAMESPACE_READ permission will be able to see the current metadata. If you are not authorized, talk to an administrator. If you are an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
+Any user with the OBJECTSTORAGE_NAMESPACE_READ permission will be able to see the current metadata. If you are not authorized, talk to an administrator. If you are an administrator who needs to write policies to give users access, see [Getting Started with Policies]. \n[Command Reference](getNamespaceMetadata)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -861,7 +861,7 @@ def get_namespace_metadata(ctx, from_json, namespace_name):
     cli_util.render_response(result, ctx)
 
 
-@object_group.command(name=cli_util.override('os.get_object.command_name', 'get'), help=u"""Gets the metadata and body of an object.""")
+@object_group.command(name=cli_util.override('os.get_object.command_name', 'get'), help=u"""Gets the metadata and body of an object. \n[Command Reference](getObject)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
 @cli_util.option('--bucket-name', required=True, help=u"""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")
 @cli_util.option('--object-name', required=True, help=u"""The name of the object. Avoid entering confidential information. Example: `test/object1.log`""")
@@ -955,7 +955,7 @@ def get_object(ctx, from_json, file, namespace_name, bucket_name, object_name, v
         file.close()
 
 
-@object_lifecycle_policy_group.command(name=cli_util.override('os.get_object_lifecycle_policy.command_name', 'get'), help=u"""Gets the object lifecycle policy for the bucket.""")
+@object_lifecycle_policy_group.command(name=cli_util.override('os.get_object_lifecycle_policy.command_name', 'get'), help=u"""Gets the object lifecycle policy for the bucket. \n[Command Reference](getObjectLifecyclePolicy)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
 @cli_util.option('--bucket-name', required=True, help=u"""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -982,7 +982,7 @@ def get_object_lifecycle_policy(ctx, from_json, namespace_name, bucket_name):
     cli_util.render_response(result, ctx)
 
 
-@preauthenticated_request_group.command(name=cli_util.override('os.get_preauthenticated_request.command_name', 'get'), help=u"""Gets the pre-authenticated request for the bucket.""")
+@preauthenticated_request_group.command(name=cli_util.override('os.get_preauthenticated_request.command_name', 'get'), help=u"""Gets the pre-authenticated request for the bucket. \n[Command Reference](getPreauthenticatedRequest)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
 @cli_util.option('--bucket-name', required=True, help=u"""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")
 @cli_util.option('--par-id', required=True, help=u"""The unique identifier for the pre-authenticated request. This can be used to manage operations against the pre-authenticated request, such as GET or DELETE.""")
@@ -1014,7 +1014,7 @@ def get_preauthenticated_request(ctx, from_json, namespace_name, bucket_name, pa
     cli_util.render_response(result, ctx)
 
 
-@replication_group.command(name=cli_util.override('os.get_replication_policy.command_name', 'get-replication-policy'), help=u"""Get the replication policy.""")
+@replication_group.command(name=cli_util.override('os.get_replication_policy.command_name', 'get-replication-policy'), help=u"""Get the replication policy. \n[Command Reference](getReplicationPolicy)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
 @cli_util.option('--bucket-name', required=True, help=u"""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")
 @cli_util.option('--replication-id', required=True, help=u"""The ID of the replication policy.""")
@@ -1046,7 +1046,7 @@ def get_replication_policy(ctx, from_json, namespace_name, bucket_name, replicat
     cli_util.render_response(result, ctx)
 
 
-@retention_rule_group.command(name=cli_util.override('os.get_retention_rule.command_name', 'get'), help=u"""Get the specified retention rule.""")
+@retention_rule_group.command(name=cli_util.override('os.get_retention_rule.command_name', 'get'), help=u"""Get the specified retention rule. \n[Command Reference](getRetentionRule)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
 @cli_util.option('--bucket-name', required=True, help=u"""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")
 @cli_util.option('--retention-rule-id', required=True, help=u"""The ID of the retention rule.""")
@@ -1078,7 +1078,7 @@ def get_retention_rule(ctx, from_json, namespace_name, bucket_name, retention_ru
     cli_util.render_response(result, ctx)
 
 
-@work_request_group.command(name=cli_util.override('os.get_work_request.command_name', 'get'), help=u"""Gets the status of the work request for the given ID.""")
+@work_request_group.command(name=cli_util.override('os.get_work_request.command_name', 'get'), help=u"""Gets the status of the work request for the given ID. \n[Command Reference](getWorkRequest)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The ID of the asynchronous request.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -1100,7 +1100,7 @@ def get_work_request(ctx, from_json, work_request_id):
     cli_util.render_response(result, ctx)
 
 
-@bucket_group.command(name=cli_util.override('os.head_bucket.command_name', 'head'), help=u"""Efficiently checks to see if a bucket exists and gets the current entity tag (ETag) for the bucket.""")
+@bucket_group.command(name=cli_util.override('os.head_bucket.command_name', 'head'), help=u"""Efficiently checks to see if a bucket exists and gets the current entity tag (ETag) for the bucket. \n[Command Reference](headBucket)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
 @cli_util.option('--bucket-name', required=True, help=u"""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")
 @cli_util.option('--if-match', help=u"""The entity tag (ETag) to match. For creating and committing a multipart upload to an object, this is the entity tag of the target object. For uploading a part, this is the entity tag of the target part.""")
@@ -1133,7 +1133,7 @@ def head_bucket(ctx, from_json, namespace_name, bucket_name, if_match, if_none_m
     cli_util.render_response(result, ctx)
 
 
-@object_group.command(name=cli_util.override('os.head_object.command_name', 'head'), help=u"""Gets the user-defined metadata and entity tag (ETag) for an object.""")
+@object_group.command(name=cli_util.override('os.head_object.command_name', 'head'), help=u"""Gets the user-defined metadata and entity tag (ETag) for an object. \n[Command Reference](headObject)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
 @cli_util.option('--bucket-name', required=True, help=u"""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")
 @cli_util.option('--object-name', required=True, help=u"""The name of the object. Avoid entering confidential information. Example: `test/object1.log`""")
@@ -1185,7 +1185,7 @@ def head_object(ctx, from_json, namespace_name, bucket_name, object_name, versio
 
 @bucket_group.command(name=cli_util.override('os.list_buckets.command_name', 'list'), help=u"""Gets a list of all BucketSummary items in a compartment. A BucketSummary contains only summary fields for the bucket and does not contain fields like the user-defined metadata.
 
-To use this and other API operations, you must be authorized in an IAM policy. If you are not authorized, talk to an administrator. If you are an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
+To use this and other API operations, you must be authorized in an IAM policy. If you are not authorized, talk to an administrator. If you are an administrator who needs to write policies to give users access, see [Getting Started with Policies]. \n[Command Reference](listBuckets)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list buckets.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -1243,7 +1243,7 @@ def list_buckets(ctx, from_json, all_pages, page_size, namespace_name, compartme
     cli_util.render_response(result, ctx)
 
 
-@multipart_upload_group.command(name=cli_util.override('os.list_multipart_upload_parts.command_name', 'list-multipart-upload-parts'), help=u"""Lists the parts of an in-progress multipart upload.""")
+@multipart_upload_group.command(name=cli_util.override('os.list_multipart_upload_parts.command_name', 'list-multipart-upload-parts'), help=u"""Lists the parts of an in-progress multipart upload. \n[Command Reference](listMultipartUploadParts)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
 @cli_util.option('--bucket-name', required=True, help=u"""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")
 @cli_util.option('--object-name', required=True, help=u"""The name of the object. Avoid entering confidential information. Example: `test/object1.log`""")
@@ -1312,7 +1312,7 @@ def list_multipart_upload_parts(ctx, from_json, all_pages, page_size, namespace_
     cli_util.render_response(result, ctx)
 
 
-@multipart_upload_group.command(name=cli_util.override('os.list_multipart_uploads.command_name', 'list'), help=u"""Lists all of the in-progress multipart uploads for the given bucket in the given Object Storage namespace.""")
+@multipart_upload_group.command(name=cli_util.override('os.list_multipart_uploads.command_name', 'list'), help=u"""Lists all of the in-progress multipart uploads for the given bucket in the given Object Storage namespace. \n[Command Reference](listMultipartUploads)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
 @cli_util.option('--bucket-name', required=True, help=u"""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -1372,7 +1372,7 @@ def list_multipart_uploads(ctx, from_json, all_pages, page_size, namespace_name,
 
 @object_group.command(name=cli_util.override('os.list_object_versions.command_name', 'list-object-versions'), help=u"""Lists the object versions in a bucket.
 
-To use this and other API operations, you must be authorized in an IAM policy. If you are not authorized, talk to an administrator. If you are an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
+To use this and other API operations, you must be authorized in an IAM policy. If you are not authorized, talk to an administrator. If you are an administrator who needs to write policies to give users access, see [Getting Started with Policies]. \n[Command Reference](listObjectVersions)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
 @cli_util.option('--bucket-name', required=True, help=u"""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")
 @cli_util.option('--prefix', help=u"""The string to use for matching against the start of object names in a list query.""")
@@ -1450,7 +1450,7 @@ def list_object_versions(ctx, from_json, all_pages, page_size, namespace_name, b
 
 @object_group.command(name=cli_util.override('os.list_objects.command_name', 'list'), help=u"""Lists the objects in a bucket.
 
-To use this and other API operations, you must be authorized in an IAM policy. If you are not authorized, talk to an administrator. If you are an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
+To use this and other API operations, you must be authorized in an IAM policy. If you are not authorized, talk to an administrator. If you are an administrator who needs to write policies to give users access, see [Getting Started with Policies]. \n[Command Reference](listObjects)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
 @cli_util.option('--bucket-name', required=True, help=u"""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")
 @cli_util.option('--prefix', help=u"""The string to use for matching against the start of object names in a list query.""")
@@ -1499,7 +1499,7 @@ def list_objects(ctx, from_json, all_pages, namespace_name, bucket_name, prefix,
     cli_util.render_response(result, ctx)
 
 
-@preauthenticated_request_group.command(name=cli_util.override('os.list_preauthenticated_requests.command_name', 'list'), help=u"""Lists pre-authenticated requests for the bucket.""")
+@preauthenticated_request_group.command(name=cli_util.override('os.list_preauthenticated_requests.command_name', 'list'), help=u"""Lists pre-authenticated requests for the bucket. \n[Command Reference](listPreauthenticatedRequests)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
 @cli_util.option('--bucket-name', required=True, help=u"""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")
 @cli_util.option('--object-name-prefix', help=u"""User-specified object name prefixes can be used to query and return a list of pre-authenticated requests.""")
@@ -1560,7 +1560,7 @@ def list_preauthenticated_requests(ctx, from_json, all_pages, page_size, namespa
     cli_util.render_response(result, ctx)
 
 
-@replication_group.command(name=cli_util.override('os.list_replication_policies.command_name', 'list-replication-policies'), help=u"""List the replication policies associated with a bucket.""")
+@replication_group.command(name=cli_util.override('os.list_replication_policies.command_name', 'list-replication-policies'), help=u"""List the replication policies associated with a bucket. \n[Command Reference](listReplicationPolicies)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
 @cli_util.option('--bucket-name', required=True, help=u"""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")
 @cli_util.option('--page', help=u"""The page at which to start retrieving results.""")
@@ -1618,7 +1618,7 @@ def list_replication_policies(ctx, from_json, all_pages, page_size, namespace_na
     cli_util.render_response(result, ctx)
 
 
-@replication_group.command(name=cli_util.override('os.list_replication_sources.command_name', 'list-replication-sources'), help=u"""List the replication sources of a destination bucket.""")
+@replication_group.command(name=cli_util.override('os.list_replication_sources.command_name', 'list-replication-sources'), help=u"""List the replication sources of a destination bucket. \n[Command Reference](listReplicationSources)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
 @cli_util.option('--bucket-name', required=True, help=u"""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")
 @cli_util.option('--page', help=u"""The page at which to start retrieving results.""")
@@ -1676,7 +1676,7 @@ def list_replication_sources(ctx, from_json, all_pages, page_size, namespace_nam
     cli_util.render_response(result, ctx)
 
 
-@retention_rule_group.command(name=cli_util.override('os.list_retention_rules.command_name', 'list'), help=u"""List the retention rules for a bucket. The retention rules are sorted based on creation time, with the most recently created retention rule returned first.""")
+@retention_rule_group.command(name=cli_util.override('os.list_retention_rules.command_name', 'list'), help=u"""List the retention rules for a bucket. The retention rules are sorted based on creation time, with the most recently created retention rule returned first. \n[Command Reference](listRetentionRules)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
 @cli_util.option('--bucket-name', required=True, help=u"""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")
 @cli_util.option('--page', help=u"""The page at which to start retrieving results.""")
@@ -1714,7 +1714,7 @@ def list_retention_rules(ctx, from_json, all_pages, namespace_name, bucket_name,
     cli_util.render_response(result, ctx)
 
 
-@work_request_error_group.command(name=cli_util.override('os.list_work_request_errors.command_name', 'list'), help=u"""Lists the errors of the work request with the given ID.""")
+@work_request_error_group.command(name=cli_util.override('os.list_work_request_errors.command_name', 'list'), help=u"""Lists the errors of the work request with the given ID. \n[Command Reference](listWorkRequestErrors)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The ID of the asynchronous request.""")
 @cli_util.option('--page', help=u"""The page at which to start retrieving results.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -1765,7 +1765,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     cli_util.render_response(result, ctx)
 
 
-@work_request_log_entry_group.command(name=cli_util.override('os.list_work_request_logs.command_name', 'list-work-request-logs'), help=u"""Lists the logs of the work request with the given ID.""")
+@work_request_log_entry_group.command(name=cli_util.override('os.list_work_request_logs.command_name', 'list-work-request-logs'), help=u"""Lists the logs of the work request with the given ID. \n[Command Reference](listWorkRequestLogs)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The ID of the asynchronous request.""")
 @cli_util.option('--page', help=u"""The page at which to start retrieving results.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -1816,7 +1816,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     cli_util.render_response(result, ctx)
 
 
-@work_request_group.command(name=cli_util.override('os.list_work_requests.command_name', 'list'), help=u"""Lists the work requests in a compartment.""")
+@work_request_group.command(name=cli_util.override('os.list_work_requests.command_name', 'list'), help=u"""Lists the work requests in a compartment. \n[Command Reference](listWorkRequests)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list buckets.""")
 @cli_util.option('--page', help=u"""The page at which to start retrieving results.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -1864,7 +1864,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, pag
     cli_util.render_response(result, ctx)
 
 
-@replication_group.command(name=cli_util.override('os.make_bucket_writable.command_name', 'make-bucket-writable'), help=u"""Stops replication to the destination bucket and removes the replication policy. When the replication policy was created, this destination bucket became read-only except for new and changed objects replicated automatically from the source bucket. MakeBucketWritable removes the replication policy. This bucket is no longer the target for replication and is now writable, allowing users to make changes to bucket contents.""")
+@replication_group.command(name=cli_util.override('os.make_bucket_writable.command_name', 'make-bucket-writable'), help=u"""Stops replication to the destination bucket and removes the replication policy. When the replication policy was created, this destination bucket became read-only except for new and changed objects replicated automatically from the source bucket. MakeBucketWritable removes the replication policy. This bucket is no longer the target for replication and is now writable, allowing users to make changes to bucket contents. \n[Command Reference](makeBucketWritable)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
 @cli_util.option('--bucket-name', required=True, help=u"""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1895,7 +1895,7 @@ def make_bucket_writable(ctx, from_json, namespace_name, bucket_name):
 
 See [Object Names] for object naming requirements.
 
-See [Special Instructions for Object Storage PUT] for request signature requirements.""")
+See [Special Instructions for Object Storage PUT] for request signature requirements. \n[Command Reference](putObject)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
 @cli_util.option('--bucket-name', required=True, help=u"""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")
 @cli_util.option('--object-name', required=True, help=u"""The name of the object. Avoid entering confidential information. Example: `test/object1.log`""")
@@ -1977,7 +1977,7 @@ def put_object(ctx, from_json, namespace_name, bucket_name, object_name, put_obj
     cli_util.render_response(result, ctx)
 
 
-@object_lifecycle_policy_group.command(name=cli_util.override('os.put_object_lifecycle_policy.command_name', 'put'), help=u"""Creates or replaces the object lifecycle policy for the bucket.""")
+@object_lifecycle_policy_group.command(name=cli_util.override('os.put_object_lifecycle_policy.command_name', 'put'), help=u"""Creates or replaces the object lifecycle policy for the bucket. \n[Command Reference](putObjectLifecyclePolicy)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
 @cli_util.option('--bucket-name', required=True, help=u"""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")
 @cli_util.option('--items', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The bucket's set of lifecycle policy rules.
@@ -2027,7 +2027,7 @@ def put_object_lifecycle_policy(ctx, from_json, force, namespace_name, bucket_na
 
 @bucket_group.command(name=cli_util.override('os.reencrypt_bucket.command_name', 'reencrypt'), help=u"""Re-encrypts the unique data encryption key that encrypts each object written to the bucket by using the most recent version of the master encryption key assigned to the bucket. (All data encryption keys are encrypted by a master encryption key. Master encryption keys are assigned to buckets and managed by Oracle by default, but you can assign a key that you created and control through the Oracle Cloud Infrastructure Key Management service.) The kmsKeyId property of the bucket determines which master encryption key is assigned to the bucket. If you assigned a different Key Management master encryption key to the bucket, you can call this API to re-encrypt all data encryption keys with the newly assigned key. Similarly, you might want to re-encrypt all data encryption keys if the assigned key has been rotated to a new key version since objects were last added to the bucket. If you call this API and there is no kmsKeyId associated with the bucket, the call will fail.
 
-Calling this API starts a work request task to re-encrypt the data encryption key of all objects in the bucket. Only objects created before the time of the API call will be re-encrypted. The call can take a long time, depending on how many objects are in the bucket and how big they are. This API returns a work request ID that you can use to retrieve the status of the work request task. All the versions of objects will be re-encrypted whether versioning is enabled or suspended at the bucket.""")
+Calling this API starts a work request task to re-encrypt the data encryption key of all objects in the bucket. Only objects created before the time of the API call will be re-encrypted. The call can take a long time, depending on how many objects are in the bucket and how big they are. This API returns a work request ID that you can use to retrieve the status of the work request task. All the versions of objects will be re-encrypted whether versioning is enabled or suspended at the bucket. \n[Command Reference](reencryptBucket)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
 @cli_util.option('--bucket-name', required=True, help=u"""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "COMPLETED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -2086,7 +2086,7 @@ You can alternatively employ one of these encryption strategies for an object:
 
 - You can assign a key that you created and control through the Oracle Cloud Infrastructure Vault service.
 
-- You can encrypt an object using your own encryption key. The key you supply is known as a customer-provided encryption key (SSE-C).""")
+- You can encrypt an object using your own encryption key. The key you supply is known as a customer-provided encryption key (SSE-C). \n[Command Reference](reencryptObject)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
 @cli_util.option('--bucket-name', required=True, help=u"""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")
 @cli_util.option('--object-name', required=True, help=u"""The name of the object. Avoid entering confidential information. Example: `test/object1.log`""")
@@ -2139,7 +2139,7 @@ def reencrypt_object(ctx, from_json, namespace_name, bucket_name, object_name, k
 
 @object_group.command(name=cli_util.override('os.rename_object.command_name', 'rename'), help=u"""Rename an object in the given Object Storage namespace.
 
-See [Object Names] for object naming requirements.""")
+See [Object Names] for object naming requirements. \n[Command Reference](renameObject)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
 @cli_util.option('--bucket-name', required=True, help=u"""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")
 @cli_util.option('--source-name', required=True, help=u"""The name of the source object to be renamed.""")
@@ -2186,7 +2186,7 @@ def rename_object(ctx, from_json, namespace_name, bucket_name, source_name, new_
     cli_util.render_response(result, ctx)
 
 
-@object_group.command(name=cli_util.override('os.restore_objects.command_name', 'restore'), help=u"""Restores one or more objects specified by the objectName parameter. By default objects will be restored for 24 hours. Duration can be configured using the hours parameter.""")
+@object_group.command(name=cli_util.override('os.restore_objects.command_name', 'restore'), help=u"""Restores one or more objects specified by the objectName parameter. By default objects will be restored for 24 hours. Duration can be configured using the hours parameter. \n[Command Reference](restoreObjects)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
 @cli_util.option('--bucket-name', required=True, help=u"""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")
 @cli_util.option('--object-name', required=True, help=u"""An object that is in an archive storage tier and needs to be restored.""")
@@ -2229,7 +2229,7 @@ def restore_objects(ctx, from_json, namespace_name, bucket_name, object_name, ho
 
 @bucket_group.command(name=cli_util.override('os.update_bucket.command_name', 'update'), help=u"""Performs a partial or full update of a bucket's user-defined metadata.
 
-Use UpdateBucket to move a bucket from one compartment to another within the same tenancy. Supply the compartmentID of the compartment that you want to move the bucket to. For more information about moving resources between compartments, see [Moving Resources to a Different Compartment].""")
+Use UpdateBucket to move a bucket from one compartment to another within the same tenancy. Supply the compartmentID of the compartment that you want to move the bucket to. For more information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](updateBucket)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
 @cli_util.option('--bucket-name', required=True, help=u"""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")
 @cli_util.option('--compartment-id', help=u"""The compartmentId for the compartment to move the bucket to.""")
@@ -2300,7 +2300,7 @@ def update_bucket(ctx, from_json, namespace_name, bucket_name, compartment_id, m
 
 @namespace_group.command(name=cli_util.override('os.update_namespace_metadata.command_name', 'update-namespace-metadata'), help=u"""By default, buckets created using the Amazon S3 Compatibility API or the Swift API are created in the root compartment of the Oracle Cloud Infrastructure tenancy.
 
-You can change the default Swift/Amazon S3 compartmentId designation to a different compartmentId. All subsequent bucket creations will use the new default compartment, but no previously created buckets will be modified. A user must have OBJECTSTORAGE_NAMESPACE_UPDATE permission to make changes to the default compartments for Amazon S3 and Swift.""")
+You can change the default Swift/Amazon S3 compartmentId designation to a different compartmentId. All subsequent bucket creations will use the new default compartment, but no previously created buckets will be modified. A user must have OBJECTSTORAGE_NAMESPACE_UPDATE permission to make changes to the default compartments for Amazon S3 and Swift. \n[Command Reference](updateNamespaceMetadata)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
 @cli_util.option('--default-s3-compartment-id', help=u"""The updated compartment id for use by an S3 client, if this field is set.""")
 @cli_util.option('--default-swift-compartment-id', help=u"""The updated compartment id for use by a Swift client, if this field is set.""")
@@ -2334,7 +2334,7 @@ def update_namespace_metadata(ctx, from_json, namespace_name, default_s3_compart
     cli_util.render_response(result, ctx)
 
 
-@retention_rule_group.command(name=cli_util.override('os.update_retention_rule.command_name', 'update'), help=u"""Updates the specified retention rule. Rule changes take effect typically within 30 seconds.""")
+@retention_rule_group.command(name=cli_util.override('os.update_retention_rule.command_name', 'update'), help=u"""Updates the specified retention rule. Rule changes take effect typically within 30 seconds. \n[Command Reference](updateRetentionRule)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
 @cli_util.option('--bucket-name', required=True, help=u"""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")
 @cli_util.option('--retention-rule-id', required=True, help=u"""The ID of the retention rule.""")
@@ -2390,7 +2390,7 @@ def update_retention_rule(ctx, from_json, force, namespace_name, bucket_name, re
     cli_util.render_response(result, ctx)
 
 
-@multipart_upload_group.command(name=cli_util.override('os.upload_part.command_name', 'upload-part'), help=u"""Uploads a single part of a multipart upload.""")
+@multipart_upload_group.command(name=cli_util.override('os.upload_part.command_name', 'upload-part'), help=u"""Uploads a single part of a multipart upload. \n[Command Reference](uploadPart)""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace used for the request.""")
 @cli_util.option('--bucket-name', required=True, help=u"""The name of the bucket. Avoid entering confidential information. Example: `my-new-bucket1`""")
 @cli_util.option('--object-name', required=True, help=u"""The name of the object. Avoid entering confidential information. Example: `test/object1.log`""")

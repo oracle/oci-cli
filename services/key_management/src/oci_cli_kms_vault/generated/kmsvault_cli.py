@@ -39,7 +39,7 @@ kms_vault_root_group.add_command(vault_usage_group)
 kms_vault_root_group.add_command(vault_group)
 
 
-@vault_group.command(name=cli_util.override('kms_vault.backup_vault.command_name', 'backup'), help=u"""Backs up an encrypted file that contains all the metadata of a vault so that you can restore the vault later. You can backup a vault whether or not it contains keys. This operation only backs up the metadata of the vault, and does not include key metadata.""")
+@vault_group.command(name=cli_util.override('kms_vault.backup_vault.command_name', 'backup'), help=u"""Backs up an encrypted file that contains all the metadata of a vault so that you can restore the vault later. You can backup a vault whether or not it contains keys. This operation only backs up the metadata of the vault, and does not include key metadata. \n[Command Reference](backupVault)""")
 @cli_util.option('--vault-id', required=True, help=u"""The OCID of the vault.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--backup-location', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -102,7 +102,7 @@ def backup_vault(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
     cli_util.render_response(result, ctx)
 
 
-@vault_group.command(name=cli_util.override('kms_vault.backup_vault_backup_location_bucket.command_name', 'backup-vault-backup-location-bucket'), help=u"""Backs up an encrypted file that contains all the metadata of a vault so that you can restore the vault later. You can backup a vault whether or not it contains keys. This operation only backs up the metadata of the vault, and does not include key metadata.""")
+@vault_group.command(name=cli_util.override('kms_vault.backup_vault_backup_location_bucket.command_name', 'backup-vault-backup-location-bucket'), help=u"""Backs up an encrypted file that contains all the metadata of a vault so that you can restore the vault later. You can backup a vault whether or not it contains keys. This operation only backs up the metadata of the vault, and does not include key metadata. \n[Command Reference](backupVault)""")
 @cli_util.option('--vault-id', required=True, help=u"""The OCID of the vault.""")
 @cli_util.option('--backup-location-namespace', required=True, help=u"""""")
 @cli_util.option('--backup-location-bucket-name', required=True, help=u"""""")
@@ -170,7 +170,7 @@ def backup_vault_backup_location_bucket(ctx, from_json, wait_for_state, max_wait
     cli_util.render_response(result, ctx)
 
 
-@vault_group.command(name=cli_util.override('kms_vault.backup_vault_backup_location_uri.command_name', 'backup-vault-backup-location-uri'), help=u"""Backs up an encrypted file that contains all the metadata of a vault so that you can restore the vault later. You can backup a vault whether or not it contains keys. This operation only backs up the metadata of the vault, and does not include key metadata.""")
+@vault_group.command(name=cli_util.override('kms_vault.backup_vault_backup_location_uri.command_name', 'backup-vault-backup-location-uri'), help=u"""Backs up an encrypted file that contains all the metadata of a vault so that you can restore the vault later. You can backup a vault whether or not it contains keys. This operation only backs up the metadata of the vault, and does not include key metadata. \n[Command Reference](backupVault)""")
 @cli_util.option('--vault-id', required=True, help=u"""The OCID of the vault.""")
 @cli_util.option('--backup-location-uri', required=True, help=u"""""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -236,7 +236,7 @@ def backup_vault_backup_location_uri(ctx, from_json, wait_for_state, max_wait_se
 
 @vault_group.command(name=cli_util.override('kms_vault.cancel_vault_deletion.command_name', 'cancel-vault-deletion'), help=u"""Cancels the scheduled deletion of the specified vault. Canceling a scheduled deletion restores the vault and all keys in it to their respective states from before their scheduled deletion. All keys that were scheduled for deletion prior to vault deletion retain their lifecycle state and time of deletion.
 
-As a provisioning operation, this call is subject to a Key Management limit that applies to the total number of requests across all provisioning write operations. Key Management might throttle this call to reject an otherwise valid request when the total rate of provisioning write operations exceeds 10 requests per second for a given tenancy.""")
+As a provisioning operation, this call is subject to a Key Management limit that applies to the total number of requests across all provisioning write operations. Key Management might throttle this call to reject an otherwise valid request when the total rate of provisioning write operations exceeds 10 requests per second for a given tenancy. \n[Command Reference](cancelVaultDeletion)""")
 @cli_util.option('--vault-id', required=True, help=u"""The OCID of the vault.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "DELETED", "PENDING_DELETION", "SCHEDULING_DELETION", "CANCELLING_DELETION", "UPDATING", "BACKUP_IN_PROGRESS", "RESTORING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -291,7 +291,7 @@ def cancel_vault_deletion(ctx, from_json, wait_for_state, max_wait_seconds, wait
 
 When provided, if-match is checked against the ETag values of the resource.
 
-As a provisioning operation, this call is subject to a Key Management limit that applies to the total number of requests across all provisioning write operations. Key Management might throttle this call to reject an otherwise valid request when the total rate of provisioning write operations exceeds 10 requests per second for a given tenancy.""")
+As a provisioning operation, this call is subject to a Key Management limit that applies to the total number of requests across all provisioning write operations. Key Management might throttle this call to reject an otherwise valid request when the total rate of provisioning write operations exceeds 10 requests per second for a given tenancy. \n[Command Reference](changeVaultCompartment)""")
 @cli_util.option('--vault-id', required=True, help=u"""The OCID of the vault.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the vault to.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -324,7 +324,7 @@ def change_vault_compartment(ctx, from_json, vault_id, compartment_id, if_match)
 
 @vault_group.command(name=cli_util.override('kms_vault.create_vault.command_name', 'create'), help=u"""Creates a new vault. The type of vault you create determines key placement, pricing, and available options. Options include storage isolation, a dedicated service endpoint instead of a shared service endpoint for API calls, and either a dedicated hardware security module (HSM) or a multitenant HSM.
 
-As a provisioning operation, this call is subject to a Key Management limit that applies to the total number of requests across all provisioning write operations. Key Management might throttle this call to reject an otherwise valid request when the total rate of provisioning write operations exceeds 10 requests per second for a given tenancy.""")
+As a provisioning operation, this call is subject to a Key Management limit that applies to the total number of requests across all provisioning write operations. Key Management might throttle this call to reject an otherwise valid request when the total rate of provisioning write operations exceeds 10 requests per second for a given tenancy. \n[Command Reference](createVault)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where you want to create this vault.""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name for the vault. It does not have to be unique, and it is changeable. Avoid entering confidential information.""")
 @cli_util.option('--vault-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["VIRTUAL_PRIVATE", "DEFAULT"]), help=u"""The type of vault to create. Each type of vault stores the key with different degrees of isolation and has different options and pricing.""")
@@ -387,7 +387,7 @@ def create_vault(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
 
 @vault_group.command(name=cli_util.override('kms_vault.get_vault.command_name', 'get'), help=u"""Gets the specified vault's configuration information.
 
-As a provisioning operation, this call is subject to a Key Management limit that applies to the total number of requests across all provisioning read operations. Key Management might throttle this call to reject an otherwise valid request when the total rate of provisioning read operations exceeds 10 requests per second for a given tenancy.""")
+As a provisioning operation, this call is subject to a Key Management limit that applies to the total number of requests across all provisioning read operations. Key Management might throttle this call to reject an otherwise valid request when the total rate of provisioning read operations exceeds 10 requests per second for a given tenancy. \n[Command Reference](getVault)""")
 @cli_util.option('--vault-id', required=True, help=u"""The OCID of the vault.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -409,7 +409,7 @@ def get_vault(ctx, from_json, vault_id):
     cli_util.render_response(result, ctx)
 
 
-@vault_usage_group.command(name=cli_util.override('kms_vault.get_vault_usage.command_name', 'get'), help=u"""Gets the count of keys and key versions in the specified vault to calculate usage against service limits.""")
+@vault_usage_group.command(name=cli_util.override('kms_vault.get_vault_usage.command_name', 'get'), help=u"""Gets the count of keys and key versions in the specified vault to calculate usage against service limits. \n[Command Reference](getVaultUsage)""")
 @cli_util.option('--vault-id', required=True, help=u"""The OCID of the vault.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -433,7 +433,7 @@ def get_vault_usage(ctx, from_json, vault_id):
 
 @vault_group.command(name=cli_util.override('kms_vault.list_vaults.command_name', 'list'), help=u"""Lists the vaults in the specified compartment.
 
-As a provisioning operation, this call is subject to a Key Management limit that applies to the total number of requests across all provisioning read operations. Key Management might throttle this call to reject an otherwise valid request when the total rate of provisioning read operations exceeds 10 requests per second for a given tenancy.""")
+As a provisioning operation, this call is subject to a Key Management limit that applies to the total number of requests across all provisioning read operations. Key Management might throttle this call to reject an otherwise valid request when the total rate of provisioning read operations exceeds 10 requests per second for a given tenancy. \n[Command Reference](listVaults)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
@@ -487,7 +487,7 @@ def list_vaults(ctx, from_json, all_pages, page_size, compartment_id, limit, pag
     cli_util.render_response(result, ctx)
 
 
-@vault_group.command(name=cli_util.override('kms_vault.restore_vault_from_file.command_name', 'restore-vault-from-file'), help=u"""Restores a vault from an encrypted backup file. If a vault with the same OCID already exists, this operation returns a response with a 409 HTTP status error code.""")
+@vault_group.command(name=cli_util.override('kms_vault.restore_vault_from_file.command_name', 'restore-vault-from-file'), help=u"""Restores a vault from an encrypted backup file. If a vault with the same OCID already exists, this operation returns a response with a 409 HTTP status error code. \n[Command Reference](restoreVaultFromFile)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
 @cli_util.option('--restore-vault-from-file-details', required=True, help=u"""The encrypted backup file to upload to restore the vault.""")
 @cli_util.option('--content-length', type=click.INT, help=u"""The content length of the body.""")
@@ -521,7 +521,7 @@ def restore_vault_from_file(ctx, from_json, compartment_id, restore_vault_from_f
     cli_util.render_response(result, ctx)
 
 
-@vault_group.command(name=cli_util.override('kms_vault.restore_vault_from_object_store.command_name', 'restore-vault-from-object-store'), help=u"""Restores a vault from an encrypted backup file stored in Oracle Cloud Infrastructure Object Storage. If a vault with the same OCID already exists, this operation returns a response with a 409 HTTP status error code.""")
+@vault_group.command(name=cli_util.override('kms_vault.restore_vault_from_object_store.command_name', 'restore-vault-from-object-store'), help=u"""Restores a vault from an encrypted backup file stored in Oracle Cloud Infrastructure Object Storage. If a vault with the same OCID already exists, this operation returns a response with a 409 HTTP status error code. \n[Command Reference](restoreVaultFromObjectStore)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--backup-location', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -551,7 +551,7 @@ def restore_vault_from_object_store(ctx, from_json, compartment_id, if_match, ba
     cli_util.render_response(result, ctx)
 
 
-@vault_group.command(name=cli_util.override('kms_vault.restore_vault_from_object_store_backup_location_bucket.command_name', 'restore-vault-from-object-store-backup-location-bucket'), help=u"""Restores a vault from an encrypted backup file stored in Oracle Cloud Infrastructure Object Storage. If a vault with the same OCID already exists, this operation returns a response with a 409 HTTP status error code.""")
+@vault_group.command(name=cli_util.override('kms_vault.restore_vault_from_object_store_backup_location_bucket.command_name', 'restore-vault-from-object-store-backup-location-bucket'), help=u"""Restores a vault from an encrypted backup file stored in Oracle Cloud Infrastructure Object Storage. If a vault with the same OCID already exists, this operation returns a response with a 409 HTTP status error code. \n[Command Reference](restoreVaultFromObjectStore)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
 @cli_util.option('--backup-location-namespace', required=True, help=u"""""")
 @cli_util.option('--backup-location-bucket-name', required=True, help=u"""""")
@@ -586,7 +586,7 @@ def restore_vault_from_object_store_backup_location_bucket(ctx, from_json, compa
     cli_util.render_response(result, ctx)
 
 
-@vault_group.command(name=cli_util.override('kms_vault.restore_vault_from_object_store_backup_location_uri.command_name', 'restore-vault-from-object-store-backup-location-uri'), help=u"""Restores a vault from an encrypted backup file stored in Oracle Cloud Infrastructure Object Storage. If a vault with the same OCID already exists, this operation returns a response with a 409 HTTP status error code.""")
+@vault_group.command(name=cli_util.override('kms_vault.restore_vault_from_object_store_backup_location_uri.command_name', 'restore-vault-from-object-store-backup-location-uri'), help=u"""Restores a vault from an encrypted backup file stored in Oracle Cloud Infrastructure Object Storage. If a vault with the same OCID already exists, this operation returns a response with a 409 HTTP status error code. \n[Command Reference](restoreVaultFromObjectStore)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
 @cli_util.option('--backup-location-uri', required=True, help=u"""""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -619,7 +619,7 @@ def restore_vault_from_object_store_backup_location_uri(ctx, from_json, compartm
 
 @vault_group.command(name=cli_util.override('kms_vault.schedule_vault_deletion.command_name', 'schedule-vault-deletion'), help=u"""Schedules the deletion of the specified vault. This sets the lifecycle state of the vault and all keys in it that are not already scheduled for deletion to `PENDING_DELETION` and then deletes them after the retention period ends. The lifecycle state and time of deletion for keys already scheduled for deletion won't change. If any keys in the vault are scheduled to be deleted after the specified time of deletion for the vault, the call is rejected with the error code 409.
 
-As a provisioning operation, this call is subject to a Key Management limit that applies to the total number of requests across all provisioning write operations. Key Management might throttle this call to reject an otherwise valid request when the total rate of provisioning write operations exceeds 10 requests per second for a given tenancy.""")
+As a provisioning operation, this call is subject to a Key Management limit that applies to the total number of requests across all provisioning write operations. Key Management might throttle this call to reject an otherwise valid request when the total rate of provisioning write operations exceeds 10 requests per second for a given tenancy. \n[Command Reference](scheduleVaultDeletion)""")
 @cli_util.option('--vault-id', required=True, help=u"""The OCID of the vault.""")
 @cli_util.option('--time-of-deletion', type=custom_types.CLI_DATETIME, help=u"""An optional property indicating when to delete the vault, expressed in [RFC 3339] timestamp format. The specified time must be between 7 and 30 days from the time when the request is received. If this property is missing, it will be set to 30 days from the time of the request by default.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -680,7 +680,7 @@ def schedule_vault_deletion(ctx, from_json, wait_for_state, max_wait_seconds, wa
 
 @vault_group.command(name=cli_util.override('kms_vault.update_vault.command_name', 'update'), help=u"""Updates the properties of a vault. Specifically, you can update the `displayName`, `freeformTags`, and `definedTags` properties. Furthermore, the vault must be in an ACTIVE or CREATING state to be updated.
 
-As a provisioning operation, this call is subject to a Key Management limit that applies to the total number of requests across all provisioning write operations. Key Management might throttle this call to reject an otherwise valid request when the total rate of provisioning write operations exceeds 10 requests per second for a given tenancy.""")
+As a provisioning operation, this call is subject to a Key Management limit that applies to the total number of requests across all provisioning write operations. Key Management might throttle this call to reject an otherwise valid request when the total rate of provisioning write operations exceeds 10 requests per second for a given tenancy. \n[Command Reference](updateVault)""")
 @cli_util.option('--vault-id', required=True, help=u"""The OCID of the vault.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""A user-friendly name for the vault. It does not have to be unique, and it is changeable. Avoid entering confidential information.""")

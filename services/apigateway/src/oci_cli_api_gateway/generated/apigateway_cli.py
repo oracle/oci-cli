@@ -36,7 +36,7 @@ api_gateway_service_cli.api_gateway_service_group.commands.pop(api_gateway_root_
 api_gateway_service_cli.api_gateway_service_group.add_command(certificate_group)
 
 
-@certificate_group.command(name=cli_util.override('api_gateway.change_certificate_compartment.command_name', 'change-compartment'), help=u"""Changes the certificate compartment.""")
+@certificate_group.command(name=cli_util.override('api_gateway.change_certificate_compartment.command_name', 'change-compartment'), help=u"""Changes the certificate compartment. \n[Command Reference](changeCertificateCompartment)""")
 @cli_util.option('--certificate-id', required=True, help=u"""The ocid of the certificate.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which the resource is created.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -67,7 +67,7 @@ def change_certificate_compartment(ctx, from_json, certificate_id, compartment_i
     cli_util.render_response(result, ctx)
 
 
-@certificate_group.command(name=cli_util.override('api_gateway.create_certificate.command_name', 'create'), help=u"""Creates a new Certificate.""")
+@certificate_group.command(name=cli_util.override('api_gateway.create_certificate.command_name', 'create'), help=u"""Creates a new Certificate. \n[Command Reference](createCertificate)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment in which the resource is created.""")
 @cli_util.option('--private-key', required=True, help=u"""The private key associated with the certificate in pem format.""")
 @cli_util.option('--certificate', required=True, help=u"""The data of the leaf certificate in pem format.""")
@@ -144,7 +144,7 @@ def create_certificate(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     cli_util.render_response(result, ctx)
 
 
-@certificate_group.command(name=cli_util.override('api_gateway.delete_certificate.command_name', 'delete'), help=u"""Deletes the certificate with the given identifier.""")
+@certificate_group.command(name=cli_util.override('api_gateway.delete_certificate.command_name', 'delete'), help=u"""Deletes the certificate with the given identifier. \n[Command Reference](deleteCertificate)""")
 @cli_util.option('--certificate-id', required=True, help=u"""The ocid of the certificate.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -198,7 +198,7 @@ def delete_certificate(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     cli_util.render_response(result, ctx)
 
 
-@certificate_group.command(name=cli_util.override('api_gateway.get_certificate.command_name', 'get'), help=u"""Gets a certificate by identifier.""")
+@certificate_group.command(name=cli_util.override('api_gateway.get_certificate.command_name', 'get'), help=u"""Gets a certificate by identifier. \n[Command Reference](getCertificate)""")
 @cli_util.option('--certificate-id', required=True, help=u"""The ocid of the certificate.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -220,7 +220,7 @@ def get_certificate(ctx, from_json, certificate_id):
     cli_util.render_response(result, ctx)
 
 
-@certificate_group.command(name=cli_util.override('api_gateway.list_certificates.command_name', 'list'), help=u"""Returns a list of certificates.""")
+@certificate_group.command(name=cli_util.override('api_gateway.list_certificates.command_name', 'list'), help=u"""Returns a list of certificates. \n[Command Reference](listCertificates)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The ocid of the compartment in which to list resources.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable.
 
@@ -284,7 +284,7 @@ def list_certificates(ctx, from_json, all_pages, page_size, compartment_id, disp
     cli_util.render_response(result, ctx)
 
 
-@certificate_group.command(name=cli_util.override('api_gateway.update_certificate.command_name', 'update'), help=u"""Updates a certificate with the given identifier""")
+@certificate_group.command(name=cli_util.override('api_gateway.update_certificate.command_name', 'update'), help=u"""Updates a certificate with the given identifier \n[Command Reference](updateCertificate)""")
 @cli_util.option('--certificate-id', required=True, help=u"""The ocid of the certificate.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.
 

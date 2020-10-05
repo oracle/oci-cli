@@ -30,7 +30,7 @@ def search_result_group():
 logging_search_root_group.add_command(search_result_group)
 
 
-@search_result_group.command(name=cli_util.override('logging_search.search_logs.command_name', 'search-logs'), help=u"""Submit a query to search logs.""")
+@search_result_group.command(name=cli_util.override('logging_search.search_logs.command_name', 'search-logs'), help=u"""Submit a query to search logs. \n[Command Reference](searchLogs)""")
 @cli_util.option('--time-start', required=True, type=custom_types.CLI_DATETIME, help=u"""Start filter log's date and time, in the format defined by RFC3339.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-end', required=True, type=custom_types.CLI_DATETIME, help=u"""End filter log's date and time, in the format defined by RFC3339.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--search-query', required=True, help=u"""Query corresponding to the search operation. This query is parsed and validated before execution and should follow the spec. For query language specification see: https://docs.cloud.oracle.com/iaas/Content/Logging/Reference/query_language_specification.htm""")

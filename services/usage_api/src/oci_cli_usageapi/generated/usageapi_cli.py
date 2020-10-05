@@ -37,7 +37,7 @@ usage_api_root_group.add_command(usage_summary_group)
 usage_api_root_group.add_command(configuration_group)
 
 
-@configuration_group.command(name=cli_util.override('usage_api.request_summarized_configurations.command_name', 'request-summarized'), help=u"""Returns the list of config for UI dropdown list""")
+@configuration_group.command(name=cli_util.override('usage_api.request_summarized_configurations.command_name', 'request-summarized'), help=u"""Returns the list of config for UI dropdown list \n[Command Reference](requestSummarizedConfigurations)""")
 @cli_util.option('--tenant-id', required=True, help=u"""tenant id""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -56,7 +56,7 @@ def request_summarized_configurations(ctx, from_json, tenant_id):
     cli_util.render_response(result, ctx)
 
 
-@usage_summary_group.command(name=cli_util.override('usage_api.request_summarized_usages.command_name', 'request-summarized-usages'), help=u"""Returns the usage for the given account""")
+@usage_summary_group.command(name=cli_util.override('usage_api.request_summarized_usages.command_name', 'request-summarized-usages'), help=u"""Returns the usage for the given account \n[Command Reference](requestSummarizedUsages)""")
 @cli_util.option('--tenant-id', required=True, help=u"""tenant id""")
 @cli_util.option('--time-usage-started', required=True, type=custom_types.CLI_DATETIME, help=u"""The start time of the usage.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-usage-ended', required=True, type=custom_types.CLI_DATETIME, help=u"""The end time of the usage.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)

@@ -58,7 +58,7 @@ data_science_root_group.add_command(notebook_session_shape_group)
 data_science_root_group.add_command(notebook_session_group)
 
 
-@model_group.command(name=cli_util.override('data_science.activate_model.command_name', 'activate'), help=u"""Activates the model.""")
+@model_group.command(name=cli_util.override('data_science.activate_model.command_name', 'activate'), help=u"""Activates the model. \n[Command Reference](activateModel)""")
 @cli_util.option('--model-id', required=True, help=u"""The [OCID] of the model.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED", "FAILED", "INACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -109,7 +109,7 @@ def activate_model(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
     cli_util.render_response(result, ctx)
 
 
-@notebook_session_group.command(name=cli_util.override('data_science.activate_notebook_session.command_name', 'activate'), help=u"""Activates the notebook session.""")
+@notebook_session_group.command(name=cli_util.override('data_science.activate_notebook_session.command_name', 'activate'), help=u"""Activates the notebook session. \n[Command Reference](activateNotebookSession)""")
 @cli_util.option('--notebook-session-id', required=True, help=u"""The [OCID] of the notebook session.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -160,7 +160,7 @@ def activate_notebook_session(ctx, from_json, wait_for_state, max_wait_seconds, 
     cli_util.render_response(result, ctx)
 
 
-@work_request_group.command(name=cli_util.override('data_science.cancel_work_request.command_name', 'cancel'), help=u"""Cancels a work request that has not started.""")
+@work_request_group.command(name=cli_util.override('data_science.cancel_work_request.command_name', 'cancel'), help=u"""Cancels a work request that has not started. \n[Command Reference](cancelWorkRequest)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The [OCID] of the work request.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
 @cli_util.confirm_delete_option
@@ -186,7 +186,7 @@ def cancel_work_request(ctx, from_json, work_request_id, if_match):
     cli_util.render_response(result, ctx)
 
 
-@model_group.command(name=cli_util.override('data_science.change_model_compartment.command_name', 'change-compartment'), help=u"""Moves a model resource into a different compartment.""")
+@model_group.command(name=cli_util.override('data_science.change_model_compartment.command_name', 'change-compartment'), help=u"""Moves a model resource into a different compartment. \n[Command Reference](changeModelCompartment)""")
 @cli_util.option('--model-id', required=True, help=u"""The [OCID] of the model.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
@@ -217,7 +217,7 @@ def change_model_compartment(ctx, from_json, model_id, compartment_id, if_match)
     cli_util.render_response(result, ctx)
 
 
-@notebook_session_group.command(name=cli_util.override('data_science.change_notebook_session_compartment.command_name', 'change-compartment'), help=u"""Moves a notebook session resource into a different compartment.""")
+@notebook_session_group.command(name=cli_util.override('data_science.change_notebook_session_compartment.command_name', 'change-compartment'), help=u"""Moves a notebook session resource into a different compartment. \n[Command Reference](changeNotebookSessionCompartment)""")
 @cli_util.option('--notebook-session-id', required=True, help=u"""The [OCID] of the notebook session.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
@@ -248,7 +248,7 @@ def change_notebook_session_compartment(ctx, from_json, notebook_session_id, com
     cli_util.render_response(result, ctx)
 
 
-@project_group.command(name=cli_util.override('data_science.change_project_compartment.command_name', 'change-compartment'), help=u"""Moves a project resource into a different compartment.""")
+@project_group.command(name=cli_util.override('data_science.change_project_compartment.command_name', 'change-compartment'), help=u"""Moves a project resource into a different compartment. \n[Command Reference](changeProjectCompartment)""")
 @cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
@@ -279,7 +279,7 @@ def change_project_compartment(ctx, from_json, project_id, compartment_id, if_ma
     cli_util.render_response(result, ctx)
 
 
-@model_group.command(name=cli_util.override('data_science.create_model.command_name', 'create'), help=u"""Creates a new model.""")
+@model_group.command(name=cli_util.override('data_science.create_model.command_name', 'create'), help=u"""Creates a new model. \n[Command Reference](createModel)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to create the model in.""")
 @cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project to associate with the model.""")
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the resource. Does not have to be unique, and can be modified. Avoid entering confidential information. Example: `My Model`""")
@@ -346,7 +346,7 @@ def create_model(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
     cli_util.render_response(result, ctx)
 
 
-@model_group.command(name=cli_util.override('data_science.create_model_artifact.command_name', 'create-model-artifact'), help=u"""Creates model artifact for specified model.""")
+@model_group.command(name=cli_util.override('data_science.create_model_artifact.command_name', 'create-model-artifact'), help=u"""Creates model artifact for specified model. \n[Command Reference](createModelArtifact)""")
 @cli_util.option('--model-id', required=True, help=u"""The [OCID] of the model.""")
 @cli_util.option('--model-artifact', required=True, help=u"""The model artifact to upload.""")
 @cli_util.option('--content-length', type=click.INT, help=u"""The content length of the body.""")
@@ -380,7 +380,7 @@ def create_model_artifact(ctx, from_json, model_id, model_artifact, content_leng
     cli_util.render_response(result, ctx)
 
 
-@model_group.command(name=cli_util.override('data_science.create_model_provenance.command_name', 'create-model-provenance'), help=u"""Creates provenance information for the specified model.""")
+@model_group.command(name=cli_util.override('data_science.create_model_provenance.command_name', 'create-model-provenance'), help=u"""Creates provenance information for the specified model. \n[Command Reference](createModelProvenance)""")
 @cli_util.option('--model-id', required=True, help=u"""The [OCID] of the model.""")
 @cli_util.option('--repository-url', help=u"""For model reproducibility purposes. URL of the git repository associated with model training.""")
 @cli_util.option('--git-branch', help=u"""For model reproducibility purposes. Branch of the git repository associated with model training.""")
@@ -426,7 +426,7 @@ def create_model_provenance(ctx, from_json, model_id, repository_url, git_branch
     cli_util.render_response(result, ctx)
 
 
-@notebook_session_group.command(name=cli_util.override('data_science.create_notebook_session.command_name', 'create'), help=u"""Creates a new notebook session.""")
+@notebook_session_group.command(name=cli_util.override('data_science.create_notebook_session.command_name', 'create'), help=u"""Creates a new notebook session. \n[Command Reference](createNotebookSession)""")
 @cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project to associate with the notebook session.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment where you want to create the notebook session.""")
 @cli_util.option('--notebook-session-configuration-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -491,7 +491,7 @@ def create_notebook_session(ctx, from_json, wait_for_state, max_wait_seconds, wa
     cli_util.render_response(result, ctx)
 
 
-@project_group.command(name=cli_util.override('data_science.create_project.command_name', 'create'), help=u"""Creates a new project.""")
+@project_group.command(name=cli_util.override('data_science.create_project.command_name', 'create'), help=u"""Creates a new project. \n[Command Reference](createProject)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to create the project in.""")
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the resource. Does not have to be unique, and can be modified. Avoid entering confidential information.""")
 @cli_util.option('--description', help=u"""A short blurb describing the project.""")
@@ -556,7 +556,7 @@ def create_project(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
     cli_util.render_response(result, ctx)
 
 
-@model_group.command(name=cli_util.override('data_science.deactivate_model.command_name', 'deactivate'), help=u"""Deactivates the model.""")
+@model_group.command(name=cli_util.override('data_science.deactivate_model.command_name', 'deactivate'), help=u"""Deactivates the model. \n[Command Reference](deactivateModel)""")
 @cli_util.option('--model-id', required=True, help=u"""The [OCID] of the model.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED", "FAILED", "INACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -607,7 +607,7 @@ def deactivate_model(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
     cli_util.render_response(result, ctx)
 
 
-@notebook_session_group.command(name=cli_util.override('data_science.deactivate_notebook_session.command_name', 'deactivate'), help=u"""Deactivates the notebook session.""")
+@notebook_session_group.command(name=cli_util.override('data_science.deactivate_notebook_session.command_name', 'deactivate'), help=u"""Deactivates the notebook session. \n[Command Reference](deactivateNotebookSession)""")
 @cli_util.option('--notebook-session-id', required=True, help=u"""The [OCID] of the notebook session.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -658,7 +658,7 @@ def deactivate_notebook_session(ctx, from_json, wait_for_state, max_wait_seconds
     cli_util.render_response(result, ctx)
 
 
-@model_group.command(name=cli_util.override('data_science.delete_model.command_name', 'delete'), help=u"""Deletes the specified model.""")
+@model_group.command(name=cli_util.override('data_science.delete_model.command_name', 'delete'), help=u"""Deletes the specified model. \n[Command Reference](deleteModel)""")
 @cli_util.option('--model-id', required=True, help=u"""The [OCID] of the model.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
 @cli_util.confirm_delete_option
@@ -722,7 +722,7 @@ def delete_model(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
     cli_util.render_response(result, ctx)
 
 
-@notebook_session_group.command(name=cli_util.override('data_science.delete_notebook_session.command_name', 'delete'), help=u"""Deletes the specified notebook session. Any unsaved work in this notebook session will be lost.""")
+@notebook_session_group.command(name=cli_util.override('data_science.delete_notebook_session.command_name', 'delete'), help=u"""Deletes the specified notebook session. Any unsaved work in this notebook session will be lost. \n[Command Reference](deleteNotebookSession)""")
 @cli_util.option('--notebook-session-id', required=True, help=u"""The [OCID] of the notebook session.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
 @cli_util.confirm_delete_option
@@ -774,7 +774,7 @@ def delete_notebook_session(ctx, from_json, wait_for_state, max_wait_seconds, wa
     cli_util.render_response(result, ctx)
 
 
-@project_group.command(name=cli_util.override('data_science.delete_project.command_name', 'delete'), help=u"""Deletes the specified project. This operation will fail unless all associated resources (such as notebook sessions or models) are in a DELETED state. You must delete all associated resources before deleting a project.""")
+@project_group.command(name=cli_util.override('data_science.delete_project.command_name', 'delete'), help=u"""Deletes the specified project. This operation will fail unless all associated resources (such as notebook sessions or models) are in a DELETED state. You must delete all associated resources before deleting a project. \n[Command Reference](deleteProject)""")
 @cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the `etag` you provide matches the resource's current `etag` value.""")
 @cli_util.confirm_delete_option
@@ -826,7 +826,7 @@ def delete_project(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
     cli_util.render_response(result, ctx)
 
 
-@model_group.command(name=cli_util.override('data_science.get_model.command_name', 'get'), help=u"""Gets the specified model's information.""")
+@model_group.command(name=cli_util.override('data_science.get_model.command_name', 'get'), help=u"""Gets the specified model's information. \n[Command Reference](getModel)""")
 @cli_util.option('--model-id', required=True, help=u"""The [OCID] of the model.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -848,7 +848,7 @@ def get_model(ctx, from_json, model_id):
     cli_util.render_response(result, ctx)
 
 
-@model_group.command(name=cli_util.override('data_science.get_model_artifact_content.command_name', 'get-model-artifact-content'), help=u"""Downloads model artifact content for specified model.""")
+@model_group.command(name=cli_util.override('data_science.get_model_artifact_content.command_name', 'get-model-artifact-content'), help=u"""Downloads model artifact content for specified model. \n[Command Reference](getModelArtifactContent)""")
 @cli_util.option('--model-id', required=True, help=u"""The [OCID] of the model.""")
 @cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
 @cli_util.option('--range', help=u"""Optional byte range to fetch, as described in [RFC 7233], section 2.1. Note that only a single range of bytes is supported.""")
@@ -896,7 +896,7 @@ def get_model_artifact_content(ctx, from_json, file, model_id, range):
         file.close()
 
 
-@model_group.command(name=cli_util.override('data_science.get_model_provenance.command_name', 'get-model-provenance'), help=u"""Gets provenance information for specified model.""")
+@model_group.command(name=cli_util.override('data_science.get_model_provenance.command_name', 'get-model-provenance'), help=u"""Gets provenance information for specified model. \n[Command Reference](getModelProvenance)""")
 @cli_util.option('--model-id', required=True, help=u"""The [OCID] of the model.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -918,7 +918,7 @@ def get_model_provenance(ctx, from_json, model_id):
     cli_util.render_response(result, ctx)
 
 
-@notebook_session_group.command(name=cli_util.override('data_science.get_notebook_session.command_name', 'get'), help=u"""Gets the specified notebook session's information.""")
+@notebook_session_group.command(name=cli_util.override('data_science.get_notebook_session.command_name', 'get'), help=u"""Gets the specified notebook session's information. \n[Command Reference](getNotebookSession)""")
 @cli_util.option('--notebook-session-id', required=True, help=u"""The [OCID] of the notebook session.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -940,7 +940,7 @@ def get_notebook_session(ctx, from_json, notebook_session_id):
     cli_util.render_response(result, ctx)
 
 
-@project_group.command(name=cli_util.override('data_science.get_project.command_name', 'get'), help=u"""Gets the specified project's information.""")
+@project_group.command(name=cli_util.override('data_science.get_project.command_name', 'get'), help=u"""Gets the specified project's information. \n[Command Reference](getProject)""")
 @cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -962,7 +962,7 @@ def get_project(ctx, from_json, project_id):
     cli_util.render_response(result, ctx)
 
 
-@work_request_group.command(name=cli_util.override('data_science.get_work_request.command_name', 'get'), help=u"""Gets the specified work request's information.""")
+@work_request_group.command(name=cli_util.override('data_science.get_work_request.command_name', 'get'), help=u"""Gets the specified work request's information. \n[Command Reference](getWorkRequest)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The [OCID] of the work request.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -984,7 +984,7 @@ def get_work_request(ctx, from_json, work_request_id):
     cli_util.render_response(result, ctx)
 
 
-@model_group.command(name=cli_util.override('data_science.head_model_artifact.command_name', 'head-model-artifact'), help=u"""Gets model artifact metadata for specified model.""")
+@model_group.command(name=cli_util.override('data_science.head_model_artifact.command_name', 'head-model-artifact'), help=u"""Gets model artifact metadata for specified model. \n[Command Reference](headModelArtifact)""")
 @cli_util.option('--model-id', required=True, help=u"""The [OCID] of the model.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -1006,7 +1006,7 @@ def head_model_artifact(ctx, from_json, model_id):
     cli_util.render_response(result, ctx)
 
 
-@model_group.command(name=cli_util.override('data_science.list_models.command_name', 'list'), help=u"""Lists models in the specified compartment.""")
+@model_group.command(name=cli_util.override('data_science.list_models.command_name', 'list'), help=u"""Lists models in the specified compartment. \n[Command Reference](listModels)""")
 @cli_util.option('--compartment-id', required=True, help=u"""<b>Filter</b> results by the [OCID] of the compartment.""")
 @cli_util.option('--id', help=u"""<b>Filter</b> results by [OCID]. Must be an OCID of the correct type for the resource type.""")
 @cli_util.option('--project-id', help=u"""<b>Filter</b> results by the [OCID] of the project.""")
@@ -1079,7 +1079,7 @@ def list_models(ctx, from_json, all_pages, page_size, compartment_id, id, projec
     cli_util.render_response(result, ctx)
 
 
-@notebook_session_shape_group.command(name=cli_util.override('data_science.list_notebook_session_shapes.command_name', 'list'), help=u"""Lists the valid notebook session shapes.""")
+@notebook_session_shape_group.command(name=cli_util.override('data_science.list_notebook_session_shapes.command_name', 'list'), help=u"""Lists the valid notebook session shapes. \n[Command Reference](listNotebookSessionShapes)""")
 @cli_util.option('--compartment-id', required=True, help=u"""<b>Filter</b> results by the [OCID] of the compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 1000 is the maximum. See [List Pagination].
 
@@ -1131,7 +1131,7 @@ def list_notebook_session_shapes(ctx, from_json, all_pages, page_size, compartme
     cli_util.render_response(result, ctx)
 
 
-@notebook_session_group.command(name=cli_util.override('data_science.list_notebook_sessions.command_name', 'list'), help=u"""Lists notebook sessions in the specified compartment.""")
+@notebook_session_group.command(name=cli_util.override('data_science.list_notebook_sessions.command_name', 'list'), help=u"""Lists notebook sessions in the specified compartment. \n[Command Reference](listNotebookSessions)""")
 @cli_util.option('--compartment-id', required=True, help=u"""<b>Filter</b> results by the [OCID] of the compartment.""")
 @cli_util.option('--id', help=u"""<b>Filter</b> results by [OCID]. Must be an OCID of the correct type for the resource type.""")
 @cli_util.option('--project-id', help=u"""<b>Filter</b> results by the [OCID] of the project.""")
@@ -1204,7 +1204,7 @@ def list_notebook_sessions(ctx, from_json, all_pages, page_size, compartment_id,
     cli_util.render_response(result, ctx)
 
 
-@project_group.command(name=cli_util.override('data_science.list_projects.command_name', 'list'), help=u"""Lists projects in the specified compartment.""")
+@project_group.command(name=cli_util.override('data_science.list_projects.command_name', 'list'), help=u"""Lists projects in the specified compartment. \n[Command Reference](listProjects)""")
 @cli_util.option('--compartment-id', required=True, help=u"""<b>Filter</b> results by the [OCID] of the compartment.""")
 @cli_util.option('--id', help=u"""<b>Filter</b> results by [OCID]. Must be an OCID of the correct type for the resource type.""")
 @cli_util.option('--display-name', help=u"""<b>Filter</b> results by its user-friendly name.""")
@@ -1274,7 +1274,7 @@ def list_projects(ctx, from_json, all_pages, page_size, compartment_id, id, disp
     cli_util.render_response(result, ctx)
 
 
-@work_request_group.command(name=cli_util.override('data_science.list_work_request_errors.command_name', 'list-work-request-errors'), help=u"""Lists work request errors for the specified work request.""")
+@work_request_group.command(name=cli_util.override('data_science.list_work_request_errors.command_name', 'list-work-request-errors'), help=u"""Lists work request errors for the specified work request. \n[Command Reference](listWorkRequestErrors)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The [OCID] of the work request.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1297,7 +1297,7 @@ def list_work_request_errors(ctx, from_json, all_pages, work_request_id):
     cli_util.render_response(result, ctx)
 
 
-@work_request_group.command(name=cli_util.override('data_science.list_work_request_logs.command_name', 'list-work-request-logs'), help=u"""Lists work request logs for the specified work request.""")
+@work_request_group.command(name=cli_util.override('data_science.list_work_request_logs.command_name', 'list-work-request-logs'), help=u"""Lists work request logs for the specified work request. \n[Command Reference](listWorkRequestLogs)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The [OCID] of the work request.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1320,7 +1320,7 @@ def list_work_request_logs(ctx, from_json, all_pages, work_request_id):
     cli_util.render_response(result, ctx)
 
 
-@work_request_group.command(name=cli_util.override('data_science.list_work_requests.command_name', 'list'), help=u"""Lists work requests in the specified compartment.""")
+@work_request_group.command(name=cli_util.override('data_science.list_work_requests.command_name', 'list'), help=u"""Lists work requests in the specified compartment. \n[Command Reference](listWorkRequests)""")
 @cli_util.option('--compartment-id', required=True, help=u"""<b>Filter</b> results by the [OCID] of the compartment.""")
 @cli_util.option('--id', help=u"""<b>Filter</b> results by [OCID]. Must be an OCID of the correct type for the resource type.""")
 @cli_util.option('--operation-type', type=custom_types.CliCaseInsensitiveChoice(["NOTEBOOK_SESSION_CREATE", "NOTEBOOK_SESSION_DELETE", "NOTEBOOK_SESSION_ACTIVATE", "NOTEBOOK_SESSION_DEACTIVATE", "PROJECT_DELETE", "WORKREQUEST_CANCEL"]), help=u"""<b>Filter</b> results by the type of the operation associated with the work request.""")
@@ -1387,7 +1387,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, id,
     cli_util.render_response(result, ctx)
 
 
-@model_group.command(name=cli_util.override('data_science.update_model.command_name', 'update'), help=u"""Updates the properties of a model. You can update the `displayName`, `description`, `freeformTags`, and `definedTags` properties.""")
+@model_group.command(name=cli_util.override('data_science.update_model.command_name', 'update'), help=u"""Updates the properties of a model. You can update the `displayName`, `description`, `freeformTags`, and `definedTags` properties. \n[Command Reference](updateModel)""")
 @cli_util.option('--model-id', required=True, help=u"""The [OCID] of the model.""")
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the resource. Does not have to be unique, and can be modified. Avoid entering confidential information.  Example: `My Model`""")
 @cli_util.option('--description', help=u"""A short blurb describing the model.""")
@@ -1463,7 +1463,7 @@ def update_model(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_i
     cli_util.render_response(result, ctx)
 
 
-@model_group.command(name=cli_util.override('data_science.update_model_provenance.command_name', 'update-model-provenance'), help=u"""Updates provenance information for the specified model.""")
+@model_group.command(name=cli_util.override('data_science.update_model_provenance.command_name', 'update-model-provenance'), help=u"""Updates provenance information for the specified model. \n[Command Reference](updateModelProvenance)""")
 @cli_util.option('--model-id', required=True, help=u"""The [OCID] of the model.""")
 @cli_util.option('--repository-url', help=u"""For model reproducibility purposes. URL of the git repository associated with model training.""")
 @cli_util.option('--git-branch', help=u"""For model reproducibility purposes. Branch of the git repository associated with model training.""")
@@ -1512,7 +1512,7 @@ def update_model_provenance(ctx, from_json, model_id, repository_url, git_branch
     cli_util.render_response(result, ctx)
 
 
-@notebook_session_group.command(name=cli_util.override('data_science.update_notebook_session.command_name', 'update'), help=u"""Updates the properties of a notebook session. You can update the `displayName`, `freeformTags`, and `definedTags` properties. When the notebook session is in the INACTIVE lifecycle state, you can update `notebookSessionConfigurationDetails` and change `shape`, `subnetId`, and `blockStorageSizeInGBs`. Changes to the `notebookSessionConfigurationDetails` will take effect the next time the `ActivateNotebookSession` action is invoked on the notebook session resource.""")
+@notebook_session_group.command(name=cli_util.override('data_science.update_notebook_session.command_name', 'update'), help=u"""Updates the properties of a notebook session. You can update the `displayName`, `freeformTags`, and `definedTags` properties. When the notebook session is in the INACTIVE lifecycle state, you can update `notebookSessionConfigurationDetails` and change `shape`, `subnetId`, and `blockStorageSizeInGBs`. Changes to the `notebookSessionConfigurationDetails` will take effect the next time the `ActivateNotebookSession` action is invoked on the notebook session resource. \n[Command Reference](updateNotebookSession)""")
 @cli_util.option('--notebook-session-id', required=True, help=u"""The [OCID] of the notebook session.""")
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the resource. Does not have to be unique, and can be modified. Avoid entering confidential information. Example: `My NotebookSession`""")
 @cli_util.option('--notebook-session-configuration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1588,7 +1588,7 @@ def update_notebook_session(ctx, from_json, force, wait_for_state, max_wait_seco
     cli_util.render_response(result, ctx)
 
 
-@project_group.command(name=cli_util.override('data_science.update_project.command_name', 'update'), help=u"""Updates the properties of a project. You can update the `displayName`, `description`, `freeformTags`, and `definedTags` properties.""")
+@project_group.command(name=cli_util.override('data_science.update_project.command_name', 'update'), help=u"""Updates the properties of a project. You can update the `displayName`, `description`, `freeformTags`, and `definedTags` properties. \n[Command Reference](updateProject)""")
 @cli_util.option('--project-id', required=True, help=u"""The [OCID] of the project.""")
 @cli_util.option('--display-name', help=u"""A user-friendly display name for the resource. Does not have to be unique, and can be modified. Avoid entering confidential information.""")
 @cli_util.option('--description', help=u"""A short blurb describing the project.""")

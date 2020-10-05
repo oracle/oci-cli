@@ -36,6 +36,10 @@ class TestDBCliExtended(unittest.TestCase):
         assert 'rotate-regional-wallet' in result.output
         assert 'update-autonomous-database-regional-wallet' not in result.output
 
+    def test_delete_db_cloud_vm_cluster(self):
+        result = util.invoke_command(['db', 'database', 'delete'])
+        assert 'Error: Missing option(s) --database-id' in result.output
+
     def test_autonomous_database(self):
         result = util.invoke_command(['db', 'autonomous-database'])
         assert 'change-compartment' in result.output
@@ -108,3 +112,126 @@ class TestDBCliExtended(unittest.TestCase):
         assert 'Please specify one of the three options. 1. \'--one-off-patches\',  2. \'--database-software-image-id and --patch-action\' or 3. \'--patch-id and --patch-action\'.' in result.output
         result = util.invoke_command(['db', 'database', 'patch', '--database-id', 'databaseId', '--patch-id', 'patchId'])
         assert 'Please specify one of the three options. 1. \'--one-off-patches\',  2. \'--database-software-image-id and --patch-action\' or 3. \'--patch-id and --patch-action\'.' in result.output
+
+# Exacs new resource model
+
+    def test_cloud_exa_infra(self):
+        # create cloud exa infra
+        result = util.invoke_command(['db', 'cloud-exa-infra', 'create'])
+        assert 'Error: Missing option(s)' in result.output
+        assert '--compartment-id' in result.output
+        assert '--availability-domain' in result.output
+        assert '--shape' in result.output
+        assert '--display-name' in result.output
+        # update cloud exa infra
+        result = util.invoke_command(['db', 'cloud-exa-infra', 'update'])
+        assert 'Error: Missing option(s)' in result.output
+        assert '--cloud-exa-infra-id' in result.output
+        assert '--cloud-exadata-infrastructure-id' not in result.output
+        # delete cloud exa infra
+        result = util.invoke_command(['db', 'cloud-exa-infra', 'delete'])
+        assert 'Error: Missing option(s)' in result.output
+        assert '--cloud-exa-infra-id' in result.output
+        assert '--cloud-exadata-infrastructure-id' not in result.output
+        # change cloud exa infra compartment
+        result = util.invoke_command(['db', 'cloud-exa-infra', 'change-compartment'])
+        assert 'Error: Missing option(s)' in result.output
+        assert '--cloud-exa-infra-id' in result.output
+        assert '--compartment-id' in result.output
+        assert '--cloud-exadata-infrastructure-id' not in result.output
+        # get cloud exa infra
+        result = util.invoke_command(['db', 'cloud-exa-infra', 'get'])
+        assert 'Error: Missing option(s)' in result.output
+        assert '--cloud-exa-infra-id' in result.output
+        assert '--cloud-exadata-infrastructure-id' not in result.output
+        # list cloud exa infras
+        result = util.invoke_command(['db', 'cloud-exa-infra', 'list'])
+        assert 'Error: Missing option(s)' in result.output
+        assert '--compartment-id' in result.output
+
+    def test_cloud_vm_cluster(self):
+        # create cloud vm cluster
+        result = util.invoke_command(['db', 'cloud-vm-cluster', 'create'])
+        assert 'Error: Missing option(s)' in result.output
+        assert '--compartment-id' in result.output
+        assert '--cloud-exa-infra-id' in result.output
+        assert '--cloud-exadata-infrastructure-id' not in result.output
+        assert '--subnet-id' in result.output
+        assert '--backup-subnet-id' in result.output
+        assert '--cpu-core-count' in result.output
+        assert '--gi-version' in result.output
+        assert 'ssh-authorized-keys-file' in result.output
+        assert 'ssh-public-keys' not in result.output
+        assert '--display-name' in result.output
+        assert '--hostname' in result.output
+        # update cloud vm cluster
+        result = util.invoke_command(['db', 'cloud-vm-cluster', 'update'])
+        assert 'Error: Missing option(s)' in result.output
+        assert '--cloud-vm-cluster-id' in result.output
+        # delete cloud vm cluster
+        result = util.invoke_command(['db', 'cloud-vm-cluster', 'delete'])
+        assert 'Error: Missing option(s)' in result.output
+        assert '--cloud-vm-cluster-id' in result.output
+        # change cloud vm cluster compartment
+        result = util.invoke_command(['db', 'cloud-vm-cluster', 'change-compartment'])
+        assert 'Error: Missing option(s)' in result.output
+        assert '--cloud-vm-cluster-id' in result.output
+        assert '--compartment-id' in result.output
+        # get cloud vm cluster
+        result = util.invoke_command(['db', 'cloud-vm-cluster', 'get'])
+        assert 'Error: Missing option(s)' in result.output
+        assert '--cloud-vm-cluster-id' in result.output
+        # list cloud vm clusters
+        result = util.invoke_command(['db', 'cloud-vm-cluster', 'list'])
+        assert 'Error: Missing option(s)' in result.output
+        assert '--compartment-id' in result.output
+        # get cloud vm cluster iorm config
+        result = util.invoke_command(['db', 'cloud-vm-cluster', 'get-exadata-iorm-config'])
+        assert 'Error: Missing option(s)' in result.output
+        assert '--cloud-vm-cluster-id' in result.output
+        # update cloud vm cluster iorm config
+        result = util.invoke_command(['db', 'cloud-vm-cluster', 'update-exadata-iorm-config'])
+        assert 'Error: Missing option(s)' in result.output
+        assert '--cloud-vm-cluster-id' in result.output
+        # get update
+        result = util.invoke_command(['db', 'cloud-vm-cluster', 'get-update'])
+        assert 'Error: Missing option(s)' in result.output
+        assert '--cloud-vm-cluster-id' in result.output
+        assert '--update-id' in result.output
+        # list updates
+        result = util.invoke_command(['db', 'cloud-vm-cluster', 'list-updates'])
+        assert 'Error: Missing option(s)' in result.output
+        assert '--cloud-vm-cluster-id' in result.output
+        # get update history
+        result = util.invoke_command(['db', 'cloud-vm-cluster', 'get-update-history'])
+        assert 'Error: Missing option(s)' in result.output
+        assert '--cloud-vm-cluster-id' in result.output
+        assert '--update-history-entry-id' in result.output
+        # get update history entries
+        result = util.invoke_command(['db', 'cloud-vm-cluster', 'list-update-histories'])
+        assert 'Error: Missing option(s)' in result.output
+        assert '--cloud-vm-cluster-id' in result.output
+
+    def test_switch_exa_db_system(self):
+        # switch exadata db system
+        result = util.invoke_command(['db', 'system', 'switch'])
+        assert 'Error: Missing option(s)' in result.output
+        assert '--db-system-id' in result.output
+
+    def test_create_db_home_irestore_vm_cluster(self):
+        result = util.invoke_command(['db', 'db-home', 'create'])
+        assert 'Missing a required parameter' in result.output
+        assert '--db-system-id' in result.output
+        assert '--vm-cluster-id' in result.output
+
+    def test_create_db_irestore_vm_cluster(self):
+        result = util.invoke_command(['db', 'database', 'create-from-backup'])
+        assert 'Error: Missing option(s)' in result.output
+        assert '--admin-password' in result.output
+        assert '--backup-id' in result.output
+        assert '--backup-tde-password' in result.output
+
+        result = util.invoke_command(['db', 'database', 'create-from-backup', '--admin-password', 'password', '--backup-id', 'backupId', '--backup-tde-password', 'tdePass'])
+        assert 'Missing a required parameter' in result.output
+        assert '--db-system-id' in result.output
+        assert '--vm-cluster-id' in result.output
