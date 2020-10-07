@@ -65,7 +65,7 @@ data_safe_root_group.add_command(work_request_group)
 data_safe_root_group.add_command(enable_data_safe_configuration_details_group)
 
 
-@data_safe_private_endpoint_group.command(name=cli_util.override('data_safe.change_data_safe_private_endpoint_compartment.command_name', 'change-compartment'), help=u"""Moves the Data Safe private endpoint and its dependent resources to the specified compartment.""")
+@data_safe_private_endpoint_group.command(name=cli_util.override('data_safe.change_data_safe_private_endpoint_compartment.command_name', 'change-compartment'), help=u"""Moves the Data Safe private endpoint and its dependent resources to the specified compartment. \n[Command Reference](changeDataSafePrivateEndpointCompartment)""")
 @cli_util.option('--data-safe-private-endpoint-id', required=True, help=u"""The OCID of the private endpoint.""")
 @cli_util.option('--compartment-id', help=u"""The OCID of the new compartment.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -124,7 +124,7 @@ def change_data_safe_private_endpoint_compartment(ctx, from_json, wait_for_state
     cli_util.render_response(result, ctx)
 
 
-@data_safe_private_endpoint_group.command(name=cli_util.override('data_safe.create_data_safe_private_endpoint.command_name', 'create'), help=u"""Creates a new Data Safe private endpoint.""")
+@data_safe_private_endpoint_group.command(name=cli_util.override('data_safe.create_data_safe_private_endpoint.command_name', 'create'), help=u"""Creates a new Data Safe private endpoint. \n[Command Reference](createDataSafePrivateEndpoint)""")
 @cli_util.option('--display-name', required=True, help=u"""The display name for the private endpoint. The name does not have to be unique, and it's changeable.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
 @cli_util.option('--vcn-id', required=True, help=u"""The OCID of the VCN.""")
@@ -203,7 +203,7 @@ def create_data_safe_private_endpoint(ctx, from_json, wait_for_state, max_wait_s
     cli_util.render_response(result, ctx)
 
 
-@data_safe_private_endpoint_group.command(name=cli_util.override('data_safe.delete_data_safe_private_endpoint.command_name', 'delete'), help=u"""Deletes the specified Data Safe private endpoint.""")
+@data_safe_private_endpoint_group.command(name=cli_util.override('data_safe.delete_data_safe_private_endpoint.command_name', 'delete'), help=u"""Deletes the specified Data Safe private endpoint. \n[Command Reference](deleteDataSafePrivateEndpoint)""")
 @cli_util.option('--data-safe-private-endpoint-id', required=True, help=u"""The OCID of the private endpoint.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the if-match parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -255,7 +255,7 @@ def delete_data_safe_private_endpoint(ctx, from_json, wait_for_state, max_wait_s
     cli_util.render_response(result, ctx)
 
 
-@enable_data_safe_configuration_details_group.command(name=cli_util.override('data_safe.enable_data_safe_configuration.command_name', 'enable-data-safe-configuration'), help=u"""Enables Data Safe in the tenancy and region.""")
+@enable_data_safe_configuration_details_group.command(name=cli_util.override('data_safe.enable_data_safe_configuration.command_name', 'enable-data-safe-configuration'), help=u"""Enables Data Safe in the tenancy and region. \n[Command Reference](enableDataSafeConfiguration)""")
 @cli_util.option('--is-enabled', type=click.BOOL, help=u"""Indicates if Data Safe is enabled.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]
 
@@ -329,7 +329,7 @@ def enable_data_safe_configuration(ctx, from_json, force, wait_for_state, max_wa
     cli_util.render_response(result, ctx)
 
 
-@data_safe_configuration_group.command(name=cli_util.override('data_safe.get_data_safe_configuration.command_name', 'get'), help=u"""Gets the details of the Data Safe configuration.""")
+@data_safe_configuration_group.command(name=cli_util.override('data_safe.get_data_safe_configuration.command_name', 'get'), help=u"""Gets the details of the Data Safe configuration. \n[Command Reference](getDataSafeConfiguration)""")
 @cli_util.option('--compartment-id', help=u"""A filter to return only resources that match the specified compartment OCID.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -349,7 +349,7 @@ def get_data_safe_configuration(ctx, from_json, compartment_id):
     cli_util.render_response(result, ctx)
 
 
-@data_safe_private_endpoint_group.command(name=cli_util.override('data_safe.get_data_safe_private_endpoint.command_name', 'get'), help=u"""Gets the details of the specified Data Safe private endpoint.""")
+@data_safe_private_endpoint_group.command(name=cli_util.override('data_safe.get_data_safe_private_endpoint.command_name', 'get'), help=u"""Gets the details of the specified Data Safe private endpoint. \n[Command Reference](getDataSafePrivateEndpoint)""")
 @cli_util.option('--data-safe-private-endpoint-id', required=True, help=u"""The OCID of the private endpoint.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -371,7 +371,7 @@ def get_data_safe_private_endpoint(ctx, from_json, data_safe_private_endpoint_id
     cli_util.render_response(result, ctx)
 
 
-@work_request_group.command(name=cli_util.override('data_safe.get_work_request.command_name', 'get'), help=u"""Gets the details of the specified work request.""")
+@work_request_group.command(name=cli_util.override('data_safe.get_work_request.command_name', 'get'), help=u"""Gets the details of the specified work request. \n[Command Reference](getWorkRequest)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The OCID of the work request.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -393,7 +393,7 @@ def get_work_request(ctx, from_json, work_request_id):
     cli_util.render_response(result, ctx)
 
 
-@data_safe_private_endpoint_group.command(name=cli_util.override('data_safe.list_data_safe_private_endpoints.command_name', 'list'), help=u"""Gets a list of Data Safe private endpoints.""")
+@data_safe_private_endpoint_group.command(name=cli_util.override('data_safe.list_data_safe_private_endpoints.command_name', 'list'), help=u"""Gets a list of Data Safe private endpoints. \n[Command Reference](listDataSafePrivateEndpoints)""")
 @cli_util.option('--compartment-id', help=u"""A filter to return only resources that match the specified compartment OCID.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the specified display name.""")
 @cli_util.option('--vcn-id', help=u"""A filter to return only the private endpoints that match the specified VCN OCID.""")
@@ -455,7 +455,7 @@ def list_data_safe_private_endpoints(ctx, from_json, all_pages, page_size, compa
     cli_util.render_response(result, ctx)
 
 
-@work_request_error_group.command(name=cli_util.override('data_safe.list_work_request_errors.command_name', 'list'), help=u"""Gets a list of errors for the specified work request.""")
+@work_request_error_group.command(name=cli_util.override('data_safe.list_work_request_errors.command_name', 'list'), help=u"""Gets a list of errors for the specified work request. \n[Command Reference](listWorkRequestErrors)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The OCID of the work request.""")
 @cli_util.option('--page', help=u"""The beginning page from which the results start retrieving.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of items to return per page in a paginated \"List\" call. For details about how pagination works, see [List Pagination].""")
@@ -506,7 +506,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     cli_util.render_response(result, ctx)
 
 
-@work_request_log_entry_group.command(name=cli_util.override('data_safe.list_work_request_logs.command_name', 'list-work-request-logs'), help=u"""Gets a list of log entries for the specified work request.""")
+@work_request_log_entry_group.command(name=cli_util.override('data_safe.list_work_request_logs.command_name', 'list-work-request-logs'), help=u"""Gets a list of log entries for the specified work request. \n[Command Reference](listWorkRequestLogs)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The OCID of the work request.""")
 @cli_util.option('--page', help=u"""The beginning page from which the results start retrieving.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of items to return per page in a paginated \"List\" call. For details about how pagination works, see [List Pagination].""")
@@ -557,7 +557,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     cli_util.render_response(result, ctx)
 
 
-@work_request_group.command(name=cli_util.override('data_safe.list_work_requests.command_name', 'list'), help=u"""Gets a list of work requests.""")
+@work_request_group.command(name=cli_util.override('data_safe.list_work_requests.command_name', 'list'), help=u"""Gets a list of work requests. \n[Command Reference](listWorkRequests)""")
 @cli_util.option('--compartment-id', help=u"""A filter to return only resources that match the specified compartment OCID.""")
 @cli_util.option('--resource-id', help=u"""A filter to return only work requests that match the specified resource OCID.""")
 @cli_util.option('--page', help=u"""The beginning page from which the results start retrieving.""")
@@ -607,7 +607,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, res
     cli_util.render_response(result, ctx)
 
 
-@data_safe_private_endpoint_group.command(name=cli_util.override('data_safe.update_data_safe_private_endpoint.command_name', 'update'), help=u"""Updates one or more attributes of the specified Data Safe private endpoint.""")
+@data_safe_private_endpoint_group.command(name=cli_util.override('data_safe.update_data_safe_private_endpoint.command_name', 'update'), help=u"""Updates one or more attributes of the specified Data Safe private endpoint. \n[Command Reference](updateDataSafePrivateEndpoint)""")
 @cli_util.option('--data-safe-private-endpoint-id', required=True, help=u"""The OCID of the private endpoint.""")
 @cli_util.option('--display-name', required=True, help=u"""The display name of the private endpoint.""")
 @cli_util.option('--description', help=u"""The description of the private endpoint.""")

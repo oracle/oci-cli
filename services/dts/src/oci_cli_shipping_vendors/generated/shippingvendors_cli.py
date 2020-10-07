@@ -31,7 +31,7 @@ dts_service_cli.dts_service_group.add_command(shipping_vendors_root_group)
 shipping_vendors_root_group.add_command(shipping_vendors_group)
 
 
-@shipping_vendors_group.command(name=cli_util.override('shipping_vendors.list_shipping_vendors.command_name', 'list'), help=u"""Lists available shipping vendors for Transfer Package delivery""")
+@shipping_vendors_group.command(name=cli_util.override('shipping_vendors.list_shipping_vendors.command_name', 'list'), help=u"""Lists available shipping vendors for Transfer Package delivery \n[Command Reference](listShippingVendors)""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option

@@ -37,7 +37,7 @@ vault_root_group.add_command(secret_version_group)
 vault_root_group.add_command(secret_group)
 
 
-@secret_group.command(name=cli_util.override('vault.cancel_secret_deletion.command_name', 'cancel-secret-deletion'), help=u"""Cancels the pending deletion of the specified secret. Canceling a scheduled deletion restores the secret's lifecycle state to what it was before you scheduled the secret for deletion.""")
+@secret_group.command(name=cli_util.override('vault.cancel_secret_deletion.command_name', 'cancel-secret-deletion'), help=u"""Cancels the pending deletion of the specified secret. Canceling a scheduled deletion restores the secret's lifecycle state to what it was before you scheduled the secret for deletion. \n[Command Reference](cancelSecretDeletion)""")
 @cli_util.option('--secret-id', required=True, help=u"""The OCID of the secret.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -62,7 +62,7 @@ def cancel_secret_deletion(ctx, from_json, secret_id, if_match):
     cli_util.render_response(result, ctx)
 
 
-@secret_version_group.command(name=cli_util.override('vault.cancel_secret_version_deletion.command_name', 'cancel-secret-version-deletion'), help=u"""Cancels the scheduled deletion of a secret version.""")
+@secret_version_group.command(name=cli_util.override('vault.cancel_secret_version_deletion.command_name', 'cancel-secret-version-deletion'), help=u"""Cancels the scheduled deletion of a secret version. \n[Command Reference](cancelSecretVersionDeletion)""")
 @cli_util.option('--secret-id', required=True, help=u"""The OCID of the secret.""")
 @cli_util.option('--secret-version-number', required=True, type=click.INT, help=u"""The version number of the secret.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -94,7 +94,7 @@ def cancel_secret_version_deletion(ctx, from_json, secret_id, secret_version_num
 
 @secret_group.command(name=cli_util.override('vault.change_secret_compartment.command_name', 'change-compartment'), help=u"""Moves a secret into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].
 
-When provided, if-match is checked against the ETag values of the secret.""")
+When provided, if-match is checked against the ETag values of the secret. \n[Command Reference](changeSecretCompartment)""")
 @cli_util.option('--secret-id', required=True, help=u"""The OCID of the secret.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -127,7 +127,7 @@ def change_secret_compartment(ctx, from_json, secret_id, compartment_id, if_matc
 
 @secret_group.command(name=cli_util.override('vault.create_secret.command_name', 'create'), help=u"""Creates a new secret according to the details of the request.
 
-This operation is not supported by the Oracle Cloud Infrastructure Terraform Provider.""")
+This operation is not supported by the Oracle Cloud Infrastructure Terraform Provider. \n[Command Reference](createSecret)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where you want to create the secret.""")
 @cli_util.option('--secret-content', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--secret-name', required=True, help=u"""A user-friendly name for the secret. Secret names should be unique within a vault. Avoid entering confidential information. Valid characters are uppercase or lowercase letters, numbers, hyphens, underscores, and periods.""")
@@ -210,7 +210,7 @@ def create_secret(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 
 @secret_group.command(name=cli_util.override('vault.create_secret_base64_secret_content_details.command_name', 'create-secret-base64-secret-content-details'), help=u"""Creates a new secret according to the details of the request.
 
-This operation is not supported by the Oracle Cloud Infrastructure Terraform Provider.""")
+This operation is not supported by the Oracle Cloud Infrastructure Terraform Provider. \n[Command Reference](createSecret)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where you want to create the secret.""")
 @cli_util.option('--secret-name', required=True, help=u"""A user-friendly name for the secret. Secret names should be unique within a vault. Avoid entering confidential information. Valid characters are uppercase or lowercase letters, numbers, hyphens, underscores, and periods.""")
 @cli_util.option('--vault-id', required=True, help=u"""The OCID of the vault where you want to create the secret.""")
@@ -304,7 +304,7 @@ def create_secret_base64_secret_content_details(ctx, from_json, wait_for_state, 
     cli_util.render_response(result, ctx)
 
 
-@secret_group.command(name=cli_util.override('vault.get_secret.command_name', 'get'), help=u"""Gets information about the specified secret.""")
+@secret_group.command(name=cli_util.override('vault.get_secret.command_name', 'get'), help=u"""Gets information about the specified secret. \n[Command Reference](getSecret)""")
 @cli_util.option('--secret-id', required=True, help=u"""The OCID of the secret.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -326,7 +326,7 @@ def get_secret(ctx, from_json, secret_id):
     cli_util.render_response(result, ctx)
 
 
-@secret_version_group.command(name=cli_util.override('vault.get_secret_version.command_name', 'get'), help=u"""Gets information about the specified version of a secret.""")
+@secret_version_group.command(name=cli_util.override('vault.get_secret_version.command_name', 'get'), help=u"""Gets information about the specified version of a secret. \n[Command Reference](getSecretVersion)""")
 @cli_util.option('--secret-id', required=True, help=u"""The OCID of the secret.""")
 @cli_util.option('--secret-version-number', required=True, type=click.INT, help=u"""The version number of the secret.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -353,7 +353,7 @@ def get_secret_version(ctx, from_json, secret_id, secret_version_number):
     cli_util.render_response(result, ctx)
 
 
-@secret_version_group.command(name=cli_util.override('vault.list_secret_versions.command_name', 'list'), help=u"""Lists all secret versions for the specified secret.""")
+@secret_version_group.command(name=cli_util.override('vault.list_secret_versions.command_name', 'list'), help=u"""Lists all secret versions for the specified secret. \n[Command Reference](listSecretVersions)""")
 @cli_util.option('--secret-id', required=True, help=u"""The OCID of the secret.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
@@ -410,7 +410,7 @@ def list_secret_versions(ctx, from_json, all_pages, page_size, secret_id, limit,
     cli_util.render_response(result, ctx)
 
 
-@secret_group.command(name=cli_util.override('vault.list_secrets.command_name', 'list'), help=u"""Lists all secrets in the specified vault and compartment.""")
+@secret_group.command(name=cli_util.override('vault.list_secrets.command_name', 'list'), help=u"""Lists all secrets in the specified vault and compartment. \n[Command Reference](listSecrets)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
 @cli_util.option('--name', help=u"""The secret name.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call.""")
@@ -473,7 +473,7 @@ def list_secrets(ctx, from_json, all_pages, page_size, compartment_id, name, lim
     cli_util.render_response(result, ctx)
 
 
-@secret_group.command(name=cli_util.override('vault.schedule_secret_deletion.command_name', 'schedule-secret-deletion'), help=u"""Schedules the deletion of the specified secret. This sets the lifecycle state of the secret to `PENDING_DELETION` and then deletes it after the specified retention period ends.""")
+@secret_group.command(name=cli_util.override('vault.schedule_secret_deletion.command_name', 'schedule-secret-deletion'), help=u"""Schedules the deletion of the specified secret. This sets the lifecycle state of the secret to `PENDING_DELETION` and then deletes it after the specified retention period ends. \n[Command Reference](scheduleSecretDeletion)""")
 @cli_util.option('--secret-id', required=True, help=u"""The OCID of the secret.""")
 @cli_util.option('--time-of-deletion', type=custom_types.CLI_DATETIME, help=u"""An optional property indicating when to delete the secret version, expressed in [RFC 3339] timestamp format.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -506,7 +506,7 @@ def schedule_secret_deletion(ctx, from_json, secret_id, time_of_deletion, if_mat
     cli_util.render_response(result, ctx)
 
 
-@secret_version_group.command(name=cli_util.override('vault.schedule_secret_version_deletion.command_name', 'schedule-secret-version-deletion'), help=u"""Schedules the deletion of the specified secret version. This deletes it after the specified retention period ends. You can only delete a secret version if the secret version rotation state is marked as `DEPRECATED`.""")
+@secret_version_group.command(name=cli_util.override('vault.schedule_secret_version_deletion.command_name', 'schedule-secret-version-deletion'), help=u"""Schedules the deletion of the specified secret version. This deletes it after the specified retention period ends. You can only delete a secret version if the secret version rotation state is marked as `DEPRECATED`. \n[Command Reference](scheduleSecretVersionDeletion)""")
 @cli_util.option('--secret-id', required=True, help=u"""The OCID of the secret.""")
 @cli_util.option('--secret-version-number', required=True, type=click.INT, help=u"""The version number of the secret.""")
 @cli_util.option('--time-of-deletion', type=custom_types.CLI_DATETIME, help=u"""An optional property indicating when to delete the secret version, expressed in [RFC 3339] timestamp format. Example: `2019-04-03T21:10:29.600Z`""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
@@ -546,7 +546,7 @@ def schedule_secret_version_deletion(ctx, from_json, secret_id, secret_version_n
 
 @secret_group.command(name=cli_util.override('vault.update_secret.command_name', 'update'), help=u"""Updates the properties of a secret. Specifically, you can update the version number of the secret to make that version number the current version. You can also update a secret's description, its free-form or defined tags, rules and the secret contents. Updating the secret content automatically creates a new secret version. You cannot, however, update the current secret version number and the secret contents and the rules at the same time. Furthermore, the secret must in an `ACTIVE` lifecycle state to be updated.
 
-This operation is not supported by the Oracle Cloud Infrastructure Terraform Provider.""")
+This operation is not supported by the Oracle Cloud Infrastructure Terraform Provider. \n[Command Reference](updateSecret)""")
 @cli_util.option('--secret-id', required=True, help=u"""The OCID of the secret.""")
 @cli_util.option('--current-version-number', type=click.INT, help=u"""Details to update the secret version of the specified secret. The secret contents, version number, and rules can't be specified at the same time. Updating the secret contents automatically creates a new secret version.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -638,7 +638,7 @@ def update_secret(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_
 
 @secret_group.command(name=cli_util.override('vault.update_secret_base64_secret_content_details.command_name', 'update-secret-base64-secret-content-details'), help=u"""Updates the properties of a secret. Specifically, you can update the version number of the secret to make that version number the current version. You can also update a secret's description, its free-form or defined tags, rules and the secret contents. Updating the secret content automatically creates a new secret version. You cannot, however, update the current secret version number and the secret contents and the rules at the same time. Furthermore, the secret must in an `ACTIVE` lifecycle state to be updated.
 
-This operation is not supported by the Oracle Cloud Infrastructure Terraform Provider.""")
+This operation is not supported by the Oracle Cloud Infrastructure Terraform Provider. \n[Command Reference](updateSecret)""")
 @cli_util.option('--secret-id', required=True, help=u"""The OCID of the secret.""")
 @cli_util.option('--current-version-number', type=click.INT, help=u"""Details to update the secret version of the specified secret. The secret contents, version number, and rules can't be specified at the same time. Updating the secret contents automatically creates a new secret version.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)

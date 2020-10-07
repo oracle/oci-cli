@@ -289,7 +289,7 @@ data_catalog_root_group.add_command(type_collection_group)
 data_catalog_root_group.add_command(job_execution_collection_group)
 
 
-@catalog_group.command(name=cli_util.override('data_catalog.attach_catalog_private_endpoint.command_name', 'attach'), help=u"""Attaches a private reverse connection endpoint resource to a data catalog resource. When provided, 'If-Match' is checked against 'ETag' values of the resource.""")
+@catalog_group.command(name=cli_util.override('data_catalog.attach_catalog_private_endpoint.command_name', 'attach'), help=u"""Attaches a private reverse connection endpoint resource to a data catalog resource. When provided, 'If-Match' is checked against 'ETag' values of the resource. \n[Command Reference](attachCatalogPrivateEndpoint)""")
 @cli_util.option('--catalog-private-endpoint-id', required=True, help=u"""The identifier of the private endpoint to be attached to the catalog resource.""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -346,7 +346,7 @@ def attach_catalog_private_endpoint(ctx, from_json, wait_for_state, max_wait_sec
     cli_util.render_response(result, ctx)
 
 
-@catalog_group.command(name=cli_util.override('data_catalog.change_catalog_compartment.command_name', 'change-compartment'), help=u"""Moves a resource into a different compartment. When provided, 'If-Match' is checked against 'ETag' values of the resource.""")
+@catalog_group.command(name=cli_util.override('data_catalog.change_catalog_compartment.command_name', 'change-compartment'), help=u"""Moves a resource into a different compartment. When provided, 'If-Match' is checked against 'ETag' values of the resource. \n[Command Reference](changeCatalogCompartment)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The identifier of the compartment where the resource should be moved.""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -403,7 +403,7 @@ def change_catalog_compartment(ctx, from_json, wait_for_state, max_wait_seconds,
     cli_util.render_response(result, ctx)
 
 
-@catalog_private_endpoint_group.command(name=cli_util.override('data_catalog.change_catalog_private_endpoint_compartment.command_name', 'change-compartment'), help=u"""Moves a resource into a different compartment. When provided, 'If-Match' is checked against 'ETag' values of the resource.""")
+@catalog_private_endpoint_group.command(name=cli_util.override('data_catalog.change_catalog_private_endpoint_compartment.command_name', 'change-compartment'), help=u"""Moves a resource into a different compartment. When provided, 'If-Match' is checked against 'ETag' values of the resource. \n[Command Reference](changeCatalogPrivateEndpointCompartment)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The identifier of the compartment where the resource should be moved.""")
 @cli_util.option('--catalog-private-endpoint-id', required=True, help=u"""Unique private reverse connection identifier.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -460,7 +460,7 @@ def change_catalog_private_endpoint_compartment(ctx, from_json, wait_for_state, 
     cli_util.render_response(result, ctx)
 
 
-@attribute_group.command(name=cli_util.override('data_catalog.create_attribute.command_name', 'create'), help=u"""Creates a new entity attribute.""")
+@attribute_group.command(name=cli_util.override('data_catalog.create_attribute.command_name', 'create'), help=u"""Creates a new entity attribute. \n[Command Reference](createAttribute)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--data-asset-key', required=True, help=u"""Unique data asset key.""")
 @cli_util.option('--entity-key', required=True, help=u"""Unique entity key.""")
@@ -576,7 +576,7 @@ def create_attribute(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
     cli_util.render_response(result, ctx)
 
 
-@attribute_tag_group.command(name=cli_util.override('data_catalog.create_attribute_tag.command_name', 'create'), help=u"""Creates a new entity attribute tag.""")
+@attribute_tag_group.command(name=cli_util.override('data_catalog.create_attribute_tag.command_name', 'create'), help=u"""Creates a new entity attribute tag. \n[Command Reference](createAttributeTag)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--data-asset-key', required=True, help=u"""Unique data asset key.""")
 @cli_util.option('--entity-key', required=True, help=u"""Unique entity key.""")
@@ -651,7 +651,7 @@ def create_attribute_tag(ctx, from_json, wait_for_state, max_wait_seconds, wait_
     cli_util.render_response(result, ctx)
 
 
-@catalog_group.command(name=cli_util.override('data_catalog.create_catalog.command_name', 'create'), help=u"""Creates a new data catalog instance that includes a console and an API URL for managing metadata operations. For more information, please see the documentation.""")
+@catalog_group.command(name=cli_util.override('data_catalog.create_catalog.command_name', 'create'), help=u"""Creates a new data catalog instance that includes a console and an API URL for managing metadata operations. For more information, please see the documentation. \n[Command Reference](createCatalog)""")
 @cli_util.option('--compartment-id', required=True, help=u"""Compartment identifier.""")
 @cli_util.option('--display-name', help=u"""Data catalog identifier.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type, or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -712,7 +712,7 @@ def create_catalog(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
     cli_util.render_response(result, ctx)
 
 
-@catalog_private_endpoint_group.command(name=cli_util.override('data_catalog.create_catalog_private_endpoint.command_name', 'create'), help=u"""Create a new private reverse connection endpoint.""")
+@catalog_private_endpoint_group.command(name=cli_util.override('data_catalog.create_catalog_private_endpoint.command_name', 'create'), help=u"""Create a new private reverse connection endpoint. \n[Command Reference](createCatalogPrivateEndpoint)""")
 @cli_util.option('--dns-zones', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of DNS zones to be used by the data assets to be harvested. Example: custpvtsubnet.oraclevcn.com for data asset: db.custpvtsubnet.oraclevcn.com""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--subnet-id', required=True, help=u"""The OCID of subnet to which the reverse connection is to be created""")
 @cli_util.option('--compartment-id', required=True, help=u"""Compartment identifier.""")
@@ -777,7 +777,7 @@ def create_catalog_private_endpoint(ctx, from_json, wait_for_state, max_wait_sec
     cli_util.render_response(result, ctx)
 
 
-@connection_group.command(name=cli_util.override('data_catalog.create_connection.command_name', 'create'), help=u"""Creates a new connection.""")
+@connection_group.command(name=cli_util.override('data_catalog.create_connection.command_name', 'create'), help=u"""Creates a new connection. \n[Command Reference](createConnection)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--data-asset-key', required=True, help=u"""Unique data asset key.""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly display name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
@@ -852,7 +852,7 @@ def create_connection(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
     cli_util.render_response(result, ctx)
 
 
-@data_asset_group.command(name=cli_util.override('data_catalog.create_data_asset.command_name', 'create'), help=u"""Create a new data asset.""")
+@data_asset_group.command(name=cli_util.override('data_catalog.create_data_asset.command_name', 'create'), help=u"""Create a new data asset. \n[Command Reference](createDataAsset)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly display name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--type-key', required=True, help=u"""The key of the data asset type. This can be obtained via the '/types' endpoint.""")
@@ -916,7 +916,7 @@ def create_data_asset(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
     cli_util.render_response(result, ctx)
 
 
-@data_asset_tag_group.command(name=cli_util.override('data_catalog.create_data_asset_tag.command_name', 'create'), help=u"""Creates a new data asset tag.""")
+@data_asset_tag_group.command(name=cli_util.override('data_catalog.create_data_asset_tag.command_name', 'create'), help=u"""Creates a new data asset tag. \n[Command Reference](createDataAssetTag)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--data-asset-key', required=True, help=u"""Unique data asset key.""")
 @cli_util.option('--name', help=u"""The name of the tag in the case of a free form tag. When linking to a glossary term, this field is not specified.""")
@@ -981,7 +981,7 @@ def create_data_asset_tag(ctx, from_json, wait_for_state, max_wait_seconds, wait
     cli_util.render_response(result, ctx)
 
 
-@entity_group.command(name=cli_util.override('data_catalog.create_entity.command_name', 'create'), help=u"""Creates a new data entity.""")
+@entity_group.command(name=cli_util.override('data_catalog.create_entity.command_name', 'create'), help=u"""Creates a new data entity. \n[Command Reference](createEntity)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--data-asset-key', required=True, help=u"""Unique data asset key.""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly display name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
@@ -1070,7 +1070,7 @@ def create_entity(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
     cli_util.render_response(result, ctx)
 
 
-@entity_tag_group.command(name=cli_util.override('data_catalog.create_entity_tag.command_name', 'create'), help=u"""Creates a new entity tag.""")
+@entity_tag_group.command(name=cli_util.override('data_catalog.create_entity_tag.command_name', 'create'), help=u"""Creates a new entity tag. \n[Command Reference](createEntityTag)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--data-asset-key', required=True, help=u"""Unique data asset key.""")
 @cli_util.option('--entity-key', required=True, help=u"""Unique entity key.""")
@@ -1140,7 +1140,7 @@ def create_entity_tag(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
     cli_util.render_response(result, ctx)
 
 
-@folder_group.command(name=cli_util.override('data_catalog.create_folder.command_name', 'create'), help=u"""Creates a new folder.""")
+@folder_group.command(name=cli_util.override('data_catalog.create_folder.command_name', 'create'), help=u"""Creates a new folder. \n[Command Reference](createFolder)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--data-asset-key', required=True, help=u"""Unique data asset key.""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly display name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
@@ -1221,7 +1221,7 @@ def create_folder(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
     cli_util.render_response(result, ctx)
 
 
-@folder_tag_group.command(name=cli_util.override('data_catalog.create_folder_tag.command_name', 'create'), help=u"""Creates a new folder tag.""")
+@folder_tag_group.command(name=cli_util.override('data_catalog.create_folder_tag.command_name', 'create'), help=u"""Creates a new folder tag. \n[Command Reference](createFolderTag)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--data-asset-key', required=True, help=u"""Unique data asset key.""")
 @cli_util.option('--folder-key', required=True, help=u"""Unique folder key.""")
@@ -1291,7 +1291,7 @@ def create_folder_tag(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
     cli_util.render_response(result, ctx)
 
 
-@glossary_group.command(name=cli_util.override('data_catalog.create_glossary.command_name', 'create'), help=u"""Creates a new glossary.""")
+@glossary_group.command(name=cli_util.override('data_catalog.create_glossary.command_name', 'create'), help=u"""Creates a new glossary. \n[Command Reference](createGlossary)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly display name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--description', help=u"""Detailed description of the glossary.""")
@@ -1357,7 +1357,7 @@ def create_glossary(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
     cli_util.render_response(result, ctx)
 
 
-@job_group.command(name=cli_util.override('data_catalog.create_job.command_name', 'create'), help=u"""Creates a new job.""")
+@job_group.command(name=cli_util.override('data_catalog.create_job.command_name', 'create'), help=u"""Creates a new job. \n[Command Reference](createJob)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly display name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--job-definition-key', required=True, help=u"""The unique key of the job definition that defined the scope of this job.""")
@@ -1433,7 +1433,7 @@ def create_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
     cli_util.render_response(result, ctx)
 
 
-@job_definition_group.command(name=cli_util.override('data_catalog.create_job_definition.command_name', 'create'), help=u"""Creates a new job definition.""")
+@job_definition_group.command(name=cli_util.override('data_catalog.create_job_definition.command_name', 'create'), help=u"""Creates a new job definition. \n[Command Reference](createJobDefinition)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly display name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--job-type', required=True, type=custom_types.CliCaseInsensitiveChoice(["HARVEST", "PROFILING", "SAMPLING", "PREVIEW", "IMPORT", "EXPORT", "IMPORT_GLOSSARY", "EXPORT_GLOSSARY", "INTERNAL", "PURGE", "IMMEDIATE", "SCHEDULED", "IMMEDIATE_EXECUTION", "SCHEDULED_EXECUTION", "SCHEDULED_EXECUTION_INSTANCE"]), help=u"""Type of the job definition.""")
@@ -1517,7 +1517,7 @@ def create_job_definition(ctx, from_json, wait_for_state, max_wait_seconds, wait
     cli_util.render_response(result, ctx)
 
 
-@job_execution_group.command(name=cli_util.override('data_catalog.create_job_execution.command_name', 'create'), help=u"""Creates a new job execution.""")
+@job_execution_group.command(name=cli_util.override('data_catalog.create_job_execution.command_name', 'create'), help=u"""Creates a new job execution. \n[Command Reference](createJobExecution)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--job-key', required=True, help=u"""Unique job key.""")
 @cli_util.option('--sub-type', help=u"""Sub-type of this job execution.""")
@@ -1630,7 +1630,7 @@ def create_job_execution(ctx, from_json, wait_for_state, max_wait_seconds, wait_
     cli_util.render_response(result, ctx)
 
 
-@term_group.command(name=cli_util.override('data_catalog.create_term.command_name', 'create'), help=u"""Create a new term within a glossary.""")
+@term_group.command(name=cli_util.override('data_catalog.create_term.command_name', 'create'), help=u"""Create a new term within a glossary. \n[Command Reference](createTerm)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--glossary-key', required=True, help=u"""Unique glossary key.""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly display name. Is changeable. The combination of 'displayName' and 'parentTermKey' must be unique. Avoid entering confidential information.""")
@@ -1709,7 +1709,7 @@ def create_term(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
     cli_util.render_response(result, ctx)
 
 
-@term_relationship_group.command(name=cli_util.override('data_catalog.create_term_relationship.command_name', 'create'), help=u"""Creates a new term relationship for this term within a glossary.""")
+@term_relationship_group.command(name=cli_util.override('data_catalog.create_term_relationship.command_name', 'create'), help=u"""Creates a new term relationship for this term within a glossary. \n[Command Reference](createTermRelationship)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--glossary-key', required=True, help=u"""Unique glossary key.""")
 @cli_util.option('--term-key', required=True, help=u"""Unique glossary term key.""")
@@ -1779,7 +1779,7 @@ def create_term_relationship(ctx, from_json, wait_for_state, max_wait_seconds, w
     cli_util.render_response(result, ctx)
 
 
-@attribute_group.command(name=cli_util.override('data_catalog.delete_attribute.command_name', 'delete'), help=u"""Deletes a specific entity attribute.""")
+@attribute_group.command(name=cli_util.override('data_catalog.delete_attribute.command_name', 'delete'), help=u"""Deletes a specific entity attribute. \n[Command Reference](deleteAttribute)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--data-asset-key', required=True, help=u"""Unique data asset key.""")
 @cli_util.option('--entity-key', required=True, help=u"""Unique entity key.""")
@@ -1820,7 +1820,7 @@ def delete_attribute(ctx, from_json, catalog_id, data_asset_key, entity_key, att
     cli_util.render_response(result, ctx)
 
 
-@attribute_tag_group.command(name=cli_util.override('data_catalog.delete_attribute_tag.command_name', 'delete'), help=u"""Deletes a specific entity attribute tag.""")
+@attribute_tag_group.command(name=cli_util.override('data_catalog.delete_attribute_tag.command_name', 'delete'), help=u"""Deletes a specific entity attribute tag. \n[Command Reference](deleteAttributeTag)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--data-asset-key', required=True, help=u"""Unique data asset key.""")
 @cli_util.option('--entity-key', required=True, help=u"""Unique entity key.""")
@@ -1866,7 +1866,7 @@ def delete_attribute_tag(ctx, from_json, catalog_id, data_asset_key, entity_key,
     cli_util.render_response(result, ctx)
 
 
-@catalog_group.command(name=cli_util.override('data_catalog.delete_catalog.command_name', 'delete'), help=u"""Deletes a data catalog resource by identifier.""")
+@catalog_group.command(name=cli_util.override('data_catalog.delete_catalog.command_name', 'delete'), help=u"""Deletes a data catalog resource by identifier. \n[Command Reference](deleteCatalog)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -1918,7 +1918,7 @@ def delete_catalog(ctx, from_json, wait_for_state, max_wait_seconds, wait_interv
     cli_util.render_response(result, ctx)
 
 
-@catalog_private_endpoint_group.command(name=cli_util.override('data_catalog.delete_catalog_private_endpoint.command_name', 'delete'), help=u"""Deletes a private reverse connection endpoint by identifier.""")
+@catalog_private_endpoint_group.command(name=cli_util.override('data_catalog.delete_catalog_private_endpoint.command_name', 'delete'), help=u"""Deletes a private reverse connection endpoint by identifier. \n[Command Reference](deleteCatalogPrivateEndpoint)""")
 @cli_util.option('--catalog-private-endpoint-id', required=True, help=u"""Unique private reverse connection identifier.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -1970,7 +1970,7 @@ def delete_catalog_private_endpoint(ctx, from_json, wait_for_state, max_wait_sec
     cli_util.render_response(result, ctx)
 
 
-@connection_group.command(name=cli_util.override('data_catalog.delete_connection.command_name', 'delete'), help=u"""Deletes a specific connection of a data asset.""")
+@connection_group.command(name=cli_util.override('data_catalog.delete_connection.command_name', 'delete'), help=u"""Deletes a specific connection of a data asset. \n[Command Reference](deleteConnection)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--data-asset-key', required=True, help=u"""Unique data asset key.""")
 @cli_util.option('--connection-key', required=True, help=u"""Unique connection key.""")
@@ -2006,7 +2006,7 @@ def delete_connection(ctx, from_json, catalog_id, data_asset_key, connection_key
     cli_util.render_response(result, ctx)
 
 
-@data_asset_group.command(name=cli_util.override('data_catalog.delete_data_asset.command_name', 'delete'), help=u"""Deletes a specific data asset identified by it's key.""")
+@data_asset_group.command(name=cli_util.override('data_catalog.delete_data_asset.command_name', 'delete'), help=u"""Deletes a specific data asset identified by it's key. \n[Command Reference](deleteDataAsset)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--data-asset-key', required=True, help=u"""Unique data asset key.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -2037,7 +2037,7 @@ def delete_data_asset(ctx, from_json, catalog_id, data_asset_key, if_match):
     cli_util.render_response(result, ctx)
 
 
-@data_asset_tag_group.command(name=cli_util.override('data_catalog.delete_data_asset_tag.command_name', 'delete'), help=u"""Deletes a specific data asset tag.""")
+@data_asset_tag_group.command(name=cli_util.override('data_catalog.delete_data_asset_tag.command_name', 'delete'), help=u"""Deletes a specific data asset tag. \n[Command Reference](deleteDataAssetTag)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--data-asset-key', required=True, help=u"""Unique data asset key.""")
 @cli_util.option('--tag-key', required=True, help=u"""Unique tag key.""")
@@ -2073,7 +2073,7 @@ def delete_data_asset_tag(ctx, from_json, catalog_id, data_asset_key, tag_key, i
     cli_util.render_response(result, ctx)
 
 
-@entity_group.command(name=cli_util.override('data_catalog.delete_entity.command_name', 'delete'), help=u"""Deletes a specific data entity.""")
+@entity_group.command(name=cli_util.override('data_catalog.delete_entity.command_name', 'delete'), help=u"""Deletes a specific data entity. \n[Command Reference](deleteEntity)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--data-asset-key', required=True, help=u"""Unique data asset key.""")
 @cli_util.option('--entity-key', required=True, help=u"""Unique entity key.""")
@@ -2109,7 +2109,7 @@ def delete_entity(ctx, from_json, catalog_id, data_asset_key, entity_key, if_mat
     cli_util.render_response(result, ctx)
 
 
-@entity_tag_group.command(name=cli_util.override('data_catalog.delete_entity_tag.command_name', 'delete'), help=u"""Deletes a specific entity tag.""")
+@entity_tag_group.command(name=cli_util.override('data_catalog.delete_entity_tag.command_name', 'delete'), help=u"""Deletes a specific entity tag. \n[Command Reference](deleteEntityTag)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--data-asset-key', required=True, help=u"""Unique data asset key.""")
 @cli_util.option('--entity-key', required=True, help=u"""Unique entity key.""")
@@ -2150,7 +2150,7 @@ def delete_entity_tag(ctx, from_json, catalog_id, data_asset_key, entity_key, ta
     cli_util.render_response(result, ctx)
 
 
-@folder_group.command(name=cli_util.override('data_catalog.delete_folder.command_name', 'delete'), help=u"""Deletes a specific folder of a data asset identified by it's key.""")
+@folder_group.command(name=cli_util.override('data_catalog.delete_folder.command_name', 'delete'), help=u"""Deletes a specific folder of a data asset identified by it's key. \n[Command Reference](deleteFolder)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--data-asset-key', required=True, help=u"""Unique data asset key.""")
 @cli_util.option('--folder-key', required=True, help=u"""Unique folder key.""")
@@ -2186,7 +2186,7 @@ def delete_folder(ctx, from_json, catalog_id, data_asset_key, folder_key, if_mat
     cli_util.render_response(result, ctx)
 
 
-@folder_tag_group.command(name=cli_util.override('data_catalog.delete_folder_tag.command_name', 'delete'), help=u"""Deletes a specific folder tag.""")
+@folder_tag_group.command(name=cli_util.override('data_catalog.delete_folder_tag.command_name', 'delete'), help=u"""Deletes a specific folder tag. \n[Command Reference](deleteFolderTag)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--data-asset-key', required=True, help=u"""Unique data asset key.""")
 @cli_util.option('--folder-key', required=True, help=u"""Unique folder key.""")
@@ -2227,7 +2227,7 @@ def delete_folder_tag(ctx, from_json, catalog_id, data_asset_key, folder_key, ta
     cli_util.render_response(result, ctx)
 
 
-@glossary_group.command(name=cli_util.override('data_catalog.delete_glossary.command_name', 'delete'), help=u"""Deletes a specific glossary identified by it's key.""")
+@glossary_group.command(name=cli_util.override('data_catalog.delete_glossary.command_name', 'delete'), help=u"""Deletes a specific glossary identified by it's key. \n[Command Reference](deleteGlossary)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--glossary-key', required=True, help=u"""Unique glossary key.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -2258,7 +2258,7 @@ def delete_glossary(ctx, from_json, catalog_id, glossary_key, if_match):
     cli_util.render_response(result, ctx)
 
 
-@job_group.command(name=cli_util.override('data_catalog.delete_job.command_name', 'delete'), help=u"""Deletes a specific job identified by it's key.""")
+@job_group.command(name=cli_util.override('data_catalog.delete_job.command_name', 'delete'), help=u"""Deletes a specific job identified by it's key. \n[Command Reference](deleteJob)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--job-key', required=True, help=u"""Unique job key.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -2289,7 +2289,7 @@ def delete_job(ctx, from_json, catalog_id, job_key, if_match):
     cli_util.render_response(result, ctx)
 
 
-@job_definition_group.command(name=cli_util.override('data_catalog.delete_job_definition.command_name', 'delete'), help=u"""Deletes a specific job definition identified by it's key.""")
+@job_definition_group.command(name=cli_util.override('data_catalog.delete_job_definition.command_name', 'delete'), help=u"""Deletes a specific job definition identified by it's key. \n[Command Reference](deleteJobDefinition)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--job-definition-key', required=True, help=u"""Unique job definition key.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -2320,7 +2320,7 @@ def delete_job_definition(ctx, from_json, catalog_id, job_definition_key, if_mat
     cli_util.render_response(result, ctx)
 
 
-@term_group.command(name=cli_util.override('data_catalog.delete_term.command_name', 'delete'), help=u"""Deletes a specific glossary term.""")
+@term_group.command(name=cli_util.override('data_catalog.delete_term.command_name', 'delete'), help=u"""Deletes a specific glossary term. \n[Command Reference](deleteTerm)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--glossary-key', required=True, help=u"""Unique glossary key.""")
 @cli_util.option('--term-key', required=True, help=u"""Unique glossary term key.""")
@@ -2356,7 +2356,7 @@ def delete_term(ctx, from_json, catalog_id, glossary_key, term_key, if_match):
     cli_util.render_response(result, ctx)
 
 
-@term_relationship_group.command(name=cli_util.override('data_catalog.delete_term_relationship.command_name', 'delete'), help=u"""Deletes a specific glossary term relationship.""")
+@term_relationship_group.command(name=cli_util.override('data_catalog.delete_term_relationship.command_name', 'delete'), help=u"""Deletes a specific glossary term relationship. \n[Command Reference](deleteTermRelationship)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--glossary-key', required=True, help=u"""Unique glossary key.""")
 @cli_util.option('--term-key', required=True, help=u"""Unique glossary term key.""")
@@ -2397,7 +2397,7 @@ def delete_term_relationship(ctx, from_json, catalog_id, glossary_key, term_key,
     cli_util.render_response(result, ctx)
 
 
-@catalog_group.command(name=cli_util.override('data_catalog.detach_catalog_private_endpoint.command_name', 'detach'), help=u"""Detaches a private reverse connection endpoint resource to a data catalog resource. When provided, 'If-Match' is checked against 'ETag' values of the resource.""")
+@catalog_group.command(name=cli_util.override('data_catalog.detach_catalog_private_endpoint.command_name', 'detach'), help=u"""Detaches a private reverse connection endpoint resource to a data catalog resource. When provided, 'If-Match' is checked against 'ETag' values of the resource. \n[Command Reference](detachCatalogPrivateEndpoint)""")
 @cli_util.option('--catalog-private-endpoint-id', required=True, help=u"""The identifier of the private endpoint to be detached from catalog resource.""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -2454,7 +2454,7 @@ def detach_catalog_private_endpoint(ctx, from_json, wait_for_state, max_wait_sec
     cli_util.render_response(result, ctx)
 
 
-@glossary_group.command(name=cli_util.override('data_catalog.expand_tree_for_glossary.command_name', 'expand-tree-for'), help=u"""Returns the fully expanded tree hierarchy of parent and child terms in this glossary.""")
+@glossary_group.command(name=cli_util.override('data_catalog.expand_tree_for_glossary.command_name', 'expand-tree-for'), help=u"""Returns the fully expanded tree hierarchy of parent and child terms in this glossary. \n[Command Reference](expandTreeForGlossary)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--glossary-key', required=True, help=u"""Unique glossary key.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2481,7 +2481,7 @@ def expand_tree_for_glossary(ctx, from_json, catalog_id, glossary_key):
     cli_util.render_response(result, ctx)
 
 
-@glossary_group.command(name=cli_util.override('data_catalog.export_glossary.command_name', 'export'), help=u"""Export the glossary and the terms and return the exported glossary as csv or json.""")
+@glossary_group.command(name=cli_util.override('data_catalog.export_glossary.command_name', 'export'), help=u"""Export the glossary and the terms and return the exported glossary as csv or json. \n[Command Reference](exportGlossary)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--glossary-key', required=True, help=u"""Unique glossary key.""")
 @cli_util.option('--is-relationship-exported', type=click.BOOL, help=u"""Specify if the relationship metadata is exported for the glossary.""")
@@ -2511,7 +2511,7 @@ def export_glossary(ctx, from_json, catalog_id, glossary_key, is_relationship_ex
     cli_util.render_response(result, ctx)
 
 
-@attribute_group.command(name=cli_util.override('data_catalog.get_attribute.command_name', 'get'), help=u"""Gets a specific entity attribute by key.""")
+@attribute_group.command(name=cli_util.override('data_catalog.get_attribute.command_name', 'get'), help=u"""Gets a specific entity attribute by key. \n[Command Reference](getAttribute)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--data-asset-key', required=True, help=u"""Unique data asset key.""")
 @cli_util.option('--entity-key', required=True, help=u"""Unique entity key.""")
@@ -2551,7 +2551,7 @@ def get_attribute(ctx, from_json, catalog_id, data_asset_key, entity_key, attrib
     cli_util.render_response(result, ctx)
 
 
-@attribute_tag_group.command(name=cli_util.override('data_catalog.get_attribute_tag.command_name', 'get'), help=u"""Gets a specific entity attribute tag by key.""")
+@attribute_tag_group.command(name=cli_util.override('data_catalog.get_attribute_tag.command_name', 'get'), help=u"""Gets a specific entity attribute tag by key. \n[Command Reference](getAttributeTag)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--data-asset-key', required=True, help=u"""Unique data asset key.""")
 @cli_util.option('--entity-key', required=True, help=u"""Unique entity key.""")
@@ -2596,7 +2596,7 @@ def get_attribute_tag(ctx, from_json, catalog_id, data_asset_key, entity_key, at
     cli_util.render_response(result, ctx)
 
 
-@catalog_group.command(name=cli_util.override('data_catalog.get_catalog.command_name', 'get'), help=u"""Gets a data catalog by identifier.""")
+@catalog_group.command(name=cli_util.override('data_catalog.get_catalog.command_name', 'get'), help=u"""Gets a data catalog by identifier. \n[Command Reference](getCatalog)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -2618,7 +2618,7 @@ def get_catalog(ctx, from_json, catalog_id):
     cli_util.render_response(result, ctx)
 
 
-@catalog_private_endpoint_group.command(name=cli_util.override('data_catalog.get_catalog_private_endpoint.command_name', 'get'), help=u"""Gets a specific private reverse connection by identifier.""")
+@catalog_private_endpoint_group.command(name=cli_util.override('data_catalog.get_catalog_private_endpoint.command_name', 'get'), help=u"""Gets a specific private reverse connection by identifier. \n[Command Reference](getCatalogPrivateEndpoint)""")
 @cli_util.option('--catalog-private-endpoint-id', required=True, help=u"""Unique private reverse connection identifier.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -2640,7 +2640,7 @@ def get_catalog_private_endpoint(ctx, from_json, catalog_private_endpoint_id):
     cli_util.render_response(result, ctx)
 
 
-@connection_group.command(name=cli_util.override('data_catalog.get_connection.command_name', 'get'), help=u"""Gets a specific data asset connection by key.""")
+@connection_group.command(name=cli_util.override('data_catalog.get_connection.command_name', 'get'), help=u"""Gets a specific data asset connection by key. \n[Command Reference](getConnection)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--data-asset-key', required=True, help=u"""Unique data asset key.""")
 @cli_util.option('--connection-key', required=True, help=u"""Unique connection key.""")
@@ -2675,7 +2675,7 @@ def get_connection(ctx, from_json, catalog_id, data_asset_key, connection_key, f
     cli_util.render_response(result, ctx)
 
 
-@data_asset_group.command(name=cli_util.override('data_catalog.get_data_asset.command_name', 'get'), help=u"""Gets a specific data asset for the given key within a data catalog.""")
+@data_asset_group.command(name=cli_util.override('data_catalog.get_data_asset.command_name', 'get'), help=u"""Gets a specific data asset for the given key within a data catalog. \n[Command Reference](getDataAsset)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--data-asset-key', required=True, help=u"""Unique data asset key.""")
 @cli_util.option('--fields', type=custom_types.CliCaseInsensitiveChoice(["key", "displayName", "description", "catalogId", "externalKey", "typeKey", "lifecycleState", "timeCreated", "timeUpdated", "createdById", "updatedById", "uri", "properties"]), multiple=True, help=u"""Specifies the fields to return in a data asset response.""")
@@ -2705,7 +2705,7 @@ def get_data_asset(ctx, from_json, catalog_id, data_asset_key, fields):
     cli_util.render_response(result, ctx)
 
 
-@data_asset_tag_group.command(name=cli_util.override('data_catalog.get_data_asset_tag.command_name', 'get'), help=u"""Gets a specific data asset tag by key.""")
+@data_asset_tag_group.command(name=cli_util.override('data_catalog.get_data_asset_tag.command_name', 'get'), help=u"""Gets a specific data asset tag by key. \n[Command Reference](getDataAssetTag)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--data-asset-key', required=True, help=u"""Unique data asset key.""")
 @cli_util.option('--tag-key', required=True, help=u"""Unique tag key.""")
@@ -2740,7 +2740,7 @@ def get_data_asset_tag(ctx, from_json, catalog_id, data_asset_key, tag_key, fiel
     cli_util.render_response(result, ctx)
 
 
-@entity_group.command(name=cli_util.override('data_catalog.get_entity.command_name', 'get'), help=u"""Gets a specific data entity by key for a data asset.""")
+@entity_group.command(name=cli_util.override('data_catalog.get_entity.command_name', 'get'), help=u"""Gets a specific data entity by key for a data asset. \n[Command Reference](getEntity)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--data-asset-key', required=True, help=u"""Unique data asset key.""")
 @cli_util.option('--entity-key', required=True, help=u"""Unique entity key.""")
@@ -2775,7 +2775,7 @@ def get_entity(ctx, from_json, catalog_id, data_asset_key, entity_key, fields):
     cli_util.render_response(result, ctx)
 
 
-@entity_tag_group.command(name=cli_util.override('data_catalog.get_entity_tag.command_name', 'get'), help=u"""Gets a specific entity tag by key.""")
+@entity_tag_group.command(name=cli_util.override('data_catalog.get_entity_tag.command_name', 'get'), help=u"""Gets a specific entity tag by key. \n[Command Reference](getEntityTag)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--data-asset-key', required=True, help=u"""Unique data asset key.""")
 @cli_util.option('--entity-key', required=True, help=u"""Unique entity key.""")
@@ -2815,7 +2815,7 @@ def get_entity_tag(ctx, from_json, catalog_id, data_asset_key, entity_key, tag_k
     cli_util.render_response(result, ctx)
 
 
-@folder_group.command(name=cli_util.override('data_catalog.get_folder.command_name', 'get'), help=u"""Gets a specific data asset folder by key.""")
+@folder_group.command(name=cli_util.override('data_catalog.get_folder.command_name', 'get'), help=u"""Gets a specific data asset folder by key. \n[Command Reference](getFolder)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--data-asset-key', required=True, help=u"""Unique data asset key.""")
 @cli_util.option('--folder-key', required=True, help=u"""Unique folder key.""")
@@ -2850,7 +2850,7 @@ def get_folder(ctx, from_json, catalog_id, data_asset_key, folder_key, fields):
     cli_util.render_response(result, ctx)
 
 
-@folder_tag_group.command(name=cli_util.override('data_catalog.get_folder_tag.command_name', 'get'), help=u"""Gets a specific folder tag by key.""")
+@folder_tag_group.command(name=cli_util.override('data_catalog.get_folder_tag.command_name', 'get'), help=u"""Gets a specific folder tag by key. \n[Command Reference](getFolderTag)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--data-asset-key', required=True, help=u"""Unique data asset key.""")
 @cli_util.option('--folder-key', required=True, help=u"""Unique folder key.""")
@@ -2890,7 +2890,7 @@ def get_folder_tag(ctx, from_json, catalog_id, data_asset_key, folder_key, tag_k
     cli_util.render_response(result, ctx)
 
 
-@glossary_group.command(name=cli_util.override('data_catalog.get_glossary.command_name', 'get'), help=u"""Gets a specific glossary by key within a data catalog.""")
+@glossary_group.command(name=cli_util.override('data_catalog.get_glossary.command_name', 'get'), help=u"""Gets a specific glossary by key within a data catalog. \n[Command Reference](getGlossary)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--glossary-key', required=True, help=u"""Unique glossary key.""")
 @cli_util.option('--fields', type=custom_types.CliCaseInsensitiveChoice(["key", "displayName", "description", "catalogId", "lifecycleState", "timeCreated", "timeUpdated", "createdById", "updatedById", "owner", "workflowStatus", "uri"]), multiple=True, help=u"""Specifies the fields to return in a glossary response.""")
@@ -2920,7 +2920,7 @@ def get_glossary(ctx, from_json, catalog_id, glossary_key, fields):
     cli_util.render_response(result, ctx)
 
 
-@job_group.command(name=cli_util.override('data_catalog.get_job.command_name', 'get'), help=u"""Gets a specific job by key within a data catalog.""")
+@job_group.command(name=cli_util.override('data_catalog.get_job.command_name', 'get'), help=u"""Gets a specific job by key within a data catalog. \n[Command Reference](getJob)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--job-key', required=True, help=u"""Unique job key.""")
 @cli_util.option('--fields', type=custom_types.CliCaseInsensitiveChoice(["key", "displayName", "description", "catalogId", "lifecycleState", "timeCreated", "timeUpdated", "jobType", "scheduleCronExpression", "timeScheduleBegin", "timeScheduleEnd", "scheduleType", "connectionKey", "jobDefinitionKey", "internalVersion", "executionCount", "timeOfLatestExecution", "executions", "createdById", "updatedById", "uri", "jobDefinitionName", "errorCode", "errorMessage"]), multiple=True, help=u"""Specifies the fields to return in a job response.""")
@@ -2950,7 +2950,7 @@ def get_job(ctx, from_json, catalog_id, job_key, fields):
     cli_util.render_response(result, ctx)
 
 
-@job_definition_group.command(name=cli_util.override('data_catalog.get_job_definition.command_name', 'get'), help=u"""Gets a specific job definition by key within a data catalog.""")
+@job_definition_group.command(name=cli_util.override('data_catalog.get_job_definition.command_name', 'get'), help=u"""Gets a specific job definition by key within a data catalog. \n[Command Reference](getJobDefinition)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--job-definition-key', required=True, help=u"""Unique job definition key.""")
 @cli_util.option('--fields', type=custom_types.CliCaseInsensitiveChoice(["key", "displayName", "description", "catalogId", "jobType", "isIncremental", "dataAssetKey", "connectionKey", "internalVersion", "lifecycleState", "timeCreated", "timeUpdated", "createdById", "updatedById", "uri", "isSampleDataExtracted", "sampleDataSizeInMBs", "timeLatestExecutionStarted", "timeLatestExecutionEnded", "jobExecutionState", "scheduleType", "properties"]), multiple=True, help=u"""Specifies the fields to return in a job definition response.""")
@@ -2980,7 +2980,7 @@ def get_job_definition(ctx, from_json, catalog_id, job_definition_key, fields):
     cli_util.render_response(result, ctx)
 
 
-@job_execution_group.command(name=cli_util.override('data_catalog.get_job_execution.command_name', 'get'), help=u"""Gets a specific job execution by key.""")
+@job_execution_group.command(name=cli_util.override('data_catalog.get_job_execution.command_name', 'get'), help=u"""Gets a specific job execution by key. \n[Command Reference](getJobExecution)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--job-key', required=True, help=u"""Unique job key.""")
 @cli_util.option('--job-execution-key', required=True, help=u"""The key of the job execution.""")
@@ -3015,7 +3015,7 @@ def get_job_execution(ctx, from_json, catalog_id, job_key, job_execution_key, fi
     cli_util.render_response(result, ctx)
 
 
-@job_log_group.command(name=cli_util.override('data_catalog.get_job_log.command_name', 'get'), help=u"""Gets a specific job log by key.""")
+@job_log_group.command(name=cli_util.override('data_catalog.get_job_log.command_name', 'get'), help=u"""Gets a specific job log by key. \n[Command Reference](getJobLog)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--job-key', required=True, help=u"""Unique job key.""")
 @cli_util.option('--job-execution-key', required=True, help=u"""The key of the job execution.""")
@@ -3055,7 +3055,7 @@ def get_job_log(ctx, from_json, catalog_id, job_key, job_execution_key, job_log_
     cli_util.render_response(result, ctx)
 
 
-@job_metric_group.command(name=cli_util.override('data_catalog.get_job_metrics.command_name', 'get'), help=u"""Gets a specific job metric by key.""")
+@job_metric_group.command(name=cli_util.override('data_catalog.get_job_metrics.command_name', 'get'), help=u"""Gets a specific job metric by key. \n[Command Reference](getJobMetrics)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--job-key', required=True, help=u"""Unique job key.""")
 @cli_util.option('--job-execution-key', required=True, help=u"""The key of the job execution.""")
@@ -3095,7 +3095,7 @@ def get_job_metrics(ctx, from_json, catalog_id, job_key, job_execution_key, job_
     cli_util.render_response(result, ctx)
 
 
-@term_group.command(name=cli_util.override('data_catalog.get_term.command_name', 'get'), help=u"""Gets a specific glossary term by key.""")
+@term_group.command(name=cli_util.override('data_catalog.get_term.command_name', 'get'), help=u"""Gets a specific glossary term by key. \n[Command Reference](getTerm)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--glossary-key', required=True, help=u"""Unique glossary key.""")
 @cli_util.option('--term-key', required=True, help=u"""Unique glossary term key.""")
@@ -3130,7 +3130,7 @@ def get_term(ctx, from_json, catalog_id, glossary_key, term_key, fields):
     cli_util.render_response(result, ctx)
 
 
-@term_relationship_group.command(name=cli_util.override('data_catalog.get_term_relationship.command_name', 'get'), help=u"""Gets a specific glossary term relationship by key.""")
+@term_relationship_group.command(name=cli_util.override('data_catalog.get_term_relationship.command_name', 'get'), help=u"""Gets a specific glossary term relationship by key. \n[Command Reference](getTermRelationship)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--glossary-key', required=True, help=u"""Unique glossary key.""")
 @cli_util.option('--term-key', required=True, help=u"""Unique glossary term key.""")
@@ -3170,7 +3170,7 @@ def get_term_relationship(ctx, from_json, catalog_id, glossary_key, term_key, te
     cli_util.render_response(result, ctx)
 
 
-@type_group.command(name=cli_util.override('data_catalog.get_type.command_name', 'get'), help=u"""Gets a specific type by key within a data catalog.""")
+@type_group.command(name=cli_util.override('data_catalog.get_type.command_name', 'get'), help=u"""Gets a specific type by key within a data catalog. \n[Command Reference](getType)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--type-key', required=True, help=u"""Unique type key.""")
 @cli_util.option('--fields', type=custom_types.CliCaseInsensitiveChoice(["key", "description", "name", "catalogId", "properties", "isInternal", "isTag", "isApproved", "typeCategory", "externalTypeName", "lifecycleState", "uri"]), multiple=True, help=u"""Specifies the fields to return in a type response.""")
@@ -3200,7 +3200,7 @@ def get_type(ctx, from_json, catalog_id, type_key, fields):
     cli_util.render_response(result, ctx)
 
 
-@work_request_group.command(name=cli_util.override('data_catalog.get_work_request.command_name', 'get'), help=u"""Gets the status of the work request with the given OCID.""")
+@work_request_group.command(name=cli_util.override('data_catalog.get_work_request.command_name', 'get'), help=u"""Gets the status of the work request with the given OCID. \n[Command Reference](getWorkRequest)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The OCID of the asynchronous request.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -3222,7 +3222,7 @@ def get_work_request(ctx, from_json, work_request_id):
     cli_util.render_response(result, ctx)
 
 
-@data_asset_group.command(name=cli_util.override('data_catalog.import_connection.command_name', 'import-connection'), help=u"""Import new connection for this data asset.""")
+@data_asset_group.command(name=cli_util.override('data_catalog.import_connection.command_name', 'import-connection'), help=u"""Import new connection for this data asset. \n[Command Reference](importConnection)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--data-asset-key', required=True, help=u"""Unique data asset key.""")
 @cli_util.option('--connection-payload', required=True, help=u"""The information used to import the connection.""")
@@ -3262,7 +3262,7 @@ def import_connection(ctx, from_json, catalog_id, data_asset_key, connection_pay
     cli_util.render_response(result, ctx)
 
 
-@glossary_group.command(name=cli_util.override('data_catalog.import_glossary.command_name', 'import'), help=u"""Import the glossary and the terms from csv or json files and return the imported glossary resource.""")
+@glossary_group.command(name=cli_util.override('data_catalog.import_glossary.command_name', 'import'), help=u"""Import the glossary and the terms from csv or json files and return the imported glossary resource. \n[Command Reference](importGlossary)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--glossary-key', required=True, help=u"""Unique glossary key.""")
 @cli_util.option('--glossary-file-contents', help=u"""The file contents used for the import of glossary.""")
@@ -3300,7 +3300,7 @@ def import_glossary(ctx, from_json, catalog_id, glossary_key, glossary_file_cont
     cli_util.render_response(result, ctx)
 
 
-@attribute_tag_collection_group.command(name=cli_util.override('data_catalog.list_attribute_tags.command_name', 'list-attribute-tags'), help=u"""Returns a list of all tags for an entity attribute.""")
+@attribute_tag_collection_group.command(name=cli_util.override('data_catalog.list_attribute_tags.command_name', 'list-attribute-tags'), help=u"""Returns a list of all tags for an entity attribute. \n[Command Reference](listAttributeTags)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--data-asset-key', required=True, help=u"""Unique data asset key.""")
 @cli_util.option('--entity-key', required=True, help=u"""Unique entity key.""")
@@ -3399,7 +3399,7 @@ def list_attribute_tags(ctx, from_json, all_pages, page_size, catalog_id, data_a
     cli_util.render_response(result, ctx)
 
 
-@attribute_collection_group.command(name=cli_util.override('data_catalog.list_attributes.command_name', 'list-attributes'), help=u"""Returns a list of all attributes of an data entity.""")
+@attribute_collection_group.command(name=cli_util.override('data_catalog.list_attributes.command_name', 'list-attributes'), help=u"""Returns a list of all attributes of an data entity. \n[Command Reference](listAttributes)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--data-asset-key', required=True, help=u"""Unique data asset key.""")
 @cli_util.option('--entity-key', required=True, help=u"""Unique entity key.""")
@@ -3521,7 +3521,7 @@ def list_attributes(ctx, from_json, all_pages, page_size, catalog_id, data_asset
     cli_util.render_response(result, ctx)
 
 
-@catalog_private_endpoint_group.command(name=cli_util.override('data_catalog.list_catalog_private_endpoints.command_name', 'list'), help=u"""Returns a list of all the catalog private endpoints in the specified compartment.""")
+@catalog_private_endpoint_group.command(name=cli_util.override('data_catalog.list_catalog_private_endpoints.command_name', 'list'), help=u"""Returns a list of all the catalog private endpoints in the specified compartment. \n[Command Reference](listCatalogPrivateEndpoints)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where you want to list resources.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given. The match is not case sensitive.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -3581,7 +3581,7 @@ def list_catalog_private_endpoints(ctx, from_json, all_pages, page_size, compart
     cli_util.render_response(result, ctx)
 
 
-@catalog_group.command(name=cli_util.override('data_catalog.list_catalogs.command_name', 'list'), help=u"""Returns a list of all the data catalogs in the specified compartment.""")
+@catalog_group.command(name=cli_util.override('data_catalog.list_catalogs.command_name', 'list'), help=u"""Returns a list of all the data catalogs in the specified compartment. \n[Command Reference](listCatalogs)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where you want to list resources.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given. The match is not case sensitive.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -3641,7 +3641,7 @@ def list_catalogs(ctx, from_json, all_pages, page_size, compartment_id, display_
     cli_util.render_response(result, ctx)
 
 
-@connection_collection_group.command(name=cli_util.override('data_catalog.list_connections.command_name', 'list-connections'), help=u"""Returns a list of all Connections for a data asset.""")
+@connection_collection_group.command(name=cli_util.override('data_catalog.list_connections.command_name', 'list-connections'), help=u"""Returns a list of all Connections for a data asset. \n[Command Reference](listConnections)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--data-asset-key', required=True, help=u"""Unique data asset key.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given. The match is not case sensitive.""")
@@ -3738,7 +3738,7 @@ def list_connections(ctx, from_json, all_pages, page_size, catalog_id, data_asse
     cli_util.render_response(result, ctx)
 
 
-@data_asset_tag_collection_group.command(name=cli_util.override('data_catalog.list_data_asset_tags.command_name', 'list-data-asset-tags'), help=u"""Returns a list of all tags for a data asset.""")
+@data_asset_tag_collection_group.command(name=cli_util.override('data_catalog.list_data_asset_tags.command_name', 'list-data-asset-tags'), help=u"""Returns a list of all tags for a data asset. \n[Command Reference](listDataAssetTags)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--data-asset-key', required=True, help=u"""Unique data asset key.""")
 @cli_util.option('--name', help=u"""Immutable resource name.""")
@@ -3823,7 +3823,7 @@ def list_data_asset_tags(ctx, from_json, all_pages, page_size, catalog_id, data_
     cli_util.render_response(result, ctx)
 
 
-@data_asset_collection_group.command(name=cli_util.override('data_catalog.list_data_assets.command_name', 'list-data-assets'), help=u"""Returns a list of data assets within a data catalog.""")
+@data_asset_collection_group.command(name=cli_util.override('data_catalog.list_data_assets.command_name', 'list-data-assets'), help=u"""Returns a list of data assets within a data catalog. \n[Command Reference](listDataAssets)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given. The match is not case sensitive.""")
 @cli_util.option('--display-name-contains', help=u"""A filter to return only resources that match display name pattern given. The match is not case sensitive. For Example : /folders?displayNameContains=Cu.* The above would match all folders with display name that starts with \"Cu\".""")
@@ -3910,7 +3910,7 @@ def list_data_assets(ctx, from_json, all_pages, page_size, catalog_id, display_n
     cli_util.render_response(result, ctx)
 
 
-@entity_group.command(name=cli_util.override('data_catalog.list_entities.command_name', 'list'), help=u"""Returns a list of all entities of a data asset.""")
+@entity_group.command(name=cli_util.override('data_catalog.list_entities.command_name', 'list'), help=u"""Returns a list of all entities of a data asset. \n[Command Reference](listEntities)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--data-asset-key', required=True, help=u"""Unique data asset key.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given. The match is not case sensitive.""")
@@ -4025,7 +4025,7 @@ def list_entities(ctx, from_json, all_pages, page_size, catalog_id, data_asset_k
     cli_util.render_response(result, ctx)
 
 
-@entity_tag_collection_group.command(name=cli_util.override('data_catalog.list_entity_tags.command_name', 'list-entity-tags'), help=u"""Returns a list of all tags for a data entity.""")
+@entity_tag_collection_group.command(name=cli_util.override('data_catalog.list_entity_tags.command_name', 'list-entity-tags'), help=u"""Returns a list of all tags for a data entity. \n[Command Reference](listEntityTags)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--data-asset-key', required=True, help=u"""Unique data asset key.""")
 @cli_util.option('--entity-key', required=True, help=u"""Unique entity key.""")
@@ -4117,7 +4117,7 @@ def list_entity_tags(ctx, from_json, all_pages, page_size, catalog_id, data_asse
     cli_util.render_response(result, ctx)
 
 
-@folder_tag_collection_group.command(name=cli_util.override('data_catalog.list_folder_tags.command_name', 'list-folder-tags'), help=u"""Returns a list of all tags for a folder.""")
+@folder_tag_collection_group.command(name=cli_util.override('data_catalog.list_folder_tags.command_name', 'list-folder-tags'), help=u"""Returns a list of all tags for a folder. \n[Command Reference](listFolderTags)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--data-asset-key', required=True, help=u"""Unique data asset key.""")
 @cli_util.option('--folder-key', required=True, help=u"""Unique folder key.""")
@@ -4209,7 +4209,7 @@ def list_folder_tags(ctx, from_json, all_pages, page_size, catalog_id, data_asse
     cli_util.render_response(result, ctx)
 
 
-@folder_collection_group.command(name=cli_util.override('data_catalog.list_folders.command_name', 'list-folders'), help=u"""Returns a list of all folders.""")
+@folder_collection_group.command(name=cli_util.override('data_catalog.list_folders.command_name', 'list-folders'), help=u"""Returns a list of all folders. \n[Command Reference](listFolders)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--data-asset-key', required=True, help=u"""Unique data asset key.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given. The match is not case sensitive.""")
@@ -4312,7 +4312,7 @@ def list_folders(ctx, from_json, all_pages, page_size, catalog_id, data_asset_ke
     cli_util.render_response(result, ctx)
 
 
-@glossary_group.command(name=cli_util.override('data_catalog.list_glossaries.command_name', 'list'), help=u"""Returns a list of all glossaries within a data catalog.""")
+@glossary_group.command(name=cli_util.override('data_catalog.list_glossaries.command_name', 'list'), help=u"""Returns a list of all glossaries within a data catalog. \n[Command Reference](listGlossaries)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given. The match is not case sensitive.""")
 @cli_util.option('--display-name-contains', help=u"""A filter to return only resources that match display name pattern given. The match is not case sensitive. For Example : /folders?displayNameContains=Cu.* The above would match all folders with display name that starts with \"Cu\".""")
@@ -4393,7 +4393,7 @@ def list_glossaries(ctx, from_json, all_pages, page_size, catalog_id, display_na
     cli_util.render_response(result, ctx)
 
 
-@job_definition_collection_group.command(name=cli_util.override('data_catalog.list_job_definitions.command_name', 'list-job-definitions'), help=u"""Returns a list of job definitions within a data catalog.""")
+@job_definition_collection_group.command(name=cli_util.override('data_catalog.list_job_definitions.command_name', 'list-job-definitions'), help=u"""Returns a list of job definitions within a data catalog. \n[Command Reference](listJobDefinitions)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given. The match is not case sensitive.""")
 @cli_util.option('--display-name-contains', help=u"""A filter to return only resources that match display name pattern given. The match is not case sensitive. For Example : /folders?displayNameContains=Cu.* The above would match all folders with display name that starts with \"Cu\".""")
@@ -4492,7 +4492,7 @@ def list_job_definitions(ctx, from_json, all_pages, page_size, catalog_id, displ
     cli_util.render_response(result, ctx)
 
 
-@job_execution_collection_group.command(name=cli_util.override('data_catalog.list_job_executions.command_name', 'list-job-executions'), help=u"""Returns a list of job executions for a job.""")
+@job_execution_collection_group.command(name=cli_util.override('data_catalog.list_job_executions.command_name', 'list-job-executions'), help=u"""Returns a list of job executions for a job. \n[Command Reference](listJobExecutions)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--job-key', required=True, help=u"""Unique job key.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATED", "IN_PROGRESS", "INACTIVE", "FAILED", "SUCCEEDED", "CANCELED"]), help=u"""Job execution lifecycle state.""")
@@ -4607,7 +4607,7 @@ def list_job_executions(ctx, from_json, all_pages, page_size, catalog_id, job_ke
     cli_util.render_response(result, ctx)
 
 
-@job_log_collection_group.command(name=cli_util.override('data_catalog.list_job_logs.command_name', 'list-job-logs'), help=u"""Returns a list of job logs.""")
+@job_log_collection_group.command(name=cli_util.override('data_catalog.list_job_logs.command_name', 'list-job-logs'), help=u"""Returns a list of job logs. \n[Command Reference](listJobLogs)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--job-key', required=True, help=u"""Unique job key.""")
 @cli_util.option('--job-execution-key', required=True, help=u"""The key of the job execution.""")
@@ -4699,7 +4699,7 @@ def list_job_logs(ctx, from_json, all_pages, page_size, catalog_id, job_key, job
     cli_util.render_response(result, ctx)
 
 
-@job_metric_collection_group.command(name=cli_util.override('data_catalog.list_job_metrics.command_name', 'list-job-metrics'), help=u"""Returns a list of job metrics.""")
+@job_metric_collection_group.command(name=cli_util.override('data_catalog.list_job_metrics.command_name', 'list-job-metrics'), help=u"""Returns a list of job metrics. \n[Command Reference](listJobMetrics)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--job-key', required=True, help=u"""Unique job key.""")
 @cli_util.option('--job-execution-key', required=True, help=u"""The key of the job execution.""")
@@ -4809,7 +4809,7 @@ def list_job_metrics(ctx, from_json, all_pages, page_size, catalog_id, job_key, 
     cli_util.render_response(result, ctx)
 
 
-@job_collection_group.command(name=cli_util.override('data_catalog.list_jobs.command_name', 'list-jobs'), help=u"""Returns a list of jobs within a data catalog.""")
+@job_collection_group.command(name=cli_util.override('data_catalog.list_jobs.command_name', 'list-jobs'), help=u"""Returns a list of jobs within a data catalog. \n[Command Reference](listJobs)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given. The match is not case sensitive.""")
 @cli_util.option('--display-name-contains', help=u"""A filter to return only resources that match display name pattern given. The match is not case sensitive. For Example : /folders?displayNameContains=Cu.* The above would match all folders with display name that starts with \"Cu\".""")
@@ -4917,7 +4917,7 @@ def list_jobs(ctx, from_json, all_pages, page_size, catalog_id, display_name, di
     cli_util.render_response(result, ctx)
 
 
-@term_group.command(name=cli_util.override('data_catalog.list_tags.command_name', 'list-tags'), help=u"""Returns a list of all user created tags in the system.""")
+@term_group.command(name=cli_util.override('data_catalog.list_tags.command_name', 'list-tags'), help=u"""Returns a list of all user created tags in the system. \n[Command Reference](listTags)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given. The match is not case sensitive.""")
 @cli_util.option('--display-name-contains', help=u"""A filter to return only resources that match display name pattern given. The match is not case sensitive. For Example : /folders?displayNameContains=Cu.* The above would match all folders with display name that starts with \"Cu\".""")
@@ -4986,7 +4986,7 @@ def list_tags(ctx, from_json, all_pages, page_size, catalog_id, display_name, di
     cli_util.render_response(result, ctx)
 
 
-@term_relationship_group.command(name=cli_util.override('data_catalog.list_term_relationships.command_name', 'list'), help=u"""Returns a list of all term relationships within a glossary.""")
+@term_relationship_group.command(name=cli_util.override('data_catalog.list_term_relationships.command_name', 'list'), help=u"""Returns a list of all term relationships within a glossary. \n[Command Reference](listTermRelationships)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--glossary-key', required=True, help=u"""Unique glossary key.""")
 @cli_util.option('--term-key', required=True, help=u"""Unique glossary term key.""")
@@ -5069,7 +5069,7 @@ def list_term_relationships(ctx, from_json, all_pages, page_size, catalog_id, gl
     cli_util.render_response(result, ctx)
 
 
-@term_group.command(name=cli_util.override('data_catalog.list_terms.command_name', 'list'), help=u"""Returns a list of all terms within a glossary.""")
+@term_group.command(name=cli_util.override('data_catalog.list_terms.command_name', 'list'), help=u"""Returns a list of all terms within a glossary. \n[Command Reference](listTerms)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--glossary-key', required=True, help=u"""Unique glossary key.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given. The match is not case sensitive.""")
@@ -5157,7 +5157,7 @@ def list_terms(ctx, from_json, all_pages, page_size, catalog_id, glossary_key, d
     cli_util.render_response(result, ctx)
 
 
-@type_collection_group.command(name=cli_util.override('data_catalog.list_types.command_name', 'list-types'), help=u"""Returns a list of all types within a data catalog.""")
+@type_collection_group.command(name=cli_util.override('data_catalog.list_types.command_name', 'list-types'), help=u"""Returns a list of all types within a data catalog. \n[Command Reference](listTypes)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--name', help=u"""Immutable resource name.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED", "MOVING"]), help=u"""A filter to return only resources that match the specified lifecycle state. The value is case insensitive.""")
@@ -5238,7 +5238,7 @@ def list_types(ctx, from_json, all_pages, page_size, catalog_id, name, lifecycle
     cli_util.render_response(result, ctx)
 
 
-@work_request_error_group.command(name=cli_util.override('data_catalog.list_work_request_errors.command_name', 'list'), help=u"""Returns a (paginated) list of errors for a given work request.""")
+@work_request_error_group.command(name=cli_util.override('data_catalog.list_work_request_errors.command_name', 'list'), help=u"""Returns a (paginated) list of errors for a given work request. \n[Command Reference](listWorkRequestErrors)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The OCID of the asynchronous request.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -5295,7 +5295,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     cli_util.render_response(result, ctx)
 
 
-@work_request_log_group.command(name=cli_util.override('data_catalog.list_work_request_logs.command_name', 'list'), help=u"""Returns a (paginated) list of logs for a given work request.""")
+@work_request_log_group.command(name=cli_util.override('data_catalog.list_work_request_logs.command_name', 'list'), help=u"""Returns a (paginated) list of logs for a given work request. \n[Command Reference](listWorkRequestLogs)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The OCID of the asynchronous request.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -5352,7 +5352,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     cli_util.render_response(result, ctx)
 
 
-@work_request_group.command(name=cli_util.override('data_catalog.list_work_requests.command_name', 'list'), help=u"""Lists the work requests in a compartment.""")
+@work_request_group.command(name=cli_util.override('data_catalog.list_work_requests.command_name', 'list'), help=u"""Lists the work requests in a compartment. \n[Command Reference](listWorkRequests)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where you want to list resources.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -5400,7 +5400,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, pag
     cli_util.render_response(result, ctx)
 
 
-@catalog_group.command(name=cli_util.override('data_catalog.object_stats.command_name', 'object-stats'), help=u"""Returns stats on objects by type in the repository.""")
+@catalog_group.command(name=cli_util.override('data_catalog.object_stats.command_name', 'object-stats'), help=u"""Returns stats on objects by type in the repository. \n[Command Reference](objectStats)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. If no value is specified TIMECREATED is default.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
@@ -5434,7 +5434,7 @@ def object_stats(ctx, from_json, catalog_id, sort_by, sort_order, limit, page):
     cli_util.render_response(result, ctx)
 
 
-@data_asset_group.command(name=cli_util.override('data_catalog.parse_connection.command_name', 'parse-connection'), help=u"""Parse data asset references through connections from this data asset.""")
+@data_asset_group.command(name=cli_util.override('data_catalog.parse_connection.command_name', 'parse-connection'), help=u"""Parse data asset references through connections from this data asset. \n[Command Reference](parseConnection)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--data-asset-key', required=True, help=u"""Unique data asset key.""")
 @cli_util.option('--connection-detail', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -5476,7 +5476,7 @@ def parse_connection(ctx, from_json, catalog_id, data_asset_key, connection_deta
     cli_util.render_response(result, ctx)
 
 
-@search_result_group.command(name=cli_util.override('data_catalog.search_criteria.command_name', 'search-criteria'), help=u"""Returns a list of search results within a data catalog.""")
+@search_result_group.command(name=cli_util.override('data_catalog.search_criteria.command_name', 'search-criteria'), help=u"""Returns a list of search results within a data catalog. \n[Command Reference](searchCriteria)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--query-parameterconflict', help=u"""Search query dsl that defines the query components including fields and predicates.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given. The match is not case sensitive.""")
@@ -5530,7 +5530,7 @@ def search_criteria(ctx, from_json, catalog_id, query_parameterconflict, display
     cli_util.render_response(result, ctx)
 
 
-@connection_group.command(name=cli_util.override('data_catalog.test_connection.command_name', 'test'), help=u"""Test the connection by connecting to the data asset using credentials in the metadata.""")
+@connection_group.command(name=cli_util.override('data_catalog.test_connection.command_name', 'test'), help=u"""Test the connection by connecting to the data asset using credentials in the metadata. \n[Command Reference](testConnection)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--data-asset-key', required=True, help=u"""Unique data asset key.""")
 @cli_util.option('--connection-key', required=True, help=u"""Unique connection key.""")
@@ -5562,7 +5562,7 @@ def test_connection(ctx, from_json, catalog_id, data_asset_key, connection_key):
     cli_util.render_response(result, ctx)
 
 
-@attribute_group.command(name=cli_util.override('data_catalog.update_attribute.command_name', 'update'), help=u"""Updates a specific data asset attribute.""")
+@attribute_group.command(name=cli_util.override('data_catalog.update_attribute.command_name', 'update'), help=u"""Updates a specific data asset attribute. \n[Command Reference](updateAttribute)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--data-asset-key', required=True, help=u"""Unique data asset key.""")
 @cli_util.option('--entity-key', required=True, help=u"""Unique entity key.""")
@@ -5697,7 +5697,7 @@ def update_attribute(ctx, from_json, force, wait_for_state, max_wait_seconds, wa
     cli_util.render_response(result, ctx)
 
 
-@catalog_group.command(name=cli_util.override('data_catalog.update_catalog.command_name', 'update'), help=u"""Updates the data catalog.""")
+@catalog_group.command(name=cli_util.override('data_catalog.update_catalog.command_name', 'update'), help=u"""Updates the data catalog. \n[Command Reference](updateCatalog)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--display-name', help=u"""Data catalog identifier.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type, or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -5769,7 +5769,7 @@ def update_catalog(ctx, from_json, force, wait_for_state, max_wait_seconds, wait
     cli_util.render_response(result, ctx)
 
 
-@catalog_private_endpoint_group.command(name=cli_util.override('data_catalog.update_catalog_private_endpoint.command_name', 'update'), help=u"""Updates the private reverse connection endpoint.""")
+@catalog_private_endpoint_group.command(name=cli_util.override('data_catalog.update_catalog_private_endpoint.command_name', 'update'), help=u"""Updates the private reverse connection endpoint. \n[Command Reference](updateCatalogPrivateEndpoint)""")
 @cli_util.option('--catalog-private-endpoint-id', required=True, help=u"""Unique private reverse connection identifier.""")
 @cli_util.option('--dns-zones', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of DNS zones to be used by the data assets to be harvested. Example: custpvtsubnet.oraclevcn.com for data asset: db.custpvtsubnet.oraclevcn.com""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type, or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -5845,7 +5845,7 @@ def update_catalog_private_endpoint(ctx, from_json, force, wait_for_state, max_w
     cli_util.render_response(result, ctx)
 
 
-@connection_group.command(name=cli_util.override('data_catalog.update_connection.command_name', 'update'), help=u"""Updates a specific connection of a data asset.""")
+@connection_group.command(name=cli_util.override('data_catalog.update_connection.command_name', 'update'), help=u"""Updates a specific connection of a data asset. \n[Command Reference](updateConnection)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--data-asset-key', required=True, help=u"""Unique data asset key.""")
 @cli_util.option('--connection-key', required=True, help=u"""Unique connection key.""")
@@ -5935,7 +5935,7 @@ def update_connection(ctx, from_json, force, wait_for_state, max_wait_seconds, w
     cli_util.render_response(result, ctx)
 
 
-@data_asset_group.command(name=cli_util.override('data_catalog.update_data_asset.command_name', 'update'), help=u"""Updates a specific data asset identified by the given key.""")
+@data_asset_group.command(name=cli_util.override('data_catalog.update_data_asset.command_name', 'update'), help=u"""Updates a specific data asset identified by the given key. \n[Command Reference](updateDataAsset)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--data-asset-key', required=True, help=u"""Unique data asset key.""")
 @cli_util.option('--display-name', help=u"""A user-friendly display name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
@@ -6012,7 +6012,7 @@ def update_data_asset(ctx, from_json, force, wait_for_state, max_wait_seconds, w
     cli_util.render_response(result, ctx)
 
 
-@entity_group.command(name=cli_util.override('data_catalog.update_entity.command_name', 'update'), help=u"""Updates a specific data entity.""")
+@entity_group.command(name=cli_util.override('data_catalog.update_entity.command_name', 'update'), help=u"""Updates a specific data entity. \n[Command Reference](updateEntity)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--data-asset-key', required=True, help=u"""Unique data asset key.""")
 @cli_util.option('--entity-key', required=True, help=u"""Unique entity key.""")
@@ -6118,7 +6118,7 @@ def update_entity(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_
     cli_util.render_response(result, ctx)
 
 
-@folder_group.command(name=cli_util.override('data_catalog.update_folder.command_name', 'update'), help=u"""Updates a specific folder of a data asset.""")
+@folder_group.command(name=cli_util.override('data_catalog.update_folder.command_name', 'update'), help=u"""Updates a specific folder of a data asset. \n[Command Reference](updateFolder)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--data-asset-key', required=True, help=u"""Unique data asset key.""")
 @cli_util.option('--folder-key', required=True, help=u"""Unique folder key.""")
@@ -6216,7 +6216,7 @@ def update_folder(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_
     cli_util.render_response(result, ctx)
 
 
-@glossary_group.command(name=cli_util.override('data_catalog.update_glossary.command_name', 'update'), help=u"""Updates a specific glossary identified by the given key.""")
+@glossary_group.command(name=cli_util.override('data_catalog.update_glossary.command_name', 'update'), help=u"""Updates a specific glossary identified by the given key. \n[Command Reference](updateGlossary)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--glossary-key', required=True, help=u"""Unique glossary key.""")
 @cli_util.option('--display-name', help=u"""A user-friendly display name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
@@ -6292,7 +6292,7 @@ def update_glossary(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
     cli_util.render_response(result, ctx)
 
 
-@job_group.command(name=cli_util.override('data_catalog.update_job.command_name', 'update'), help=u"""Updates a specific job identified by the given key.""")
+@job_group.command(name=cli_util.override('data_catalog.update_job.command_name', 'update'), help=u"""Updates a specific job identified by the given key. \n[Command Reference](updateJob)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--job-key', required=True, help=u"""Unique job key.""")
 @cli_util.option('--display-name', help=u"""A user-friendly display name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
@@ -6376,7 +6376,7 @@ def update_job(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
     cli_util.render_response(result, ctx)
 
 
-@job_definition_group.command(name=cli_util.override('data_catalog.update_job_definition.command_name', 'update'), help=u"""Update a specific job definition identified by the given key.""")
+@job_definition_group.command(name=cli_util.override('data_catalog.update_job_definition.command_name', 'update'), help=u"""Update a specific job definition identified by the given key. \n[Command Reference](updateJobDefinition)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--job-definition-key', required=True, help=u"""Unique job definition key.""")
 @cli_util.option('--display-name', help=u"""A user-friendly display name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
@@ -6473,7 +6473,7 @@ def update_job_definition(ctx, from_json, force, wait_for_state, max_wait_second
     cli_util.render_response(result, ctx)
 
 
-@term_group.command(name=cli_util.override('data_catalog.update_term.command_name', 'update'), help=u"""Updates a specific glossary term.""")
+@term_group.command(name=cli_util.override('data_catalog.update_term.command_name', 'update'), help=u"""Updates a specific glossary term. \n[Command Reference](updateTerm)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--glossary-key', required=True, help=u"""Unique glossary key.""")
 @cli_util.option('--term-key', required=True, help=u"""Unique glossary term key.""")
@@ -6558,7 +6558,7 @@ def update_term(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
     cli_util.render_response(result, ctx)
 
 
-@term_relationship_group.command(name=cli_util.override('data_catalog.update_term_relationship.command_name', 'update'), help=u"""Updates a specific glossary term relationship.""")
+@term_relationship_group.command(name=cli_util.override('data_catalog.update_term_relationship.command_name', 'update'), help=u"""Updates a specific glossary term relationship. \n[Command Reference](updateTermRelationship)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--glossary-key', required=True, help=u"""Unique glossary key.""")
 @cli_util.option('--term-key', required=True, help=u"""Unique glossary term key.""")
@@ -6636,7 +6636,7 @@ def update_term_relationship(ctx, from_json, wait_for_state, max_wait_seconds, w
     cli_util.render_response(result, ctx)
 
 
-@connection_group.command(name=cli_util.override('data_catalog.upload_credentials.command_name', 'upload-credentials'), help=u"""Upload connection credentails and metadata for this connection.""")
+@connection_group.command(name=cli_util.override('data_catalog.upload_credentials.command_name', 'upload-credentials'), help=u"""Upload connection credentails and metadata for this connection. \n[Command Reference](uploadCredentials)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--data-asset-key', required=True, help=u"""Unique data asset key.""")
 @cli_util.option('--connection-key', required=True, help=u"""Unique connection key.""")
@@ -6707,7 +6707,7 @@ def upload_credentials(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     cli_util.render_response(result, ctx)
 
 
-@catalog_group.command(name=cli_util.override('data_catalog.users.command_name', 'users'), help=u"""Returns active users in the system.""")
+@catalog_group.command(name=cli_util.override('data_catalog.users.command_name', 'users'), help=u"""Returns active users in the system. \n[Command Reference](users)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. If no value is specified TIMECREATED is default.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
@@ -6741,7 +6741,7 @@ def users(ctx, from_json, catalog_id, sort_by, sort_order, limit, page):
     cli_util.render_response(result, ctx)
 
 
-@data_asset_group.command(name=cli_util.override('data_catalog.validate_connection.command_name', 'validate-connection'), help=u"""Validate connection by connecting to the data asset using credentials in metadata.""")
+@data_asset_group.command(name=cli_util.override('data_catalog.validate_connection.command_name', 'validate-connection'), help=u"""Validate connection by connecting to the data asset using credentials in metadata. \n[Command Reference](validateConnection)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--data-asset-key', required=True, help=u"""Unique data asset key.""")
 @cli_util.option('--connection-detail', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)

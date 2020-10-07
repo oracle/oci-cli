@@ -45,7 +45,7 @@ work_requests_root_group.add_command(work_request_log_entry_group)
 work_requests_root_group.add_command(work_request_group)
 
 
-@work_request_group.command(name=cli_util.override('work_requests.get_work_request.command_name', 'get'), help=u"""Gets the status of the work request with the given ID.""")
+@work_request_group.command(name=cli_util.override('work_requests.get_work_request.command_name', 'get'), help=u"""Gets the status of the work request with the given ID. \n[Command Reference](getWorkRequest)""")
 @cli_util.option('--work-request-id', required=True, help=u"""the ID of the WorkRequest""")
 @cli_util.option('--if-none-match', help=u"""For conditional requests. In the GET call for a resource, set the `If-None-Match` header to the value of the ETag from a previous GET (or POST or PUT) response for that resource. The server will return with either a 304 Not Modified response if the resource has not changed, or a 200 OK response with the updated representation.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -70,7 +70,7 @@ def get_work_request(ctx, from_json, work_request_id, if_none_match):
     cli_util.render_response(result, ctx)
 
 
-@work_request_error_group.command(name=cli_util.override('work_requests.list_work_request_errors.command_name', 'list'), help=u"""Return a (paginated) list of errors for a given work request.""")
+@work_request_error_group.command(name=cli_util.override('work_requests.list_work_request_errors.command_name', 'list'), help=u"""Return a (paginated) list of errors for a given work request. \n[Command Reference](listWorkRequestErrors)""")
 @cli_util.option('--work-request-id', required=True, help=u"""the ID of the WorkRequest""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated list call. For information about pagination, see [List Pagination].""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` or `opc-prev-page` response header from the previous list call. For information about pagination, see [List Pagination].""")
@@ -121,7 +121,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     cli_util.render_response(result, ctx)
 
 
-@work_request_log_entry_group.command(name=cli_util.override('work_requests.list_work_request_logs.command_name', 'list-work-request-logs'), help=u"""Return a (paginated) list of logs for a given work request.""")
+@work_request_log_entry_group.command(name=cli_util.override('work_requests.list_work_request_logs.command_name', 'list-work-request-logs'), help=u"""Return a (paginated) list of logs for a given work request. \n[Command Reference](listWorkRequestLogs)""")
 @cli_util.option('--work-request-id', required=True, help=u"""the ID of the WorkRequest""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated list call. For information about pagination, see [List Pagination].""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` or `opc-prev-page` response header from the previous list call. For information about pagination, see [List Pagination].""")
@@ -172,7 +172,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     cli_util.render_response(result, ctx)
 
 
-@work_request_group.command(name=cli_util.override('work_requests.list_work_requests.command_name', 'list'), help=u"""Lists the work requests in a specified compartment.""")
+@work_request_group.command(name=cli_util.override('work_requests.list_work_requests.command_name', 'list'), help=u"""Lists the work requests in a specified compartment. \n[Command Reference](listWorkRequests)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["ID", "OPERATION_TYPE", "STATUS", "TIME_ACCEPTED", "TIME_STARTED", "TIME_FINISHED"]), help=u"""The optional field to sort the results by.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use (ASC or DESC).""")

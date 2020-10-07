@@ -86,7 +86,7 @@ fs_root_group.add_command(export_group)
 fs_root_group.add_command(snapshot_group)
 
 
-@file_system_group.command(name=cli_util.override('fs.change_file_system_compartment.command_name', 'change-compartment'), help=u"""Moves a file system and its associated snapshots into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]""")
+@file_system_group.command(name=cli_util.override('fs.change_file_system_compartment.command_name', 'change-compartment'), help=u"""Moves a file system and its associated snapshots into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment] \n[Command Reference](changeFileSystemCompartment)""")
 @cli_util.option('--file-system-id', required=True, help=u"""The OCID of the file system.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the file system to.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -117,7 +117,7 @@ def change_file_system_compartment(ctx, from_json, file_system_id, compartment_i
     cli_util.render_response(result, ctx)
 
 
-@mount_target_group.command(name=cli_util.override('fs.change_mount_target_compartment.command_name', 'change-compartment'), help=u"""Moves a mount target and its associated export set into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]""")
+@mount_target_group.command(name=cli_util.override('fs.change_mount_target_compartment.command_name', 'change-compartment'), help=u"""Moves a mount target and its associated export set into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment] \n[Command Reference](changeMountTargetCompartment)""")
 @cli_util.option('--mount-target-id', required=True, help=u"""The OCID of the mount target.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the mount target to.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -148,7 +148,7 @@ def change_mount_target_compartment(ctx, from_json, mount_target_id, compartment
     cli_util.render_response(result, ctx)
 
 
-@export_group.command(name=cli_util.override('fs.create_export.command_name', 'create'), help=u"""Creates a new export in the specified export set, path, and file system.""")
+@export_group.command(name=cli_util.override('fs.create_export.command_name', 'create'), help=u"""Creates a new export in the specified export set, path, and file system. \n[Command Reference](createExport)""")
 @cli_util.option('--export-set-id', required=True, help=u"""The OCID of this export's export set.""")
 @cli_util.option('--file-system-id', required=True, help=u"""The OCID of this export's file system.""")
 @cli_util.option('--path', required=True, help=u"""Path used to access the associated file system.
@@ -229,7 +229,7 @@ For information about Network Security Groups access control, see [Network Secur
 
 For information about availability domains, see [Regions and Availability Domains]. To get a list of availability domains, use the `ListAvailabilityDomains` operation in the Identity and Access Management Service API.
 
-All Oracle Cloud Infrastructure resources, including file systems, get an Oracle-assigned, unique ID called an Oracle Cloud Identifier (OCID).  When you create a resource, you can find its OCID in the response. You can also retrieve a resource's OCID by using a List API operation on that resource type or by viewing the resource in the Console.""")
+All Oracle Cloud Infrastructure resources, including file systems, get an Oracle-assigned, unique ID called an Oracle Cloud Identifier (OCID).  When you create a resource, you can find its OCID in the response. You can also retrieve a resource's OCID by using a List API operation on that resource type or by viewing the resource in the Console. \n[Command Reference](createFileSystem)""")
 @cli_util.option('--availability-domain', required=True, help=u"""The availability domain to create the file system in.
 
 Example: `Uocm:PHX-AD-1`""")
@@ -308,7 +308,7 @@ For information about access control and compartments, see [Overview of the IAM 
 
 For information about availability domains, see [Regions and Availability Domains]. To get a list of availability domains, use the `ListAvailabilityDomains` operation in the Identity and Access Management Service API.
 
-All Oracle Cloud Infrastructure Services resources, including mount targets, get an Oracle-assigned, unique ID called an Oracle Cloud Identifier (OCID).  When you create a resource, you can find its OCID in the response. You can also retrieve a resource's OCID by using a List API operation on that resource type, or by viewing the resource in the Console.""")
+All Oracle Cloud Infrastructure Services resources, including mount targets, get an Oracle-assigned, unique ID called an Oracle Cloud Identifier (OCID).  When you create a resource, you can find its OCID in the response. You can also retrieve a resource's OCID by using a List API operation on that resource type, or by viewing the resource in the Console. \n[Command Reference](createMountTarget)""")
 @cli_util.option('--availability-domain', required=True, help=u"""The availability domain in which to create the mount target.
 
 Example: `Uocm:PHX-AD-1`""")
@@ -395,7 +395,7 @@ def create_mount_target(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     cli_util.render_response(result, ctx)
 
 
-@snapshot_group.command(name=cli_util.override('fs.create_snapshot.command_name', 'create'), help=u"""Creates a new snapshot of the specified file system. You can access the snapshot at `.snapshot/<name>`.""")
+@snapshot_group.command(name=cli_util.override('fs.create_snapshot.command_name', 'create'), help=u"""Creates a new snapshot of the specified file system. You can access the snapshot at `.snapshot/<name>`. \n[Command Reference](createSnapshot)""")
 @cli_util.option('--file-system-id', required=True, help=u"""The OCID of the file system to take a snapshot of.""")
 @cli_util.option('--name', required=True, help=u"""Name of the snapshot. This value is immutable. It must also be unique with respect to all other non-DELETED snapshots on the associated file system.
 
@@ -458,7 +458,7 @@ def create_snapshot(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
     cli_util.render_response(result, ctx)
 
 
-@export_group.command(name=cli_util.override('fs.delete_export.command_name', 'delete'), help=u"""Deletes the specified export.""")
+@export_group.command(name=cli_util.override('fs.delete_export.command_name', 'delete'), help=u"""Deletes the specified export. \n[Command Reference](deleteExport)""")
 @cli_util.option('--export-id', required=True, help=u"""The OCID of the export.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -522,7 +522,7 @@ def delete_export(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
     cli_util.render_response(result, ctx)
 
 
-@file_system_group.command(name=cli_util.override('fs.delete_file_system.command_name', 'delete'), help=u"""Deletes the specified file system. Before you delete the file system, verify that no remaining export resources still reference it. Deleting a file system also deletes all of its snapshots.""")
+@file_system_group.command(name=cli_util.override('fs.delete_file_system.command_name', 'delete'), help=u"""Deletes the specified file system. Before you delete the file system, verify that no remaining export resources still reference it. Deleting a file system also deletes all of its snapshots. \n[Command Reference](deleteFileSystem)""")
 @cli_util.option('--file-system-id', required=True, help=u"""The OCID of the file system.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -586,7 +586,7 @@ def delete_file_system(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     cli_util.render_response(result, ctx)
 
 
-@mount_target_group.command(name=cli_util.override('fs.delete_mount_target.command_name', 'delete'), help=u"""Deletes the specified mount target. This operation also deletes the mount target's VNICs.""")
+@mount_target_group.command(name=cli_util.override('fs.delete_mount_target.command_name', 'delete'), help=u"""Deletes the specified mount target. This operation also deletes the mount target's VNICs. \n[Command Reference](deleteMountTarget)""")
 @cli_util.option('--mount-target-id', required=True, help=u"""The OCID of the mount target.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -650,7 +650,7 @@ def delete_mount_target(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     cli_util.render_response(result, ctx)
 
 
-@snapshot_group.command(name=cli_util.override('fs.delete_snapshot.command_name', 'delete'), help=u"""Deletes the specified snapshot.""")
+@snapshot_group.command(name=cli_util.override('fs.delete_snapshot.command_name', 'delete'), help=u"""Deletes the specified snapshot. \n[Command Reference](deleteSnapshot)""")
 @cli_util.option('--snapshot-id', required=True, help=u"""The OCID of the snapshot.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -714,7 +714,7 @@ def delete_snapshot(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
     cli_util.render_response(result, ctx)
 
 
-@export_group.command(name=cli_util.override('fs.get_export.command_name', 'get'), help=u"""Gets the specified export's information.""")
+@export_group.command(name=cli_util.override('fs.get_export.command_name', 'get'), help=u"""Gets the specified export's information. \n[Command Reference](getExport)""")
 @cli_util.option('--export-id', required=True, help=u"""The OCID of the export.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -736,7 +736,7 @@ def get_export(ctx, from_json, export_id):
     cli_util.render_response(result, ctx)
 
 
-@export_set_group.command(name=cli_util.override('fs.get_export_set.command_name', 'get'), help=u"""Gets the specified export set's information.""")
+@export_set_group.command(name=cli_util.override('fs.get_export_set.command_name', 'get'), help=u"""Gets the specified export set's information. \n[Command Reference](getExportSet)""")
 @cli_util.option('--export-set-id', required=True, help=u"""The OCID of the export set.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -758,7 +758,7 @@ def get_export_set(ctx, from_json, export_set_id):
     cli_util.render_response(result, ctx)
 
 
-@file_system_group.command(name=cli_util.override('fs.get_file_system.command_name', 'get'), help=u"""Gets the specified file system's information.""")
+@file_system_group.command(name=cli_util.override('fs.get_file_system.command_name', 'get'), help=u"""Gets the specified file system's information. \n[Command Reference](getFileSystem)""")
 @cli_util.option('--file-system-id', required=True, help=u"""The OCID of the file system.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -780,7 +780,7 @@ def get_file_system(ctx, from_json, file_system_id):
     cli_util.render_response(result, ctx)
 
 
-@mount_target_group.command(name=cli_util.override('fs.get_mount_target.command_name', 'get'), help=u"""Gets the specified mount target's information.""")
+@mount_target_group.command(name=cli_util.override('fs.get_mount_target.command_name', 'get'), help=u"""Gets the specified mount target's information. \n[Command Reference](getMountTarget)""")
 @cli_util.option('--mount-target-id', required=True, help=u"""The OCID of the mount target.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -802,7 +802,7 @@ def get_mount_target(ctx, from_json, mount_target_id):
     cli_util.render_response(result, ctx)
 
 
-@snapshot_group.command(name=cli_util.override('fs.get_snapshot.command_name', 'get'), help=u"""Gets the specified snapshot's information.""")
+@snapshot_group.command(name=cli_util.override('fs.get_snapshot.command_name', 'get'), help=u"""Gets the specified snapshot's information. \n[Command Reference](getSnapshot)""")
 @cli_util.option('--snapshot-id', required=True, help=u"""The OCID of the snapshot.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -824,7 +824,7 @@ def get_snapshot(ctx, from_json, snapshot_id):
     cli_util.render_response(result, ctx)
 
 
-@export_set_group.command(name=cli_util.override('fs.list_export_sets.command_name', 'list'), help=u"""Lists the export set resources in the specified compartment.""")
+@export_set_group.command(name=cli_util.override('fs.list_export_sets.command_name', 'list'), help=u"""Lists the export set resources in the specified compartment. \n[Command Reference](listExportSets)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
 @cli_util.option('--availability-domain', required=True, help=u"""The name of the availability domain.
 
@@ -903,7 +903,7 @@ def list_export_sets(ctx, from_json, all_pages, page_size, compartment_id, avail
     cli_util.render_response(result, ctx)
 
 
-@export_group.command(name=cli_util.override('fs.list_exports.command_name', 'list'), help=u"""Lists export resources by compartment, file system, or export set. You must specify an export set ID, a file system ID, and / or a compartment ID.""")
+@export_group.command(name=cli_util.override('fs.list_exports.command_name', 'list'), help=u"""Lists export resources by compartment, file system, or export set. You must specify an export set ID, a file system ID, and / or a compartment ID. \n[Command Reference](listExports)""")
 @cli_util.option('--compartment-id', help=u"""The OCID of the compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 1000 is the maximum.
 
@@ -974,7 +974,7 @@ def list_exports(ctx, from_json, all_pages, page_size, compartment_id, limit, pa
     cli_util.render_response(result, ctx)
 
 
-@file_system_group.command(name=cli_util.override('fs.list_file_systems.command_name', 'list'), help=u"""Lists the file system resources in the specified compartment.""")
+@file_system_group.command(name=cli_util.override('fs.list_file_systems.command_name', 'list'), help=u"""Lists the file system resources in the specified compartment. \n[Command Reference](listFileSystems)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
 @cli_util.option('--availability-domain', required=True, help=u"""The name of the availability domain.
 
@@ -1053,7 +1053,7 @@ def list_file_systems(ctx, from_json, all_pages, page_size, compartment_id, avai
     cli_util.render_response(result, ctx)
 
 
-@mount_target_group.command(name=cli_util.override('fs.list_mount_targets.command_name', 'list'), help=u"""Lists the mount target resources in the specified compartment.""")
+@mount_target_group.command(name=cli_util.override('fs.list_mount_targets.command_name', 'list'), help=u"""Lists the mount target resources in the specified compartment. \n[Command Reference](listMountTargets)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
 @cli_util.option('--availability-domain', required=True, help=u"""The name of the availability domain.
 
@@ -1135,7 +1135,7 @@ def list_mount_targets(ctx, from_json, all_pages, page_size, compartment_id, ava
     cli_util.render_response(result, ctx)
 
 
-@snapshot_group.command(name=cli_util.override('fs.list_snapshots.command_name', 'list'), help=u"""Lists snapshots of the specified file system.""")
+@snapshot_group.command(name=cli_util.override('fs.list_snapshots.command_name', 'list'), help=u"""Lists snapshots of the specified file system. \n[Command Reference](listSnapshots)""")
 @cli_util.option('--file-system-id', required=True, help=u"""The OCID of the file system.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. 1 is the minimum, 100 is the maximum.
 
@@ -1198,7 +1198,7 @@ def list_snapshots(ctx, from_json, all_pages, page_size, file_system_id, limit, 
     cli_util.render_response(result, ctx)
 
 
-@export_group.command(name=cli_util.override('fs.update_export.command_name', 'update'), help=u"""Updates the specified export's information.""")
+@export_group.command(name=cli_util.override('fs.update_export.command_name', 'update'), help=u"""Updates the specified export's information. \n[Command Reference](updateExport)""")
 @cli_util.option('--export-id', required=True, help=u"""The OCID of the export.""")
 @cli_util.option('--export-options', type=custom_types.CLI_COMPLEX_TYPE, help=u"""New export options for the export.
 
@@ -1268,7 +1268,7 @@ def update_export(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_
     cli_util.render_response(result, ctx)
 
 
-@export_set_group.command(name=cli_util.override('fs.update_export_set.command_name', 'update'), help=u"""Updates the specified export set's information.""")
+@export_set_group.command(name=cli_util.override('fs.update_export_set.command_name', 'update'), help=u"""Updates the specified export set's information. \n[Command Reference](updateExportSet)""")
 @cli_util.option('--export-set-id', required=True, help=u"""The OCID of the export set.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. It does not have to be unique, and it is changeable. Avoid entering confidential information.
 
@@ -1337,7 +1337,7 @@ def update_export_set(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
     cli_util.render_response(result, ctx)
 
 
-@file_system_group.command(name=cli_util.override('fs.update_file_system.command_name', 'update'), help=u"""Updates the specified file system's information. You can use this operation to rename a file system.""")
+@file_system_group.command(name=cli_util.override('fs.update_file_system.command_name', 'update'), help=u"""Updates the specified file system's information. You can use this operation to rename a file system. \n[Command Reference](updateFileSystem)""")
 @cli_util.option('--file-system-id', required=True, help=u"""The OCID of the file system.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. It does not have to be unique, and it is changeable. Avoid entering confidential information.
 
@@ -1417,7 +1417,7 @@ def update_file_system(ctx, from_json, force, wait_for_state, max_wait_seconds, 
     cli_util.render_response(result, ctx)
 
 
-@mount_target_group.command(name=cli_util.override('fs.update_mount_target.command_name', 'update'), help=u"""Updates the specified mount target's information.""")
+@mount_target_group.command(name=cli_util.override('fs.update_mount_target.command_name', 'update'), help=u"""Updates the specified mount target's information. \n[Command Reference](updateMountTarget)""")
 @cli_util.option('--mount-target-id', required=True, help=u"""The OCID of the mount target.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it is changeable. Avoid entering confidential information.
 
@@ -1495,7 +1495,7 @@ def update_mount_target(ctx, from_json, force, wait_for_state, max_wait_seconds,
     cli_util.render_response(result, ctx)
 
 
-@snapshot_group.command(name=cli_util.override('fs.update_snapshot.command_name', 'update'), help=u"""Updates the specified snapshot's information.""")
+@snapshot_group.command(name=cli_util.override('fs.update_snapshot.command_name', 'update'), help=u"""Updates the specified snapshot's information. \n[Command Reference](updateSnapshot)""")
 @cli_util.option('--snapshot-id', required=True, help=u"""The OCID of the snapshot.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair  with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)

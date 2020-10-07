@@ -67,7 +67,7 @@ compute_management_root_group.add_command(cluster_network_group)
 compute_management_root_group.add_command(instance_pool_load_balancer_attachment_group)
 
 
-@instance_pool_group.command(name=cli_util.override('compute_management.attach_load_balancer.command_name', 'attach'), help=u"""Attach a load balancer to the instance pool.""")
+@instance_pool_group.command(name=cli_util.override('compute_management.attach_load_balancer.command_name', 'attach'), help=u"""Attach a load balancer to the instance pool. \n[Command Reference](attachLoadBalancer)""")
 @cli_util.option('--instance-pool-id', required=True, help=u"""The [OCID] of the instance pool.""")
 @cli_util.option('--load-balancer-id', required=True, help=u"""The [OCID] of the load balancer to attach to the instance pool.""")
 @cli_util.option('--backend-set-name', required=True, help=u"""The name of the backend set on the load balancer to add instances to.""")
@@ -131,7 +131,7 @@ def attach_load_balancer(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 
 @cluster_network_group.command(name=cli_util.override('compute_management.change_cluster_network_compartment.command_name', 'change-compartment'), help=u"""Moves a cluster network into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].
 
-When you move a cluster network to a different compartment, associated resources such as the instances in the cluster network, boot volumes, and VNICs are not moved.""")
+When you move a cluster network to a different compartment, associated resources such as the instances in the cluster network, boot volumes, and VNICs are not moved. \n[Command Reference](changeClusterNetworkCompartment)""")
 @cli_util.option('--cluster-network-id', required=True, help=u"""The [OCID] of the cluster network.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -166,7 +166,7 @@ def change_cluster_network_compartment(ctx, from_json, cluster_network_id, compa
 
 When you move an instance configuration to a different compartment, associated resources such as instance pools are not moved.
 
-**Important:** Most of the properties for an existing instance configuration, including the compartment, cannot be modified after you create the instance configuration. Although you can move an instance configuration to a different compartment, you will not be able to use the instance configuration to manage instance pools in the new compartment. If you want to update an instance configuration to point to a different compartment, you should instead create a new instance configuration in the target compartment using [CreateInstanceConfiguration].""")
+**Important:** Most of the properties for an existing instance configuration, including the compartment, cannot be modified after you create the instance configuration. Although you can move an instance configuration to a different compartment, you will not be able to use the instance configuration to manage instance pools in the new compartment. If you want to update an instance configuration to point to a different compartment, you should instead create a new instance configuration in the target compartment using [CreateInstanceConfiguration]. \n[Command Reference](changeInstanceConfigurationCompartment)""")
 @cli_util.option('--instance-configuration-id', required=True, help=u"""The OCID of the instance configuration.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the instance configuration to.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -199,7 +199,7 @@ def change_instance_configuration_compartment(ctx, from_json, instance_configura
 
 @instance_pool_group.command(name=cli_util.override('compute_management.change_instance_pool_compartment.command_name', 'change-compartment'), help=u"""Moves an instance pool into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].
 
-When you move an instance pool to a different compartment, associated resources such as the instances in the pool, boot volumes, VNICs, and autoscaling configurations are not moved.""")
+When you move an instance pool to a different compartment, associated resources such as the instances in the pool, boot volumes, VNICs, and autoscaling configurations are not moved. \n[Command Reference](changeInstancePoolCompartment)""")
 @cli_util.option('--instance-pool-id', required=True, help=u"""The [OCID] of the instance pool.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the instance pool to.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -230,7 +230,7 @@ def change_instance_pool_compartment(ctx, from_json, instance_pool_id, compartme
     cli_util.render_response(result, ctx)
 
 
-@cluster_network_group.command(name=cli_util.override('compute_management.create_cluster_network.command_name', 'create'), help=u"""Creates a cluster network. For more information about cluster networks, see [Managing Cluster Networks].""")
+@cluster_network_group.command(name=cli_util.override('compute_management.create_cluster_network.command_name', 'create'), help=u"""Creates a cluster network. For more information about cluster networks, see [Managing Cluster Networks]. \n[Command Reference](createClusterNetwork)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the cluster network.""")
 @cli_util.option('--instance-pools', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The data to create the instance pools in the cluster network.
 
@@ -300,7 +300,7 @@ def create_cluster_network(ctx, from_json, wait_for_state, max_wait_seconds, wai
     cli_util.render_response(result, ctx)
 
 
-@instance_configuration_group.command(name=cli_util.override('compute_management.create_instance_configuration.command_name', 'create'), help=u"""Creates an instance configuration. An instance configuration is a template that defines the settings to use when creating Compute instances.""")
+@instance_configuration_group.command(name=cli_util.override('compute_management.create_instance_configuration.command_name', 'create'), help=u"""Creates an instance configuration. An instance configuration is a template that defines the settings to use when creating Compute instances. \n[Command Reference](createInstanceConfiguration)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the instance configuration.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
@@ -348,7 +348,7 @@ def create_instance_configuration(ctx, from_json, compartment_id, defined_tags, 
     cli_util.render_response(result, ctx)
 
 
-@instance_configuration_group.command(name=cli_util.override('compute_management.create_instance_configuration_create_instance_configuration_details.command_name', 'create-instance-configuration-create-instance-configuration-details'), help=u"""Creates an instance configuration. An instance configuration is a template that defines the settings to use when creating Compute instances.""")
+@instance_configuration_group.command(name=cli_util.override('compute_management.create_instance_configuration_create_instance_configuration_details.command_name', 'create-instance-configuration-create-instance-configuration-details'), help=u"""Creates an instance configuration. An instance configuration is a template that defines the settings to use when creating Compute instances. \n[Command Reference](createInstanceConfiguration)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the instance configuration.""")
 @cli_util.option('--instance-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
@@ -390,7 +390,7 @@ def create_instance_configuration_create_instance_configuration_details(ctx, fro
     cli_util.render_response(result, ctx)
 
 
-@instance_configuration_group.command(name=cli_util.override('compute_management.create_instance_configuration_create_instance_configuration_from_instance_details.command_name', 'create-instance-configuration-create-instance-configuration-from-instance-details'), help=u"""Creates an instance configuration. An instance configuration is a template that defines the settings to use when creating Compute instances.""")
+@instance_configuration_group.command(name=cli_util.override('compute_management.create_instance_configuration_create_instance_configuration_from_instance_details.command_name', 'create-instance-configuration-create-instance-configuration-from-instance-details'), help=u"""Creates an instance configuration. An instance configuration is a template that defines the settings to use when creating Compute instances. \n[Command Reference](createInstanceConfiguration)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the instance configuration.""")
 @cli_util.option('--instance-id', required=True, help=u"""The [OCID] of the instance to use to create the instance configuration.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
@@ -432,7 +432,7 @@ def create_instance_configuration_create_instance_configuration_from_instance_de
     cli_util.render_response(result, ctx)
 
 
-@instance_pool_group.command(name=cli_util.override('compute_management.create_instance_pool.command_name', 'create'), help=u"""Create an instance pool.""")
+@instance_pool_group.command(name=cli_util.override('compute_management.create_instance_pool.command_name', 'create'), help=u"""Create an instance pool. \n[Command Reference](createInstancePool)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment containing the instance pool.""")
 @cli_util.option('--instance-configuration-id', required=True, help=u"""The [OCID] of the instance configuration associated with the instance pool.""")
 @cli_util.option('--placement-configurations', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The placement configurations for the instance pool. Provide one placement configuration for each availability domain.
@@ -510,7 +510,7 @@ def create_instance_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_
     cli_util.render_response(result, ctx)
 
 
-@instance_configuration_group.command(name=cli_util.override('compute_management.delete_instance_configuration.command_name', 'delete'), help=u"""Deletes an instance configuration.""")
+@instance_configuration_group.command(name=cli_util.override('compute_management.delete_instance_configuration.command_name', 'delete'), help=u"""Deletes an instance configuration. \n[Command Reference](deleteInstanceConfiguration)""")
 @cli_util.option('--instance-configuration-id', required=True, help=u"""The OCID of the instance configuration.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -535,7 +535,7 @@ def delete_instance_configuration(ctx, from_json, instance_configuration_id, if_
     cli_util.render_response(result, ctx)
 
 
-@instance_pool_group.command(name=cli_util.override('compute_management.detach_load_balancer.command_name', 'detach'), help=u"""Detach a load balancer from the instance pool.""")
+@instance_pool_group.command(name=cli_util.override('compute_management.detach_load_balancer.command_name', 'detach'), help=u"""Detach a load balancer from the instance pool. \n[Command Reference](detachLoadBalancer)""")
 @cli_util.option('--instance-pool-id', required=True, help=u"""The [OCID] of the instance pool.""")
 @cli_util.option('--load-balancer-id', required=True, help=u"""The OCID of the load balancer to detach from the instance pool.""")
 @cli_util.option('--backend-set-name', required=True, help=u"""The name of the backend set on the load balancer to detach from the instance pool.""")
@@ -593,7 +593,7 @@ def detach_load_balancer(ctx, from_json, wait_for_state, max_wait_seconds, wait_
     cli_util.render_response(result, ctx)
 
 
-@cluster_network_group.command(name=cli_util.override('compute_management.get_cluster_network.command_name', 'get'), help=u"""Gets information about the specified cluster network.""")
+@cluster_network_group.command(name=cli_util.override('compute_management.get_cluster_network.command_name', 'get'), help=u"""Gets information about the specified cluster network. \n[Command Reference](getClusterNetwork)""")
 @cli_util.option('--cluster-network-id', required=True, help=u"""The [OCID] of the cluster network.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -614,7 +614,7 @@ def get_cluster_network(ctx, from_json, cluster_network_id):
     cli_util.render_response(result, ctx)
 
 
-@instance_configuration_group.command(name=cli_util.override('compute_management.get_instance_configuration.command_name', 'get'), help=u"""Gets the specified instance configuration""")
+@instance_configuration_group.command(name=cli_util.override('compute_management.get_instance_configuration.command_name', 'get'), help=u"""Gets the specified instance configuration \n[Command Reference](getInstanceConfiguration)""")
 @cli_util.option('--instance-configuration-id', required=True, help=u"""The OCID of the instance configuration.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -635,7 +635,7 @@ def get_instance_configuration(ctx, from_json, instance_configuration_id):
     cli_util.render_response(result, ctx)
 
 
-@instance_pool_group.command(name=cli_util.override('compute_management.get_instance_pool.command_name', 'get'), help=u"""Gets the specified instance pool""")
+@instance_pool_group.command(name=cli_util.override('compute_management.get_instance_pool.command_name', 'get'), help=u"""Gets the specified instance pool \n[Command Reference](getInstancePool)""")
 @cli_util.option('--instance-pool-id', required=True, help=u"""The [OCID] of the instance pool.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -656,7 +656,7 @@ def get_instance_pool(ctx, from_json, instance_pool_id):
     cli_util.render_response(result, ctx)
 
 
-@instance_pool_load_balancer_attachment_group.command(name=cli_util.override('compute_management.get_instance_pool_load_balancer_attachment.command_name', 'get'), help=u"""Gets information about a load balancer that is attached to the specified instance pool.""")
+@instance_pool_load_balancer_attachment_group.command(name=cli_util.override('compute_management.get_instance_pool_load_balancer_attachment.command_name', 'get'), help=u"""Gets information about a load balancer that is attached to the specified instance pool. \n[Command Reference](getInstancePoolLoadBalancerAttachment)""")
 @cli_util.option('--instance-pool-id', required=True, help=u"""The [OCID] of the instance pool.""")
 @cli_util.option('--instance-pool-load-balancer-attachment-id', required=True, help=u"""The OCID of the load balancer attachment.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -684,7 +684,7 @@ def get_instance_pool_load_balancer_attachment(ctx, from_json, instance_pool_id,
 
 @instance_group.command(name=cli_util.override('compute_management.launch_instance_configuration.command_name', 'launch-instance-configuration'), help=u"""Launches an instance from an instance configuration.
 
-If the instance configuration does not include all of the parameters that are required to launch an instance, such as the availability domain and subnet ID, you must provide these parameters when you launch an instance from the instance configuration. For more information, see the [InstanceConfiguration] resource.""")
+If the instance configuration does not include all of the parameters that are required to launch an instance, such as the availability domain and subnet ID, you must provide these parameters when you launch an instance from the instance configuration. For more information, see the [InstanceConfiguration] resource. \n[Command Reference](launchInstanceConfiguration)""")
 @cli_util.option('--instance-configuration-id', required=True, help=u"""The OCID of the instance configuration.""")
 @cli_util.option('--instance-type', required=True, help=u"""The type of instance details. Supported instanceType is compute""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -713,7 +713,7 @@ def launch_instance_configuration(ctx, from_json, instance_configuration_id, ins
 
 @instance_group.command(name=cli_util.override('compute_management.launch_instance_configuration_compute_instance_details.command_name', 'launch-instance-configuration-compute-instance-details'), help=u"""Launches an instance from an instance configuration.
 
-If the instance configuration does not include all of the parameters that are required to launch an instance, such as the availability domain and subnet ID, you must provide these parameters when you launch an instance from the instance configuration. For more information, see the [InstanceConfiguration] resource.""")
+If the instance configuration does not include all of the parameters that are required to launch an instance, such as the availability domain and subnet ID, you must provide these parameters when you launch an instance from the instance configuration. For more information, see the [InstanceConfiguration] resource. \n[Command Reference](launchInstanceConfiguration)""")
 @cli_util.option('--instance-configuration-id', required=True, help=u"""The OCID of the instance configuration.""")
 @cli_util.option('--block-volumes', type=custom_types.CLI_COMPLEX_TYPE, help=u"""
 
@@ -756,7 +756,7 @@ def launch_instance_configuration_compute_instance_details(ctx, from_json, insta
     cli_util.render_response(result, ctx)
 
 
-@cluster_network_group.command(name=cli_util.override('compute_management.list_cluster_network_instances.command_name', 'list-cluster-network-instances'), help=u"""Lists the instances in the specified cluster network.""")
+@cluster_network_group.command(name=cli_util.override('compute_management.list_cluster_network_instances.command_name', 'list-cluster-network-instances'), help=u"""Lists the instances in the specified cluster network. \n[Command Reference](listClusterNetworkInstances)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--cluster-network-id', required=True, help=u"""The [OCID] of the cluster network.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
@@ -823,7 +823,7 @@ def list_cluster_network_instances(ctx, from_json, all_pages, page_size, compart
     cli_util.render_response(result, ctx)
 
 
-@cluster_network_group.command(name=cli_util.override('compute_management.list_cluster_networks.command_name', 'list'), help=u"""Lists the cluster networks in the specified compartment.""")
+@cluster_network_group.command(name=cli_util.override('compute_management.list_cluster_networks.command_name', 'list'), help=u"""Lists the cluster networks in the specified compartment. \n[Command Reference](listClusterNetworks)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
@@ -886,7 +886,7 @@ def list_cluster_networks(ctx, from_json, all_pages, page_size, compartment_id, 
     cli_util.render_response(result, ctx)
 
 
-@instance_configuration_group.command(name=cli_util.override('compute_management.list_instance_configurations.command_name', 'list'), help=u"""Lists the instance configurations in the specified compartment.""")
+@instance_configuration_group.command(name=cli_util.override('compute_management.list_instance_configurations.command_name', 'list'), help=u"""Lists the instance configurations in the specified compartment. \n[Command Reference](listInstanceConfigurations)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
@@ -943,7 +943,7 @@ def list_instance_configurations(ctx, from_json, all_pages, page_size, compartme
     cli_util.render_response(result, ctx)
 
 
-@instance_group.command(name=cli_util.override('compute_management.list_instance_pool_instances.command_name', 'list-instance-pool-instances'), help=u"""List the instances in the specified instance pool.""")
+@instance_group.command(name=cli_util.override('compute_management.list_instance_pool_instances.command_name', 'list-instance-pool-instances'), help=u"""List the instances in the specified instance pool. \n[Command Reference](listInstancePoolInstances)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--instance-pool-id', required=True, help=u"""The [OCID] of the instance pool.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
@@ -1010,7 +1010,7 @@ def list_instance_pool_instances(ctx, from_json, all_pages, page_size, compartme
     cli_util.render_response(result, ctx)
 
 
-@instance_pool_group.command(name=cli_util.override('compute_management.list_instance_pools.command_name', 'list'), help=u"""Lists the instance pools in the specified compartment.""")
+@instance_pool_group.command(name=cli_util.override('compute_management.list_instance_pools.command_name', 'list'), help=u"""Lists the instance pools in the specified compartment. \n[Command Reference](listInstancePools)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
@@ -1073,7 +1073,7 @@ def list_instance_pools(ctx, from_json, all_pages, page_size, compartment_id, di
     cli_util.render_response(result, ctx)
 
 
-@instance_pool_group.command(name=cli_util.override('compute_management.reset_instance_pool.command_name', 'reset'), help=u"""Performs the reset (power off and power on) action on the specified instance pool, which performs the action on all the instances in the pool.""")
+@instance_pool_group.command(name=cli_util.override('compute_management.reset_instance_pool.command_name', 'reset'), help=u"""Performs the reset (power off and power on) action on the specified instance pool, which performs the action on all the instances in the pool. \n[Command Reference](resetInstancePool)""")
 @cli_util.option('--instance-pool-id', required=True, help=u"""The [OCID] of the instance pool.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "SCALING", "STARTING", "STOPPING", "TERMINATING", "STOPPED", "TERMINATED", "RUNNING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -1123,7 +1123,7 @@ def reset_instance_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     cli_util.render_response(result, ctx)
 
 
-@instance_pool_group.command(name=cli_util.override('compute_management.softreset_instance_pool.command_name', 'softreset'), help=u"""Performs the softreset (ACPI shutdown and power on) action on the specified instance pool, which performs the action on all the instances in the pool.""")
+@instance_pool_group.command(name=cli_util.override('compute_management.softreset_instance_pool.command_name', 'softreset'), help=u"""Performs the softreset (ACPI shutdown and power on) action on the specified instance pool, which performs the action on all the instances in the pool. \n[Command Reference](softresetInstancePool)""")
 @cli_util.option('--instance-pool-id', required=True, help=u"""The [OCID] of the instance pool.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "SCALING", "STARTING", "STOPPING", "TERMINATING", "STOPPED", "TERMINATED", "RUNNING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -1173,7 +1173,7 @@ def softreset_instance_pool(ctx, from_json, wait_for_state, max_wait_seconds, wa
     cli_util.render_response(result, ctx)
 
 
-@instance_pool_group.command(name=cli_util.override('compute_management.start_instance_pool.command_name', 'start'), help=u"""Performs the start (power on) action on the specified instance pool, which performs the action on all the instances in the pool.""")
+@instance_pool_group.command(name=cli_util.override('compute_management.start_instance_pool.command_name', 'start'), help=u"""Performs the start (power on) action on the specified instance pool, which performs the action on all the instances in the pool. \n[Command Reference](startInstancePool)""")
 @cli_util.option('--instance-pool-id', required=True, help=u"""The [OCID] of the instance pool.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "SCALING", "STARTING", "STOPPING", "TERMINATING", "STOPPED", "TERMINATED", "RUNNING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -1223,7 +1223,7 @@ def start_instance_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     cli_util.render_response(result, ctx)
 
 
-@instance_pool_group.command(name=cli_util.override('compute_management.stop_instance_pool.command_name', 'stop'), help=u"""Performs the stop (power off) action on the specified instance pool, which performs the action on all the instances in the pool.""")
+@instance_pool_group.command(name=cli_util.override('compute_management.stop_instance_pool.command_name', 'stop'), help=u"""Performs the stop (power off) action on the specified instance pool, which performs the action on all the instances in the pool. \n[Command Reference](stopInstancePool)""")
 @cli_util.option('--instance-pool-id', required=True, help=u"""The [OCID] of the instance pool.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "SCALING", "STARTING", "STOPPING", "TERMINATING", "STOPPED", "TERMINATED", "RUNNING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -1275,7 +1275,7 @@ def stop_instance_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
 @cluster_network_group.command(name=cli_util.override('compute_management.terminate_cluster_network.command_name', 'terminate'), help=u"""Terminates the specified cluster network.
 
-When you delete a cluster network, all of its resources are permanently deleted, including associated instances and instance pools.""")
+When you delete a cluster network, all of its resources are permanently deleted, including associated instances and instance pools. \n[Command Reference](terminateClusterNetwork)""")
 @cli_util.option('--cluster-network-id', required=True, help=u"""The [OCID] of the cluster network.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -1342,7 +1342,7 @@ def terminate_cluster_network(ctx, from_json, wait_for_state, max_wait_seconds, 
 
 **Warning:** When you delete an instance pool, the resources that were created by the pool are permanently deleted, including associated instances, attached boot volumes, and block volumes.
 
-If an autoscaling configuration applies to the instance pool, the autoscaling configuration will be deleted asynchronously after the pool is deleted. You can also manually delete the autoscaling configuration using the `DeleteAutoScalingConfiguration` operation in the Autoscaling API.""")
+If an autoscaling configuration applies to the instance pool, the autoscaling configuration will be deleted asynchronously after the pool is deleted. You can also manually delete the autoscaling configuration using the `DeleteAutoScalingConfiguration` operation in the Autoscaling API. \n[Command Reference](terminateInstancePool)""")
 @cli_util.option('--instance-pool-id', required=True, help=u"""The [OCID] of the instance pool.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -1405,7 +1405,7 @@ def terminate_instance_pool(ctx, from_json, wait_for_state, max_wait_seconds, wa
     cli_util.render_response(result, ctx)
 
 
-@cluster_network_group.command(name=cli_util.override('compute_management.update_cluster_network.command_name', 'update'), help=u"""Updates the specified cluster network. The OCID of the cluster network remains the same.""")
+@cluster_network_group.command(name=cli_util.override('compute_management.update_cluster_network.command_name', 'update'), help=u"""Updates the specified cluster network. The OCID of the cluster network remains the same. \n[Command Reference](updateClusterNetwork)""")
 @cli_util.option('--cluster-network-id', required=True, help=u"""The [OCID] of the cluster network.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
@@ -1480,7 +1480,7 @@ def update_cluster_network(ctx, from_json, force, wait_for_state, max_wait_secon
     cli_util.render_response(result, ctx)
 
 
-@instance_configuration_group.command(name=cli_util.override('compute_management.update_instance_configuration.command_name', 'update'), help=u"""Updates the free-form tags, defined tags, and display name of an instance configuration.""")
+@instance_configuration_group.command(name=cli_util.override('compute_management.update_instance_configuration.command_name', 'update'), help=u"""Updates the free-form tags, defined tags, and display name of an instance configuration. \n[Command Reference](updateInstanceConfiguration)""")
 @cli_util.option('--instance-configuration-id', required=True, help=u"""The OCID of the instance configuration.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
@@ -1533,7 +1533,7 @@ def update_instance_configuration(ctx, from_json, force, instance_configuration_
 
 @instance_pool_group.command(name=cli_util.override('compute_management.update_instance_pool.command_name', 'update'), help=u"""Update the specified instance pool.
 
-The OCID of the instance pool remains the same.""")
+The OCID of the instance pool remains the same. \n[Command Reference](updateInstancePool)""")
 @cli_util.option('--instance-pool-id', required=True, help=u"""The [OCID] of the instance pool.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 

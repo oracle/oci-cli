@@ -31,7 +31,7 @@ limits_service_cli.limits_service_group.add_command(quotas_root_group)
 quotas_root_group.add_command(quota_group)
 
 
-@quota_group.command(name=cli_util.override('quotas.create_quota.command_name', 'create'), help=u"""Creates a new quota with the details supplied.""")
+@quota_group.command(name=cli_util.override('quotas.create_quota.command_name', 'create'), help=u"""Creates a new quota with the details supplied. \n[Command Reference](createQuota)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment containing the resource this quota applies to.""")
 @cli_util.option('--description', required=True, help=u"""The description you assign to the quota.""")
 @cli_util.option('--name', required=True, help=u"""The name you assign to the quota during creation. The name must be unique across all quotas in the tenancy and cannot be changed.""")
@@ -94,7 +94,7 @@ def create_quota(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
     cli_util.render_response(result, ctx)
 
 
-@quota_group.command(name=cli_util.override('quotas.delete_quota.command_name', 'delete'), help=u"""Deletes the quota corresponding to the given OCID.""")
+@quota_group.command(name=cli_util.override('quotas.delete_quota.command_name', 'delete'), help=u"""Deletes the quota corresponding to the given OCID. \n[Command Reference](deleteQuota)""")
 @cli_util.option('--quota-id', required=True, help=u"""The OCID of the quota.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -158,7 +158,7 @@ def delete_quota(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
     cli_util.render_response(result, ctx)
 
 
-@quota_group.command(name=cli_util.override('quotas.get_quota.command_name', 'get'), help=u"""Gets the quota for the OCID specified.""")
+@quota_group.command(name=cli_util.override('quotas.get_quota.command_name', 'get'), help=u"""Gets the quota for the OCID specified. \n[Command Reference](getQuota)""")
 @cli_util.option('--quota-id', required=True, help=u"""The OCID of the quota.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -180,7 +180,7 @@ def get_quota(ctx, from_json, quota_id):
     cli_util.render_response(result, ctx)
 
 
-@quota_group.command(name=cli_util.override('quotas.list_quotas.command_name', 'list'), help=u"""Lists all quotas on resources from the given compartment""")
+@quota_group.command(name=cli_util.override('quotas.list_quotas.command_name', 'list'), help=u"""Lists all quotas on resources from the given compartment \n[Command Reference](listQuotas)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the parent compartment (remember that the tenancy is simply the root compartment).""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call.""")
@@ -240,7 +240,7 @@ def list_quotas(ctx, from_json, all_pages, page_size, compartment_id, page, limi
     cli_util.render_response(result, ctx)
 
 
-@quota_group.command(name=cli_util.override('quotas.update_quota.command_name', 'update'), help=u"""Updates the quota corresponding to given OCID with the details supplied.""")
+@quota_group.command(name=cli_util.override('quotas.update_quota.command_name', 'update'), help=u"""Updates the quota corresponding to given OCID with the details supplied. \n[Command Reference](updateQuota)""")
 @cli_util.option('--quota-id', required=True, help=u"""The OCID of the quota.""")
 @cli_util.option('--description', help=u"""The description you assign to the quota.""")
 @cli_util.option('--statements', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of quota statements written in the declarative quota statement language.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)

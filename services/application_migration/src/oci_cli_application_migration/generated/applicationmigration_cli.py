@@ -65,7 +65,7 @@ application_migration_root_group.add_command(source_group)
 application_migration_root_group.add_command(work_request_group)
 
 
-@work_request_group.command(name=cli_util.override('application_migration.cancel_work_request.command_name', 'cancel'), help=u"""Cancels the specified work request""")
+@work_request_group.command(name=cli_util.override('application_migration.cancel_work_request.command_name', 'cancel'), help=u"""Cancels the specified work request \n[Command Reference](cancelWorkRequest)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The OCID of the work request.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the `PUT` or `DELETE` call for a resource, set the `if-match` parameter to the value of the etag from a previous `GET` or `POST` response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -91,7 +91,7 @@ def cancel_work_request(ctx, from_json, work_request_id, if_match):
     cli_util.render_response(result, ctx)
 
 
-@migration_group.command(name=cli_util.override('application_migration.change_migration_compartment.command_name', 'change-compartment'), help=u"""Moves a Migration into a different compartment.""")
+@migration_group.command(name=cli_util.override('application_migration.change_migration_compartment.command_name', 'change-compartment'), help=u"""Moves a Migration into a different compartment. \n[Command Reference](changeMigrationCompartment)""")
 @cli_util.option('--migration-id', required=True, help=u"""The application OCID""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the `PUT` or `DELETE` call for a resource, set the `if-match` parameter to the value of the etag from a previous `GET` or `POST` response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -122,7 +122,7 @@ def change_migration_compartment(ctx, from_json, migration_id, compartment_id, i
     cli_util.render_response(result, ctx)
 
 
-@source_group.command(name=cli_util.override('application_migration.change_source_compartment.command_name', 'change-compartment'), help=u"""Moves a Source into a different compartment.""")
+@source_group.command(name=cli_util.override('application_migration.change_source_compartment.command_name', 'change-compartment'), help=u"""Moves a Source into a different compartment. \n[Command Reference](changeSourceCompartment)""")
 @cli_util.option('--source-id', required=True, help=u"""The source OCID""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resource should be moved.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the `PUT` or `DELETE` call for a resource, set the `if-match` parameter to the value of the etag from a previous `GET` or `POST` response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -153,7 +153,7 @@ def change_source_compartment(ctx, from_json, source_id, compartment_id, if_matc
     cli_util.render_response(result, ctx)
 
 
-@migration_group.command(name=cli_util.override('application_migration.create_migration.command_name', 'create'), help=u"""Creates an application migration in the specified compartment. Specify the compartment using the compartment ID.""")
+@migration_group.command(name=cli_util.override('application_migration.create_migration.command_name', 'create'), help=u"""Creates an application migration in the specified compartment. Specify the compartment using the compartment ID. \n[Command Reference](createMigration)""")
 @cli_util.option('--compartment-id', required=True, help=u"""Unique idenfifier (OCID) for the compartment where the Source is located.""")
 @cli_util.option('--source-id', required=True, help=u"""Unique identifier (OCID) of the application source.""")
 @cli_util.option('--application-name', required=True, help=u"""Name of the application being migrated from the source.""")
@@ -210,7 +210,7 @@ def create_migration(ctx, from_json, compartment_id, source_id, application_name
     cli_util.render_response(result, ctx)
 
 
-@migration_group.command(name=cli_util.override('application_migration.create_migration_oic_discovery_details.command_name', 'create-migration-oic-discovery-details'), help=u"""Creates an application migration in the specified compartment. Specify the compartment using the compartment ID.""")
+@migration_group.command(name=cli_util.override('application_migration.create_migration_oic_discovery_details.command_name', 'create-migration-oic-discovery-details'), help=u"""Creates an application migration in the specified compartment. Specify the compartment using the compartment ID. \n[Command Reference](createMigration)""")
 @cli_util.option('--compartment-id', required=True, help=u"""Unique idenfifier (OCID) for the compartment where the Source is located.""")
 @cli_util.option('--source-id', required=True, help=u"""Unique identifier (OCID) of the application source.""")
 @cli_util.option('--application-name', required=True, help=u"""Name of the application being migrated from the source.""")
@@ -272,7 +272,7 @@ def create_migration_oic_discovery_details(ctx, from_json, compartment_id, sourc
     cli_util.render_response(result, ctx)
 
 
-@migration_group.command(name=cli_util.override('application_migration.create_migration_pcs_discovery_details.command_name', 'create-migration-pcs-discovery-details'), help=u"""Creates an application migration in the specified compartment. Specify the compartment using the compartment ID.""")
+@migration_group.command(name=cli_util.override('application_migration.create_migration_pcs_discovery_details.command_name', 'create-migration-pcs-discovery-details'), help=u"""Creates an application migration in the specified compartment. Specify the compartment using the compartment ID. \n[Command Reference](createMigration)""")
 @cli_util.option('--compartment-id', required=True, help=u"""Unique idenfifier (OCID) for the compartment where the Source is located.""")
 @cli_util.option('--source-id', required=True, help=u"""Unique identifier (OCID) of the application source.""")
 @cli_util.option('--application-name', required=True, help=u"""Name of the application being migrated from the source.""")
@@ -334,7 +334,7 @@ def create_migration_pcs_discovery_details(ctx, from_json, compartment_id, sourc
     cli_util.render_response(result, ctx)
 
 
-@migration_group.command(name=cli_util.override('application_migration.create_migration_ics_discovery_details.command_name', 'create-migration-ics-discovery-details'), help=u"""Creates an application migration in the specified compartment. Specify the compartment using the compartment ID.""")
+@migration_group.command(name=cli_util.override('application_migration.create_migration_ics_discovery_details.command_name', 'create-migration-ics-discovery-details'), help=u"""Creates an application migration in the specified compartment. Specify the compartment using the compartment ID. \n[Command Reference](createMigration)""")
 @cli_util.option('--compartment-id', required=True, help=u"""Unique idenfifier (OCID) for the compartment where the Source is located.""")
 @cli_util.option('--source-id', required=True, help=u"""Unique identifier (OCID) of the application source.""")
 @cli_util.option('--application-name', required=True, help=u"""Name of the application being migrated from the source.""")
@@ -396,7 +396,7 @@ def create_migration_ics_discovery_details(ctx, from_json, compartment_id, sourc
     cli_util.render_response(result, ctx)
 
 
-@migration_group.command(name=cli_util.override('application_migration.create_migration_oac_discovery_details.command_name', 'create-migration-oac-discovery-details'), help=u"""Creates an application migration in the specified compartment. Specify the compartment using the compartment ID.""")
+@migration_group.command(name=cli_util.override('application_migration.create_migration_oac_discovery_details.command_name', 'create-migration-oac-discovery-details'), help=u"""Creates an application migration in the specified compartment. Specify the compartment using the compartment ID. \n[Command Reference](createMigration)""")
 @cli_util.option('--compartment-id', required=True, help=u"""Unique idenfifier (OCID) for the compartment where the Source is located.""")
 @cli_util.option('--source-id', required=True, help=u"""Unique identifier (OCID) of the application source.""")
 @cli_util.option('--application-name', required=True, help=u"""Name of the application being migrated from the source.""")
@@ -458,7 +458,7 @@ def create_migration_oac_discovery_details(ctx, from_json, compartment_id, sourc
     cli_util.render_response(result, ctx)
 
 
-@migration_group.command(name=cli_util.override('application_migration.create_migration_jcs_discovery_details.command_name', 'create-migration-jcs-discovery-details'), help=u"""Creates an application migration in the specified compartment. Specify the compartment using the compartment ID.""")
+@migration_group.command(name=cli_util.override('application_migration.create_migration_jcs_discovery_details.command_name', 'create-migration-jcs-discovery-details'), help=u"""Creates an application migration in the specified compartment. Specify the compartment using the compartment ID. \n[Command Reference](createMigration)""")
 @cli_util.option('--compartment-id', required=True, help=u"""Unique idenfifier (OCID) for the compartment where the Source is located.""")
 @cli_util.option('--source-id', required=True, help=u"""Unique identifier (OCID) of the application source.""")
 @cli_util.option('--application-name', required=True, help=u"""Name of the application being migrated from the source.""")
@@ -520,7 +520,7 @@ def create_migration_jcs_discovery_details(ctx, from_json, compartment_id, sourc
     cli_util.render_response(result, ctx)
 
 
-@migration_group.command(name=cli_util.override('application_migration.create_migration_soacs_discovery_details.command_name', 'create-migration-soacs-discovery-details'), help=u"""Creates an application migration in the specified compartment. Specify the compartment using the compartment ID.""")
+@migration_group.command(name=cli_util.override('application_migration.create_migration_soacs_discovery_details.command_name', 'create-migration-soacs-discovery-details'), help=u"""Creates an application migration in the specified compartment. Specify the compartment using the compartment ID. \n[Command Reference](createMigration)""")
 @cli_util.option('--compartment-id', required=True, help=u"""Unique idenfifier (OCID) for the compartment where the Source is located.""")
 @cli_util.option('--source-id', required=True, help=u"""Unique identifier (OCID) of the application source.""")
 @cli_util.option('--application-name', required=True, help=u"""Name of the application being migrated from the source.""")
@@ -582,7 +582,7 @@ def create_migration_soacs_discovery_details(ctx, from_json, compartment_id, sou
     cli_util.render_response(result, ctx)
 
 
-@source_group.command(name=cli_util.override('application_migration.create_source.command_name', 'create'), help=u"""Creates a migration source in the specified compartment. Specify the compartment using the compartment ID.""")
+@source_group.command(name=cli_util.override('application_migration.create_source.command_name', 'create'), help=u"""Creates a migration source in the specified compartment. Specify the compartment using the compartment ID. \n[Command Reference](createSource)""")
 @cli_util.option('--compartment-id', required=True, help=u"""Unique idenfifier (OCID) for the compartment where the Source is located.""")
 @cli_util.option('--source-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""Human-readable name of the source.""")
@@ -627,7 +627,7 @@ def create_source(ctx, from_json, compartment_id, source_details, display_name, 
     cli_util.render_response(result, ctx)
 
 
-@source_group.command(name=cli_util.override('application_migration.create_source_internal_source_details.command_name', 'create-source-internal-source-details'), help=u"""Creates a migration source in the specified compartment. Specify the compartment using the compartment ID.""")
+@source_group.command(name=cli_util.override('application_migration.create_source_internal_source_details.command_name', 'create-source-internal-source-details'), help=u"""Creates a migration source in the specified compartment. Specify the compartment using the compartment ID. \n[Command Reference](createSource)""")
 @cli_util.option('--compartment-id', required=True, help=u"""Unique idenfifier (OCID) for the compartment where the Source is located.""")
 @cli_util.option('--source-details-account-name', required=True, help=u"""The tradition cloud account name""")
 @cli_util.option('--display-name', help=u"""Human-readable name of the source.""")
@@ -675,7 +675,7 @@ def create_source_internal_source_details(ctx, from_json, compartment_id, source
     cli_util.render_response(result, ctx)
 
 
-@source_group.command(name=cli_util.override('application_migration.create_source_ocic_source_details.command_name', 'create-source-ocic-source-details'), help=u"""Creates a migration source in the specified compartment. Specify the compartment using the compartment ID.""")
+@source_group.command(name=cli_util.override('application_migration.create_source_ocic_source_details.command_name', 'create-source-ocic-source-details'), help=u"""Creates a migration source in the specified compartment. Specify the compartment using the compartment ID. \n[Command Reference](createSource)""")
 @cli_util.option('--compartment-id', required=True, help=u"""Unique idenfifier (OCID) for the compartment where the Source is located.""")
 @cli_util.option('--source-details-region', required=True, help=u"""The Oracle Cloud Infrastructure - Classic region name (e.g. us2-z11 or uscom-central-1)""")
 @cli_util.option('--source-details-compute-account', required=True, help=u"""The compute account id""")
@@ -725,7 +725,7 @@ def create_source_ocic_source_details(ctx, from_json, compartment_id, source_det
     cli_util.render_response(result, ctx)
 
 
-@source_group.command(name=cli_util.override('application_migration.create_source_internal_authorization_details.command_name', 'create-source-internal-authorization-details'), help=u"""Creates a migration source in the specified compartment. Specify the compartment using the compartment ID.""")
+@source_group.command(name=cli_util.override('application_migration.create_source_internal_authorization_details.command_name', 'create-source-internal-authorization-details'), help=u"""Creates a migration source in the specified compartment. Specify the compartment using the compartment ID. \n[Command Reference](createSource)""")
 @cli_util.option('--compartment-id', required=True, help=u"""Unique idenfifier (OCID) for the compartment where the Source is located.""")
 @cli_util.option('--source-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--authorization-details-username', required=True, help=u"""User with Compute Operations role in Oracle Cloud Infrastructure - Classic.""")
@@ -773,7 +773,7 @@ def create_source_internal_authorization_details(ctx, from_json, compartment_id,
     cli_util.render_response(result, ctx)
 
 
-@source_group.command(name=cli_util.override('application_migration.create_source_ocic_authorization_details.command_name', 'create-source-ocic-authorization-details'), help=u"""Creates a migration source in the specified compartment. Specify the compartment using the compartment ID.""")
+@source_group.command(name=cli_util.override('application_migration.create_source_ocic_authorization_details.command_name', 'create-source-ocic-authorization-details'), help=u"""Creates a migration source in the specified compartment. Specify the compartment using the compartment ID. \n[Command Reference](createSource)""")
 @cli_util.option('--compartment-id', required=True, help=u"""Unique idenfifier (OCID) for the compartment where the Source is located.""")
 @cli_util.option('--source-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--authorization-details-username', required=True, help=u"""User with Compute Operations role in Oracle Cloud Infrastructure - Classic.""")
@@ -821,7 +821,7 @@ def create_source_ocic_authorization_details(ctx, from_json, compartment_id, sou
     cli_util.render_response(result, ctx)
 
 
-@migration_group.command(name=cli_util.override('application_migration.delete_migration.command_name', 'delete'), help=u"""Deletes the specified Application object.""")
+@migration_group.command(name=cli_util.override('application_migration.delete_migration.command_name', 'delete'), help=u"""Deletes the specified Application object. \n[Command Reference](deleteMigration)""")
 @cli_util.option('--migration-id', required=True, help=u"""The application OCID""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the `PUT` or `DELETE` call for a resource, set the `if-match` parameter to the value of the etag from a previous `GET` or `POST` response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -847,7 +847,7 @@ def delete_migration(ctx, from_json, migration_id, if_match):
     cli_util.render_response(result, ctx)
 
 
-@source_group.command(name=cli_util.override('application_migration.delete_source.command_name', 'delete'), help=u"""Deletes the specified Source object.""")
+@source_group.command(name=cli_util.override('application_migration.delete_source.command_name', 'delete'), help=u"""Deletes the specified Source object. \n[Command Reference](deleteSource)""")
 @cli_util.option('--source-id', required=True, help=u"""The source OCID""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the `PUT` or `DELETE` call for a resource, set the `if-match` parameter to the value of the etag from a previous `GET` or `POST` response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -873,7 +873,7 @@ def delete_source(ctx, from_json, source_id, if_match):
     cli_util.render_response(result, ctx)
 
 
-@migration_group.command(name=cli_util.override('application_migration.get_migration.command_name', 'get'), help=u"""Gets an application migration using the ID.""")
+@migration_group.command(name=cli_util.override('application_migration.get_migration.command_name', 'get'), help=u"""Gets an application migration using the ID. \n[Command Reference](getMigration)""")
 @cli_util.option('--migration-id', required=True, help=u"""The application OCID""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -895,7 +895,7 @@ def get_migration(ctx, from_json, migration_id):
     cli_util.render_response(result, ctx)
 
 
-@source_group.command(name=cli_util.override('application_migration.get_source.command_name', 'get'), help=u"""Gets a migration source using the source ID.""")
+@source_group.command(name=cli_util.override('application_migration.get_source.command_name', 'get'), help=u"""Gets a migration source using the source ID. \n[Command Reference](getSource)""")
 @cli_util.option('--source-id', required=True, help=u"""The source OCID""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -917,7 +917,7 @@ def get_source(ctx, from_json, source_id):
     cli_util.render_response(result, ctx)
 
 
-@work_request_group.command(name=cli_util.override('application_migration.get_work_request.command_name', 'get'), help=u"""Gets the details of a work request.""")
+@work_request_group.command(name=cli_util.override('application_migration.get_work_request.command_name', 'get'), help=u"""Gets the details of a work request. \n[Command Reference](getWorkRequest)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The OCID of the work request.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -939,7 +939,7 @@ def get_work_request(ctx, from_json, work_request_id):
     cli_util.render_response(result, ctx)
 
 
-@migration_group.command(name=cli_util.override('application_migration.list_migrations.command_name', 'list'), help=u"""Returns a list of migrations in a given compartment.""")
+@migration_group.command(name=cli_util.override('application_migration.list_migrations.command_name', 'list'), help=u"""Returns a list of migrations in a given compartment. \n[Command Reference](listMigrations)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The compartment OCID on which to filter.""")
 @cli_util.option('--id', help=u"""The OCID on which to query for an application.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The number of items returned in a paginated `List` call. For information about pagination, see [List Pagination].""")
@@ -1002,7 +1002,7 @@ def list_migrations(ctx, from_json, all_pages, page_size, compartment_id, id, li
     cli_util.render_response(result, ctx)
 
 
-@source_application_group.command(name=cli_util.override('application_migration.list_source_applications.command_name', 'list'), help=u"""Returns a list of applications running in the source environment. This list is generated dynamically by interrogating the source and changes as applications are started or stopped in that environment.""")
+@source_application_group.command(name=cli_util.override('application_migration.list_source_applications.command_name', 'list'), help=u"""Returns a list of applications running in the source environment. This list is generated dynamically by interrogating the source and changes as applications are started or stopped in that environment. \n[Command Reference](listSourceApplications)""")
 @cli_util.option('--source-id', required=True, help=u"""The source OCID""")
 @cli_util.option('--compartment-id', required=True, help=u"""The compartment OCID on which to filter.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The number of items returned in a paginated `List` call. For information about pagination, see [List Pagination].""")
@@ -1066,7 +1066,7 @@ def list_source_applications(ctx, from_json, all_pages, page_size, source_id, co
     cli_util.render_response(result, ctx)
 
 
-@source_group.command(name=cli_util.override('application_migration.list_sources.command_name', 'list'), help=u"""Returns a list of migration sources in a specified compartment.""")
+@source_group.command(name=cli_util.override('application_migration.list_sources.command_name', 'list'), help=u"""Returns a list of migration sources in a specified compartment. \n[Command Reference](listSources)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The compartment OCID on which to filter.""")
 @cli_util.option('--id', help=u"""The OCID on which to query for a source.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The number of items returned in a paginated `List` call. For information about pagination, see [List Pagination].""")
@@ -1129,7 +1129,7 @@ def list_sources(ctx, from_json, all_pages, page_size, compartment_id, id, limit
     cli_util.render_response(result, ctx)
 
 
-@work_request_error_group.command(name=cli_util.override('application_migration.list_work_request_errors.command_name', 'list'), help=u"""Gets the errors for a work request.""")
+@work_request_error_group.command(name=cli_util.override('application_migration.list_work_request_errors.command_name', 'list'), help=u"""Gets the errors for a work request. \n[Command Reference](listWorkRequestErrors)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The OCID of the work request.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The number of items returned in a paginated `List` call. For information about pagination, see [List Pagination].""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the preceding `List` call. For information about pagination, see [List Pagination].""")
@@ -1183,7 +1183,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     cli_util.render_response(result, ctx)
 
 
-@work_request_log_entry_group.command(name=cli_util.override('application_migration.list_work_request_logs.command_name', 'list-work-request-logs'), help=u"""Gets the logs for a work request.""")
+@work_request_log_entry_group.command(name=cli_util.override('application_migration.list_work_request_logs.command_name', 'list-work-request-logs'), help=u"""Gets the logs for a work request. \n[Command Reference](listWorkRequestLogs)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The OCID of the work request.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The number of items returned in a paginated `List` call. For information about pagination, see [List Pagination].""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the preceding `List` call. For information about pagination, see [List Pagination].""")
@@ -1237,7 +1237,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     cli_util.render_response(result, ctx)
 
 
-@work_request_group.command(name=cli_util.override('application_migration.list_work_requests.command_name', 'list'), help=u"""Lists the work requests in a compartment or for a specified resource.""")
+@work_request_group.command(name=cli_util.override('application_migration.list_work_requests.command_name', 'list'), help=u"""Lists the work requests in a compartment or for a specified resource. \n[Command Reference](listWorkRequests)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The compartment OCID on which to filter.""")
 @cli_util.option('--resource-id', help=u"""The OCID of the resource.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The number of items returned in a paginated `List` call. For information about pagination, see [List Pagination].""")
@@ -1288,7 +1288,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, res
     cli_util.render_response(result, ctx)
 
 
-@migration_group.command(name=cli_util.override('application_migration.migrate_application.command_name', 'migrate-application'), help=u"""Validates target configuration and migrates a PaaS application running in a Source environment into the customers Oracle Cloud Infrastructure tenancy. This an optional action and only required if automatic start of migration was not selected when creating the migration.""")
+@migration_group.command(name=cli_util.override('application_migration.migrate_application.command_name', 'migrate-application'), help=u"""Validates target configuration and migrates a PaaS application running in a Source environment into the customers Oracle Cloud Infrastructure tenancy. This an optional action and only required if automatic start of migration was not selected when creating the migration. \n[Command Reference](migrateApplication)""")
 @cli_util.option('--migration-id', required=True, help=u"""The application OCID""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -1310,7 +1310,7 @@ def migrate_application(ctx, from_json, migration_id):
     cli_util.render_response(result, ctx)
 
 
-@migration_group.command(name=cli_util.override('application_migration.update_migration.command_name', 'update'), help=u"""Update the configuration for an application migration.""")
+@migration_group.command(name=cli_util.override('application_migration.update_migration.command_name', 'update'), help=u"""Update the configuration for an application migration. \n[Command Reference](updateMigration)""")
 @cli_util.option('--migration-id', required=True, help=u"""The application OCID""")
 @cli_util.option('--display-name', help=u"""Human-readable name of the migration.""")
 @cli_util.option('--description', help=u"""Description of the migration.""")
@@ -1376,7 +1376,7 @@ def update_migration(ctx, from_json, force, migration_id, display_name, descript
     cli_util.render_response(result, ctx)
 
 
-@migration_group.command(name=cli_util.override('application_migration.update_migration_oic_discovery_details.command_name', 'update-migration-oic-discovery-details'), help=u"""Update the configuration for an application migration.""")
+@migration_group.command(name=cli_util.override('application_migration.update_migration_oic_discovery_details.command_name', 'update-migration-oic-discovery-details'), help=u"""Update the configuration for an application migration. \n[Command Reference](updateMigration)""")
 @cli_util.option('--migration-id', required=True, help=u"""The application OCID""")
 @cli_util.option('--discovery-details-service-instance-user', required=True, help=u"""The OIC instance admin user""")
 @cli_util.option('--discovery-details-service-instance-password', required=True, help=u"""The OIC instance admin password""")
@@ -1445,7 +1445,7 @@ def update_migration_oic_discovery_details(ctx, from_json, force, migration_id, 
     cli_util.render_response(result, ctx)
 
 
-@migration_group.command(name=cli_util.override('application_migration.update_migration_pcs_discovery_details.command_name', 'update-migration-pcs-discovery-details'), help=u"""Update the configuration for an application migration.""")
+@migration_group.command(name=cli_util.override('application_migration.update_migration_pcs_discovery_details.command_name', 'update-migration-pcs-discovery-details'), help=u"""Update the configuration for an application migration. \n[Command Reference](updateMigration)""")
 @cli_util.option('--migration-id', required=True, help=u"""The application OCID""")
 @cli_util.option('--discovery-details-service-instance-user', required=True, help=u"""The PCS instance admin user""")
 @cli_util.option('--discovery-details-service-instance-password', required=True, help=u"""The PCS instance admin password""")
@@ -1514,7 +1514,7 @@ def update_migration_pcs_discovery_details(ctx, from_json, force, migration_id, 
     cli_util.render_response(result, ctx)
 
 
-@migration_group.command(name=cli_util.override('application_migration.update_migration_ics_discovery_details.command_name', 'update-migration-ics-discovery-details'), help=u"""Update the configuration for an application migration.""")
+@migration_group.command(name=cli_util.override('application_migration.update_migration_ics_discovery_details.command_name', 'update-migration-ics-discovery-details'), help=u"""Update the configuration for an application migration. \n[Command Reference](updateMigration)""")
 @cli_util.option('--migration-id', required=True, help=u"""The application OCID""")
 @cli_util.option('--discovery-details-service-instance-user', required=True, help=u"""The ICS instance admin user""")
 @cli_util.option('--discovery-details-service-instance-password', required=True, help=u"""The ICS instance admin password""")
@@ -1583,7 +1583,7 @@ def update_migration_ics_discovery_details(ctx, from_json, force, migration_id, 
     cli_util.render_response(result, ctx)
 
 
-@migration_group.command(name=cli_util.override('application_migration.update_migration_oac_discovery_details.command_name', 'update-migration-oac-discovery-details'), help=u"""Update the configuration for an application migration.""")
+@migration_group.command(name=cli_util.override('application_migration.update_migration_oac_discovery_details.command_name', 'update-migration-oac-discovery-details'), help=u"""Update the configuration for an application migration. \n[Command Reference](updateMigration)""")
 @cli_util.option('--migration-id', required=True, help=u"""The application OCID""")
 @cli_util.option('--discovery-details-service-instance-user', required=True, help=u"""The OAC instance admin user""")
 @cli_util.option('--discovery-details-service-instance-password', required=True, help=u"""The OAC instance admin password""")
@@ -1652,7 +1652,7 @@ def update_migration_oac_discovery_details(ctx, from_json, force, migration_id, 
     cli_util.render_response(result, ctx)
 
 
-@migration_group.command(name=cli_util.override('application_migration.update_migration_jcs_discovery_details.command_name', 'update-migration-jcs-discovery-details'), help=u"""Update the configuration for an application migration.""")
+@migration_group.command(name=cli_util.override('application_migration.update_migration_jcs_discovery_details.command_name', 'update-migration-jcs-discovery-details'), help=u"""Update the configuration for an application migration. \n[Command Reference](updateMigration)""")
 @cli_util.option('--migration-id', required=True, help=u"""The application OCID""")
 @cli_util.option('--discovery-details-weblogic-user', required=True, help=u"""The JCS instance weblogic admin user""")
 @cli_util.option('--discovery-details-weblogic-password', required=True, help=u"""The JCS instance weblogic admin password""")
@@ -1721,7 +1721,7 @@ def update_migration_jcs_discovery_details(ctx, from_json, force, migration_id, 
     cli_util.render_response(result, ctx)
 
 
-@migration_group.command(name=cli_util.override('application_migration.update_migration_soacs_discovery_details.command_name', 'update-migration-soacs-discovery-details'), help=u"""Update the configuration for an application migration.""")
+@migration_group.command(name=cli_util.override('application_migration.update_migration_soacs_discovery_details.command_name', 'update-migration-soacs-discovery-details'), help=u"""Update the configuration for an application migration. \n[Command Reference](updateMigration)""")
 @cli_util.option('--migration-id', required=True, help=u"""The application OCID""")
 @cli_util.option('--discovery-details-weblogic-user', required=True, help=u"""The SOACS instance weblogic admin user""")
 @cli_util.option('--discovery-details-weblogic-password', required=True, help=u"""The SOACS instance weblogic admin password""")
@@ -1790,7 +1790,7 @@ def update_migration_soacs_discovery_details(ctx, from_json, force, migration_id
     cli_util.render_response(result, ctx)
 
 
-@source_group.command(name=cli_util.override('application_migration.update_source.command_name', 'update'), help=u"""Update source details.""")
+@source_group.command(name=cli_util.override('application_migration.update_source.command_name', 'update'), help=u"""Update source details. \n[Command Reference](updateSource)""")
 @cli_util.option('--source-id', required=True, help=u"""The source OCID""")
 @cli_util.option('--display-name', help=u"""Human-readable name of the source.""")
 @cli_util.option('--description', help=u"""Description of the source.""")
@@ -1848,7 +1848,7 @@ def update_source(ctx, from_json, force, source_id, display_name, description, s
     cli_util.render_response(result, ctx)
 
 
-@source_group.command(name=cli_util.override('application_migration.update_source_internal_source_details.command_name', 'update-source-internal-source-details'), help=u"""Update source details.""")
+@source_group.command(name=cli_util.override('application_migration.update_source_internal_source_details.command_name', 'update-source-internal-source-details'), help=u"""Update source details. \n[Command Reference](updateSource)""")
 @cli_util.option('--source-id', required=True, help=u"""The source OCID""")
 @cli_util.option('--source-details-account-name', required=True, help=u"""The tradition cloud account name""")
 @cli_util.option('--display-name', help=u"""Human-readable name of the source.""")
@@ -1907,7 +1907,7 @@ def update_source_internal_source_details(ctx, from_json, force, source_id, sour
     cli_util.render_response(result, ctx)
 
 
-@source_group.command(name=cli_util.override('application_migration.update_source_ocic_source_details.command_name', 'update-source-ocic-source-details'), help=u"""Update source details.""")
+@source_group.command(name=cli_util.override('application_migration.update_source_ocic_source_details.command_name', 'update-source-ocic-source-details'), help=u"""Update source details. \n[Command Reference](updateSource)""")
 @cli_util.option('--source-id', required=True, help=u"""The source OCID""")
 @cli_util.option('--source-details-region', required=True, help=u"""The Oracle Cloud Infrastructure - Classic region name (e.g. us2-z11 or uscom-central-1)""")
 @cli_util.option('--source-details-compute-account', required=True, help=u"""The compute account id""")
@@ -1968,7 +1968,7 @@ def update_source_ocic_source_details(ctx, from_json, force, source_id, source_d
     cli_util.render_response(result, ctx)
 
 
-@source_group.command(name=cli_util.override('application_migration.update_source_internal_authorization_details.command_name', 'update-source-internal-authorization-details'), help=u"""Update source details.""")
+@source_group.command(name=cli_util.override('application_migration.update_source_internal_authorization_details.command_name', 'update-source-internal-authorization-details'), help=u"""Update source details. \n[Command Reference](updateSource)""")
 @cli_util.option('--source-id', required=True, help=u"""The source OCID""")
 @cli_util.option('--authorization-details-username', required=True, help=u"""User with Compute Operations role in Oracle Cloud Infrastructure - Classic.""")
 @cli_util.option('--authorization-details-password', required=True, help=u"""Password for this user.""")
@@ -2029,7 +2029,7 @@ def update_source_internal_authorization_details(ctx, from_json, force, source_i
     cli_util.render_response(result, ctx)
 
 
-@source_group.command(name=cli_util.override('application_migration.update_source_ocic_authorization_details.command_name', 'update-source-ocic-authorization-details'), help=u"""Update source details.""")
+@source_group.command(name=cli_util.override('application_migration.update_source_ocic_authorization_details.command_name', 'update-source-ocic-authorization-details'), help=u"""Update source details. \n[Command Reference](updateSource)""")
 @cli_util.option('--source-id', required=True, help=u"""The source OCID""")
 @cli_util.option('--authorization-details-username', required=True, help=u"""User with Compute Operations role in Oracle Cloud Infrastructure - Classic.""")
 @cli_util.option('--authorization-details-password', required=True, help=u"""Password for this user.""")

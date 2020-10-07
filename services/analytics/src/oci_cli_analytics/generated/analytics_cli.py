@@ -51,7 +51,7 @@ analytics_root_group.add_command(analytics_instance_group)
 analytics_root_group.add_command(work_request_group)
 
 
-@analytics_instance_group.command(name=cli_util.override('analytics.change_analytics_instance_compartment.command_name', 'change-compartment'), help=u"""Change the compartment of an Analytics instance. The operation is long-running and creates a new WorkRequest.""")
+@analytics_instance_group.command(name=cli_util.override('analytics.change_analytics_instance_compartment.command_name', 'change-compartment'), help=u"""Change the compartment of an Analytics instance. The operation is long-running and creates a new WorkRequest. \n[Command Reference](changeAnalyticsInstanceCompartment)""")
 @cli_util.option('--analytics-instance-id', required=True, help=u"""The OCID of the AnalyticsInstance.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the new compartment.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -108,7 +108,7 @@ def change_analytics_instance_compartment(ctx, from_json, wait_for_state, max_wa
     cli_util.render_response(result, ctx)
 
 
-@analytics_instance_group.command(name=cli_util.override('analytics.change_analytics_instance_network_endpoint.command_name', 'change-analytics-instance-network-endpoint'), help=u"""Change an Analytics instance network endpoint. The operation is long-running and creates a new WorkRequest.""")
+@analytics_instance_group.command(name=cli_util.override('analytics.change_analytics_instance_network_endpoint.command_name', 'change-analytics-instance-network-endpoint'), help=u"""Change an Analytics instance network endpoint. The operation is long-running and creates a new WorkRequest. \n[Command Reference](changeAnalyticsInstanceNetworkEndpoint)""")
 @cli_util.option('--analytics-instance-id', required=True, help=u"""The OCID of the AnalyticsInstance.""")
 @cli_util.option('--network-endpoint-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -165,7 +165,7 @@ def change_analytics_instance_network_endpoint(ctx, from_json, wait_for_state, m
     cli_util.render_response(result, ctx)
 
 
-@analytics_instance_group.command(name=cli_util.override('analytics.change_analytics_instance_network_endpoint_private_endpoint_details.command_name', 'change-analytics-instance-network-endpoint-private-endpoint-details'), help=u"""Change an Analytics instance network endpoint. The operation is long-running and creates a new WorkRequest.""")
+@analytics_instance_group.command(name=cli_util.override('analytics.change_analytics_instance_network_endpoint_private_endpoint_details.command_name', 'change-analytics-instance-network-endpoint-private-endpoint-details'), help=u"""Change an Analytics instance network endpoint. The operation is long-running and creates a new WorkRequest. \n[Command Reference](changeAnalyticsInstanceNetworkEndpoint)""")
 @cli_util.option('--analytics-instance-id', required=True, help=u"""The OCID of the AnalyticsInstance.""")
 @cli_util.option('--network-endpoint-details-vcn-id', required=True, help=u"""The VCN OCID for the private endpoint.""")
 @cli_util.option('--network-endpoint-details-subnet-id', required=True, help=u"""The subnet OCID for the private endpoint.""")
@@ -227,7 +227,7 @@ def change_analytics_instance_network_endpoint_private_endpoint_details(ctx, fro
     cli_util.render_response(result, ctx)
 
 
-@analytics_instance_group.command(name=cli_util.override('analytics.change_analytics_instance_network_endpoint_public_endpoint_details.command_name', 'change-analytics-instance-network-endpoint-public-endpoint-details'), help=u"""Change an Analytics instance network endpoint. The operation is long-running and creates a new WorkRequest.""")
+@analytics_instance_group.command(name=cli_util.override('analytics.change_analytics_instance_network_endpoint_public_endpoint_details.command_name', 'change-analytics-instance-network-endpoint-public-endpoint-details'), help=u"""Change an Analytics instance network endpoint. The operation is long-running and creates a new WorkRequest. \n[Command Reference](changeAnalyticsInstanceNetworkEndpoint)""")
 @cli_util.option('--analytics-instance-id', required=True, help=u"""The OCID of the AnalyticsInstance.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--network-endpoint-details-whitelisted-ips', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Source IP addresses or IP address ranges igress rules.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -295,7 +295,7 @@ def change_analytics_instance_network_endpoint_public_endpoint_details(ctx, from
     cli_util.render_response(result, ctx)
 
 
-@analytics_instance_group.command(name=cli_util.override('analytics.create_analytics_instance.command_name', 'create'), help=u"""Create a new AnalyticsInstance in the specified compartment. The operation is long-running and creates a new WorkRequest.""")
+@analytics_instance_group.command(name=cli_util.override('analytics.create_analytics_instance.command_name', 'create'), help=u"""Create a new AnalyticsInstance in the specified compartment. The operation is long-running and creates a new WorkRequest. \n[Command Reference](createAnalyticsInstance)""")
 @cli_util.option('--name', required=True, help=u"""The name of the Analytics instance. This name must be unique in the tenancy and cannot be changed.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
 @cli_util.option('--feature-set', required=True, type=custom_types.CliCaseInsensitiveChoice(["SELF_SERVICE_ANALYTICS", "ENTERPRISE_ANALYTICS"]), help=u"""Analytics feature set.""")
@@ -380,7 +380,7 @@ def create_analytics_instance(ctx, from_json, wait_for_state, max_wait_seconds, 
     cli_util.render_response(result, ctx)
 
 
-@analytics_instance_group.command(name=cli_util.override('analytics.create_analytics_instance_private_endpoint_details.command_name', 'create-analytics-instance-private-endpoint-details'), help=u"""Create a new AnalyticsInstance in the specified compartment. The operation is long-running and creates a new WorkRequest.""")
+@analytics_instance_group.command(name=cli_util.override('analytics.create_analytics_instance_private_endpoint_details.command_name', 'create-analytics-instance-private-endpoint-details'), help=u"""Create a new AnalyticsInstance in the specified compartment. The operation is long-running and creates a new WorkRequest. \n[Command Reference](createAnalyticsInstance)""")
 @cli_util.option('--name', required=True, help=u"""The name of the Analytics instance. This name must be unique in the tenancy and cannot be changed.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
 @cli_util.option('--feature-set', required=True, type=custom_types.CliCaseInsensitiveChoice(["SELF_SERVICE_ANALYTICS", "ENTERPRISE_ANALYTICS"]), help=u"""Analytics feature set.""")
@@ -468,7 +468,7 @@ def create_analytics_instance_private_endpoint_details(ctx, from_json, wait_for_
     cli_util.render_response(result, ctx)
 
 
-@analytics_instance_group.command(name=cli_util.override('analytics.create_analytics_instance_public_endpoint_details.command_name', 'create-analytics-instance-public-endpoint-details'), help=u"""Create a new AnalyticsInstance in the specified compartment. The operation is long-running and creates a new WorkRequest.""")
+@analytics_instance_group.command(name=cli_util.override('analytics.create_analytics_instance_public_endpoint_details.command_name', 'create-analytics-instance-public-endpoint-details'), help=u"""Create a new AnalyticsInstance in the specified compartment. The operation is long-running and creates a new WorkRequest. \n[Command Reference](createAnalyticsInstance)""")
 @cli_util.option('--name', required=True, help=u"""The name of the Analytics instance. This name must be unique in the tenancy and cannot be changed.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
 @cli_util.option('--feature-set', required=True, type=custom_types.CliCaseInsensitiveChoice(["SELF_SERVICE_ANALYTICS", "ENTERPRISE_ANALYTICS"]), help=u"""Analytics feature set.""")
@@ -562,7 +562,7 @@ def create_analytics_instance_public_endpoint_details(ctx, from_json, wait_for_s
     cli_util.render_response(result, ctx)
 
 
-@analytics_instance_group.command(name=cli_util.override('analytics.delete_analytics_instance.command_name', 'delete'), help=u"""Terminates the specified Analytics instance. The operation is long-running and creates a new WorkRequest.""")
+@analytics_instance_group.command(name=cli_util.override('analytics.delete_analytics_instance.command_name', 'delete'), help=u"""Terminates the specified Analytics instance. The operation is long-running and creates a new WorkRequest. \n[Command Reference](deleteAnalyticsInstance)""")
 @cli_util.option('--analytics-instance-id', required=True, help=u"""The OCID of the AnalyticsInstance.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -614,7 +614,7 @@ def delete_analytics_instance(ctx, from_json, wait_for_state, max_wait_seconds, 
     cli_util.render_response(result, ctx)
 
 
-@work_request_group.command(name=cli_util.override('analytics.delete_work_request.command_name', 'delete'), help=u"""Cancel a work request that has not started yet.""")
+@work_request_group.command(name=cli_util.override('analytics.delete_work_request.command_name', 'delete'), help=u"""Cancel a work request that has not started yet. \n[Command Reference](deleteWorkRequest)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The OCID of the work request.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -640,7 +640,7 @@ def delete_work_request(ctx, from_json, work_request_id, if_match):
     cli_util.render_response(result, ctx)
 
 
-@analytics_instance_group.command(name=cli_util.override('analytics.get_analytics_instance.command_name', 'get'), help=u"""Info for a specific Analytics instance.""")
+@analytics_instance_group.command(name=cli_util.override('analytics.get_analytics_instance.command_name', 'get'), help=u"""Info for a specific Analytics instance. \n[Command Reference](getAnalyticsInstance)""")
 @cli_util.option('--analytics-instance-id', required=True, help=u"""The OCID of the AnalyticsInstance.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -662,7 +662,7 @@ def get_analytics_instance(ctx, from_json, analytics_instance_id):
     cli_util.render_response(result, ctx)
 
 
-@work_request_group.command(name=cli_util.override('analytics.get_work_request.command_name', 'get'), help=u"""Get the details of a work request.""")
+@work_request_group.command(name=cli_util.override('analytics.get_work_request.command_name', 'get'), help=u"""Get the details of a work request. \n[Command Reference](getWorkRequest)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The OCID of the work request.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -684,7 +684,7 @@ def get_work_request(ctx, from_json, work_request_id):
     cli_util.render_response(result, ctx)
 
 
-@analytics_instance_group.command(name=cli_util.override('analytics.list_analytics_instances.command_name', 'list'), help=u"""List Analytics instances.""")
+@analytics_instance_group.command(name=cli_util.override('analytics.list_analytics_instances.command_name', 'list'), help=u"""List Analytics instances. \n[Command Reference](listAnalyticsInstances)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
 @cli_util.option('--name', help=u"""A filter to return only resources that match the given name exactly.""")
 @cli_util.option('--capacity-type', type=custom_types.CliCaseInsensitiveChoice(["OLPU_COUNT", "USER_COUNT"]), help=u"""A filter to only return resources matching the capacity type enum. Values are case-insensitive.""")
@@ -752,7 +752,7 @@ def list_analytics_instances(ctx, from_json, all_pages, page_size, compartment_i
     cli_util.render_response(result, ctx)
 
 
-@work_request_error_group.command(name=cli_util.override('analytics.list_work_request_errors.command_name', 'list'), help=u"""Get the errors of a work request.""")
+@work_request_error_group.command(name=cli_util.override('analytics.list_work_request_errors.command_name', 'list'), help=u"""Get the errors of a work request. \n[Command Reference](listWorkRequestErrors)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The OCID of the work request.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
@@ -805,7 +805,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     cli_util.render_response(result, ctx)
 
 
-@work_request_log_group.command(name=cli_util.override('analytics.list_work_request_logs.command_name', 'list'), help=u"""Get the logs of a work request.""")
+@work_request_log_group.command(name=cli_util.override('analytics.list_work_request_logs.command_name', 'list'), help=u"""Get the logs of a work request. \n[Command Reference](listWorkRequestLogs)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The OCID of the work request.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
@@ -858,7 +858,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     cli_util.render_response(result, ctx)
 
 
-@work_request_group.command(name=cli_util.override('analytics.list_work_requests.command_name', 'list'), help=u"""List all work requests in a compartment.""")
+@work_request_group.command(name=cli_util.override('analytics.list_work_requests.command_name', 'list'), help=u"""List all work requests in a compartment. \n[Command Reference](listWorkRequests)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
 @cli_util.option('--resource-id', help=u"""The OCID of the resource associated with a work request.""")
 @cli_util.option('--resource-type', type=custom_types.CliCaseInsensitiveChoice(["ANALYTICS_INSTANCE"]), help=u"""Type of the resource associated with a work request""")
@@ -923,7 +923,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, res
     cli_util.render_response(result, ctx)
 
 
-@analytics_instance_group.command(name=cli_util.override('analytics.scale_analytics_instance.command_name', 'scale'), help=u"""Scale an Analytics instance up or down. The operation is long-running and creates a new WorkRequest.""")
+@analytics_instance_group.command(name=cli_util.override('analytics.scale_analytics_instance.command_name', 'scale'), help=u"""Scale an Analytics instance up or down. The operation is long-running and creates a new WorkRequest. \n[Command Reference](scaleAnalyticsInstance)""")
 @cli_util.option('--analytics-instance-id', required=True, help=u"""The OCID of the AnalyticsInstance.""")
 @cli_util.option('--capacity', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -980,7 +980,7 @@ def scale_analytics_instance(ctx, from_json, wait_for_state, max_wait_seconds, w
     cli_util.render_response(result, ctx)
 
 
-@analytics_instance_group.command(name=cli_util.override('analytics.start_analytics_instance.command_name', 'start'), help=u"""Starts the specified Analytics instance. The operation is long-running and creates a new WorkRequest.""")
+@analytics_instance_group.command(name=cli_util.override('analytics.start_analytics_instance.command_name', 'start'), help=u"""Starts the specified Analytics instance. The operation is long-running and creates a new WorkRequest. \n[Command Reference](startAnalyticsInstance)""")
 @cli_util.option('--analytics-instance-id', required=True, help=u"""The OCID of the AnalyticsInstance.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -1031,7 +1031,7 @@ def start_analytics_instance(ctx, from_json, wait_for_state, max_wait_seconds, w
     cli_util.render_response(result, ctx)
 
 
-@analytics_instance_group.command(name=cli_util.override('analytics.stop_analytics_instance.command_name', 'stop'), help=u"""Stop the specified Analytics instance. The operation is long-running and creates a new WorkRequest.""")
+@analytics_instance_group.command(name=cli_util.override('analytics.stop_analytics_instance.command_name', 'stop'), help=u"""Stop the specified Analytics instance. The operation is long-running and creates a new WorkRequest. \n[Command Reference](stopAnalyticsInstance)""")
 @cli_util.option('--analytics-instance-id', required=True, help=u"""The OCID of the AnalyticsInstance.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -1082,7 +1082,7 @@ def stop_analytics_instance(ctx, from_json, wait_for_state, max_wait_seconds, wa
     cli_util.render_response(result, ctx)
 
 
-@analytics_instance_group.command(name=cli_util.override('analytics.update_analytics_instance.command_name', 'update'), help=u"""Updates certain fields of an Analytics instance. Fields that are not provided in the request will not be updated.""")
+@analytics_instance_group.command(name=cli_util.override('analytics.update_analytics_instance.command_name', 'update'), help=u"""Updates certain fields of an Analytics instance. Fields that are not provided in the request will not be updated. \n[Command Reference](updateAnalyticsInstance)""")
 @cli_util.option('--analytics-instance-id', required=True, help=u"""The OCID of the AnalyticsInstance.""")
 @cli_util.option('--description', help=u"""Optional description.""")
 @cli_util.option('--email-notification', help=u"""Email address receiving notifications.""")

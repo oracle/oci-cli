@@ -58,7 +58,7 @@ limits_service_cli.limits_service_group.add_command(limit_definition_group)
 limits_service_cli.limits_service_group.add_command(resource_availability_group)
 
 
-@resource_availability_group.command(name=cli_util.override('limits.get_resource_availability.command_name', 'get'), help=u"""For a given compartmentId, resource limit name, and scope, returns the following:   - the number of available resources associated with the given limit   - the usage in the selected compartment for the given limit   Note: not all resource limits support this API. If the value is not available, the API will return 404.""")
+@resource_availability_group.command(name=cli_util.override('limits.get_resource_availability.command_name', 'get'), help=u"""For a given compartmentId, resource limit name, and scope, returns the following:   - the number of available resources associated with the given limit   - the usage in the selected compartment for the given limit   Note: not all resource limits support this API. If the value is not available, the API will return 404. \n[Command Reference](getResourceAvailability)""")
 @cli_util.option('--service-name', required=True, help=u"""The service name of the target quota.""")
 @cli_util.option('--limit-name', required=True, help=u"""The limit name for which to fetch the data.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment for which data is being fetched.""")
@@ -90,7 +90,7 @@ def get_resource_availability(ctx, from_json, service_name, limit_name, compartm
     cli_util.render_response(result, ctx)
 
 
-@limit_definition_group.command(name=cli_util.override('limits.list_limit_definitions.command_name', 'list'), help=u"""Includes a list of resource limits that are currently supported. If the 'areQuotasSupported' property is true, you can create quota policies on top of this limit at the compartment level.""")
+@limit_definition_group.command(name=cli_util.override('limits.list_limit_definitions.command_name', 'list'), help=u"""Includes a list of resource limits that are currently supported. If the 'areQuotasSupported' property is true, you can create quota policies on top of this limit at the compartment level. \n[Command Reference](listLimitDefinitions)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the parent compartment (remember that the tenancy is simply the root compartment).""")
 @cli_util.option('--service-name', help=u"""The target service name.""")
 @cli_util.option('--name', help=u"""Optional field, filter for a specific resource limit.""")
@@ -150,7 +150,7 @@ def list_limit_definitions(ctx, from_json, all_pages, page_size, compartment_id,
     cli_util.render_response(result, ctx)
 
 
-@limit_value_group.command(name=cli_util.override('limits.list_limit_values.command_name', 'list'), help=u"""Includes a full list of resource limits belonging to a given service.""")
+@limit_value_group.command(name=cli_util.override('limits.list_limit_values.command_name', 'list'), help=u"""Includes a full list of resource limits belonging to a given service. \n[Command Reference](listLimitValues)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the parent compartment (remember that the tenancy is simply the root compartment).""")
 @cli_util.option('--service-name', required=True, help=u"""The target service name""")
 @cli_util.option('--scope-type', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "REGION", "AD"]), help=u"""Filter entries by scope type.""")
@@ -219,7 +219,7 @@ def list_limit_values(ctx, from_json, all_pages, page_size, compartment_id, serv
     cli_util.render_response(result, ctx)
 
 
-@service_group.command(name=cli_util.override('limits.list_services.command_name', 'list'), help=u"""Returns the list of supported services. This will include the programmatic service name, along with the friendly service name.""")
+@service_group.command(name=cli_util.override('limits.list_services.command_name', 'list'), help=u"""Returns the list of supported services. This will include the programmatic service name, along with the friendly service name. \n[Command Reference](listServices)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the parent compartment (remember that the tenancy is simply the root compartment).""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["name", "description"]), help=u"""The field to sort by.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'. By default it will be ascending.""")

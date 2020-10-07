@@ -30,7 +30,7 @@ def log_entry_group():
 logging_ingestion_root_group.add_command(log_entry_group)
 
 
-@log_entry_group.command(name=cli_util.override('logging_ingestion.put_logs.command_name', 'put-logs'), help=u"""This Api allows ingesting logs associated with a logId. Success response implies the data has been accepted.""")
+@log_entry_group.command(name=cli_util.override('logging_ingestion.put_logs.command_name', 'put-logs'), help=u"""This Api allows ingesting logs associated with a logId. Success response implies the data has been accepted. \n[Command Reference](putLogs)""")
 @cli_util.option('--log-id', required=True, help=u"""OCID of a log to work with.""")
 @cli_util.option('--specversion', required=True, help=u"""Required for identifying the version of the data format being used. Permitted values include: \"1.0\"""")
 @cli_util.option('--log-entry-batches', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of log-batches. Each batch has a single source, type and subject.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)

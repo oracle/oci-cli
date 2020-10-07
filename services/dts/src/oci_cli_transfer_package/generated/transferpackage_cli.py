@@ -38,7 +38,7 @@ transfer_package_root_group.add_command(attach_devices_details_group)
 transfer_package_root_group.add_command(transfer_package_group)
 
 
-@attach_devices_details_group.command(name=cli_util.override('transfer_package.attach_devices_to_transfer_package.command_name', 'attach'), help=u"""Attaches Devices to a Transfer Package""")
+@attach_devices_details_group.command(name=cli_util.override('transfer_package.attach_devices_to_transfer_package.command_name', 'attach'), help=u"""Attaches Devices to a Transfer Package \n[Command Reference](attachDevicesToTransferPackage)""")
 @cli_util.option('--id', required=True, help=u"""ID of the Transfer Job""")
 @cli_util.option('--transfer-package-label', required=True, help=u"""Label of the Transfer Package""")
 @cli_util.option('--device-labels', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of TransferDeviceLabel's""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -72,7 +72,7 @@ def attach_devices_to_transfer_package(ctx, from_json, id, transfer_package_labe
     cli_util.render_response(result, ctx)
 
 
-@transfer_package_group.command(name=cli_util.override('transfer_package.create_transfer_package.command_name', 'create'), help=u"""Create a new Transfer Package""")
+@transfer_package_group.command(name=cli_util.override('transfer_package.create_transfer_package.command_name', 'create'), help=u"""Create a new Transfer Package \n[Command Reference](createTransferPackage)""")
 @cli_util.option('--id', required=True, help=u"""ID of the Transfer Job""")
 @cli_util.option('--original-package-delivery-tracking-number', help=u"""""")
 @cli_util.option('--return-package-delivery-tracking-number', help=u"""""")
@@ -135,7 +135,7 @@ def create_transfer_package(ctx, from_json, wait_for_state, max_wait_seconds, wa
     cli_util.render_response(result, ctx)
 
 
-@transfer_package_group.command(name=cli_util.override('transfer_package.delete_transfer_package.command_name', 'delete'), help=u"""deletes a transfer Package""")
+@transfer_package_group.command(name=cli_util.override('transfer_package.delete_transfer_package.command_name', 'delete'), help=u"""deletes a transfer Package \n[Command Reference](deleteTransferPackage)""")
 @cli_util.option('--id', required=True, help=u"""ID of the Transfer Job""")
 @cli_util.option('--transfer-package-label', required=True, help=u"""Label of the Transfer Package""")
 @cli_util.confirm_delete_option
@@ -162,7 +162,7 @@ def delete_transfer_package(ctx, from_json, id, transfer_package_label):
     cli_util.render_response(result, ctx)
 
 
-@transfer_package_group.command(name=cli_util.override('transfer_package.detach_devices_from_transfer_package.command_name', 'detach'), help=u"""Detaches Devices from a Transfer Package""")
+@transfer_package_group.command(name=cli_util.override('transfer_package.detach_devices_from_transfer_package.command_name', 'detach'), help=u"""Detaches Devices from a Transfer Package \n[Command Reference](detachDevicesFromTransferPackage)""")
 @cli_util.option('--id', required=True, help=u"""ID of the Transfer Job""")
 @cli_util.option('--transfer-package-label', required=True, help=u"""Label of the Transfer Package""")
 @cli_util.option('--device-labels', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of TransferDeviceLabel's""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -196,7 +196,7 @@ def detach_devices_from_transfer_package(ctx, from_json, id, transfer_package_la
     cli_util.render_response(result, ctx)
 
 
-@transfer_package_group.command(name=cli_util.override('transfer_package.get_transfer_package.command_name', 'get'), help=u"""Describes a transfer package in detail""")
+@transfer_package_group.command(name=cli_util.override('transfer_package.get_transfer_package.command_name', 'get'), help=u"""Describes a transfer package in detail \n[Command Reference](getTransferPackage)""")
 @cli_util.option('--id', required=True, help=u"""ID of the Transfer Job""")
 @cli_util.option('--transfer-package-label', required=True, help=u"""Label of the Transfer Package""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -222,7 +222,7 @@ def get_transfer_package(ctx, from_json, id, transfer_package_label):
     cli_util.render_response(result, ctx)
 
 
-@transfer_package_group.command(name=cli_util.override('transfer_package.list_transfer_packages.command_name', 'list'), help=u"""Lists Transfer Packages associated with a transferJob""")
+@transfer_package_group.command(name=cli_util.override('transfer_package.list_transfer_packages.command_name', 'list'), help=u"""Lists Transfer Packages associated with a transferJob \n[Command Reference](listTransferPackages)""")
 @cli_util.option('--id', required=True, help=u"""ID of the Transfer Job""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["PREPARING", "SHIPPING", "RECEIVED", "PROCESSING", "PROCESSED", "RETURNED", "DELETED", "CANCELLED", "CANCELLED_RETURNED"]), help=u"""filtering by lifecycleState""")
 @cli_util.option('--display-name', help=u"""filtering by displayName""")
@@ -250,7 +250,7 @@ def list_transfer_packages(ctx, from_json, all_pages, id, lifecycle_state, displ
     cli_util.render_response(result, ctx)
 
 
-@transfer_package_group.command(name=cli_util.override('transfer_package.update_transfer_package.command_name', 'update'), help=u"""Updates a Transfer Package""")
+@transfer_package_group.command(name=cli_util.override('transfer_package.update_transfer_package.command_name', 'update'), help=u"""Updates a Transfer Package \n[Command Reference](updateTransferPackage)""")
 @cli_util.option('--id', required=True, help=u"""ID of the Transfer Job""")
 @cli_util.option('--transfer-package-label', required=True, help=u"""Label of the Transfer Package""")
 @cli_util.option('--original-package-delivery-tracking-number', help=u"""""")

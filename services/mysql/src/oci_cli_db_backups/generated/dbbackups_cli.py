@@ -33,7 +33,7 @@ mysql_service_cli.mysql_service_group.add_command(db_backups_root_group)
 db_backups_root_group.add_command(backup_group)
 
 
-@backup_group.command(name=cli_util.override('db_backups.create_backup.command_name', 'create'), help=u"""Create a backup of a DB System.""")
+@backup_group.command(name=cli_util.override('db_backups.create_backup.command_name', 'create'), help=u"""Create a backup of a DB System. \n[Command Reference](createBackup)""")
 @cli_util.option('--db-system-id', required=True, help=u"""The OCID of the DB System the Backup is associated with.""")
 @cli_util.option('--display-name', help=u"""A user-supplied display name for the backup.""")
 @cli_util.option('--description', help=u"""A user-supplied description for the backup.""")
@@ -108,7 +108,7 @@ def create_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
     cli_util.render_response(result, ctx)
 
 
-@backup_group.command(name=cli_util.override('db_backups.delete_backup.command_name', 'delete'), help=u"""Delete a Backup.""")
+@backup_group.command(name=cli_util.override('db_backups.delete_backup.command_name', 'delete'), help=u"""Delete a Backup. \n[Command Reference](deleteBackup)""")
 @cli_util.option('--backup-id', required=True, help=u"""The OCID of the Backup""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `If-Match` header to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -162,7 +162,7 @@ def delete_backup(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
     cli_util.render_response(result, ctx)
 
 
-@backup_group.command(name=cli_util.override('db_backups.get_backup.command_name', 'get'), help=u"""Get information about the specified Backup""")
+@backup_group.command(name=cli_util.override('db_backups.get_backup.command_name', 'get'), help=u"""Get information about the specified Backup \n[Command Reference](getBackup)""")
 @cli_util.option('--backup-id', required=True, help=u"""The OCID of the Backup""")
 @cli_util.option('--if-none-match', help=u"""For conditional requests. In the GET call for a resource, set the `If-None-Match` header to the value of the ETag from a previous GET (or POST or PUT) response for that resource. The server will return with either a 304 Not Modified response if the resource has not changed, or a 200 OK response with the updated representation.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -187,7 +187,7 @@ def get_backup(ctx, from_json, backup_id, if_none_match):
     cli_util.render_response(result, ctx)
 
 
-@backup_group.command(name=cli_util.override('db_backups.list_backups.command_name', 'list'), help=u"""Get a list of DB System backups.""")
+@backup_group.command(name=cli_util.override('db_backups.list_backups.command_name', 'list'), help=u"""Get a list of DB System backups. \n[Command Reference](listBackups)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
 @cli_util.option('--backup-id', help=u"""Backup OCID""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), help=u"""Backup Lifecycle State""")
@@ -253,7 +253,7 @@ def list_backups(ctx, from_json, all_pages, page_size, compartment_id, backup_id
     cli_util.render_response(result, ctx)
 
 
-@backup_group.command(name=cli_util.override('db_backups.update_backup.command_name', 'update'), help=u"""Update the metadata of a Backup. Metadata such as the displayName or description""")
+@backup_group.command(name=cli_util.override('db_backups.update_backup.command_name', 'update'), help=u"""Update the metadata of a Backup. Metadata such as the displayName or description \n[Command Reference](updateBackup)""")
 @cli_util.option('--backup-id', required=True, help=u"""The OCID of the Backup""")
 @cli_util.option('--display-name', help=u"""A user-supplied display name for the backup.""")
 @cli_util.option('--description', help=u"""A user-supplied description for the backup.""")

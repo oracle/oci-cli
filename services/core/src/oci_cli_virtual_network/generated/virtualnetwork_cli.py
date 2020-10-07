@@ -502,7 +502,7 @@ virtual_network_root_group.add_command(drg_redundancy_status_group)
 virtual_network_root_group.add_command(security_list_group)
 
 
-@security_rule_group.command(name=cli_util.override('virtual_network.add_network_security_group_security_rules.command_name', 'add'), help=u"""Adds one or more security rules to the specified network security group.""")
+@security_rule_group.command(name=cli_util.override('virtual_network.add_network_security_group_security_rules.command_name', 'add'), help=u"""Adds one or more security rules to the specified network security group. \n[Command Reference](addNetworkSecurityGroupSecurityRules)""")
 @cli_util.option('--network-security-group-id', required=True, help=u"""The [OCID] of the network security group.""")
 @cli_util.option('--security-rules', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The NSG security rules to add.
 
@@ -533,7 +533,7 @@ def add_network_security_group_security_rules(ctx, from_json, network_security_g
     cli_util.render_response(result, ctx)
 
 
-@public_ip_pool_group.command(name=cli_util.override('virtual_network.add_public_ip_pool_capacity.command_name', 'add'), help=u"""Adds a Cidr from the named Byoip Range prefix to the referenced Public IP Pool. The cidr must be a subset of the Byoip Range in question. The cidr must not overlap with any other cidr already added to this or any other Public Ip Pool.""")
+@public_ip_pool_group.command(name=cli_util.override('virtual_network.add_public_ip_pool_capacity.command_name', 'add'), help=u"""Adds a Cidr from the named Byoip Range prefix to the referenced Public IP Pool. The cidr must be a subset of the Byoip Range in question. The cidr must not overlap with any other cidr already added to this or any other Public Ip Pool. \n[Command Reference](addPublicIpPoolCapacity)""")
 @cli_util.option('--public-ip-pool-id', required=True, help=u"""The OCID of the Public Ip Pool object.""")
 @cli_util.option('--byoip-range-id', required=True, help=u"""The OCID of the Byoip Range Id object to whch the cidr block belongs.""")
 @cli_util.option('--cidr-block', required=True, help=u"""The CIDR IP address range to be added to the Public Ip Pool Example: `10.0.1.0/24`""")
@@ -589,7 +589,7 @@ def add_public_ip_pool_capacity(ctx, from_json, wait_for_state, max_wait_seconds
     cli_util.render_response(result, ctx)
 
 
-@byoip_range_group.command(name=cli_util.override('virtual_network.advertise_byoip_range.command_name', 'advertise'), help=u"""initiate route advertisements for the Byoip Range prefix. the prefix must be in PROVISIONED state""")
+@byoip_range_group.command(name=cli_util.override('virtual_network.advertise_byoip_range.command_name', 'advertise'), help=u"""initiate route advertisements for the Byoip Range prefix. the prefix must be in PROVISIONED state \n[Command Reference](advertiseByoipRange)""")
 @cli_util.option('--byoip-range-id', required=True, help=u"""The OCID of the Byoip Range object.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -613,7 +613,7 @@ def advertise_byoip_range(ctx, from_json, byoip_range_id):
 
 @service_gateway_group.command(name=cli_util.override('virtual_network.attach_service_id.command_name', 'attach'), help=u"""Adds the specified [Service] to the list of enabled `Service` objects for the specified gateway. You must also set up a route rule with the `cidrBlock` of the `Service` as the rule's destination and the service gateway as the rule's target. See [Route Table].
 
-**Note:** The `AttachServiceId` operation is an easy way to add an individual `Service` to the service gateway. Compare it with [UpdateServiceGateway], which replaces the entire existing list of enabled `Service` objects with the list that you provide in the `Update` call.""")
+**Note:** The `AttachServiceId` operation is an easy way to add an individual `Service` to the service gateway. Compare it with [UpdateServiceGateway], which replaces the entire existing list of enabled `Service` objects with the list that you provide in the `Update` call. \n[Command Reference](attachServiceId)""")
 @cli_util.option('--service-gateway-id', required=True, help=u"""The service gateway's [OCID].""")
 @cli_util.option('--service-id', required=True, help=u"""The [OCID] of the [Service].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -669,7 +669,7 @@ def attach_service_id(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
     cli_util.render_response(result, ctx)
 
 
-@virtual_circuit_public_prefix_group.command(name=cli_util.override('virtual_network.bulk_add_virtual_circuit_public_prefixes.command_name', 'bulk-add'), help=u"""Adds one or more customer public IP prefixes to the specified public virtual circuit. Use this operation (and not [UpdateVirtualCircuit]) to add prefixes to the virtual circuit. Oracle must verify the customer's ownership of each prefix before traffic for that prefix will flow across the virtual circuit.""")
+@virtual_circuit_public_prefix_group.command(name=cli_util.override('virtual_network.bulk_add_virtual_circuit_public_prefixes.command_name', 'bulk-add'), help=u"""Adds one or more customer public IP prefixes to the specified public virtual circuit. Use this operation (and not [UpdateVirtualCircuit]) to add prefixes to the virtual circuit. Oracle must verify the customer's ownership of each prefix before traffic for that prefix will flow across the virtual circuit. \n[Command Reference](bulkAddVirtualCircuitPublicPrefixes)""")
 @cli_util.option('--virtual-circuit-id', required=True, help=u"""The OCID of the virtual circuit.""")
 @cli_util.option('--public-prefixes', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The public IP prefixes (CIDRs) to add to the public virtual circuit.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'public-prefixes': {'module': 'core', 'class': 'list[CreateVirtualCircuitPublicPrefixDetails]'}})
@@ -696,7 +696,7 @@ def bulk_add_virtual_circuit_public_prefixes(ctx, from_json, virtual_circuit_id,
     cli_util.render_response(result, ctx)
 
 
-@virtual_circuit_public_prefix_group.command(name=cli_util.override('virtual_network.bulk_delete_virtual_circuit_public_prefixes.command_name', 'bulk-delete'), help=u"""Removes one or more customer public IP prefixes from the specified public virtual circuit. Use this operation (and not [UpdateVirtualCircuit]) to remove prefixes from the virtual circuit. When the virtual circuit's state switches back to PROVISIONED, Oracle stops advertising the specified prefixes across the connection.""")
+@virtual_circuit_public_prefix_group.command(name=cli_util.override('virtual_network.bulk_delete_virtual_circuit_public_prefixes.command_name', 'bulk-delete'), help=u"""Removes one or more customer public IP prefixes from the specified public virtual circuit. Use this operation (and not [UpdateVirtualCircuit]) to remove prefixes from the virtual circuit. When the virtual circuit's state switches back to PROVISIONED, Oracle stops advertising the specified prefixes across the connection. \n[Command Reference](bulkDeleteVirtualCircuitPublicPrefixes)""")
 @cli_util.option('--virtual-circuit-id', required=True, help=u"""The OCID of the virtual circuit.""")
 @cli_util.option('--public-prefixes', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The public IP prefixes (CIDRs) to remove from the public virtual circuit.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'public-prefixes': {'module': 'core', 'class': 'list[DeleteVirtualCircuitPublicPrefixDetails]'}})
@@ -723,7 +723,7 @@ def bulk_delete_virtual_circuit_public_prefixes(ctx, from_json, virtual_circuit_
     cli_util.render_response(result, ctx)
 
 
-@byoip_range_group.command(name=cli_util.override('virtual_network.change_byoip_range_compartment.command_name', 'change-compartment'), help=u"""Moves a byoip range into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].""")
+@byoip_range_group.command(name=cli_util.override('virtual_network.change_byoip_range_compartment.command_name', 'change-compartment'), help=u"""Moves a byoip range into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeByoipRangeCompartment)""")
 @cli_util.option('--byoip-range-id', required=True, help=u"""The OCID of the Byoip Range object.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the Byoip Range to.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -751,7 +751,7 @@ def change_byoip_range_compartment(ctx, from_json, byoip_range_id, compartment_i
     cli_util.render_response(result, ctx)
 
 
-@cpe_group.command(name=cli_util.override('virtual_network.change_cpe_compartment.command_name', 'change-compartment'), help=u"""Moves a CPE object into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].""")
+@cpe_group.command(name=cli_util.override('virtual_network.change_cpe_compartment.command_name', 'change-compartment'), help=u"""Moves a CPE object into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeCpeCompartment)""")
 @cli_util.option('--cpe-id', required=True, help=u"""The OCID of the CPE.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the CPE object to.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -779,7 +779,7 @@ def change_cpe_compartment(ctx, from_json, cpe_id, compartment_id):
     cli_util.render_response(result, ctx)
 
 
-@cross_connect_group.command(name=cli_util.override('virtual_network.change_cross_connect_compartment.command_name', 'change-compartment'), help=u"""Moves a cross-connect into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].""")
+@cross_connect_group.command(name=cli_util.override('virtual_network.change_cross_connect_compartment.command_name', 'change-compartment'), help=u"""Moves a cross-connect into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeCrossConnectCompartment)""")
 @cli_util.option('--cross-connect-id', required=True, help=u"""The OCID of the cross-connect.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the cross-connect to.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -807,7 +807,7 @@ def change_cross_connect_compartment(ctx, from_json, cross_connect_id, compartme
     cli_util.render_response(result, ctx)
 
 
-@cross_connect_group_group.command(name=cli_util.override('virtual_network.change_cross_connect_group_compartment.command_name', 'change-compartment'), help=u"""Moves a cross-connect group into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].""")
+@cross_connect_group_group.command(name=cli_util.override('virtual_network.change_cross_connect_group_compartment.command_name', 'change-compartment'), help=u"""Moves a cross-connect group into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeCrossConnectGroupCompartment)""")
 @cli_util.option('--cross-connect-group-id', required=True, help=u"""The OCID of the cross-connect group.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the cross-connect group to.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -835,7 +835,7 @@ def change_cross_connect_group_compartment(ctx, from_json, cross_connect_group_i
     cli_util.render_response(result, ctx)
 
 
-@dhcp_options_group.command(name=cli_util.override('virtual_network.change_dhcp_options_compartment.command_name', 'change-compartment'), help=u"""Moves a set of DHCP options into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].""")
+@dhcp_options_group.command(name=cli_util.override('virtual_network.change_dhcp_options_compartment.command_name', 'change-compartment'), help=u"""Moves a set of DHCP options into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeDhcpOptionsCompartment)""")
 @cli_util.option('--dhcp-id', required=True, help=u"""The OCID for the set of DHCP options.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the set of DHCP options to.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -863,7 +863,7 @@ def change_dhcp_options_compartment(ctx, from_json, dhcp_id, compartment_id):
     cli_util.render_response(result, ctx)
 
 
-@drg_group.command(name=cli_util.override('virtual_network.change_drg_compartment.command_name', 'change-compartment'), help=u"""Moves a DRG into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].""")
+@drg_group.command(name=cli_util.override('virtual_network.change_drg_compartment.command_name', 'change-compartment'), help=u"""Moves a DRG into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeDrgCompartment)""")
 @cli_util.option('--drg-id', required=True, help=u"""The OCID of the DRG.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the DRG to.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -891,7 +891,7 @@ def change_drg_compartment(ctx, from_json, drg_id, compartment_id):
     cli_util.render_response(result, ctx)
 
 
-@internet_gateway_group.command(name=cli_util.override('virtual_network.change_internet_gateway_compartment.command_name', 'change-compartment'), help=u"""Moves an internet gateway into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].""")
+@internet_gateway_group.command(name=cli_util.override('virtual_network.change_internet_gateway_compartment.command_name', 'change-compartment'), help=u"""Moves an internet gateway into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeInternetGatewayCompartment)""")
 @cli_util.option('--ig-id', required=True, help=u"""The OCID of the internet gateway.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the internet gateway to.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -919,7 +919,7 @@ def change_internet_gateway_compartment(ctx, from_json, ig_id, compartment_id):
     cli_util.render_response(result, ctx)
 
 
-@ip_sec_connection_group.command(name=cli_util.override('virtual_network.change_ip_sec_connection_compartment.command_name', 'change-compartment'), help=u"""Moves an IPSec connection into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].""")
+@ip_sec_connection_group.command(name=cli_util.override('virtual_network.change_ip_sec_connection_compartment.command_name', 'change-compartment'), help=u"""Moves an IPSec connection into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeIPSecConnectionCompartment)""")
 @cli_util.option('--ipsc-id', required=True, help=u"""The OCID of the IPSec connection.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the IPSec connection to.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -947,7 +947,7 @@ def change_ip_sec_connection_compartment(ctx, from_json, ipsc_id, compartment_id
     cli_util.render_response(result, ctx)
 
 
-@local_peering_gateway_group.command(name=cli_util.override('virtual_network.change_local_peering_gateway_compartment.command_name', 'change-compartment'), help=u"""Moves a local peering gateway into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].""")
+@local_peering_gateway_group.command(name=cli_util.override('virtual_network.change_local_peering_gateway_compartment.command_name', 'change-compartment'), help=u"""Moves a local peering gateway into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeLocalPeeringGatewayCompartment)""")
 @cli_util.option('--local-peering-gateway-id', required=True, help=u"""The OCID of the local peering gateway.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the local peering gateway to.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -975,7 +975,7 @@ def change_local_peering_gateway_compartment(ctx, from_json, local_peering_gatew
     cli_util.render_response(result, ctx)
 
 
-@nat_gateway_group.command(name=cli_util.override('virtual_network.change_nat_gateway_compartment.command_name', 'change-compartment'), help=u"""Moves a NAT gateway into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].""")
+@nat_gateway_group.command(name=cli_util.override('virtual_network.change_nat_gateway_compartment.command_name', 'change-compartment'), help=u"""Moves a NAT gateway into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeNatGatewayCompartment)""")
 @cli_util.option('--nat-gateway-id', required=True, help=u"""The NAT gateway's [OCID].""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the NAT gateway to.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1003,7 +1003,7 @@ def change_nat_gateway_compartment(ctx, from_json, nat_gateway_id, compartment_i
     cli_util.render_response(result, ctx)
 
 
-@network_security_group_group.command(name=cli_util.override('virtual_network.change_network_security_group_compartment.command_name', 'change-compartment'), help=u"""Moves a network security group into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].""")
+@network_security_group_group.command(name=cli_util.override('virtual_network.change_network_security_group_compartment.command_name', 'change-compartment'), help=u"""Moves a network security group into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeNetworkSecurityGroupCompartment)""")
 @cli_util.option('--network-security-group-id', required=True, help=u"""The [OCID] of the network security group.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the network security group to.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1033,7 +1033,7 @@ def change_network_security_group_compartment(ctx, from_json, network_security_g
 
 @public_ip_group.command(name=cli_util.override('virtual_network.change_public_ip_compartment.command_name', 'change-compartment'), help=u"""Moves a public IP into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].
 
-This operation applies only to reserved public IPs. Ephemeral public IPs always belong to the same compartment as their VNIC and move accordingly.""")
+This operation applies only to reserved public IPs. Ephemeral public IPs always belong to the same compartment as their VNIC and move accordingly. \n[Command Reference](changePublicIpCompartment)""")
 @cli_util.option('--public-ip-id', required=True, help=u"""The OCID of the public IP.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the public IP to.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1061,7 +1061,7 @@ def change_public_ip_compartment(ctx, from_json, public_ip_id, compartment_id):
     cli_util.render_response(result, ctx)
 
 
-@public_ip_pool_group.command(name=cli_util.override('virtual_network.change_public_ip_pool_compartment.command_name', 'change-compartment'), help=u"""Moves a public IP pool into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].""")
+@public_ip_pool_group.command(name=cli_util.override('virtual_network.change_public_ip_pool_compartment.command_name', 'change-compartment'), help=u"""Moves a public IP pool into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changePublicIpPoolCompartment)""")
 @cli_util.option('--public-ip-pool-id', required=True, help=u"""The OCID of the Public Ip Pool object.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the Public IP Pool to.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1089,7 +1089,7 @@ def change_public_ip_pool_compartment(ctx, from_json, public_ip_pool_id, compart
     cli_util.render_response(result, ctx)
 
 
-@remote_peering_connection_group.command(name=cli_util.override('virtual_network.change_remote_peering_connection_compartment.command_name', 'change-compartment'), help=u"""Moves a remote peering connection (RPC) into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].""")
+@remote_peering_connection_group.command(name=cli_util.override('virtual_network.change_remote_peering_connection_compartment.command_name', 'change-compartment'), help=u"""Moves a remote peering connection (RPC) into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeRemotePeeringConnectionCompartment)""")
 @cli_util.option('--remote-peering-connection-id', required=True, help=u"""The OCID of the remote peering connection (RPC).""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the remote peering connection to.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1117,7 +1117,7 @@ def change_remote_peering_connection_compartment(ctx, from_json, remote_peering_
     cli_util.render_response(result, ctx)
 
 
-@route_table_group.command(name=cli_util.override('virtual_network.change_route_table_compartment.command_name', 'change-compartment'), help=u"""Moves a route table into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].""")
+@route_table_group.command(name=cli_util.override('virtual_network.change_route_table_compartment.command_name', 'change-compartment'), help=u"""Moves a route table into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeRouteTableCompartment)""")
 @cli_util.option('--rt-id', required=True, help=u"""The OCID of the route table.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the route table to.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1145,7 +1145,7 @@ def change_route_table_compartment(ctx, from_json, rt_id, compartment_id):
     cli_util.render_response(result, ctx)
 
 
-@security_list_group.command(name=cli_util.override('virtual_network.change_security_list_compartment.command_name', 'change-compartment'), help=u"""Moves a security list into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].""")
+@security_list_group.command(name=cli_util.override('virtual_network.change_security_list_compartment.command_name', 'change-compartment'), help=u"""Moves a security list into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeSecurityListCompartment)""")
 @cli_util.option('--security-list-id', required=True, help=u"""The OCID of the security list.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the security list to.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1173,7 +1173,7 @@ def change_security_list_compartment(ctx, from_json, security_list_id, compartme
     cli_util.render_response(result, ctx)
 
 
-@service_gateway_group.command(name=cli_util.override('virtual_network.change_service_gateway_compartment.command_name', 'change-compartment'), help=u"""Moves a service gateway into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].""")
+@service_gateway_group.command(name=cli_util.override('virtual_network.change_service_gateway_compartment.command_name', 'change-compartment'), help=u"""Moves a service gateway into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeServiceGatewayCompartment)""")
 @cli_util.option('--service-gateway-id', required=True, help=u"""The service gateway's [OCID].""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the service gateway to.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1201,7 +1201,7 @@ def change_service_gateway_compartment(ctx, from_json, service_gateway_id, compa
     cli_util.render_response(result, ctx)
 
 
-@subnet_group.command(name=cli_util.override('virtual_network.change_subnet_compartment.command_name', 'change-compartment'), help=u"""Moves a subnet into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].""")
+@subnet_group.command(name=cli_util.override('virtual_network.change_subnet_compartment.command_name', 'change-compartment'), help=u"""Moves a subnet into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeSubnetCompartment)""")
 @cli_util.option('--subnet-id', required=True, help=u"""The OCID of the subnet.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the subnet to.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1229,7 +1229,7 @@ def change_subnet_compartment(ctx, from_json, subnet_id, compartment_id):
     cli_util.render_response(result, ctx)
 
 
-@vcn_group.command(name=cli_util.override('virtual_network.change_vcn_compartment.command_name', 'change-compartment'), help=u"""Moves a VCN into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].""")
+@vcn_group.command(name=cli_util.override('virtual_network.change_vcn_compartment.command_name', 'change-compartment'), help=u"""Moves a VCN into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeVcnCompartment)""")
 @cli_util.option('--vcn-id', required=True, help=u"""The [OCID] of the VCN.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the VCN to.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1257,7 +1257,7 @@ def change_vcn_compartment(ctx, from_json, vcn_id, compartment_id):
     cli_util.render_response(result, ctx)
 
 
-@virtual_circuit_group.command(name=cli_util.override('virtual_network.change_virtual_circuit_compartment.command_name', 'change-compartment'), help=u"""Moves a virtual circuit into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].""")
+@virtual_circuit_group.command(name=cli_util.override('virtual_network.change_virtual_circuit_compartment.command_name', 'change-compartment'), help=u"""Moves a virtual circuit into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeVirtualCircuitCompartment)""")
 @cli_util.option('--virtual-circuit-id', required=True, help=u"""The OCID of the virtual circuit.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the virtual circuit to.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1285,7 +1285,7 @@ def change_virtual_circuit_compartment(ctx, from_json, virtual_circuit_id, compa
     cli_util.render_response(result, ctx)
 
 
-@vlan_group.command(name=cli_util.override('virtual_network.change_vlan_compartment.command_name', 'change-compartment'), help=u"""Moves a VLAN into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].""")
+@vlan_group.command(name=cli_util.override('virtual_network.change_vlan_compartment.command_name', 'change-compartment'), help=u"""Moves a VLAN into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeVlanCompartment)""")
 @cli_util.option('--vlan-id', required=True, help=u"""The [OCID] of the VLAN.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the VLAN to.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -1318,7 +1318,7 @@ def change_vlan_compartment(ctx, from_json, vlan_id, compartment_id, if_match):
 
 @local_peering_gateway_group.command(name=cli_util.override('virtual_network.connect_local_peering_gateways.command_name', 'connect'), help=u"""Connects this local peering gateway (LPG) to another one in the same region.
 
-This operation must be called by the VCN administrator who is designated as the *requestor* in the peering relationship. The *acceptor* must implement an Identity and Access Management (IAM) policy that gives the requestor permission to connect to LPGs in the acceptor's compartment. Without that permission, this operation will fail. For more information, see [VCN Peering].""")
+This operation must be called by the VCN administrator who is designated as the *requestor* in the peering relationship. The *acceptor* must implement an Identity and Access Management (IAM) policy that gives the requestor permission to connect to LPGs in the acceptor's compartment. Without that permission, this operation will fail. For more information, see [VCN Peering]. \n[Command Reference](connectLocalPeeringGateways)""")
 @cli_util.option('--local-peering-gateway-id', required=True, help=u"""The OCID of the local peering gateway.""")
 @cli_util.option('--peer-id', required=True, help=u"""The OCID of the LPG you want to peer with.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1347,7 +1347,7 @@ def connect_local_peering_gateways(ctx, from_json, local_peering_gateway_id, pee
 
 @remote_peering_connection_group.command(name=cli_util.override('virtual_network.connect_remote_peering_connections.command_name', 'connect'), help=u"""Connects this RPC to another one in a different region.
 
-This operation must be called by the VCN administrator who is designated as the *requestor* in the peering relationship. The *acceptor* must implement an Identity and Access Management (IAM) policy that gives the requestor permission to connect to RPCs in the acceptor's compartment. Without that permission, this operation will fail. For more information, see [VCN Peering].""")
+This operation must be called by the VCN administrator who is designated as the *requestor* in the peering relationship. The *acceptor* must implement an Identity and Access Management (IAM) policy that gives the requestor permission to connect to RPCs in the acceptor's compartment. Without that permission, this operation will fail. For more information, see [VCN Peering]. \n[Command Reference](connectRemotePeeringConnections)""")
 @cli_util.option('--remote-peering-connection-id', required=True, help=u"""The OCID of the remote peering connection (RPC).""")
 @cli_util.option('--peer-id', required=True, help=u"""The OCID of the RPC you want to peer with.""")
 @cli_util.option('--peer-region-name', required=True, help=u"""The name of the region that contains the RPC you want to peer with.
@@ -1378,7 +1378,7 @@ def connect_remote_peering_connections(ctx, from_json, remote_peering_connection
     cli_util.render_response(result, ctx)
 
 
-@byoip_range_group.command(name=cli_util.override('virtual_network.create_byoip_range.command_name', 'create'), help=u"""Creates a Byoip Range prefix.""")
+@byoip_range_group.command(name=cli_util.override('virtual_network.create_byoip_range.command_name', 'create'), help=u"""Creates a Byoip Range prefix. \n[Command Reference](createByoipRange)""")
 @cli_util.option('--cidr-block', required=True, help=u"""The CIDR IP address range of the prefix. Example: `10.0.1.0/24`""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to contain the Byoip Range.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
@@ -1451,7 +1451,7 @@ For the purposes of access control, you must provide the OCID of the compartment
 
 You must provide the public IP address of your on-premises router. See [Configuring Your On-Premises Router for an IPSec VPN].
 
-You may optionally specify a *display name* for the CPE, otherwise a default is provided. It does not have to be unique, and you can change it. Avoid entering confidential information.""")
+You may optionally specify a *display name* for the CPE, otherwise a default is provided. It does not have to be unique, and you can change it. Avoid entering confidential information. \n[Command Reference](createCpe)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to contain the CPE.""")
 @cli_util.option('--ip-address', required=True, help=u"""The public IP address of the on-premises router.
 
@@ -1507,7 +1507,7 @@ After creating the `CrossConnect` object, you need to go the FastConnect locatio
 
 For the purposes of access control, you must provide the OCID of the compartment where you want the cross-connect to reside. If you're not sure which compartment to use, put the cross-connect in the same compartment with your VCN. For more information about compartments and access control, see [Overview of the IAM Service]. For information about OCIDs, see [Resource Identifiers].
 
-You may optionally specify a *display name* for the cross-connect. It does not have to be unique, and you can change it. Avoid entering confidential information.""")
+You may optionally specify a *display name* for the cross-connect. It does not have to be unique, and you can change it. Avoid entering confidential information. \n[Command Reference](createCrossConnect)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to contain the cross-connect.""")
 @cli_util.option('--location-name', required=True, help=u"""The name of the FastConnect location where this cross-connect will be installed. To get a list of the available locations, see [ListCrossConnectLocations].
 
@@ -1599,7 +1599,7 @@ def create_cross_connect(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 
 For the purposes of access control, you must provide the OCID of the compartment where you want the cross-connect group to reside. If you're not sure which compartment to use, put the cross-connect group in the same compartment with your VCN. For more information about compartments and access control, see [Overview of the IAM Service]. For information about OCIDs, see [Resource Identifiers].
 
-You may optionally specify a *display name* for the cross-connect group. It does not have to be unique, and you can change it. Avoid entering confidential information.""")
+You may optionally specify a *display name* for the cross-connect group. It does not have to be unique, and you can change it. Avoid entering confidential information. \n[Command Reference](createCrossConnectGroup)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to contain the cross-connect group.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
@@ -1671,7 +1671,7 @@ def create_cross_connect_group(ctx, from_json, wait_for_state, max_wait_seconds,
 
 For the purposes of access control, you must provide the OCID of the compartment where you want the set of DHCP options to reside. Notice that the set of options doesn't have to be in the same compartment as the VCN, subnets, or other Networking Service components. If you're not sure which compartment to use, put the set of DHCP options in the same compartment as the VCN. For more information about compartments and access control, see [Overview of the IAM Service]. For information about OCIDs, see [Resource Identifiers].
 
-You may optionally specify a *display name* for the set of DHCP options, otherwise a default is provided. It does not have to be unique, and you can change it. Avoid entering confidential information.""")
+You may optionally specify a *display name* for the set of DHCP options, otherwise a default is provided. It does not have to be unique, and you can change it. Avoid entering confidential information. \n[Command Reference](createDhcpOptions)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to contain the set of DHCP options.""")
 @cli_util.option('--options', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""A set of DHCP options.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--vcn-id', required=True, help=u"""The OCID of the VCN the set of DHCP options belongs to.""")
@@ -1743,7 +1743,7 @@ def create_dhcp_options(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
 
 For the purposes of access control, you must provide the OCID of the compartment where you want the DRG to reside. Notice that the DRG doesn't have to be in the same compartment as the VCN, the DRG attachment, or other Networking Service components. If you're not sure which compartment to use, put the DRG in the same compartment as the VCN. For more information about compartments and access control, see [Overview of the IAM Service]. For information about OCIDs, see [Resource Identifiers].
 
-You may optionally specify a *display name* for the DRG, otherwise a default is provided. It does not have to be unique, and you can change it. Avoid entering confidential information.""")
+You may optionally specify a *display name* for the DRG, otherwise a default is provided. It does not have to be unique, and you can change it. Avoid entering confidential information. \n[Command Reference](createDrg)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to contain the DRG.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
@@ -1811,7 +1811,7 @@ def create_drg(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
 
 You may optionally specify a *display name* for the attachment, otherwise a default is provided. It does not have to be unique, and you can change it. Avoid entering confidential information.
 
-For the purposes of access control, the DRG attachment is automatically placed into the same compartment as the VCN. For more information about compartments and access control, see [Overview of the IAM Service].""")
+For the purposes of access control, the DRG attachment is automatically placed into the same compartment as the VCN. For more information about compartments and access control, see [Overview of the IAM Service]. \n[Command Reference](createDrgAttachment)""")
 @cli_util.option('--drg-id', required=True, help=u"""The OCID of the DRG.""")
 @cli_util.option('--vcn-id', required=True, help=u"""The OCID of the VCN.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique. Avoid entering confidential information.""")
@@ -1883,7 +1883,7 @@ You may optionally specify a *display name* for the internet gateway, otherwise 
 
 For traffic to flow between a subnet and an internet gateway, you must create a route rule accordingly in the subnet's route table (for example, 0.0.0.0/0 > internet gateway). See [UpdateRouteTable].
 
-You must specify whether the internet gateway is enabled when you create it. If it's disabled, that means no traffic will flow to/from the internet even if there's a route rule that enables that traffic. You can later use [UpdateInternetGateway] to easily disable/enable the gateway without changing the route rule.""")
+You must specify whether the internet gateway is enabled when you create it. If it's disabled, that means no traffic will flow to/from the internet even if there's a route rule that enables that traffic. You can later use [UpdateInternetGateway] to easily disable/enable the gateway without changing the route rule. \n[Command Reference](createInternetGateway)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to contain the internet gateway.""")
 @cli_util.option('--is-enabled', required=True, type=click.BOOL, help=u"""Whether the gateway is enabled upon creation.""")
 @cli_util.option('--vcn-id', required=True, help=u"""The OCID of the VCN the internet gateway is attached to.""")
@@ -1963,7 +1963,7 @@ After creating the IPSec connection, you need to configure your on-premises rout
 
   * [IPSecConnectionTunnel]   * [IPSecConnectionTunnelSharedSecret]
 
-For each tunnel, you need the IP address of Oracle's VPN headend and the shared secret (that is, the pre-shared key). For more information, see [Configuring Your On-Premises Router for an IPSec VPN].""")
+For each tunnel, you need the IP address of Oracle's VPN headend and the shared secret (that is, the pre-shared key). For more information, see [Configuring Your On-Premises Router for an IPSec VPN]. \n[Command Reference](createIPSecConnection)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to contain the IPSec connection.""")
 @cli_util.option('--cpe-id', required=True, help=u"""The OCID of the [Cpe] object.""")
 @cli_util.option('--drg-id', required=True, help=u"""The OCID of the DRG.""")
@@ -2063,7 +2063,7 @@ def create_ip_sec_connection(ctx, from_json, wait_for_state, max_wait_seconds, w
     cli_util.render_response(result, ctx)
 
 
-@ipv6_group.command(name=cli_util.override('virtual_network.create_ipv6.command_name', 'create'), help=u"""Creates an IPv6 for the specified VNIC.""")
+@ipv6_group.command(name=cli_util.override('virtual_network.create_ipv6.command_name', 'create'), help=u"""Creates an IPv6 for the specified VNIC. \n[Command Reference](createIpv6)""")
 @cli_util.option('--vnic-id', required=True, help=u"""The [OCID] of the VNIC to assign the IPv6 to. The IPv6 will be in the VNIC's subnet.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
@@ -2142,7 +2142,7 @@ def create_ipv6(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
     cli_util.render_response(result, ctx)
 
 
-@local_peering_gateway_group.command(name=cli_util.override('virtual_network.create_local_peering_gateway.command_name', 'create'), help=u"""Creates a new local peering gateway (LPG) for the specified VCN.""")
+@local_peering_gateway_group.command(name=cli_util.override('virtual_network.create_local_peering_gateway.command_name', 'create'), help=u"""Creates a new local peering gateway (LPG) for the specified VCN. \n[Command Reference](createLocalPeeringGateway)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment containing the local peering gateway (LPG).""")
 @cli_util.option('--vcn-id', required=True, help=u"""The OCID of the VCN the LPG belongs to.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
@@ -2216,7 +2216,7 @@ def create_local_peering_gateway(ctx, from_json, wait_for_state, max_wait_second
     cli_util.render_response(result, ctx)
 
 
-@nat_gateway_group.command(name=cli_util.override('virtual_network.create_nat_gateway.command_name', 'create'), help=u"""Creates a new NAT gateway for the specified VCN. You must also set up a route rule with the NAT gateway as the rule's target. See [Route Table].""")
+@nat_gateway_group.command(name=cli_util.override('virtual_network.create_nat_gateway.command_name', 'create'), help=u"""Creates a new NAT gateway for the specified VCN. You must also set up a route rule with the NAT gateway as the rule's target. See [Route Table]. \n[Command Reference](createNatGateway)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to contain the NAT gateway.""")
 @cli_util.option('--vcn-id', required=True, help=u"""The [OCID] of the VCN the gateway belongs to.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
@@ -2292,7 +2292,7 @@ def create_nat_gateway(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     cli_util.render_response(result, ctx)
 
 
-@network_security_group_group.command(name=cli_util.override('virtual_network.create_network_security_group.command_name', 'create'), help=u"""Creates a new network security group for the specified VCN.""")
+@network_security_group_group.command(name=cli_util.override('virtual_network.create_network_security_group.command_name', 'create'), help=u"""Creates a new network security group for the specified VCN. \n[Command Reference](createNetworkSecurityGroup)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to contain the network security group.""")
 @cli_util.option('--vcn-id', required=True, help=u"""The [OCID] of the VCN to create the network security group in.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
@@ -2358,7 +2358,7 @@ def create_network_security_group(ctx, from_json, wait_for_state, max_wait_secon
     cli_util.render_response(result, ctx)
 
 
-@private_ip_group.command(name=cli_util.override('virtual_network.create_private_ip.command_name', 'create'), help=u"""Creates a secondary private IP for the specified VNIC. For more information about secondary private IPs, see [IP Addresses].""")
+@private_ip_group.command(name=cli_util.override('virtual_network.create_private_ip.command_name', 'create'), help=u"""Creates a secondary private IP for the specified VNIC. For more information about secondary private IPs, see [IP Addresses]. \n[Command Reference](createPrivateIp)""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2426,7 +2426,7 @@ def create_private_ip(ctx, from_json, defined_tags, display_name, freeform_tags,
 
 **Note:** When assigning a public IP to a private IP, the private IP must not already have a public IP with `lifecycleState` = ASSIGNING or ASSIGNED. If it does, an error is returned.
 
-Also, for reserved public IPs, the optional assignment part of this operation is asynchronous. Poll the public IP's `lifecycleState` to determine if the assignment succeeded.""")
+Also, for reserved public IPs, the optional assignment part of this operation is asynchronous. Poll the public IP's `lifecycleState` to determine if the assignment succeeded. \n[Command Reference](createPublicIp)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to contain the public IP. For ephemeral public IPs, you must set this to the private IP's compartment OCID.""")
 @cli_util.option('--lifetime', required=True, type=custom_types.CliCaseInsensitiveChoice(["EPHEMERAL", "RESERVED"]), help=u"""Defines when the public IP is deleted and released back to the Oracle Cloud Infrastructure public IP pool. For more information, see [Public IP Addresses].""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
@@ -2504,7 +2504,7 @@ def create_public_ip(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
     cli_util.render_response(result, ctx)
 
 
-@public_ip_pool_group.command(name=cli_util.override('virtual_network.create_public_ip_pool.command_name', 'create'), help=u"""Creates a Public Ip Pool""")
+@public_ip_pool_group.command(name=cli_util.override('virtual_network.create_public_ip_pool.command_name', 'create'), help=u"""Creates a Public Ip Pool \n[Command Reference](createPublicIpPool)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to contain the Public Ip Pool""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
@@ -2569,7 +2569,7 @@ def create_public_ip_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait
     cli_util.render_response(result, ctx)
 
 
-@remote_peering_connection_group.command(name=cli_util.override('virtual_network.create_remote_peering_connection.command_name', 'create'), help=u"""Creates a new remote peering connection (RPC) for the specified DRG.""")
+@remote_peering_connection_group.command(name=cli_util.override('virtual_network.create_remote_peering_connection.command_name', 'create'), help=u"""Creates a new remote peering connection (RPC) for the specified DRG. \n[Command Reference](createRemotePeeringConnection)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to contain the RPC.""")
 @cli_util.option('--drg-id', required=True, help=u"""The OCID of the DRG the RPC belongs to.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
@@ -2639,7 +2639,7 @@ def create_remote_peering_connection(ctx, from_json, wait_for_state, max_wait_se
 
 For the purposes of access control, you must provide the OCID of the compartment where you want the route table to reside. Notice that the route table doesn't have to be in the same compartment as the VCN, subnets, or other Networking Service components. If you're not sure which compartment to use, put the route table in the same compartment as the VCN. For more information about compartments and access control, see [Overview of the IAM Service]. For information about OCIDs, see [Resource Identifiers].
 
-You may optionally specify a *display name* for the route table, otherwise a default is provided. It does not have to be unique, and you can change it. Avoid entering confidential information.""")
+You may optionally specify a *display name* for the route table, otherwise a default is provided. It does not have to be unique, and you can change it. Avoid entering confidential information. \n[Command Reference](createRouteTable)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to contain the route table.""")
 @cli_util.option('--route-rules', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The collection of rules used for routing destination IPs to network devices.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--vcn-id', required=True, help=u"""The OCID of the VCN the route table belongs to.""")
@@ -2711,7 +2711,7 @@ def create_route_table(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
 For the purposes of access control, you must provide the OCID of the compartment where you want the security list to reside. Notice that the security list doesn't have to be in the same compartment as the VCN, subnets, or other Networking Service components. If you're not sure which compartment to use, put the security list in the same compartment as the VCN. For more information about compartments and access control, see [Overview of the IAM Service]. For information about OCIDs, see [Resource Identifiers].
 
-You may optionally specify a *display name* for the security list, otherwise a default is provided. It does not have to be unique, and you can change it. Avoid entering confidential information.""")
+You may optionally specify a *display name* for the security list, otherwise a default is provided. It does not have to be unique, and you can change it. Avoid entering confidential information. \n[Command Reference](createSecurityList)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to contain the security list.""")
 @cli_util.option('--egress-security-rules', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Rules for allowing egress IP packets.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--ingress-security-rules', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Rules for allowing ingress IP packets.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -2785,7 +2785,7 @@ def create_security_list(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 
 For the purposes of access control, you must provide the OCID of the compartment where you want the service gateway to reside. For more information about compartments and access control, see [Overview of the IAM Service]. For information about OCIDs, see [Resource Identifiers].
 
-You may optionally specify a *display name* for the service gateway, otherwise a default is provided. It does not have to be unique, and you can change it. Avoid entering confidential information.""")
+You may optionally specify a *display name* for the service gateway, otherwise a default is provided. It does not have to be unique, and you can change it. Avoid entering confidential information. \n[Command Reference](createServiceGateway)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID]  of the compartment to contain the service gateway.""")
 @cli_util.option('--services', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of the OCIDs of the [Service] objects to enable for the service gateway. This list can be empty if you don't want to enable any `Service` objects when you create the gateway. You can enable a `Service` object later by using either [AttachServiceId] or [UpdateServiceGateway].
 
@@ -2875,7 +2875,7 @@ You may optionally associate a set of DHCP options with the subnet. If you don't
 
 You may optionally specify a *display name* for the subnet, otherwise a default is provided. It does not have to be unique, and you can change it. Avoid entering confidential information.
 
-You can also add a DNS label for the subnet, which is required if you want the Internet and VCN Resolver to resolve hostnames for instances in the subnet. For more information, see [DNS in Your Virtual Cloud Network].""")
+You can also add a DNS label for the subnet, which is required if you want the Internet and VCN Resolver to resolve hostnames for instances in the subnet. For more information, see [DNS in Your Virtual Cloud Network]. \n[Command Reference](createSubnet)""")
 @cli_util.option('--cidr-block', required=True, help=u"""The CIDR IP address range of the subnet. The CIDR must maintain the following rules -
 
 a. The CIDR block is valid and correctly formatted. b. The new range is within one of the parent VCN ranges.
@@ -3007,7 +3007,7 @@ You can also add a DNS label for the VCN, which is required if you want the inst
 
 The VCN automatically comes with a default route table, default security list, and default set of DHCP options. The OCID for each is returned in the response. You can't delete these default objects, but you can change their contents (that is, change the route rules, security list rules, and so on).
 
-The VCN and subnets you create are not accessible until you attach an internet gateway or set up an IPSec VPN or FastConnect. For more information, see [Overview of the Networking Service].""")
+The VCN and subnets you create are not accessible until you attach an internet gateway or set up an IPSec VPN or FastConnect. For more information, see [Overview of the Networking Service]. \n[Command Reference](createVcn)""")
 @cli_util.option('--cidr-block', required=True, help=u"""The CIDR IP address block of the VCN. Example: `10.0.0.0/16`""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to contain the VCN.""")
 @cli_util.option('--ipv6-cidr-block', help=u"""If you enable IPv6 for the VCN (see `isIpv6Enabled`), you may optionally provide an IPv6 /48 CIDR block from the supported ranges (see [IPv6 Addresses]. The addresses in this block will be considered private and cannot be accessed from the internet. The documentation refers to this as a *custom CIDR* for the VCN.
@@ -3107,7 +3107,7 @@ For the purposes of access control, you must provide the OCID of the compartment
 
 You may optionally specify a *display name* for the virtual circuit. It does not have to be unique, and you can change it. Avoid entering confidential information.
 
-**Important:** When creating a virtual circuit, you specify a DRG for the traffic to flow through. Make sure you attach the DRG to your VCN and confirm the VCN's routing sends traffic to the DRG. Otherwise traffic will not flow. For more information, see [Route Tables].""")
+**Important:** When creating a virtual circuit, you specify a DRG for the traffic to flow through. Make sure you attach the DRG to your VCN and confirm the VCN's routing sends traffic to the DRG. Otherwise traffic will not flow. For more information, see [Route Tables]. \n[Command Reference](createVirtualCircuit)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment to contain the virtual circuit.""")
 @cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["PUBLIC", "PRIVATE"]), help=u"""The type of IP addresses used in this virtual circuit. PRIVATE means [RFC 1918] addresses (10.0.0.0/8, 172.16/12, and 192.168/16).""")
 @cli_util.option('--bandwidth-shape-name', help=u"""The provisioned data rate of the connection.  To get a list of the available bandwidth levels (that is, shapes), see [ListFastConnectProviderServiceVirtualCircuitBandwidthShapes].
@@ -3225,7 +3225,7 @@ def create_virtual_circuit(ctx, from_json, wait_for_state, max_wait_seconds, wai
     cli_util.render_response(result, ctx)
 
 
-@vlan_group.command(name=cli_util.override('virtual_network.create_vlan.command_name', 'create'), help=u"""Creates a VLAN in the specified VCN and the specified compartment.""")
+@vlan_group.command(name=cli_util.override('virtual_network.create_vlan.command_name', 'create'), help=u"""Creates a VLAN in the specified VCN and the specified compartment. \n[Command Reference](createVlan)""")
 @cli_util.option('--availability-domain', required=True, help=u"""The availability domain of the VLAN.
 
 Example: `Uocm:PHX-AD-1`""")
@@ -3316,7 +3316,7 @@ def create_vlan(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 
 @byoip_range_group.command(name=cli_util.override('virtual_network.delete_byoip_range.command_name', 'delete'), help=u"""Deletes the specified Byoip Range prefix. The prefix must be in CREATING, PROVISIONED or FAILED state. It must not have any subranges allocated to a Public Ip Pool object. You must specify the object's OCID.
 
-In case the range is currently PROVISIONED, the operation will be asynchronous as it needs to be de-ptovisioned first.""")
+In case the range is currently PROVISIONED, the operation will be asynchronous as it needs to be de-ptovisioned first. \n[Command Reference](deleteByoipRange)""")
 @cli_util.option('--byoip-range-id', required=True, help=u"""The OCID of the Byoip Range object.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -3380,7 +3380,7 @@ def delete_byoip_range(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     cli_util.render_response(result, ctx)
 
 
-@cpe_group.command(name=cli_util.override('virtual_network.delete_cpe.command_name', 'delete'), help=u"""Deletes the specified CPE object. The CPE must not be connected to a DRG. This is an asynchronous operation. The CPE's `lifecycleState` will change to TERMINATING temporarily until the CPE is completely removed.""")
+@cpe_group.command(name=cli_util.override('virtual_network.delete_cpe.command_name', 'delete'), help=u"""Deletes the specified CPE object. The CPE must not be connected to a DRG. This is an asynchronous operation. The CPE's `lifecycleState` will change to TERMINATING temporarily until the CPE is completely removed. \n[Command Reference](deleteCpe)""")
 @cli_util.option('--cpe-id', required=True, help=u"""The OCID of the CPE.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -3405,7 +3405,7 @@ def delete_cpe(ctx, from_json, cpe_id, if_match):
     cli_util.render_response(result, ctx)
 
 
-@cross_connect_group.command(name=cli_util.override('virtual_network.delete_cross_connect.command_name', 'delete'), help=u"""Deletes the specified cross-connect. It must not be mapped to a [VirtualCircuit].""")
+@cross_connect_group.command(name=cli_util.override('virtual_network.delete_cross_connect.command_name', 'delete'), help=u"""Deletes the specified cross-connect. It must not be mapped to a [VirtualCircuit]. \n[Command Reference](deleteCrossConnect)""")
 @cli_util.option('--cross-connect-id', required=True, help=u"""The OCID of the cross-connect.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -3468,7 +3468,7 @@ def delete_cross_connect(ctx, from_json, wait_for_state, max_wait_seconds, wait_
     cli_util.render_response(result, ctx)
 
 
-@cross_connect_group_group.command(name=cli_util.override('virtual_network.delete_cross_connect_group.command_name', 'delete'), help=u"""Deletes the specified cross-connect group. It must not contain any cross-connects, and it cannot be mapped to a [VirtualCircuit].""")
+@cross_connect_group_group.command(name=cli_util.override('virtual_network.delete_cross_connect_group.command_name', 'delete'), help=u"""Deletes the specified cross-connect group. It must not contain any cross-connects, and it cannot be mapped to a [VirtualCircuit]. \n[Command Reference](deleteCrossConnectGroup)""")
 @cli_util.option('--cross-connect-group-id', required=True, help=u"""The OCID of the cross-connect group.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -3533,7 +3533,7 @@ def delete_cross_connect_group(ctx, from_json, wait_for_state, max_wait_seconds,
 
 @dhcp_options_group.command(name=cli_util.override('virtual_network.delete_dhcp_options.command_name', 'delete'), help=u"""Deletes the specified set of DHCP options, but only if it's not associated with a subnet. You can't delete a VCN's default set of DHCP options.
 
-This is an asynchronous operation. The state of the set of options will switch to TERMINATING temporarily until the set is completely removed.""")
+This is an asynchronous operation. The state of the set of options will switch to TERMINATING temporarily until the set is completely removed. \n[Command Reference](deleteDhcpOptions)""")
 @cli_util.option('--dhcp-id', required=True, help=u"""The OCID for the set of DHCP options.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -3596,7 +3596,7 @@ def delete_dhcp_options(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     cli_util.render_response(result, ctx)
 
 
-@drg_group.command(name=cli_util.override('virtual_network.delete_drg.command_name', 'delete'), help=u"""Deletes the specified DRG. The DRG must not be attached to a VCN or be connected to your on-premise network. Also, there must not be a route table that lists the DRG as a target. This is an asynchronous operation. The DRG's `lifecycleState` will change to TERMINATING temporarily until the DRG is completely removed.""")
+@drg_group.command(name=cli_util.override('virtual_network.delete_drg.command_name', 'delete'), help=u"""Deletes the specified DRG. The DRG must not be attached to a VCN or be connected to your on-premise network. Also, there must not be a route table that lists the DRG as a target. This is an asynchronous operation. The DRG's `lifecycleState` will change to TERMINATING temporarily until the DRG is completely removed. \n[Command Reference](deleteDrg)""")
 @cli_util.option('--drg-id', required=True, help=u"""The OCID of the DRG.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -3659,7 +3659,7 @@ def delete_drg(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
     cli_util.render_response(result, ctx)
 
 
-@drg_attachment_group.command(name=cli_util.override('virtual_network.delete_drg_attachment.command_name', 'delete'), help=u"""Detaches a DRG from a VCN by deleting the corresponding `DrgAttachment`. This is an asynchronous operation. The attachment's `lifecycleState` will change to DETACHING temporarily until the attachment is completely removed.""")
+@drg_attachment_group.command(name=cli_util.override('virtual_network.delete_drg_attachment.command_name', 'delete'), help=u"""Detaches a DRG from a VCN by deleting the corresponding `DrgAttachment`. This is an asynchronous operation. The attachment's `lifecycleState` will change to DETACHING temporarily until the attachment is completely removed. \n[Command Reference](deleteDrgAttachment)""")
 @cli_util.option('--drg-attachment-id', required=True, help=u"""The OCID of the DRG attachment.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -3724,7 +3724,7 @@ def delete_drg_attachment(ctx, from_json, wait_for_state, max_wait_seconds, wait
 
 @internet_gateway_group.command(name=cli_util.override('virtual_network.delete_internet_gateway.command_name', 'delete'), help=u"""Deletes the specified internet gateway. The internet gateway does not have to be disabled, but there must not be a route table that lists it as a target.
 
-This is an asynchronous operation. The gateway's `lifecycleState` will change to TERMINATING temporarily until the gateway is completely removed.""")
+This is an asynchronous operation. The gateway's `lifecycleState` will change to TERMINATING temporarily until the gateway is completely removed. \n[Command Reference](deleteInternetGateway)""")
 @cli_util.option('--ig-id', required=True, help=u"""The OCID of the internet gateway.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -3789,7 +3789,7 @@ def delete_internet_gateway(ctx, from_json, wait_for_state, max_wait_seconds, wa
 
 @ip_sec_connection_group.command(name=cli_util.override('virtual_network.delete_ip_sec_connection.command_name', 'delete'), help=u"""Deletes the specified IPSec connection. If your goal is to disable the IPSec VPN between your VCN and on-premises network, it's easiest to simply detach the DRG but keep all the IPSec VPN components intact. If you were to delete all the components and then later need to create an IPSec VPN again, you would need to configure your on-premises router again with the new information returned from [CreateIPSecConnection].
 
-This is an asynchronous operation. The connection's `lifecycleState` will change to TERMINATING temporarily until the connection is completely removed.""")
+This is an asynchronous operation. The connection's `lifecycleState` will change to TERMINATING temporarily until the connection is completely removed. \n[Command Reference](deleteIPSecConnection)""")
 @cli_util.option('--ipsc-id', required=True, help=u"""The OCID of the IPSec connection.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -3852,7 +3852,7 @@ def delete_ip_sec_connection(ctx, from_json, wait_for_state, max_wait_seconds, w
     cli_util.render_response(result, ctx)
 
 
-@ipv6_group.command(name=cli_util.override('virtual_network.delete_ipv6.command_name', 'delete'), help=u"""Unassigns and deletes the specified IPv6. You must specify the object's OCID. The IPv6 address is returned to the subnet's pool of available addresses.""")
+@ipv6_group.command(name=cli_util.override('virtual_network.delete_ipv6.command_name', 'delete'), help=u"""Unassigns and deletes the specified IPv6. You must specify the object's OCID. The IPv6 address is returned to the subnet's pool of available addresses. \n[Command Reference](deleteIpv6)""")
 @cli_util.option('--ipv6-id', required=True, help=u"""The [OCID] of the IPv6.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -3918,7 +3918,7 @@ def delete_ipv6(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 
 @local_peering_gateway_group.command(name=cli_util.override('virtual_network.delete_local_peering_gateway.command_name', 'delete'), help=u"""Deletes the specified local peering gateway (LPG).
 
-This is an asynchronous operation; the local peering gateway's `lifecycleState` changes to TERMINATING temporarily until the local peering gateway is completely removed.""")
+This is an asynchronous operation; the local peering gateway's `lifecycleState` changes to TERMINATING temporarily until the local peering gateway is completely removed. \n[Command Reference](deleteLocalPeeringGateway)""")
 @cli_util.option('--local-peering-gateway-id', required=True, help=u"""The OCID of the local peering gateway.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -3983,7 +3983,7 @@ def delete_local_peering_gateway(ctx, from_json, wait_for_state, max_wait_second
 
 @nat_gateway_group.command(name=cli_util.override('virtual_network.delete_nat_gateway.command_name', 'delete'), help=u"""Deletes the specified NAT gateway. The NAT gateway does not have to be disabled, but there must not be a route rule that lists the NAT gateway as a target.
 
-This is an asynchronous operation. The NAT gateway's `lifecycleState` will change to TERMINATING temporarily until the NAT gateway is completely removed.""")
+This is an asynchronous operation. The NAT gateway's `lifecycleState` will change to TERMINATING temporarily until the NAT gateway is completely removed. \n[Command Reference](deleteNatGateway)""")
 @cli_util.option('--nat-gateway-id', required=True, help=u"""The NAT gateway's [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -4048,7 +4048,7 @@ def delete_nat_gateway(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
 @network_security_group_group.command(name=cli_util.override('virtual_network.delete_network_security_group.command_name', 'delete'), help=u"""Deletes the specified network security group. The group must not contain any VNICs.
 
-To get a list of the VNICs in a network security group, use [ListNetworkSecurityGroupVnics]. Each returned [NetworkSecurityGroupVnic] object contains both the OCID of the VNIC and the OCID of the VNIC's parent resource (for example, the Compute instance that the VNIC is attached to).""")
+To get a list of the VNICs in a network security group, use [ListNetworkSecurityGroupVnics]. Each returned [NetworkSecurityGroupVnic] object contains both the OCID of the VNIC and the OCID of the VNIC's parent resource (for example, the Compute instance that the VNIC is attached to). \n[Command Reference](deleteNetworkSecurityGroup)""")
 @cli_util.option('--network-security-group-id', required=True, help=u"""The [OCID] of the network security group.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -4115,7 +4115,7 @@ def delete_network_security_group(ctx, from_json, wait_for_state, max_wait_secon
 
 This operation cannot be used with primary private IPs, which are automatically unassigned and deleted when the VNIC is terminated.
 
-**Important:** If a secondary private IP is the [target of a route rule], unassigning it from the VNIC causes that route rule to blackhole and the traffic will be dropped.""")
+**Important:** If a secondary private IP is the [target of a route rule], unassigning it from the VNIC causes that route rule to blackhole and the traffic will be dropped. \n[Command Reference](deletePrivateIp)""")
 @cli_util.option('--private-ip-id', required=True, help=u"""The OCID of the private IP.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -4146,7 +4146,7 @@ def delete_private_ip(ctx, from_json, private_ip_id, if_match):
 
 For an assigned reserved public IP, the initial unassignment portion of this operation is asynchronous. Poll the public IP's `lifecycleState` to determine if the operation succeeded.
 
-If you want to simply unassign a reserved public IP and return it to your pool of reserved public IPs, instead use [UpdatePublicIp].""")
+If you want to simply unassign a reserved public IP and return it to your pool of reserved public IPs, instead use [UpdatePublicIp]. \n[Command Reference](deletePublicIp)""")
 @cli_util.option('--public-ip-id', required=True, help=u"""The OCID of the public IP.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -4209,7 +4209,7 @@ def delete_public_ip(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
     cli_util.render_response(result, ctx)
 
 
-@public_ip_pool_group.command(name=cli_util.override('virtual_network.delete_public_ip_pool.command_name', 'delete'), help=u"""Deletes the specified Public Ip Pool It must not have any active address allocations You must specify the object's OCID.""")
+@public_ip_pool_group.command(name=cli_util.override('virtual_network.delete_public_ip_pool.command_name', 'delete'), help=u"""Deletes the specified Public Ip Pool It must not have any active address allocations You must specify the object's OCID. \n[Command Reference](deletePublicIpPool)""")
 @cli_util.option('--public-ip-pool-id', required=True, help=u"""The OCID of the Public Ip Pool object.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -4275,7 +4275,7 @@ def delete_public_ip_pool(ctx, from_json, wait_for_state, max_wait_seconds, wait
 
 @remote_peering_connection_group.command(name=cli_util.override('virtual_network.delete_remote_peering_connection.command_name', 'delete'), help=u"""Deletes the remote peering connection (RPC).
 
-This is an asynchronous operation; the RPC's `lifecycleState` changes to TERMINATING temporarily until the RPC is completely removed.""")
+This is an asynchronous operation; the RPC's `lifecycleState` changes to TERMINATING temporarily until the RPC is completely removed. \n[Command Reference](deleteRemotePeeringConnection)""")
 @cli_util.option('--remote-peering-connection-id', required=True, help=u"""The OCID of the remote peering connection (RPC).""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -4340,7 +4340,7 @@ def delete_remote_peering_connection(ctx, from_json, wait_for_state, max_wait_se
 
 @route_table_group.command(name=cli_util.override('virtual_network.delete_route_table.command_name', 'delete'), help=u"""Deletes the specified route table, but only if it's not associated with a subnet. You can't delete a VCN's default route table.
 
-This is an asynchronous operation. The route table's `lifecycleState` will change to TERMINATING temporarily until the route table is completely removed.""")
+This is an asynchronous operation. The route table's `lifecycleState` will change to TERMINATING temporarily until the route table is completely removed. \n[Command Reference](deleteRouteTable)""")
 @cli_util.option('--rt-id', required=True, help=u"""The OCID of the route table.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -4405,7 +4405,7 @@ def delete_route_table(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
 @security_list_group.command(name=cli_util.override('virtual_network.delete_security_list.command_name', 'delete'), help=u"""Deletes the specified security list, but only if it's not associated with a subnet. You can't delete a VCN's default security list.
 
-This is an asynchronous operation. The security list's `lifecycleState` will change to TERMINATING temporarily until the security list is completely removed.""")
+This is an asynchronous operation. The security list's `lifecycleState` will change to TERMINATING temporarily until the security list is completely removed. \n[Command Reference](deleteSecurityList)""")
 @cli_util.option('--security-list-id', required=True, help=u"""The OCID of the security list.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -4468,7 +4468,7 @@ def delete_security_list(ctx, from_json, wait_for_state, max_wait_seconds, wait_
     cli_util.render_response(result, ctx)
 
 
-@service_gateway_group.command(name=cli_util.override('virtual_network.delete_service_gateway.command_name', 'delete'), help=u"""Deletes the specified service gateway. There must not be a route table that lists the service gateway as a target.""")
+@service_gateway_group.command(name=cli_util.override('virtual_network.delete_service_gateway.command_name', 'delete'), help=u"""Deletes the specified service gateway. There must not be a route table that lists the service gateway as a target. \n[Command Reference](deleteServiceGateway)""")
 @cli_util.option('--service-gateway-id', required=True, help=u"""The service gateway's [OCID].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -4531,7 +4531,7 @@ def delete_service_gateway(ctx, from_json, wait_for_state, max_wait_seconds, wai
     cli_util.render_response(result, ctx)
 
 
-@subnet_group.command(name=cli_util.override('virtual_network.delete_subnet.command_name', 'delete'), help=u"""Deletes the specified subnet, but only if there are no instances in the subnet. This is an asynchronous operation. The subnet's `lifecycleState` will change to TERMINATING temporarily. If there are any instances in the subnet, the state will instead change back to AVAILABLE.""")
+@subnet_group.command(name=cli_util.override('virtual_network.delete_subnet.command_name', 'delete'), help=u"""Deletes the specified subnet, but only if there are no instances in the subnet. This is an asynchronous operation. The subnet's `lifecycleState` will change to TERMINATING temporarily. If there are any instances in the subnet, the state will instead change back to AVAILABLE. \n[Command Reference](deleteSubnet)""")
 @cli_util.option('--subnet-id', required=True, help=u"""The OCID of the subnet.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -4594,7 +4594,7 @@ def delete_subnet(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
     cli_util.render_response(result, ctx)
 
 
-@vcn_group.command(name=cli_util.override('virtual_network.delete_vcn.command_name', 'delete'), help=u"""Deletes the specified VCN. The VCN must be empty and have no attached gateways. This is an asynchronous operation. The VCN's `lifecycleState` will change to TERMINATING temporarily until the VCN is completely removed.""")
+@vcn_group.command(name=cli_util.override('virtual_network.delete_vcn.command_name', 'delete'), help=u"""Deletes the specified VCN. The VCN must be empty and have no attached gateways. This is an asynchronous operation. The VCN's `lifecycleState` will change to TERMINATING temporarily until the VCN is completely removed. \n[Command Reference](deleteVcn)""")
 @cli_util.option('--vcn-id', required=True, help=u"""The [OCID] of the VCN.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -4659,7 +4659,7 @@ def delete_vcn(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
 
 @virtual_circuit_group.command(name=cli_util.override('virtual_network.delete_virtual_circuit.command_name', 'delete'), help=u"""Deletes the specified virtual circuit.
 
-**Important:** If you're using FastConnect via a provider, make sure to also terminate the connection with the provider, or else the provider may continue to bill you.""")
+**Important:** If you're using FastConnect via a provider, make sure to also terminate the connection with the provider, or else the provider may continue to bill you. \n[Command Reference](deleteVirtualCircuit)""")
 @cli_util.option('--virtual-circuit-id', required=True, help=u"""The OCID of the virtual circuit.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -4722,7 +4722,7 @@ def delete_virtual_circuit(ctx, from_json, wait_for_state, max_wait_seconds, wai
     cli_util.render_response(result, ctx)
 
 
-@vlan_group.command(name=cli_util.override('virtual_network.delete_vlan.command_name', 'delete'), help=u"""Deletes the specified VLAN, but only if there are no VNICs in the VLAN.""")
+@vlan_group.command(name=cli_util.override('virtual_network.delete_vlan.command_name', 'delete'), help=u"""Deletes the specified VLAN, but only if there are no VNICs in the VLAN. \n[Command Reference](deleteVlan)""")
 @cli_util.option('--vlan-id', required=True, help=u"""The [OCID] of the VLAN.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -4788,7 +4788,7 @@ def delete_vlan(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 
 @service_gateway_group.command(name=cli_util.override('virtual_network.detach_service_id.command_name', 'detach'), help=u"""Removes the specified [Service] from the list of enabled `Service` objects for the specified gateway. You do not need to remove any route rules that specify this `Service` object's `cidrBlock` as the destination CIDR. However, consider removing the rules if your intent is to permanently disable use of the `Service` through this service gateway.
 
-**Note:** The `DetachServiceId` operation is an easy way to remove an individual `Service` from the service gateway. Compare it with [UpdateServiceGateway], which replaces the entire existing list of enabled `Service` objects with the list that you provide in the `Update` call. `UpdateServiceGateway` also lets you block all traffic through the service gateway without having to remove each of the individual `Service` objects.""")
+**Note:** The `DetachServiceId` operation is an easy way to remove an individual `Service` from the service gateway. Compare it with [UpdateServiceGateway], which replaces the entire existing list of enabled `Service` objects with the list that you provide in the `Update` call. `UpdateServiceGateway` also lets you block all traffic through the service gateway without having to remove each of the individual `Service` objects. \n[Command Reference](detachServiceId)""")
 @cli_util.option('--service-gateway-id', required=True, help=u"""The service gateway's [OCID].""")
 @cli_util.option('--service-id', required=True, help=u"""The [OCID] of the [Service].""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -4844,7 +4844,7 @@ def detach_service_id(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
     cli_util.render_response(result, ctx)
 
 
-@byoip_range_group.command(name=cli_util.override('virtual_network.get_byoip_range.command_name', 'get'), help=u"""Gets the specified Byoip Range object. You must specify the object's OCID.""")
+@byoip_range_group.command(name=cli_util.override('virtual_network.get_byoip_range.command_name', 'get'), help=u"""Gets the specified Byoip Range object. You must specify the object's OCID. \n[Command Reference](getByoipRange)""")
 @cli_util.option('--byoip-range-id', required=True, help=u"""The OCID of the Byoip Range object.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -4866,7 +4866,7 @@ def get_byoip_range(ctx, from_json, byoip_range_id):
     cli_util.render_response(result, ctx)
 
 
-@cpe_group.command(name=cli_util.override('virtual_network.get_cpe.command_name', 'get'), help=u"""Gets the specified CPE's information.""")
+@cpe_group.command(name=cli_util.override('virtual_network.get_cpe.command_name', 'get'), help=u"""Gets the specified CPE's information. \n[Command Reference](getCpe)""")
 @cli_util.option('--cpe-id', required=True, help=u"""The OCID of the CPE.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -4893,7 +4893,7 @@ The rendered content is specific to the type of CPE device (for example, Cisco A
 
 The operation returns configuration information for *all* of the [IPSecConnection] objects that use the specified CPE. Here are similar operations:
 
-  * [GetIpsecCpeDeviceConfigContent]   returns CPE configuration content for all tunnels in a single IPSec connection.   * [GetTunnelCpeDeviceConfigContent]   returns CPE configuration content for a specific tunnel within an IPSec connection.""")
+  * [GetIpsecCpeDeviceConfigContent]   returns CPE configuration content for all tunnels in a single IPSec connection.   * [GetTunnelCpeDeviceConfigContent]   returns CPE configuration content for a specific tunnel within an IPSec connection. \n[Command Reference](getCpeDeviceConfigContent)""")
 @cli_util.option('--cpe-id', required=True, help=u"""The OCID of the CPE.""")
 @cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -4940,7 +4940,7 @@ def get_cpe_device_config_content(ctx, from_json, file, cpe_id):
 
 @cpe_device_shape_detail_group.command(name=cli_util.override('virtual_network.get_cpe_device_shape.command_name', 'get-cpe-device-shape'), help=u"""Gets the detailed information about the specified CPE device type. This might include a set of questions that are specific to the particular CPE device type. The customer must supply answers to those questions (see [UpdateTunnelCpeDeviceConfig]). The service merges the answers with a template of other information for the CPE device type. The following operations return the merged content:
 
-  * [GetCpeDeviceConfigContent]   * [GetIpsecCpeDeviceConfigContent]   * [GetTunnelCpeDeviceConfigContent]""")
+  * [GetCpeDeviceConfigContent]   * [GetIpsecCpeDeviceConfigContent]   * [GetTunnelCpeDeviceConfigContent] \n[Command Reference](getCpeDeviceShape)""")
 @cli_util.option('--cpe-device-shape-id', required=True, help=u"""The [OCID] of the CPE device shape.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -4962,7 +4962,7 @@ def get_cpe_device_shape(ctx, from_json, cpe_device_shape_id):
     cli_util.render_response(result, ctx)
 
 
-@cross_connect_group.command(name=cli_util.override('virtual_network.get_cross_connect.command_name', 'get'), help=u"""Gets the specified cross-connect's information.""")
+@cross_connect_group.command(name=cli_util.override('virtual_network.get_cross_connect.command_name', 'get'), help=u"""Gets the specified cross-connect's information. \n[Command Reference](getCrossConnect)""")
 @cli_util.option('--cross-connect-id', required=True, help=u"""The OCID of the cross-connect.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -4983,7 +4983,7 @@ def get_cross_connect(ctx, from_json, cross_connect_id):
     cli_util.render_response(result, ctx)
 
 
-@cross_connect_group_group.command(name=cli_util.override('virtual_network.get_cross_connect_group.command_name', 'get'), help=u"""Gets the specified cross-connect group's information.""")
+@cross_connect_group_group.command(name=cli_util.override('virtual_network.get_cross_connect_group.command_name', 'get'), help=u"""Gets the specified cross-connect group's information. \n[Command Reference](getCrossConnectGroup)""")
 @cli_util.option('--cross-connect-group-id', required=True, help=u"""The OCID of the cross-connect group.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -5004,7 +5004,7 @@ def get_cross_connect_group(ctx, from_json, cross_connect_group_id):
     cli_util.render_response(result, ctx)
 
 
-@letter_of_authority_group.command(name=cli_util.override('virtual_network.get_cross_connect_letter_of_authority.command_name', 'get-cross-connect'), help=u"""Gets the Letter of Authority for the specified cross-connect.""")
+@letter_of_authority_group.command(name=cli_util.override('virtual_network.get_cross_connect_letter_of_authority.command_name', 'get-cross-connect'), help=u"""Gets the Letter of Authority for the specified cross-connect. \n[Command Reference](getCrossConnectLetterOfAuthority)""")
 @cli_util.option('--cross-connect-id', required=True, help=u"""The OCID of the cross-connect.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -5025,7 +5025,7 @@ def get_cross_connect_letter_of_authority(ctx, from_json, cross_connect_id):
     cli_util.render_response(result, ctx)
 
 
-@cross_connect_status_group.command(name=cli_util.override('virtual_network.get_cross_connect_status.command_name', 'get'), help=u"""Gets the status of the specified cross-connect.""")
+@cross_connect_status_group.command(name=cli_util.override('virtual_network.get_cross_connect_status.command_name', 'get'), help=u"""Gets the status of the specified cross-connect. \n[Command Reference](getCrossConnectStatus)""")
 @cli_util.option('--cross-connect-id', required=True, help=u"""The OCID of the cross-connect.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -5046,7 +5046,7 @@ def get_cross_connect_status(ctx, from_json, cross_connect_id):
     cli_util.render_response(result, ctx)
 
 
-@dhcp_options_group.command(name=cli_util.override('virtual_network.get_dhcp_options.command_name', 'get'), help=u"""Gets the specified set of DHCP options.""")
+@dhcp_options_group.command(name=cli_util.override('virtual_network.get_dhcp_options.command_name', 'get'), help=u"""Gets the specified set of DHCP options. \n[Command Reference](getDhcpOptions)""")
 @cli_util.option('--dhcp-id', required=True, help=u"""The OCID for the set of DHCP options.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -5067,7 +5067,7 @@ def get_dhcp_options(ctx, from_json, dhcp_id):
     cli_util.render_response(result, ctx)
 
 
-@drg_group.command(name=cli_util.override('virtual_network.get_drg.command_name', 'get'), help=u"""Gets the specified DRG's information.""")
+@drg_group.command(name=cli_util.override('virtual_network.get_drg.command_name', 'get'), help=u"""Gets the specified DRG's information. \n[Command Reference](getDrg)""")
 @cli_util.option('--drg-id', required=True, help=u"""The OCID of the DRG.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -5088,7 +5088,7 @@ def get_drg(ctx, from_json, drg_id):
     cli_util.render_response(result, ctx)
 
 
-@drg_attachment_group.command(name=cli_util.override('virtual_network.get_drg_attachment.command_name', 'get'), help=u"""Gets the information for the specified `DrgAttachment`.""")
+@drg_attachment_group.command(name=cli_util.override('virtual_network.get_drg_attachment.command_name', 'get'), help=u"""Gets the information for the specified `DrgAttachment`. \n[Command Reference](getDrgAttachment)""")
 @cli_util.option('--drg-attachment-id', required=True, help=u"""The OCID of the DRG attachment.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -5109,7 +5109,7 @@ def get_drg_attachment(ctx, from_json, drg_attachment_id):
     cli_util.render_response(result, ctx)
 
 
-@drg_redundancy_status_group.command(name=cli_util.override('virtual_network.get_drg_redundancy_status.command_name', 'get'), help=u"""Gets the redundancy status for the specified DRG. For more information, see [Redundancy Remedies].""")
+@drg_redundancy_status_group.command(name=cli_util.override('virtual_network.get_drg_redundancy_status.command_name', 'get'), help=u"""Gets the redundancy status for the specified DRG. For more information, see [Redundancy Remedies]. \n[Command Reference](getDrgRedundancyStatus)""")
 @cli_util.option('--drg-id', required=True, help=u"""The OCID of the DRG.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -5131,7 +5131,7 @@ def get_drg_redundancy_status(ctx, from_json, drg_id):
     cli_util.render_response(result, ctx)
 
 
-@fast_connect_provider_service_group.command(name=cli_util.override('virtual_network.get_fast_connect_provider_service.command_name', 'get'), help=u"""Gets the specified provider service. For more information, see [FastConnect Overview].""")
+@fast_connect_provider_service_group.command(name=cli_util.override('virtual_network.get_fast_connect_provider_service.command_name', 'get'), help=u"""Gets the specified provider service. For more information, see [FastConnect Overview]. \n[Command Reference](getFastConnectProviderService)""")
 @cli_util.option('--provider-service-id', required=True, help=u"""The OCID of the provider service.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -5152,7 +5152,7 @@ def get_fast_connect_provider_service(ctx, from_json, provider_service_id):
     cli_util.render_response(result, ctx)
 
 
-@fast_connect_provider_service_key_group.command(name=cli_util.override('virtual_network.get_fast_connect_provider_service_key.command_name', 'get'), help=u"""Gets the specified provider service key's information. Use this operation to validate a provider service key. An invalid key returns a 404 error.""")
+@fast_connect_provider_service_key_group.command(name=cli_util.override('virtual_network.get_fast_connect_provider_service_key.command_name', 'get'), help=u"""Gets the specified provider service key's information. Use this operation to validate a provider service key. An invalid key returns a 404 error. \n[Command Reference](getFastConnectProviderServiceKey)""")
 @cli_util.option('--provider-service-id', required=True, help=u"""The OCID of the provider service.""")
 @cli_util.option('--provider-service-key-name', required=True, help=u"""The provider service key that the provider gives you when you set up a virtual circuit connection from the provider to Oracle Cloud Infrastructure. You can set up that connection and get your provider service key at the provider's website or portal. For the portal location, see the `description` attribute of the [FastConnectProviderService].""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -5178,7 +5178,7 @@ def get_fast_connect_provider_service_key(ctx, from_json, provider_service_id, p
     cli_util.render_response(result, ctx)
 
 
-@internet_gateway_group.command(name=cli_util.override('virtual_network.get_internet_gateway.command_name', 'get'), help=u"""Gets the specified internet gateway's information.""")
+@internet_gateway_group.command(name=cli_util.override('virtual_network.get_internet_gateway.command_name', 'get'), help=u"""Gets the specified internet gateway's information. \n[Command Reference](getInternetGateway)""")
 @cli_util.option('--ig-id', required=True, help=u"""The OCID of the internet gateway.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -5199,7 +5199,7 @@ def get_internet_gateway(ctx, from_json, ig_id):
     cli_util.render_response(result, ctx)
 
 
-@ip_sec_connection_group.command(name=cli_util.override('virtual_network.get_ip_sec_connection.command_name', 'get'), help=u"""Gets the specified IPSec connection's basic information, including the static routes for the on-premises router. If you want the status of the connection (whether it's up or down), use [GetIPSecConnectionTunnel].""")
+@ip_sec_connection_group.command(name=cli_util.override('virtual_network.get_ip_sec_connection.command_name', 'get'), help=u"""Gets the specified IPSec connection's basic information, including the static routes for the on-premises router. If you want the status of the connection (whether it's up or down), use [GetIPSecConnectionTunnel]. \n[Command Reference](getIPSecConnection)""")
 @cli_util.option('--ipsc-id', required=True, help=u"""The OCID of the IPSec connection.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -5222,7 +5222,7 @@ def get_ip_sec_connection(ctx, from_json, ipsc_id):
 
 @ip_sec_connection_device_config_group.command(name=cli_util.override('virtual_network.get_ip_sec_connection_device_config.command_name', 'get'), help=u"""Deprecated. To get tunnel information, instead use:
 
-* [GetIPSecConnectionTunnel] * [GetIPSecConnectionTunnelSharedSecret]""")
+* [GetIPSecConnectionTunnel] * [GetIPSecConnectionTunnelSharedSecret] \n[Command Reference](getIPSecConnectionDeviceConfig)""")
 @cli_util.option('--ipsc-id', required=True, help=u"""The OCID of the IPSec connection.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -5243,7 +5243,7 @@ def get_ip_sec_connection_device_config(ctx, from_json, ipsc_id):
     cli_util.render_response(result, ctx)
 
 
-@ip_sec_connection_device_status_group.command(name=cli_util.override('virtual_network.get_ip_sec_connection_device_status.command_name', 'get'), help=u"""Deprecated. To get the tunnel status, instead use [GetIPSecConnectionTunnel].""")
+@ip_sec_connection_device_status_group.command(name=cli_util.override('virtual_network.get_ip_sec_connection_device_status.command_name', 'get'), help=u"""Deprecated. To get the tunnel status, instead use [GetIPSecConnectionTunnel]. \n[Command Reference](getIPSecConnectionDeviceStatus)""")
 @cli_util.option('--ipsc-id', required=True, help=u"""The OCID of the IPSec connection.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -5264,7 +5264,7 @@ def get_ip_sec_connection_device_status(ctx, from_json, ipsc_id):
     cli_util.render_response(result, ctx)
 
 
-@ip_sec_connection_tunnel_group.command(name=cli_util.override('virtual_network.get_ip_sec_connection_tunnel.command_name', 'get'), help=u"""Gets the specified tunnel's information. The resulting object does not include the tunnel's shared secret (pre-shared key). To retrieve that, use [GetIPSecConnectionTunnelSharedSecret].""")
+@ip_sec_connection_tunnel_group.command(name=cli_util.override('virtual_network.get_ip_sec_connection_tunnel.command_name', 'get'), help=u"""Gets the specified tunnel's information. The resulting object does not include the tunnel's shared secret (pre-shared key). To retrieve that, use [GetIPSecConnectionTunnelSharedSecret]. \n[Command Reference](getIPSecConnectionTunnel)""")
 @cli_util.option('--ipsc-id', required=True, help=u"""The OCID of the IPSec connection.""")
 @cli_util.option('--tunnel-id', required=True, help=u"""The [OCID] of the tunnel.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -5290,7 +5290,7 @@ def get_ip_sec_connection_tunnel(ctx, from_json, ipsc_id, tunnel_id):
     cli_util.render_response(result, ctx)
 
 
-@ip_sec_connection_tunnel_shared_secret_group.command(name=cli_util.override('virtual_network.get_ip_sec_connection_tunnel_shared_secret.command_name', 'get'), help=u"""Gets the specified tunnel's shared secret (pre-shared key). To get other information about the tunnel, use [GetIPSecConnectionTunnel].""")
+@ip_sec_connection_tunnel_shared_secret_group.command(name=cli_util.override('virtual_network.get_ip_sec_connection_tunnel_shared_secret.command_name', 'get'), help=u"""Gets the specified tunnel's shared secret (pre-shared key). To get other information about the tunnel, use [GetIPSecConnectionTunnel]. \n[Command Reference](getIPSecConnectionTunnelSharedSecret)""")
 @cli_util.option('--ipsc-id', required=True, help=u"""The OCID of the IPSec connection.""")
 @cli_util.option('--tunnel-id', required=True, help=u"""The [OCID] of the tunnel.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -5322,7 +5322,7 @@ The rendered content is specific to the type of CPE device (for example, Cisco A
 
 The operation returns configuration information for all tunnels in the single specified [IPSecConnection] object. Here are other similar operations:
 
-  * [GetTunnelCpeDeviceConfigContent]   returns CPE configuration content for a specific tunnel within an IPSec connection.   * [GetCpeDeviceConfigContent]   returns CPE configuration content for *all* IPSec connections that use a specific CPE.""")
+  * [GetTunnelCpeDeviceConfigContent]   returns CPE configuration content for a specific tunnel within an IPSec connection.   * [GetCpeDeviceConfigContent]   returns CPE configuration content for *all* IPSec connections that use a specific CPE. \n[Command Reference](getIpsecCpeDeviceConfigContent)""")
 @cli_util.option('--ipsc-id', required=True, help=u"""The OCID of the IPSec connection.""")
 @cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -5367,7 +5367,7 @@ def get_ipsec_cpe_device_config_content(ctx, from_json, file, ipsc_id):
         file.close()
 
 
-@ipv6_group.command(name=cli_util.override('virtual_network.get_ipv6.command_name', 'get'), help=u"""Gets the specified IPv6. You must specify the object's OCID. Alternatively, you can get the object by using [ListIpv6s] with the IPv6 address (for example, 2001:0db8:0123:1111:98fe:dcba:9876:4321) and subnet OCID.""")
+@ipv6_group.command(name=cli_util.override('virtual_network.get_ipv6.command_name', 'get'), help=u"""Gets the specified IPv6. You must specify the object's OCID. Alternatively, you can get the object by using [ListIpv6s] with the IPv6 address (for example, 2001:0db8:0123:1111:98fe:dcba:9876:4321) and subnet OCID. \n[Command Reference](getIpv6)""")
 @cli_util.option('--ipv6-id', required=True, help=u"""The [OCID] of the IPv6.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -5389,7 +5389,7 @@ def get_ipv6(ctx, from_json, ipv6_id):
     cli_util.render_response(result, ctx)
 
 
-@local_peering_gateway_group.command(name=cli_util.override('virtual_network.get_local_peering_gateway.command_name', 'get'), help=u"""Gets the specified local peering gateway's information.""")
+@local_peering_gateway_group.command(name=cli_util.override('virtual_network.get_local_peering_gateway.command_name', 'get'), help=u"""Gets the specified local peering gateway's information. \n[Command Reference](getLocalPeeringGateway)""")
 @cli_util.option('--local-peering-gateway-id', required=True, help=u"""The OCID of the local peering gateway.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -5410,7 +5410,7 @@ def get_local_peering_gateway(ctx, from_json, local_peering_gateway_id):
     cli_util.render_response(result, ctx)
 
 
-@nat_gateway_group.command(name=cli_util.override('virtual_network.get_nat_gateway.command_name', 'get'), help=u"""Gets the specified NAT gateway's information.""")
+@nat_gateway_group.command(name=cli_util.override('virtual_network.get_nat_gateway.command_name', 'get'), help=u"""Gets the specified NAT gateway's information. \n[Command Reference](getNatGateway)""")
 @cli_util.option('--nat-gateway-id', required=True, help=u"""The NAT gateway's [OCID].""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -5435,7 +5435,7 @@ def get_nat_gateway(ctx, from_json, nat_gateway_id):
 
 To list the VNICs in an NSG, see [ListNetworkSecurityGroupVnics].
 
-To list the security rules in an NSG, see [ListNetworkSecurityGroupSecurityRules].""")
+To list the security rules in an NSG, see [ListNetworkSecurityGroupSecurityRules]. \n[Command Reference](getNetworkSecurityGroup)""")
 @cli_util.option('--network-security-group-id', required=True, help=u"""The [OCID] of the network security group.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -5456,7 +5456,7 @@ def get_network_security_group(ctx, from_json, network_security_group_id):
     cli_util.render_response(result, ctx)
 
 
-@private_ip_group.command(name=cli_util.override('virtual_network.get_private_ip.command_name', 'get'), help=u"""Gets the specified private IP. You must specify the object's OCID. Alternatively, you can get the object by using [ListPrivateIps] with the private IP address (for example, 10.0.3.3) and subnet OCID.""")
+@private_ip_group.command(name=cli_util.override('virtual_network.get_private_ip.command_name', 'get'), help=u"""Gets the specified private IP. You must specify the object's OCID. Alternatively, you can get the object by using [ListPrivateIps] with the private IP address (for example, 10.0.3.3) and subnet OCID. \n[Command Reference](getPrivateIp)""")
 @cli_util.option('--private-ip-id', required=True, help=u"""The OCID of the private IP.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -5483,7 +5483,7 @@ Alternatively, you can get the object by using [GetPublicIpByIpAddress] with the
 
 Or you can use [GetPublicIpByPrivateIpId] with the OCID of the private IP that the public IP is assigned to.
 
-**Note:** If you're fetching a reserved public IP that is in the process of being moved to a different private IP, the service returns the public IP object with `lifecycleState` = ASSIGNING and `assignedEntityId` = OCID of the target private IP.""")
+**Note:** If you're fetching a reserved public IP that is in the process of being moved to a different private IP, the service returns the public IP object with `lifecycleState` = ASSIGNING and `assignedEntityId` = OCID of the target private IP. \n[Command Reference](getPublicIp)""")
 @cli_util.option('--public-ip-id', required=True, help=u"""The OCID of the public IP.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -5506,7 +5506,7 @@ def get_public_ip(ctx, from_json, public_ip_id):
 
 @public_ip_group.command(name=cli_util.override('virtual_network.get_public_ip_by_ip_address.command_name', 'get-public-ip-by-ip-address'), help=u"""Gets the public IP based on the public IP address (for example, 203.0.113.2).
 
-**Note:** If you're fetching a reserved public IP that is in the process of being moved to a different private IP, the service returns the public IP object with `lifecycleState` = ASSIGNING and `assignedEntityId` = OCID of the target private IP.""")
+**Note:** If you're fetching a reserved public IP that is in the process of being moved to a different private IP, the service returns the public IP object with `lifecycleState` = ASSIGNING and `assignedEntityId` = OCID of the target private IP. \n[Command Reference](getPublicIpByIpAddress)""")
 @cli_util.option('--ip-address', required=True, help=u"""The public IP address. Example: 203.0.113.2""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -5530,7 +5530,7 @@ def get_public_ip_by_ip_address(ctx, from_json, ip_address):
 
 @public_ip_group.command(name=cli_util.override('virtual_network.get_public_ip_by_private_ip_id.command_name', 'get-public-ip-by-private-ip-id'), help=u"""Gets the public IP assigned to the specified private IP. You must specify the OCID of the private IP. If no public IP is assigned, a 404 is returned.
 
-**Note:** If you're fetching a reserved public IP that is in the process of being moved to a different private IP, and you provide the OCID of the original private IP, this operation returns a 404. If you instead provide the OCID of the target private IP, or if you instead call [GetPublicIp] or [GetPublicIpByIpAddress], the service returns the public IP object with `lifecycleState` = ASSIGNING and `assignedEntityId` = OCID of the target private IP.""")
+**Note:** If you're fetching a reserved public IP that is in the process of being moved to a different private IP, and you provide the OCID of the original private IP, this operation returns a 404. If you instead provide the OCID of the target private IP, or if you instead call [GetPublicIp] or [GetPublicIpByIpAddress], the service returns the public IP object with `lifecycleState` = ASSIGNING and `assignedEntityId` = OCID of the target private IP. \n[Command Reference](getPublicIpByPrivateIpId)""")
 @cli_util.option('--private-ip-id', required=True, help=u"""OCID of the private IP.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -5552,7 +5552,7 @@ def get_public_ip_by_private_ip_id(ctx, from_json, private_ip_id):
     cli_util.render_response(result, ctx)
 
 
-@public_ip_pool_group.command(name=cli_util.override('virtual_network.get_public_ip_pool.command_name', 'get'), help=u"""Gets the specified Public Ip Pool object. You must specify the object's OCID.""")
+@public_ip_pool_group.command(name=cli_util.override('virtual_network.get_public_ip_pool.command_name', 'get'), help=u"""Gets the specified Public Ip Pool object. You must specify the object's OCID. \n[Command Reference](getPublicIpPool)""")
 @cli_util.option('--public-ip-pool-id', required=True, help=u"""The OCID of the Public Ip Pool object.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -5574,7 +5574,7 @@ def get_public_ip_pool(ctx, from_json, public_ip_pool_id):
     cli_util.render_response(result, ctx)
 
 
-@remote_peering_connection_group.command(name=cli_util.override('virtual_network.get_remote_peering_connection.command_name', 'get'), help=u"""Get the specified remote peering connection's information.""")
+@remote_peering_connection_group.command(name=cli_util.override('virtual_network.get_remote_peering_connection.command_name', 'get'), help=u"""Get the specified remote peering connection's information. \n[Command Reference](getRemotePeeringConnection)""")
 @cli_util.option('--remote-peering-connection-id', required=True, help=u"""The OCID of the remote peering connection (RPC).""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -5595,7 +5595,7 @@ def get_remote_peering_connection(ctx, from_json, remote_peering_connection_id):
     cli_util.render_response(result, ctx)
 
 
-@route_table_group.command(name=cli_util.override('virtual_network.get_route_table.command_name', 'get'), help=u"""Gets the specified route table's information.""")
+@route_table_group.command(name=cli_util.override('virtual_network.get_route_table.command_name', 'get'), help=u"""Gets the specified route table's information. \n[Command Reference](getRouteTable)""")
 @cli_util.option('--rt-id', required=True, help=u"""The OCID of the route table.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -5616,7 +5616,7 @@ def get_route_table(ctx, from_json, rt_id):
     cli_util.render_response(result, ctx)
 
 
-@security_list_group.command(name=cli_util.override('virtual_network.get_security_list.command_name', 'get'), help=u"""Gets the specified security list's information.""")
+@security_list_group.command(name=cli_util.override('virtual_network.get_security_list.command_name', 'get'), help=u"""Gets the specified security list's information. \n[Command Reference](getSecurityList)""")
 @cli_util.option('--security-list-id', required=True, help=u"""The OCID of the security list.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -5637,7 +5637,7 @@ def get_security_list(ctx, from_json, security_list_id):
     cli_util.render_response(result, ctx)
 
 
-@service_group.command(name=cli_util.override('virtual_network.get_service.command_name', 'get'), help=u"""Gets the specified [Service] object.""")
+@service_group.command(name=cli_util.override('virtual_network.get_service.command_name', 'get'), help=u"""Gets the specified [Service] object. \n[Command Reference](getService)""")
 @cli_util.option('--service-id', required=True, help=u"""The service's [OCID].""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -5658,7 +5658,7 @@ def get_service(ctx, from_json, service_id):
     cli_util.render_response(result, ctx)
 
 
-@service_gateway_group.command(name=cli_util.override('virtual_network.get_service_gateway.command_name', 'get'), help=u"""Gets the specified service gateway's information.""")
+@service_gateway_group.command(name=cli_util.override('virtual_network.get_service_gateway.command_name', 'get'), help=u"""Gets the specified service gateway's information. \n[Command Reference](getServiceGateway)""")
 @cli_util.option('--service-gateway-id', required=True, help=u"""The service gateway's [OCID].""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -5679,7 +5679,7 @@ def get_service_gateway(ctx, from_json, service_gateway_id):
     cli_util.render_response(result, ctx)
 
 
-@subnet_group.command(name=cli_util.override('virtual_network.get_subnet.command_name', 'get'), help=u"""Gets the specified subnet's information.""")
+@subnet_group.command(name=cli_util.override('virtual_network.get_subnet.command_name', 'get'), help=u"""Gets the specified subnet's information. \n[Command Reference](getSubnet)""")
 @cli_util.option('--subnet-id', required=True, help=u"""The OCID of the subnet.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -5700,7 +5700,7 @@ def get_subnet(ctx, from_json, subnet_id):
     cli_util.render_response(result, ctx)
 
 
-@tunnel_cpe_device_config_group.command(name=cli_util.override('virtual_network.get_tunnel_cpe_device_config.command_name', 'get'), help=u"""Gets the set of CPE configuration answers for the tunnel, which the customer provided in [UpdateTunnelCpeDeviceConfig]. To get the full set of content for the tunnel (any answers merged with the template of other information specific to the CPE device type), use [GetTunnelCpeDeviceConfigContent].""")
+@tunnel_cpe_device_config_group.command(name=cli_util.override('virtual_network.get_tunnel_cpe_device_config.command_name', 'get'), help=u"""Gets the set of CPE configuration answers for the tunnel, which the customer provided in [UpdateTunnelCpeDeviceConfig]. To get the full set of content for the tunnel (any answers merged with the template of other information specific to the CPE device type), use [GetTunnelCpeDeviceConfigContent]. \n[Command Reference](getTunnelCpeDeviceConfig)""")
 @cli_util.option('--ipsc-id', required=True, help=u"""The OCID of the IPSec connection.""")
 @cli_util.option('--tunnel-id', required=True, help=u"""The [OCID] of the tunnel.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -5733,7 +5733,7 @@ The rendered content is specific to the type of CPE device (for example, Cisco A
 
 The operation returns configuration information for only the specified IPSec tunnel. Here are other similar operations:
 
-  * [GetIpsecCpeDeviceConfigContent]   returns CPE configuration content for all tunnels in a single IPSec connection.   * [GetCpeDeviceConfigContent]   returns CPE configuration content for *all* IPSec connections that use a specific CPE.""")
+  * [GetIpsecCpeDeviceConfigContent]   returns CPE configuration content for all tunnels in a single IPSec connection.   * [GetCpeDeviceConfigContent]   returns CPE configuration content for *all* IPSec connections that use a specific CPE. \n[Command Reference](getTunnelCpeDeviceConfigContent)""")
 @cli_util.option('--ipsc-id', required=True, help=u"""The OCID of the IPSec connection.""")
 @cli_util.option('--tunnel-id', required=True, help=u"""The [OCID] of the tunnel.""")
 @cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
@@ -5783,7 +5783,7 @@ def get_tunnel_cpe_device_config_content(ctx, from_json, file, ipsc_id, tunnel_i
         file.close()
 
 
-@vcn_group.command(name=cli_util.override('virtual_network.get_vcn.command_name', 'get'), help=u"""Gets the specified VCN's information.""")
+@vcn_group.command(name=cli_util.override('virtual_network.get_vcn.command_name', 'get'), help=u"""Gets the specified VCN's information. \n[Command Reference](getVcn)""")
 @cli_util.option('--vcn-id', required=True, help=u"""The [OCID] of the VCN.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -5804,7 +5804,7 @@ def get_vcn(ctx, from_json, vcn_id):
     cli_util.render_response(result, ctx)
 
 
-@virtual_circuit_group.command(name=cli_util.override('virtual_network.get_virtual_circuit.command_name', 'get'), help=u"""Gets the specified virtual circuit's information.""")
+@virtual_circuit_group.command(name=cli_util.override('virtual_network.get_virtual_circuit.command_name', 'get'), help=u"""Gets the specified virtual circuit's information. \n[Command Reference](getVirtualCircuit)""")
 @cli_util.option('--virtual-circuit-id', required=True, help=u"""The OCID of the virtual circuit.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -5825,7 +5825,7 @@ def get_virtual_circuit(ctx, from_json, virtual_circuit_id):
     cli_util.render_response(result, ctx)
 
 
-@vlan_group.command(name=cli_util.override('virtual_network.get_vlan.command_name', 'get'), help=u"""Gets the specified VLAN's information.""")
+@vlan_group.command(name=cli_util.override('virtual_network.get_vlan.command_name', 'get'), help=u"""Gets the specified VLAN's information. \n[Command Reference](getVlan)""")
 @cli_util.option('--vlan-id', required=True, help=u"""The [OCID] of the VLAN.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -5847,7 +5847,7 @@ def get_vlan(ctx, from_json, vlan_id):
     cli_util.render_response(result, ctx)
 
 
-@vnic_group.command(name=cli_util.override('virtual_network.get_vnic.command_name', 'get'), help=u"""Gets the information for the specified virtual network interface card (VNIC). You can get the VNIC OCID from the [ListVnicAttachments] operation.""")
+@vnic_group.command(name=cli_util.override('virtual_network.get_vnic.command_name', 'get'), help=u"""Gets the information for the specified virtual network interface card (VNIC). You can get the VNIC OCID from the [ListVnicAttachments] operation. \n[Command Reference](getVnic)""")
 @cli_util.option('--vnic-id', required=True, help=u"""The OCID of the VNIC.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -5868,7 +5868,7 @@ def get_vnic(ctx, from_json, vnic_id):
     cli_util.render_response(result, ctx)
 
 
-@peer_region_for_remote_peering_group.command(name=cli_util.override('virtual_network.list_allowed_peer_regions_for_remote_peering.command_name', 'list-allowed-peer-regions-for-remote-peering'), help=u"""Lists the regions that support remote VCN peering (which is peering across regions). For more information, see [VCN Peering].""")
+@peer_region_for_remote_peering_group.command(name=cli_util.override('virtual_network.list_allowed_peer_regions_for_remote_peering.command_name', 'list-allowed-peer-regions-for-remote-peering'), help=u"""Lists the regions that support remote VCN peering (which is peering across regions). For more information, see [VCN Peering]. \n[Command Reference](listAllowedPeerRegionsForRemotePeering)""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -5885,7 +5885,7 @@ def list_allowed_peer_regions_for_remote_peering(ctx, from_json, all_pages, ):
     cli_util.render_response(result, ctx)
 
 
-@byoip_allocated_range_summary_group.command(name=cli_util.override('virtual_network.list_byoip_allocated_ranges.command_name', 'list-byoip-allocated-ranges'), help=u"""Lists the ByoipAllocatedRange objects for the ByoipRange. Each ByoipAllocatedRange object has a CIDR block part of the ByoipRange and the PublicIpPool it is assigned to.""")
+@byoip_allocated_range_summary_group.command(name=cli_util.override('virtual_network.list_byoip_allocated_ranges.command_name', 'list-byoip-allocated-ranges'), help=u"""Lists the ByoipAllocatedRange objects for the ByoipRange. Each ByoipAllocatedRange object has a CIDR block part of the ByoipRange and the PublicIpPool it is assigned to. \n[Command Reference](listByoipAllocatedRanges)""")
 @cli_util.option('--byoip-range-id', required=True, help=u"""The OCID of the Byoip Range object.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
@@ -5938,7 +5938,7 @@ def list_byoip_allocated_ranges(ctx, from_json, all_pages, page_size, byoip_rang
     cli_util.render_response(result, ctx)
 
 
-@byoip_range_group.command(name=cli_util.override('virtual_network.list_byoip_ranges.command_name', 'list'), help=u"""Lists the ByoipRange objects in the specified compartment. You can filter the list by using query parameters.""")
+@byoip_range_group.command(name=cli_util.override('virtual_network.list_byoip_ranges.command_name', 'list'), help=u"""Lists the ByoipRange objects in the specified compartment. You can filter the list by using query parameters. \n[Command Reference](listByoipRanges)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
@@ -6008,7 +6008,7 @@ If you want to generate CPE configuration content for one of the returned CPE de
 
 For information about generating CPE configuration content, see these operations:
 
-  * [GetCpeDeviceConfigContent]   * [GetIpsecCpeDeviceConfigContent]   * [GetTunnelCpeDeviceConfigContent]""")
+  * [GetCpeDeviceConfigContent]   * [GetIpsecCpeDeviceConfigContent]   * [GetTunnelCpeDeviceConfigContent] \n[Command Reference](listCpeDeviceShapes)""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
@@ -6054,7 +6054,7 @@ def list_cpe_device_shapes(ctx, from_json, all_pages, page_size, limit, page):
     cli_util.render_response(result, ctx)
 
 
-@cpe_group.command(name=cli_util.override('virtual_network.list_cpes.command_name', 'list'), help=u"""Lists the customer-premises equipment objects (CPEs) in the specified compartment.""")
+@cpe_group.command(name=cli_util.override('virtual_network.list_cpes.command_name', 'list'), help=u"""Lists the customer-premises equipment objects (CPEs) in the specified compartment. \n[Command Reference](listCpes)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
@@ -6103,7 +6103,7 @@ def list_cpes(ctx, from_json, all_pages, page_size, compartment_id, limit, page)
     cli_util.render_response(result, ctx)
 
 
-@cross_connect_group_group.command(name=cli_util.override('virtual_network.list_cross_connect_groups.command_name', 'list'), help=u"""Lists the cross-connect groups in the specified compartment.""")
+@cross_connect_group_group.command(name=cli_util.override('virtual_network.list_cross_connect_groups.command_name', 'list'), help=u"""Lists the cross-connect groups in the specified compartment. \n[Command Reference](listCrossConnectGroups)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
@@ -6166,7 +6166,7 @@ def list_cross_connect_groups(ctx, from_json, all_pages, page_size, compartment_
     cli_util.render_response(result, ctx)
 
 
-@cross_connect_location_group.command(name=cli_util.override('virtual_network.list_cross_connect_locations.command_name', 'list'), help=u"""Lists the available FastConnect locations for cross-connect installation. You need this information so you can specify your desired location when you create a cross-connect.""")
+@cross_connect_location_group.command(name=cli_util.override('virtual_network.list_cross_connect_locations.command_name', 'list'), help=u"""Lists the available FastConnect locations for cross-connect installation. You need this information so you can specify your desired location when you create a cross-connect. \n[Command Reference](listCrossConnectLocations)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
@@ -6215,7 +6215,7 @@ def list_cross_connect_locations(ctx, from_json, all_pages, page_size, compartme
     cli_util.render_response(result, ctx)
 
 
-@cross_connect_group.command(name=cli_util.override('virtual_network.list_cross_connects.command_name', 'list'), help=u"""Lists the cross-connects in the specified compartment. You can filter the list by specifying the OCID of a cross-connect group.""")
+@cross_connect_group.command(name=cli_util.override('virtual_network.list_cross_connects.command_name', 'list'), help=u"""Lists the cross-connects in the specified compartment. You can filter the list by specifying the OCID of a cross-connect group. \n[Command Reference](listCrossConnects)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--cross-connect-group-id', help=u"""The OCID of the cross-connect group.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
@@ -6281,7 +6281,7 @@ def list_cross_connects(ctx, from_json, all_pages, page_size, compartment_id, cr
     cli_util.render_response(result, ctx)
 
 
-@cross_connect_port_speed_shape_group.command(name=cli_util.override('virtual_network.list_crossconnect_port_speed_shapes.command_name', 'list-crossconnect-port-speed-shapes'), help=u"""Lists the available port speeds for cross-connects. You need this information so you can specify your desired port speed (that is, shape) when you create a cross-connect.""")
+@cross_connect_port_speed_shape_group.command(name=cli_util.override('virtual_network.list_crossconnect_port_speed_shapes.command_name', 'list-crossconnect-port-speed-shapes'), help=u"""Lists the available port speeds for cross-connects. You need this information so you can specify your desired port speed (that is, shape) when you create a cross-connect. \n[Command Reference](listCrossconnectPortSpeedShapes)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
@@ -6330,7 +6330,7 @@ def list_crossconnect_port_speed_shapes(ctx, from_json, all_pages, page_size, co
     cli_util.render_response(result, ctx)
 
 
-@dhcp_options_group.command(name=cli_util.override('virtual_network.list_dhcp_options.command_name', 'list'), help=u"""Lists the sets of DHCP options in the specified VCN and specified compartment. If the VCN ID is not provided, then the list includes the sets of DHCP options from all VCNs in the specified compartment. The response includes the default set of options that automatically comes with each VCN, plus any other sets you've created.""")
+@dhcp_options_group.command(name=cli_util.override('virtual_network.list_dhcp_options.command_name', 'list'), help=u"""Lists the sets of DHCP options in the specified VCN and specified compartment. If the VCN ID is not provided, then the list includes the sets of DHCP options from all VCNs in the specified compartment. The response includes the default set of options that automatically comes with each VCN, plus any other sets you've created. \n[Command Reference](listDhcpOptions)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--vcn-id', help=u"""The [OCID] of the VCN.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
@@ -6396,7 +6396,7 @@ def list_dhcp_options(ctx, from_json, all_pages, page_size, compartment_id, vcn_
     cli_util.render_response(result, ctx)
 
 
-@drg_attachment_group.command(name=cli_util.override('virtual_network.list_drg_attachments.command_name', 'list'), help=u"""Lists the `DrgAttachment` objects for the specified compartment. You can filter the results by VCN or DRG.""")
+@drg_attachment_group.command(name=cli_util.override('virtual_network.list_drg_attachments.command_name', 'list'), help=u"""Lists the `DrgAttachment` objects for the specified compartment. You can filter the results by VCN or DRG. \n[Command Reference](listDrgAttachments)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--vcn-id', help=u"""The [OCID] of the VCN.""")
 @cli_util.option('--drg-id', help=u"""The OCID of the DRG.""")
@@ -6451,7 +6451,7 @@ def list_drg_attachments(ctx, from_json, all_pages, page_size, compartment_id, v
     cli_util.render_response(result, ctx)
 
 
-@drg_group.command(name=cli_util.override('virtual_network.list_drgs.command_name', 'list'), help=u"""Lists the DRGs in the specified compartment.""")
+@drg_group.command(name=cli_util.override('virtual_network.list_drgs.command_name', 'list'), help=u"""Lists the DRGs in the specified compartment. \n[Command Reference](listDrgs)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
@@ -6504,7 +6504,7 @@ def list_drgs(ctx, from_json, all_pages, page_size, compartment_id, limit, page)
 
 For the compartment ID, provide the OCID of your tenancy (the root compartment).
 
-For more information, see [FastConnect Overview].""")
+For more information, see [FastConnect Overview]. \n[Command Reference](listFastConnectProviderServices)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
@@ -6555,7 +6555,7 @@ def list_fast_connect_provider_services(ctx, from_json, all_pages, page_size, co
 
 @fast_connect_provider_service_group.command(name=cli_util.override('virtual_network.list_fast_connect_provider_virtual_circuit_bandwidth_shapes.command_name', 'list-fast-connect-provider-virtual-circuit-bandwidth-shapes'), help=u"""Gets the list of available virtual circuit bandwidth levels for a provider. You need this information so you can specify your desired bandwidth level (shape) when you create a virtual circuit.
 
-For more information about virtual circuits, see [FastConnect Overview].""")
+For more information about virtual circuits, see [FastConnect Overview]. \n[Command Reference](listFastConnectProviderVirtualCircuitBandwidthShapes)""")
 @cli_util.option('--provider-service-id', required=True, help=u"""The OCID of the provider service.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
@@ -6607,7 +6607,7 @@ def list_fast_connect_provider_virtual_circuit_bandwidth_shapes(ctx, from_json, 
     cli_util.render_response(result, ctx)
 
 
-@internet_gateway_group.command(name=cli_util.override('virtual_network.list_internet_gateways.command_name', 'list'), help=u"""Lists the internet gateways in the specified VCN and the specified compartment. If the VCN ID is not provided, then the list includes the internet gateways from all VCNs in the specified compartment.""")
+@internet_gateway_group.command(name=cli_util.override('virtual_network.list_internet_gateways.command_name', 'list'), help=u"""Lists the internet gateways in the specified VCN and the specified compartment. If the VCN ID is not provided, then the list includes the internet gateways from all VCNs in the specified compartment. \n[Command Reference](listInternetGateways)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--vcn-id', help=u"""The [OCID] of the VCN.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
@@ -6673,7 +6673,7 @@ def list_internet_gateways(ctx, from_json, all_pages, page_size, compartment_id,
     cli_util.render_response(result, ctx)
 
 
-@ip_sec_connection_tunnel_group.command(name=cli_util.override('virtual_network.list_ip_sec_connection_tunnels.command_name', 'list'), help=u"""Lists the tunnel information for the specified IPSec connection.""")
+@ip_sec_connection_tunnel_group.command(name=cli_util.override('virtual_network.list_ip_sec_connection_tunnels.command_name', 'list'), help=u"""Lists the tunnel information for the specified IPSec connection. \n[Command Reference](listIPSecConnectionTunnels)""")
 @cli_util.option('--ipsc-id', required=True, help=u"""The OCID of the IPSec connection.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
@@ -6725,7 +6725,7 @@ def list_ip_sec_connection_tunnels(ctx, from_json, all_pages, page_size, ipsc_id
     cli_util.render_response(result, ctx)
 
 
-@ip_sec_connection_group.command(name=cli_util.override('virtual_network.list_ip_sec_connections.command_name', 'list'), help=u"""Lists the IPSec connections for the specified compartment. You can filter the results by DRG or CPE.""")
+@ip_sec_connection_group.command(name=cli_util.override('virtual_network.list_ip_sec_connections.command_name', 'list'), help=u"""Lists the IPSec connections for the specified compartment. You can filter the results by DRG or CPE. \n[Command Reference](listIPSecConnections)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--drg-id', help=u"""The OCID of the DRG.""")
 @cli_util.option('--cpe-id', help=u"""The OCID of the CPE.""")
@@ -6782,7 +6782,7 @@ def list_ip_sec_connections(ctx, from_json, all_pages, page_size, compartment_id
 
 @ipv6_group.command(name=cli_util.override('virtual_network.list_ipv6s.command_name', 'list'), help=u"""Lists the [IPv6] objects based on one of these filters:
 
-  * Subnet OCID.   * VNIC OCID.   * Both IPv6 address and subnet OCID: This lets you get an `Ipv6` object based on its private   IPv6 address (for example, 2001:0db8:0123:1111:abcd:ef01:2345:6789) and not its OCID. For comparison,   [GetIpv6] requires the OCID.""")
+  * Subnet OCID.   * VNIC OCID.   * Both IPv6 address and subnet OCID: This lets you get an `Ipv6` object based on its private   IPv6 address (for example, 2001:0db8:0123:1111:abcd:ef01:2345:6789) and not its OCID. For comparison,   [GetIpv6] requires the OCID. \n[Command Reference](listIpv6s)""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
@@ -6837,7 +6837,7 @@ def list_ipv6s(ctx, from_json, all_pages, page_size, limit, page, ip_address, su
     cli_util.render_response(result, ctx)
 
 
-@local_peering_gateway_group.command(name=cli_util.override('virtual_network.list_local_peering_gateways.command_name', 'list'), help=u"""Lists the local peering gateways (LPGs) for the specified VCN and specified compartment. If the VCN ID is not provided, then the list includes the LPGs from all VCNs in the specified compartment.""")
+@local_peering_gateway_group.command(name=cli_util.override('virtual_network.list_local_peering_gateways.command_name', 'list'), help=u"""Lists the local peering gateways (LPGs) for the specified VCN and specified compartment. If the VCN ID is not provided, then the list includes the LPGs from all VCNs in the specified compartment. \n[Command Reference](listLocalPeeringGateways)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
@@ -6889,7 +6889,7 @@ def list_local_peering_gateways(ctx, from_json, all_pages, page_size, compartmen
     cli_util.render_response(result, ctx)
 
 
-@nat_gateway_group.command(name=cli_util.override('virtual_network.list_nat_gateways.command_name', 'list'), help=u"""Lists the NAT gateways in the specified compartment. You may optionally specify a VCN OCID to filter the results by VCN.""")
+@nat_gateway_group.command(name=cli_util.override('virtual_network.list_nat_gateways.command_name', 'list'), help=u"""Lists the NAT gateways in the specified compartment. You may optionally specify a VCN OCID to filter the results by VCN. \n[Command Reference](listNatGateways)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--vcn-id', help=u"""The [OCID] of the VCN.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
@@ -6955,7 +6955,7 @@ def list_nat_gateways(ctx, from_json, all_pages, page_size, compartment_id, vcn_
     cli_util.render_response(result, ctx)
 
 
-@security_rule_group.command(name=cli_util.override('virtual_network.list_network_security_group_security_rules.command_name', 'list-network-security-group'), help=u"""Lists the security rules in the specified network security group.""")
+@security_rule_group.command(name=cli_util.override('virtual_network.list_network_security_group_security_rules.command_name', 'list-network-security-group'), help=u"""Lists the security rules in the specified network security group. \n[Command Reference](listNetworkSecurityGroupSecurityRules)""")
 @cli_util.option('--network-security-group-id', required=True, help=u"""The [OCID] of the network security group.""")
 @cli_util.option('--direction', type=custom_types.CliCaseInsensitiveChoice(["EGRESS", "INGRESS"]), help=u"""Direction of the security rule. Set to `EGRESS` for rules that allow outbound IP packets, or `INGRESS` for rules that allow inbound IP packets.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
@@ -7016,7 +7016,7 @@ def list_network_security_group_security_rules(ctx, from_json, all_pages, page_s
     cli_util.render_response(result, ctx)
 
 
-@network_security_group_vnic_group.command(name=cli_util.override('virtual_network.list_network_security_group_vnics.command_name', 'list'), help=u"""Lists the VNICs in the specified network security group.""")
+@network_security_group_vnic_group.command(name=cli_util.override('virtual_network.list_network_security_group_vnics.command_name', 'list'), help=u"""Lists the VNICs in the specified network security group. \n[Command Reference](listNetworkSecurityGroupVnics)""")
 @cli_util.option('--network-security-group-id', required=True, help=u"""The [OCID] of the network security group.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
@@ -7074,7 +7074,7 @@ def list_network_security_group_vnics(ctx, from_json, all_pages, page_size, netw
     cli_util.render_response(result, ctx)
 
 
-@network_security_group_group.command(name=cli_util.override('virtual_network.list_network_security_groups.command_name', 'list'), help=u"""Lists the network security groups in the specified compartment.""")
+@network_security_group_group.command(name=cli_util.override('virtual_network.list_network_security_groups.command_name', 'list'), help=u"""Lists the network security groups in the specified compartment. \n[Command Reference](listNetworkSecurityGroups)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--vcn-id', help=u"""The [OCID] of the VCN.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
@@ -7146,7 +7146,7 @@ def list_network_security_groups(ctx, from_json, all_pages, page_size, compartme
 
 If you're listing all the private IPs associated with a given subnet or VNIC, the response includes both primary and secondary private IPs.
 
-If you are an Oracle Cloud VMware Solution customer and have VLANs in your VCN, you can filter the list by VLAN OCID. See [Vlan].""")
+If you are an Oracle Cloud VMware Solution customer and have VLANs in your VCN, you can filter the list by VLAN OCID. See [Vlan]. \n[Command Reference](listPrivateIps)""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
@@ -7203,7 +7203,7 @@ def list_private_ips(ctx, from_json, all_pages, page_size, limit, page, ip_addre
     cli_util.render_response(result, ctx)
 
 
-@public_ip_pool_group.command(name=cli_util.override('virtual_network.list_public_ip_pools.command_name', 'list'), help=u"""Lists the PublicIpPool objects in the specified compartment. You can filter the list by using query parameters.""")
+@public_ip_pool_group.command(name=cli_util.override('virtual_network.list_public_ip_pools.command_name', 'list'), help=u"""Lists the PublicIpPool objects in the specified compartment. You can filter the list by using query parameters. \n[Command Reference](listPublicIpPools)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
@@ -7275,7 +7275,7 @@ To list the ephemeral public IPs assigned to a regional entity such as a NAT gat
 
 To list the ephemeral public IPs assigned to private IPs:   * Set `scope` = `AVAILABILITY_DOMAIN` (required)   * Set the `availabilityDomain` parameter to the desired availability domain (required)   * Set `lifetime` = `EPHEMERAL`
 
-**Note:** An ephemeral public IP assigned to a private IP is always in the same availability domain and compartment as the private IP.""")
+**Note:** An ephemeral public IP assigned to a private IP is always in the same availability domain and compartment as the private IP. \n[Command Reference](listPublicIps)""")
 @cli_util.option('--scope', required=True, type=custom_types.CliCaseInsensitiveChoice(["REGION", "AVAILABILITY_DOMAIN"]), help=u"""Whether the public IP is regional or specific to a particular availability domain.
 
 * `REGION`: The public IP exists within a region and is assigned to a regional entity (such as a [NatGateway]), or can be assigned to a private IP in any availability domain in the region. Reserved public IPs have `scope` = `REGION`, as do ephemeral public IPs assigned to a regional entity.
@@ -7343,7 +7343,7 @@ def list_public_ips(ctx, from_json, all_pages, page_size, scope, compartment_id,
     cli_util.render_response(result, ctx)
 
 
-@remote_peering_connection_group.command(name=cli_util.override('virtual_network.list_remote_peering_connections.command_name', 'list'), help=u"""Lists the remote peering connections (RPCs) for the specified DRG and compartment (the RPC's compartment).""")
+@remote_peering_connection_group.command(name=cli_util.override('virtual_network.list_remote_peering_connections.command_name', 'list'), help=u"""Lists the remote peering connections (RPCs) for the specified DRG and compartment (the RPC's compartment). \n[Command Reference](listRemotePeeringConnections)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--drg-id', help=u"""The OCID of the DRG.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
@@ -7395,7 +7395,7 @@ def list_remote_peering_connections(ctx, from_json, all_pages, page_size, compar
     cli_util.render_response(result, ctx)
 
 
-@route_table_group.command(name=cli_util.override('virtual_network.list_route_tables.command_name', 'list'), help=u"""Lists the route tables in the specified VCN and specified compartment. If the VCN ID is not provided, then the list includes the route tables from all VCNs in the specified compartment. The response includes the default route table that automatically comes with each VCN in the specified compartment, plus any route tables you've created.""")
+@route_table_group.command(name=cli_util.override('virtual_network.list_route_tables.command_name', 'list'), help=u"""Lists the route tables in the specified VCN and specified compartment. If the VCN ID is not provided, then the list includes the route tables from all VCNs in the specified compartment. The response includes the default route table that automatically comes with each VCN in the specified compartment, plus any route tables you've created. \n[Command Reference](listRouteTables)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
@@ -7461,7 +7461,7 @@ def list_route_tables(ctx, from_json, all_pages, page_size, compartment_id, limi
     cli_util.render_response(result, ctx)
 
 
-@security_list_group.command(name=cli_util.override('virtual_network.list_security_lists.command_name', 'list'), help=u"""Lists the security lists in the specified VCN and compartment. If the VCN ID is not provided, then the list includes the security lists from all VCNs in the specified compartment.""")
+@security_list_group.command(name=cli_util.override('virtual_network.list_security_lists.command_name', 'list'), help=u"""Lists the security lists in the specified VCN and compartment. If the VCN ID is not provided, then the list includes the security lists from all VCNs in the specified compartment. \n[Command Reference](listSecurityLists)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
@@ -7527,7 +7527,7 @@ def list_security_lists(ctx, from_json, all_pages, page_size, compartment_id, li
     cli_util.render_response(result, ctx)
 
 
-@service_gateway_group.command(name=cli_util.override('virtual_network.list_service_gateways.command_name', 'list'), help=u"""Lists the service gateways in the specified compartment. You may optionally specify a VCN OCID to filter the results by VCN.""")
+@service_gateway_group.command(name=cli_util.override('virtual_network.list_service_gateways.command_name', 'list'), help=u"""Lists the service gateways in the specified compartment. You may optionally specify a VCN OCID to filter the results by VCN. \n[Command Reference](listServiceGateways)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--vcn-id', help=u"""The [OCID] of the VCN.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
@@ -7590,7 +7590,7 @@ def list_service_gateways(ctx, from_json, all_pages, page_size, compartment_id, 
     cli_util.render_response(result, ctx)
 
 
-@service_group.command(name=cli_util.override('virtual_network.list_services.command_name', 'list'), help=u"""Lists the available [Service] objects that you can enable for a service gateway in this region.""")
+@service_group.command(name=cli_util.override('virtual_network.list_services.command_name', 'list'), help=u"""Lists the available [Service] objects that you can enable for a service gateway in this region. \n[Command Reference](listServices)""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
@@ -7635,7 +7635,7 @@ def list_services(ctx, from_json, all_pages, page_size, limit, page):
     cli_util.render_response(result, ctx)
 
 
-@subnet_group.command(name=cli_util.override('virtual_network.list_subnets.command_name', 'list'), help=u"""Lists the subnets in the specified VCN and the specified compartment. If the VCN ID is not provided, then the list includes the subnets from all VCNs in the specified compartment.""")
+@subnet_group.command(name=cli_util.override('virtual_network.list_subnets.command_name', 'list'), help=u"""Lists the subnets in the specified VCN and the specified compartment. If the VCN ID is not provided, then the list includes the subnets from all VCNs in the specified compartment. \n[Command Reference](listSubnets)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
@@ -7701,7 +7701,7 @@ def list_subnets(ctx, from_json, all_pages, page_size, compartment_id, limit, pa
     cli_util.render_response(result, ctx)
 
 
-@vcn_group.command(name=cli_util.override('virtual_network.list_vcns.command_name', 'list'), help=u"""Lists the virtual cloud networks (VCNs) in the specified compartment.""")
+@vcn_group.command(name=cli_util.override('virtual_network.list_vcns.command_name', 'list'), help=u"""Lists the virtual cloud networks (VCNs) in the specified compartment. \n[Command Reference](listVcns)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
@@ -7764,7 +7764,7 @@ def list_vcns(ctx, from_json, all_pages, page_size, compartment_id, limit, page,
     cli_util.render_response(result, ctx)
 
 
-@virtual_circuit_bandwidth_shape_group.command(name=cli_util.override('virtual_network.list_virtual_circuit_bandwidth_shapes.command_name', 'list'), help=u"""The deprecated operation lists available bandwidth levels for virtual circuits. For the compartment ID, provide the OCID of your tenancy (the root compartment).""")
+@virtual_circuit_bandwidth_shape_group.command(name=cli_util.override('virtual_network.list_virtual_circuit_bandwidth_shapes.command_name', 'list'), help=u"""The deprecated operation lists available bandwidth levels for virtual circuits. For the compartment ID, provide the OCID of your tenancy (the root compartment). \n[Command Reference](listVirtualCircuitBandwidthShapes)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
@@ -7813,7 +7813,7 @@ def list_virtual_circuit_bandwidth_shapes(ctx, from_json, all_pages, page_size, 
     cli_util.render_response(result, ctx)
 
 
-@virtual_circuit_public_prefix_group.command(name=cli_util.override('virtual_network.list_virtual_circuit_public_prefixes.command_name', 'list'), help=u"""Lists the public IP prefixes and their details for the specified public virtual circuit.""")
+@virtual_circuit_public_prefix_group.command(name=cli_util.override('virtual_network.list_virtual_circuit_public_prefixes.command_name', 'list'), help=u"""Lists the public IP prefixes and their details for the specified public virtual circuit. \n[Command Reference](listVirtualCircuitPublicPrefixes)""")
 @cli_util.option('--virtual-circuit-id', required=True, help=u"""The OCID of the virtual circuit.""")
 @cli_util.option('--verification-state', type=custom_types.CliCaseInsensitiveChoice(["IN_PROGRESS", "COMPLETED", "FAILED"]), help=u"""A filter to only return resources that match the given verification state. The state value is case-insensitive.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
@@ -7838,7 +7838,7 @@ def list_virtual_circuit_public_prefixes(ctx, from_json, all_pages, virtual_circ
     cli_util.render_response(result, ctx)
 
 
-@virtual_circuit_group.command(name=cli_util.override('virtual_network.list_virtual_circuits.command_name', 'list'), help=u"""Lists the virtual circuits in the specified compartment.""")
+@virtual_circuit_group.command(name=cli_util.override('virtual_network.list_virtual_circuits.command_name', 'list'), help=u"""Lists the virtual circuits in the specified compartment. \n[Command Reference](listVirtualCircuits)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
@@ -7901,7 +7901,7 @@ def list_virtual_circuits(ctx, from_json, all_pages, page_size, compartment_id, 
     cli_util.render_response(result, ctx)
 
 
-@vlan_group.command(name=cli_util.override('virtual_network.list_vlans.command_name', 'list'), help=u"""Lists the VLANs in the specified VCN and the specified compartment.""")
+@vlan_group.command(name=cli_util.override('virtual_network.list_vlans.command_name', 'list'), help=u"""Lists the VLANs in the specified VCN and the specified compartment. \n[Command Reference](listVlans)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--vcn-id', required=True, help=u"""The [OCID] of the VCN.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
@@ -7969,7 +7969,7 @@ def list_vlans(ctx, from_json, all_pages, page_size, compartment_id, vcn_id, lim
     cli_util.render_response(result, ctx)
 
 
-@security_rule_group.command(name=cli_util.override('virtual_network.remove_network_security_group_security_rules.command_name', 'remove'), help=u"""Removes one or more security rules from the specified network security group.""")
+@security_rule_group.command(name=cli_util.override('virtual_network.remove_network_security_group_security_rules.command_name', 'remove'), help=u"""Removes one or more security rules from the specified network security group. \n[Command Reference](removeNetworkSecurityGroupSecurityRules)""")
 @cli_util.option('--network-security-group-id', required=True, help=u"""The [OCID] of the network security group.""")
 @cli_util.option('--security-rule-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The Oracle-assigned ID of each [SecurityRule] to be deleted.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'security-rule-ids': {'module': 'core', 'class': 'list[string]'}})
@@ -7998,7 +7998,7 @@ def remove_network_security_group_security_rules(ctx, from_json, network_securit
     cli_util.render_response(result, ctx)
 
 
-@public_ip_pool_group.command(name=cli_util.override('virtual_network.remove_public_ip_pool_capacity.command_name', 'remove'), help=u"""Removes a Cidr from the referenced Public IP Pool.""")
+@public_ip_pool_group.command(name=cli_util.override('virtual_network.remove_public_ip_pool_capacity.command_name', 'remove'), help=u"""Removes a Cidr from the referenced Public IP Pool. \n[Command Reference](removePublicIpPoolCapacity)""")
 @cli_util.option('--public-ip-pool-id', required=True, help=u"""The OCID of the Public Ip Pool object.""")
 @cli_util.option('--cidr-block', required=True, help=u"""The CIDR IP address range to be removed from the Public Ip Pool Example: `10.0.1.0/24`""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["INACTIVE", "UPDATING", "ACTIVE", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -8052,7 +8052,7 @@ def remove_public_ip_pool_capacity(ctx, from_json, wait_for_state, max_wait_seco
     cli_util.render_response(result, ctx)
 
 
-@byoip_range_group.command(name=cli_util.override('virtual_network.update_byoip_range.command_name', 'update'), help=u"""Updates the specified Byoip Range.""")
+@byoip_range_group.command(name=cli_util.override('virtual_network.update_byoip_range.command_name', 'update'), help=u"""Updates the specified Byoip Range. \n[Command Reference](updateByoipRange)""")
 @cli_util.option('--byoip-range-id', required=True, help=u"""The OCID of the Byoip Range object.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
@@ -8128,7 +8128,7 @@ def update_byoip_range(ctx, from_json, force, wait_for_state, max_wait_seconds, 
     cli_util.render_response(result, ctx)
 
 
-@cpe_group.command(name=cli_util.override('virtual_network.update_cpe.command_name', 'update'), help=u"""Updates the specified CPE's display name or tags. Avoid entering confidential information.""")
+@cpe_group.command(name=cli_util.override('virtual_network.update_cpe.command_name', 'update'), help=u"""Updates the specified CPE's display name or tags. Avoid entering confidential information. \n[Command Reference](updateCpe)""")
 @cli_util.option('--cpe-id', required=True, help=u"""The OCID of the CPE.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
@@ -8185,7 +8185,7 @@ def update_cpe(ctx, from_json, force, cpe_id, defined_tags, display_name, freefo
     cli_util.render_response(result, ctx)
 
 
-@cross_connect_group.command(name=cli_util.override('virtual_network.update_cross_connect.command_name', 'update'), help=u"""Updates the specified cross-connect.""")
+@cross_connect_group.command(name=cli_util.override('virtual_network.update_cross_connect.command_name', 'update'), help=u"""Updates the specified cross-connect. \n[Command Reference](updateCrossConnect)""")
 @cli_util.option('--cross-connect-id', required=True, help=u"""The OCID of the cross-connect.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
@@ -8270,7 +8270,7 @@ def update_cross_connect(ctx, from_json, force, wait_for_state, max_wait_seconds
     cli_util.render_response(result, ctx)
 
 
-@cross_connect_group_group.command(name=cli_util.override('virtual_network.update_cross_connect_group.command_name', 'update'), help=u"""Updates the specified cross-connect group's display name. Avoid entering confidential information.""")
+@cross_connect_group_group.command(name=cli_util.override('virtual_network.update_cross_connect_group.command_name', 'update'), help=u"""Updates the specified cross-connect group's display name. Avoid entering confidential information. \n[Command Reference](updateCrossConnectGroup)""")
 @cli_util.option('--cross-connect-group-id', required=True, help=u"""The OCID of the cross-connect group.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
@@ -8351,7 +8351,7 @@ def update_cross_connect_group(ctx, from_json, force, wait_for_state, max_wait_s
 
 @dhcp_options_group.command(name=cli_util.override('virtual_network.update_dhcp_options.command_name', 'update'), help=u"""Updates the specified set of DHCP options. You can update the display name or the options themselves. Avoid entering confidential information.
 
-Note that the `options` object you provide replaces the entire existing set of options.""")
+Note that the `options` object you provide replaces the entire existing set of options. \n[Command Reference](updateDhcpOptions)""")
 @cli_util.option('--dhcp-id', required=True, help=u"""The OCID for the set of DHCP options.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
@@ -8432,7 +8432,7 @@ def update_dhcp_options(ctx, from_json, force, wait_for_state, max_wait_seconds,
     cli_util.render_response(result, ctx)
 
 
-@drg_group.command(name=cli_util.override('virtual_network.update_drg.command_name', 'update'), help=u"""Updates the specified DRG's display name or tags. Avoid entering confidential information.""")
+@drg_group.command(name=cli_util.override('virtual_network.update_drg.command_name', 'update'), help=u"""Updates the specified DRG's display name or tags. Avoid entering confidential information. \n[Command Reference](updateDrg)""")
 @cli_util.option('--drg-id', required=True, help=u"""The OCID of the DRG.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
@@ -8507,7 +8507,7 @@ def update_drg(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_int
     cli_util.render_response(result, ctx)
 
 
-@drg_attachment_group.command(name=cli_util.override('virtual_network.update_drg_attachment.command_name', 'update'), help=u"""Updates the display name for the specified `DrgAttachment`. Avoid entering confidential information.""")
+@drg_attachment_group.command(name=cli_util.override('virtual_network.update_drg_attachment.command_name', 'update'), help=u"""Updates the display name for the specified `DrgAttachment`. Avoid entering confidential information. \n[Command Reference](updateDrgAttachment)""")
 @cli_util.option('--drg-attachment-id', required=True, help=u"""The OCID of the DRG attachment.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--route-table-id', help=u"""The OCID of the route table the DRG attachment will use.
@@ -8575,7 +8575,7 @@ def update_drg_attachment(ctx, from_json, wait_for_state, max_wait_seconds, wait
 
 @internet_gateway_group.command(name=cli_util.override('virtual_network.update_internet_gateway.command_name', 'update'), help=u"""Updates the specified internet gateway. You can disable/enable it, or change its display name or tags. Avoid entering confidential information.
 
-If the gateway is disabled, that means no traffic will flow to/from the internet even if there's a route rule that enables that traffic.""")
+If the gateway is disabled, that means no traffic will flow to/from the internet even if there's a route rule that enables that traffic. \n[Command Reference](updateInternetGateway)""")
 @cli_util.option('--ig-id', required=True, help=u"""The OCID of the internet gateway.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
@@ -8656,7 +8656,7 @@ def update_internet_gateway(ctx, from_json, force, wait_for_state, max_wait_seco
 
 @ip_sec_connection_group.command(name=cli_util.override('virtual_network.update_ip_sec_connection.command_name', 'update'), help=u"""Updates the specified IPSec connection.
 
-To update an individual IPSec tunnel's attributes, use [UpdateIPSecConnectionTunnel].""")
+To update an individual IPSec tunnel's attributes, use [UpdateIPSecConnectionTunnel]. \n[Command Reference](updateIPSecConnection)""")
 @cli_util.option('--ipsc-id', required=True, help=u"""The OCID of the IPSec connection.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
@@ -8759,7 +8759,7 @@ def update_ip_sec_connection(ctx, from_json, force, wait_for_state, max_wait_sec
 
   * If you want to switch the tunnel's `routing` from `STATIC` to `BGP`, make sure the tunnel's     BGP session configuration attributes have been set ([bgpSessionConfig]).
 
-  * If you want to switch the tunnel's `routing` from `BGP` to `STATIC`, make sure the     [IPSecConnection] already has at least one valid CIDR     static route.""")
+  * If you want to switch the tunnel's `routing` from `BGP` to `STATIC`, make sure the     [IPSecConnection] already has at least one valid CIDR     static route. \n[Command Reference](updateIPSecConnectionTunnel)""")
 @cli_util.option('--ipsc-id', required=True, help=u"""The OCID of the IPSec connection.""")
 @cli_util.option('--tunnel-id', required=True, help=u"""The [OCID] of the tunnel.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
@@ -8842,7 +8842,7 @@ def update_ip_sec_connection_tunnel(ctx, from_json, force, wait_for_state, max_w
 
 @ip_sec_connection_tunnel_shared_secret_group.command(name=cli_util.override('virtual_network.update_ip_sec_connection_tunnel_shared_secret.command_name', 'update'), help=u"""Updates the shared secret (pre-shared key) for the specified tunnel.
 
-**Important:** If you change the shared secret, the tunnel will go down while it's reprovisioned.""")
+**Important:** If you change the shared secret, the tunnel will go down while it's reprovisioned. \n[Command Reference](updateIPSecConnectionTunnelSharedSecret)""")
 @cli_util.option('--ipsc-id', required=True, help=u"""The OCID of the IPSec connection.""")
 @cli_util.option('--tunnel-id', required=True, help=u"""The [OCID] of the tunnel.""")
 @cli_util.option('--shared-secret', help=u"""The shared secret (pre-shared key) to use for the tunnel. Only numbers, letters, and spaces are allowed.""")
@@ -8881,7 +8881,7 @@ def update_ip_sec_connection_tunnel_shared_secret(ctx, from_json, ipsc_id, tunne
 
 @ipv6_group.command(name=cli_util.override('virtual_network.update_ipv6.command_name', 'update'), help=u"""Updates the specified IPv6. You must specify the object's OCID. Use this operation if you want to:
 
-  * Move an IPv6 to a different VNIC in the same subnet.   * Enable/disable internet access for an IPv6.   * Change the display name for an IPv6.   * Update resource tags for an IPv6.""")
+  * Move an IPv6 to a different VNIC in the same subnet.   * Enable/disable internet access for an IPv6.   * Change the display name for an IPv6.   * Update resource tags for an IPv6. \n[Command Reference](updateIpv6)""")
 @cli_util.option('--ipv6-id', required=True, help=u"""The [OCID] of the IPv6.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
@@ -8969,7 +8969,7 @@ def update_ipv6(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_in
     cli_util.render_response(result, ctx)
 
 
-@local_peering_gateway_group.command(name=cli_util.override('virtual_network.update_local_peering_gateway.command_name', 'update'), help=u"""Updates the specified local peering gateway (LPG).""")
+@local_peering_gateway_group.command(name=cli_util.override('virtual_network.update_local_peering_gateway.command_name', 'update'), help=u"""Updates the specified local peering gateway (LPG). \n[Command Reference](updateLocalPeeringGateway)""")
 @cli_util.option('--local-peering-gateway-id', required=True, help=u"""The OCID of the local peering gateway.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
@@ -9050,7 +9050,7 @@ def update_local_peering_gateway(ctx, from_json, force, wait_for_state, max_wait
     cli_util.render_response(result, ctx)
 
 
-@nat_gateway_group.command(name=cli_util.override('virtual_network.update_nat_gateway.command_name', 'update'), help=u"""Updates the specified NAT gateway.""")
+@nat_gateway_group.command(name=cli_util.override('virtual_network.update_nat_gateway.command_name', 'update'), help=u"""Updates the specified NAT gateway. \n[Command Reference](updateNatGateway)""")
 @cli_util.option('--nat-gateway-id', required=True, help=u"""The NAT gateway's [OCID].""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
@@ -9139,7 +9139,7 @@ To add a VNIC to the group *when you create the VNIC*, specify the NSG's OCID du
 
 To add or remove security rules from the group, use [AddNetworkSecurityGroupSecurityRules] or [RemoveNetworkSecurityGroupSecurityRules].
 
-To edit the contents of existing security rules in the group, use [UpdateNetworkSecurityGroupSecurityRules].""")
+To edit the contents of existing security rules in the group, use [UpdateNetworkSecurityGroupSecurityRules]. \n[Command Reference](updateNetworkSecurityGroup)""")
 @cli_util.option('--network-security-group-id', required=True, help=u"""The [OCID] of the network security group.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
@@ -9214,7 +9214,7 @@ def update_network_security_group(ctx, from_json, force, wait_for_state, max_wai
     cli_util.render_response(result, ctx)
 
 
-@security_rule_group.command(name=cli_util.override('virtual_network.update_network_security_group_security_rules.command_name', 'update-network-security-group'), help=u"""Updates one or more security rules in the specified network security group.""")
+@security_rule_group.command(name=cli_util.override('virtual_network.update_network_security_group_security_rules.command_name', 'update-network-security-group'), help=u"""Updates one or more security rules in the specified network security group. \n[Command Reference](updateNetworkSecurityGroupSecurityRules)""")
 @cli_util.option('--network-security-group-id', required=True, help=u"""The [OCID] of the network security group.""")
 @cli_util.option('--security-rules', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The NSG security rules to update.
 
@@ -9249,7 +9249,7 @@ def update_network_security_group_security_rules(ctx, from_json, network_securit
 
   - Move a secondary private IP to a different VNIC in the same subnet.   - Change the display name for a secondary private IP.   - Change the hostname for a secondary private IP.
 
-This operation cannot be used with primary private IPs. To update the hostname for the primary IP on a VNIC, use [UpdateVnic].""")
+This operation cannot be used with primary private IPs. To update the hostname for the primary IP on a VNIC, use [UpdateVnic]. \n[Command Reference](updatePrivateIp)""")
 @cli_util.option('--private-ip-id', required=True, help=u"""The OCID of the private IP.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
@@ -9324,7 +9324,7 @@ Regarding ephemeral public IPs:
 
 **Note:** If a public IP is assigned to a secondary private IP (see [PrivateIp]), and you move that secondary private IP to another VNIC, the public IP moves with it.
 
-**Note:** There's a limit to the number of [public IPs] a VNIC or instance can have. If you try to move a reserved public IP to a VNIC or instance that has already reached its public IP limit, an error is returned. For information about the public IP limits, see [Public IP Addresses].""")
+**Note:** There's a limit to the number of [public IPs] a VNIC or instance can have. If you try to move a reserved public IP to a VNIC or instance that has already reached its public IP limit, an error is returned. For information about the public IP limits, see [Public IP Addresses]. \n[Command Reference](updatePublicIp)""")
 @cli_util.option('--public-ip-id', required=True, help=u"""The OCID of the public IP.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
@@ -9403,7 +9403,7 @@ def update_public_ip(ctx, from_json, force, wait_for_state, max_wait_seconds, wa
     cli_util.render_response(result, ctx)
 
 
-@public_ip_pool_group.command(name=cli_util.override('virtual_network.update_public_ip_pool.command_name', 'update'), help=u"""Updates the specified Public Ip Pool.""")
+@public_ip_pool_group.command(name=cli_util.override('virtual_network.update_public_ip_pool.command_name', 'update'), help=u"""Updates the specified Public Ip Pool. \n[Command Reference](updatePublicIpPool)""")
 @cli_util.option('--public-ip-pool-id', required=True, help=u"""The OCID of the Public Ip Pool object.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
@@ -9479,7 +9479,7 @@ def update_public_ip_pool(ctx, from_json, force, wait_for_state, max_wait_second
     cli_util.render_response(result, ctx)
 
 
-@remote_peering_connection_group.command(name=cli_util.override('virtual_network.update_remote_peering_connection.command_name', 'update'), help=u"""Updates the specified remote peering connection (RPC).""")
+@remote_peering_connection_group.command(name=cli_util.override('virtual_network.update_remote_peering_connection.command_name', 'update'), help=u"""Updates the specified remote peering connection (RPC). \n[Command Reference](updateRemotePeeringConnection)""")
 @cli_util.option('--remote-peering-connection-id', required=True, help=u"""The OCID of the remote peering connection (RPC).""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
@@ -9556,7 +9556,7 @@ def update_remote_peering_connection(ctx, from_json, force, wait_for_state, max_
 
 @route_table_group.command(name=cli_util.override('virtual_network.update_route_table.command_name', 'update'), help=u"""Updates the specified route table's display name or route rules. Avoid entering confidential information.
 
-Note that the `routeRules` object you provide replaces the entire existing set of rules.""")
+Note that the `routeRules` object you provide replaces the entire existing set of rules. \n[Command Reference](updateRouteTable)""")
 @cli_util.option('--rt-id', required=True, help=u"""The OCID of the route table.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
@@ -9639,7 +9639,7 @@ def update_route_table(ctx, from_json, force, wait_for_state, max_wait_seconds, 
 
 @security_list_group.command(name=cli_util.override('virtual_network.update_security_list.command_name', 'update'), help=u"""Updates the specified security list's display name or rules. Avoid entering confidential information.
 
-Note that the `egressSecurityRules` or `ingressSecurityRules` objects you provide replace the entire existing objects.""")
+Note that the `egressSecurityRules` or `ingressSecurityRules` objects you provide replace the entire existing objects. \n[Command Reference](updateSecurityList)""")
 @cli_util.option('--security-list-id', required=True, help=u"""The OCID of the security list.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
@@ -9726,7 +9726,7 @@ def update_security_list(ctx, from_json, force, wait_for_state, max_wait_seconds
     cli_util.render_response(result, ctx)
 
 
-@service_gateway_group.command(name=cli_util.override('virtual_network.update_service_gateway.command_name', 'update'), help=u"""Updates the specified service gateway. The information you provide overwrites the existing attributes of the gateway.""")
+@service_gateway_group.command(name=cli_util.override('virtual_network.update_service_gateway.command_name', 'update'), help=u"""Updates the specified service gateway. The information you provide overwrites the existing attributes of the gateway. \n[Command Reference](updateServiceGateway)""")
 @cli_util.option('--service-gateway-id', required=True, help=u"""The service gateway's [OCID].""")
 @cli_util.option('--block-traffic', type=click.BOOL, help=u"""Whether the service gateway blocks all traffic through it. The default is `false`. When this is `true`, traffic is not routed to any services, regardless of route rules.
 
@@ -9821,7 +9821,7 @@ def update_service_gateway(ctx, from_json, force, wait_for_state, max_wait_secon
     cli_util.render_response(result, ctx)
 
 
-@subnet_group.command(name=cli_util.override('virtual_network.update_subnet.command_name', 'update'), help=u"""Updates the specified subnet.""")
+@subnet_group.command(name=cli_util.override('virtual_network.update_subnet.command_name', 'update'), help=u"""Updates the specified subnet. \n[Command Reference](updateSubnet)""")
 @cli_util.option('--subnet-id', required=True, help=u"""The OCID of the subnet.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
@@ -9908,7 +9908,7 @@ def update_subnet(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_
     cli_util.render_response(result, ctx)
 
 
-@tunnel_cpe_device_config_group.command(name=cli_util.override('virtual_network.update_tunnel_cpe_device_config.command_name', 'update'), help=u"""Creates or updates the set of CPE configuration answers for the specified tunnel. The answers correlate to the questions that are specific to the CPE device type (see the `parameters` attribute of [CpeDeviceShapeDetail]).""")
+@tunnel_cpe_device_config_group.command(name=cli_util.override('virtual_network.update_tunnel_cpe_device_config.command_name', 'update'), help=u"""Creates or updates the set of CPE configuration answers for the specified tunnel. The answers correlate to the questions that are specific to the CPE device type (see the `parameters` attribute of [CpeDeviceShapeDetail]). \n[Command Reference](updateTunnelCpeDeviceConfig)""")
 @cli_util.option('--ipsc-id', required=True, help=u"""The OCID of the IPSec connection.""")
 @cli_util.option('--tunnel-id', required=True, help=u"""The [OCID] of the tunnel.""")
 @cli_util.option('--tunnel-cpe-device-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The set of configuration answers for a CPE device.
@@ -9953,7 +9953,7 @@ def update_tunnel_cpe_device_config(ctx, from_json, force, ipsc_id, tunnel_id, t
     cli_util.render_response(result, ctx)
 
 
-@vcn_group.command(name=cli_util.override('virtual_network.update_vcn.command_name', 'update'), help=u"""Updates the specified VCN.""")
+@vcn_group.command(name=cli_util.override('virtual_network.update_vcn.command_name', 'update'), help=u"""Updates the specified VCN. \n[Command Reference](updateVcn)""")
 @cli_util.option('--vcn-id', required=True, help=u"""The [OCID] of the VCN.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
@@ -10032,7 +10032,7 @@ def update_vcn(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_int
 
 **Important:** If the virtual circuit is working and in the PROVISIONED state, updating any of the network-related properties (such as the DRG being used, the BGP ASN, and so on) will cause the virtual circuit's state to switch to PROVISIONING and the related BGP session to go down. After Oracle re-provisions the virtual circuit, its state will return to PROVISIONED. Make sure you confirm that the associated BGP session is back up. For more information about the various states and how to test connectivity, see [FastConnect Overview].
 
-To change the list of public IP prefixes for a public virtual circuit, use [BulkAddVirtualCircuitPublicPrefixes] and [BulkDeleteVirtualCircuitPublicPrefixes]. Updating the list of prefixes does NOT cause the BGP session to go down. However, Oracle must verify the customer's ownership of each added prefix before traffic for that prefix will flow across the virtual circuit.""")
+To change the list of public IP prefixes for a public virtual circuit, use [BulkAddVirtualCircuitPublicPrefixes] and [BulkDeleteVirtualCircuitPublicPrefixes]. Updating the list of prefixes does NOT cause the BGP session to go down. However, Oracle must verify the customer's ownership of each added prefix before traffic for that prefix will flow across the virtual circuit. \n[Command Reference](updateVirtualCircuit)""")
 @cli_util.option('--virtual-circuit-id', required=True, help=u"""The OCID of the virtual circuit.""")
 @cli_util.option('--bandwidth-shape-name', help=u"""The provisioned data rate of the connection. To get a list of the available bandwidth levels (that is, shapes), see [ListFastConnectProviderVirtualCircuitBandwidthShapes]. To be updated only by the customer who owns the virtual circuit.""")
 @cli_util.option('--cross-connect-mappings', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of mappings, each containing properties for a cross-connect or cross-connect group associated with this virtual circuit.
@@ -10157,7 +10157,7 @@ def update_virtual_circuit(ctx, from_json, force, wait_for_state, max_wait_secon
     cli_util.render_response(result, ctx)
 
 
-@vlan_group.command(name=cli_util.override('virtual_network.update_vlan.command_name', 'update'), help=u"""Updates the specified VLAN. This could result in changes to all the VNICs in the VLAN, which can take time. During that transition period, the VLAN will be in the UPDATING state.""")
+@vlan_group.command(name=cli_util.override('virtual_network.update_vlan.command_name', 'update'), help=u"""Updates the specified VLAN. This could result in changes to all the VNICs in the VLAN, which can take time. During that transition period, the VLAN will be in the UPDATING state. \n[Command Reference](updateVlan)""")
 @cli_util.option('--vlan-id', required=True, help=u"""The [OCID] of the VLAN.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
@@ -10241,7 +10241,7 @@ def update_vlan(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_in
     cli_util.render_response(result, ctx)
 
 
-@vnic_group.command(name=cli_util.override('virtual_network.update_vnic.command_name', 'update'), help=u"""Updates the specified VNIC.""")
+@vnic_group.command(name=cli_util.override('virtual_network.update_vnic.command_name', 'update'), help=u"""Updates the specified VNIC. \n[Command Reference](updateVnic)""")
 @cli_util.option('--vnic-id', required=True, help=u"""The OCID of the VNIC.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
@@ -10336,7 +10336,7 @@ def update_vnic(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_in
     cli_util.render_response(result, ctx)
 
 
-@byoip_range_group.command(name=cli_util.override('virtual_network.validate_byoip_range.command_name', 'validate'), help=u"""submit the Byoip Range for validation. This presumes the user has updated their IP registry record in accordance to validation requirements""")
+@byoip_range_group.command(name=cli_util.override('virtual_network.validate_byoip_range.command_name', 'validate'), help=u"""submit the Byoip Range for validation. This presumes the user has updated their IP registry record in accordance to validation requirements \n[Command Reference](validateByoipRange)""")
 @cli_util.option('--byoip-range-id', required=True, help=u"""The OCID of the Byoip Range object.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -10358,7 +10358,7 @@ def validate_byoip_range(ctx, from_json, byoip_range_id):
     cli_util.render_response(result, ctx)
 
 
-@byoip_range_group.command(name=cli_util.override('virtual_network.withdraw_byoip_range.command_name', 'withdraw'), help=u"""stop route advertisements for the Byoip Range prefix.""")
+@byoip_range_group.command(name=cli_util.override('virtual_network.withdraw_byoip_range.command_name', 'withdraw'), help=u"""stop route advertisements for the Byoip Range prefix. \n[Command Reference](withdrawByoipRange)""")
 @cli_util.option('--byoip-range-id', required=True, help=u"""The OCID of the Byoip Range object.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option

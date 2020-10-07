@@ -54,7 +54,7 @@ work_requests_root_group.add_command(work_request_summary_group)
 work_requests_root_group.add_command(work_request_group)
 
 
-@work_request_group.command(name=cli_util.override('work_requests.cancel_work_request.command_name', 'cancel'), help=u"""Cancels the work request.""")
+@work_request_group.command(name=cli_util.override('work_requests.cancel_work_request.command_name', 'cancel'), help=u"""Cancels the work request. \n[Command Reference](cancelWorkRequest)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The ocid of the asynchronous request.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -80,7 +80,7 @@ def cancel_work_request(ctx, from_json, work_request_id, if_match):
     cli_util.render_response(result, ctx)
 
 
-@work_request_group.command(name=cli_util.override('work_requests.get_work_request.command_name', 'get'), help=u"""Gets the status of the work request with the given identifier.""")
+@work_request_group.command(name=cli_util.override('work_requests.get_work_request.command_name', 'get'), help=u"""Gets the status of the work request with the given identifier. \n[Command Reference](getWorkRequest)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The ocid of the asynchronous request.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -102,7 +102,7 @@ def get_work_request(ctx, from_json, work_request_id):
     cli_util.render_response(result, ctx)
 
 
-@work_request_error_group.command(name=cli_util.override('work_requests.list_work_request_errors.command_name', 'list'), help=u"""Returns a (paginated) list of errors for a given work request.""")
+@work_request_error_group.command(name=cli_util.override('work_requests.list_work_request_errors.command_name', 'list'), help=u"""Returns a (paginated) list of errors for a given work request. \n[Command Reference](listWorkRequestErrors)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The ocid of the asynchronous request.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -159,7 +159,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     cli_util.render_response(result, ctx)
 
 
-@work_request_log_group.command(name=cli_util.override('work_requests.list_work_request_logs.command_name', 'list'), help=u"""Returns a (paginated) list of logs for a given work request.""")
+@work_request_log_group.command(name=cli_util.override('work_requests.list_work_request_logs.command_name', 'list'), help=u"""Returns a (paginated) list of logs for a given work request. \n[Command Reference](listWorkRequestLogs)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The ocid of the asynchronous request.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -216,7 +216,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     cli_util.render_response(result, ctx)
 
 
-@work_request_summary_group.command(name=cli_util.override('work_requests.list_work_requests.command_name', 'list-work-requests'), help=u"""Lists the work requests in a compartment.""")
+@work_request_summary_group.command(name=cli_util.override('work_requests.list_work_requests.command_name', 'list-work-requests'), help=u"""Lists the work requests in a compartment. \n[Command Reference](listWorkRequests)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The ocid of the compartment in which to list resources.""")
 @cli_util.option('--resource-id', help=u"""Filter work requests by the resource ocid.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")

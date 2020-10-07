@@ -88,7 +88,7 @@ dns_root_group.add_command(records_group)
 dns_root_group.add_command(zones_group)
 
 
-@steering_policy_group.command(name=cli_util.override('dns.change_steering_policy_compartment.command_name', 'change-compartment'), help=u"""Moves a steering policy into a different compartment.""")
+@steering_policy_group.command(name=cli_util.override('dns.change_steering_policy_compartment.command_name', 'change-compartment'), help=u"""Moves a steering policy into a different compartment. \n[Command Reference](changeSteeringPolicyCompartment)""")
 @cli_util.option('--steering-policy-id', required=True, help=u"""The OCID of the target steering policy.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the steering policy should be moved.""")
 @cli_util.option('--if-match', help=u"""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
@@ -119,7 +119,7 @@ def change_steering_policy_compartment(ctx, from_json, steering_policy_id, compa
     cli_util.render_response(result, ctx)
 
 
-@tsig_key_group.command(name=cli_util.override('dns.change_tsig_key_compartment.command_name', 'change-compartment'), help=u"""Moves a TSIG key into a different compartment.""")
+@tsig_key_group.command(name=cli_util.override('dns.change_tsig_key_compartment.command_name', 'change-compartment'), help=u"""Moves a TSIG key into a different compartment. \n[Command Reference](changeTsigKeyCompartment)""")
 @cli_util.option('--tsig-key-id', required=True, help=u"""The OCID of the target TSIG key.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the TSIG key should be moved.""")
 @cli_util.option('--if-match', help=u"""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
@@ -150,7 +150,7 @@ def change_tsig_key_compartment(ctx, from_json, tsig_key_id, compartment_id, if_
     cli_util.render_response(result, ctx)
 
 
-@zone_group.command(name=cli_util.override('dns.change_zone_compartment.command_name', 'change-compartment'), help=u"""Moves a zone into a different compartment. **Note:** All SteeringPolicyAttachment objects associated with this zone will also be moved into the provided compartment.""")
+@zone_group.command(name=cli_util.override('dns.change_zone_compartment.command_name', 'change-compartment'), help=u"""Moves a zone into a different compartment. **Note:** All SteeringPolicyAttachment objects associated with this zone will also be moved into the provided compartment. \n[Command Reference](changeZoneCompartment)""")
 @cli_util.option('--zone-id', required=True, help=u"""The OCID of the target zone.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the zone should be moved.""")
 @cli_util.option('--if-match', help=u"""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
@@ -181,7 +181,7 @@ def change_zone_compartment(ctx, from_json, zone_id, compartment_id, if_match):
     cli_util.render_response(result, ctx)
 
 
-@steering_policy_group.command(name=cli_util.override('dns.create_steering_policy.command_name', 'create'), help=u"""Creates a new steering policy in the specified compartment. For more information on creating policies with templates, see [Traffic Management API Guide].""")
+@steering_policy_group.command(name=cli_util.override('dns.create_steering_policy.command_name', 'create'), help=u"""Creates a new steering policy in the specified compartment. For more information on creating policies with templates, see [Traffic Management API Guide]. \n[Command Reference](createSteeringPolicy)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment containing the steering policy.""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name for the steering policy. Does not have to be unique and can be changed. Avoid entering confidential information.""")
 @cli_util.option('--template', required=True, type=custom_types.CliCaseInsensitiveChoice(["FAILOVER", "LOAD_BALANCE", "ROUTE_BY_GEO", "ROUTE_BY_ASN", "ROUTE_BY_IP", "CUSTOM"]), help=u"""A set of predefined rules based on the desired purpose of the steering policy. Each template utilizes Traffic Management's rules in a different order to produce the desired results when answering DNS queries.
@@ -292,7 +292,7 @@ def create_steering_policy(ctx, from_json, wait_for_state, max_wait_seconds, wai
 
 @steering_policy_attachment_group.command(name=cli_util.override('dns.create_steering_policy_attachment.command_name', 'create'), help=u"""Creates a new attachment between a steering policy and a domain, giving the policy permission to answer queries for the specified domain. A steering policy must be attached to a domain for the policy to answer DNS queries for that domain.
 
-For the purposes of access control, the attachment is automatically placed into the same compartment as the domain's zone.""")
+For the purposes of access control, the attachment is automatically placed into the same compartment as the domain's zone. \n[Command Reference](createSteeringPolicyAttachment)""")
 @cli_util.option('--steering-policy-id', required=True, help=u"""The OCID of the attached steering policy.""")
 @cli_util.option('--zone-id', required=True, help=u"""The OCID of the attached zone.""")
 @cli_util.option('--domain-name', required=True, help=u"""The attached domain within the attached zone.""")
@@ -349,7 +349,7 @@ def create_steering_policy_attachment(ctx, from_json, wait_for_state, max_wait_s
     cli_util.render_response(result, ctx)
 
 
-@tsig_key_group.command(name=cli_util.override('dns.create_tsig_key.command_name', 'create'), help=u"""Creates a new TSIG key in the specified compartment. There is no `opc-retry-token` header since TSIG key names must be globally unique.""")
+@tsig_key_group.command(name=cli_util.override('dns.create_tsig_key.command_name', 'create'), help=u"""Creates a new TSIG key in the specified compartment. There is no `opc-retry-token` header since TSIG key names must be globally unique. \n[Command Reference](createTsigKey)""")
 @cli_util.option('--algorithm', required=True, help=u"""TSIG key algorithms are encoded as domain names, but most consist of only one non-empty label, which is not required to be explicitly absolute. Applicable algorithms include: hmac-sha1, hmac-sha224, hmac-sha256, hmac-sha512. For more information on these algorithms, see [RFC 4635].""")
 @cli_util.option('--name', required=True, help=u"""A globally unique domain name identifying the key for a given pair of hosts.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment containing the TSIG key.""")
@@ -416,7 +416,7 @@ def create_tsig_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
     cli_util.render_response(result, ctx)
 
 
-@zone_group.command(name=cli_util.override('dns.create_zone.command_name', 'create'), help=u"""Creates a new zone in the specified compartment. The `compartmentId` query parameter is required if the `Content-Type` header for the request is `text/dns`.""")
+@zone_group.command(name=cli_util.override('dns.create_zone.command_name', 'create'), help=u"""Creates a new zone in the specified compartment. The `compartmentId` query parameter is required if the `Content-Type` header for the request is `text/dns`. \n[Command Reference](createZone)""")
 @cli_util.option('--name', required=True, help=u"""The name of the zone.""")
 @cli_util.option('--migration-source', type=custom_types.CliCaseInsensitiveChoice(["NONE", "DYNECT"]), help=u"""Discriminator that is used to determine whether to create a new zone (NONE) or to migrate an existing DynECT zone (DYNECT).""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
@@ -485,7 +485,7 @@ def create_zone(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
     cli_util.render_response(result, ctx)
 
 
-@zone_group.command(name=cli_util.override('dns.create_zone_create_zone_details.command_name', 'create-zone-create-zone-details'), help=u"""Creates a new zone in the specified compartment. The `compartmentId` query parameter is required if the `Content-Type` header for the request is `text/dns`.""")
+@zone_group.command(name=cli_util.override('dns.create_zone_create_zone_details.command_name', 'create-zone-create-zone-details'), help=u"""Creates a new zone in the specified compartment. The `compartmentId` query parameter is required if the `Content-Type` header for the request is `text/dns`. \n[Command Reference](createZone)""")
 @cli_util.option('--name', required=True, help=u"""The name of the zone.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
@@ -562,7 +562,7 @@ def create_zone_create_zone_details(ctx, from_json, wait_for_state, max_wait_sec
     cli_util.render_response(result, ctx)
 
 
-@zone_group.command(name=cli_util.override('dns.create_zone_create_migrated_dynect_zone_details.command_name', 'create-zone-create-migrated-dynect-zone-details'), help=u"""Creates a new zone in the specified compartment. The `compartmentId` query parameter is required if the `Content-Type` header for the request is `text/dns`.""")
+@zone_group.command(name=cli_util.override('dns.create_zone_create_migrated_dynect_zone_details.command_name', 'create-zone-create-migrated-dynect-zone-details'), help=u"""Creates a new zone in the specified compartment. The `compartmentId` query parameter is required if the `Content-Type` header for the request is `text/dns`. \n[Command Reference](createZone)""")
 @cli_util.option('--name', required=True, help=u"""The name of the zone.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
@@ -633,7 +633,7 @@ def create_zone_create_migrated_dynect_zone_details(ctx, from_json, wait_for_sta
     cli_util.render_response(result, ctx)
 
 
-@records_group.command(name=cli_util.override('dns.delete_domain_records.command_name', 'delete-domain'), help=u"""Deletes all records at the specified zone and domain.""")
+@records_group.command(name=cli_util.override('dns.delete_domain_records.command_name', 'delete-domain'), help=u"""Deletes all records at the specified zone and domain. \n[Command Reference](deleteDomainRecords)""")
 @cli_util.option('--zone-name-or-id', required=True, help=u"""The name or OCID of the target zone.""")
 @cli_util.option('--domain', required=True, help=u"""The target fully-qualified domain name (FQDN) within the target zone.""")
 @cli_util.option('--if-match', help=u"""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
@@ -670,7 +670,7 @@ def delete_domain_records(ctx, from_json, zone_name_or_id, domain, if_match, if_
     cli_util.render_response(result, ctx)
 
 
-@rr_set_group.command(name=cli_util.override('dns.delete_rr_set.command_name', 'delete'), help=u"""Deletes all records in the specified RRSet.""")
+@rr_set_group.command(name=cli_util.override('dns.delete_rr_set.command_name', 'delete'), help=u"""Deletes all records in the specified RRSet. \n[Command Reference](deleteRRSet)""")
 @cli_util.option('--zone-name-or-id', required=True, help=u"""The name or OCID of the target zone.""")
 @cli_util.option('--domain', required=True, help=u"""The target fully-qualified domain name (FQDN) within the target zone.""")
 @cli_util.option('--rtype', required=True, help=u"""The type of the target RRSet within the target zone.""")
@@ -712,7 +712,7 @@ def delete_rr_set(ctx, from_json, zone_name_or_id, domain, rtype, if_match, if_u
     cli_util.render_response(result, ctx)
 
 
-@steering_policy_group.command(name=cli_util.override('dns.delete_steering_policy.command_name', 'delete'), help=u"""Deletes the specified steering policy. A `204` response indicates that the delete has been successful. Deletion will fail if the policy is attached to any zones. To detach a policy from a zone, see `DeleteSteeringPolicyAttachment`.""")
+@steering_policy_group.command(name=cli_util.override('dns.delete_steering_policy.command_name', 'delete'), help=u"""Deletes the specified steering policy. A `204` response indicates that the delete has been successful. Deletion will fail if the policy is attached to any zones. To detach a policy from a zone, see `DeleteSteeringPolicyAttachment`. \n[Command Reference](deleteSteeringPolicy)""")
 @cli_util.option('--steering-policy-id', required=True, help=u"""The OCID of the target steering policy.""")
 @cli_util.option('--if-match', help=u"""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
 @cli_util.option('--if-unmodified-since', help=u"""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
@@ -779,7 +779,7 @@ def delete_steering_policy(ctx, from_json, wait_for_state, max_wait_seconds, wai
     cli_util.render_response(result, ctx)
 
 
-@steering_policy_attachment_group.command(name=cli_util.override('dns.delete_steering_policy_attachment.command_name', 'delete'), help=u"""Deletes the specified steering policy attachment. A `204` response indicates that the delete has been successful.""")
+@steering_policy_attachment_group.command(name=cli_util.override('dns.delete_steering_policy_attachment.command_name', 'delete'), help=u"""Deletes the specified steering policy attachment. A `204` response indicates that the delete has been successful. \n[Command Reference](deleteSteeringPolicyAttachment)""")
 @cli_util.option('--steering-policy-attachment-id', required=True, help=u"""The OCID of the target steering policy attachment.""")
 @cli_util.option('--if-match', help=u"""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
 @cli_util.option('--if-unmodified-since', help=u"""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
@@ -846,7 +846,7 @@ def delete_steering_policy_attachment(ctx, from_json, wait_for_state, max_wait_s
     cli_util.render_response(result, ctx)
 
 
-@tsig_key_group.command(name=cli_util.override('dns.delete_tsig_key.command_name', 'delete'), help=u"""Deletes the specified TSIG key.""")
+@tsig_key_group.command(name=cli_util.override('dns.delete_tsig_key.command_name', 'delete'), help=u"""Deletes the specified TSIG key. \n[Command Reference](deleteTsigKey)""")
 @cli_util.option('--tsig-key-id', required=True, help=u"""The OCID of the target TSIG key.""")
 @cli_util.option('--if-match', help=u"""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
 @cli_util.option('--if-unmodified-since', help=u"""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
@@ -913,7 +913,7 @@ def delete_tsig_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
     cli_util.render_response(result, ctx)
 
 
-@zone_group.command(name=cli_util.override('dns.delete_zone.command_name', 'delete'), help=u"""Deletes the specified zone and all its steering policy attachments. A `204` response indicates that zone has been successfully deleted.""")
+@zone_group.command(name=cli_util.override('dns.delete_zone.command_name', 'delete'), help=u"""Deletes the specified zone and all its steering policy attachments. A `204` response indicates that zone has been successfully deleted. \n[Command Reference](deleteZone)""")
 @cli_util.option('--zone-name-or-id', required=True, help=u"""The name or OCID of the target zone.""")
 @cli_util.option('--if-match', help=u"""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
 @cli_util.option('--if-unmodified-since', help=u"""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
@@ -983,7 +983,7 @@ def delete_zone(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
     cli_util.render_response(result, ctx)
 
 
-@records_group.command(name=cli_util.override('dns.get_domain_records.command_name', 'get-domain'), help=u"""Gets a list of all records at the specified zone and domain. The results are sorted by `rtype` in alphabetical order by default. You can optionally filter and/or sort the results using the listed parameters.""")
+@records_group.command(name=cli_util.override('dns.get_domain_records.command_name', 'get-domain'), help=u"""Gets a list of all records at the specified zone and domain. The results are sorted by `rtype` in alphabetical order by default. You can optionally filter and/or sort the results using the listed parameters. \n[Command Reference](getDomainRecords)""")
 @cli_util.option('--zone-name-or-id', required=True, help=u"""The name or OCID of the target zone.""")
 @cli_util.option('--domain', required=True, help=u"""The target fully-qualified domain name (FQDN) within the target zone.""")
 @cli_util.option('--if-none-match', help=u"""The `If-None-Match` header field makes the request method conditional on the absence of any current representation of the target resource, when the field-value is `*`, or having a selected representation with an entity-tag that does not match any of those listed in the field-value.""")
@@ -1062,7 +1062,7 @@ def get_domain_records(ctx, from_json, all_pages, page_size, zone_name_or_id, do
     cli_util.render_response(result, ctx)
 
 
-@rr_set_group.command(name=cli_util.override('dns.get_rr_set.command_name', 'get'), help=u"""Gets a list of all records in the specified RRSet. The results are sorted by `recordHash` by default.""")
+@rr_set_group.command(name=cli_util.override('dns.get_rr_set.command_name', 'get'), help=u"""Gets a list of all records in the specified RRSet. The results are sorted by `recordHash` by default. \n[Command Reference](getRRSet)""")
 @cli_util.option('--zone-name-or-id', required=True, help=u"""The name or OCID of the target zone.""")
 @cli_util.option('--domain', required=True, help=u"""The target fully-qualified domain name (FQDN) within the target zone.""")
 @cli_util.option('--rtype', required=True, help=u"""The type of the target RRSet within the target zone.""")
@@ -1139,7 +1139,7 @@ def get_rr_set(ctx, from_json, all_pages, page_size, zone_name_or_id, domain, rt
     cli_util.render_response(result, ctx)
 
 
-@steering_policy_group.command(name=cli_util.override('dns.get_steering_policy.command_name', 'get'), help=u"""Gets information about the specified steering policy.""")
+@steering_policy_group.command(name=cli_util.override('dns.get_steering_policy.command_name', 'get'), help=u"""Gets information about the specified steering policy. \n[Command Reference](getSteeringPolicy)""")
 @cli_util.option('--steering-policy-id', required=True, help=u"""The OCID of the target steering policy.""")
 @cli_util.option('--if-none-match', help=u"""The `If-None-Match` header field makes the request method conditional on the absence of any current representation of the target resource, when the field-value is `*`, or having a selected representation with an entity-tag that does not match any of those listed in the field-value.""")
 @cli_util.option('--if-modified-since', help=u"""The `If-Modified-Since` header field makes a GET or HEAD request method conditional on the selected representation's modification date being more recent than the date provided in the field-value.  Transfer of the selected representation's data is avoided if that data has not changed.""")
@@ -1167,7 +1167,7 @@ def get_steering_policy(ctx, from_json, steering_policy_id, if_none_match, if_mo
     cli_util.render_response(result, ctx)
 
 
-@steering_policy_attachment_group.command(name=cli_util.override('dns.get_steering_policy_attachment.command_name', 'get'), help=u"""Gets information about the specified steering policy attachment.""")
+@steering_policy_attachment_group.command(name=cli_util.override('dns.get_steering_policy_attachment.command_name', 'get'), help=u"""Gets information about the specified steering policy attachment. \n[Command Reference](getSteeringPolicyAttachment)""")
 @cli_util.option('--steering-policy-attachment-id', required=True, help=u"""The OCID of the target steering policy attachment.""")
 @cli_util.option('--if-none-match', help=u"""The `If-None-Match` header field makes the request method conditional on the absence of any current representation of the target resource, when the field-value is `*`, or having a selected representation with an entity-tag that does not match any of those listed in the field-value.""")
 @cli_util.option('--if-modified-since', help=u"""The `If-Modified-Since` header field makes a GET or HEAD request method conditional on the selected representation's modification date being more recent than the date provided in the field-value.  Transfer of the selected representation's data is avoided if that data has not changed.""")
@@ -1195,7 +1195,7 @@ def get_steering_policy_attachment(ctx, from_json, steering_policy_attachment_id
     cli_util.render_response(result, ctx)
 
 
-@tsig_key_group.command(name=cli_util.override('dns.get_tsig_key.command_name', 'get'), help=u"""Gets information about the specified TSIG key.""")
+@tsig_key_group.command(name=cli_util.override('dns.get_tsig_key.command_name', 'get'), help=u"""Gets information about the specified TSIG key. \n[Command Reference](getTsigKey)""")
 @cli_util.option('--tsig-key-id', required=True, help=u"""The OCID of the target TSIG key.""")
 @cli_util.option('--if-none-match', help=u"""The `If-None-Match` header field makes the request method conditional on the absence of any current representation of the target resource, when the field-value is `*`, or having a selected representation with an entity-tag that does not match any of those listed in the field-value.""")
 @cli_util.option('--if-modified-since', help=u"""The `If-Modified-Since` header field makes a GET or HEAD request method conditional on the selected representation's modification date being more recent than the date provided in the field-value.  Transfer of the selected representation's data is avoided if that data has not changed.""")
@@ -1223,7 +1223,7 @@ def get_tsig_key(ctx, from_json, tsig_key_id, if_none_match, if_modified_since):
     cli_util.render_response(result, ctx)
 
 
-@zones_group.command(name=cli_util.override('dns.get_zone.command_name', 'get'), help=u"""Gets information about the specified zone, including its creation date, zone type, and serial.""")
+@zones_group.command(name=cli_util.override('dns.get_zone.command_name', 'get'), help=u"""Gets information about the specified zone, including its creation date, zone type, and serial. \n[Command Reference](getZone)""")
 @cli_util.option('--zone-name-or-id', required=True, help=u"""The name or OCID of the target zone.""")
 @cli_util.option('--if-none-match', help=u"""The `If-None-Match` header field makes the request method conditional on the absence of any current representation of the target resource, when the field-value is `*`, or having a selected representation with an entity-tag that does not match any of those listed in the field-value.""")
 @cli_util.option('--if-modified-since', help=u"""The `If-Modified-Since` header field makes a GET or HEAD request method conditional on the selected representation's modification date being more recent than the date provided in the field-value.  Transfer of the selected representation's data is avoided if that data has not changed.""")
@@ -1254,7 +1254,7 @@ def get_zone(ctx, from_json, zone_name_or_id, if_none_match, if_modified_since, 
     cli_util.render_response(result, ctx)
 
 
-@records_group.command(name=cli_util.override('dns.get_zone_records.command_name', 'get-zone'), help=u"""Gets all records in the specified zone. The results are sorted by `domain` in alphabetical order by default. For more information about records, see [Resource Record (RR) TYPEs].""")
+@records_group.command(name=cli_util.override('dns.get_zone_records.command_name', 'get-zone'), help=u"""Gets all records in the specified zone. The results are sorted by `domain` in alphabetical order by default. For more information about records, see [Resource Record (RR) TYPEs]. \n[Command Reference](getZoneRecords)""")
 @cli_util.option('--zone-name-or-id', required=True, help=u"""The name or OCID of the target zone.""")
 @cli_util.option('--if-none-match', help=u"""The `If-None-Match` header field makes the request method conditional on the absence of any current representation of the target resource, when the field-value is `*`, or having a selected representation with an entity-tag that does not match any of those listed in the field-value.""")
 @cli_util.option('--if-modified-since', help=u"""The `If-Modified-Since` header field makes a GET or HEAD request method conditional on the selected representation's modification date being more recent than the date provided in the field-value.  Transfer of the selected representation's data is avoided if that data has not changed.""")
@@ -1332,7 +1332,7 @@ def get_zone_records(ctx, from_json, all_pages, page_size, zone_name_or_id, if_n
     cli_util.render_response(result, ctx)
 
 
-@steering_policy_group.command(name=cli_util.override('dns.list_steering_policies.command_name', 'list'), help=u"""Gets a list of all steering policies in the specified compartment.""")
+@steering_policy_group.command(name=cli_util.override('dns.list_steering_policies.command_name', 'list'), help=u"""Gets a list of all steering policies in the specified compartment. \n[Command Reference](listSteeringPolicies)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment the resource belongs to.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a page of the collection.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
@@ -1410,7 +1410,7 @@ def list_steering_policies(ctx, from_json, all_pages, page_size, compartment_id,
     cli_util.render_response(result, ctx)
 
 
-@steering_policy_attachment_group.command(name=cli_util.override('dns.list_steering_policy_attachments.command_name', 'list'), help=u"""Lists the steering policy attachments in the specified compartment.""")
+@steering_policy_attachment_group.command(name=cli_util.override('dns.list_steering_policy_attachments.command_name', 'list'), help=u"""Lists the steering policy attachments in the specified compartment. \n[Command Reference](listSteeringPolicyAttachments)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment the resource belongs to.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a page of the collection.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
@@ -1491,7 +1491,7 @@ def list_steering_policy_attachments(ctx, from_json, all_pages, page_size, compa
     cli_util.render_response(result, ctx)
 
 
-@tsig_key_group.command(name=cli_util.override('dns.list_tsig_keys.command_name', 'list'), help=u"""Gets a list of all TSIG keys in the specified compartment.""")
+@tsig_key_group.command(name=cli_util.override('dns.list_tsig_keys.command_name', 'list'), help=u"""Gets a list of all TSIG keys in the specified compartment. \n[Command Reference](listTsigKeys)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment the resource belongs to.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a page of the collection.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
@@ -1554,7 +1554,7 @@ def list_tsig_keys(ctx, from_json, all_pages, page_size, compartment_id, limit, 
     cli_util.render_response(result, ctx)
 
 
-@zones_group.command(name=cli_util.override('dns.list_zones.command_name', 'list'), help=u"""Gets a list of all zones in the specified compartment. The collection can be filtered by name, time created, and zone type.""")
+@zones_group.command(name=cli_util.override('dns.list_zones.command_name', 'list'), help=u"""Gets a list of all zones in the specified compartment. The collection can be filtered by name, time created, and zone type. \n[Command Reference](listZones)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment the resource belongs to.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a page of the collection.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
@@ -1626,7 +1626,7 @@ def list_zones(ctx, from_json, all_pages, page_size, compartment_id, limit, page
     cli_util.render_response(result, ctx)
 
 
-@records_group.command(name=cli_util.override('dns.patch_domain_records.command_name', 'patch-domain'), help=u"""Updates records in the specified zone at a domain. You can update one record or all records for the specified zone depending on the changes provided in the request body. You can also add or remove records using this function.""")
+@records_group.command(name=cli_util.override('dns.patch_domain_records.command_name', 'patch-domain'), help=u"""Updates records in the specified zone at a domain. You can update one record or all records for the specified zone depending on the changes provided in the request body. You can also add or remove records using this function. \n[Command Reference](patchDomainRecords)""")
 @cli_util.option('--zone-name-or-id', required=True, help=u"""The name or OCID of the target zone.""")
 @cli_util.option('--domain', required=True, help=u"""The target fully-qualified domain name (FQDN) within the target zone.""")
 @cli_util.option('--items', type=custom_types.CLI_COMPLEX_TYPE, help=u"""
@@ -1672,7 +1672,7 @@ def patch_domain_records(ctx, from_json, zone_name_or_id, domain, items, if_matc
     cli_util.render_response(result, ctx)
 
 
-@rr_set_group.command(name=cli_util.override('dns.patch_rr_set.command_name', 'patch'), help=u"""Updates records in the specified RRSet.""")
+@rr_set_group.command(name=cli_util.override('dns.patch_rr_set.command_name', 'patch'), help=u"""Updates records in the specified RRSet. \n[Command Reference](patchRRSet)""")
 @cli_util.option('--zone-name-or-id', required=True, help=u"""The name or OCID of the target zone.""")
 @cli_util.option('--domain', required=True, help=u"""The target fully-qualified domain name (FQDN) within the target zone.""")
 @cli_util.option('--rtype', required=True, help=u"""The type of the target RRSet within the target zone.""")
@@ -1723,7 +1723,7 @@ def patch_rr_set(ctx, from_json, zone_name_or_id, domain, rtype, items, if_match
     cli_util.render_response(result, ctx)
 
 
-@records_group.command(name=cli_util.override('dns.patch_zone_records.command_name', 'patch-zone'), help=u"""Updates a collection of records in the specified zone. You can update one record or all records for the specified zone depending on the changes provided in the request body. You can also add or remove records using this function.""")
+@records_group.command(name=cli_util.override('dns.patch_zone_records.command_name', 'patch-zone'), help=u"""Updates a collection of records in the specified zone. You can update one record or all records for the specified zone depending on the changes provided in the request body. You can also add or remove records using this function. \n[Command Reference](patchZoneRecords)""")
 @cli_util.option('--zone-name-or-id', required=True, help=u"""The name or OCID of the target zone.""")
 @cli_util.option('--items', type=custom_types.CLI_COMPLEX_TYPE, help=u"""
 
@@ -1764,7 +1764,7 @@ def patch_zone_records(ctx, from_json, zone_name_or_id, items, if_match, if_unmo
     cli_util.render_response(result, ctx)
 
 
-@records_group.command(name=cli_util.override('dns.update_domain_records.command_name', 'update-domain'), help=u"""Replaces records in the specified zone at a domain with the records specified in the request body. If a specified record does not exist, it will be created. If the record exists, then it will be updated to represent the record in the body of the request. If a record in the zone does not exist in the request body, the record will be removed from the zone.""")
+@records_group.command(name=cli_util.override('dns.update_domain_records.command_name', 'update-domain'), help=u"""Replaces records in the specified zone at a domain with the records specified in the request body. If a specified record does not exist, it will be created. If the record exists, then it will be updated to represent the record in the body of the request. If a record in the zone does not exist in the request body, the record will be removed from the zone. \n[Command Reference](updateDomainRecords)""")
 @cli_util.option('--zone-name-or-id', required=True, help=u"""The name or OCID of the target zone.""")
 @cli_util.option('--domain', required=True, help=u"""The target fully-qualified domain name (FQDN) within the target zone.""")
 @cli_util.option('--items', type=custom_types.CLI_COMPLEX_TYPE, help=u"""
@@ -1815,7 +1815,7 @@ def update_domain_records(ctx, from_json, force, zone_name_or_id, domain, items,
     cli_util.render_response(result, ctx)
 
 
-@record_collection_group.command(name=cli_util.override('dns.update_rr_set.command_name', 'update-rr-set'), help=u"""Replaces records in the specified RRSet.""")
+@record_collection_group.command(name=cli_util.override('dns.update_rr_set.command_name', 'update-rr-set'), help=u"""Replaces records in the specified RRSet. \n[Command Reference](updateRRSet)""")
 @cli_util.option('--zone-name-or-id', required=True, help=u"""The name or OCID of the target zone.""")
 @cli_util.option('--domain', required=True, help=u"""The target fully-qualified domain name (FQDN) within the target zone.""")
 @cli_util.option('--rtype', required=True, help=u"""The type of the target RRSet within the target zone.""")
@@ -1871,7 +1871,7 @@ def update_rr_set(ctx, from_json, force, zone_name_or_id, domain, rtype, items, 
     cli_util.render_response(result, ctx)
 
 
-@steering_policy_group.command(name=cli_util.override('dns.update_steering_policy.command_name', 'update'), help=u"""Updates the configuration of the specified steering policy.""")
+@steering_policy_group.command(name=cli_util.override('dns.update_steering_policy.command_name', 'update'), help=u"""Updates the configuration of the specified steering policy. \n[Command Reference](updateSteeringPolicy)""")
 @cli_util.option('--steering-policy-id', required=True, help=u"""The OCID of the target steering policy.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name for the steering policy. Does not have to be unique and can be changed. Avoid entering confidential information.""")
 @cli_util.option('--ttl', type=click.INT, help=u"""The Time To Live (TTL) for responses from the steering policy, in seconds. If not specified during creation, a value of 30 seconds will be used.""")
@@ -1998,7 +1998,7 @@ def update_steering_policy(ctx, from_json, force, wait_for_state, max_wait_secon
     cli_util.render_response(result, ctx)
 
 
-@steering_policy_attachment_group.command(name=cli_util.override('dns.update_steering_policy_attachment.command_name', 'update'), help=u"""Updates the specified steering policy attachment with your new information.""")
+@steering_policy_attachment_group.command(name=cli_util.override('dns.update_steering_policy_attachment.command_name', 'update'), help=u"""Updates the specified steering policy attachment with your new information. \n[Command Reference](updateSteeringPolicyAttachment)""")
 @cli_util.option('--steering-policy-attachment-id', required=True, help=u"""The OCID of the target steering policy attachment.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name for the steering policy attachment. Does not have to be unique and can be changed. Avoid entering confidential information.""")
 @cli_util.option('--if-match', help=u"""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
@@ -2060,7 +2060,7 @@ def update_steering_policy_attachment(ctx, from_json, wait_for_state, max_wait_s
     cli_util.render_response(result, ctx)
 
 
-@tsig_key_group.command(name=cli_util.override('dns.update_tsig_key.command_name', 'update'), help=u"""Updates the specified TSIG key.""")
+@tsig_key_group.command(name=cli_util.override('dns.update_tsig_key.command_name', 'update'), help=u"""Updates the specified TSIG key. \n[Command Reference](updateTsigKey)""")
 @cli_util.option('--tsig-key-id', required=True, help=u"""The OCID of the target TSIG key.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
@@ -2135,7 +2135,7 @@ def update_tsig_key(ctx, from_json, force, wait_for_state, max_wait_seconds, wai
     cli_util.render_response(result, ctx)
 
 
-@zone_group.command(name=cli_util.override('dns.update_zone.command_name', 'update'), help=u"""Updates the specified secondary zone with your new external master server information. For more information about secondary zone, see [Manage DNS Service Zone].""")
+@zone_group.command(name=cli_util.override('dns.update_zone.command_name', 'update'), help=u"""Updates the specified secondary zone with your new external master server information. For more information about secondary zone, see [Manage DNS Service Zone]. \n[Command Reference](updateZone)""")
 @cli_util.option('--zone-name-or-id', required=True, help=u"""The name or OCID of the target zone.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
@@ -2219,7 +2219,7 @@ def update_zone(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_in
     cli_util.render_response(result, ctx)
 
 
-@records_group.command(name=cli_util.override('dns.update_zone_records.command_name', 'update-zone'), help=u"""Replaces records in the specified zone with the records specified in the request body. If a specified record does not exist, it will be created. If the record exists, then it will be updated to represent the record in the body of the request. If a record in the zone does not exist in the request body, the record will be removed from the zone.""")
+@records_group.command(name=cli_util.override('dns.update_zone_records.command_name', 'update-zone'), help=u"""Replaces records in the specified zone with the records specified in the request body. If a specified record does not exist, it will be created. If the record exists, then it will be updated to represent the record in the body of the request. If a record in the zone does not exist in the request body, the record will be removed from the zone. \n[Command Reference](updateZoneRecords)""")
 @cli_util.option('--zone-name-or-id', required=True, help=u"""The name or OCID of the target zone.""")
 @cli_util.option('--items', type=custom_types.CLI_COMPLEX_TYPE, help=u"""
 

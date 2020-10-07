@@ -31,7 +31,7 @@ dts_service_cli.dts_service_group.add_command(appliance_export_job_root_group)
 appliance_export_job_root_group.add_command(appliance_export_job_group)
 
 
-@appliance_export_job_group.command(name=cli_util.override('appliance_export_job.change_appliance_export_job_compartment.command_name', 'change-compartment'), help=u"""Moves a ApplianceExportJob into a different compartment.""")
+@appliance_export_job_group.command(name=cli_util.override('appliance_export_job.change_appliance_export_job_compartment.command_name', 'change-compartment'), help=u"""Moves a ApplianceExportJob into a different compartment. \n[Command Reference](changeApplianceExportJobCompartment)""")
 @cli_util.option('--appliance-export-job-id', required=True, help=u"""ID of the Appliance Export Job""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID]  of the compartment into which the resources should be moved.""")
 @cli_util.option('--if-match', help=u"""The entity tag to match. Optional, if set, the update will be successful only if the object's tag matches the tag specified in the request.""")
@@ -62,7 +62,7 @@ def change_appliance_export_job_compartment(ctx, from_json, appliance_export_job
     cli_util.render_response(result, ctx)
 
 
-@appliance_export_job_group.command(name=cli_util.override('appliance_export_job.create_appliance_export_job.command_name', 'create'), help=u"""Creates a new Appliance Export Job that corresponds with customer's logical dataset""")
+@appliance_export_job_group.command(name=cli_util.override('appliance_export_job.create_appliance_export_job.command_name', 'create'), help=u"""Creates a new Appliance Export Job that corresponds with customer's logical dataset \n[Command Reference](createApplianceExportJob)""")
 @cli_util.option('--compartment-id', required=True, help=u"""""")
 @cli_util.option('--bucket-name', required=True, help=u"""""")
 @cli_util.option('--display-name', required=True, help=u"""""")
@@ -141,7 +141,7 @@ def create_appliance_export_job(ctx, from_json, wait_for_state, max_wait_seconds
     cli_util.render_response(result, ctx)
 
 
-@appliance_export_job_group.command(name=cli_util.override('appliance_export_job.delete_appliance_export_job.command_name', 'delete'), help=u"""deletes a Appliance Export Job""")
+@appliance_export_job_group.command(name=cli_util.override('appliance_export_job.delete_appliance_export_job.command_name', 'delete'), help=u"""deletes a Appliance Export Job \n[Command Reference](deleteApplianceExportJob)""")
 @cli_util.option('--appliance-export-job-id', required=True, help=u"""ID of the Appliance Export Job""")
 @cli_util.option('--if-match', help=u"""The entity tag to match. Optional, if set, the update will be successful only if the object's tag matches the tag specified in the request.""")
 @cli_util.confirm_delete_option
@@ -205,7 +205,7 @@ def delete_appliance_export_job(ctx, from_json, wait_for_state, max_wait_seconds
     cli_util.render_response(result, ctx)
 
 
-@appliance_export_job_group.command(name=cli_util.override('appliance_export_job.get_appliance_export_job.command_name', 'get'), help=u"""Describes a Appliance Export Job in detail""")
+@appliance_export_job_group.command(name=cli_util.override('appliance_export_job.get_appliance_export_job.command_name', 'get'), help=u"""Describes a Appliance Export Job in detail \n[Command Reference](getApplianceExportJob)""")
 @cli_util.option('--appliance-export-job-id', required=True, help=u"""OCID of the Appliance Export Job""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -227,7 +227,7 @@ def get_appliance_export_job(ctx, from_json, appliance_export_job_id):
     cli_util.render_response(result, ctx)
 
 
-@appliance_export_job_group.command(name=cli_util.override('appliance_export_job.list_appliance_export_jobs.command_name', 'list'), help=u"""Lists Appliance Export Jobs in a given compartment""")
+@appliance_export_job_group.command(name=cli_util.override('appliance_export_job.list_appliance_export_jobs.command_name', 'list'), help=u"""Lists Appliance Export Jobs in a given compartment \n[Command Reference](listApplianceExportJobs)""")
 @cli_util.option('--compartment-id', required=True, help=u"""compartment id""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INPROGRESS", "SUCCEEDED", "FAILED", "CANCELLED", "DELETED"]), help=u"""filtering by lifecycleState""")
 @cli_util.option('--display-name', help=u"""filtering by displayName""")
@@ -283,7 +283,7 @@ def list_appliance_export_jobs(ctx, from_json, all_pages, page_size, compartment
     cli_util.render_response(result, ctx)
 
 
-@appliance_export_job_group.command(name=cli_util.override('appliance_export_job.update_appliance_export_job.command_name', 'update'), help=u"""Updates a Appliance Export Job that corresponds with customer's logical dataset.""")
+@appliance_export_job_group.command(name=cli_util.override('appliance_export_job.update_appliance_export_job.command_name', 'update'), help=u"""Updates a Appliance Export Job that corresponds with customer's logical dataset. \n[Command Reference](updateApplianceExportJob)""")
 @cli_util.option('--appliance-export-job-id', required=True, help=u"""ID of the Appliance Export Job""")
 @cli_util.option('--bucket-name', help=u"""""")
 @cli_util.option('--prefix', help=u"""List of objects with names matching this prefix would be part of this export job.""")

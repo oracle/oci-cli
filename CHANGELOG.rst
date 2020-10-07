@@ -6,6 +6,63 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.13.0 - 2020-10-06
+--------------------
+Added
+~~~~~
+
+* Support for the following features in the Database service
+
+  * Rotating keys on autonomous container databases and autonomous databases
+  
+    * ``oci db autonomous-container-database rotate-key``
+    * ``oci db autonomous-database rotate-key``
+
+  * Managing Cloud Exadata Infrastructure resources
+ 
+    * ``oci db cloud-exa-infra``
+
+  * Managing Cloud VM Cluster resources
+ 
+    * ``oci db cloud-vm-cluster`` 
+
+* Support for the following features in the Data Integration Service
+
+  * Application list patch changes (``oci data-integration application list-patch-changes``)
+  * Application references (``oci data-integration reference``)
+  * Publishing Data Integration tasks to OCI Dataflow service 
+
+    * ``oci data-integration external-publication``
+    * ``oci data-integration external-publication-validation``
+
+  * Generic JDBC and MySQL data asset types
+
+    * ``oci data-integration data-asset update | create``
+
+  * [Breaking] The following commands have been moved
+
+    * ``oci data-integration task delete-task-validation`` to ``oci data-integration task-validation delete``
+    * ``oci data-integration task get-task-validation`` to ``oci data-integration task-validation get``
+    * ``oci data-integration task list-task-validations`` to ``oci data-integration task-validation list``
+
+* Support for disabling the legacy Instance Metadata endpoints v1 in the Compute service
+
+  * ``oci compute instance launch --instance-options``
+
+* Support for instance configurations specifying instance options in the Compute Management service
+
+  * ``oci compute-management instance-configuration create --instance-details`` 
+
+* Support for controlling the display of tax banners in the Marketplace service
+  
+  * ``oci marketplace tax-summary list-taxes`` 
+
+* Streaming output support for listing objects in Object Storage (`Issue 323 <https://github.com/oracle/oci-cli/issues/323>`__)
+
+  * ``oci os object list --stream-output``
+
+* Support for calling Oracle Cloud Infrastructure services in the Dubai region (``--region me-dubai-1``)
+
 2.12.13 - 2020-09-29
 --------------------
 Added

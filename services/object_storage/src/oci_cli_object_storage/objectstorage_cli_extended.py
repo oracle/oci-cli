@@ -3,6 +3,7 @@
 # This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 from __future__ import division
+from __future__ import print_function
 import arrow
 import base64
 import click
@@ -16,7 +17,7 @@ import six  # noqa: F401
 import services.object_storage.src.oci_cli_object_storage.object_storage_transfer_manager  # noqa: F401,E402
 from oci import exceptions
 from oci.object_storage.transfer import constants
-from oci_cli.cli_util import render, render_response, parse_json_parameter, help_option, help_option_group, build_client, wrap_exceptions, filter_object_headers, get_param, copy_help_from_generated_code
+from oci_cli.cli_util import render, render_response, parse_json_parameter, help_option, help_option_group, build_client, wrap_exceptions, filter_object_headers, get_param, copy_help_from_generated_code, stream_page_object
 from oci.object_storage import UploadManager, MultipartObjectAssembler
 from oci_cli.file_filters import BaseFileFilterCollection
 from oci_cli.file_filters import SingleTypeFileFilterCollection
@@ -338,12 +339,13 @@ def list_object_versions(ctx, from_json, all_pages, page_size, namespace_name, b
 @cli_util.option('--fields', default='name,size,timeCreated,md5', show_default=True, help="Object summary in list of objects includes the 'name' field. This parameter may also include "
                  "'size' (object size in bytes), 'md5', and 'timeCreated' (object creation date and time) fields. "
                  "Value of this parameter should be a comma separated, case-insensitive list of those field names.")
+@cli_util.option('--stream-output', 'stream_output', is_flag=True, help="""Print output to stdout as it is fetched so the full response is not stored in memory. This only works with --all.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'object_storage', 'class': 'list[ObjectSummary]'})
 @wrap_exceptions
-def object_list(ctx, from_json, namespace, bucket_name, prefix, start, end, limit, delimiter, fields, all_pages, page_size):
+def object_list(ctx, from_json, namespace, bucket_name, prefix, start, end, limit, delimiter, fields, all_pages, page_size, stream_output):
     """
     Lists the objects in a bucket.
 
@@ -354,6 +356,8 @@ def object_list(ctx, from_json, namespace, bucket_name, prefix, start, end, limi
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
     elif not all_pages and limit is None:
         limit = 100
+    if stream_output and all_pages is None:
+        raise click.UsageError('The --stream-output option requires --all.')
     client = build_client('object_storage', 'object_storage', ctx)
 
     args = {
@@ -377,6 +381,8 @@ def object_list(ctx, from_json, namespace, bucket_name, prefix, start, end, limi
 
     remaining_item_count = limit
     keep_paginating_for_all = True
+    page_index = 1
+    previous_page_has_data = False
 
     # if the user explicitly sets limit to 0 we will still call the service once with limit=0
     fetched_at_least_once = False
@@ -405,9 +411,19 @@ def object_list(ctx, from_json, namespace, bucket_name, prefix, start, end, limi
                 if prefix not in prefixes:
                     prefixes.append(prefix)
 
-        objects = response.data.objects
+        if stream_output:
+            previous_page_has_data = stream_page_object(page_index=page_index,
+                                                        call_result=response,
+                                                        previous_page_has_data=previous_page_has_data,
+                                                        data_key="objects")
+
+            page_index += 1
+
+        else:
+            objects = response.data.objects
+            all_objects.extend(objects)
+
         next_start = response.data.next_start_with
-        all_objects.extend(objects)
 
         if next_start:
             if remaining_item_count:
@@ -422,7 +438,14 @@ def object_list(ctx, from_json, namespace, bucket_name, prefix, start, end, limi
     if response.data.next_start_with:
         metadata['next-start-with'] = response.data.next_start_with
 
-    render(all_objects, metadata, ctx, display_all_headers=True)
+    if stream_output:
+        # we've already printed everything
+        print("  \"prefixes\": " + str(metadata['prefixes']))
+        print("}")
+        if ctx.obj['debug']:
+            print("", file=sys.stderr)
+    else:
+        render(all_objects, metadata, ctx, display_all_headers=True)
 
 
 @objectstorage_cli.object_group.command(name='put')

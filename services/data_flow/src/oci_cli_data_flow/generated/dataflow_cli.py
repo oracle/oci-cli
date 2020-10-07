@@ -72,7 +72,7 @@ data_flow_root_group.add_command(run_group)
 data_flow_root_group.add_command(work_request_group)
 
 
-@application_group.command(name=cli_util.override('data_flow.change_application_compartment.command_name', 'change-compartment'), help=u"""Moves an application into a different compartment. When provided, If-Match is checked against ETag values of the resource. Associated resources, like runs, will not be automatically moved.""")
+@application_group.command(name=cli_util.override('data_flow.change_application_compartment.command_name', 'change-compartment'), help=u"""Moves an application into a different compartment. When provided, If-Match is checked against ETag values of the resource. Associated resources, like runs, will not be automatically moved. \n[Command Reference](changeApplicationCompartment)""")
 @cli_util.option('--application-id', required=True, help=u"""The unique ID for an application.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of a compartment.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -103,7 +103,7 @@ def change_application_compartment(ctx, from_json, application_id, compartment_i
     cli_util.render_response(result, ctx)
 
 
-@private_endpoint_group.command(name=cli_util.override('data_flow.change_private_endpoint_compartment.command_name', 'change-compartment'), help=u"""Moves a private endpoint into a different compartment. When provided, If-Match is checked against ETag values of the resource.""")
+@private_endpoint_group.command(name=cli_util.override('data_flow.change_private_endpoint_compartment.command_name', 'change-compartment'), help=u"""Moves a private endpoint into a different compartment. When provided, If-Match is checked against ETag values of the resource. \n[Command Reference](changePrivateEndpointCompartment)""")
 @cli_util.option('--private-endpoint-id', required=True, help=u"""The unique ID for a private endpoint.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of a compartment.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -160,7 +160,7 @@ def change_private_endpoint_compartment(ctx, from_json, wait_for_state, max_wait
     cli_util.render_response(result, ctx)
 
 
-@run_group.command(name=cli_util.override('data_flow.change_run_compartment.command_name', 'change-compartment'), help=u"""Moves a run into a different compartment. When provided, If-Match is checked against ETag values of the resource. Associated resources, like historical metrics, will not be automatically moved. The run must be in a terminal state (CANCELED, FAILED, SUCCEEDED) in order for it to be moved to a different compartment""")
+@run_group.command(name=cli_util.override('data_flow.change_run_compartment.command_name', 'change-compartment'), help=u"""Moves a run into a different compartment. When provided, If-Match is checked against ETag values of the resource. Associated resources, like historical metrics, will not be automatically moved. The run must be in a terminal state (CANCELED, FAILED, SUCCEEDED) in order for it to be moved to a different compartment \n[Command Reference](changeRunCompartment)""")
 @cli_util.option('--run-id', required=True, help=u"""The unique ID for the run""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of a compartment.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -191,7 +191,7 @@ def change_run_compartment(ctx, from_json, run_id, compartment_id, if_match):
     cli_util.render_response(result, ctx)
 
 
-@application_group.command(name=cli_util.override('data_flow.create_application.command_name', 'create'), help=u"""Creates an application.""")
+@application_group.command(name=cli_util.override('data_flow.create_application.command_name', 'create'), help=u"""Creates an application. \n[Command Reference](createApplication)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of a compartment.""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name. It does not have to be unique. Avoid entering confidential information.""")
 @cli_util.option('--driver-shape', required=True, help=u"""The VM shape for the driver. Sets the driver cores and memory.""")
@@ -300,7 +300,7 @@ def create_application(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     cli_util.render_response(result, ctx)
 
 
-@private_endpoint_group.command(name=cli_util.override('data_flow.create_private_endpoint.command_name', 'create'), help=u"""Creates a private endpoint to be used by an application.""")
+@private_endpoint_group.command(name=cli_util.override('data_flow.create_private_endpoint.command_name', 'create'), help=u"""Creates a private endpoint to be used by an application. \n[Command Reference](createPrivateEndpoint)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of a compartment.""")
 @cli_util.option('--dns-zones', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of DNS zone names. Example: `[ \"app.examplecorp.com\", \"app.examplecorp2.com\" ]`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--subnet-id', required=True, help=u"""The OCID of a subnet.""")
@@ -377,7 +377,7 @@ def create_private_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wa
     cli_util.render_response(result, ctx)
 
 
-@run_group.command(name=cli_util.override('data_flow.create_run.command_name', 'create'), help=u"""Creates a run for an application.""")
+@run_group.command(name=cli_util.override('data_flow.create_run.command_name', 'create'), help=u"""Creates a run for an application. \n[Command Reference](createRun)""")
 @cli_util.option('--application-id', required=True, help=u"""The application ID.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of a compartment.""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly name. It does not have to be unique. Avoid entering confidential information.""")
@@ -472,7 +472,7 @@ def create_run(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
     cli_util.render_response(result, ctx)
 
 
-@application_group.command(name=cli_util.override('data_flow.delete_application.command_name', 'delete'), help=u"""Deletes an application using an `applicationId`.""")
+@application_group.command(name=cli_util.override('data_flow.delete_application.command_name', 'delete'), help=u"""Deletes an application using an `applicationId`. \n[Command Reference](deleteApplication)""")
 @cli_util.option('--application-id', required=True, help=u"""The unique ID for an application.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -536,7 +536,7 @@ def delete_application(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     cli_util.render_response(result, ctx)
 
 
-@private_endpoint_group.command(name=cli_util.override('data_flow.delete_private_endpoint.command_name', 'delete'), help=u"""Deletes a private endpoint using a `privateEndpointId`.""")
+@private_endpoint_group.command(name=cli_util.override('data_flow.delete_private_endpoint.command_name', 'delete'), help=u"""Deletes a private endpoint using a `privateEndpointId`. \n[Command Reference](deletePrivateEndpoint)""")
 @cli_util.option('--private-endpoint-id', required=True, help=u"""The unique ID for a private endpoint.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -588,7 +588,7 @@ def delete_private_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wa
     cli_util.render_response(result, ctx)
 
 
-@run_group.command(name=cli_util.override('data_flow.delete_run.command_name', 'delete'), help=u"""Cancels the specified run if it has not already completed or was previously cancelled. If a run is in progress, the executing job will be killed.""")
+@run_group.command(name=cli_util.override('data_flow.delete_run.command_name', 'delete'), help=u"""Cancels the specified run if it has not already completed or was previously cancelled. If a run is in progress, the executing job will be killed. \n[Command Reference](deleteRun)""")
 @cli_util.option('--run-id', required=True, help=u"""The unique ID for the run""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -652,7 +652,7 @@ def delete_run(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
     cli_util.render_response(result, ctx)
 
 
-@application_group.command(name=cli_util.override('data_flow.get_application.command_name', 'get'), help=u"""Retrieves an application using an `applicationId`.""")
+@application_group.command(name=cli_util.override('data_flow.get_application.command_name', 'get'), help=u"""Retrieves an application using an `applicationId`. \n[Command Reference](getApplication)""")
 @cli_util.option('--application-id', required=True, help=u"""The unique ID for an application.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -674,7 +674,7 @@ def get_application(ctx, from_json, application_id):
     cli_util.render_response(result, ctx)
 
 
-@private_endpoint_group.command(name=cli_util.override('data_flow.get_private_endpoint.command_name', 'get'), help=u"""Retrieves an private endpoint using a `privateEndpointId`.""")
+@private_endpoint_group.command(name=cli_util.override('data_flow.get_private_endpoint.command_name', 'get'), help=u"""Retrieves an private endpoint using a `privateEndpointId`. \n[Command Reference](getPrivateEndpoint)""")
 @cli_util.option('--private-endpoint-id', required=True, help=u"""The unique ID for a private endpoint.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -696,7 +696,7 @@ def get_private_endpoint(ctx, from_json, private_endpoint_id):
     cli_util.render_response(result, ctx)
 
 
-@run_group.command(name=cli_util.override('data_flow.get_run.command_name', 'get'), help=u"""Retrieves the run for the specified `runId`.""")
+@run_group.command(name=cli_util.override('data_flow.get_run.command_name', 'get'), help=u"""Retrieves the run for the specified `runId`. \n[Command Reference](getRun)""")
 @cli_util.option('--run-id', required=True, help=u"""The unique ID for the run""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -718,7 +718,7 @@ def get_run(ctx, from_json, run_id):
     cli_util.render_response(result, ctx)
 
 
-@run_group.command(name=cli_util.override('data_flow.get_run_log.command_name', 'get-run-log'), help=u"""Retrieves the content of an run log.""")
+@run_group.command(name=cli_util.override('data_flow.get_run_log.command_name', 'get-run-log'), help=u"""Retrieves the content of an run log. \n[Command Reference](getRunLog)""")
 @cli_util.option('--run-id', required=True, help=u"""The unique ID for the run""")
 @cli_util.option('--name', required=True, help=u"""The name of the log. Avoid entering confidential information.""")
 @cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
@@ -768,7 +768,7 @@ def get_run_log(ctx, from_json, file, run_id, name):
         file.close()
 
 
-@work_request_group.command(name=cli_util.override('data_flow.get_work_request.command_name', 'get'), help=u"""Gets the status of the work request with the given OCID.""")
+@work_request_group.command(name=cli_util.override('data_flow.get_work_request.command_name', 'get'), help=u"""Gets the status of the work request with the given OCID. \n[Command Reference](getWorkRequest)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The unique ID for a work request.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -790,7 +790,7 @@ def get_work_request(ctx, from_json, work_request_id):
     cli_util.render_response(result, ctx)
 
 
-@application_group.command(name=cli_util.override('data_flow.list_applications.command_name', 'list'), help=u"""Lists all applications in the specified compartment.""")
+@application_group.command(name=cli_util.override('data_flow.list_applications.command_name', 'list'), help=u"""Lists all applications in the specified compartment. \n[Command Reference](listApplications)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of results to return in a paginated `List` call.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` or `opc-prev-page` response header from the last `List` call to sent back to server for getting the next page of results.""")
@@ -853,7 +853,7 @@ def list_applications(ctx, from_json, all_pages, page_size, compartment_id, limi
     cli_util.render_response(result, ctx)
 
 
-@private_endpoint_group.command(name=cli_util.override('data_flow.list_private_endpoints.command_name', 'list'), help=u"""Lists all private endpoints in the specified compartment.""")
+@private_endpoint_group.command(name=cli_util.override('data_flow.list_private_endpoints.command_name', 'list'), help=u"""Lists all private endpoints in the specified compartment. \n[Command Reference](listPrivateEndpoints)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of results to return in a paginated `List` call.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` or `opc-prev-page` response header from the last `List` call to sent back to server for getting the next page of results.""")
@@ -919,7 +919,7 @@ def list_private_endpoints(ctx, from_json, all_pages, page_size, compartment_id,
     cli_util.render_response(result, ctx)
 
 
-@run_log_summary_group.command(name=cli_util.override('data_flow.list_run_logs.command_name', 'list-run-logs'), help=u"""Retrieves summaries of the run's logs.""")
+@run_log_summary_group.command(name=cli_util.override('data_flow.list_run_logs.command_name', 'list-run-logs'), help=u"""Retrieves summaries of the run's logs. \n[Command Reference](listRunLogs)""")
 @cli_util.option('--run-id', required=True, help=u"""The unique ID for the run""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of results to return in a paginated \"List\" call.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` or `opc-prev-page` response header from the last `List` call to sent back to server for getting the next page of results.""")
@@ -970,7 +970,7 @@ def list_run_logs(ctx, from_json, all_pages, page_size, run_id, limit, page):
     cli_util.render_response(result, ctx)
 
 
-@run_group.command(name=cli_util.override('data_flow.list_runs.command_name', 'list'), help=u"""Lists all runs of an application in the specified compartment.""")
+@run_group.command(name=cli_util.override('data_flow.list_runs.command_name', 'list'), help=u"""Lists all runs of an application in the specified compartment. \n[Command Reference](listRuns)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
 @cli_util.option('--application-id', help=u"""The ID of the application.""")
 @cli_util.option('--owner-principal-id', help=u"""The OCID of the user who created the resource.""")
@@ -1042,7 +1042,7 @@ def list_runs(ctx, from_json, all_pages, page_size, compartment_id, application_
     cli_util.render_response(result, ctx)
 
 
-@work_request_error_group.command(name=cli_util.override('data_flow.list_work_request_errors.command_name', 'list'), help=u"""Return a (paginated) list of errors for a given work request.""")
+@work_request_error_group.command(name=cli_util.override('data_flow.list_work_request_errors.command_name', 'list'), help=u"""Return a (paginated) list of errors for a given work request. \n[Command Reference](listWorkRequestErrors)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The unique ID for a work request.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of results to return in a paginated `List` call.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` or `opc-prev-page` response header from the last `List` call to sent back to server for getting the next page of results.""")
@@ -1093,7 +1093,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     cli_util.render_response(result, ctx)
 
 
-@work_request_log_group.command(name=cli_util.override('data_flow.list_work_request_logs.command_name', 'list'), help=u"""Return a paginated list of logs for a given work request.""")
+@work_request_log_group.command(name=cli_util.override('data_flow.list_work_request_logs.command_name', 'list'), help=u"""Return a paginated list of logs for a given work request. \n[Command Reference](listWorkRequestLogs)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The unique ID for a work request.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of results to return in a paginated `List` call.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` or `opc-prev-page` response header from the last `List` call to sent back to server for getting the next page of results.""")
@@ -1144,7 +1144,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     cli_util.render_response(result, ctx)
 
 
-@work_request_group.command(name=cli_util.override('data_flow.list_work_requests.command_name', 'list'), help=u"""Lists the work requests in a compartment.""")
+@work_request_group.command(name=cli_util.override('data_flow.list_work_requests.command_name', 'list'), help=u"""Lists the work requests in a compartment. \n[Command Reference](listWorkRequests)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of results to return in a paginated `List` call.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` or `opc-prev-page` response header from the last `List` call to sent back to server for getting the next page of results.""")
@@ -1192,7 +1192,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, lim
     cli_util.render_response(result, ctx)
 
 
-@application_group.command(name=cli_util.override('data_flow.update_application.command_name', 'update'), help=u"""Updates an application using an `applicationId`.""")
+@application_group.command(name=cli_util.override('data_flow.update_application.command_name', 'update'), help=u"""Updates an application using an `applicationId`. \n[Command Reference](updateApplication)""")
 @cli_util.option('--application-id', required=True, help=u"""The unique ID for an application.""")
 @cli_util.option('--class-name', help=u"""The class for the application.""")
 @cli_util.option('--file-uri', help=u"""An Oracle Cloud Infrastructure URI of the file containing the application to execute. See https://docs.cloud.oracle.com/iaas/Content/API/SDKDocs/hdfsconnector.htm#uriformat.""")
@@ -1326,7 +1326,7 @@ def update_application(ctx, from_json, force, wait_for_state, max_wait_seconds, 
     cli_util.render_response(result, ctx)
 
 
-@private_endpoint_group.command(name=cli_util.override('data_flow.update_private_endpoint.command_name', 'update'), help=u"""Updates a private endpoint using a `privateEndpointId`.  If changes to a private endpoint match a previously defined private endpoint, then a 409 status code will be returned.  This indicates that a conflict has been detected.""")
+@private_endpoint_group.command(name=cli_util.override('data_flow.update_private_endpoint.command_name', 'update'), help=u"""Updates a private endpoint using a `privateEndpointId`.  If changes to a private endpoint match a previously defined private endpoint, then a 409 status code will be returned.  This indicates that a conflict has been detected. \n[Command Reference](updatePrivateEndpoint)""")
 @cli_util.option('--private-endpoint-id', required=True, help=u"""The unique ID for a private endpoint.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--description', help=u"""A user-friendly description. Avoid entering confidential information.""")
@@ -1414,7 +1414,7 @@ def update_private_endpoint(ctx, from_json, force, wait_for_state, max_wait_seco
     cli_util.render_response(result, ctx)
 
 
-@run_group.command(name=cli_util.override('data_flow.update_run.command_name', 'update'), help=u"""Updates a run using a `runId`.""")
+@run_group.command(name=cli_util.override('data_flow.update_run.command_name', 'update'), help=u"""Updates a run using a `runId`. \n[Command Reference](updateRun)""")
 @cli_util.option('--run-id', required=True, help=u"""The unique ID for the run""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)

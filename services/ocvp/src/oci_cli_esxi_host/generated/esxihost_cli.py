@@ -44,7 +44,7 @@ esxi_host_root_group.add_command(esxi_host_summary_group)
 
 @esxi_host_group.command(name=cli_util.override('esxi_host.create_esxi_host.command_name', 'create'), help=u"""Adds another ESXi host to an existing SDDC. The attributes of the specified `Sddc` determine the VMware software and other configuration settings used by the ESXi host.
 
-Use the [WorkRequest] operations to track the creation of the ESXi host.""")
+Use the [WorkRequest] operations to track the creation of the ESXi host. \n[Command Reference](createEsxiHost)""")
 @cli_util.option('--sddc-id', required=True, help=u"""The [OCID] of the SDDC to add the ESXi host to.""")
 @cli_util.option('--display-name', help=u"""A descriptive name for the ESXi host. Does not have to be unique, and it's changeable. Avoid entering confidential information.
 
@@ -117,7 +117,7 @@ When you delete an ESXi host, Oracle does not remove the node configuration with
 
 **Note:** If you delete EXSi hosts from the SDDC to total less than 3, you are still billed for the 3 minimum recommended EXSi hosts. Also, you cannot add more VMware workloads to the SDDC until it again has at least 3 ESXi hosts.
 
-Use the [WorkRequest] operations to track the deletion of the ESXi host.""")
+Use the [WorkRequest] operations to track the deletion of the ESXi host. \n[Command Reference](deleteEsxiHost)""")
 @cli_util.option('--esxi-host-id', required=True, help=u"""The [OCID] of the ESXi host.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -169,7 +169,7 @@ def delete_esxi_host(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
     cli_util.render_response(result, ctx)
 
 
-@esxi_host_group.command(name=cli_util.override('esxi_host.get_esxi_host.command_name', 'get'), help=u"""Gets the specified ESXi host's information.""")
+@esxi_host_group.command(name=cli_util.override('esxi_host.get_esxi_host.command_name', 'get'), help=u"""Gets the specified ESXi host's information. \n[Command Reference](getEsxiHost)""")
 @cli_util.option('--esxi-host-id', required=True, help=u"""The [OCID] of the ESXi host.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -193,7 +193,7 @@ def get_esxi_host(ctx, from_json, esxi_host_id):
 
 @esxi_host_summary_group.command(name=cli_util.override('esxi_host.list_esxi_hosts.command_name', 'list-esxi-hosts'), help=u"""Lists the ESXi hosts in the specified SDDC. The list can be filtered by Compute instance OCID or ESXi display name.
 
-Remember that in terms of implementation, an ESXi host is a Compute instance that is configured with the chosen bundle of VMware software. Each `EsxiHost` object has its own OCID (`id`), and a separate attribute for the OCID of the Compute instance (`computeInstanceId`). When filtering the list of ESXi hosts, you can specify the OCID of the Compute instance, not the ESXi host OCID.""")
+Remember that in terms of implementation, an ESXi host is a Compute instance that is configured with the chosen bundle of VMware software. Each `EsxiHost` object has its own OCID (`id`), and a separate attribute for the OCID of the Compute instance (`computeInstanceId`). When filtering the list of ESXi hosts, you can specify the OCID of the Compute instance, not the ESXi host OCID. \n[Command Reference](listEsxiHosts)""")
 @cli_util.option('--sddc-id', help=u"""The [OCID] of the SDDC.""")
 @cli_util.option('--compute-instance-id', help=u"""The [OCID] of the Compute instance.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
@@ -257,7 +257,7 @@ def list_esxi_hosts(ctx, from_json, all_pages, page_size, sddc_id, compute_insta
     cli_util.render_response(result, ctx)
 
 
-@esxi_host_group.command(name=cli_util.override('esxi_host.update_esxi_host.command_name', 'update'), help=u"""Updates the specified ESXi host.""")
+@esxi_host_group.command(name=cli_util.override('esxi_host.update_esxi_host.command_name', 'update'), help=u"""Updates the specified ESXi host. \n[Command Reference](updateEsxiHost)""")
 @cli_util.option('--esxi-host-id', required=True, help=u"""The [OCID] of the ESXi host.""")
 @cli_util.option('--display-name', help=u"""A descriptive name for the ESXi host. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].

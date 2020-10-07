@@ -224,7 +224,7 @@ compute_root_group.add_command(device_group)
 compute_root_group.add_command(console_history_group)
 
 
-@image_shape_compatibility_entry_group.command(name=cli_util.override('compute.add_image_shape_compatibility_entry.command_name', 'add'), help=u"""Adds a shape to the compatible shapes list for the image.""")
+@image_shape_compatibility_entry_group.command(name=cli_util.override('compute.add_image_shape_compatibility_entry.command_name', 'add'), help=u"""Adds a shape to the compatible shapes list for the image. \n[Command Reference](addImageShapeCompatibilityEntry)""")
 @cli_util.option('--image-id', required=True, help=u"""The [OCID] of the image.""")
 @cli_util.option('--shape-name', required=True, help=u"""Shape name.""")
 @cli_util.option('--memory-constraints', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -267,7 +267,7 @@ def add_image_shape_compatibility_entry(ctx, from_json, force, image_id, shape_n
     cli_util.render_response(result, ctx)
 
 
-@boot_volume_attachment_group.command(name=cli_util.override('compute.attach_boot_volume.command_name', 'attach'), help=u"""Attaches the specified boot volume to the specified instance.""")
+@boot_volume_attachment_group.command(name=cli_util.override('compute.attach_boot_volume.command_name', 'attach'), help=u"""Attaches the specified boot volume to the specified instance. \n[Command Reference](attachBootVolume)""")
 @cli_util.option('--boot-volume-id', required=True, help=u"""The OCID of the  boot volume.""")
 @cli_util.option('--instance-id', required=True, help=u"""The OCID of the instance.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it cannot be changed. Avoid entering confidential information.""")
@@ -321,7 +321,7 @@ def attach_boot_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     cli_util.render_response(result, ctx)
 
 
-@vnic_attachment_group.command(name=cli_util.override('compute.attach_vnic.command_name', 'attach'), help=u"""Creates a secondary VNIC and attaches it to the specified instance. For more information about secondary VNICs, see [Virtual Network Interface Cards (VNICs)].""")
+@vnic_attachment_group.command(name=cli_util.override('compute.attach_vnic.command_name', 'attach'), help=u"""Creates a secondary VNIC and attaches it to the specified instance. For more information about secondary VNICs, see [Virtual Network Interface Cards (VNICs)]. \n[Command Reference](attachVnic)""")
 @cli_util.option('--create-vnic-details', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Details for creating a new VNIC.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--instance-id', required=True, help=u"""The OCID of the instance.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name for the attachment. Does not have to be unique, and it cannot be changed. Avoid entering confidential information.""")
@@ -379,7 +379,7 @@ def attach_vnic(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
     cli_util.render_response(result, ctx)
 
 
-@volume_attachment_group.command(name=cli_util.override('compute.attach_volume.command_name', 'attach'), help=u"""Attaches the specified storage volume to the specified instance.""")
+@volume_attachment_group.command(name=cli_util.override('compute.attach_volume.command_name', 'attach'), help=u"""Attaches the specified storage volume to the specified instance. \n[Command Reference](attachVolume)""")
 @cli_util.option('--instance-id', required=True, help=u"""The OCID of the instance.""")
 @cli_util.option('--type', required=True, help=u"""The type of volume. The only supported values are \"iscsi\" and \"paravirtualized\".""")
 @cli_util.option('--volume-id', required=True, help=u"""The OCID of the volume.""")
@@ -447,7 +447,7 @@ def attach_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
     cli_util.render_response(result, ctx)
 
 
-@volume_attachment_group.command(name=cli_util.override('compute.attach_volume_attach_service_determined_volume_details.command_name', 'attach-volume-attach-service-determined-volume-details'), help=u"""Attaches the specified storage volume to the specified instance.""")
+@volume_attachment_group.command(name=cli_util.override('compute.attach_volume_attach_service_determined_volume_details.command_name', 'attach-volume-attach-service-determined-volume-details'), help=u"""Attaches the specified storage volume to the specified instance. \n[Command Reference](attachVolume)""")
 @cli_util.option('--instance-id', required=True, help=u"""The OCID of the instance.""")
 @cli_util.option('--volume-id', required=True, help=u"""The OCID of the volume.""")
 @cli_util.option('--device', help=u"""The device name.""")
@@ -515,7 +515,7 @@ def attach_volume_attach_service_determined_volume_details(ctx, from_json, wait_
     cli_util.render_response(result, ctx)
 
 
-@volume_attachment_group.command(name=cli_util.override('compute.attach_volume_attach_emulated_volume_details.command_name', 'attach-volume-attach-emulated-volume-details'), help=u"""Attaches the specified storage volume to the specified instance.""")
+@volume_attachment_group.command(name=cli_util.override('compute.attach_volume_attach_emulated_volume_details.command_name', 'attach-volume-attach-emulated-volume-details'), help=u"""Attaches the specified storage volume to the specified instance. \n[Command Reference](attachVolume)""")
 @cli_util.option('--instance-id', required=True, help=u"""The OCID of the instance.""")
 @cli_util.option('--volume-id', required=True, help=u"""The OCID of the volume.""")
 @cli_util.option('--device', help=u"""The device name.""")
@@ -583,7 +583,7 @@ def attach_volume_attach_emulated_volume_details(ctx, from_json, wait_for_state,
     cli_util.render_response(result, ctx)
 
 
-@volume_attachment_group.command(name=cli_util.override('compute.attach_volume_attach_i_scsi_volume_details.command_name', 'attach-volume-attach-i-scsi-volume-details'), help=u"""Attaches the specified storage volume to the specified instance.""")
+@volume_attachment_group.command(name=cli_util.override('compute.attach_volume_attach_i_scsi_volume_details.command_name', 'attach-volume-attach-i-scsi-volume-details'), help=u"""Attaches the specified storage volume to the specified instance. \n[Command Reference](attachVolume)""")
 @cli_util.option('--instance-id', required=True, help=u"""The OCID of the instance.""")
 @cli_util.option('--volume-id', required=True, help=u"""The OCID of the volume.""")
 @cli_util.option('--device', help=u"""The device name.""")
@@ -655,7 +655,7 @@ def attach_volume_attach_i_scsi_volume_details(ctx, from_json, wait_for_state, m
     cli_util.render_response(result, ctx)
 
 
-@volume_attachment_group.command(name=cli_util.override('compute.attach_volume_attach_paravirtualized_volume_details.command_name', 'attach-volume-attach-paravirtualized-volume-details'), help=u"""Attaches the specified storage volume to the specified instance.""")
+@volume_attachment_group.command(name=cli_util.override('compute.attach_volume_attach_paravirtualized_volume_details.command_name', 'attach-volume-attach-paravirtualized-volume-details'), help=u"""Attaches the specified storage volume to the specified instance. \n[Command Reference](attachVolume)""")
 @cli_util.option('--instance-id', required=True, help=u"""The OCID of the instance.""")
 @cli_util.option('--volume-id', required=True, help=u"""The OCID of the volume.""")
 @cli_util.option('--device', help=u"""The device name.""")
@@ -731,7 +731,7 @@ def attach_volume_attach_paravirtualized_volume_details(ctx, from_json, wait_for
 
 The `CaptureConsoleHistory` operation works with the other console history operations as described below.
 
-1. Use `CaptureConsoleHistory` to request the capture of up to a megabyte of the most recent console history. This call returns a `ConsoleHistory` object. The object will have a state of REQUESTED. 2. Wait for the capture operation to succeed by polling `GetConsoleHistory` with the identifier of the console history metadata. The state of the `ConsoleHistory` object will go from REQUESTED to GETTING-HISTORY and then SUCCEEDED (or FAILED). 3. Use `GetConsoleHistoryContent` to get the actual console history data (not the metadata). 4. Optionally, use `DeleteConsoleHistory` to delete the console history metadata and the console history data.""")
+1. Use `CaptureConsoleHistory` to request the capture of up to a megabyte of the most recent console history. This call returns a `ConsoleHistory` object. The object will have a state of REQUESTED. 2. Wait for the capture operation to succeed by polling `GetConsoleHistory` with the identifier of the console history metadata. The state of the `ConsoleHistory` object will go from REQUESTED to GETTING-HISTORY and then SUCCEEDED (or FAILED). 3. Use `GetConsoleHistoryContent` to get the actual console history data (not the metadata). 4. Optionally, use `DeleteConsoleHistory` to delete the console history metadata and the console history data. \n[Command Reference](captureConsoleHistory)""")
 @cli_util.option('--instance-id', required=True, help=u"""The OCID of the instance to get the console history from.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
@@ -795,7 +795,7 @@ def capture_console_history(ctx, from_json, wait_for_state, max_wait_seconds, wa
     cli_util.render_response(result, ctx)
 
 
-@compute_image_capability_schema_group.command(name=cli_util.override('compute.change_compute_image_capability_schema_compartment.command_name', 'change-compartment'), help=u"""Moves a compute image capability schema into a different compartment within the same tenancy. For information about moving resources between compartments, see         [Moving Resources to a Different Compartment].""")
+@compute_image_capability_schema_group.command(name=cli_util.override('compute.change_compute_image_capability_schema_compartment.command_name', 'change-compartment'), help=u"""Moves a compute image capability schema into a different compartment within the same tenancy. For information about moving resources between compartments, see         [Moving Resources to a Different Compartment]. \n[Command Reference](changeComputeImageCapabilitySchemaCompartment)""")
 @cli_util.option('--compute-image-capability-schema-id', required=True, help=u"""The id of the compute image capability schema or the image ocid""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the instance configuration to.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -826,7 +826,7 @@ def change_compute_image_capability_schema_compartment(ctx, from_json, compute_i
     cli_util.render_response(result, ctx)
 
 
-@dedicated_vm_host_group.command(name=cli_util.override('compute.change_dedicated_vm_host_compartment.command_name', 'change-compartment'), help=u"""Moves a dedicated virtual machine host from one compartment to another.""")
+@dedicated_vm_host_group.command(name=cli_util.override('compute.change_dedicated_vm_host_compartment.command_name', 'change-compartment'), help=u"""Moves a dedicated virtual machine host from one compartment to another. \n[Command Reference](changeDedicatedVmHostCompartment)""")
 @cli_util.option('--dedicated-vm-host-id', required=True, help=u"""The OCID of the dedicated VM host.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the dedicated virtual machine host to.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -857,7 +857,7 @@ def change_dedicated_vm_host_compartment(ctx, from_json, dedicated_vm_host_id, c
     cli_util.render_response(result, ctx)
 
 
-@image_group.command(name=cli_util.override('compute.change_image_compartment.command_name', 'change-compartment'), help=u"""Moves an image into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].""")
+@image_group.command(name=cli_util.override('compute.change_image_compartment.command_name', 'change-compartment'), help=u"""Moves an image into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment]. \n[Command Reference](changeImageCompartment)""")
 @cli_util.option('--image-id', required=True, help=u"""The [OCID] of the image.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the image to.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -890,7 +890,7 @@ def change_image_compartment(ctx, from_json, image_id, compartment_id, if_match)
 
 @instance_group.command(name=cli_util.override('compute.change_instance_compartment.command_name', 'change-compartment'), help=u"""Moves an instance into a different compartment within the same tenancy. For information about moving resources between compartments, see [Moving Resources to a Different Compartment].
 
-When you move an instance to a different compartment, associated resources such as boot volumes and VNICs are not moved.""")
+When you move an instance to a different compartment, associated resources such as boot volumes and VNICs are not moved. \n[Command Reference](changeInstanceCompartment)""")
 @cli_util.option('--instance-id', required=True, help=u"""The OCID of the instance.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment to move the instance to.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -921,7 +921,7 @@ def change_instance_compartment(ctx, from_json, instance_id, compartment_id, if_
     cli_util.render_response(result, ctx)
 
 
-@app_catalog_subscription_group.command(name=cli_util.override('compute.create_app_catalog_subscription.command_name', 'create'), help=u"""Create a subscription for listing resource version for a compartment. It will take some time to propagate to all regions.""")
+@app_catalog_subscription_group.command(name=cli_util.override('compute.create_app_catalog_subscription.command_name', 'create'), help=u"""Create a subscription for listing resource version for a compartment. It will take some time to propagate to all regions. \n[Command Reference](createAppCatalogSubscription)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The compartmentID for the subscription.""")
 @cli_util.option('--listing-id', required=True, help=u"""The OCID of the listing.""")
 @cli_util.option('--listing-resource-version', required=True, help=u"""Listing resource version.""")
@@ -957,7 +957,7 @@ def create_app_catalog_subscription(ctx, from_json, compartment_id, listing_id, 
     cli_util.render_response(result, ctx)
 
 
-@compute_image_capability_schema_group.command(name=cli_util.override('compute.create_compute_image_capability_schema.command_name', 'create'), help=u"""Creates compute image capability schema.""")
+@compute_image_capability_schema_group.command(name=cli_util.override('compute.create_compute_image_capability_schema.command_name', 'create'), help=u"""Creates compute image capability schema. \n[Command Reference](createComputeImageCapabilitySchema)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment that contains the resource.""")
 @cli_util.option('--compute-global-image-capability-schema-version-name', required=True, help=u"""The name of the compute global image capability schema version""")
 @cli_util.option('--image-id', required=True, help=u"""The ocid of the image""")
@@ -1001,7 +1001,7 @@ def create_compute_image_capability_schema(ctx, from_json, compartment_id, compu
     cli_util.render_response(result, ctx)
 
 
-@dedicated_vm_host_group.command(name=cli_util.override('compute.create_dedicated_vm_host.command_name', 'create'), help=u"""Creates a new dedicated virtual machine host in the specified compartment and the specified availability domain. Dedicated virtual machine hosts enable you to run your Compute virtual machine (VM) instances on dedicated servers that are a single tenant and not shared with other customers. For more information, see [Dedicated Virtual Machine Hosts].""")
+@dedicated_vm_host_group.command(name=cli_util.override('compute.create_dedicated_vm_host.command_name', 'create'), help=u"""Creates a new dedicated virtual machine host in the specified compartment and the specified availability domain. Dedicated virtual machine hosts enable you to run your Compute virtual machine (VM) instances on dedicated servers that are a single tenant and not shared with other customers. For more information, see [Dedicated Virtual Machine Hosts]. \n[Command Reference](createDedicatedVmHost)""")
 @cli_util.option('--availability-domain', required=True, help=u"""The availability domain of the dedicated virtual machine host.
 
 Example: `Uocm:PHX-AD-1`""")
@@ -1094,7 +1094,7 @@ When importing an image based on the Object Storage URL, use [ImageSourceViaObje
 
 For more information about importing exported images, see [Image Import/Export].
 
-You may optionally specify a *display name* for the image, which is simply a friendly name or description. It does not have to be unique, and you can change it. See [UpdateImage]. Avoid entering confidential information.""")
+You may optionally specify a *display name* for the image, which is simply a friendly name or description. It does not have to be unique, and you can change it. See [UpdateImage]. Avoid entering confidential information. \n[Command Reference](createImage)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment you want the image to be created in.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
@@ -1186,7 +1186,7 @@ When importing an image based on the Object Storage URL, use [ImageSourceViaObje
 
 For more information about importing exported images, see [Image Import/Export].
 
-You may optionally specify a *display name* for the image, which is simply a friendly name or description. It does not have to be unique, and you can change it. See [UpdateImage]. Avoid entering confidential information.""")
+You may optionally specify a *display name* for the image, which is simply a friendly name or description. It does not have to be unique, and you can change it. See [UpdateImage]. Avoid entering confidential information. \n[Command Reference](createImage)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment you want the image to be created in.""")
 @cli_util.option('--image-source-details-bucket-name', required=True, help=u"""The Object Storage bucket for the image.""")
 @cli_util.option('--image-source-details-namespace-name', required=True, help=u"""The Object Storage namespace for the image.""")
@@ -1295,7 +1295,7 @@ When importing an image based on the Object Storage URL, use [ImageSourceViaObje
 
 For more information about importing exported images, see [Image Import/Export].
 
-You may optionally specify a *display name* for the image, which is simply a friendly name or description. It does not have to be unique, and you can change it. See [UpdateImage]. Avoid entering confidential information.""")
+You may optionally specify a *display name* for the image, which is simply a friendly name or description. It does not have to be unique, and you can change it. See [UpdateImage]. Avoid entering confidential information. \n[Command Reference](createImage)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment you want the image to be created in.""")
 @cli_util.option('--image-source-details-source-uri', required=True, help=u"""The Object Storage URL for the image.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
@@ -1390,7 +1390,7 @@ def create_image_image_source_via_object_storage_uri_details(ctx, from_json, wai
 
 @instance_console_connection_group.command(name=cli_util.override('compute.create_instance_console_connection.command_name', 'create'), help=u"""Creates a new console connection to the specified instance. After the console connection has been created and is available, you connect to the console using SSH.
 
-For more information about console access, see [Accessing the Console].""")
+For more information about console access, see [Accessing the Console]. \n[Command Reference](createInstanceConsoleConnection)""")
 @cli_util.option('--instance-id', required=True, help=u"""The OCID of the instance to create the console connection to.""")
 @cli_util.option('--public-key', required=True, help=u"""The SSH public key used to authenticate the console connection.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
@@ -1452,7 +1452,7 @@ def create_instance_console_connection(ctx, from_json, wait_for_state, max_wait_
     cli_util.render_response(result, ctx)
 
 
-@app_catalog_subscription_group.command(name=cli_util.override('compute.delete_app_catalog_subscription.command_name', 'delete'), help=u"""Delete a subscription for a listing resource version for a compartment.""")
+@app_catalog_subscription_group.command(name=cli_util.override('compute.delete_app_catalog_subscription.command_name', 'delete'), help=u"""Delete a subscription for a listing resource version for a compartment. \n[Command Reference](deleteAppCatalogSubscription)""")
 @cli_util.option('--listing-id', required=True, help=u"""The OCID of the listing.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--resource-version', required=True, help=u"""Listing Resource Version.""")
@@ -1475,7 +1475,7 @@ def delete_app_catalog_subscription(ctx, from_json, listing_id, compartment_id, 
     cli_util.render_response(result, ctx)
 
 
-@compute_image_capability_schema_group.command(name=cli_util.override('compute.delete_compute_image_capability_schema.command_name', 'delete'), help=u"""Deletes the specified Compute Image Capability Schema""")
+@compute_image_capability_schema_group.command(name=cli_util.override('compute.delete_compute_image_capability_schema.command_name', 'delete'), help=u"""Deletes the specified Compute Image Capability Schema \n[Command Reference](deleteComputeImageCapabilitySchema)""")
 @cli_util.option('--compute-image-capability-schema-id', required=True, help=u"""The id of the compute image capability schema or the image ocid""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -1500,7 +1500,7 @@ def delete_compute_image_capability_schema(ctx, from_json, compute_image_capabil
     cli_util.render_response(result, ctx)
 
 
-@console_history_group.command(name=cli_util.override('compute.delete_console_history.command_name', 'delete'), help=u"""Deletes the specified console history metadata and the console history data.""")
+@console_history_group.command(name=cli_util.override('compute.delete_console_history.command_name', 'delete'), help=u"""Deletes the specified console history metadata and the console history data. \n[Command Reference](deleteConsoleHistory)""")
 @cli_util.option('--instance-console-history-id', required=True, help=u"""The OCID of the console history.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -1565,7 +1565,7 @@ def delete_console_history(ctx, from_json, wait_for_state, max_wait_seconds, wai
 
 @dedicated_vm_host_group.command(name=cli_util.override('compute.delete_dedicated_vm_host.command_name', 'delete'), help=u"""Deletes the specified dedicated virtual machine host.
 
-If any VM instances are assigned to the dedicated virtual machine host, the delete operation will fail and the service will return a 409 response code.""")
+If any VM instances are assigned to the dedicated virtual machine host, the delete operation will fail and the service will return a 409 response code. \n[Command Reference](deleteDedicatedVmHost)""")
 @cli_util.option('--dedicated-vm-host-id', required=True, help=u"""The OCID of the dedicated VM host.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -1626,7 +1626,7 @@ def delete_dedicated_vm_host(ctx, from_json, wait_for_state, max_wait_seconds, w
     cli_util.render_response(result, ctx)
 
 
-@image_group.command(name=cli_util.override('compute.delete_image.command_name', 'delete'), help=u"""Deletes an image.""")
+@image_group.command(name=cli_util.override('compute.delete_image.command_name', 'delete'), help=u"""Deletes an image. \n[Command Reference](deleteImage)""")
 @cli_util.option('--image-id', required=True, help=u"""The [OCID] of the image.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -1689,7 +1689,7 @@ def delete_image(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval
     cli_util.render_response(result, ctx)
 
 
-@instance_console_connection_group.command(name=cli_util.override('compute.delete_instance_console_connection.command_name', 'delete'), help=u"""Deletes the specified instance console connection.""")
+@instance_console_connection_group.command(name=cli_util.override('compute.delete_instance_console_connection.command_name', 'delete'), help=u"""Deletes the specified instance console connection. \n[Command Reference](deleteInstanceConsoleConnection)""")
 @cli_util.option('--instance-console-connection-id', required=True, help=u"""The OCID of the instance console connection.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -1754,7 +1754,7 @@ def delete_instance_console_connection(ctx, from_json, wait_for_state, max_wait_
 
 @boot_volume_group.command(name=cli_util.override('compute.detach_boot_volume.command_name', 'detach'), help=u"""Detaches a boot volume from an instance. You must specify the OCID of the boot volume attachment.
 
-This is an asynchronous operation. The attachment's `lifecycleState` will change to DETACHING temporarily until the attachment is completely removed.""")
+This is an asynchronous operation. The attachment's `lifecycleState` will change to DETACHING temporarily until the attachment is completely removed. \n[Command Reference](detachBootVolume)""")
 @cli_util.option('--boot-volume-attachment-id', required=True, help=u"""The OCID of the boot volume attachment.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -1819,7 +1819,7 @@ def detach_boot_volume(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
 @vnic_attachment_group.command(name=cli_util.override('compute.detach_vnic.command_name', 'detach'), help=u"""Detaches and deletes the specified secondary VNIC. This operation cannot be used on the instance's primary VNIC. When you terminate an instance, all attached VNICs (primary and secondary) are automatically detached and deleted.
 
-**Important:** If the VNIC has a [private IP] that is the [target of a route rule], deleting the VNIC causes that route rule to blackhole and the traffic will be dropped.""")
+**Important:** If the VNIC has a [private IP] that is the [target of a route rule], deleting the VNIC causes that route rule to blackhole and the traffic will be dropped. \n[Command Reference](detachVnic)""")
 @cli_util.option('--vnic-attachment-id', required=True, help=u"""The OCID of the VNIC attachment.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -1884,7 +1884,7 @@ def detach_vnic(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 
 @volume_group.command(name=cli_util.override('compute.detach_volume.command_name', 'detach'), help=u"""Detaches a storage volume from an instance. You must specify the OCID of the volume attachment.
 
-This is an asynchronous operation. The attachment's `lifecycleState` will change to DETACHING temporarily until the attachment is completely removed.""")
+This is an asynchronous operation. The attachment's `lifecycleState` will change to DETACHING temporarily until the attachment is completely removed. \n[Command Reference](detachVolume)""")
 @cli_util.option('--volume-attachment-id', required=True, help=u"""The OCID of the volume attachment.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -1953,7 +1953,7 @@ For more information about exporting images, see [Image Import/Export].
 
 To perform an image export, you need write access to the Object Storage bucket for the image, see [Let Users Write Objects to Object Storage Buckets].
 
-See [Object Storage URLs] and [Using Pre-Authenticated Requests] for constructing URLs for image import/export.""")
+See [Object Storage URLs] and [Using Pre-Authenticated Requests] for constructing URLs for image import/export. \n[Command Reference](exportImage)""")
 @cli_util.option('--image-id', required=True, help=u"""The [OCID] of the image.""")
 @cli_util.option('--destination-type', required=True, help=u"""The destination type. Use `objectStorageTuple` when specifying the namespace, bucket name, and object name. Use `objectStorageUri` when specifying the Object Storage URL.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -2015,7 +2015,7 @@ For more information about exporting images, see [Image Import/Export].
 
 To perform an image export, you need write access to the Object Storage bucket for the image, see [Let Users Write Objects to Object Storage Buckets].
 
-See [Object Storage URLs] and [Using Pre-Authenticated Requests] for constructing URLs for image import/export.""")
+See [Object Storage URLs] and [Using Pre-Authenticated Requests] for constructing URLs for image import/export. \n[Command Reference](exportImage)""")
 @cli_util.option('--image-id', required=True, help=u"""The [OCID] of the image.""")
 @cli_util.option('--destination-uri', required=True, help=u"""The Object Storage URL to export the image to. See [Object Storage URLs] and [Using Pre-Authenticated Requests] for constructing URLs for image import/export.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -2079,7 +2079,7 @@ For more information about exporting images, see [Image Import/Export].
 
 To perform an image export, you need write access to the Object Storage bucket for the image, see [Let Users Write Objects to Object Storage Buckets].
 
-See [Object Storage URLs] and [Using Pre-Authenticated Requests] for constructing URLs for image import/export.""")
+See [Object Storage URLs] and [Using Pre-Authenticated Requests] for constructing URLs for image import/export. \n[Command Reference](exportImage)""")
 @cli_util.option('--image-id', required=True, help=u"""The [OCID] of the image.""")
 @cli_util.option('--bucket-name', required=True, help=u"""The Object Storage bucket to export the image to.""")
 @cli_util.option('--namespace-name', required=True, help=u"""The Object Storage namespace to export the image to.""")
@@ -2141,7 +2141,7 @@ def export_image_export_image_via_object_storage_tuple_details(ctx, from_json, w
     cli_util.render_response(result, ctx)
 
 
-@app_catalog_listing_group.command(name=cli_util.override('compute.get_app_catalog_listing.command_name', 'get'), help=u"""Gets the specified listing.""")
+@app_catalog_listing_group.command(name=cli_util.override('compute.get_app_catalog_listing.command_name', 'get'), help=u"""Gets the specified listing. \n[Command Reference](getAppCatalogListing)""")
 @cli_util.option('--listing-id', required=True, help=u"""The OCID of the listing.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -2162,7 +2162,7 @@ def get_app_catalog_listing(ctx, from_json, listing_id):
     cli_util.render_response(result, ctx)
 
 
-@app_catalog_listing_resource_version_agreements_group.command(name=cli_util.override('compute.get_app_catalog_listing_agreements.command_name', 'get-app-catalog-listing-agreements'), help=u"""Retrieves the agreements for a particular resource version of a listing.""")
+@app_catalog_listing_resource_version_agreements_group.command(name=cli_util.override('compute.get_app_catalog_listing_agreements.command_name', 'get-app-catalog-listing-agreements'), help=u"""Retrieves the agreements for a particular resource version of a listing. \n[Command Reference](getAppCatalogListingAgreements)""")
 @cli_util.option('--listing-id', required=True, help=u"""The OCID of the listing.""")
 @cli_util.option('--resource-version', required=True, help=u"""Listing Resource Version.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2188,7 +2188,7 @@ def get_app_catalog_listing_agreements(ctx, from_json, listing_id, resource_vers
     cli_util.render_response(result, ctx)
 
 
-@app_catalog_listing_resource_version_group.command(name=cli_util.override('compute.get_app_catalog_listing_resource_version.command_name', 'get'), help=u"""Gets the specified listing resource version.""")
+@app_catalog_listing_resource_version_group.command(name=cli_util.override('compute.get_app_catalog_listing_resource_version.command_name', 'get'), help=u"""Gets the specified listing resource version. \n[Command Reference](getAppCatalogListingResourceVersion)""")
 @cli_util.option('--listing-id', required=True, help=u"""The OCID of the listing.""")
 @cli_util.option('--resource-version', required=True, help=u"""Listing Resource Version.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2214,7 +2214,7 @@ def get_app_catalog_listing_resource_version(ctx, from_json, listing_id, resourc
     cli_util.render_response(result, ctx)
 
 
-@boot_volume_attachment_group.command(name=cli_util.override('compute.get_boot_volume_attachment.command_name', 'get'), help=u"""Gets information about the specified boot volume attachment.""")
+@boot_volume_attachment_group.command(name=cli_util.override('compute.get_boot_volume_attachment.command_name', 'get'), help=u"""Gets information about the specified boot volume attachment. \n[Command Reference](getBootVolumeAttachment)""")
 @cli_util.option('--boot-volume-attachment-id', required=True, help=u"""The OCID of the boot volume attachment.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -2235,7 +2235,7 @@ def get_boot_volume_attachment(ctx, from_json, boot_volume_attachment_id):
     cli_util.render_response(result, ctx)
 
 
-@compute_global_image_capability_schema_group.command(name=cli_util.override('compute.get_compute_global_image_capability_schema.command_name', 'get'), help=u"""Gets the specified Compute Global Image Capability Schema""")
+@compute_global_image_capability_schema_group.command(name=cli_util.override('compute.get_compute_global_image_capability_schema.command_name', 'get'), help=u"""Gets the specified Compute Global Image Capability Schema \n[Command Reference](getComputeGlobalImageCapabilitySchema)""")
 @cli_util.option('--compute-global-image-capability-schema-id', required=True, help=u"""The [OCID] of the compute global image capability schema""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -2256,7 +2256,7 @@ def get_compute_global_image_capability_schema(ctx, from_json, compute_global_im
     cli_util.render_response(result, ctx)
 
 
-@compute_global_image_capability_schema_version_group.command(name=cli_util.override('compute.get_compute_global_image_capability_schema_version.command_name', 'get'), help=u"""Gets the specified Compute Global Image Capability Schema Version""")
+@compute_global_image_capability_schema_version_group.command(name=cli_util.override('compute.get_compute_global_image_capability_schema_version.command_name', 'get'), help=u"""Gets the specified Compute Global Image Capability Schema Version \n[Command Reference](getComputeGlobalImageCapabilitySchemaVersion)""")
 @cli_util.option('--compute-global-image-capability-schema-id', required=True, help=u"""The [OCID] of the compute global image capability schema""")
 @cli_util.option('--compute-global-image-capability-schema-version-name', required=True, help=u"""The name of the compute global image capability schema version""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2282,7 +2282,7 @@ def get_compute_global_image_capability_schema_version(ctx, from_json, compute_g
     cli_util.render_response(result, ctx)
 
 
-@compute_image_capability_schema_group.command(name=cli_util.override('compute.get_compute_image_capability_schema.command_name', 'get'), help=u"""Gets the specified Compute Image Capability Schema""")
+@compute_image_capability_schema_group.command(name=cli_util.override('compute.get_compute_image_capability_schema.command_name', 'get'), help=u"""Gets the specified Compute Image Capability Schema \n[Command Reference](getComputeImageCapabilitySchema)""")
 @cli_util.option('--compute-image-capability-schema-id', required=True, help=u"""The id of the compute image capability schema or the image ocid""")
 @cli_util.option('--is-merge-enabled', type=click.BOOL, help=u"""Merge the image capability schema with the global image capability schema""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2306,7 +2306,7 @@ def get_compute_image_capability_schema(ctx, from_json, compute_image_capability
     cli_util.render_response(result, ctx)
 
 
-@console_history_group.command(name=cli_util.override('compute.get_console_history.command_name', 'get'), help=u"""Shows the metadata for the specified console history. See [CaptureConsoleHistory] for details about using the console history operations.""")
+@console_history_group.command(name=cli_util.override('compute.get_console_history.command_name', 'get'), help=u"""Shows the metadata for the specified console history. See [CaptureConsoleHistory] for details about using the console history operations. \n[Command Reference](getConsoleHistory)""")
 @cli_util.option('--instance-console-history-id', required=True, help=u"""The OCID of the console history.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -2327,7 +2327,7 @@ def get_console_history(ctx, from_json, instance_console_history_id):
     cli_util.render_response(result, ctx)
 
 
-@console_history_group.command(name=cli_util.override('compute.get_console_history_content.command_name', 'get-console-history-content'), help=u"""Gets the actual console history data (not the metadata). See [CaptureConsoleHistory] for details about using the console history operations.""")
+@console_history_group.command(name=cli_util.override('compute.get_console_history_content.command_name', 'get-console-history-content'), help=u"""Gets the actual console history data (not the metadata). See [CaptureConsoleHistory] for details about using the console history operations. \n[Command Reference](getConsoleHistoryContent)""")
 @cli_util.option('--instance-console-history-id', required=True, help=u"""The OCID of the console history.""")
 @cli_util.option('--file', type=click.File(mode='wb'), required=True, help="The name of the file that will receive the response data, or '-' to write to STDOUT.")
 @cli_util.option('--offset', type=click.INT, help=u"""Offset of the snapshot data to retrieve.""")
@@ -2355,7 +2355,7 @@ def get_console_history_content(ctx, from_json, file, instance_console_history_i
     file.write(result.data)
 
 
-@dedicated_vm_host_group.command(name=cli_util.override('compute.get_dedicated_vm_host.command_name', 'get'), help=u"""Gets information about the specified dedicated virtual machine host.""")
+@dedicated_vm_host_group.command(name=cli_util.override('compute.get_dedicated_vm_host.command_name', 'get'), help=u"""Gets information about the specified dedicated virtual machine host. \n[Command Reference](getDedicatedVmHost)""")
 @cli_util.option('--dedicated-vm-host-id', required=True, help=u"""The OCID of the dedicated VM host.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -2377,7 +2377,7 @@ def get_dedicated_vm_host(ctx, from_json, dedicated_vm_host_id):
     cli_util.render_response(result, ctx)
 
 
-@image_group.command(name=cli_util.override('compute.get_image.command_name', 'get'), help=u"""Gets the specified image.""")
+@image_group.command(name=cli_util.override('compute.get_image.command_name', 'get'), help=u"""Gets the specified image. \n[Command Reference](getImage)""")
 @cli_util.option('--image-id', required=True, help=u"""The [OCID] of the image.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -2398,7 +2398,7 @@ def get_image(ctx, from_json, image_id):
     cli_util.render_response(result, ctx)
 
 
-@image_shape_compatibility_entry_group.command(name=cli_util.override('compute.get_image_shape_compatibility_entry.command_name', 'get'), help=u"""Retrieves an image shape compatibility entry.""")
+@image_shape_compatibility_entry_group.command(name=cli_util.override('compute.get_image_shape_compatibility_entry.command_name', 'get'), help=u"""Retrieves an image shape compatibility entry. \n[Command Reference](getImageShapeCompatibilityEntry)""")
 @cli_util.option('--image-id', required=True, help=u"""The [OCID] of the image.""")
 @cli_util.option('--shape-name', required=True, help=u"""Shape name.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2425,7 +2425,7 @@ def get_image_shape_compatibility_entry(ctx, from_json, image_id, shape_name):
     cli_util.render_response(result, ctx)
 
 
-@instance_group.command(name=cli_util.override('compute.get_instance.command_name', 'get'), help=u"""Gets information about the specified instance.""")
+@instance_group.command(name=cli_util.override('compute.get_instance.command_name', 'get'), help=u"""Gets information about the specified instance. \n[Command Reference](getInstance)""")
 @cli_util.option('--instance-id', required=True, help=u"""The OCID of the instance.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -2446,7 +2446,7 @@ def get_instance(ctx, from_json, instance_id):
     cli_util.render_response(result, ctx)
 
 
-@instance_console_connection_group.command(name=cli_util.override('compute.get_instance_console_connection.command_name', 'get'), help=u"""Gets the specified instance console connection's information.""")
+@instance_console_connection_group.command(name=cli_util.override('compute.get_instance_console_connection.command_name', 'get'), help=u"""Gets the specified instance console connection's information. \n[Command Reference](getInstanceConsoleConnection)""")
 @cli_util.option('--instance-console-connection-id', required=True, help=u"""The OCID of the instance console connection.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -2467,7 +2467,7 @@ def get_instance_console_connection(ctx, from_json, instance_console_connection_
     cli_util.render_response(result, ctx)
 
 
-@vnic_attachment_group.command(name=cli_util.override('compute.get_vnic_attachment.command_name', 'get'), help=u"""Gets the information for the specified VNIC attachment.""")
+@vnic_attachment_group.command(name=cli_util.override('compute.get_vnic_attachment.command_name', 'get'), help=u"""Gets the information for the specified VNIC attachment. \n[Command Reference](getVnicAttachment)""")
 @cli_util.option('--vnic-attachment-id', required=True, help=u"""The OCID of the VNIC attachment.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -2488,7 +2488,7 @@ def get_vnic_attachment(ctx, from_json, vnic_attachment_id):
     cli_util.render_response(result, ctx)
 
 
-@volume_attachment_group.command(name=cli_util.override('compute.get_volume_attachment.command_name', 'get'), help=u"""Gets information about the specified volume attachment.""")
+@volume_attachment_group.command(name=cli_util.override('compute.get_volume_attachment.command_name', 'get'), help=u"""Gets information about the specified volume attachment. \n[Command Reference](getVolumeAttachment)""")
 @cli_util.option('--volume-attachment-id', required=True, help=u"""The OCID of the volume attachment.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -2509,7 +2509,7 @@ def get_volume_attachment(ctx, from_json, volume_attachment_id):
     cli_util.render_response(result, ctx)
 
 
-@instance_credentials_group.command(name=cli_util.override('compute.get_windows_instance_initial_credentials.command_name', 'get-windows-instance-initial-credentials'), help=u"""Gets the generated credentials for the instance. Only works for instances that require a password to log in, such as Windows. For certain operating systems, users will be forced to change the initial credentials.""")
+@instance_credentials_group.command(name=cli_util.override('compute.get_windows_instance_initial_credentials.command_name', 'get-windows-instance-initial-credentials'), help=u"""Gets the generated credentials for the instance. Only works for instances that require a password to log in, such as Windows. For certain operating systems, users will be forced to change the initial credentials. \n[Command Reference](getWindowsInstanceInitialCredentials)""")
 @cli_util.option('--instance-id', required=True, help=u"""The OCID of the instance.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -2542,7 +2542,7 @@ def get_windows_instance_initial_credentials(ctx, from_json, instance_id):
 
 - **SOFTRESET** - Gracefully reboots the instance by sending a shutdown command to the operating system, and then powers the instance back on.
 
-For more information, see [Stopping and Starting an Instance].""")
+For more information, see [Stopping and Starting an Instance]. \n[Command Reference](instanceAction)""")
 @cli_util.option('--instance-id', required=True, help=u"""The OCID of the instance.""")
 @cli_util.option('--action', required=True, help=u"""The action to perform on the instance. Allowed values are: STOP, START, SOFTRESET, RESET, SOFTSTOP, SENDDIAGNOSTICINTERRUPT""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -2608,7 +2608,7 @@ When you launch an instance, it is automatically attached to a virtual network i
 
 You can later add secondary VNICs to an instance. For more information, see [Virtual Network Interface Cards (VNICs)].
 
-To launch an instance from a Marketplace image listing, you must provide the image ID of the listing resource version that you want, but you also must subscribe to the listing before you try to launch the instance. To subscribe to the listing, use the [GetAppCatalogListingAgreements] operation to get the signature for the terms of use agreement for the desired listing resource version. Then, call [CreateAppCatalogSubscription] with the signature. To get the image ID for the LaunchInstance operation, call [GetAppCatalogListingResourceVersion].""")
+To launch an instance from a Marketplace image listing, you must provide the image ID of the listing resource version that you want, but you also must subscribe to the listing before you try to launch the instance. To subscribe to the listing, use the [GetAppCatalogListingAgreements] operation to get the signature for the terms of use agreement for the desired listing resource version. Then, call [CreateAppCatalogSubscription] with the signature. To get the image ID for the LaunchInstance operation, call [GetAppCatalogListingResourceVersion]. \n[Command Reference](launchInstance)""")
 @cli_util.option('--availability-domain', required=True, help=u"""The availability domain of the instance.
 
 Example: `Uocm:PHX-AD-1`""")
@@ -2653,6 +2653,7 @@ For more information about the Bring Your Own Image feature of Oracle Cloud Infr
 
 For more information about iPXE, see http://ipxe.org.""")
 @cli_util.option('--launch-options', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Options for tuning the compatibility and performance of VM shapes. The values that you specify override any default values.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--instance-options', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--availability-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Options for defining the availability of a VM instance after a maintenance event that impacts the underlying hardware.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Custom metadata key/value pairs that you provide, such as the SSH public key required to connect to the instance.
 
@@ -2689,12 +2690,12 @@ A metadata service runs on every launched instance. The service is an HTTP endpo
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["MOVING", "PROVISIONING", "RUNNING", "STARTING", "STOPPING", "STOPPED", "CREATING_IMAGE", "TERMINATING", "TERMINATED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}})
+@json_skeleton_utils.get_cli_json_input_option({'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}}, output_type={'module': 'core', 'class': 'Instance'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}, 'source-details': {'module': 'core', 'class': 'InstanceSourceDetails'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def launch_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, shape, create_vnic_details, dedicated_vm_host_id, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, hostname_label, image_id, ipxe_script_file, launch_options, availability_config, metadata, agent_config, shape_config, source_details, subnet_id, is_pv_encryption_in_transit_enabled):
+def launch_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, shape, create_vnic_details, dedicated_vm_host_id, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, metadata, agent_config, shape_config, source_details, subnet_id, is_pv_encryption_in_transit_enabled):
 
     kwargs = {}
 
@@ -2735,6 +2736,9 @@ def launch_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 
     if launch_options is not None:
         _details['launchOptions'] = cli_util.parse_json_parameter("launch_options", launch_options)
+
+    if instance_options is not None:
+        _details['instanceOptions'] = cli_util.parse_json_parameter("instance_options", instance_options)
 
     if availability_config is not None:
         _details['availabilityConfig'] = cli_util.parse_json_parameter("availability_config", availability_config)
@@ -2802,7 +2806,7 @@ When you launch an instance, it is automatically attached to a virtual network i
 
 You can later add secondary VNICs to an instance. For more information, see [Virtual Network Interface Cards (VNICs)].
 
-To launch an instance from a Marketplace image listing, you must provide the image ID of the listing resource version that you want, but you also must subscribe to the listing before you try to launch the instance. To subscribe to the listing, use the [GetAppCatalogListingAgreements] operation to get the signature for the terms of use agreement for the desired listing resource version. Then, call [CreateAppCatalogSubscription] with the signature. To get the image ID for the LaunchInstance operation, call [GetAppCatalogListingResourceVersion].""")
+To launch an instance from a Marketplace image listing, you must provide the image ID of the listing resource version that you want, but you also must subscribe to the listing before you try to launch the instance. To subscribe to the listing, use the [GetAppCatalogListingAgreements] operation to get the signature for the terms of use agreement for the desired listing resource version. Then, call [CreateAppCatalogSubscription] with the signature. To get the image ID for the LaunchInstance operation, call [GetAppCatalogListingResourceVersion]. \n[Command Reference](launchInstance)""")
 @cli_util.option('--availability-domain', required=True, help=u"""The availability domain of the instance.
 
 Example: `Uocm:PHX-AD-1`""")
@@ -2848,6 +2852,7 @@ For more information about the Bring Your Own Image feature of Oracle Cloud Infr
 
 For more information about iPXE, see http://ipxe.org.""")
 @cli_util.option('--launch-options', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Options for tuning the compatibility and performance of VM shapes. The values that you specify override any default values.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--instance-options', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--availability-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Options for defining the availability of a VM instance after a maintenance event that impacts the underlying hardware.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Custom metadata key/value pairs that you provide, such as the SSH public key required to connect to the instance.
 
@@ -2884,12 +2889,12 @@ A metadata service runs on every launched instance. The service is an HTTP endpo
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["MOVING", "PROVISIONING", "RUNNING", "STARTING", "STOPPING", "STOPPED", "CREATING_IMAGE", "TERMINATING", "TERMINATED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}})
+@json_skeleton_utils.get_cli_json_input_option({'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}}, output_type={'module': 'core', 'class': 'Instance'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def launch_instance_instance_source_via_image_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, shape, source_details_image_id, create_vnic_details, dedicated_vm_host_id, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, hostname_label, image_id, ipxe_script_file, launch_options, availability_config, metadata, agent_config, shape_config, subnet_id, is_pv_encryption_in_transit_enabled, source_details_boot_volume_size_in_gbs):
+def launch_instance_instance_source_via_image_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, shape, source_details_image_id, create_vnic_details, dedicated_vm_host_id, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, metadata, agent_config, shape_config, subnet_id, is_pv_encryption_in_transit_enabled, source_details_boot_volume_size_in_gbs):
 
     kwargs = {}
 
@@ -2932,6 +2937,9 @@ def launch_instance_instance_source_via_image_details(ctx, from_json, wait_for_s
 
     if launch_options is not None:
         _details['launchOptions'] = cli_util.parse_json_parameter("launch_options", launch_options)
+
+    if instance_options is not None:
+        _details['instanceOptions'] = cli_util.parse_json_parameter("instance_options", instance_options)
 
     if availability_config is not None:
         _details['availabilityConfig'] = cli_util.parse_json_parameter("availability_config", availability_config)
@@ -3001,7 +3009,7 @@ When you launch an instance, it is automatically attached to a virtual network i
 
 You can later add secondary VNICs to an instance. For more information, see [Virtual Network Interface Cards (VNICs)].
 
-To launch an instance from a Marketplace image listing, you must provide the image ID of the listing resource version that you want, but you also must subscribe to the listing before you try to launch the instance. To subscribe to the listing, use the [GetAppCatalogListingAgreements] operation to get the signature for the terms of use agreement for the desired listing resource version. Then, call [CreateAppCatalogSubscription] with the signature. To get the image ID for the LaunchInstance operation, call [GetAppCatalogListingResourceVersion].""")
+To launch an instance from a Marketplace image listing, you must provide the image ID of the listing resource version that you want, but you also must subscribe to the listing before you try to launch the instance. To subscribe to the listing, use the [GetAppCatalogListingAgreements] operation to get the signature for the terms of use agreement for the desired listing resource version. Then, call [CreateAppCatalogSubscription] with the signature. To get the image ID for the LaunchInstance operation, call [GetAppCatalogListingResourceVersion]. \n[Command Reference](launchInstance)""")
 @cli_util.option('--availability-domain', required=True, help=u"""The availability domain of the instance.
 
 Example: `Uocm:PHX-AD-1`""")
@@ -3047,6 +3055,7 @@ For more information about the Bring Your Own Image feature of Oracle Cloud Infr
 
 For more information about iPXE, see http://ipxe.org.""")
 @cli_util.option('--launch-options', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Options for tuning the compatibility and performance of VM shapes. The values that you specify override any default values.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--instance-options', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--availability-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Options for defining the availability of a VM instance after a maintenance event that impacts the underlying hardware.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--metadata', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Custom metadata key/value pairs that you provide, such as the SSH public key required to connect to the instance.
 
@@ -3082,12 +3091,12 @@ A metadata service runs on every launched instance. The service is an HTTP endpo
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["MOVING", "PROVISIONING", "RUNNING", "STARTING", "STOPPING", "STOPPED", "CREATING_IMAGE", "TERMINATING", "TERMINATED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}})
+@json_skeleton_utils.get_cli_json_input_option({'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}}, output_type={'module': 'core', 'class': 'Instance'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'create-vnic-details': {'module': 'core', 'class': 'CreateVnicDetails'}, 'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'launch-options': {'module': 'core', 'class': 'LaunchOptions'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'availability-config': {'module': 'core', 'class': 'LaunchInstanceAvailabilityConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'LaunchInstanceAgentConfigDetails'}, 'shape-config': {'module': 'core', 'class': 'LaunchInstanceShapeConfigDetails'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def launch_instance_instance_source_via_boot_volume_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, shape, source_details_boot_volume_id, create_vnic_details, dedicated_vm_host_id, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, hostname_label, image_id, ipxe_script_file, launch_options, availability_config, metadata, agent_config, shape_config, subnet_id, is_pv_encryption_in_transit_enabled):
+def launch_instance_instance_source_via_boot_volume_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, availability_domain, compartment_id, shape, source_details_boot_volume_id, create_vnic_details, dedicated_vm_host_id, defined_tags, display_name, extended_metadata, fault_domain, freeform_tags, hostname_label, image_id, ipxe_script_file, launch_options, instance_options, availability_config, metadata, agent_config, shape_config, subnet_id, is_pv_encryption_in_transit_enabled):
 
     kwargs = {}
 
@@ -3130,6 +3139,9 @@ def launch_instance_instance_source_via_boot_volume_details(ctx, from_json, wait
 
     if launch_options is not None:
         _details['launchOptions'] = cli_util.parse_json_parameter("launch_options", launch_options)
+
+    if instance_options is not None:
+        _details['instanceOptions'] = cli_util.parse_json_parameter("instance_options", instance_options)
 
     if availability_config is not None:
         _details['availabilityConfig'] = cli_util.parse_json_parameter("availability_config", availability_config)
@@ -3182,7 +3194,7 @@ def launch_instance_instance_source_via_boot_volume_details(ctx, from_json, wait
     cli_util.render_response(result, ctx)
 
 
-@app_catalog_listing_resource_version_group.command(name=cli_util.override('compute.list_app_catalog_listing_resource_versions.command_name', 'list'), help=u"""Gets all resource versions for a particular listing.""")
+@app_catalog_listing_resource_version_group.command(name=cli_util.override('compute.list_app_catalog_listing_resource_versions.command_name', 'list'), help=u"""Gets all resource versions for a particular listing. \n[Command Reference](listAppCatalogListingResourceVersions)""")
 @cli_util.option('--listing-id', required=True, help=u"""The OCID of the listing.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
@@ -3237,7 +3249,7 @@ def list_app_catalog_listing_resource_versions(ctx, from_json, all_pages, page_s
     cli_util.render_response(result, ctx)
 
 
-@app_catalog_listing_group.command(name=cli_util.override('compute.list_app_catalog_listings.command_name', 'list'), help=u"""Lists the published listings.""")
+@app_catalog_listing_group.command(name=cli_util.override('compute.list_app_catalog_listings.command_name', 'list'), help=u"""Lists the published listings. \n[Command Reference](listAppCatalogListings)""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
 Example: `50`""")
@@ -3294,7 +3306,7 @@ def list_app_catalog_listings(ctx, from_json, all_pages, page_size, limit, page,
     cli_util.render_response(result, ctx)
 
 
-@app_catalog_subscription_group.command(name=cli_util.override('compute.list_app_catalog_subscriptions.command_name', 'list'), help=u"""Lists subscriptions for a compartment.""")
+@app_catalog_subscription_group.command(name=cli_util.override('compute.list_app_catalog_subscriptions.command_name', 'list'), help=u"""Lists subscriptions for a compartment. \n[Command Reference](listAppCatalogSubscriptions)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
@@ -3354,7 +3366,7 @@ def list_app_catalog_subscriptions(ctx, from_json, all_pages, page_size, compart
     cli_util.render_response(result, ctx)
 
 
-@boot_volume_attachment_group.command(name=cli_util.override('compute.list_boot_volume_attachments.command_name', 'list'), help=u"""Lists the boot volume attachments in the specified compartment. You can filter the list by specifying an instance OCID, boot volume OCID, or both.""")
+@boot_volume_attachment_group.command(name=cli_util.override('compute.list_boot_volume_attachments.command_name', 'list'), help=u"""Lists the boot volume attachments in the specified compartment. You can filter the list by specifying an instance OCID, boot volume OCID, or both. \n[Command Reference](listBootVolumeAttachments)""")
 @cli_util.option('--availability-domain', required=True, help=u"""The name of the availability domain.
 
 Example: `Uocm:PHX-AD-1`""")
@@ -3415,7 +3427,7 @@ def list_boot_volume_attachments(ctx, from_json, all_pages, page_size, availabil
     cli_util.render_response(result, ctx)
 
 
-@compute_global_image_capability_schema_version_group.command(name=cli_util.override('compute.list_compute_global_image_capability_schema_versions.command_name', 'list'), help=u"""Lists Compute Global Image Capability Schema versions in the specified compartment.""")
+@compute_global_image_capability_schema_version_group.command(name=cli_util.override('compute.list_compute_global_image_capability_schema_versions.command_name', 'list'), help=u"""Lists Compute Global Image Capability Schema versions in the specified compartment. \n[Command Reference](listComputeGlobalImageCapabilitySchemaVersions)""")
 @cli_util.option('--compute-global-image-capability-schema-id', required=True, help=u"""The [OCID] of the compute global image capability schema""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
@@ -3478,7 +3490,7 @@ def list_compute_global_image_capability_schema_versions(ctx, from_json, all_pag
     cli_util.render_response(result, ctx)
 
 
-@compute_global_image_capability_schema_group.command(name=cli_util.override('compute.list_compute_global_image_capability_schemas.command_name', 'list'), help=u"""Lists Compute Global Image Capability Schema in the specified compartment.""")
+@compute_global_image_capability_schema_group.command(name=cli_util.override('compute.list_compute_global_image_capability_schemas.command_name', 'list'), help=u"""Lists Compute Global Image Capability Schema in the specified compartment. \n[Command Reference](listComputeGlobalImageCapabilitySchemas)""")
 @cli_util.option('--compartment-id', help=u"""A filter to return only resources that match the given compartment OCID exactly.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
@@ -3537,7 +3549,7 @@ def list_compute_global_image_capability_schemas(ctx, from_json, all_pages, page
     cli_util.render_response(result, ctx)
 
 
-@compute_image_capability_schema_group.command(name=cli_util.override('compute.list_compute_image_capability_schemas.command_name', 'list'), help=u"""Lists Compute Image Capability Schema in the specified compartment. You can also query by a specific imageId.""")
+@compute_image_capability_schema_group.command(name=cli_util.override('compute.list_compute_image_capability_schemas.command_name', 'list'), help=u"""Lists Compute Image Capability Schema in the specified compartment. You can also query by a specific imageId. \n[Command Reference](listComputeImageCapabilitySchemas)""")
 @cli_util.option('--compartment-id', help=u"""A filter to return only resources that match the given compartment OCID exactly.""")
 @cli_util.option('--image-id', help=u"""The [OCID] of an image.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
@@ -3599,7 +3611,7 @@ def list_compute_image_capability_schemas(ctx, from_json, all_pages, page_size, 
     cli_util.render_response(result, ctx)
 
 
-@console_history_group.command(name=cli_util.override('compute.list_console_histories.command_name', 'list'), help=u"""Lists the console history metadata for the specified compartment or instance.""")
+@console_history_group.command(name=cli_util.override('compute.list_console_histories.command_name', 'list'), help=u"""Lists the console history metadata for the specified compartment or instance. \n[Command Reference](listConsoleHistories)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--availability-domain', help=u"""The name of the availability domain.
 
@@ -3669,7 +3681,7 @@ def list_console_histories(ctx, from_json, all_pages, page_size, compartment_id,
     cli_util.render_response(result, ctx)
 
 
-@dedicated_vm_host_instance_shape_group.command(name=cli_util.override('compute.list_dedicated_vm_host_instance_shapes.command_name', 'list'), help=u"""Lists the shapes that can be used to launch a virtual machine instance on a dedicated virtual machine host within the specified compartment. You can filter the list by compatibility with a specific dedicated virtual machine host shape.""")
+@dedicated_vm_host_instance_shape_group.command(name=cli_util.override('compute.list_dedicated_vm_host_instance_shapes.command_name', 'list'), help=u"""Lists the shapes that can be used to launch a virtual machine instance on a dedicated virtual machine host within the specified compartment. You can filter the list by compatibility with a specific dedicated virtual machine host shape. \n[Command Reference](listDedicatedVmHostInstanceShapes)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--availability-domain', help=u"""The name of the availability domain.
 
@@ -3727,7 +3739,7 @@ def list_dedicated_vm_host_instance_shapes(ctx, from_json, all_pages, page_size,
     cli_util.render_response(result, ctx)
 
 
-@dedicated_vm_host_instance_group.command(name=cli_util.override('compute.list_dedicated_vm_host_instances.command_name', 'list'), help=u"""Returns the list of instances on the dedicated virtual machine hosts that match the specified criteria.""")
+@dedicated_vm_host_instance_group.command(name=cli_util.override('compute.list_dedicated_vm_host_instances.command_name', 'list'), help=u"""Returns the list of instances on the dedicated virtual machine hosts that match the specified criteria. \n[Command Reference](listDedicatedVmHostInstances)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--dedicated-vm-host-id', required=True, help=u"""The OCID of the dedicated VM host.""")
 @cli_util.option('--availability-domain', help=u"""The name of the availability domain.
@@ -3799,7 +3811,7 @@ def list_dedicated_vm_host_instances(ctx, from_json, all_pages, page_size, compa
     cli_util.render_response(result, ctx)
 
 
-@dedicated_vm_host_shape_group.command(name=cli_util.override('compute.list_dedicated_vm_host_shapes.command_name', 'list'), help=u"""Lists the shapes that can be used to launch a dedicated virtual machine host within the specified compartment.""")
+@dedicated_vm_host_shape_group.command(name=cli_util.override('compute.list_dedicated_vm_host_shapes.command_name', 'list'), help=u"""Lists the shapes that can be used to launch a dedicated virtual machine host within the specified compartment. \n[Command Reference](listDedicatedVmHostShapes)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--availability-domain', help=u"""The name of the availability domain.
 
@@ -3859,7 +3871,7 @@ def list_dedicated_vm_host_shapes(ctx, from_json, all_pages, page_size, compartm
 
 @dedicated_vm_host_group.command(name=cli_util.override('compute.list_dedicated_vm_hosts.command_name', 'list'), help=u"""Returns the list of dedicated virtual machine hosts that match the specified criteria in the specified compartment.
 
-You can limit the list by specifying a dedicated virtual machine host display name. The list will include all the identically-named dedicated virtual machine hosts in the compartment.""")
+You can limit the list by specifying a dedicated virtual machine host display name. The list will include all the identically-named dedicated virtual machine hosts in the compartment. \n[Command Reference](listDedicatedVmHosts)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--availability-domain', help=u"""The name of the availability domain.
 
@@ -3933,7 +3945,7 @@ def list_dedicated_vm_hosts(ctx, from_json, all_pages, page_size, compartment_id
     cli_util.render_response(result, ctx)
 
 
-@image_shape_compatibility_entry_group.command(name=cli_util.override('compute.list_image_shape_compatibility_entries.command_name', 'list'), help=u"""Lists the compatible shapes for the specified image.""")
+@image_shape_compatibility_entry_group.command(name=cli_util.override('compute.list_image_shape_compatibility_entries.command_name', 'list'), help=u"""Lists the compatible shapes for the specified image. \n[Command Reference](listImageShapeCompatibilityEntries)""")
 @cli_util.option('--image-id', required=True, help=u"""The [OCID] of the image.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
 
@@ -3988,7 +4000,7 @@ def list_image_shape_compatibility_entries(ctx, from_json, all_pages, page_size,
 
 @image_group.command(name=cli_util.override('compute.list_images.command_name', 'list'), help=u"""Lists the available images in the specified compartment, including both [Oracle-provided images] and [custom images] that have been created. The list of images returned is ordered to first show all Oracle-provided images, then all custom images.
 
-The order of images returned may change when new images are released.""")
+The order of images returned may change when new images are released. \n[Command Reference](listImages)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the given display name exactly.""")
 @cli_util.option('--operating-system', help=u"""The image's operating system.
@@ -4066,7 +4078,7 @@ def list_images(ctx, from_json, all_pages, page_size, compartment_id, display_na
 
 @instance_console_connection_group.command(name=cli_util.override('compute.list_instance_console_connections.command_name', 'list'), help=u"""Lists the console connections for the specified compartment or instance.
 
-For more information about console access, see [Accessing the Console].""")
+For more information about console access, see [Accessing the Console]. \n[Command Reference](listInstanceConsoleConnections)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--instance-id', help=u"""The OCID of the instance.""")
 @cli_util.option('--limit', type=click.INT, help=u"""For list pagination. The maximum number of results per page, or items to return in a paginated \"List\" call. For important details about how pagination works, see [List Pagination].
@@ -4118,7 +4130,7 @@ def list_instance_console_connections(ctx, from_json, all_pages, page_size, comp
     cli_util.render_response(result, ctx)
 
 
-@device_group.command(name=cli_util.override('compute.list_instance_devices.command_name', 'list-instance'), help=u"""Gets a list of all the devices for given instance. You can optionally filter results by device availability.""")
+@device_group.command(name=cli_util.override('compute.list_instance_devices.command_name', 'list-instance'), help=u"""Gets a list of all the devices for given instance. You can optionally filter results by device availability. \n[Command Reference](listInstanceDevices)""")
 @cli_util.option('--instance-id', required=True, help=u"""The OCID of the instance.""")
 @cli_util.option('--is-available', type=click.BOOL, help=u"""A filter to return only available devices or only used devices.""")
 @cli_util.option('--name', help=u"""A filter to return only devices that match the given name exactly.""")
@@ -4185,7 +4197,7 @@ def list_instance_devices(ctx, from_json, all_pages, page_size, instance_id, is_
     cli_util.render_response(result, ctx)
 
 
-@instance_group.command(name=cli_util.override('compute.list_instances.command_name', 'list'), help=u"""Lists the instances in the specified compartment and the specified availability domain. You can filter the results by specifying an instance name (the list will include all the identically-named instances in the compartment).""")
+@instance_group.command(name=cli_util.override('compute.list_instances.command_name', 'list'), help=u"""Lists the instances in the specified compartment and the specified availability domain. You can filter the results by specifying an instance name (the list will include all the identically-named instances in the compartment). \n[Command Reference](listInstances)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--availability-domain', help=u"""The name of the availability domain.
 
@@ -4255,7 +4267,7 @@ def list_instances(ctx, from_json, all_pages, page_size, compartment_id, availab
     cli_util.render_response(result, ctx)
 
 
-@shape_group.command(name=cli_util.override('compute.list_shapes.command_name', 'list'), help=u"""Lists the shapes that can be used to launch an instance within the specified compartment. You can filter the list by compatibility with a specific image.""")
+@shape_group.command(name=cli_util.override('compute.list_shapes.command_name', 'list'), help=u"""Lists the shapes that can be used to launch an instance within the specified compartment. You can filter the list by compatibility with a specific image. \n[Command Reference](listShapes)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--availability-domain', help=u"""The name of the availability domain.
 
@@ -4312,7 +4324,7 @@ def list_shapes(ctx, from_json, all_pages, page_size, compartment_id, availabili
     cli_util.render_response(result, ctx)
 
 
-@vnic_attachment_group.command(name=cli_util.override('compute.list_vnic_attachments.command_name', 'list'), help=u"""Lists the VNIC attachments in the specified compartment. A VNIC attachment resides in the same compartment as the attached instance. The list can be filtered by instance, VNIC, or availability domain.""")
+@vnic_attachment_group.command(name=cli_util.override('compute.list_vnic_attachments.command_name', 'list'), help=u"""Lists the VNIC attachments in the specified compartment. A VNIC attachment resides in the same compartment as the attached instance. The list can be filtered by instance, VNIC, or availability domain. \n[Command Reference](listVnicAttachments)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--availability-domain', help=u"""The name of the availability domain.
 
@@ -4374,7 +4386,7 @@ def list_vnic_attachments(ctx, from_json, all_pages, page_size, compartment_id, 
 
 @volume_attachment_group.command(name=cli_util.override('compute.list_volume_attachments.command_name', 'list'), help=u"""Lists the volume attachments in the specified compartment. You can filter the list by specifying an instance OCID, volume OCID, or both.
 
-Currently, the only supported volume attachment type are [IScsiVolumeAttachment] and [ParavirtualizedVolumeAttachment].""")
+Currently, the only supported volume attachment type are [IScsiVolumeAttachment] and [ParavirtualizedVolumeAttachment]. \n[Command Reference](listVolumeAttachments)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment.""")
 @cli_util.option('--availability-domain', help=u"""The name of the availability domain.
 
@@ -4434,7 +4446,7 @@ def list_volume_attachments(ctx, from_json, all_pages, page_size, compartment_id
     cli_util.render_response(result, ctx)
 
 
-@image_shape_compatibility_entry_group.command(name=cli_util.override('compute.remove_image_shape_compatibility_entry.command_name', 'remove'), help=u"""Removes a shape from the compatible shapes list for the image.""")
+@image_shape_compatibility_entry_group.command(name=cli_util.override('compute.remove_image_shape_compatibility_entry.command_name', 'remove'), help=u"""Removes a shape from the compatible shapes list for the image. \n[Command Reference](removeImageShapeCompatibilityEntry)""")
 @cli_util.option('--image-id', required=True, help=u"""The [OCID] of the image.""")
 @cli_util.option('--shape-name', required=True, help=u"""Shape name.""")
 @cli_util.confirm_delete_option
@@ -4465,7 +4477,7 @@ def remove_image_shape_compatibility_entry(ctx, from_json, image_id, shape_name)
 
 To preserve the boot volume associated with the instance, specify `true` for `PreserveBootVolumeQueryParam`. To delete the boot volume when the instance is deleted, specify `false` or do not specify a value for `PreserveBootVolumeQueryParam`.
 
-This is an asynchronous operation. The instance's `lifecycleState` will change to TERMINATING temporarily until the instance is completely removed.""")
+This is an asynchronous operation. The instance's `lifecycleState` will change to TERMINATING temporarily until the instance is completely removed. \n[Command Reference](terminateInstance)""")
 @cli_util.option('--instance-id', required=True, help=u"""The OCID of the instance.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--preserve-boot-volume', type=click.BOOL, help=u"""Specifies whether to delete or preserve the boot volume when terminating an instance. The default value is false.""")
@@ -4531,7 +4543,7 @@ def terminate_instance(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     cli_util.render_response(result, ctx)
 
 
-@compute_image_capability_schema_group.command(name=cli_util.override('compute.update_compute_image_capability_schema.command_name', 'update'), help=u"""Updates the specified Compute Image Capability Schema""")
+@compute_image_capability_schema_group.command(name=cli_util.override('compute.update_compute_image_capability_schema.command_name', 'update'), help=u"""Updates the specified Compute Image Capability Schema \n[Command Reference](updateComputeImageCapabilitySchema)""")
 @cli_util.option('--compute-image-capability-schema-id', required=True, help=u"""The id of the compute image capability schema or the image ocid""")
 @cli_util.option('--display-name', help=u"""A user-friendly name for the compute image capability schema""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
@@ -4586,7 +4598,7 @@ def update_compute_image_capability_schema(ctx, from_json, force, compute_image_
     cli_util.render_response(result, ctx)
 
 
-@console_history_group.command(name=cli_util.override('compute.update_console_history.command_name', 'update'), help=u"""Updates the specified console history metadata.""")
+@console_history_group.command(name=cli_util.override('compute.update_console_history.command_name', 'update'), help=u"""Updates the specified console history metadata. \n[Command Reference](updateConsoleHistory)""")
 @cli_util.option('--instance-console-history-id', required=True, help=u"""The OCID of the console history.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
@@ -4661,7 +4673,7 @@ def update_console_history(ctx, from_json, force, wait_for_state, max_wait_secon
     cli_util.render_response(result, ctx)
 
 
-@dedicated_vm_host_group.command(name=cli_util.override('compute.update_dedicated_vm_host.command_name', 'update'), help=u"""Updates the displayName, freeformTags, and definedTags attributes for the specified dedicated virtual machine host. If an attribute value is not included, it will not be updated.""")
+@dedicated_vm_host_group.command(name=cli_util.override('compute.update_dedicated_vm_host.command_name', 'update'), help=u"""Updates the displayName, freeformTags, and definedTags attributes for the specified dedicated virtual machine host. If an attribute value is not included, it will not be updated. \n[Command Reference](updateDedicatedVmHost)""")
 @cli_util.option('--dedicated-vm-host-id', required=True, help=u"""The OCID of the dedicated VM host.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
@@ -4739,7 +4751,7 @@ def update_dedicated_vm_host(ctx, from_json, force, wait_for_state, max_wait_sec
     cli_util.render_response(result, ctx)
 
 
-@image_group.command(name=cli_util.override('compute.update_image.command_name', 'update'), help=u"""Updates the display name of the image. Avoid entering confidential information.""")
+@image_group.command(name=cli_util.override('compute.update_image.command_name', 'update'), help=u"""Updates the display name of the image. Avoid entering confidential information. \n[Command Reference](updateImage)""")
 @cli_util.option('--image-id', required=True, help=u"""The [OCID] of the image.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
@@ -4832,7 +4844,7 @@ def update_image(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_i
 
 Changes to metadata fields will be reflected in the instance metadata service (this may take up to a minute).
 
-The OCID of the instance remains the same.""")
+The OCID of the instance remains the same. \n[Command Reference](updateInstance)""")
 @cli_util.option('--instance-id', required=True, help=u"""The OCID of the instance.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
@@ -4866,6 +4878,7 @@ If the instance is running when you change the shape, the instance is rebooted.
 
 Example: `VM.Standard2.1`""")
 @cli_util.option('--shape-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--instance-options', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--fault-domain', help=u"""A fault domain is a grouping of hardware and infrastructure within an availability domain. Each availability domain contains three fault domains. Fault domains let you distribute your instances so that they are not on the same physical hardware within a single availability domain. A hardware failure or Compute hardware maintenance that affects one fault domain does not affect instances in other fault domains.
 
 To get a list of fault domains, use the [ListFaultDomains] operation in the Identity and Access Management Service API.
@@ -4878,18 +4891,18 @@ Example: `FAULT-DOMAIN-1`""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["MOVING", "PROVISIONING", "RUNNING", "STARTING", "STOPPING", "STOPPED", "CREATING_IMAGE", "TERMINATING", "TERMINATED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'UpdateInstanceAgentConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'shape-config': {'module': 'core', 'class': 'UpdateInstanceShapeConfigDetails'}, 'launch-options': {'module': 'core', 'class': 'UpdateLaunchOptions'}, 'availability-config': {'module': 'core', 'class': 'UpdateInstanceAvailabilityConfigDetails'}})
+@json_skeleton_utils.get_cli_json_input_option({'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'UpdateInstanceAgentConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'shape-config': {'module': 'core', 'class': 'UpdateInstanceShapeConfigDetails'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'launch-options': {'module': 'core', 'class': 'UpdateLaunchOptions'}, 'availability-config': {'module': 'core', 'class': 'UpdateInstanceAvailabilityConfigDetails'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'UpdateInstanceAgentConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'shape-config': {'module': 'core', 'class': 'UpdateInstanceShapeConfigDetails'}, 'launch-options': {'module': 'core', 'class': 'UpdateLaunchOptions'}, 'availability-config': {'module': 'core', 'class': 'UpdateInstanceAvailabilityConfigDetails'}}, output_type={'module': 'core', 'class': 'Instance'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'defined-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}, 'freeform-tags': {'module': 'core', 'class': 'dict(str, string)'}, 'agent-config': {'module': 'core', 'class': 'UpdateInstanceAgentConfigDetails'}, 'metadata': {'module': 'core', 'class': 'dict(str, string)'}, 'extended-metadata': {'module': 'core', 'class': 'dict(str, object)'}, 'shape-config': {'module': 'core', 'class': 'UpdateInstanceShapeConfigDetails'}, 'instance-options': {'module': 'core', 'class': 'InstanceOptions'}, 'launch-options': {'module': 'core', 'class': 'UpdateLaunchOptions'}, 'availability-config': {'module': 'core', 'class': 'UpdateInstanceAvailabilityConfigDetails'}}, output_type={'module': 'core', 'class': 'Instance'})
 @cli_util.wrap_exceptions
-def update_instance(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_id, defined_tags, display_name, freeform_tags, agent_config, metadata, extended_metadata, shape, shape_config, fault_domain, launch_options, availability_config, if_match):
+def update_instance(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_id, defined_tags, display_name, freeform_tags, agent_config, metadata, extended_metadata, shape, shape_config, instance_options, fault_domain, launch_options, availability_config, if_match):
 
     if isinstance(instance_id, six.string_types) and len(instance_id.strip()) == 0:
         raise click.UsageError('Parameter --instance-id cannot be whitespace or empty string')
     if not force:
-        if defined_tags or freeform_tags or agent_config or metadata or extended_metadata or shape_config or launch_options or availability_config:
-            if not click.confirm("WARNING: Updates to defined-tags and freeform-tags and agent-config and metadata and extended-metadata and shape-config and launch-options and availability-config will replace any existing values. Are you sure you want to continue?"):
+        if defined_tags or freeform_tags or agent_config or metadata or extended_metadata or shape_config or instance_options or launch_options or availability_config:
+            if not click.confirm("WARNING: Updates to defined-tags and freeform-tags and agent-config and metadata and extended-metadata and shape-config and instance-options and launch-options and availability-config will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -4921,6 +4934,9 @@ def update_instance(ctx, from_json, force, wait_for_state, max_wait_seconds, wai
 
     if shape_config is not None:
         _details['shapeConfig'] = cli_util.parse_json_parameter("shape_config", shape_config)
+
+    if instance_options is not None:
+        _details['instanceOptions'] = cli_util.parse_json_parameter("instance_options", instance_options)
 
     if fault_domain is not None:
         _details['faultDomain'] = fault_domain
@@ -4963,7 +4979,7 @@ def update_instance(ctx, from_json, force, wait_for_state, max_wait_seconds, wai
     cli_util.render_response(result, ctx)
 
 
-@instance_console_connection_group.command(name=cli_util.override('compute.update_instance_console_connection.command_name', 'update'), help=u"""Updates the defined tags and free-form tags for the specified instance console connection.""")
+@instance_console_connection_group.command(name=cli_util.override('compute.update_instance_console_connection.command_name', 'update'), help=u"""Updates the defined tags and free-form tags for the specified instance console connection. \n[Command Reference](updateInstanceConsoleConnection)""")
 @cli_util.option('--instance-console-connection-id', required=True, help=u"""The OCID of the instance console connection.""")
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 

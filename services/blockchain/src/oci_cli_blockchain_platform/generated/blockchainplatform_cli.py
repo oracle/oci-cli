@@ -65,7 +65,7 @@ blockchain_root_group.add_command(osn_group)
 blockchain_root_group.add_command(work_request_group)
 
 
-@blockchain_platform_group.command(name=cli_util.override('blockchain.change_blockchain_platform_compartment.command_name', 'change-compartment'), help=u"""Change Blockchain Platform Compartment""")
+@blockchain_platform_group.command(name=cli_util.override('blockchain.change_blockchain_platform_compartment.command_name', 'change-compartment'), help=u"""Change Blockchain Platform Compartment \n[Command Reference](changeBlockchainPlatformCompartment)""")
 @cli_util.option('--blockchain-platform-id', required=True, help=u"""Unique service identifier.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the new compartment.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -122,7 +122,7 @@ def change_blockchain_platform_compartment(ctx, from_json, wait_for_state, max_w
     cli_util.render_response(result, ctx)
 
 
-@blockchain_platform_group.command(name=cli_util.override('blockchain.create_blockchain_platform.command_name', 'create'), help=u"""Creates a new Blockchain Platform.""")
+@blockchain_platform_group.command(name=cli_util.override('blockchain.create_blockchain_platform.command_name', 'create'), help=u"""Creates a new Blockchain Platform. \n[Command Reference](createBlockchainPlatform)""")
 @cli_util.option('--display-name', required=True, help=u"""Platform Instance Display name, can be renamed""")
 @cli_util.option('--compartment-id', required=True, help=u"""Compartment Identifier""")
 @cli_util.option('--platform-role', required=True, help=u"""Role of platform - founder or participant""")
@@ -205,7 +205,7 @@ def create_blockchain_platform(ctx, from_json, wait_for_state, max_wait_seconds,
     cli_util.render_response(result, ctx)
 
 
-@blockchain_platform_group.command(name=cli_util.override('blockchain.create_osn.command_name', 'create-osn'), help=u"""Create Blockchain Platform Osn""")
+@blockchain_platform_group.command(name=cli_util.override('blockchain.create_osn.command_name', 'create-osn'), help=u"""Create Blockchain Platform Osn \n[Command Reference](createOsn)""")
 @cli_util.option('--blockchain-platform-id', required=True, help=u"""Unique service identifier.""")
 @cli_util.option('--ad', required=True, help=u"""Availability Domain to place new OSN""")
 @cli_util.option('--ocpu-allocation-param', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -266,7 +266,7 @@ def create_osn(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
     cli_util.render_response(result, ctx)
 
 
-@blockchain_platform_group.command(name=cli_util.override('blockchain.create_peer.command_name', 'create-peer'), help=u"""Create Blockchain Platform Peer""")
+@blockchain_platform_group.command(name=cli_util.override('blockchain.create_peer.command_name', 'create-peer'), help=u"""Create Blockchain Platform Peer \n[Command Reference](createPeer)""")
 @cli_util.option('--blockchain-platform-id', required=True, help=u"""Unique service identifier.""")
 @cli_util.option('--role', required=True, help=u"""Peer role""")
 @cli_util.option('--ocpu-allocation-param', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -328,7 +328,7 @@ def create_peer(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
     cli_util.render_response(result, ctx)
 
 
-@blockchain_platform_group.command(name=cli_util.override('blockchain.delete_blockchain_platform.command_name', 'delete'), help=u"""Delete a particular of a Blockchain Platform""")
+@blockchain_platform_group.command(name=cli_util.override('blockchain.delete_blockchain_platform.command_name', 'delete'), help=u"""Delete a particular of a Blockchain Platform \n[Command Reference](deleteBlockchainPlatform)""")
 @cli_util.option('--blockchain-platform-id', required=True, help=u"""Unique service identifier.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -380,7 +380,7 @@ def delete_blockchain_platform(ctx, from_json, wait_for_state, max_wait_seconds,
     cli_util.render_response(result, ctx)
 
 
-@blockchain_platform_group.command(name=cli_util.override('blockchain.delete_osn.command_name', 'delete-osn'), help=u"""Delete a particular OSN of a Blockchain Platform""")
+@blockchain_platform_group.command(name=cli_util.override('blockchain.delete_osn.command_name', 'delete-osn'), help=u"""Delete a particular OSN of a Blockchain Platform \n[Command Reference](deleteOsn)""")
 @cli_util.option('--blockchain-platform-id', required=True, help=u"""Unique service identifier.""")
 @cli_util.option('--osn-id', required=True, help=u"""OSN identifier.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -437,7 +437,7 @@ def delete_osn(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
     cli_util.render_response(result, ctx)
 
 
-@blockchain_platform_group.command(name=cli_util.override('blockchain.delete_peer.command_name', 'delete-peer'), help=u"""Delete a particular peer of a Blockchain Platform""")
+@blockchain_platform_group.command(name=cli_util.override('blockchain.delete_peer.command_name', 'delete-peer'), help=u"""Delete a particular peer of a Blockchain Platform \n[Command Reference](deletePeer)""")
 @cli_util.option('--blockchain-platform-id', required=True, help=u"""Unique service identifier.""")
 @cli_util.option('--peer-id', required=True, help=u"""Peer identifier.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -494,7 +494,7 @@ def delete_peer(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
     cli_util.render_response(result, ctx)
 
 
-@work_request_group.command(name=cli_util.override('blockchain.delete_work_request.command_name', 'delete'), help=u"""Attempts to cancel the work request with the given ID.""")
+@work_request_group.command(name=cli_util.override('blockchain.delete_work_request.command_name', 'delete'), help=u"""Attempts to cancel the work request with the given ID. \n[Command Reference](deleteWorkRequest)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The ID of the asynchronous request.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -546,7 +546,7 @@ def delete_work_request(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     cli_util.render_response(result, ctx)
 
 
-@blockchain_platform_group.command(name=cli_util.override('blockchain.get_blockchain_platform.command_name', 'get'), help=u"""Gets information about a Blockchain Platform identified by the specific id""")
+@blockchain_platform_group.command(name=cli_util.override('blockchain.get_blockchain_platform.command_name', 'get'), help=u"""Gets information about a Blockchain Platform identified by the specific id \n[Command Reference](getBlockchainPlatform)""")
 @cli_util.option('--blockchain-platform-id', required=True, help=u"""Unique service identifier.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -568,7 +568,7 @@ def get_blockchain_platform(ctx, from_json, blockchain_platform_id):
     cli_util.render_response(result, ctx)
 
 
-@osn_group.command(name=cli_util.override('blockchain.get_osn.command_name', 'get'), help=u"""Gets information about an OSN identified by the specific id""")
+@osn_group.command(name=cli_util.override('blockchain.get_osn.command_name', 'get'), help=u"""Gets information about an OSN identified by the specific id \n[Command Reference](getOsn)""")
 @cli_util.option('--blockchain-platform-id', required=True, help=u"""Unique service identifier.""")
 @cli_util.option('--osn-id', required=True, help=u"""OSN identifier.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -595,7 +595,7 @@ def get_osn(ctx, from_json, blockchain_platform_id, osn_id):
     cli_util.render_response(result, ctx)
 
 
-@peer_group.command(name=cli_util.override('blockchain.get_peer.command_name', 'get'), help=u"""Gets information about a peer identified by the specific id""")
+@peer_group.command(name=cli_util.override('blockchain.get_peer.command_name', 'get'), help=u"""Gets information about a peer identified by the specific id \n[Command Reference](getPeer)""")
 @cli_util.option('--blockchain-platform-id', required=True, help=u"""Unique service identifier.""")
 @cli_util.option('--peer-id', required=True, help=u"""Peer identifier.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -622,7 +622,7 @@ def get_peer(ctx, from_json, blockchain_platform_id, peer_id):
     cli_util.render_response(result, ctx)
 
 
-@work_request_group.command(name=cli_util.override('blockchain.get_work_request.command_name', 'get'), help=u"""Gets the status of the work request with the given ID.""")
+@work_request_group.command(name=cli_util.override('blockchain.get_work_request.command_name', 'get'), help=u"""Gets the status of the work request with the given ID. \n[Command Reference](getWorkRequest)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The ID of the asynchronous request.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -644,7 +644,7 @@ def get_work_request(ctx, from_json, work_request_id):
     cli_util.render_response(result, ctx)
 
 
-@blockchain_platform_group.command(name=cli_util.override('blockchain.list_blockchain_platforms.command_name', 'list'), help=u"""Returns a list Blockchain Platform Instances in a compartment""")
+@blockchain_platform_group.command(name=cli_util.override('blockchain.list_blockchain_platforms.command_name', 'list'), help=u"""Returns a list Blockchain Platform Instances in a compartment \n[Command Reference](listBlockchainPlatforms)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Example: `My new resource`""")
 @cli_util.option('--page', help=u"""The page at which to start retrieving results.""")
@@ -704,7 +704,7 @@ def list_blockchain_platforms(ctx, from_json, all_pages, page_size, compartment_
     cli_util.render_response(result, ctx)
 
 
-@osn_group.command(name=cli_util.override('blockchain.list_osns.command_name', 'list'), help=u"""List Blockchain Platform OSNs""")
+@osn_group.command(name=cli_util.override('blockchain.list_osns.command_name', 'list'), help=u"""List Blockchain Platform OSNs \n[Command Reference](listOsns)""")
 @cli_util.option('--blockchain-platform-id', required=True, help=u"""Unique service identifier.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Example: `My new resource`""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
@@ -764,7 +764,7 @@ def list_osns(ctx, from_json, all_pages, page_size, blockchain_platform_id, disp
     cli_util.render_response(result, ctx)
 
 
-@peer_group.command(name=cli_util.override('blockchain.list_peers.command_name', 'list'), help=u"""List Blockchain Platform Peers""")
+@peer_group.command(name=cli_util.override('blockchain.list_peers.command_name', 'list'), help=u"""List Blockchain Platform Peers \n[Command Reference](listPeers)""")
 @cli_util.option('--blockchain-platform-id', required=True, help=u"""Unique service identifier.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name. Does not have to be unique, and it's changeable. Example: `My new resource`""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
@@ -824,7 +824,7 @@ def list_peers(ctx, from_json, all_pages, page_size, blockchain_platform_id, dis
     cli_util.render_response(result, ctx)
 
 
-@work_request_error_group.command(name=cli_util.override('blockchain.list_work_request_errors.command_name', 'list'), help=u"""Return a (paginated) list of errors for a given work request.""")
+@work_request_error_group.command(name=cli_util.override('blockchain.list_work_request_errors.command_name', 'list'), help=u"""Return a (paginated) list of errors for a given work request. \n[Command Reference](listWorkRequestErrors)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The ID of the asynchronous request.""")
 @cli_util.option('--page', help=u"""The page at which to start retrieving results.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -875,7 +875,7 @@ def list_work_request_errors(ctx, from_json, all_pages, page_size, work_request_
     cli_util.render_response(result, ctx)
 
 
-@work_request_log_entry_group.command(name=cli_util.override('blockchain.list_work_request_logs.command_name', 'list-work-request-logs'), help=u"""Return a (paginated) list of logs for a given work request.""")
+@work_request_log_entry_group.command(name=cli_util.override('blockchain.list_work_request_logs.command_name', 'list-work-request-logs'), help=u"""Return a (paginated) list of logs for a given work request. \n[Command Reference](listWorkRequestLogs)""")
 @cli_util.option('--work-request-id', required=True, help=u"""The ID of the asynchronous request.""")
 @cli_util.option('--page', help=u"""The page at which to start retrieving results.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
@@ -926,7 +926,7 @@ def list_work_request_logs(ctx, from_json, all_pages, page_size, work_request_id
     cli_util.render_response(result, ctx)
 
 
-@work_request_group.command(name=cli_util.override('blockchain.list_work_requests.command_name', 'list'), help=u"""Lists the work requests in a compartment.""")
+@work_request_group.command(name=cli_util.override('blockchain.list_work_requests.command_name', 'list'), help=u"""Lists the work requests in a compartment. \n[Command Reference](listWorkRequests)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The ID of the compartment in which to list resources.""")
 @cli_util.option('--blockchain-platform-id', required=True, help=u"""Unique service identifier.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
@@ -984,7 +984,7 @@ def list_work_requests(ctx, from_json, all_pages, page_size, compartment_id, blo
     cli_util.render_response(result, ctx)
 
 
-@blockchain_platform_group.command(name=cli_util.override('blockchain.preview_scale_blockchain_platform.command_name', 'preview-scale'), help=u"""Preview Scale Blockchain Platform""")
+@blockchain_platform_group.command(name=cli_util.override('blockchain.preview_scale_blockchain_platform.command_name', 'preview-scale'), help=u"""Preview Scale Blockchain Platform \n[Command Reference](previewScaleBlockchainPlatform)""")
 @cli_util.option('--blockchain-platform-id', required=True, help=u"""Unique service identifier.""")
 @cli_util.option('--add-osns', type=custom_types.CLI_COMPLEX_TYPE, help=u"""new OSNs to add
 
@@ -1048,7 +1048,7 @@ def preview_scale_blockchain_platform(ctx, from_json, blockchain_platform_id, ad
     cli_util.render_response(result, ctx)
 
 
-@blockchain_platform_group.command(name=cli_util.override('blockchain.scale_blockchain_platform.command_name', 'scale'), help=u"""Scale Blockchain Platform""")
+@blockchain_platform_group.command(name=cli_util.override('blockchain.scale_blockchain_platform.command_name', 'scale'), help=u"""Scale Blockchain Platform \n[Command Reference](scaleBlockchainPlatform)""")
 @cli_util.option('--blockchain-platform-id', required=True, help=u"""Unique service identifier.""")
 @cli_util.option('--add-osns', type=custom_types.CLI_COMPLEX_TYPE, help=u"""new OSNs to add
 
@@ -1141,7 +1141,7 @@ def scale_blockchain_platform(ctx, from_json, wait_for_state, max_wait_seconds, 
     cli_util.render_response(result, ctx)
 
 
-@blockchain_platform_group.command(name=cli_util.override('blockchain.start_blockchain_platform.command_name', 'start'), help=u"""Start a Blockchain Platform""")
+@blockchain_platform_group.command(name=cli_util.override('blockchain.start_blockchain_platform.command_name', 'start'), help=u"""Start a Blockchain Platform \n[Command Reference](startBlockchainPlatform)""")
 @cli_util.option('--blockchain-platform-id', required=True, help=u"""Unique service identifier.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -1192,7 +1192,7 @@ def start_blockchain_platform(ctx, from_json, wait_for_state, max_wait_seconds, 
     cli_util.render_response(result, ctx)
 
 
-@blockchain_platform_group.command(name=cli_util.override('blockchain.stop_blockchain_platform.command_name', 'stop'), help=u"""Stop a Blockchain Platform""")
+@blockchain_platform_group.command(name=cli_util.override('blockchain.stop_blockchain_platform.command_name', 'stop'), help=u"""Stop a Blockchain Platform \n[Command Reference](stopBlockchainPlatform)""")
 @cli_util.option('--blockchain-platform-id', required=True, help=u"""Unique service identifier.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -1243,7 +1243,7 @@ def stop_blockchain_platform(ctx, from_json, wait_for_state, max_wait_seconds, w
     cli_util.render_response(result, ctx)
 
 
-@blockchain_platform_group.command(name=cli_util.override('blockchain.update_blockchain_platform.command_name', 'update'), help=u"""Update a particular of a Blockchain Platform""")
+@blockchain_platform_group.command(name=cli_util.override('blockchain.update_blockchain_platform.command_name', 'update'), help=u"""Update a particular of a Blockchain Platform \n[Command Reference](updateBlockchainPlatform)""")
 @cli_util.option('--blockchain-platform-id', required=True, help=u"""Unique service identifier.""")
 @cli_util.option('--description', help=u"""Platform Description""")
 @cli_util.option('--storage-size-in-tbs', help=u"""Storage size in TBs""")
@@ -1327,7 +1327,7 @@ def update_blockchain_platform(ctx, from_json, force, wait_for_state, max_wait_s
     cli_util.render_response(result, ctx)
 
 
-@blockchain_platform_group.command(name=cli_util.override('blockchain.update_osn.command_name', 'update-osn'), help=u"""Update Blockchain Platform OSN""")
+@blockchain_platform_group.command(name=cli_util.override('blockchain.update_osn.command_name', 'update-osn'), help=u"""Update Blockchain Platform OSN \n[Command Reference](updateOsn)""")
 @cli_util.option('--blockchain-platform-id', required=True, help=u"""Unique service identifier.""")
 @cli_util.option('--osn-id', required=True, help=u"""OSN identifier.""")
 @cli_util.option('--ocpu-allocation-param', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -1394,7 +1394,7 @@ def update_osn(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_int
     cli_util.render_response(result, ctx)
 
 
-@blockchain_platform_group.command(name=cli_util.override('blockchain.update_peer.command_name', 'update-peer'), help=u"""Update Blockchain Platform Peer""")
+@blockchain_platform_group.command(name=cli_util.override('blockchain.update_peer.command_name', 'update-peer'), help=u"""Update Blockchain Platform Peer \n[Command Reference](updatePeer)""")
 @cli_util.option('--blockchain-platform-id', required=True, help=u"""Unique service identifier.""")
 @cli_util.option('--peer-id', required=True, help=u"""Peer identifier.""")
 @cli_util.option('--ocpu-allocation-param', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
