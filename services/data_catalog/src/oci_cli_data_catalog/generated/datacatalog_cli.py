@@ -45,6 +45,12 @@ def folder_tag_collection_group():
     pass
 
 
+@click.command(cli_util.override('data_catalog.pattern_group.command_name', 'pattern'), cls=CommandGroupWithAlias, help="""Pattern representation. A Pattern is defined using an expression and can be used as data selectors or filters to provide a singular view of an entity across multiple physical data artifacts.""")
+@cli_util.help_option_group
+def pattern_group():
+    pass
+
+
 @click.command(cli_util.override('data_catalog.entity_tag_collection_group.command_name', 'entity-tag-collection'), cls=CommandGroupWithAlias, help="""Results of an entity tags listing. Entity tags allow assciation of business terms with entities.""")
 @cli_util.help_option_group
 def entity_tag_collection_group():
@@ -78,6 +84,12 @@ def folder_collection_group():
 @click.command(cli_util.override('data_catalog.data_asset_collection_group.command_name', 'data-asset-collection'), cls=CommandGroupWithAlias, help="""Results of a data assets listing. A data asset is often synonymous with a 'System', such as a database, or may be a file container or a message stream.""")
 @cli_util.help_option_group
 def data_asset_collection_group():
+    pass
+
+
+@click.command(cli_util.override('data_catalog.custom_property_group.command_name', 'custom-property'), cls=CommandGroupWithAlias, help="""Custom Property Definition""")
+@cli_util.help_option_group
+def custom_property_group():
     pass
 
 
@@ -201,6 +213,12 @@ def folder_group():
     pass
 
 
+@click.command(cli_util.override('data_catalog.namespace_group.command_name', 'namespace'), cls=CommandGroupWithAlias, help="""Namespace Definition""")
+@cli_util.help_option_group
+def namespace_group():
+    pass
+
+
 @click.command(cli_util.override('data_catalog.catalog_private_endpoint_group.command_name', 'catalog-private-endpoint'), cls=CommandGroupWithAlias, help="""A private network reverse connection creates a connection from service to customer subnet over a private network.""")
 @cli_util.help_option_group
 def catalog_private_endpoint_group():
@@ -253,12 +271,14 @@ data_catalog_root_group.add_command(job_definition_collection_group)
 data_catalog_root_group.add_command(catalog_group)
 data_catalog_root_group.add_command(term_relationship_group)
 data_catalog_root_group.add_command(folder_tag_collection_group)
+data_catalog_root_group.add_command(pattern_group)
 data_catalog_root_group.add_command(entity_tag_collection_group)
 data_catalog_root_group.add_command(work_request_group)
 data_catalog_root_group.add_command(job_metric_group)
 data_catalog_root_group.add_command(type_group)
 data_catalog_root_group.add_command(folder_collection_group)
 data_catalog_root_group.add_command(data_asset_collection_group)
+data_catalog_root_group.add_command(custom_property_group)
 data_catalog_root_group.add_command(work_request_log_group)
 data_catalog_root_group.add_command(attribute_tag_group)
 data_catalog_root_group.add_command(job_log_group)
@@ -279,6 +299,7 @@ data_catalog_root_group.add_command(search_result_group)
 data_catalog_root_group.add_command(data_asset_tag_group)
 data_catalog_root_group.add_command(glossary_group)
 data_catalog_root_group.add_command(folder_group)
+data_catalog_root_group.add_command(namespace_group)
 data_catalog_root_group.add_command(catalog_private_endpoint_group)
 data_catalog_root_group.add_command(data_asset_tag_collection_group)
 data_catalog_root_group.add_command(job_metric_collection_group)
@@ -287,6 +308,132 @@ data_catalog_root_group.add_command(job_group)
 data_catalog_root_group.add_command(entity_group)
 data_catalog_root_group.add_command(type_collection_group)
 data_catalog_root_group.add_command(job_execution_collection_group)
+
+
+@data_asset_group.command(name=cli_util.override('data_catalog.add_data_selector_patterns.command_name', 'add'), help=u"""Add data selector pattern to the data asset. \n[Command Reference](addDataSelectorPatterns)""")
+@cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
+@cli_util.option('--data-asset-key', required=True, help=u"""Unique data asset key.""")
+@cli_util.option('--items', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Collection of pattern Ids.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED", "MOVING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'items': {'module': 'data_catalog', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'items': {'module': 'data_catalog', 'class': 'list[string]'}}, output_type={'module': 'data_catalog', 'class': 'DataAsset'})
+@cli_util.wrap_exceptions
+def add_data_selector_patterns(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, data_asset_key, items, if_match):
+
+    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+        raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
+
+    if isinstance(data_asset_key, six.string_types) and len(data_asset_key.strip()) == 0:
+        raise click.UsageError('Parameter --data-asset-key cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['items'] = cli_util.parse_json_parameter("items", items)
+
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
+    result = client.add_data_selector_patterns(
+        catalog_id=catalog_id,
+        data_asset_key=data_asset_key,
+        data_selector_pattern_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_data_asset') and callable(getattr(client, 'get_data_asset')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_data_asset(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@type_group.command(name=cli_util.override('data_catalog.associate_custom_property.command_name', 'associate-custom-property'), help=u"""Associate the custom property for the given type \n[Command Reference](associateCustomProperty)""")
+@cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
+@cli_util.option('--type-key', required=True, help=u"""Unique type key.""")
+@cli_util.option('--custom-property-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""array of custom property Ids""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED", "MOVING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'custom-property-ids': {'module': 'data_catalog', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'custom-property-ids': {'module': 'data_catalog', 'class': 'list[string]'}}, output_type={'module': 'data_catalog', 'class': 'Type'})
+@cli_util.wrap_exceptions
+def associate_custom_property(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, type_key, custom_property_ids, if_match):
+
+    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+        raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
+
+    if isinstance(type_key, six.string_types) and len(type_key.strip()) == 0:
+        raise click.UsageError('Parameter --type-key cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if custom_property_ids is not None:
+        _details['customPropertyIds'] = cli_util.parse_json_parameter("custom_property_ids", custom_property_ids)
+
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
+    result = client.associate_custom_property(
+        catalog_id=catalog_id,
+        type_key=type_key,
+        associate_custom_property_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_type') and callable(getattr(client, 'get_type')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_type(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
 
 
 @catalog_group.command(name=cli_util.override('data_catalog.attach_catalog_private_endpoint.command_name', 'attach'), help=u"""Attaches a private reverse connection endpoint resource to a data catalog resource. When provided, 'If-Match' is checked against 'ETag' values of the resource. \n[Command Reference](attachCatalogPrivateEndpoint)""")
@@ -478,16 +625,19 @@ def change_catalog_private_endpoint_compartment(ctx, from_json, wait_for_state, 
 @cli_util.option('--max-collection-count', type=click.INT, help=u"""The maximum count for the number of instances of a given type stored in this collection type attribute,applicable if this attribute is a complex type. For type specifications in systems that specify only \"capacity\" without upper or lower bound , this property can also be used to just mean \"capacity\". Some examples are Varray size in Oracle , Occurs Clause in Cobol , capacity in XmlSchemaObjectCollection , maxOccurs in  Xml , maxItems in Json""")
 @cli_util.option('--external-datatype-entity-key', help=u"""External entity key that represents the datatype of this attribute , applicable if this attribute is a complex type.""")
 @cli_util.option('--external-parent-attribute-key', help=u"""External attribute key that represents the parent attribute  of this attribute , applicable if the parent attribute is of complex type.""")
+@cli_util.option('--custom-property-members', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of customized properties along with the values for this object
+
+This option is a JSON list with items of type CustomPropertySetUsage.  For documentation on CustomPropertySetUsage please see our API reference: https://docs.cloud.oracle.com/api/#/en/datacatalog/20190325/datatypes/CustomPropertySetUsage.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A map of maps that contains the properties which are specific to the attribute type. Each attribute type definition defines it's set of required and optional properties. The map keys are category names and the values are maps of property name to property value. Every property is contained inside of a category. Most attributes have required properties within the \"default\" category. To determine the set of required and optional properties for an attribute type, a query can be done on '/types?type=attribute' that returns a collection of all attribute types. The appropriate attribute type, which will include definitions of all of it's properties, can be identified from this collection. Example: `{\"properties\": { \"default\": { \"key1\": \"value1\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED", "MOVING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'properties': {'module': 'data_catalog', 'class': 'dict(str, dict(str, string))'}})
+@json_skeleton_utils.get_cli_json_input_option({'custom-property-members': {'module': 'data_catalog', 'class': 'list[CustomPropertySetUsage]'}, 'properties': {'module': 'data_catalog', 'class': 'dict(str, dict(str, string))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'properties': {'module': 'data_catalog', 'class': 'dict(str, dict(str, string))'}}, output_type={'module': 'data_catalog', 'class': 'Attribute'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'custom-property-members': {'module': 'data_catalog', 'class': 'list[CustomPropertySetUsage]'}, 'properties': {'module': 'data_catalog', 'class': 'dict(str, dict(str, string))'}}, output_type={'module': 'data_catalog', 'class': 'Attribute'})
 @cli_util.wrap_exceptions
-def create_attribute(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, data_asset_key, entity_key, display_name, external_data_type, time_external, description, is_incremental_data, is_nullable, length, position, precision, scale, min_collection_count, max_collection_count, external_datatype_entity_key, external_parent_attribute_key, properties):
+def create_attribute(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, data_asset_key, entity_key, display_name, external_data_type, time_external, description, is_incremental_data, is_nullable, length, position, precision, scale, min_collection_count, max_collection_count, external_datatype_entity_key, external_parent_attribute_key, custom_property_members, properties):
 
     if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
@@ -538,6 +688,9 @@ def create_attribute(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
 
     if external_parent_attribute_key is not None:
         _details['externalParentAttributeKey'] = external_parent_attribute_key
+
+    if custom_property_members is not None:
+        _details['customPropertyMembers'] = cli_util.parse_json_parameter("custom_property_members", custom_property_members)
 
     if properties is not None:
         _details['properties'] = cli_util.parse_json_parameter("properties", properties)
@@ -784,17 +937,20 @@ def create_catalog_private_endpoint(ctx, from_json, wait_for_state, max_wait_sec
 @cli_util.option('--type-key', required=True, help=u"""The key of the object type. Type key's can be found via the '/types' endpoint.""")
 @cli_util.option('--properties', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""A map of maps that contains the properties which are specific to the connection type. Each connection type definition defines it's set of required and optional properties. The map keys are category names and the values are maps of property name to property value. Every property is contained inside of a category. Most connections have required properties within the \"default\" category. To determine the set of optional and required properties for a connection type, a query can be done on '/types?type=connection' that returns a collection of all connection types. The appropriate connection type, which will include definitions of all of it's properties, can be identified from this collection. Example: `{\"properties\": { \"default\": { \"username\": \"user1\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--description', help=u"""A description of the connection.""")
+@cli_util.option('--custom-property-members', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of customized properties along with the values for this object
+
+This option is a JSON list with items of type CustomPropertySetUsage.  For documentation on CustomPropertySetUsage please see our API reference: https://docs.cloud.oracle.com/api/#/en/datacatalog/20190325/datatypes/CustomPropertySetUsage.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--enc-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A map of maps that contains the encrypted values for sensitive properties which are specific to the connection type. Each connection type definition defines it's set of required and optional properties. The map keys are category names and the values are maps of property name to property value. Every property is contained inside of a category. Most connections have required properties within the \"default\" category. To determine the set of optional and required properties for a connection type, a query can be done on '/types?type=connection' that returns a collection of all connection types. The appropriate connection type, which will include definitions of all of it's properties, can be identified from this collection. Example: `{\"encProperties\": { \"default\": { \"password\": \"pwd\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-default', type=click.BOOL, help=u"""Indicates whether this connection is the default connection. The first connection of a data asset defaults to being the default, subsequent connections default to not being the default. If a default connection already exists, then trying to create a connection as the default will fail. In this case the default connection would need to be updated not to be the default and then the new connection can then be created as the default.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED", "MOVING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'properties': {'module': 'data_catalog', 'class': 'dict(str, dict(str, string))'}, 'enc-properties': {'module': 'data_catalog', 'class': 'dict(str, dict(str, string))'}})
+@json_skeleton_utils.get_cli_json_input_option({'custom-property-members': {'module': 'data_catalog', 'class': 'list[CustomPropertySetUsage]'}, 'properties': {'module': 'data_catalog', 'class': 'dict(str, dict(str, string))'}, 'enc-properties': {'module': 'data_catalog', 'class': 'dict(str, dict(str, string))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'properties': {'module': 'data_catalog', 'class': 'dict(str, dict(str, string))'}, 'enc-properties': {'module': 'data_catalog', 'class': 'dict(str, dict(str, string))'}}, output_type={'module': 'data_catalog', 'class': 'Connection'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'custom-property-members': {'module': 'data_catalog', 'class': 'list[CustomPropertySetUsage]'}, 'properties': {'module': 'data_catalog', 'class': 'dict(str, dict(str, string))'}, 'enc-properties': {'module': 'data_catalog', 'class': 'dict(str, dict(str, string))'}}, output_type={'module': 'data_catalog', 'class': 'Connection'})
 @cli_util.wrap_exceptions
-def create_connection(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, data_asset_key, display_name, type_key, properties, description, enc_properties, is_default):
+def create_connection(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, data_asset_key, display_name, type_key, properties, description, custom_property_members, enc_properties, is_default):
 
     if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
@@ -812,6 +968,9 @@ def create_connection(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 
     if description is not None:
         _details['description'] = description
+
+    if custom_property_members is not None:
+        _details['customPropertyMembers'] = cli_util.parse_json_parameter("custom_property_members", custom_property_members)
 
     if enc_properties is not None:
         _details['encProperties'] = cli_util.parse_json_parameter("enc_properties", enc_properties)
@@ -852,21 +1011,123 @@ def create_connection(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
     cli_util.render_response(result, ctx)
 
 
+@custom_property_group.command(name=cli_util.override('data_catalog.create_custom_property.command_name', 'create'), help=u"""Create a new Custom Property \n[Command Reference](createCustomProperty)""")
+@cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
+@cli_util.option('--namespace-id', required=True, help=u"""Unique namespace identifier.""")
+@cli_util.option('--display-name', required=True, help=u"""A user-friendly display name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--description', help=u"""Detailed description of the custom property.""")
+@cli_util.option('--data-type', type=custom_types.CliCaseInsensitiveChoice(["TEXT", "RICH_TEXT", "BOOLEAN", "NUMBER", "DATE"]), help=u"""The data type of the custom property""")
+@cli_util.option('--is-sortable', type=click.BOOL, help=u"""If this field allows to sort from UI""")
+@cli_util.option('--is-filterable', type=click.BOOL, help=u"""If this field allows to filter or create facets from UI""")
+@cli_util.option('--is-multi-valued', type=click.BOOL, help=u"""If this field allows multiple values to be set""")
+@cli_util.option('--is-hidden', type=click.BOOL, help=u"""If this field is a hidden field""")
+@cli_util.option('--is-editable', type=click.BOOL, help=u"""If this field is a editable field""")
+@cli_util.option('--is-hidden-in-search', type=click.BOOL, help=u"""If this field is allowed to pop in search results""")
+@cli_util.option('--allowed-values', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Allowed values for the custom property if any""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A map of maps that contains the properties which are specific to the data asset type. Each data asset type definition defines it's set of required and optional properties. The map keys are category names and the values are maps of property name to property value. Every property is contained inside of a category. Most data assets have required properties within the \"default\" category. To determine the set of optional and required properties for a data asset type, a query can be done on '/types?type=dataAsset' that returns a collection of all data asset types. The appropriate data asset type, which includes definitions of all of it's properties, can be identified from this collection. Example: `{\"properties\": { \"default\": { \"host\": \"host1\", \"port\": \"1521\", \"database\": \"orcl\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED", "MOVING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'allowed-values': {'module': 'data_catalog', 'class': 'list[string]'}, 'properties': {'module': 'data_catalog', 'class': 'dict(str, dict(str, string))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'allowed-values': {'module': 'data_catalog', 'class': 'list[string]'}, 'properties': {'module': 'data_catalog', 'class': 'dict(str, dict(str, string))'}}, output_type={'module': 'data_catalog', 'class': 'CustomProperty'})
+@cli_util.wrap_exceptions
+def create_custom_property(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, namespace_id, display_name, description, data_type, is_sortable, is_filterable, is_multi_valued, is_hidden, is_editable, is_hidden_in_search, allowed_values, properties):
+
+    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+        raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
+
+    if isinstance(namespace_id, six.string_types) and len(namespace_id.strip()) == 0:
+        raise click.UsageError('Parameter --namespace-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if data_type is not None:
+        _details['dataType'] = data_type
+
+    if is_sortable is not None:
+        _details['isSortable'] = is_sortable
+
+    if is_filterable is not None:
+        _details['isFilterable'] = is_filterable
+
+    if is_multi_valued is not None:
+        _details['isMultiValued'] = is_multi_valued
+
+    if is_hidden is not None:
+        _details['isHidden'] = is_hidden
+
+    if is_editable is not None:
+        _details['isEditable'] = is_editable
+
+    if is_hidden_in_search is not None:
+        _details['isHiddenInSearch'] = is_hidden_in_search
+
+    if allowed_values is not None:
+        _details['allowedValues'] = cli_util.parse_json_parameter("allowed_values", allowed_values)
+
+    if properties is not None:
+        _details['properties'] = cli_util.parse_json_parameter("properties", properties)
+
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
+    result = client.create_custom_property(
+        catalog_id=catalog_id,
+        namespace_id=namespace_id,
+        create_custom_property_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_custom_property') and callable(getattr(client, 'get_custom_property')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_custom_property(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @data_asset_group.command(name=cli_util.override('data_catalog.create_data_asset.command_name', 'create'), help=u"""Create a new data asset. \n[Command Reference](createDataAsset)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly display name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--type-key', required=True, help=u"""The key of the data asset type. This can be obtained via the '/types' endpoint.""")
 @cli_util.option('--description', help=u"""Detailed description of the data asset.""")
+@cli_util.option('--custom-property-members', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of customized properties along with the values for this object
+
+This option is a JSON list with items of type CustomPropertySetUsage.  For documentation on CustomPropertySetUsage please see our API reference: https://docs.cloud.oracle.com/api/#/en/datacatalog/20190325/datatypes/CustomPropertySetUsage.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A map of maps that contains the properties which are specific to the data asset type. Each data asset type definition defines it's set of required and optional properties. The map keys are category names and the values are maps of property name to property value. Every property is contained inside of a category. Most data assets have required properties within the \"default\" category. To determine the set of optional and required properties for a data asset type, a query can be done on '/types?type=dataAsset' that returns a collection of all data asset types. The appropriate data asset type, which includes definitions of all of it's properties, can be identified from this collection. Example: `{\"properties\": { \"default\": { \"host\": \"host1\", \"port\": \"1521\", \"database\": \"orcl\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED", "MOVING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'properties': {'module': 'data_catalog', 'class': 'dict(str, dict(str, string))'}})
+@json_skeleton_utils.get_cli_json_input_option({'custom-property-members': {'module': 'data_catalog', 'class': 'list[CustomPropertySetUsage]'}, 'properties': {'module': 'data_catalog', 'class': 'dict(str, dict(str, string))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'properties': {'module': 'data_catalog', 'class': 'dict(str, dict(str, string))'}}, output_type={'module': 'data_catalog', 'class': 'DataAsset'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'custom-property-members': {'module': 'data_catalog', 'class': 'list[CustomPropertySetUsage]'}, 'properties': {'module': 'data_catalog', 'class': 'dict(str, dict(str, string))'}}, output_type={'module': 'data_catalog', 'class': 'DataAsset'})
 @cli_util.wrap_exceptions
-def create_data_asset(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, display_name, type_key, description, properties):
+def create_data_asset(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, display_name, type_key, description, custom_property_members, properties):
 
     if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
@@ -880,6 +1141,9 @@ def create_data_asset(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 
     if description is not None:
         _details['description'] = description
+
+    if custom_property_members is not None:
+        _details['customPropertyMembers'] = cli_util.parse_json_parameter("custom_property_members", custom_property_members)
 
     if properties is not None:
         _details['properties'] = cli_util.parse_json_parameter("properties", properties)
@@ -990,18 +1254,23 @@ def create_data_asset_tag(ctx, from_json, wait_for_state, max_wait_seconds, wait
 @cli_util.option('--is-logical', type=click.BOOL, help=u"""Property to indicate if the object is a physical materialized object or virtual. For example, View.""")
 @cli_util.option('--is-partition', type=click.BOOL, help=u"""Property to indicate if the object is a sub object of a parent physical object.""")
 @cli_util.option('--folder-key', help=u"""Key of the associated folder.""")
+@cli_util.option('--pattern-key', help=u"""Key of the associated pattern if this is a logical entity.""")
+@cli_util.option('--realized-expression', help=u"""The expression realized after resolving qualifiers . Used in deriving this logical entity""")
 @cli_util.option('--harvest-status', type=custom_types.CliCaseInsensitiveChoice(["COMPLETE", "ERROR", "IN_PROGRESS", "DEFERRED"]), help=u"""Status of the object as updated by the harvest process. When an entity object is created , it's harvest status will indicate if the entity's metadata has been fully harvested or not. The harvest process can perform shallow harvesting to allow users to browse the metadata and can on-demand deep harvest on any object This requires a harvest status indicator for catalog objects.""")
 @cli_util.option('--last-job-key', help=u"""Key of the last harvest process to update this object.""")
+@cli_util.option('--custom-property-members', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of customized properties along with the values for this object
+
+This option is a JSON list with items of type CustomPropertySetUsage.  For documentation on CustomPropertySetUsage please see our API reference: https://docs.cloud.oracle.com/api/#/en/datacatalog/20190325/datatypes/CustomPropertySetUsage.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A map of maps that contains the properties which are specific to the entity type. Each entity type definition defines it's set of required and optional properties. The map keys are category names and the values are maps of property name to property value. Every property is contained inside of a category. Most entities have required properties within the \"default\" category. To determine the set of required and optional properties for an entity type, a query can be done on '/types?type=dataEntity' that returns a collection of all entity types. The appropriate entity type, which includes definitions of all of it's properties, can be identified from this collection. Example: `{\"properties\": { \"default\": { \"key1\": \"value1\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED", "MOVING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'properties': {'module': 'data_catalog', 'class': 'dict(str, dict(str, string))'}})
+@json_skeleton_utils.get_cli_json_input_option({'custom-property-members': {'module': 'data_catalog', 'class': 'list[CustomPropertySetUsage]'}, 'properties': {'module': 'data_catalog', 'class': 'dict(str, dict(str, string))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'properties': {'module': 'data_catalog', 'class': 'dict(str, dict(str, string))'}}, output_type={'module': 'data_catalog', 'class': 'Entity'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'custom-property-members': {'module': 'data_catalog', 'class': 'list[CustomPropertySetUsage]'}, 'properties': {'module': 'data_catalog', 'class': 'dict(str, dict(str, string))'}}, output_type={'module': 'data_catalog', 'class': 'Entity'})
 @cli_util.wrap_exceptions
-def create_entity(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, data_asset_key, display_name, time_external, description, is_logical, is_partition, folder_key, harvest_status, last_job_key, properties):
+def create_entity(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, data_asset_key, display_name, time_external, description, is_logical, is_partition, folder_key, pattern_key, realized_expression, harvest_status, last_job_key, custom_property_members, properties):
 
     if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
@@ -1028,11 +1297,20 @@ def create_entity(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
     if folder_key is not None:
         _details['folderKey'] = folder_key
 
+    if pattern_key is not None:
+        _details['patternKey'] = pattern_key
+
+    if realized_expression is not None:
+        _details['realizedExpression'] = realized_expression
+
     if harvest_status is not None:
         _details['harvestStatus'] = harvest_status
 
     if last_job_key is not None:
         _details['lastJobKey'] = last_job_key
+
+    if custom_property_members is not None:
+        _details['customPropertyMembers'] = cli_util.parse_json_parameter("custom_property_members", custom_property_members)
 
     if properties is not None:
         _details['properties'] = cli_util.parse_json_parameter("properties", properties)
@@ -1146,6 +1424,9 @@ def create_entity_tag(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 @cli_util.option('--display-name', required=True, help=u"""A user-friendly display name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--time-external', required=True, type=custom_types.CLI_DATETIME, help=u"""Last modified timestamp of this object in the external system.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--description', help=u"""Detailed description of a folder.""")
+@cli_util.option('--custom-property-members', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of customized properties along with the values for this object
+
+This option is a JSON list with items of type CustomPropertySetUsage.  For documentation on CustomPropertySetUsage please see our API reference: https://docs.cloud.oracle.com/api/#/en/datacatalog/20190325/datatypes/CustomPropertySetUsage.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A map of maps that contains the properties which are specific to the folder type. Each folder type definition defines it's set of required and optional properties. The map keys are category names and the values are maps of property name to property value. Every property is contained inside of a category. Most folders have required properties within the \"default\" category. To determine the set of optional and required properties for a folder type, a query can be done on '/types?type=folder' that returns a collection of all folder types. The appropriate folder type, which includes definitions of all of it's properties, can be identified from this collection. Example: `{\"properties\": { \"default\": { \"key1\": \"value1\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--parent-folder-key', help=u"""The key of the containing folder or null if there isn't a parent folder.""")
 @cli_util.option('--last-job-key', help=u"""The job key of the harvest process that updated the folder definition from the source system.""")
@@ -1153,12 +1434,12 @@ def create_entity_tag(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED", "MOVING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'properties': {'module': 'data_catalog', 'class': 'dict(str, dict(str, string))'}})
+@json_skeleton_utils.get_cli_json_input_option({'custom-property-members': {'module': 'data_catalog', 'class': 'list[CustomPropertySetUsage]'}, 'properties': {'module': 'data_catalog', 'class': 'dict(str, dict(str, string))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'properties': {'module': 'data_catalog', 'class': 'dict(str, dict(str, string))'}}, output_type={'module': 'data_catalog', 'class': 'Folder'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'custom-property-members': {'module': 'data_catalog', 'class': 'list[CustomPropertySetUsage]'}, 'properties': {'module': 'data_catalog', 'class': 'dict(str, dict(str, string))'}}, output_type={'module': 'data_catalog', 'class': 'Folder'})
 @cli_util.wrap_exceptions
-def create_folder(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, data_asset_key, display_name, time_external, description, properties, parent_folder_key, last_job_key, harvest_status):
+def create_folder(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, data_asset_key, display_name, time_external, description, custom_property_members, properties, parent_folder_key, last_job_key, harvest_status):
 
     if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
@@ -1175,6 +1456,9 @@ def create_folder(ctx, from_json, wait_for_state, max_wait_seconds, wait_interva
 
     if description is not None:
         _details['description'] = description
+
+    if custom_property_members is not None:
+        _details['customPropertyMembers'] = cli_util.parse_json_parameter("custom_property_members", custom_property_members)
 
     if properties is not None:
         _details['properties'] = cli_util.parse_json_parameter("properties", properties)
@@ -1297,15 +1581,18 @@ def create_folder_tag(ctx, from_json, wait_for_state, max_wait_seconds, wait_int
 @cli_util.option('--description', help=u"""Detailed description of the glossary.""")
 @cli_util.option('--workflow-status', type=custom_types.CliCaseInsensitiveChoice(["NEW", "APPROVED", "UNDER_REVIEW", "ESCALATED"]), help=u"""Status of the approval process workflow for this business glossary.""")
 @cli_util.option('--owner', help=u"""OCID of the user who is the owner of the glossary.""")
+@cli_util.option('--custom-property-members', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of customized properties along with the values for this object
+
+This option is a JSON list with items of type CustomPropertySetUsage.  For documentation on CustomPropertySetUsage please see our API reference: https://docs.cloud.oracle.com/api/#/en/datacatalog/20190325/datatypes/CustomPropertySetUsage.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED", "MOVING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'custom-property-members': {'module': 'data_catalog', 'class': 'list[CustomPropertySetUsage]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_catalog', 'class': 'Glossary'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'custom-property-members': {'module': 'data_catalog', 'class': 'list[CustomPropertySetUsage]'}}, output_type={'module': 'data_catalog', 'class': 'Glossary'})
 @cli_util.wrap_exceptions
-def create_glossary(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, display_name, description, workflow_status, owner):
+def create_glossary(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, display_name, description, workflow_status, owner, custom_property_members):
 
     if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
@@ -1324,6 +1611,9 @@ def create_glossary(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 
     if owner is not None:
         _details['owner'] = owner
+
+    if custom_property_members is not None:
+        _details['customPropertyMembers'] = cli_util.parse_json_parameter("custom_property_members", custom_property_members)
 
     client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     result = client.create_glossary(
@@ -1630,6 +1920,146 @@ def create_job_execution(ctx, from_json, wait_for_state, max_wait_seconds, wait_
     cli_util.render_response(result, ctx)
 
 
+@namespace_group.command(name=cli_util.override('data_catalog.create_namespace.command_name', 'create'), help=u"""Create a new Namespace to be used by a custom property \n[Command Reference](createNamespace)""")
+@cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
+@cli_util.option('--display-name', required=True, help=u"""A user-friendly display name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--description', help=u"""Detailed description of the Namespace.""")
+@cli_util.option('--is-service-defined', type=click.BOOL, help=u"""If this field is defined by service or by a user""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED", "MOVING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_catalog', 'class': 'Namespace'})
+@cli_util.wrap_exceptions
+def create_namespace(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, display_name, description, is_service_defined):
+
+    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+        raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if is_service_defined is not None:
+        _details['isServiceDefined'] = is_service_defined
+
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
+    result = client.create_namespace(
+        catalog_id=catalog_id,
+        create_namespace_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_namespace') and callable(getattr(client, 'get_namespace')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_namespace(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@pattern_group.command(name=cli_util.override('data_catalog.create_pattern.command_name', 'create'), help=u"""Create a new pattern. \n[Command Reference](createPattern)""")
+@cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
+@cli_util.option('--display-name', required=True, help=u"""A user-friendly display name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--description', help=u"""Detailed description of the Pattern.""")
+@cli_util.option('--expression', help=u"""The expression used in the pattern that may include qualifiers. Refer to the user documentation for details of the format and examples.""")
+@cli_util.option('--check-file-path-list', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of file paths against which the expression can be tried, as a check. This documents, for reference purposes, some example objects a pattern is meant to work with. If isEnableCheckFailureLimit is set to true, this will be run as a validation during the request, such that if the check fails the request fails. If isEnableCheckFailureLimit instead is set to (the default) false, a pattern will still be created or updated even if the check fails, with a lifecycleState of FAILED.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-enable-check-failure-limit', type=click.BOOL, help=u"""Indicates whether the expression check, against the checkFilePathList, will fail the request if the count of UNMATCHED files is above the checkFailureLimit.""")
+@cli_util.option('--check-failure-limit', type=click.INT, help=u"""The maximum number of UNMATCHED files, in checkFilePathList, above which the check fails. Optional, if checkFilePathList is provided - but if isEnableCheckFailureLimit is set to true it is required.""")
+@cli_util.option('--properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A map of maps that contains the properties which are specific to the pattern type. Each pattern type definition defines it's set of required and optional properties. Example: `{\"properties\": { \"default\": { \"tbd\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED", "MOVING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'check-file-path-list': {'module': 'data_catalog', 'class': 'list[string]'}, 'properties': {'module': 'data_catalog', 'class': 'dict(str, dict(str, string))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'check-file-path-list': {'module': 'data_catalog', 'class': 'list[string]'}, 'properties': {'module': 'data_catalog', 'class': 'dict(str, dict(str, string))'}}, output_type={'module': 'data_catalog', 'class': 'Pattern'})
+@cli_util.wrap_exceptions
+def create_pattern(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, display_name, description, expression, check_file_path_list, is_enable_check_failure_limit, check_failure_limit, properties):
+
+    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+        raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if expression is not None:
+        _details['expression'] = expression
+
+    if check_file_path_list is not None:
+        _details['checkFilePathList'] = cli_util.parse_json_parameter("check_file_path_list", check_file_path_list)
+
+    if is_enable_check_failure_limit is not None:
+        _details['isEnableCheckFailureLimit'] = is_enable_check_failure_limit
+
+    if check_failure_limit is not None:
+        _details['checkFailureLimit'] = check_failure_limit
+
+    if properties is not None:
+        _details['properties'] = cli_util.parse_json_parameter("properties", properties)
+
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
+    result = client.create_pattern(
+        catalog_id=catalog_id,
+        create_pattern_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_pattern') and callable(getattr(client, 'get_pattern')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_pattern(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @term_group.command(name=cli_util.override('data_catalog.create_term.command_name', 'create'), help=u"""Create a new term within a glossary. \n[Command Reference](createTerm)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--glossary-key', required=True, help=u"""Unique glossary key.""")
@@ -1639,15 +2069,18 @@ def create_job_execution(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 @cli_util.option('--parent-term-key', help=u"""The terms parent term key. Will be null if the term has no parent term.""")
 @cli_util.option('--owner', help=u"""OCID of the user who is the owner of this business terminology.""")
 @cli_util.option('--workflow-status', type=custom_types.CliCaseInsensitiveChoice(["NEW", "APPROVED", "UNDER_REVIEW", "ESCALATED"]), help=u"""Status of the approval process workflow for this business term in the glossary.""")
+@cli_util.option('--custom-property-members', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of customized properties along with the values for this object
+
+This option is a JSON list with items of type CustomPropertySetUsage.  For documentation on CustomPropertySetUsage please see our API reference: https://docs.cloud.oracle.com/api/#/en/datacatalog/20190325/datatypes/CustomPropertySetUsage.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED", "MOVING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'custom-property-members': {'module': 'data_catalog', 'class': 'list[CustomPropertySetUsage]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_catalog', 'class': 'Term'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'custom-property-members': {'module': 'data_catalog', 'class': 'list[CustomPropertySetUsage]'}}, output_type={'module': 'data_catalog', 'class': 'Term'})
 @cli_util.wrap_exceptions
-def create_term(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, glossary_key, display_name, description, is_allowed_to_have_child_terms, parent_term_key, owner, workflow_status):
+def create_term(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, glossary_key, display_name, description, is_allowed_to_have_child_terms, parent_term_key, owner, workflow_status, custom_property_members):
 
     if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
@@ -1675,6 +2108,9 @@ def create_term(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 
     if workflow_status is not None:
         _details['workflowStatus'] = workflow_status
+
+    if custom_property_members is not None:
+        _details['customPropertyMembers'] = cli_util.parse_json_parameter("custom_property_members", custom_property_members)
 
     client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     result = client.create_term(
@@ -2006,6 +2442,42 @@ def delete_connection(ctx, from_json, catalog_id, data_asset_key, connection_key
     cli_util.render_response(result, ctx)
 
 
+@custom_property_group.command(name=cli_util.override('data_catalog.delete_custom_property.command_name', 'delete'), help=u"""Deletes a specific custom property identified by it's key. \n[Command Reference](deleteCustomProperty)""")
+@cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
+@cli_util.option('--namespace-id', required=True, help=u"""Unique namespace identifier.""")
+@cli_util.option('--custom-property-key', required=True, help=u"""Unique Custom Property key""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_custom_property(ctx, from_json, catalog_id, namespace_id, custom_property_key, if_match):
+
+    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+        raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
+
+    if isinstance(namespace_id, six.string_types) and len(namespace_id.strip()) == 0:
+        raise click.UsageError('Parameter --namespace-id cannot be whitespace or empty string')
+
+    if isinstance(custom_property_key, six.string_types) and len(custom_property_key.strip()) == 0:
+        raise click.UsageError('Parameter --custom-property-key cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
+    result = client.delete_custom_property(
+        catalog_id=catalog_id,
+        namespace_id=namespace_id,
+        custom_property_key=custom_property_key,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @data_asset_group.command(name=cli_util.override('data_catalog.delete_data_asset.command_name', 'delete'), help=u"""Deletes a specific data asset identified by it's key. \n[Command Reference](deleteDataAsset)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--data-asset-key', required=True, help=u"""Unique data asset key.""")
@@ -2320,6 +2792,68 @@ def delete_job_definition(ctx, from_json, catalog_id, job_definition_key, if_mat
     cli_util.render_response(result, ctx)
 
 
+@namespace_group.command(name=cli_util.override('data_catalog.delete_namespace.command_name', 'delete'), help=u"""Deletes a specific Namespace identified by it's key. \n[Command Reference](deleteNamespace)""")
+@cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
+@cli_util.option('--namespace-id', required=True, help=u"""Unique namespace identifier.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_namespace(ctx, from_json, catalog_id, namespace_id, if_match):
+
+    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+        raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
+
+    if isinstance(namespace_id, six.string_types) and len(namespace_id.strip()) == 0:
+        raise click.UsageError('Parameter --namespace-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
+    result = client.delete_namespace(
+        catalog_id=catalog_id,
+        namespace_id=namespace_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@pattern_group.command(name=cli_util.override('data_catalog.delete_pattern.command_name', 'delete'), help=u"""Deletes a specific pattern identified by it's key. \n[Command Reference](deletePattern)""")
+@cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
+@cli_util.option('--pattern-key', required=True, help=u"""Unique pattern key.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.confirm_delete_option
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_pattern(ctx, from_json, catalog_id, pattern_key, if_match):
+
+    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+        raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
+
+    if isinstance(pattern_key, six.string_types) and len(pattern_key.strip()) == 0:
+        raise click.UsageError('Parameter --pattern-key cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
+    result = client.delete_pattern(
+        catalog_id=catalog_id,
+        pattern_key=pattern_key,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @term_group.command(name=cli_util.override('data_catalog.delete_term.command_name', 'delete'), help=u"""Deletes a specific glossary term. \n[Command Reference](deleteTerm)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--glossary-key', required=True, help=u"""Unique glossary key.""")
@@ -2451,6 +2985,70 @@ def detach_catalog_private_endpoint(ctx, from_json, wait_for_state, max_wait_sec
                 raise
         else:
             click.echo('Unable to wait for the work request to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@type_group.command(name=cli_util.override('data_catalog.disassociate_custom_property.command_name', 'disassociate-custom-property'), help=u"""Remove the custom property for the given type \n[Command Reference](disassociateCustomProperty)""")
+@cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
+@cli_util.option('--type-key', required=True, help=u"""Unique type key.""")
+@cli_util.option('--custom-property-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""array of custom property Ids""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED", "MOVING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'custom-property-ids': {'module': 'data_catalog', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'custom-property-ids': {'module': 'data_catalog', 'class': 'list[string]'}}, output_type={'module': 'data_catalog', 'class': 'Type'})
+@cli_util.wrap_exceptions
+def disassociate_custom_property(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, type_key, custom_property_ids, if_match):
+
+    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+        raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
+
+    if isinstance(type_key, six.string_types) and len(type_key.strip()) == 0:
+        raise click.UsageError('Parameter --type-key cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if custom_property_ids is not None:
+        _details['customPropertyIds'] = cli_util.parse_json_parameter("custom_property_ids", custom_property_ids)
+
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
+    result = client.disassociate_custom_property(
+        catalog_id=catalog_id,
+        type_key=type_key,
+        disassociate_custom_property_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_type') and callable(getattr(client, 'get_type')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_type(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -2670,6 +3268,41 @@ def get_connection(ctx, from_json, catalog_id, data_asset_key, connection_key, f
         catalog_id=catalog_id,
         data_asset_key=data_asset_key,
         connection_key=connection_key,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@custom_property_group.command(name=cli_util.override('data_catalog.get_custom_property.command_name', 'get'), help=u"""Gets a specific custom property for the given key within a data catalog. \n[Command Reference](getCustomProperty)""")
+@cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
+@cli_util.option('--namespace-id', required=True, help=u"""Unique namespace identifier.""")
+@cli_util.option('--custom-property-key', required=True, help=u"""Unique Custom Property key""")
+@cli_util.option('--fields', type=custom_types.CliCaseInsensitiveChoice(["key", "displayName", "description", "dataType", "namespaceName", "lifecycleState", "timeCreated", "timeUpdated", "createdById", "updatedById", "properties"]), multiple=True, help=u"""Specifies the fields to return in a custom property response.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_catalog', 'class': 'CustomProperty'})
+@cli_util.wrap_exceptions
+def get_custom_property(ctx, from_json, catalog_id, namespace_id, custom_property_key, fields):
+
+    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+        raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
+
+    if isinstance(namespace_id, six.string_types) and len(namespace_id.strip()) == 0:
+        raise click.UsageError('Parameter --namespace-id cannot be whitespace or empty string')
+
+    if isinstance(custom_property_key, six.string_types) and len(custom_property_key.strip()) == 0:
+        raise click.UsageError('Parameter --custom-property-key cannot be whitespace or empty string')
+
+    kwargs = {}
+    if fields is not None and len(fields) > 0:
+        kwargs['fields'] = fields
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
+    result = client.get_custom_property(
+        catalog_id=catalog_id,
+        namespace_id=namespace_id,
+        custom_property_key=custom_property_key,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -3095,6 +3728,66 @@ def get_job_metrics(ctx, from_json, catalog_id, job_key, job_execution_key, job_
     cli_util.render_response(result, ctx)
 
 
+@namespace_group.command(name=cli_util.override('data_catalog.get_namespace.command_name', 'get'), help=u"""Gets a specific namespace for the given key within a data catalog. \n[Command Reference](getNamespace)""")
+@cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
+@cli_util.option('--namespace-id', required=True, help=u"""Unique namespace identifier.""")
+@cli_util.option('--fields', type=custom_types.CliCaseInsensitiveChoice(["key", "displayName", "description", "lifecycleState", "timeCreated", "timeUpdated", "createdById", "updatedById", "properties"]), multiple=True, help=u"""Specifies the fields to return in a namespace response.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_catalog', 'class': 'Namespace'})
+@cli_util.wrap_exceptions
+def get_namespace(ctx, from_json, catalog_id, namespace_id, fields):
+
+    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+        raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
+
+    if isinstance(namespace_id, six.string_types) and len(namespace_id.strip()) == 0:
+        raise click.UsageError('Parameter --namespace-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if fields is not None and len(fields) > 0:
+        kwargs['fields'] = fields
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
+    result = client.get_namespace(
+        catalog_id=catalog_id,
+        namespace_id=namespace_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@pattern_group.command(name=cli_util.override('data_catalog.get_pattern.command_name', 'get'), help=u"""Gets a specific pattern for the given key within a data catalog. \n[Command Reference](getPattern)""")
+@cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
+@cli_util.option('--pattern-key', required=True, help=u"""Unique pattern key.""")
+@cli_util.option('--fields', type=custom_types.CliCaseInsensitiveChoice(["key", "displayName", "description", "catalogId", "expression", "lifecycleState", "timeCreated", "timeUpdated", "createdById", "updatedById", "properties"]), multiple=True, help=u"""Specifies the fields to return in a pattern response.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_catalog', 'class': 'Pattern'})
+@cli_util.wrap_exceptions
+def get_pattern(ctx, from_json, catalog_id, pattern_key, fields):
+
+    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+        raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
+
+    if isinstance(pattern_key, six.string_types) and len(pattern_key.strip()) == 0:
+        raise click.UsageError('Parameter --pattern-key cannot be whitespace or empty string')
+
+    kwargs = {}
+    if fields is not None and len(fields) > 0:
+        kwargs['fields'] = fields
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
+    result = client.get_pattern(
+        catalog_id=catalog_id,
+        pattern_key=pattern_key,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @term_group.command(name=cli_util.override('data_catalog.get_term.command_name', 'get'), help=u"""Gets a specific glossary term by key. \n[Command Reference](getTerm)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--glossary-key', required=True, help=u"""Unique glossary key.""")
@@ -3295,6 +3988,42 @@ def import_glossary(ctx, from_json, catalog_id, glossary_key, glossary_file_cont
         catalog_id=catalog_id,
         glossary_key=glossary_key,
         import_glossary_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@entity_group.command(name=cli_util.override('data_catalog.list_aggregated_physical_entities.command_name', 'list-aggregated-physical'), help=u"""List the physical entities aggregated by this logical entity. \n[Command Reference](listAggregatedPhysicalEntities)""")
+@cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
+@cli_util.option('--data-asset-key', required=True, help=u"""Unique data asset key.""")
+@cli_util.option('--entity-key', required=True, help=u"""Unique entity key.""")
+@cli_util.option('--fields', type=custom_types.CliCaseInsensitiveChoice(["key", "displayName", "description", "dataAssetKey", "timeCreated", "timeUpdated", "createdById", "updatedById", "lifecycleState", "externalKey", "timeExternal", "timeStatusUpdated", "isLogical", "isPartition", "folderKey", "folderName", "typeKey", "path", "harvestStatus", "lastJobKey", "uri", "properties"]), multiple=True, help=u"""Specifies the fields to return in an entity response.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_catalog', 'class': 'EntityCollection'})
+@cli_util.wrap_exceptions
+def list_aggregated_physical_entities(ctx, from_json, all_pages, catalog_id, data_asset_key, entity_key, fields):
+
+    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+        raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
+
+    if isinstance(data_asset_key, six.string_types) and len(data_asset_key.strip()) == 0:
+        raise click.UsageError('Parameter --data-asset-key cannot be whitespace or empty string')
+
+    if isinstance(entity_key, six.string_types) and len(entity_key.strip()) == 0:
+        raise click.UsageError('Parameter --entity-key cannot be whitespace or empty string')
+
+    kwargs = {}
+    if fields is not None and len(fields) > 0:
+        kwargs['fields'] = fields
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
+    result = client.list_aggregated_physical_entities(
+        catalog_id=catalog_id,
+        data_asset_key=data_asset_key,
+        entity_key=entity_key,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -3738,6 +4467,100 @@ def list_connections(ctx, from_json, all_pages, page_size, catalog_id, data_asse
     cli_util.render_response(result, ctx)
 
 
+@custom_property_group.command(name=cli_util.override('data_catalog.list_custom_properties.command_name', 'list'), help=u"""Returns a list of custom properties within a data catalog. \n[Command Reference](listCustomProperties)""")
+@cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
+@cli_util.option('--namespace-id', required=True, help=u"""Unique namespace identifier.""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given. The match is not case sensitive.""")
+@cli_util.option('--display-name-contains', help=u"""A filter to return only resources that match display name pattern given. The match is not case sensitive. For Example : /folders?displayNameContains=Cu.* The above would match all folders with display name that starts with \"Cu\".""")
+@cli_util.option('--data-types', type=custom_types.CliCaseInsensitiveChoice(["TEXT", "RICH_TEXT", "BOOLEAN", "NUMBER", "DATE"]), multiple=True, help=u"""Return the custom properties which has specified data types""")
+@cli_util.option('--type-name', type=custom_types.CliCaseInsensitiveChoice(["DATA_ASSET", "AUTONOMOUS_DATA_WAREHOUSE", "HIVE", "KAFKA", "MYSQL", "ORACLE_OBJECT_STORAGE", "AUTONOMOUS_TRANSACTION_PROCESSING", "ORACLE", "POSTGRESQL", "MICROSOFT_AZURE_SQL_DATABASE", "MICROSOFT_SQL_SERVER", "IBM_DB2", "DATA_ENTITY", "LOGICAL_ENTITY", "TABLE", "VIEW", "ATTRIBUTE", "FOLDER", "CONNECTION", "GLOSSARY", "TERM", "CATEGORY", "FILE", "BUCKET"]), multiple=True, help=u"""A filter to return only resources that match the entire type name given. The match is not case sensitive""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED", "MOVING"]), help=u"""A filter to return only resources that match the specified lifecycle state. The value is case insensitive.""")
+@cli_util.option('--time-created', type=custom_types.CLI_DATETIME, help=u"""Time that the resource was created. An [RFC3339] formatted datetime string.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-updated', type=custom_types.CLI_DATETIME, help=u"""Time that the resource was updated. An [RFC3339] formatted datetime string.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--created-by-id', help=u"""OCID of the user who created the resource.""")
+@cli_util.option('--updated-by-id', help=u"""OCID of the user who updated the resource.""")
+@cli_util.option('--fields', type=custom_types.CliCaseInsensitiveChoice(["key", "displayName", "description", "dataType", "namespaceName", "lifecycleState", "timeCreated"]), multiple=True, help=u"""Specifies the fields to return in a custom property summary response.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["DISPLAYNAME", "USAGECOUNT"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for USAGECOUNT and DISPLAYNAME is Ascending""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_catalog', 'class': 'CustomPropertyCollection'})
+@cli_util.wrap_exceptions
+def list_custom_properties(ctx, from_json, all_pages, page_size, catalog_id, namespace_id, display_name, display_name_contains, data_types, type_name, lifecycle_state, time_created, time_updated, created_by_id, updated_by_id, fields, sort_order, sort_by, limit, page):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+        raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
+
+    if isinstance(namespace_id, six.string_types) and len(namespace_id.strip()) == 0:
+        raise click.UsageError('Parameter --namespace-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if display_name_contains is not None:
+        kwargs['display_name_contains'] = display_name_contains
+    if data_types is not None and len(data_types) > 0:
+        kwargs['data_types'] = data_types
+    if type_name is not None and len(type_name) > 0:
+        kwargs['type_name'] = type_name
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if time_created is not None:
+        kwargs['time_created'] = time_created
+    if time_updated is not None:
+        kwargs['time_updated'] = time_updated
+    if created_by_id is not None:
+        kwargs['created_by_id'] = created_by_id
+    if updated_by_id is not None:
+        kwargs['updated_by_id'] = updated_by_id
+    if fields is not None and len(fields) > 0:
+        kwargs['fields'] = fields
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_custom_properties,
+            catalog_id=catalog_id,
+            namespace_id=namespace_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_custom_properties,
+            limit,
+            page_size,
+            catalog_id=catalog_id,
+            namespace_id=namespace_id,
+            **kwargs
+        )
+    else:
+        result = client.list_custom_properties(
+            catalog_id=catalog_id,
+            namespace_id=namespace_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
 @data_asset_tag_collection_group.command(name=cli_util.override('data_catalog.list_data_asset_tags.command_name', 'list-data-asset-tags'), help=u"""Returns a list of all tags for a data asset. \n[Command Reference](listDataAssetTags)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--data-asset-key', required=True, help=u"""Unique data asset key.""")
@@ -3910,6 +4733,37 @@ def list_data_assets(ctx, from_json, all_pages, page_size, catalog_id, display_n
     cli_util.render_response(result, ctx)
 
 
+@pattern_group.command(name=cli_util.override('data_catalog.list_derived_logical_entities.command_name', 'list-derived-logical-entities'), help=u"""List logical entities derived from this pattern. \n[Command Reference](listDerivedLogicalEntities)""")
+@cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
+@cli_util.option('--pattern-key', required=True, help=u"""Unique pattern key.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_catalog', 'class': 'EntityCollection'})
+@cli_util.wrap_exceptions
+def list_derived_logical_entities(ctx, from_json, all_pages, catalog_id, pattern_key, if_match):
+
+    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+        raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
+
+    if isinstance(pattern_key, six.string_types) and len(pattern_key.strip()) == 0:
+        raise click.UsageError('Parameter --pattern-key cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
+    result = client.list_derived_logical_entities(
+        catalog_id=catalog_id,
+        pattern_key=pattern_key,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @entity_group.command(name=cli_util.override('data_catalog.list_entities.command_name', 'list'), help=u"""Returns a list of all entities of a data asset. \n[Command Reference](listEntities)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--data-asset-key', required=True, help=u"""Unique data asset key.""")
@@ -3921,6 +4775,7 @@ def list_data_assets(ctx, from_json, all_pages, page_size, catalog_id, display_n
 @cli_util.option('--created-by-id', help=u"""OCID of the user who created the resource.""")
 @cli_util.option('--updated-by-id', help=u"""OCID of the user who updated the resource.""")
 @cli_util.option('--external-key', help=u"""Unique external identifier of this resource in the external source system.""")
+@cli_util.option('--pattern-key', help=u"""Unique pattern key.""")
 @cli_util.option('--time-external', type=custom_types.CLI_DATETIME, help=u"""Last modified timestamp of this object in the external system.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-status-updated', type=custom_types.CLI_DATETIME, help=u"""Time that the resource's status was last updated. An [RFC3339] formatted datetime string.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--is-logical', type=click.BOOL, help=u"""Identifies if the object is a physical object (materialized) or virtual/logical object defined on other objects.""")
@@ -3941,7 +4796,7 @@ def list_data_assets(ctx, from_json, all_pages, page_size, catalog_id, display_n
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_catalog', 'class': 'EntityCollection'})
 @cli_util.wrap_exceptions
-def list_entities(ctx, from_json, all_pages, page_size, catalog_id, data_asset_key, display_name, display_name_contains, lifecycle_state, time_created, time_updated, created_by_id, updated_by_id, external_key, time_external, time_status_updated, is_logical, is_partition, folder_key, path, harvest_status, last_job_key, fields, sort_by, sort_order, limit, page):
+def list_entities(ctx, from_json, all_pages, page_size, catalog_id, data_asset_key, display_name, display_name_contains, lifecycle_state, time_created, time_updated, created_by_id, updated_by_id, external_key, pattern_key, time_external, time_status_updated, is_logical, is_partition, folder_key, path, harvest_status, last_job_key, fields, sort_by, sort_order, limit, page):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -3969,6 +4824,8 @@ def list_entities(ctx, from_json, all_pages, page_size, catalog_id, data_asset_k
         kwargs['updated_by_id'] = updated_by_id
     if external_key is not None:
         kwargs['external_key'] = external_key
+    if pattern_key is not None:
+        kwargs['pattern_key'] = pattern_key
     if time_external is not None:
         kwargs['time_external'] = time_external
     if time_status_updated is not None:
@@ -4917,6 +5774,168 @@ def list_jobs(ctx, from_json, all_pages, page_size, catalog_id, display_name, di
     cli_util.render_response(result, ctx)
 
 
+@namespace_group.command(name=cli_util.override('data_catalog.list_namespaces.command_name', 'list'), help=u"""Returns a list of namespaces within a data catalog. \n[Command Reference](listNamespaces)""")
+@cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given. The match is not case sensitive.""")
+@cli_util.option('--display-name-contains', help=u"""A filter to return only resources that match display name pattern given. The match is not case sensitive. For Example : /folders?displayNameContains=Cu.* The above would match all folders with display name that starts with \"Cu\".""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED", "MOVING"]), help=u"""A filter to return only resources that match the specified lifecycle state. The value is case insensitive.""")
+@cli_util.option('--time-created', type=custom_types.CLI_DATETIME, help=u"""Time that the resource was created. An [RFC3339] formatted datetime string.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-updated', type=custom_types.CLI_DATETIME, help=u"""Time that the resource was updated. An [RFC3339] formatted datetime string.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--created-by-id', help=u"""OCID of the user who created the resource.""")
+@cli_util.option('--updated-by-id', help=u"""OCID of the user who updated the resource.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. If no value is specified TIMECREATED is default.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--fields', type=custom_types.CliCaseInsensitiveChoice(["key", "displayName", "description", "lifecycleState", "timeCreated"]), multiple=True, help=u"""Specifies the fields to return in a namespace summary response.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_catalog', 'class': 'NamespaceCollection'})
+@cli_util.wrap_exceptions
+def list_namespaces(ctx, from_json, all_pages, page_size, catalog_id, display_name, display_name_contains, lifecycle_state, time_created, time_updated, created_by_id, updated_by_id, sort_by, sort_order, fields, limit, page):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+        raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if display_name_contains is not None:
+        kwargs['display_name_contains'] = display_name_contains
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if time_created is not None:
+        kwargs['time_created'] = time_created
+    if time_updated is not None:
+        kwargs['time_updated'] = time_updated
+    if created_by_id is not None:
+        kwargs['created_by_id'] = created_by_id
+    if updated_by_id is not None:
+        kwargs['updated_by_id'] = updated_by_id
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if fields is not None and len(fields) > 0:
+        kwargs['fields'] = fields
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_namespaces,
+            catalog_id=catalog_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_namespaces,
+            limit,
+            page_size,
+            catalog_id=catalog_id,
+            **kwargs
+        )
+    else:
+        result = client.list_namespaces(
+            catalog_id=catalog_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@pattern_group.command(name=cli_util.override('data_catalog.list_patterns.command_name', 'list'), help=u"""Returns a list of patterns within a data catalog. \n[Command Reference](listPatterns)""")
+@cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
+@cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given. The match is not case sensitive.""")
+@cli_util.option('--display-name-contains', help=u"""A filter to return only resources that match display name pattern given. The match is not case sensitive. For Example : /folders?displayNameContains=Cu.* The above would match all folders with display name that starts with \"Cu\".""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED", "MOVING"]), help=u"""A filter to return only resources that match the specified lifecycle state. The value is case insensitive.""")
+@cli_util.option('--time-created', type=custom_types.CLI_DATETIME, help=u"""Time that the resource was created. An [RFC3339] formatted datetime string.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-updated', type=custom_types.CLI_DATETIME, help=u"""Time that the resource was updated. An [RFC3339] formatted datetime string.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--created-by-id', help=u"""OCID of the user who created the resource.""")
+@cli_util.option('--updated-by-id', help=u"""OCID of the user who updated the resource.""")
+@cli_util.option('--fields', type=custom_types.CliCaseInsensitiveChoice(["key", "displayName", "description", "catalogId", "expression", "lifecycleState", "timeCreated"]), multiple=True, help=u"""Specifies the fields to return in a pattern summary response.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMECREATED", "DISPLAYNAME"]), help=u"""The field to sort by. Only one sort order may be provided. Default order for TIMECREATED is descending. Default order for DISPLAYNAME is ascending. If no value is specified TIMECREATED is default.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
+@cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_catalog', 'class': 'PatternCollection'})
+@cli_util.wrap_exceptions
+def list_patterns(ctx, from_json, all_pages, page_size, catalog_id, display_name, display_name_contains, lifecycle_state, time_created, time_updated, created_by_id, updated_by_id, fields, sort_by, sort_order, limit, page):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+        raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if display_name_contains is not None:
+        kwargs['display_name_contains'] = display_name_contains
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if time_created is not None:
+        kwargs['time_created'] = time_created
+    if time_updated is not None:
+        kwargs['time_updated'] = time_updated
+    if created_by_id is not None:
+        kwargs['created_by_id'] = created_by_id
+    if updated_by_id is not None:
+        kwargs['updated_by_id'] = updated_by_id
+    if fields is not None and len(fields) > 0:
+        kwargs['fields'] = fields
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_patterns,
+            catalog_id=catalog_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_patterns,
+            limit,
+            page_size,
+            catalog_id=catalog_id,
+            **kwargs
+        )
+    else:
+        result = client.list_patterns(
+            catalog_id=catalog_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
 @term_group.command(name=cli_util.override('data_catalog.list_tags.command_name', 'list-tags'), help=u"""Returns a list of all user created tags in the system. \n[Command Reference](listTags)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given. The match is not case sensitive.""")
@@ -5476,9 +6495,77 @@ def parse_connection(ctx, from_json, catalog_id, data_asset_key, connection_deta
     cli_util.render_response(result, ctx)
 
 
+@data_asset_group.command(name=cli_util.override('data_catalog.remove_data_selector_patterns.command_name', 'remove'), help=u"""Remove data selector pattern from the data asset. \n[Command Reference](removeDataSelectorPatterns)""")
+@cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
+@cli_util.option('--data-asset-key', required=True, help=u"""Unique data asset key.""")
+@cli_util.option('--items', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""Collection of pattern Ids.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED", "MOVING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'items': {'module': 'data_catalog', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'items': {'module': 'data_catalog', 'class': 'list[string]'}}, output_type={'module': 'data_catalog', 'class': 'DataAsset'})
+@cli_util.wrap_exceptions
+def remove_data_selector_patterns(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, data_asset_key, items, if_match):
+
+    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+        raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
+
+    if isinstance(data_asset_key, six.string_types) and len(data_asset_key.strip()) == 0:
+        raise click.UsageError('Parameter --data-asset-key cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['items'] = cli_util.parse_json_parameter("items", items)
+
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
+    result = client.remove_data_selector_patterns(
+        catalog_id=catalog_id,
+        data_asset_key=data_asset_key,
+        data_selector_pattern_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_data_asset') and callable(getattr(client, 'get_data_asset')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_data_asset(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @search_result_group.command(name=cli_util.override('data_catalog.search_criteria.command_name', 'search-criteria'), help=u"""Returns a list of search results within a data catalog. \n[Command Reference](searchCriteria)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--query-parameterconflict', help=u"""Search query dsl that defines the query components including fields and predicates.""")
+@cli_util.option('--faceted-query', help=u"""Query string that a dataObject is to be searched with. Used in the faceted query request""")
+@cli_util.option('--dimensions', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of properties of dataObjects that needs to aggregated on for facets.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--sort', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Array of objects having details about sort field and order.
+
+This option is a JSON list with items of type FacetedSearchSortRequest.  For documentation on FacetedSearchSortRequest please see our API reference: https://docs.cloud.oracle.com/api/#/en/datacatalog/20190325/datatypes/FacetedSearchSortRequest.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--filters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given. The match is not case sensitive.""")
 @cli_util.option('--name', help=u"""Immutable resource name.""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED", "MOVING"]), help=u"""A filter to return only resources that match the specified lifecycle state. The value is case insensitive.""")
@@ -5487,12 +6574,12 @@ def parse_connection(ctx, from_json, catalog_id, data_asset_key, connection_deta
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either 'asc' or 'desc'.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'dimensions': {'module': 'data_catalog', 'class': 'list[string]'}, 'sort': {'module': 'data_catalog', 'class': 'list[FacetedSearchSortRequest]'}, 'filters': {'module': 'data_catalog', 'class': 'FacetedSearchFilterRequest'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_catalog', 'class': 'SearchResultCollection'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'dimensions': {'module': 'data_catalog', 'class': 'list[string]'}, 'sort': {'module': 'data_catalog', 'class': 'list[FacetedSearchSortRequest]'}, 'filters': {'module': 'data_catalog', 'class': 'FacetedSearchFilterRequest'}}, output_type={'module': 'data_catalog', 'class': 'SearchResultCollection'})
 @cli_util.wrap_exceptions
-def search_criteria(ctx, from_json, catalog_id, query_parameterconflict, display_name, name, lifecycle_state, timeout, sort_by, sort_order, limit, page):
+def search_criteria(ctx, from_json, catalog_id, query_parameterconflict, faceted_query, dimensions, sort, filters, display_name, name, lifecycle_state, timeout, sort_by, sort_order, limit, page):
 
     if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
@@ -5520,6 +6607,18 @@ def search_criteria(ctx, from_json, catalog_id, query_parameterconflict, display
 
     if query_parameterconflict is not None:
         _details['query'] = query_parameterconflict
+
+    if faceted_query is not None:
+        _details['facetedQuery'] = faceted_query
+
+    if dimensions is not None:
+        _details['dimensions'] = cli_util.parse_json_parameter("dimensions", dimensions)
+
+    if sort is not None:
+        _details['sort'] = cli_util.parse_json_parameter("sort", sort)
+
+    if filters is not None:
+        _details['filters'] = cli_util.parse_json_parameter("filters", filters)
 
     client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     result = client.search_criteria(
@@ -5581,18 +6680,21 @@ def test_connection(ctx, from_json, catalog_id, data_asset_key, connection_key):
 @cli_util.option('--max-collection-count', type=click.INT, help=u"""The maximum count for the number of instances of a given type stored in this collection type attribute,applicable if this attribute is a complex type. For type specifications in systems that specify only \"capacity\" without upper or lower bound , this property can also be used to just mean \"capacity\". Some examples are Varray size in Oracle , Occurs Clause in Cobol , capacity in XmlSchemaObjectCollection , maxOccurs in  Xml , maxItems in Json""")
 @cli_util.option('--external-datatype-entity-key', help=u"""External entity key that represents the datatype of this attribute , applicable if this attribute is a complex type.""")
 @cli_util.option('--external-parent-attribute-key', help=u"""External attribute key that represents the parent attribute  of this attribute , applicable if the parent attribute is of complex type.""")
+@cli_util.option('--custom-property-members', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of customized properties along with the values for this object
+
+This option is a JSON list with items of type CustomPropertySetUsage.  For documentation on CustomPropertySetUsage please see our API reference: https://docs.cloud.oracle.com/api/#/en/datacatalog/20190325/datatypes/CustomPropertySetUsage.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A map of maps that contains the properties which are specific to the attribute type. Each attribute type definition defines it's set of required and optional properties. The map keys are category names and the values are maps of property name to property value. Every property is contained inside of a category. Most attributes have required properties within the \"default\" category. To determine the set of required and optional properties for an Attribute type, a query can be done on '/types?type=attribute' which returns a collection of all attribute types. The appropriate attribute type, which will include definitions of all of it's properties, can be identified from this collection. Example: `{\"properties\": { \"default\": { \"key1\": \"value1\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED", "MOVING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'properties': {'module': 'data_catalog', 'class': 'dict(str, dict(str, string))'}})
+@json_skeleton_utils.get_cli_json_input_option({'custom-property-members': {'module': 'data_catalog', 'class': 'list[CustomPropertySetUsage]'}, 'properties': {'module': 'data_catalog', 'class': 'dict(str, dict(str, string))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'properties': {'module': 'data_catalog', 'class': 'dict(str, dict(str, string))'}}, output_type={'module': 'data_catalog', 'class': 'Attribute'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'custom-property-members': {'module': 'data_catalog', 'class': 'list[CustomPropertySetUsage]'}, 'properties': {'module': 'data_catalog', 'class': 'dict(str, dict(str, string))'}}, output_type={'module': 'data_catalog', 'class': 'Attribute'})
 @cli_util.wrap_exceptions
-def update_attribute(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, data_asset_key, entity_key, attribute_key, display_name, description, external_data_type, is_incremental_data, is_nullable, length, position, precision, scale, time_external, min_collection_count, max_collection_count, external_datatype_entity_key, external_parent_attribute_key, properties, if_match):
+def update_attribute(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, data_asset_key, entity_key, attribute_key, display_name, description, external_data_type, is_incremental_data, is_nullable, length, position, precision, scale, time_external, min_collection_count, max_collection_count, external_datatype_entity_key, external_parent_attribute_key, custom_property_members, properties, if_match):
 
     if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
@@ -5606,8 +6708,8 @@ def update_attribute(ctx, from_json, force, wait_for_state, max_wait_seconds, wa
     if isinstance(attribute_key, six.string_types) and len(attribute_key.strip()) == 0:
         raise click.UsageError('Parameter --attribute-key cannot be whitespace or empty string')
     if not force:
-        if properties:
-            if not click.confirm("WARNING: Updates to properties will replace any existing values. Are you sure you want to continue?"):
+        if custom_property_members or properties:
+            if not click.confirm("WARNING: Updates to custom-property-members and properties will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -5658,6 +6760,9 @@ def update_attribute(ctx, from_json, force, wait_for_state, max_wait_seconds, wa
 
     if external_parent_attribute_key is not None:
         _details['externalParentAttributeKey'] = external_parent_attribute_key
+
+    if custom_property_members is not None:
+        _details['customPropertyMembers'] = cli_util.parse_json_parameter("custom_property_members", custom_property_members)
 
     if properties is not None:
         _details['properties'] = cli_util.parse_json_parameter("properties", properties)
@@ -5851,6 +6956,9 @@ def update_catalog_private_endpoint(ctx, from_json, force, wait_for_state, max_w
 @cli_util.option('--connection-key', required=True, help=u"""Unique connection key.""")
 @cli_util.option('--description', help=u"""A description of the connection.""")
 @cli_util.option('--display-name', help=u"""A user-friendly display name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--custom-property-members', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of customized properties along with the values for this object
+
+This option is a JSON list with items of type CustomPropertySetUsage.  For documentation on CustomPropertySetUsage please see our API reference: https://docs.cloud.oracle.com/api/#/en/datacatalog/20190325/datatypes/CustomPropertySetUsage.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A map of maps that contains the properties which are specific to the connection type. Each connection type definition defines it's set of required and optional properties. The map keys are category names and the values are maps of property name to property value. Every property is contained inside of a category. Most connections have required properties within the \"default\" category. To determine the set of optional and required properties for a connection type, a query can be done on '/types?type=connection' that returns a collection of all connection types. The appropriate connection type, which will include definitions of all of it's properties, can be identified from this collection. Example: `{\"properties\": { \"default\": { \"username\": \"user1\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--enc-properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A map of maps that contains the encrypted values for sensitive properties which are specific to the connection type. Each connection type definition defines it's set of required and optional properties. The map keys are category names and the values are maps of property name to property value. Every property is contained inside of a category. Most connections have required properties within the \"default\" category. To determine the set of optional and required properties for a connection type, a query can be done on '/types?type=connection' that returns a collection of all connection types. The appropriate connection type, which will include definitions of all of it's properties, can be identified from this collection. Example: `{\"encProperties\": { \"default\": { \"password\": \"pwd\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-default', type=click.BOOL, help=u"""Indicates whether this connection is the default connection.""")
@@ -5859,12 +6967,12 @@ def update_catalog_private_endpoint(ctx, from_json, force, wait_for_state, max_w
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED", "MOVING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'properties': {'module': 'data_catalog', 'class': 'dict(str, dict(str, string))'}, 'enc-properties': {'module': 'data_catalog', 'class': 'dict(str, dict(str, string))'}})
+@json_skeleton_utils.get_cli_json_input_option({'custom-property-members': {'module': 'data_catalog', 'class': 'list[CustomPropertySetUsage]'}, 'properties': {'module': 'data_catalog', 'class': 'dict(str, dict(str, string))'}, 'enc-properties': {'module': 'data_catalog', 'class': 'dict(str, dict(str, string))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'properties': {'module': 'data_catalog', 'class': 'dict(str, dict(str, string))'}, 'enc-properties': {'module': 'data_catalog', 'class': 'dict(str, dict(str, string))'}}, output_type={'module': 'data_catalog', 'class': 'Connection'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'custom-property-members': {'module': 'data_catalog', 'class': 'list[CustomPropertySetUsage]'}, 'properties': {'module': 'data_catalog', 'class': 'dict(str, dict(str, string))'}, 'enc-properties': {'module': 'data_catalog', 'class': 'dict(str, dict(str, string))'}}, output_type={'module': 'data_catalog', 'class': 'Connection'})
 @cli_util.wrap_exceptions
-def update_connection(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, data_asset_key, connection_key, description, display_name, properties, enc_properties, is_default, if_match):
+def update_connection(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, data_asset_key, connection_key, description, display_name, custom_property_members, properties, enc_properties, is_default, if_match):
 
     if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
@@ -5875,8 +6983,8 @@ def update_connection(ctx, from_json, force, wait_for_state, max_wait_seconds, w
     if isinstance(connection_key, six.string_types) and len(connection_key.strip()) == 0:
         raise click.UsageError('Parameter --connection-key cannot be whitespace or empty string')
     if not force:
-        if properties or enc_properties:
-            if not click.confirm("WARNING: Updates to properties and enc-properties will replace any existing values. Are you sure you want to continue?"):
+        if custom_property_members or properties or enc_properties:
+            if not click.confirm("WARNING: Updates to custom-property-members and properties and enc-properties will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -5891,6 +6999,9 @@ def update_connection(ctx, from_json, force, wait_for_state, max_wait_seconds, w
 
     if display_name is not None:
         _details['displayName'] = display_name
+
+    if custom_property_members is not None:
+        _details['customPropertyMembers'] = cli_util.parse_json_parameter("custom_property_members", custom_property_members)
 
     if properties is not None:
         _details['properties'] = cli_util.parse_json_parameter("properties", properties)
@@ -5935,32 +7046,43 @@ def update_connection(ctx, from_json, force, wait_for_state, max_wait_seconds, w
     cli_util.render_response(result, ctx)
 
 
-@data_asset_group.command(name=cli_util.override('data_catalog.update_data_asset.command_name', 'update'), help=u"""Updates a specific data asset identified by the given key. \n[Command Reference](updateDataAsset)""")
+@custom_property_group.command(name=cli_util.override('data_catalog.update_custom_property.command_name', 'update'), help=u"""Updates a specific custom property identified by the given key. \n[Command Reference](updateCustomProperty)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
-@cli_util.option('--data-asset-key', required=True, help=u"""Unique data asset key.""")
+@cli_util.option('--namespace-id', required=True, help=u"""Unique namespace identifier.""")
+@cli_util.option('--custom-property-key', required=True, help=u"""Unique Custom Property key""")
 @cli_util.option('--display-name', help=u"""A user-friendly display name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--description', help=u"""Detailed description of the data asset.""")
+@cli_util.option('--is-sortable', type=click.BOOL, help=u"""If this field allows to sort from UI""")
+@cli_util.option('--is-filterable', type=click.BOOL, help=u"""If this field allows to filter or create facets from UI""")
+@cli_util.option('--is-multi-valued', type=click.BOOL, help=u"""If this field allows multiple values to be set""")
+@cli_util.option('--is-hidden', type=click.BOOL, help=u"""If this field is a hidden field""")
+@cli_util.option('--is-editable', type=click.BOOL, help=u"""If this field is a editable field""")
+@cli_util.option('--is-hidden-in-search', type=click.BOOL, help=u"""If this field is allowed to pop in search results""")
+@cli_util.option('--allowed-values', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Allowed values for the custom property if any""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A map of maps that contains the properties which are specific to the asset type. Each data asset type definition defines it's set of required and optional properties. The map keys are category names and the values are maps of property name to property value. Every property is contained inside of a category. Most data assets have required properties within the \"default\" category. Example: `{\"properties\": { \"default\": { \"host\": \"host1\", \"port\": \"1521\", \"database\": \"orcl\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED", "MOVING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'properties': {'module': 'data_catalog', 'class': 'dict(str, dict(str, string))'}})
+@json_skeleton_utils.get_cli_json_input_option({'allowed-values': {'module': 'data_catalog', 'class': 'list[string]'}, 'properties': {'module': 'data_catalog', 'class': 'dict(str, dict(str, string))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'properties': {'module': 'data_catalog', 'class': 'dict(str, dict(str, string))'}}, output_type={'module': 'data_catalog', 'class': 'DataAsset'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'allowed-values': {'module': 'data_catalog', 'class': 'list[string]'}, 'properties': {'module': 'data_catalog', 'class': 'dict(str, dict(str, string))'}}, output_type={'module': 'data_catalog', 'class': 'CustomProperty'})
 @cli_util.wrap_exceptions
-def update_data_asset(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, data_asset_key, display_name, description, properties, if_match):
+def update_custom_property(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, namespace_id, custom_property_key, display_name, description, is_sortable, is_filterable, is_multi_valued, is_hidden, is_editable, is_hidden_in_search, allowed_values, properties, if_match):
 
     if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
-    if isinstance(data_asset_key, six.string_types) and len(data_asset_key.strip()) == 0:
-        raise click.UsageError('Parameter --data-asset-key cannot be whitespace or empty string')
+    if isinstance(namespace_id, six.string_types) and len(namespace_id.strip()) == 0:
+        raise click.UsageError('Parameter --namespace-id cannot be whitespace or empty string')
+
+    if isinstance(custom_property_key, six.string_types) and len(custom_property_key.strip()) == 0:
+        raise click.UsageError('Parameter --custom-property-key cannot be whitespace or empty string')
     if not force:
-        if properties:
-            if not click.confirm("WARNING: Updates to properties will replace any existing values. Are you sure you want to continue?"):
+        if allowed_values or properties:
+            if not click.confirm("WARNING: Updates to allowed-values and properties will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -5975,6 +7097,111 @@ def update_data_asset(ctx, from_json, force, wait_for_state, max_wait_seconds, w
 
     if description is not None:
         _details['description'] = description
+
+    if is_sortable is not None:
+        _details['isSortable'] = is_sortable
+
+    if is_filterable is not None:
+        _details['isFilterable'] = is_filterable
+
+    if is_multi_valued is not None:
+        _details['isMultiValued'] = is_multi_valued
+
+    if is_hidden is not None:
+        _details['isHidden'] = is_hidden
+
+    if is_editable is not None:
+        _details['isEditable'] = is_editable
+
+    if is_hidden_in_search is not None:
+        _details['isHiddenInSearch'] = is_hidden_in_search
+
+    if allowed_values is not None:
+        _details['allowedValues'] = cli_util.parse_json_parameter("allowed_values", allowed_values)
+
+    if properties is not None:
+        _details['properties'] = cli_util.parse_json_parameter("properties", properties)
+
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
+    result = client.update_custom_property(
+        catalog_id=catalog_id,
+        namespace_id=namespace_id,
+        custom_property_key=custom_property_key,
+        update_custom_property_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_custom_property') and callable(getattr(client, 'get_custom_property')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_custom_property(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@data_asset_group.command(name=cli_util.override('data_catalog.update_data_asset.command_name', 'update'), help=u"""Updates a specific data asset identified by the given key. \n[Command Reference](updateDataAsset)""")
+@cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
+@cli_util.option('--data-asset-key', required=True, help=u"""Unique data asset key.""")
+@cli_util.option('--display-name', help=u"""A user-friendly display name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--description', help=u"""Detailed description of the data asset.""")
+@cli_util.option('--custom-property-members', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of customized properties along with the values for this object
+
+This option is a JSON list with items of type CustomPropertySetUsage.  For documentation on CustomPropertySetUsage please see our API reference: https://docs.cloud.oracle.com/api/#/en/datacatalog/20190325/datatypes/CustomPropertySetUsage.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A map of maps that contains the properties which are specific to the asset type. Each data asset type definition defines it's set of required and optional properties. The map keys are category names and the values are maps of property name to property value. Every property is contained inside of a category. Most data assets have required properties within the \"default\" category. Example: `{\"properties\": { \"default\": { \"host\": \"host1\", \"port\": \"1521\", \"database\": \"orcl\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED", "MOVING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'custom-property-members': {'module': 'data_catalog', 'class': 'list[CustomPropertySetUsage]'}, 'properties': {'module': 'data_catalog', 'class': 'dict(str, dict(str, string))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'custom-property-members': {'module': 'data_catalog', 'class': 'list[CustomPropertySetUsage]'}, 'properties': {'module': 'data_catalog', 'class': 'dict(str, dict(str, string))'}}, output_type={'module': 'data_catalog', 'class': 'DataAsset'})
+@cli_util.wrap_exceptions
+def update_data_asset(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, data_asset_key, display_name, description, custom_property_members, properties, if_match):
+
+    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+        raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
+
+    if isinstance(data_asset_key, six.string_types) and len(data_asset_key.strip()) == 0:
+        raise click.UsageError('Parameter --data-asset-key cannot be whitespace or empty string')
+    if not force:
+        if custom_property_members or properties:
+            if not click.confirm("WARNING: Updates to custom-property-members and properties will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if custom_property_members is not None:
+        _details['customPropertyMembers'] = cli_util.parse_json_parameter("custom_property_members", custom_property_members)
 
     if properties is not None:
         _details['properties'] = cli_util.parse_json_parameter("properties", properties)
@@ -6022,20 +7249,25 @@ def update_data_asset(ctx, from_json, force, wait_for_state, max_wait_seconds, w
 @cli_util.option('--is-logical', type=click.BOOL, help=u"""Property to indicate if the object is a physical materialized object or virtual. For example, View.""")
 @cli_util.option('--is-partition', type=click.BOOL, help=u"""Property to indicate if the object is a sub object of a parent physical object.""")
 @cli_util.option('--folder-key', help=u"""Key of the associated folder.""")
+@cli_util.option('--pattern-key', help=u"""Key of the associated pattern if this is a logical entity.""")
+@cli_util.option('--realized-expression', help=u"""The expression realized after resolving qualifiers . Used in deriving this logical entity""")
 @cli_util.option('--harvest-status', type=custom_types.CliCaseInsensitiveChoice(["COMPLETE", "ERROR", "IN_PROGRESS", "DEFERRED"]), help=u"""Status of the object as updated by the harvest process. When an entity object is created, it's harvest status will indicate if the entity's metadata has been fully harvested or not. The harvest process can perform shallow harvesting to allow users to browse the metadata and can on-demand deep harvest on any object This requires a harvest status indicator for catalog objects.""")
 @cli_util.option('--last-job-key', help=u"""Key of the last harvest process to update this object.""")
+@cli_util.option('--custom-property-members', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of customized properties along with the values for this object
+
+This option is a JSON list with items of type CustomPropertySetUsage.  For documentation on CustomPropertySetUsage please see our API reference: https://docs.cloud.oracle.com/api/#/en/datacatalog/20190325/datatypes/CustomPropertySetUsage.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A map of maps that contains the properties which are specific to the entity type. Each entity type definition defines it's set of required and optional properties. The map keys are category names and the values are maps of property name to property value. Every property is contained inside of a category. Most entities have required properties within the \"default\" category. To determine the set of required and optional properties for an entity type, a query can be done on '/types?type=dataEntity' that returns a collection of all entity types. The appropriate entity type, which includes definitions of all of it's properties, can be identified from this collection. Example: `{\"properties\": { \"default\": { \"key1\": \"value1\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED", "MOVING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'properties': {'module': 'data_catalog', 'class': 'dict(str, dict(str, string))'}})
+@json_skeleton_utils.get_cli_json_input_option({'custom-property-members': {'module': 'data_catalog', 'class': 'list[CustomPropertySetUsage]'}, 'properties': {'module': 'data_catalog', 'class': 'dict(str, dict(str, string))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'properties': {'module': 'data_catalog', 'class': 'dict(str, dict(str, string))'}}, output_type={'module': 'data_catalog', 'class': 'Entity'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'custom-property-members': {'module': 'data_catalog', 'class': 'list[CustomPropertySetUsage]'}, 'properties': {'module': 'data_catalog', 'class': 'dict(str, dict(str, string))'}}, output_type={'module': 'data_catalog', 'class': 'Entity'})
 @cli_util.wrap_exceptions
-def update_entity(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, data_asset_key, entity_key, display_name, description, time_external, is_logical, is_partition, folder_key, harvest_status, last_job_key, properties, if_match):
+def update_entity(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, data_asset_key, entity_key, display_name, description, time_external, is_logical, is_partition, folder_key, pattern_key, realized_expression, harvest_status, last_job_key, custom_property_members, properties, if_match):
 
     if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
@@ -6046,8 +7278,8 @@ def update_entity(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_
     if isinstance(entity_key, six.string_types) and len(entity_key.strip()) == 0:
         raise click.UsageError('Parameter --entity-key cannot be whitespace or empty string')
     if not force:
-        if properties:
-            if not click.confirm("WARNING: Updates to properties will replace any existing values. Are you sure you want to continue?"):
+        if custom_property_members or properties:
+            if not click.confirm("WARNING: Updates to custom-property-members and properties will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -6075,11 +7307,20 @@ def update_entity(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_
     if folder_key is not None:
         _details['folderKey'] = folder_key
 
+    if pattern_key is not None:
+        _details['patternKey'] = pattern_key
+
+    if realized_expression is not None:
+        _details['realizedExpression'] = realized_expression
+
     if harvest_status is not None:
         _details['harvestStatus'] = harvest_status
 
     if last_job_key is not None:
         _details['lastJobKey'] = last_job_key
+
+    if custom_property_members is not None:
+        _details['customPropertyMembers'] = cli_util.parse_json_parameter("custom_property_members", custom_property_members)
 
     if properties is not None:
         _details['properties'] = cli_util.parse_json_parameter("properties", properties)
@@ -6125,6 +7366,9 @@ def update_entity(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_
 @cli_util.option('--display-name', help=u"""A user-friendly display name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
 @cli_util.option('--description', help=u"""Detailed description of a folder.""")
 @cli_util.option('--parent-folder-key', help=u"""The key of the containing folder.""")
+@cli_util.option('--custom-property-members', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of customized properties along with the values for this object
+
+This option is a JSON list with items of type CustomPropertySetUsage.  For documentation on CustomPropertySetUsage please see our API reference: https://docs.cloud.oracle.com/api/#/en/datacatalog/20190325/datatypes/CustomPropertySetUsage.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A map of maps that contains the properties which are specific to the folder type. Each folder type definition defines it's set of required and optional properties. The map keys are category names and the values are maps of property name to property value. Every property is contained inside of a category. Most folders have required properties within the \"default\" category. To determine the set of optional and required properties for a folder type, a query can be done on '/types?type=folder' that returns a collection of all folder types. The appropriate folder type, which includes definitions of all of it's properties, can be identified from this collection. Example: `{\"properties\": { \"default\": { \"key1\": \"value1\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--time-external', type=custom_types.CLI_DATETIME, help=u"""Last modified timestamp of this object in the external system.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--harvest-status', type=custom_types.CliCaseInsensitiveChoice(["COMPLETE", "ERROR", "IN_PROGRESS", "DEFERRED"]), help=u"""Harvest status of the folder.""")
@@ -6134,12 +7378,12 @@ def update_entity(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED", "MOVING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'properties': {'module': 'data_catalog', 'class': 'dict(str, dict(str, string))'}})
+@json_skeleton_utils.get_cli_json_input_option({'custom-property-members': {'module': 'data_catalog', 'class': 'list[CustomPropertySetUsage]'}, 'properties': {'module': 'data_catalog', 'class': 'dict(str, dict(str, string))'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'properties': {'module': 'data_catalog', 'class': 'dict(str, dict(str, string))'}}, output_type={'module': 'data_catalog', 'class': 'Folder'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'custom-property-members': {'module': 'data_catalog', 'class': 'list[CustomPropertySetUsage]'}, 'properties': {'module': 'data_catalog', 'class': 'dict(str, dict(str, string))'}}, output_type={'module': 'data_catalog', 'class': 'Folder'})
 @cli_util.wrap_exceptions
-def update_folder(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, data_asset_key, folder_key, display_name, description, parent_folder_key, properties, time_external, harvest_status, last_job_key, if_match):
+def update_folder(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, data_asset_key, folder_key, display_name, description, parent_folder_key, custom_property_members, properties, time_external, harvest_status, last_job_key, if_match):
 
     if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
@@ -6150,8 +7394,8 @@ def update_folder(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_
     if isinstance(folder_key, six.string_types) and len(folder_key.strip()) == 0:
         raise click.UsageError('Parameter --folder-key cannot be whitespace or empty string')
     if not force:
-        if properties:
-            if not click.confirm("WARNING: Updates to properties will replace any existing values. Are you sure you want to continue?"):
+        if custom_property_members or properties:
+            if not click.confirm("WARNING: Updates to custom-property-members and properties will replace any existing values. Are you sure you want to continue?"):
                 ctx.abort()
 
     kwargs = {}
@@ -6169,6 +7413,9 @@ def update_folder(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_
 
     if parent_folder_key is not None:
         _details['parentFolderKey'] = parent_folder_key
+
+    if custom_property_members is not None:
+        _details['customPropertyMembers'] = cli_util.parse_json_parameter("custom_property_members", custom_property_members)
 
     if properties is not None:
         _details['properties'] = cli_util.parse_json_parameter("properties", properties)
@@ -6223,22 +7470,30 @@ def update_folder(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_
 @cli_util.option('--description', help=u"""Detailed description of the glossary.""")
 @cli_util.option('--owner', help=u"""OCID of the user who is the owner of the glossary.""")
 @cli_util.option('--workflow-status', type=custom_types.CliCaseInsensitiveChoice(["NEW", "APPROVED", "UNDER_REVIEW", "ESCALATED"]), help=u"""Status of the approval process workflow for this business glossary.""")
+@cli_util.option('--custom-property-members', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of customized properties along with the values for this object
+
+This option is a JSON list with items of type CustomPropertySetUsage.  For documentation on CustomPropertySetUsage please see our API reference: https://docs.cloud.oracle.com/api/#/en/datacatalog/20190325/datatypes/CustomPropertySetUsage.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED", "MOVING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'custom-property-members': {'module': 'data_catalog', 'class': 'list[CustomPropertySetUsage]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_catalog', 'class': 'Glossary'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'custom-property-members': {'module': 'data_catalog', 'class': 'list[CustomPropertySetUsage]'}}, output_type={'module': 'data_catalog', 'class': 'Glossary'})
 @cli_util.wrap_exceptions
-def update_glossary(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, glossary_key, display_name, description, owner, workflow_status, if_match):
+def update_glossary(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, glossary_key, display_name, description, owner, workflow_status, custom_property_members, if_match):
 
     if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
 
     if isinstance(glossary_key, six.string_types) and len(glossary_key.strip()) == 0:
         raise click.UsageError('Parameter --glossary-key cannot be whitespace or empty string')
+    if not force:
+        if custom_property_members:
+            if not click.confirm("WARNING: Updates to custom-property-members will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
 
     kwargs = {}
     if if_match is not None:
@@ -6258,6 +7513,9 @@ def update_glossary(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 
     if workflow_status is not None:
         _details['workflowStatus'] = workflow_status
+
+    if custom_property_members is not None:
+        _details['customPropertyMembers'] = cli_util.parse_json_parameter("custom_property_members", custom_property_members)
 
     client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     result = client.update_glossary(
@@ -6473,6 +7731,171 @@ def update_job_definition(ctx, from_json, force, wait_for_state, max_wait_second
     cli_util.render_response(result, ctx)
 
 
+@namespace_group.command(name=cli_util.override('data_catalog.update_namespace.command_name', 'update'), help=u"""Updates a specific namespace identified by the given key. \n[Command Reference](updateNamespace)""")
+@cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
+@cli_util.option('--namespace-id', required=True, help=u"""Unique namespace identifier.""")
+@cli_util.option('--display-name', help=u"""A user-friendly display name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--description', help=u"""Detailed description of the namespace.""")
+@cli_util.option('--is-service-defined', type=click.BOOL, help=u"""If this field is defined by service or by a user""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED", "MOVING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_catalog', 'class': 'Namespace'})
+@cli_util.wrap_exceptions
+def update_namespace(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, namespace_id, display_name, description, is_service_defined, if_match):
+
+    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+        raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
+
+    if isinstance(namespace_id, six.string_types) and len(namespace_id.strip()) == 0:
+        raise click.UsageError('Parameter --namespace-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if is_service_defined is not None:
+        _details['isServiceDefined'] = is_service_defined
+
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
+    result = client.update_namespace(
+        catalog_id=catalog_id,
+        namespace_id=namespace_id,
+        update_namespace_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_namespace') and callable(getattr(client, 'get_namespace')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_namespace(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@pattern_group.command(name=cli_util.override('data_catalog.update_pattern.command_name', 'update'), help=u"""Updates a specific pattern identified by the given key. \n[Command Reference](updatePattern)""")
+@cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
+@cli_util.option('--pattern-key', required=True, help=u"""Unique pattern key.""")
+@cli_util.option('--display-name', help=u"""A user-friendly display name. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--description', help=u"""Detailed description of the Pattern.""")
+@cli_util.option('--expression', help=u"""The expression used in the pattern that may include qualifiers. Refer to the user documentation for details of the format and examples.""")
+@cli_util.option('--check-file-path-list', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of file paths against which the expression can be tried, as a check. This documents, for reference purposes, some example objects a pattern is meant to work with. If isEnableCheckFailureLimit is set to true, this will be run as a validation during the request, such that if the check fails the request fails. If isEnableCheckFailureLimit instead is set to (the default) false, a pattern will still be created or updated even if the check fails, with a lifecycleState of FAILED.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-enable-check-failure-limit', type=click.BOOL, help=u"""Indicates whether the expression check, against the checkFilePathList, will fail the request if the count of UNMATCHED files is above the checkFailureLimit.""")
+@cli_util.option('--check-failure-limit', type=click.INT, help=u"""The maximum number of UNMATCHED files, in checkFilePathList, above which the check fails. Optional, if checkFilePathList is provided - but if isEnableCheckFailureLimit is set to true it is required.""")
+@cli_util.option('--properties', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A map of maps that contains the properties which are specific to the pattern type. Each pattern type definition defines it's set of required and optional properties. Example: `{\"properties\": { \"default\": { \"tbd\"}}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED", "MOVING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'check-file-path-list': {'module': 'data_catalog', 'class': 'list[string]'}, 'properties': {'module': 'data_catalog', 'class': 'dict(str, dict(str, string))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'check-file-path-list': {'module': 'data_catalog', 'class': 'list[string]'}, 'properties': {'module': 'data_catalog', 'class': 'dict(str, dict(str, string))'}}, output_type={'module': 'data_catalog', 'class': 'Pattern'})
+@cli_util.wrap_exceptions
+def update_pattern(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, pattern_key, display_name, description, expression, check_file_path_list, is_enable_check_failure_limit, check_failure_limit, properties, if_match):
+
+    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+        raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
+
+    if isinstance(pattern_key, six.string_types) and len(pattern_key.strip()) == 0:
+        raise click.UsageError('Parameter --pattern-key cannot be whitespace or empty string')
+    if not force:
+        if check_file_path_list or properties:
+            if not click.confirm("WARNING: Updates to check-file-path-list and properties will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if description is not None:
+        _details['description'] = description
+
+    if expression is not None:
+        _details['expression'] = expression
+
+    if check_file_path_list is not None:
+        _details['checkFilePathList'] = cli_util.parse_json_parameter("check_file_path_list", check_file_path_list)
+
+    if is_enable_check_failure_limit is not None:
+        _details['isEnableCheckFailureLimit'] = is_enable_check_failure_limit
+
+    if check_failure_limit is not None:
+        _details['checkFailureLimit'] = check_failure_limit
+
+    if properties is not None:
+        _details['properties'] = cli_util.parse_json_parameter("properties", properties)
+
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
+    result = client.update_pattern(
+        catalog_id=catalog_id,
+        pattern_key=pattern_key,
+        update_pattern_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_pattern') and callable(getattr(client, 'get_pattern')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_pattern(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @term_group.command(name=cli_util.override('data_catalog.update_term.command_name', 'update'), help=u"""Updates a specific glossary term. \n[Command Reference](updateTerm)""")
 @cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
 @cli_util.option('--glossary-key', required=True, help=u"""Unique glossary key.""")
@@ -6482,16 +7905,20 @@ def update_job_definition(ctx, from_json, force, wait_for_state, max_wait_second
 @cli_util.option('--parent-term-key', help=u"""This terms parent term key. Will be null if the term has no parent term.""")
 @cli_util.option('--owner', help=u"""OCID of the user who is the owner of this business terminology.""")
 @cli_util.option('--workflow-status', type=custom_types.CliCaseInsensitiveChoice(["NEW", "APPROVED", "UNDER_REVIEW", "ESCALATED"]), help=u"""Status of the approval process workflow for this business term in the glossary""")
+@cli_util.option('--custom-property-members', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of customized properties along with the values for this object
+
+This option is a JSON list with items of type CustomPropertySetUsage.  For documentation on CustomPropertySetUsage please see our API reference: https://docs.cloud.oracle.com/api/#/en/datacatalog/20190325/datatypes/CustomPropertySetUsage.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED", "MOVING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'custom-property-members': {'module': 'data_catalog', 'class': 'list[CustomPropertySetUsage]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_catalog', 'class': 'Term'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'custom-property-members': {'module': 'data_catalog', 'class': 'list[CustomPropertySetUsage]'}}, output_type={'module': 'data_catalog', 'class': 'Term'})
 @cli_util.wrap_exceptions
-def update_term(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, glossary_key, term_key, display_name, description, parent_term_key, owner, workflow_status, if_match):
+def update_term(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, catalog_id, glossary_key, term_key, display_name, description, parent_term_key, owner, workflow_status, custom_property_members, if_match):
 
     if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
         raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
@@ -6501,6 +7928,10 @@ def update_term(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 
     if isinstance(term_key, six.string_types) and len(term_key.strip()) == 0:
         raise click.UsageError('Parameter --term-key cannot be whitespace or empty string')
+    if not force:
+        if custom_property_members:
+            if not click.confirm("WARNING: Updates to custom-property-members will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
 
     kwargs = {}
     if if_match is not None:
@@ -6523,6 +7954,9 @@ def update_term(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 
     if workflow_status is not None:
         _details['workflowStatus'] = workflow_status
+
+    if custom_property_members is not None:
+        _details['customPropertyMembers'] = cli_util.parse_json_parameter("custom_property_members", custom_property_members)
 
     client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
     result = client.update_term(
@@ -6775,6 +8209,53 @@ def validate_connection(ctx, from_json, catalog_id, data_asset_key, connection_d
         catalog_id=catalog_id,
         data_asset_key=data_asset_key,
         validate_connection_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@pattern_group.command(name=cli_util.override('data_catalog.validate_pattern.command_name', 'validate'), help=u"""Validate pattern by deriving file groups representing logical entities using the expression \n[Command Reference](validatePattern)""")
+@cli_util.option('--catalog-id', required=True, help=u"""Unique catalog identifier.""")
+@cli_util.option('--pattern-key', required=True, help=u"""Unique pattern key.""")
+@cli_util.option('--expression', help=u"""The expression used in the pattern that may include qualifiers. Refer to the user documentation for details of the format and examples.""")
+@cli_util.option('--check-file-path-list', type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of file paths against which the expression can be tried, as a check. This documents, for reference purposes, some example objects a pattern is meant to work with.
+
+If provided with the request,this overrides the list which already exists as part of the pattern, if any.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--check-failure-limit', type=click.INT, help=u"""The maximum number of UNMATCHED files, in checkFilePathList, above which the check fails. Optional, if checkFilePathList is provided.
+
+If provided with the request, this overrides the value which already exists as part of the pattern, if any.""")
+@json_skeleton_utils.get_cli_json_input_option({'check-file-path-list': {'module': 'data_catalog', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'check-file-path-list': {'module': 'data_catalog', 'class': 'list[string]'}}, output_type={'module': 'data_catalog', 'class': 'ValidatePatternResult'})
+@cli_util.wrap_exceptions
+def validate_pattern(ctx, from_json, catalog_id, pattern_key, expression, check_file_path_list, check_failure_limit):
+
+    if isinstance(catalog_id, six.string_types) and len(catalog_id.strip()) == 0:
+        raise click.UsageError('Parameter --catalog-id cannot be whitespace or empty string')
+
+    if isinstance(pattern_key, six.string_types) and len(pattern_key.strip()) == 0:
+        raise click.UsageError('Parameter --pattern-key cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if expression is not None:
+        _details['expression'] = expression
+
+    if check_file_path_list is not None:
+        _details['checkFilePathList'] = cli_util.parse_json_parameter("check_file_path_list", check_file_path_list)
+
+    if check_failure_limit is not None:
+        _details['checkFailureLimit'] = check_failure_limit
+
+    client = cli_util.build_client('data_catalog', 'data_catalog', ctx)
+    result = client.validate_pattern(
+        catalog_id=catalog_id,
+        pattern_key=pattern_key,
+        validate_pattern_details=_details,
         **kwargs
     )
     cli_util.render_response(result, ctx)

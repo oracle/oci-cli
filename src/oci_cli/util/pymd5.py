@@ -148,7 +148,7 @@ def H(x, y, z):
     return x ^ y ^ z
 
 
-def I(x, y, z):  # noqa: E743
+def I(x, y, z):  # noqa: E743, E741
     return y ^ (x | (~z))
 
 

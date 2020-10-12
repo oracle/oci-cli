@@ -39,8 +39,7 @@ class ManifestWriter:
             if not self._do_xa_capacity_check(line_item.size):
                 _msg_ = "MAXIMUM CAPACITY REACHED FOR THIS EXPORT, TOTAL SIZE = {}.\nPLEASE CREATE A NEW EXPORT REQUEST "
                 "WITH SPECIFYING THE FILTER '--start={}' WHICH IS THE NEXT OBJECT TO BE PROCESSED FOR THIS BUCKET.\n"
-                "STOPPING THE CURRENT MANIFEST GENERATION HERE. TOTAL NUMBER OF OBJECTS IN THIS MANIFEST = {}" \
-                    .format(self._stats.get_total_size(), line_item.path, self._stats.get_total_count())
+                "STOPPING THE CURRENT MANIFEST GENERATION HERE. TOTAL NUMBER OF OBJECTS IN THIS MANIFEST = {}".format(self._stats.get_total_size(), line_item.path, self._stats.get_total_count())  # noqa: F523
 
                 print(_msg_)
                 self.log.info(_msg_)

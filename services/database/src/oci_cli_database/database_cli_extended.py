@@ -39,6 +39,22 @@ database_cli.autonomous_database_group.commands.pop(database_cli.create_autonomo
 cli_util.rename_command(database_cli, database_cli.autonomous_database_group, database_cli.create_autonomous_database_create_autonomous_database_clone_details, "create-from-clone")
 cli_util.rename_command(database_cli, database_cli.autonomous_database_group, database_cli.create_autonomous_database_create_autonomous_database_details, "create")
 
+cli_util.rename_command(database_cli, database_cli.exadata_infrastructure_group, database_cli.download_exadata_infrastructure_config_file, "download-config-file")
+cli_util.rename_command(database_cli, database_cli.autonomous_container_database_group, database_cli.rotate_autonomous_container_database_encryption_key, "rotate-key")
+cli_util.rename_command(database_cli, database_cli.autonomous_database_group, database_cli.rotate_autonomous_database_encryption_key, "rotate-key")
+
+cli_util.rename_command(database_cli, database_cli.db_root_group, database_cli.autonomous_container_database_dataguard_association_group, "autonomous-container-database-dataguard")
+cli_util.rename_command(database_cli, database_cli.db_root_group, database_cli.autonomous_database_dataguard_association_group, "autonomous-database-dataguard")
+
+# Commands are being temporarily removed by Database team
+# cli_util.rename_command(database_cli.db_root_group, database_cli.autonomous_container_database_mission_critical_association_group, "autonomous-mission-critical-data-guard")
+# cli_util.rename_command(database_cli.db_root_group, database_cli.autonomous_database_mission_critical_association_group, "autonomous-mission-critical-database-data-guard")
+cli_util.rename_command(database_cli, database_cli.db_root_group, database_cli.autonomous_exadata_infrastructure_shape_group, "shape")
+
+# Move autonomous_exadata_infrastructure_shape_group as sub command within autonomous_exadata_infrastructure_group
+database_cli.db_root_group.commands.pop(database_cli.autonomous_exadata_infrastructure_shape_group.name)
+database_cli.autonomous_exadata_infrastructure_group.add_command(database_cli.autonomous_exadata_infrastructure_shape_group)
+
 cli_util.rename_command(database_cli, database_cli.backup_destination_group, database_cli.create_backup_destination_create_nfs_backup_destination_details, "create-nfs-details")
 cli_util.rename_command(database_cli, database_cli.backup_destination_group, database_cli.create_backup_destination_create_recovery_appliance_backup_destination_details, "create-recovery-appliance-details")
 database_cli.backup_destination_group.commands.pop(database_cli.create_backup_destination.name)
@@ -662,7 +678,7 @@ def delete_database(ctx, **kwargs):
     cli_util.render_response(response, ctx)
 
 
-@cli_util.copy_params_from_generated_command(database_cli.list_db_homes, params_to_exclude=['db_home_id', 'page', 'all_pages', 'page_size', 'db_system_id'])
+@cli_util.copy_params_from_generated_command(database_cli.list_db_homes, params_to_exclude=['db_home_id', 'page', 'all_pages', 'page_size', 'db_system_id', 'db_version'])
 @database_cli.database_group.command(name='list', help="""Lists all databases in a given DB System.""")
 @click.pass_context
 @cli_util.option('--db-system-id', help="""The OCID of the db system to list within.""")
@@ -856,10 +872,11 @@ def create_data_guard_association_group():
 
 All Oracle Cloud Infrastructue resources, including Data Guard associations, get an Oracle-assigned, unique ID called an Oracle Cloud Identifier (OCID). When you create a resource, you can find its OCID in the response. You can also retrieve a resource's OCID by using a List API operation on that resource type, or by viewing the resource in the Console. Fore more information, see [Resource Identifiers].""")
 @cli_util.option('--peer-db-system-id', required=True, help="""The OCID of the DB System to create the standby database on.""")
+@cli_util.option('--peer-db-home-id', required=False, help="""The OCID of the DB Home to create the standby database on.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'DataGuardAssociation'})
 @cli_util.wrap_exceptions
-def create_data_guard_association_from_existing_db_system(ctx, from_json, database_id, creation_type, database_admin_password, protection_mode, transport_type, peer_db_system_id):
+def create_data_guard_association_from_existing_db_system(ctx, from_json, database_id, creation_type, database_admin_password, protection_mode, transport_type, peer_db_system_id, peer_db_home_id):
     kwargs = {}
 
     details = {}
@@ -868,6 +885,9 @@ def create_data_guard_association_from_existing_db_system(ctx, from_json, databa
     details['protectionMode'] = protection_mode
     details['transportType'] = transport_type
     details['peerDbSystemId'] = peer_db_system_id
+
+    if peer_db_home_id is not None:
+        details['peerDbHomeId'] = peer_db_home_id
 
     client = cli_util.build_client('database', 'database', ctx)
     result = client.create_data_guard_association(
@@ -929,10 +949,11 @@ def create_data_guard_association_with_new_db_system(ctx, from_json, database_id
 
 All Oracle Cloud Infrastructure resources, including Data Guard associations, get an Oracle-assigned, unique ID called an Oracle Cloud Identifier (OCID). When you create a resource, you can find its OCID in the response. You can also retrieve a resource's OCID by using a List API operation on that resource type, or by viewing the resource in the Console. For more information, see [Resource Identifiers].""")
 @cli_util.option('--peer-vm-cluster-id', required=True, help=u"""The [OCID] of the VM Cluster in which to create the standby database. You must supply this value if creationType is `ExistingVmCluster`.""")
+@cli_util.option('--peer-db-home-id', required=False, help="""The OCID of the DB Home to create the standby database on.""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'DataGuardAssociation'})
 @cli_util.wrap_exceptions
-def create_data_guard_association_from_existing_vm_cluster(ctx, from_json, database_id, database_admin_password, protection_mode, transport_type, peer_vm_cluster_id):
+def create_data_guard_association_from_existing_vm_cluster(ctx, from_json, database_id, database_admin_password, protection_mode, transport_type, peer_vm_cluster_id, peer_db_home_id):
 
     kwargs = {}
 
@@ -942,6 +963,9 @@ def create_data_guard_association_from_existing_vm_cluster(ctx, from_json, datab
     details['transportType'] = transport_type
     details['peerVmClusterId'] = peer_vm_cluster_id
     details['creationType'] = 'ExistingVmCluster'
+
+    if peer_db_home_id is not None:
+        details['peerDbHomeId'] = peer_db_home_id
 
     client = cli_util.build_client('database', 'database', ctx)
     result = client.create_data_guard_association(

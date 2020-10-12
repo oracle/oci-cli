@@ -876,7 +876,7 @@ def make_dict_keys_camel_case(original_obj, parameter_name=None, complex_paramet
                 if complex_type_definition['class'].find("dict(") == 0:
                     param_type_to_pass = {  # noqa: W605
                         'module': complex_type_definition['module'],
-                        'class': re.match('dict\(([^,]*), (.*)\)', complex_type_definition['class']).group(2)
+                        'class': re.match(r'dict\(([^,]*), (.*)\)', complex_type_definition['class']).group(2)
                     }
                 elif complex_type_definition['class'] not in MODULE_TO_TYPE_MAPPINGS[complex_type_definition['module']]:
                     param_type_to_pass = complex_type_definition
