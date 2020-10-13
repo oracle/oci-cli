@@ -169,10 +169,23 @@ datacatalog_cli.search_result_group.commands.pop(datacatalog_cli.search_criteria
 @datacatalog_cli.search_result_group.command(name='query', help=u"""Returns a list of search results within a data catalog.""")
 @cli_util.option('--query-text', help=u"""Search query dsl that defines the query components including fields and predicates.""")
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'data_catalog', 'class': 'SearchResultCollection'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'dimensions': {'module': 'data_catalog', 'class': 'list[string]'}, 'sort': {'module': 'data_catalog', 'class': 'list[FacetedSearchSortRequest]'}, 'filters': {'module': 'data_catalog', 'class': 'FacetedSearchFilterRequest'}}, output_type={'module': 'data_catalog', 'class': 'SearchResultCollection'})
 @cli_util.wrap_exceptions
 def search_criteria_extended(ctx, **kwargs):
     if 'query_text' in kwargs and kwargs['query_text']:
         kwargs['query_parameterconflict'] = kwargs['query_text']
     kwargs.pop('query_text')
     ctx.invoke(datacatalog_cli.search_criteria, **kwargs)
+
+# Rename the following:
+# oci data-catalog data-asset add  -> oci data-catalog data-asset add-data-selector-patterns
+# oci data-catalog data-asset remove -> oci data-catalog data-asset remove-data-selector-patterns
+# oci data-catalog type associate-custom-property -> oci data-catalog type associate-custom-properties
+# oci data-catalog type disassociate-custom-property -> oci data-catalog type disassociate-custom-properties
+
+
+cli_util.rename_command(datacatalog_cli, datacatalog_cli.data_asset_group, datacatalog_cli.add_data_selector_patterns, "add-data-selector-patterns")
+cli_util.rename_command(datacatalog_cli, datacatalog_cli.data_asset_group, datacatalog_cli.remove_data_selector_patterns, "remove-data-selector-patterns")
+
+cli_util.rename_command(datacatalog_cli, datacatalog_cli.type_group, datacatalog_cli.associate_custom_property, "associate-custom-properties")
+cli_util.rename_command(datacatalog_cli, datacatalog_cli.type_group, datacatalog_cli.disassociate_custom_property, "disassociate-custom-properties")

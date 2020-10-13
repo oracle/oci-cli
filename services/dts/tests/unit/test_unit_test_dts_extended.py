@@ -607,7 +607,7 @@ class UnitTestDTS(unittest.TestCase):
         result = util.invoke_command(args_list)
 
         assert result.exception is None
-        assert result.exit_code is 0
+        assert result.exit_code == 0
 
     @mock.patch('services.dts.src.oci_cli_dts.physicalappliance_cli_extended.create_appliance_client')
     @mock.patch('services.dts.src.oci_cli_dts.physicalappliance_cli_extended.create_init_auth')
@@ -623,7 +623,7 @@ class UnitTestDTS(unittest.TestCase):
         result = util.invoke_command(args_list)
 
         assert result.exception is None
-        assert result.exit_code is 0
+        assert result.exit_code == 0
 
     @mock.patch('services.dts.src.oci_cli_dts.physicalappliance_cli_extended.create_appliance_client')
     @mock.patch('services.dts.src.oci_cli_dts.physicalappliance_cli_extended.create_init_auth')

@@ -6,6 +6,57 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+
+2.14.0 - 2020-10-13
+--------------------
+Added
+~~~~~
+
+* Support for API definitions in the API Gateway service
+
+  * ``oci api-gateway api --help``
+
+* Support for pattern-based Logical Entities, namespace-bound Custom Properties, and faceted search in the Data Catalog service
+
+  * ``oci data-catalog pattern``
+  * ``oci data-catalog data-asset add-data-selector-patterns``
+  * ``oci data-catalog entity list-aggregated-physical``
+  * ``oci data-catalog namespace``
+  * ``oci data-catalog custom-property``
+  * ``oci data-catalog type associate-custom-properties``
+  * ``oci data-catalog search query``
+
+* Support for Autonomous Data Guard for Autonomous Infrastructure
+
+   * ``oci autonomous-container-database-dataguard``
+   * ``oci autonomous-database-dataguard``
+
+* Support for creating a Data Guard association on an existing standby database home in the Database service.
+
+ * ``oci db data-guard-association create from-existing-db-system --peer-db-home-id``
+ * ``oci db data-guard-association create from-existing-vm-cluster --peer-db-home-id``
+
+* Support for list database homes by version.
+
+ * ``oci db db-home list --db-version``
+
+* Support for upgrading Cloud VM Cluster Grid Infrastructure
+
+  * ``oci db cloud-vm-cluster update [options]``
+
+Changed
+~~~~~
+
+* Help messages for Logging Ingestion Service
+
+* Support for updating saved search logs for Logging Service
+
+  * ``oci logging log-saved-search``
+  * ``oci logging log-included-search``
+
+* [Breaking]  Required param ``is-quick-start`` is deleted from ``oci logging log-saved-search create/update``
+
+
 2.13.0 - 2020-10-06
 --------------------
 Added

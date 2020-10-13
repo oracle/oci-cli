@@ -15,13 +15,13 @@ from oci_cli import custom_types  # noqa: F401
 from oci_cli.aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('logging_ingestion.logging_ingestion_root_group.command_name', 'logging-ingestion'), cls=CommandGroupWithAlias, help=cli_util.override('logging_ingestion.logging_ingestion_root_group.help', """PublicLoggingDataplane API specification"""), short_help=cli_util.override('logging_ingestion.logging_ingestion_root_group.short_help', """PublicLoggingDataplane API"""))
+@cli.command(cli_util.override('logging_ingestion.logging_ingestion_root_group.command_name', 'logging-ingestion'), cls=CommandGroupWithAlias, help=cli_util.override('logging_ingestion.logging_ingestion_root_group.help', """Use the Logging Ingestion API to ingest your application logs."""), short_help=cli_util.override('logging_ingestion.logging_ingestion_root_group.short_help', """Logging Ingestion API"""))
 @cli_util.help_option_group
 def logging_ingestion_root_group():
     pass
 
 
-@click.command(cli_util.override('logging_ingestion.log_entry_group.command_name', 'log-entry'), cls=CommandGroupWithAlias, help="""Contains the content of the log with associated timestamp and id. Each entry should be less than 1 MB size.""")
+@click.command(cli_util.override('logging_ingestion.log_entry_group.command_name', 'log-entry'), cls=CommandGroupWithAlias, help="""Contains the log content with the associated timestamp and ID. Each entry should be less than 1 MB size.""")
 @cli_util.help_option_group
 def log_entry_group():
     pass
@@ -30,11 +30,11 @@ def log_entry_group():
 logging_ingestion_root_group.add_command(log_entry_group)
 
 
-@log_entry_group.command(name=cli_util.override('logging_ingestion.put_logs.command_name', 'put-logs'), help=u"""This Api allows ingesting logs associated with a logId. Success response implies the data has been accepted. \n[Command Reference](putLogs)""")
+@log_entry_group.command(name=cli_util.override('logging_ingestion.put_logs.command_name', 'put-logs'), help=u"""This API allows ingesting logs associated with a logId. A success response implies the data has been accepted. \n[Command Reference](putLogs)""")
 @cli_util.option('--log-id', required=True, help=u"""OCID of a log to work with.""")
 @cli_util.option('--specversion', required=True, help=u"""Required for identifying the version of the data format being used. Permitted values include: \"1.0\"""")
 @cli_util.option('--log-entry-batches', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""List of log-batches. Each batch has a single source, type and subject.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--timestamp-opc-agent-processing', type=custom_types.CLI_DATETIME, help=u"""Effective timestamp, for when the agent started processing the log segment being sent. An RFC3339 formatted datetime string.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--timestamp-opc-agent-processing', type=custom_types.CLI_DATETIME, help=u"""Effective timestamp, for when the agent started processing the log segment being sent. An RFC3339-formatted date-time string.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--opc-agent-version', help=u"""Version of the agent sending the request.""")
 @json_skeleton_utils.get_cli_json_input_option({'log-entry-batches': {'module': 'loggingingestion', 'class': 'list[LogEntryBatch]'}})
 @cli_util.help_option
