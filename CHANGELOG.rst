@@ -6,6 +6,40 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.14.1 - 2020-10-20
+--------------------
+Added
+~~~~~
+
+* Support for Operations Insights service
+
+  * ``oci opsi``
+
+* Support to enable/disable Operations Insights Service for Autonomous Database in Database Service
+
+ * ``oci db autonomous-database enable-operations-insights --autonomous-database-id``
+ * ``oci db autonomous-database disable-operations-insights --autonomous-database-id``
+
+* New lifecycle state NEEDS_ATTENTION to Improve DB System in Database Service
+
+  * ``oci db system``
+
+* Support for HCX for create/update Software Defined Data Center (SDDC) in Oracle Cloud VMware Solution Service (OCVS)
+
+  * ``oci ocvs sddc create --is-hcx-enabled --hcx-vlan-id``
+  * ``oci ocvs sddc update --hcx-vlan-id``
+
+* Improvement for Service Connector Hub documentation
+
+  * ``oci sch``
+
+Fixed
+~~~~~
+
+* Parameter --package-name is now optional for Software Source Search in OS Management Service (`Issue 332 <https://github.com/oracle/oci-cli/issues/332>`__)
+
+  * ``oci os-management software-source search --package-name``
+
 
 2.14.0 - 2020-10-13
 --------------------
@@ -55,7 +89,7 @@ Changed
   * ``oci logging log-included-search``
 
 * [Breaking]  Required param ``is-quick-start`` is deleted from ``oci logging log-saved-search create/update``
-
+* [Breaking]  Command ``oci db autonomous-exadata-infrastructure-shape list`` has been changed to ``oci db autonomous-exadata-infrastructure shape list``
 
 2.13.0 - 2020-10-06
 --------------------

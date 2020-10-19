@@ -102,9 +102,6 @@ class TestOsManagement(unittest.TestCase):
         assert 'Error: Missing option(s)' in result.output
         assert 'software-source-id' in result.output
         assert 'package-names' in result.output
-        result = util.invoke_command(['os-management', 'software-source', 'search-packages'])
-        assert 'Error: Missing option(s)' in result.output
-        assert 'package-name' in result.output
 
     # test work-request commands
     def test_work_request_commands(self):

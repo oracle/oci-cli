@@ -148,6 +148,15 @@ database_cli.autonomous_database_group.commands.pop(database_cli.deregister_auto
 cli_util.rename_command(database_cli, autonomous_database_data_safe_group, database_cli.register_autonomous_database_data_safe, "register")
 cli_util.rename_command(database_cli, autonomous_database_data_safe_group, database_cli.deregister_autonomous_database_data_safe, "deregister")
 
+# Rename from:
+# oci db autonomous-database enable-autonomous-database-operations-insights
+# oci db autonomous-database disable-autonomous-database-operations-insights
+# To:
+# oci db autonomous-database operations-insights enable
+# oci db autonomous-database operations-insights disable
+cli_util.rename_command(database_cli, database_cli.autonomous_database_group, database_cli.enable_autonomous_database_operations_insights, "enable-operations-insights")
+cli_util.rename_command(database_cli, database_cli.autonomous_database_group, database_cli.disable_autonomous_database_operations_insights, "disable-operations-insights")
+
 
 @cli_util.copy_params_from_generated_command(database_cli.launch_db_system_launch_db_system_details, params_to_exclude=['db_home', 'db_system_options', 'ssh_public_keys'])
 @database_cli.db_system_group.command(name='launch', help=database_cli.launch_db_system_launch_db_system_details.help)

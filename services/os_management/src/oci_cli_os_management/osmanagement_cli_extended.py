@@ -121,7 +121,7 @@ def get_software_package(ctx, **kwargs):
 
 # rename the parameter software-package-name to just be package-name
 @cli_util.copy_params_from_generated_command(osmanagement_cli.search_software_packages, params_to_exclude=['software_package_name'])
-@cli_util.option('--package-name', required=True, help="""Name of package for which to search. This should be the full package name including version and architecture""")
+@cli_util.option('--package-name', help="""Name of package for which to search. This should be the full package name including version and architecture""")
 @osmanagement_cli.software_source_group.command(name='search-packages', help=osmanagement_cli.search_software_packages.help)
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})

@@ -46,9 +46,11 @@ esxi_host_root_group.add_command(esxi_host_summary_group)
 
 Use the [WorkRequest] operations to track the creation of the ESXi host. \n[Command Reference](createEsxiHost)""")
 @cli_util.option('--sddc-id', required=True, help=u"""The [OCID] of the SDDC to add the ESXi host to.""")
-@cli_util.option('--display-name', help=u"""A descriptive name for the ESXi host. Does not have to be unique, and it's changeable. Avoid entering confidential information.
+@cli_util.option('--display-name', help=u"""A descriptive name for the ESXi host. It's changeable. Esxi Host name requirements are 1-16 character length limit, Must start with a letter, Must be English letters, numbers, - only, No repeating hyphens, Must be unique within the SDDC.
 
-If this attribute is not specified, the SDDC's `instanceDisplayNamePrefix` attribute is used to name and incrementally number the ESXi host. For example, if you're creating the fourth ESXi host in the SDDC, and `instanceDisplayNamePrefix` is `MySDDC`, the host's display name is `MySDDC-4`.""")
+If this attribute is not specified, the SDDC's `instanceDisplayNamePrefix` attribute is used to name and incrementally number the ESXi host. For example, if you're creating the fourth ESXi host in the SDDC, and `instanceDisplayNamePrefix` is `MySDDC`, the host's display name is `MySDDC-4`.
+
+Avoid entering confidential information.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -259,7 +261,9 @@ def list_esxi_hosts(ctx, from_json, all_pages, page_size, sddc_id, compute_insta
 
 @esxi_host_group.command(name=cli_util.override('esxi_host.update_esxi_host.command_name', 'update'), help=u"""Updates the specified ESXi host. \n[Command Reference](updateEsxiHost)""")
 @cli_util.option('--esxi-host-id', required=True, help=u"""The [OCID] of the ESXi host.""")
-@cli_util.option('--display-name', help=u"""A descriptive name for the ESXi host. Does not have to be unique, and it's changeable. Avoid entering confidential information.""")
+@cli_util.option('--display-name', help=u"""A descriptive name for the ESXi host. It's changeable. Esxi Host name requirements are 1-16 character length limit, Must start with a letter, Must be English letters, numbers, - only, No repeating hyphens, Must be unique within the SDDC.
+
+Avoid entering confidential information.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
