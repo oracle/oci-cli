@@ -4,6 +4,7 @@
 
 from services.oce.src.oci_cli_oce_instance.generated import oceinstance_cli
 from oci_cli import cli_util
+from oci_cli import custom_types
 from oci_cli import json_skeleton_utils
 import click
 
@@ -17,6 +18,8 @@ oceinstance_cli.oce_instance_group.commands.pop(oceinstance_cli.list_oce_instanc
 oceinstance_cli.work_request_group.commands.pop(oceinstance_cli.list_work_requests.name)
 oceinstance_cli.work_request_error_group.commands.pop(oceinstance_cli.list_work_request_errors.name)
 oceinstance_cli.work_request_log_entry_group.commands.pop(oceinstance_cli.list_work_request_logs.name)
+
+cli_util.update_param_help(oceinstance_cli.create_oce_instance, 'identity_stripe', """Details of the identity stripe used for OceInstance, including name of the Identity Cloud Service instance in my services to be used and value of the Identity Cloud Service tenancy. Example: `{\"serviceName\": \"secondstripe\"; \"tenancy\": \"idcs-8416ebdd0d674f84803f4193cce026e9\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 
 
 @cli_util.copy_params_from_generated_command(oceinstance_cli.list_oce_instances, params_to_exclude=['all', 'all_pages'])

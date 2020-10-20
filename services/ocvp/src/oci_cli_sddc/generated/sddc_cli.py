@@ -96,10 +96,12 @@ Use the [WorkRequest] operations to track the creation of the SDDC. \n[Command R
 @cli_util.option('--nsx-edge-v-tep-vlan-id', required=True, help=u"""The [OCID] of the VLAN to use for the NSX Edge VTEP component of the VMware environment.""")
 @cli_util.option('--nsx-edge-uplink1-vlan-id', required=True, help=u"""The [OCID] of the VLAN to use for the NSX Edge Uplink 1 component of the VMware environment.""")
 @cli_util.option('--nsx-edge-uplink2-vlan-id', required=True, help=u"""The [OCID] of the VLAN to use for the NSX Edge Uplink 2 component of the VMware environment.""")
-@cli_util.option('--display-name', help=u"""A descriptive name for the SDDC. It must be unique, start with a letter, and contain only letters, digits, whitespaces, dashes and underscores. Avoid entering confidential information.""")
+@cli_util.option('--display-name', help=u"""A descriptive name for the SDDC. SDDC name requirements are 1-16 character length limit, Must start with a letter, Must be English letters, numbers, - only, No repeating hyphens, Must be unique within the region. Avoid entering confidential information.""")
 @cli_util.option('--instance-display-name-prefix', help=u"""A prefix used in the name of each ESXi host and Compute instance in the SDDC. If this isn't set, the SDDC's `displayName` is used as the prefix.
 
 For example, if the value is `mySDDC`, the ESXi hosts are named `mySDDC-1`, `mySDDC-2`, and so on.""")
+@cli_util.option('--is-hcx-enabled', type=click.BOOL, help=u"""This flag tells us if HCX is enabled or not.""")
+@cli_util.option('--hcx-vlan-id', help=u"""This id is required only when hcxEnabled is true""")
 @cli_util.option('--workload-network-cidr', help=u"""The CIDR block for the IP addresses that VMware VMs in the SDDC use to run application workloads.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
@@ -115,7 +117,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'ocvp', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ocvp', 'class': 'dict(str, dict(str, object))'}})
 @cli_util.wrap_exceptions
-def create_sddc(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compute_availability_domain, vmware_software_version, compartment_id, esxi_hosts_count, ssh_authorized_keys, provisioning_subnet_id, vsphere_vlan_id, vmotion_vlan_id, vsan_vlan_id, nsx_v_tep_vlan_id, nsx_edge_v_tep_vlan_id, nsx_edge_uplink1_vlan_id, nsx_edge_uplink2_vlan_id, display_name, instance_display_name_prefix, workload_network_cidr, freeform_tags, defined_tags):
+def create_sddc(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compute_availability_domain, vmware_software_version, compartment_id, esxi_hosts_count, ssh_authorized_keys, provisioning_subnet_id, vsphere_vlan_id, vmotion_vlan_id, vsan_vlan_id, nsx_v_tep_vlan_id, nsx_edge_v_tep_vlan_id, nsx_edge_uplink1_vlan_id, nsx_edge_uplink2_vlan_id, display_name, instance_display_name_prefix, is_hcx_enabled, hcx_vlan_id, workload_network_cidr, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -140,6 +142,12 @@ def create_sddc(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 
     if instance_display_name_prefix is not None:
         _details['instanceDisplayNamePrefix'] = instance_display_name_prefix
+
+    if is_hcx_enabled is not None:
+        _details['isHcxEnabled'] = is_hcx_enabled
+
+    if hcx_vlan_id is not None:
+        _details['hcxVlanId'] = hcx_vlan_id
 
     if workload_network_cidr is not None:
         _details['workloadNetworkCidr'] = workload_network_cidr
@@ -376,7 +384,7 @@ def list_supported_vmware_software_versions(ctx, from_json, all_pages, page_size
 
 **Important:** Updating an SDDC affects only certain attributes in the `Sddc` object and does not affect the VMware environment currently running in the SDDC. For more information, see [UpdateSddcDetails]. \n[Command Reference](updateSddc)""")
 @cli_util.option('--sddc-id', required=True, help=u"""The [OCID] of the SDDC.""")
-@cli_util.option('--display-name', help=u"""The [OCID] of the SDDC.""")
+@cli_util.option('--display-name', help=u"""The [OCID] of the SDDC. SDDC name requirements are 1-16 character length limit, Must start with a letter, Must be English letters, numbers, - only, No repeating hyphens, Must be unique within the region.""")
 @cli_util.option('--vmware-software-version', help=u"""The version of bundled VMware software that the Oracle Cloud VMware Solution will install on any new ESXi hosts that you add to this SDDC in the future.
 
 For the list of versions supported by the Oracle Cloud VMware Solution, see [ListSupportedVmwareSoftwareVersions]).""")
@@ -388,6 +396,7 @@ For the list of versions supported by the Oracle Cloud VMware Solution, see [Lis
 @cli_util.option('--nsx-edge-v-tep-vlan-id', help=u"""The [OCID] of the VLAN to use for the NSX Edge VTEP component of the VMware environment when adding new ESXi hosts to the SDDC.""")
 @cli_util.option('--nsx-edge-uplink1-vlan-id', help=u"""The [OCID] of the VLAN to use for the NSX Edge Uplink 1 component of the VMware environment when adding new ESXi hosts to the SDDC.""")
 @cli_util.option('--nsx-edge-uplink2-vlan-id', help=u"""The [OCID] of the VLAN to use for the NSX Edge Uplink 2 component of the VMware environment when adding new ESXi hosts to the SDDC.""")
+@cli_util.option('--hcx-vlan-id', help=u"""This id is editable only when hcxEnabled is true""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -404,7 +413,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'ocvp', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'ocvp', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'ocvp', 'class': 'Sddc'})
 @cli_util.wrap_exceptions
-def update_sddc(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, sddc_id, display_name, vmware_software_version, ssh_authorized_keys, vsphere_vlan_id, vmotion_vlan_id, vsan_vlan_id, nsx_v_tep_vlan_id, nsx_edge_v_tep_vlan_id, nsx_edge_uplink1_vlan_id, nsx_edge_uplink2_vlan_id, freeform_tags, defined_tags, if_match):
+def update_sddc(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, sddc_id, display_name, vmware_software_version, ssh_authorized_keys, vsphere_vlan_id, vmotion_vlan_id, vsan_vlan_id, nsx_v_tep_vlan_id, nsx_edge_v_tep_vlan_id, nsx_edge_uplink1_vlan_id, nsx_edge_uplink2_vlan_id, hcx_vlan_id, freeform_tags, defined_tags, if_match):
 
     if isinstance(sddc_id, six.string_types) and len(sddc_id.strip()) == 0:
         raise click.UsageError('Parameter --sddc-id cannot be whitespace or empty string')
@@ -449,6 +458,9 @@ def update_sddc(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_in
 
     if nsx_edge_uplink2_vlan_id is not None:
         _details['nsxEdgeUplink2VlanId'] = nsx_edge_uplink2_vlan_id
+
+    if hcx_vlan_id is not None:
+        _details['hcxVlanId'] = hcx_vlan_id
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
