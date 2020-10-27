@@ -37,6 +37,10 @@ from oci_cli import cli_exceptions
 from oci.retry import RetryStrategyBuilder
 
 
+def is_python2():
+    return sys.version_info[0] < 3
+
+
 # For namespace parameter within object storage commands, if not explicitly provided we make a SDK API call to
 # get the parameter. This removes the requirement for the parameter to be a required parameter.
 # Is this an object storage command? Check if the first level command is 'os' [oci os]
@@ -694,7 +698,7 @@ def object_put(ctx, from_json, namespace, bucket_name, name, file, if_match, con
 @objectstorage_cli.object_group.command(name='bulk-upload')
 @cli_util.option('-ns', '--namespace', '--namespace-name', 'namespace', required=True, help='Object Storage namespace.')
 @cli_util.option('-bn', '--bucket-name', required=True, help='The name of the bucket.')
-@cli_util.option('--src-dir', required=True, help='The directory which contains files to upload. Files in the directory and all subdirectories will be uploaded.')
+@cli_util.option('--src-dir', required=True, help='The directory which contains files to upload. Files in the directory and all subdirectories will be uploaded.', type=click.UNPROCESSED)
 @cli_util.option('--object-prefix', help='A prefix to apply to the names of all files being uploaded')
 @cli_util.option('--metadata', help='Arbitrary string keys and values for user-defined metadata. This will be applied to all files being uploaded. Must be in JSON format. Example: \'{"key1":"value1","key2":"value2"}\'')
 @cli_util.option('--content-type', help='The content type to apply to all files being uploaded. If content type is set to auto, then the CLI will guess the content type of the file.')
@@ -844,6 +848,8 @@ def object_bulk_put(ctx, from_json, namespace, bucket_name, src_dir, object_pref
                     continue
 
             object_name = normalize_object_name_path_for_object_storage(full_file_path[len(expanded_directory):])
+            if is_python2():
+                object_name = object_name.decode("utf-8")
 
             # If we start with a leading path separator (/), strip that from the object name so we get a hierarchy like:
             #    <subfolder1>/<subfolder2>/<object>
@@ -853,12 +859,11 @@ def object_bulk_put(ctx, from_json, namespace, bucket_name, src_dir, object_pref
                 object_name = object_name[1:]
 
             if object_prefix:
-                object_name = '{}{}'.format(object_prefix, object_name)
+                object_name = u'{}{}'.format(object_prefix, object_name)
 
             # If content type is set to auto, then the CLI will guess the content type of the file
             if auto_content_type:
                 base_kwargs['content_type'], _ = guess_type(object_name)
-
             try:
                 if not overwrite:
                     if len(file_list) > (idx + parallel_head_object_look_ahead_window):
@@ -868,7 +873,7 @@ def object_bulk_put(ctx, from_json, namespace, bucket_name, src_dir, object_pref
                             if look_ahead_object_name[0] == '/':
                                 look_ahead_object_name = look_ahead_object_name[1:]
                             if object_prefix:
-                                look_ahead_object_name = '{}{}'.format(object_prefix, look_ahead_object_name)
+                                look_ahead_object_name = u'{}{}'.format(object_prefix, look_ahead_object_name)
 
                             if look_ahead_object_name not in head_object_results:
                                 head_object_kwargs = {
@@ -878,12 +883,16 @@ def object_bulk_put(ctx, from_json, namespace, bucket_name, src_dir, object_pref
                                     'opc_client_request_id': client_request_id
                                 }
                                 head_object_results[look_ahead_object_name] = transfer_manager.head_object(WorkPoolTaskCallbacksContainer(), **head_object_kwargs)
+                    if is_python2():
+                        object_name = object_name.encode("utf-8")
 
                     # Pull the result from the future (this will block until the result is available) or, if we don't have a future, just make a request
                     if object_name in head_object_results:
                         head_object = head_object_results.pop(object_name).result()
                     else:
                         head_object = _make_retrying_head_object_call(client, namespace, bucket_name, object_name, client_request_id)
+                    if is_python2():
+                        object_name = object_name.decode("utf-8")
 
                     if head_object is None:
                         # Object does not exist, so make sure that the put fails if one is created in the meantime.
@@ -894,7 +903,7 @@ def object_bulk_put(ctx, from_json, namespace, bucket_name, src_dir, object_pref
                             continue
 
                         base_kwargs['if_match'] = head_object.headers['etag']
-                        if not click.confirm('WARNING: {} already exists. Are you sure you want to overwrite it?'.format(object_name)):
+                        if not click.confirm(u'WARNING: {} already exists. Are you sure you want to overwrite it?'.format(object_name)):
                             output.add_skipped(object_name)
                             continue
 
@@ -902,7 +911,7 @@ def object_bulk_put(ctx, from_json, namespace, bucket_name, src_dir, object_pref
                     file_size = os.fstat(file_object.fileno()).st_size
 
                 if ctx.obj['debug']:
-                    update_progress_kwargs = {'message': 'Uploaded {}'.format(object_name)}
+                    update_progress_kwargs = {'message': u'Uploaded {}'.format(object_name)}
                     update_progress_callback = WorkPoolTaskCallback(_print_to_console, **update_progress_kwargs)
                 else:
                     update_progress_kwargs = {'new_label': _get_progress_bar_label(None, object_name, 'Uploaded')}
@@ -924,6 +933,9 @@ def object_bulk_put(ctx, from_json, namespace, bucket_name, src_dir, object_pref
                 if not ctx.obj['debug']:
                     base_kwargs['multipart_part_completion_callback'] = BulkOperationMultipartUploadProgressBar(reusable_progress_bar, file_size, _get_progress_bar_label(None, object_name, 'Uploading part for')).update
 
+                if is_python2():
+                    object_name = object_name.encode("utf-8")
+
                 transfer_manager.upload_object(callbacks_container, namespace, bucket_name, object_name, full_file_path, file_size, verify_checksum, **base_kwargs)
 
                 # These can vary per request, so remove them if they exist so we have a blank slate for the next iteration
@@ -936,7 +948,7 @@ def object_bulk_put(ctx, from_json, namespace, bucket_name, src_dir, object_pref
                 output.add_failure(object_name, callback_exception=e)
 
                 if ctx.obj['debug']:
-                    click.echo('Failed to upload {}'.format(object_name), file=sys.stderr)
+                    click.echo(u'Failed to upload {}'.format(object_name), file=sys.stderr)
 
     transfer_manager.wait_for_completion()
     reusable_progress_bar.render_finish()
@@ -1256,7 +1268,7 @@ def object_bulk_get(ctx, from_json, namespace, bucket_name, prefix, delimiter, d
                     continue
 
                 if not overwrite:
-                    confirm = click.prompt('WARNING: {} already exists. Are you sure you want to overwrite it? [y/N/yes to (a)ll]'.format(object_name), default='N', type=custom_types.CliCaseInsensitiveChoice(["Y", "N", "A"]))
+                    confirm = click.prompt(u'WARNING: {} already exists. Are you sure you want to overwrite it? [y/N/yes to (a)ll]'.format(object_name), default='N', type=custom_types.CliCaseInsensitiveChoice(["Y", "N", "A"]))
                     if confirm == 'N':
                         output.add_skipped(object_name)
                         continue
@@ -1284,14 +1296,14 @@ def object_bulk_get(ctx, from_json, namespace, bucket_name, prefix, delimiter, d
                 get_object_kwargs = {
                     'namespace': namespace,
                     'bucket_name': bucket_name,
-                    'object_name': object_name,
+                    'object_name': object_name.encode("utf-8") if is_python2() else object_name,
                     'full_file_path': full_file_path,
                     'request_id': ctx.obj['request_id']
                 }
                 get_object_kwargs.update(encryption_key_params)
 
                 if ctx.obj['debug']:
-                    update_progress_kwargs = {'message': 'Downloaded {}'.format(object_name)}
+                    update_progress_kwargs = {'message': u'Downloaded {}'.format(object_name)}
                     update_progress_callback = WorkPoolTaskCallback(_print_to_console, **update_progress_kwargs)
                 else:
                     update_progress_kwargs = {'new_label': _get_progress_bar_label(None, object_name, 'Downloaded')}
@@ -1303,7 +1315,7 @@ def object_bulk_get(ctx, from_json, namespace, bucket_name, prefix, delimiter, d
                 callbacks_container = WorkPoolTaskCallbacksContainer(completion_callbacks=[update_progress_callback], error_callbacks=[add_to_download_failures_callback])
 
                 if ctx.obj['debug']:
-                    click.echo('Downloading {} to {}'.format(object_name, full_file_path), file=sys.stderr)
+                    click.echo(u'Downloading {} to {}'.format(object_name, full_file_path), file=sys.stderr)
                 else:
                     reusable_progress_bar.reset_progress(100, _get_progress_bar_label(None, object_name, 'Downloading'))
 
@@ -1339,7 +1351,7 @@ def object_bulk_get(ctx, from_json, namespace, bucket_name, prefix, delimiter, d
                 output.add_failure(object_name, callback_exception=e)
 
                 if ctx.obj['debug']:
-                    click.echo('Failed to download {}'.format(object_name), file=sys.stderr)
+                    click.echo(u'Failed to download {}'.format(object_name), file=sys.stderr)
 
         # Keep going if we have more pages
         kwargs['start'] = next_start
@@ -1545,24 +1557,24 @@ def object_bulk_delete(ctx, from_json, namespace, bucket_name, prefix, delimiter
 
     objects_to_delete = []
     for response in list_objects_responses:
-        objects_to_delete.extend(map(lambda obj: obj.name, response.data.objects))
+        objects_to_delete.extend(map(lambda obj: obj.name.encode("utf-8") if is_python2() else obj.name, response.data.objects))
 
     if not force:
         if include or exclude:
             # If we specify this, the approximate or exact objects to delete is not determinable without paging through the entire list (e.g. in the
             # case that the only matching items are on the last few pages). So in this case just use a generic message
-            confirm_prompt = 'WARNING: This command will delete all matching objects in the bucket. Please use --dry-run to list the objects which would be deleted. Are you sure you wish to continue?'
+            confirm_prompt = u'WARNING: This command will delete all matching objects in the bucket. Please use --dry-run to list the objects which would be deleted. Are you sure you wish to continue?'
         else:
             if list_objects_responses[-1].data.next_start_with:
                 # There are more pages of data
-                confirm_prompt = 'WARNING: This command will delete at least {} objects. Are you sure you wish to continue?'.format(len(objects_to_delete))
+                confirm_prompt = u'WARNING: This command will delete at least {} objects. Are you sure you wish to continue?'.format(len(objects_to_delete))
             else:
                 if len(objects_to_delete) == 0:
                     # There are no objects anyway, so just terminate here
-                    click.echo('There are no objects to delete in {}'.format(bucket_name), file=sys.stderr)
+                    click.echo(u'There are no objects to delete in {}'.format(bucket_name), file=sys.stderr)
                     ctx.exit()
                 else:
-                    confirm_prompt = 'WARNING: This command will delete {} objects. Are you sure you wish to continue?'.format(len(objects_to_delete))
+                    confirm_prompt = u'WARNING: This command will delete {} objects. Are you sure you wish to continue?'.format(len(objects_to_delete))
 
         if not click.confirm(confirm_prompt):
             ctx.abort()
@@ -1579,11 +1591,12 @@ def object_bulk_delete(ctx, from_json, namespace, bucket_name, prefix, delimiter
                     continue
 
             try:
+
                 if ctx.obj['debug']:
-                    update_progress_kwargs = {'message': 'Deleted {}'.format(obj)}
+                    update_progress_kwargs = {'message': u"Deleted {}".format(obj)}
                     update_progress_callback = WorkPoolTaskCallback(_print_to_console, **update_progress_kwargs)
                 else:
-                    update_progress_kwargs = {'new_label': _get_progress_bar_label(None, obj, 'Deleted')}
+                    update_progress_kwargs = {'new_label': _get_progress_bar_label(None, obj.decode("utf-8") if is_python2() else obj, 'Deleted')}
                     update_progress_callback = WorkPoolTaskCallback(reusable_progress_bar.update_label_to_end, **update_progress_kwargs)
 
                 add_to_deleted_kwargs = {'deleted': obj}
@@ -1602,10 +1615,9 @@ def object_bulk_delete(ctx, from_json, namespace, bucket_name, prefix, delimiter
                 }
 
                 if ctx.obj['debug']:
-                    click.echo('Deleting {}'.format(obj), file=sys.stderr)
+                    click.echo(u'Deleting {}'.format(obj), file=sys.stderr)
                 else:
-                    reusable_progress_bar.reset_progress(100, _get_progress_bar_label(None, obj, 'Deleting'))
-
+                    reusable_progress_bar.reset_progress(100, _get_progress_bar_label(None, obj.decode("utf-8") if is_python2() else obj, 'Deleting'))
                 transfer_manager.delete_object(callbacks_container, **delete_kwargs)
             except Exception as e:
                 # Don't let one get failure fail the entire batch, but store the error for output later
@@ -1633,7 +1645,7 @@ def object_bulk_delete(ctx, from_json, namespace, bucket_name, prefix, delimiter
                 delimiter=delimiter,
                 fields='name'
             )
-            objects_to_delete.extend(map(lambda obj: obj.name, list_objects_response.data.objects))
+            objects_to_delete.extend(map(lambda obj: obj.name.encode("utf-8") if is_python2() else obj.name, list_objects_response.data.objects))
             next_start_with = list_objects_response.data.next_start_with
 
     transfer_manager.wait_for_completion()
@@ -2490,7 +2502,7 @@ def _get_progress_bar_label(original_label, object_name, prefix='Processing'):
         else:
             object_name_to_use = object_name
 
-        formatted_progress_bar_label = '{} {}'.format(prefix, object_name_to_use)
+        formatted_progress_bar_label = u'{} {}'.format(prefix, object_name_to_use)
 
     return formatted_progress_bar_label
 

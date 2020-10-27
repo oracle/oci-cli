@@ -15,6 +15,7 @@ import string
 from tests import util
 from tests import test_config_container
 from mimetypes import guess_type
+import sys
 
 
 OBJECTS_TO_CREATE_IN_BUCKET_FOR_BULK_GET = 100
@@ -41,6 +42,10 @@ bulk_put_large_files = set()
 bulk_put_mid_sized_files = set()
 root_bulk_put_folder = None
 bulk_put_bucket_name = None
+
+
+def is_python2():
+    return sys.version_info[0] < 3
 
 
 @pytest.fixture
@@ -289,6 +294,7 @@ def test_get_multipart(object_storage_client, test_id):
     util.create_large_file(os.path.join(large_file_root_dir, '4.bin'), LARGE_CONTENT_FILE_SIZE_IN_MEBIBYTES)
     util.create_large_file(os.path.join(large_file_root_dir, '5.bin'), LARGE_CONTENT_FILE_SIZE_IN_MEBIBYTES)
     util.create_large_file(os.path.join(large_file_root_dir, '6.bin'), 1)  # Creates a 1 MiB file for variety
+    util.create_large_file(os.path.join(large_file_root_dir, '한글'), 1)  # Creates a 1 MiB file for variety
 
     invoke([
         'os', 'object', 'bulk-upload',
@@ -301,13 +307,14 @@ def test_get_multipart(object_storage_client, test_id):
 
     invoke(['os', 'object', 'bulk-download', '--namespace', util.NAMESPACE, '--bucket-name', create_bucket_request.name, '--download-dir', large_file_verify_dir, '--multipart-download-threshold', '128'])
 
-    assert get_count_of_files_in_folder_and_subfolders(large_file_verify_dir) == 6
+    assert get_count_of_files_in_folder_and_subfolders(large_file_verify_dir) == 7
     assert filecmp.cmp(os.path.join(large_file_root_dir, '1.bin'), os.path.join(large_file_verify_dir, '1.bin'))
     assert filecmp.cmp(os.path.join(large_file_root_dir, '2.bin'), os.path.join(large_file_verify_dir, '2.bin'))
     assert filecmp.cmp(os.path.join(large_file_root_dir, '3.bin'), os.path.join(large_file_verify_dir, '3.bin'))
     assert filecmp.cmp(os.path.join(large_file_root_dir, '4.bin'), os.path.join(large_file_verify_dir, '4.bin'))
     assert filecmp.cmp(os.path.join(large_file_root_dir, '5.bin'), os.path.join(large_file_verify_dir, '5.bin'))
     assert filecmp.cmp(os.path.join(large_file_root_dir, '6.bin'), os.path.join(large_file_verify_dir, '6.bin'))
+    assert filecmp.cmp(os.path.join(large_file_root_dir, '한글'), os.path.join(large_file_verify_dir, '한글'))
 
     shutil.rmtree(large_file_root_dir)
     shutil.rmtree(large_file_verify_dir)
@@ -1207,7 +1214,7 @@ def delete_bucket_and_all_items(object_storage_client, bucket_name):
     )
     for response in list_object_responses:
         for obj in response.data.objects:
-            object_storage_client.delete_object(util.NAMESPACE, bucket_name, obj.name)
+            object_storage_client.delete_object(util.NAMESPACE, bucket_name, obj.name.encode("utf-8") if is_python2() else obj.name)
     object_storage_client.delete_bucket(util.NAMESPACE, bucket_name)
 
 

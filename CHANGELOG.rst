@@ -6,6 +6,40 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.14.2 - 2020-10-27
+-------------------
+Added
+~~~~~
+
+* Support for Compute Instance Agent Service
+
+  * ``oci instance-agent``
+
+* Support for Key Store Resource representing Oracle Key Vault Instances in Database Service
+
+  * ``oci db key-store``
+
+* Support for customer managed key store in Autonomous Container Databases in Database Service
+
+  * ``oci db autonomous-container-database create --key-store-id``
+
+Changed
+~~~~~~~
+
+* Installation script will prompt users to upgrade to Python 3 if Python 2 is installed
+
+Fixed
+~~~~~
+
+* Unicode errors for bulk object operations in Object Storage Service
+
+  * ``oci os object bulk-upload | bulk-download | bulk-delete``
+
+* Documentation fixes for Logging Search Service
+
+  * ``oci logging-search``
+
+
 2.14.1 - 2020-10-20
 --------------------
 Added

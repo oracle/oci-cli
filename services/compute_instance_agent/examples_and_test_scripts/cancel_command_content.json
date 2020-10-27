@@ -1,0 +1,9 @@
+{
+  "source": {
+    "sourceType": "TEXT",
+    "text": "echo 'Starting sleep for 5 minutes'; sleep 300; echo 'Done'"
+  },
+  "output": {
+    "outputType": "TEXT"
+  }
+}

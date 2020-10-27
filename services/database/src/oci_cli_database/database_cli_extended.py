@@ -1344,3 +1344,88 @@ For information about access control and compartments, see Overview of the Ident
 For information about availability domains, see [Regions and Availability Domains].
 To get a list of availability domains, use the `ListAvailabilityDomains` operation in the Identity Service API.
 **Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
+
+
+# DEX-9777 Key store command changes
+# Key store - hide basic create. Shorten the create okv command. (create-key-store-key-store-type-from-oracle-key-vault-details -> create-oracle-key-vault-details)
+database_cli.key_store_group.commands.pop(database_cli.create_key_store.name)
+cli_util.rename_command(database_cli, database_cli.key_store_group, database_cli.create_key_store_key_store_type_from_oracle_key_vault_details, "create-oracle-key-vault-details")
+
+# Key store - hide basic update. Shorten the update okv command. (update-key-store-key-store-type-from-oracle-key-vault-details -> update-oracle-key-vault-details)
+database_cli.key_store_group.commands.pop(database_cli.update_key_store.name)
+cli_util.rename_command(database_cli, database_cli.key_store_group, database_cli.update_key_store_key_store_type_from_oracle_key_vault_details, "update-oracle-key-vault-details")
+
+# Add key store list command to key_store_group (oci db key-store-summary list-key-stores -> oci db key-store list)
+database_cli.db_root_group.commands.pop(database_cli.key_store_summary_group.name)
+cli_util.rename_command(database_cli, database_cli.key_store_summary_group, database_cli.list_key_stores, "list")
+database_cli.key_store_group.add_command(database_cli.list_key_stores)
+
+
+# Rename create Key store params that start with type-details to shorten the names
+@cli_util.copy_params_from_generated_command(database_cli.create_key_store_key_store_type_from_oracle_key_vault_details, params_to_exclude=['type_details_connection_ips', 'type_details_admin_username', 'type_details_vault_id', 'type_details_secret_id'])
+@cli_util.option('--connection-ips', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of Oracle Key Vault connection IP addresses.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--admin-username', required=True, help=u"""The administrator username to connect to Oracle Key Vault""")
+@cli_util.option('--vault-id', required=True, help=u"""The [OCID] of the Oracle Cloud Infrastructure [vault].""")
+@cli_util.option('--secret-id', required=True, help=u"""The [OCID] of the Oracle Cloud Infrastructure [secret].""")
+@database_cli.key_store_group.command(name='create-oracle-key-vault-details', help=database_cli.create_key_store_key_store_type_from_oracle_key_vault_details.help)
+@click.pass_context
+@json_skeleton_utils.get_cli_json_input_option({'connection-ips': {'module': 'database', 'class': 'list[string]'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'connection-ips': {'module': 'database', 'class': 'list[string]'}}, output_type={'module': 'database', 'class': 'KeyStore'})
+@cli_util.wrap_exceptions
+def create_okv_keystore(ctx, **kwargs):
+    if 'connection_ips' in kwargs and kwargs['connection_ips']:
+        kwargs['type_details_connection_ips'] = cli_util.parse_json_parameter("connection_ips", kwargs['connection_ips'])
+
+    del kwargs['connection_ips']
+
+    if 'admin_username' in kwargs and kwargs['admin_username']:
+        kwargs['type_details_admin_username'] = kwargs['admin_username']
+
+    del kwargs['admin_username']
+
+    if 'vault_id' in kwargs and kwargs['vault_id']:
+        kwargs['type_details_vault_id'] = kwargs['vault_id']
+
+    del kwargs['vault_id']
+
+    if 'secret_id' in kwargs and kwargs['secret_id']:
+        kwargs['type_details_secret_id'] = kwargs['secret_id']
+
+    del kwargs['secret_id']
+
+    ctx.invoke(database_cli.create_key_store_key_store_type_from_oracle_key_vault_details, **kwargs)
+
+
+# DEX-9777 Rename update Key store params starting with type-details to shorten the names
+@cli_util.copy_params_from_generated_command(database_cli.update_key_store_key_store_type_from_oracle_key_vault_details, params_to_exclude=['type_details_connection_ips', 'type_details_admin_username', 'type_details_vault_id', 'type_details_secret_id'])
+@cli_util.option('--connection-ips', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of Oracle Key Vault connection IP addresses.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--admin-username', required=True, help=u"""The administrator username to connect to Oracle Key Vault""")
+@cli_util.option('--vault-id', required=True, help=u"""The [OCID] of the Oracle Cloud Infrastructure [vault].""")
+@cli_util.option('--secret-id', required=True, help=u"""The [OCID] of the Oracle Cloud Infrastructure [secret].""")
+@database_cli.key_store_group.command(name='update-oracle-key-vault-details', help=database_cli.update_key_store_key_store_type_from_oracle_key_vault_details.help)
+@click.pass_context
+@json_skeleton_utils.get_cli_json_input_option({'connection-ips': {'module': 'database', 'class': 'list[string]'}})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'connection-ips': {'module': 'database', 'class': 'list[string]'}}, output_type={'module': 'database', 'class': 'KeyStore'})
+@cli_util.wrap_exceptions
+def update_okv_keystore(ctx, **kwargs):
+    if 'connection_ips' in kwargs and kwargs['connection_ips']:
+        kwargs['type_details_connection_ips'] = cli_util.parse_json_parameter("connection_ips", kwargs['connection_ips'])
+
+    del kwargs['connection_ips']
+
+    if 'admin_username' in kwargs and kwargs['admin_username']:
+        kwargs['type_details_admin_username'] = kwargs['admin_username']
+
+    del kwargs['admin_username']
+
+    if 'vault_id' in kwargs and kwargs['vault_id']:
+        kwargs['type_details_vault_id'] = kwargs['vault_id']
+
+    del kwargs['vault_id']
+
+    if 'secret_id' in kwargs and kwargs['secret_id']:
+        kwargs['type_details_secret_id'] = kwargs['secret_id']
+
+    del kwargs['secret_id']
+
+    ctx.invoke(database_cli.update_key_store_key_store_type_from_oracle_key_vault_details, **kwargs)

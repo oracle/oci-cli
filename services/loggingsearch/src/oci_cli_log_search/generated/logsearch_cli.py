@@ -15,13 +15,13 @@ from oci_cli import custom_types  # noqa: F401
 from oci_cli.aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('logging_search.logging_search_root_group.command_name', 'logging-search'), cls=CommandGroupWithAlias, help=cli_util.override('logging_search.logging_search_root_group.help', """Search for logs in your compartements / log groups / log objects."""), short_help=cli_util.override('logging_search.logging_search_root_group.short_help', """Logging Search API"""))
+@cli.command(cli_util.override('logging_search.logging_search_root_group.command_name', 'logging-search'), cls=CommandGroupWithAlias, help=cli_util.override('logging_search.logging_search_root_group.help', """Search for logs in your compartments, log groups, and log objects."""), short_help=cli_util.override('logging_search.logging_search_root_group.short_help', """Logging Search API"""))
 @cli_util.help_option_group
 def logging_search_root_group():
     pass
 
 
-@click.command(cli_util.override('logging_search.search_result_group.command_name', 'search-result'), cls=CommandGroupWithAlias, help="""A log search result entry""")
+@click.command(cli_util.override('logging_search.search_result_group.command_name', 'search-result'), cls=CommandGroupWithAlias, help="""A log search result entry.""")
 @cli_util.help_option_group
 def search_result_group():
     pass
@@ -33,7 +33,7 @@ logging_search_root_group.add_command(search_result_group)
 @search_result_group.command(name=cli_util.override('logging_search.search_logs.command_name', 'search-logs'), help=u"""Submit a query to search logs. \n[Command Reference](searchLogs)""")
 @cli_util.option('--time-start', required=True, type=custom_types.CLI_DATETIME, help=u"""Start filter log's date and time, in the format defined by RFC3339.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-end', required=True, type=custom_types.CLI_DATETIME, help=u"""End filter log's date and time, in the format defined by RFC3339.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--search-query', required=True, help=u"""Query corresponding to the search operation. This query is parsed and validated before execution and should follow the spec. For query language specification see: https://docs.cloud.oracle.com/iaas/Content/Logging/Reference/query_language_specification.htm""")
+@cli_util.option('--search-query', required=True, help=u"""Query corresponding to the search operation. This query is parsed and validated before execution and should follow the specification. For more information on the query language specification, see [Logging Query Language Specification].""")
 @cli_util.option('--is-return-field-info', type=click.BOOL, help=u"""Whether to return field schema information for the log stream specified in searchQuery.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call. For information about pagination, see [List Pagination].""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call. For information about pagination, see [List Pagination].""")
