@@ -35,7 +35,7 @@ requires = [
     'certifi',
     'click==6.7',
     'configparser==4.0.2',
-    'cryptography==2.8',
+    'cryptography==3.2',
     'jmespath==0.10.0',
     'python-dateutil>=2.5.3,<3.0.0',
     'pytz>=2016.10',

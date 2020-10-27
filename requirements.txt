@@ -9,7 +9,7 @@ cffi>=1.9.1
 click==6.7
 configparser==4.0.2
 coverage==4.5.2
-cryptography==2.8
+cryptography==3.2
 httpsig-cffi==15.0.0
 Jinja2==2.10.1
 jmespath==0.10.0
