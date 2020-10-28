@@ -123,14 +123,29 @@ function VerifyPythonExecutableMeetsMinimumRequirements {
     }
 
     if (VersionMeetsMinimumRequirements $PythonVersion $MinVersionToCheck) {
+        # If there is a valid python and it is not python 3
+        if ( (-Not $AcceptAllDefaults) -And $PythonVersion.StartsWith("2") -And ($MinVersionToCheck -ne $MinValidPython3Version)){
+            $message  = 'OCI-CLI recommends python 3. Do you want to install Python 3?'
+            $question = 'Install Python 3 now? (Entering "n" will install OCI CLI using existing Python 2)'
+
+            $choices = New-Object Collections.ObjectModel.Collection[Management.Automation.Host.ChoiceDescription]
+            $choices.Add((New-Object Management.Automation.Host.ChoiceDescription -ArgumentList '&Yes'))
+            $choices.Add((New-Object Management.Automation.Host.ChoiceDescription -ArgumentList '&No'))
+
+            $decision = $Host.UI.PromptForChoice($message, $question, $choices, 0)
+            if ($decision -eq 0) {
+                LogOutput 'Upgrading Python to Python 3...'
+                return $false
+            }
+        }
         return $true
     }
-    
+
     LogOutput "$PythonExecutable Python version $PythonVersion is below minimum required version $MinVersionToCheck"
     return $false
 }
 
-#  Finds the most recent version of Python installed in the registry and returns 
+#  Finds the most recent version of Python installed in the registry and returns
 #  the path for python.exe for that install (or $null if no install exists).
 #  Documentation on the registry structure: https://www.python.org/dev/peps/pep-0514/
 function FindLatestPythonExecutableInRegistry {
@@ -152,7 +167,7 @@ function FindLatestPythonExecutableInRegistry {
                    return Join-Path $PythonInstallLocation "python.exe"
                }
            }
-        }  
+        }
     }
 
     return $PythonExecutable
@@ -166,7 +181,7 @@ function DownloadFile($Uri, $OutFile) {
     }
     else {
         (New-Object System.Net.WebClient).DownloadFile($Uri, $OutFile)
-    } 
+    }
 }
 
 function DownloadAndRunPythonExeInstaller($PythonInstallLocation, $Version) {
@@ -299,7 +314,7 @@ Try {
         # (e.g. C:\Users\{USER}\Python)
         if (-Not $PythonInstallLocation)
         {
-            Try 
+            Try
             {
                 $PythonInstallLocation = Join-Path (Get-ChildItem Env:\USERPROFILE).Value "Python"
             }
@@ -321,7 +336,7 @@ Try {
             }
             else {
                 DownloadAndRunPythonExeInstaller -PythonInstallLocation $PythonInstallLocation -Version $PythonVersionToInstall
-            }    
+            }
         }
         Catch
         {

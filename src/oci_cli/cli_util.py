@@ -359,7 +359,10 @@ def create_config_and_signer_based_on_click_context(ctx):
     try:
         config.validate_config(client_config, **kwargs)
     except exceptions.InvalidConfig as bad_config:
-        table = render_config_errors(bad_config)
+        if type(bad_config.errors) != str:
+            table = render_config_errors(bad_config)
+        else:
+            table = bad_config.errors
         template = "ERROR: The config file at {config_file} is invalid:\n\n{errors}"
         sys.exit(template.format(
             config_file=ctx.obj['config_file'],

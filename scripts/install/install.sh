@@ -14,6 +14,7 @@ SHELL_INSTALL_SCRIPT_URL="https://raw.githubusercontent.com/oracle/oci-cli/maste
 INSTALL_SCRIPT_URL="https://raw.githubusercontent.com/oracle/oci-cli/v2.12.7/scripts/install/install.py"
 FALLBACK_INSTALL_SCRIPT_URL="https://raw.githubusercontent.com/oracle/oci-cli/v2.12.4/scripts/install/install.py"
 _TTY=/dev/tty
+NO_TTY_REQUIRED=false
 
 # Below is the usage text to be printed when --help is invoked on this script.
 usage="$(basename "$0") [--help] [--accept-all-defaults] [--python-install-location directory_name] [--optional-features feature1,feature2]
@@ -243,9 +244,29 @@ if [ $? -eq 0 ]; then
     if [ $? -eq 0 ]; then
         # if python is installed and meets the version requirements then we dont need to install it
         need_to_install_python=false
+        # if valid python, check if system doesn't have python 3 installed
+
+        command -v python3 >/dev/null 2>&1
+        if [ $? -eq 1 ]; then
+            # Ask user if they would like to upgrade python 2 to python 3
+            if [ "${ACCEPT_ALL_DEFAULTS}" != "true" ] && [ "${NO_TTY_REQUIRED}" == "false" ]; then
+                while true
+                do
+                  read -p "Would you like to upgrade to Python 3? Please enter Y or N. " answer
+                  case $answer in
+                   [yY]* ) echo "Installing Python 3...";
+                      need_to_install_python=true;
+                      python_exe=python3; break;;
+                   [nN]* ) break;;
+                   * )     echo "Please enter Y or N !";;
+                  esac
+                done
+            fi
+        fi
     else
         echo "System version of Python must be either a Python 2 version >= 2.7.5 or a Python 3 version >= 3.5.0."
     fi
+
 else
     echo "Python not found on system PATH"
 fi
@@ -336,10 +357,10 @@ fi
 chmod 775 $install_script
 echo "Running install script."
 echo "$python_exe $install_script $install_args"
-if [ "${ACCEPT_ALL_DEFAULTS}" == "true" ] || [ "${NO_TTY_REQUIRED}" == "true" ];then
+if [ "${NO_TTY_REQUIRED}" == "false" ];then
+    $python_exe $install_script $install_args < $_TTY
+else
     # By removing the tty requirement, users will be able to install non-interactively over ssh
     # and in docker containers more easily.
     $python_exe $install_script $install_args
-else
-    $python_exe $install_script $install_args < $_TTY
 fi
