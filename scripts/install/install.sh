@@ -357,10 +357,10 @@ fi
 chmod 775 $install_script
 echo "Running install script."
 echo "$python_exe $install_script $install_args"
-if [ "${NO_TTY_REQUIRED}" == "false" ];then
-    $python_exe $install_script $install_args < $_TTY
-else
+if [ "${ACCEPT_ALL_DEFAULTS}" == "true" ] || [ "${NO_TTY_REQUIRED}" == "true" ];then
     # By removing the tty requirement, users will be able to install non-interactively over ssh
     # and in docker containers more easily.
     $python_exe $install_script $install_args
+else
+    $python_exe $install_script $install_args < $_TTY
 fi
