@@ -6,6 +6,16 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.14.3 - 2020-10-29
+-------------------
+Fixed
+~~~~~
+
+* Upgraded version of OCI Python SDK to fix Object Storage Service issue. Please see `github issue #300 <https://github.com/oracle/oci-python-sdk/issues/300>`_ for more details.
+
+* Bug in installation script for --accept-all-defaults installs with TTY (`Pull Request <https://github.com/oracle/oci-cli/pull/344/files>`__)
+
+
 2.14.2 - 2020-10-27
 -------------------
 Added
