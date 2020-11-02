@@ -60,6 +60,18 @@ def is_ubuntu_or_debian():
     return linux_distribution_name and any(x in linux_distribution_name for x in ['ubuntu', 'debian'])
 
 
+def get_ubuntu_version():
+    try:
+        with open("/etc/os-release") as f:
+            d = {}
+            for line in f:
+                k, v = line.rstrip().split("=")
+                d[k.lower()] = v.strip('"')
+        return d["version_id"] if d["name"] == "Ubuntu" else None
+    except Exception as e:
+        return None
+
+
 optional_feature_list = ['db (will install cx_Oracle)']
 
 ACCEPT_ALL_DEFAULTS = False
@@ -540,6 +552,23 @@ def verify_install_dir_exec_path_conflict(install_dir, exec_path):
         raise CLIInstallError("The executable file '{}' would clash with the install directory of '{}'. Choose either a different install directory or directory to place the executable.".format(exec_path, install_dir))
 
 
+# installed python3-dev as oci_cli[db] was failing on ubuntu 20.4
+# failing command: ./install.sh ... --optional-features db
+
+
+def install_native_dependencies_for_ubuntu():
+    ubuntu_version = get_ubuntu_version()
+    if ubuntu_version is None or ubuntu_version != "20.04":
+        return
+    print_status('Installing native dependencies for Ubuntu.')
+    is_python3 = sys.version_info[0] == 3
+    python_dep = 'python3-dev' if is_python3 else 'python-dev'
+    dep_list = ['libssl-dev', 'libffi-dev', python_dep, 'build-essential']
+    cmd = ['sudo', 'apt-get', '--assume-yes', 'install']
+    cmd.extend(dep_list)
+    exec_command(cmd)
+
+
 def main():
     parser = argparse.ArgumentParser(description='Install Oracle Cloud Infrastructure CLI.')
     parser.add_argument('--accept-all-defaults', action='store_true',
@@ -606,6 +635,8 @@ def main():
     dbaas_exec_path = os.path.join(script_dir, DBAAS_SCRIPT_NAME)
     verify_install_dir_exec_path_conflict(install_dir, oci_exec_path)
     create_virtualenv(tmp_dir, install_dir)
+    if OPTIONAL_FEATURES:
+        install_native_dependencies_for_ubuntu()
     install_cli(install_dir, tmp_dir, args.oci_cli_version, OPTIONAL_FEATURES)
 
     if DRY_RUN:

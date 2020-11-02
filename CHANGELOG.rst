@@ -6,6 +6,30 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.14.4 - 2020-11-03
+-------------------
+Added
+~~~~~
+* Support for calling Oracle Cloud Infrastructure services in the Cardiff region (``--region uk-cardiff-1``)
+
+* Support for the Organizations service
+
+  * ``oci organizations``
+
+* Support for the Optimizer service
+
+  * ``oci optimizer``
+
+* Support for tenancy ID and name on responses in the Usage service
+
+* Support for specifying a syslog URL for applications in the Functions service
+
+  * ``oci fn application create --syslog-url``
+
+* Support for creation of always-free NoSQL database tables in the NoSQL Database service
+
+  * ``oci nosql table create`` has a new option ``--is-auto-reclaimable`` to request the creation of a free table. 
+
 2.14.3 - 2020-10-29
 -------------------
 Fixed

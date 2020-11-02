@@ -2016,7 +2016,7 @@ def build_query_expression(ctx):
                         'using double quotes inside single quotes.\ne.g. --query \'data[*]."display-name"\'',  # noqa: E127
                         file=sys.stderr)
             click.echo('If using PowerShell in Windows environment, escaping can be done by using double quotes'  # noqa: W605
-                        'with double escape character \`.\ne.g. --query data[*].\`"display-name\`"',  # noqa: E127
+                        'with double escape character \`.\ne.g. --query data[*].\`"display-name\`"',  # noqa: E127, W605
                         file=sys.stderr)
         raise
     return expression

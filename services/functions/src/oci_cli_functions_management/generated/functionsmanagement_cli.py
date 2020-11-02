@@ -78,6 +78,9 @@ def change_application_compartment(ctx, from_json, application_id, compartment_i
 Example: `{\"MY_FUNCTION_CONFIG\": \"ConfVal\"}`
 
 The maximum size for all configuration keys and values is limited to 4KB. This is measured as the sum of octets necessary to represent each key and value in UTF-8.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--syslog-url', help=u"""A syslog URL to which to send all function logs. Supports tcp, udp, and tcp+tls. The syslog URL must be reachable from all of the subnets configured for the application. Note: If you enable the OCI Logging service for this application, the syslogUrl value is ignored. Function logs are sent to the OCI Logging service, and not to the syslog URL.
+
+Example: `tcp://logserver.myserver:1234`""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -92,7 +95,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'config': {'module': 'functions', 'class': 'dict(str, string)'}, 'subnet-ids': {'module': 'functions', 'class': 'list[string]'}, 'freeform-tags': {'module': 'functions', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'functions', 'class': 'Application'})
 @cli_util.wrap_exceptions
-def create_application(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, subnet_ids, config, freeform_tags, defined_tags):
+def create_application(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, subnet_ids, config, syslog_url, freeform_tags, defined_tags):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -104,6 +107,9 @@ def create_application(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
     if config is not None:
         _details['config'] = cli_util.parse_json_parameter("config", config)
+
+    if syslog_url is not None:
+        _details['syslogUrl'] = syslog_url
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
@@ -405,7 +411,7 @@ Default: 10""")
 @cli_util.option('--page', help=u"""The pagination token for a list query returned by a previous operation""")
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), help=u"""A filter to return only applications that match the lifecycle state in this parameter. Example: `Creating`""")
 @cli_util.option('--display-name', help=u"""A filter to return only applications with display names that match the display name string. Matching is exact.""")
-@cli_util.option('--id', help=u"""A filter to return only applications with the specfied OCID.""")
+@cli_util.option('--id', help=u"""A filter to return only applications with the specified OCID.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""Specifies sort order.
 
 * **ASC:** Ascending sort order. * **DESC:** Descending sort order.""")
@@ -546,6 +552,9 @@ def list_functions(ctx, from_json, all_pages, page_size, application_id, limit, 
 Example: `{\"MY_FUNCTION_CONFIG\": \"ConfVal\"}`
 
 The maximum size for all configuration keys and values is limited to 4KB. This is measured as the sum of octets necessary to represent each key and value in UTF-8.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--syslog-url', help=u"""A syslog URL to which to send all function logs. Supports tcp, udp, and tcp+tls. The syslog URL must be reachable from all of the subnets configured for the application. Note: If you enable the OCI Logging service for this application, the syslogUrl value is ignored. Function logs are sent to the OCI Logging service, and not to the syslog URL.
+
+Example: `tcp://logserver.myserver:1234`""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
 Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -562,7 +571,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'config': {'module': 'functions', 'class': 'dict(str, string)'}, 'freeform-tags': {'module': 'functions', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'functions', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'functions', 'class': 'Application'})
 @cli_util.wrap_exceptions
-def update_application(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, application_id, config, freeform_tags, defined_tags, if_match):
+def update_application(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, application_id, config, syslog_url, freeform_tags, defined_tags, if_match):
 
     if isinstance(application_id, six.string_types) and len(application_id.strip()) == 0:
         raise click.UsageError('Parameter --application-id cannot be whitespace or empty string')
@@ -580,6 +589,9 @@ def update_application(ctx, from_json, force, wait_for_state, max_wait_seconds, 
 
     if config is not None:
         _details['config'] = cli_util.parse_json_parameter("config", config)
+
+    if syslog_url is not None:
+        _details['syslogUrl'] = syslog_url
 
     if freeform_tags is not None:
         _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
