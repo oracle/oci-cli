@@ -1,0 +1,11 @@
+# coding: utf-8
+# Copyright (c) 2016, 2020, Oracle and/or its affiliates. All rights reserved.
+
+from services.tenant_manager_control_plane.src.oci_cli_sender_invitation.generated import senderinvitation_cli
+
+senderinvitation_cli.sender_invitation_root_group.commands.pop(senderinvitation_cli.sender_invitation_group.name)
+senderinvitation_cli.sender_invitation_root_group.add_command(senderinvitation_cli.create_sender_invitation)
+senderinvitation_cli.sender_invitation_root_group.add_command(senderinvitation_cli.cancel_sender_invitation)
+senderinvitation_cli.sender_invitation_root_group.add_command(senderinvitation_cli.get_sender_invitation)
+senderinvitation_cli.sender_invitation_root_group.add_command(senderinvitation_cli.list_sender_invitations)
+senderinvitation_cli.sender_invitation_root_group.add_command(senderinvitation_cli.update_sender_invitation)

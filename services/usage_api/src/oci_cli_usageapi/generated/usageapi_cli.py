@@ -15,19 +15,19 @@ from oci_cli import custom_types  # noqa: F401
 from oci_cli.aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('usage_api.usage_api_root_group.command_name', 'usage-api'), cls=CommandGroupWithAlias, help=cli_util.override('usage_api.usage_api_root_group.help', """A description of the UsageApi API."""), short_help=cli_util.override('usage_api.usage_api_root_group.short_help', """Usage API"""))
+@cli.command(cli_util.override('usage_api.usage_api_root_group.command_name', 'usage-api'), cls=CommandGroupWithAlias, help=cli_util.override('usage_api.usage_api_root_group.help', """Use the Usage API to view your Oracle Cloud usage and costs. The API allows you to request data that meets the specified filter criteria, and to group that data by the dimension of your choosing. The Usage API is used by the Cost Analysis tool in the Console."""), short_help=cli_util.override('usage_api.usage_api_root_group.short_help', """Usage API"""))
 @cli_util.help_option_group
 def usage_api_root_group():
     pass
 
 
-@click.command(cli_util.override('usage_api.usage_summary_group.command_name', 'usage-summary'), cls=CommandGroupWithAlias, help="""The result from usage store.""")
+@click.command(cli_util.override('usage_api.usage_summary_group.command_name', 'usage-summary'), cls=CommandGroupWithAlias, help="""The usage store result.""")
 @cli_util.help_option_group
 def usage_summary_group():
     pass
 
 
-@click.command(cli_util.override('usage_api.configuration_group.command_name', 'configuration'), cls=CommandGroupWithAlias, help="""A configuration""")
+@click.command(cli_util.override('usage_api.configuration_group.command_name', 'configuration'), cls=CommandGroupWithAlias, help="""A configuration.""")
 @cli_util.help_option_group
 def configuration_group():
     pass
@@ -37,7 +37,7 @@ usage_api_root_group.add_command(usage_summary_group)
 usage_api_root_group.add_command(configuration_group)
 
 
-@configuration_group.command(name=cli_util.override('usage_api.request_summarized_configurations.command_name', 'request-summarized'), help=u"""Returns the list of config for UI dropdown list \n[Command Reference](requestSummarizedConfigurations)""")
+@configuration_group.command(name=cli_util.override('usage_api.request_summarized_configurations.command_name', 'request-summarized'), help=u"""Returns the configurations list for the UI drop-down list. \n[Command Reference](requestSummarizedConfigurations)""")
 @cli_util.option('--tenant-id', required=True, help=u"""tenant id""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -56,14 +56,14 @@ def request_summarized_configurations(ctx, from_json, tenant_id):
     cli_util.render_response(result, ctx)
 
 
-@usage_summary_group.command(name=cli_util.override('usage_api.request_summarized_usages.command_name', 'request-summarized-usages'), help=u"""Returns the usage for the given account \n[Command Reference](requestSummarizedUsages)""")
-@cli_util.option('--tenant-id', required=True, help=u"""tenant id""")
-@cli_util.option('--time-usage-started', required=True, type=custom_types.CLI_DATETIME, help=u"""The start time of the usage.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--time-usage-ended', required=True, type=custom_types.CLI_DATETIME, help=u"""The end time of the usage.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
-@cli_util.option('--granularity', required=True, type=custom_types.CliCaseInsensitiveChoice(["HOURLY", "DAILY", "MONTHLY", "TOTAL"]), help=u"""The granularity of the usage. HOURLY - Hourly aggregation of data DAILY - Daily aggregation of data MONTHLY - Monthly aggregation of data TOTAL - Not Supported Yet""")
-@cli_util.option('--query-type', type=custom_types.CliCaseInsensitiveChoice(["USAGE", "COST"]), help=u"""The type of query of the usage. Usage - Query the usage data. Cost - Query the cost / billing data.""")
+@usage_summary_group.command(name=cli_util.override('usage_api.request_summarized_usages.command_name', 'request-summarized-usages'), help=u"""Returns usage for the given account. \n[Command Reference](requestSummarizedUsages)""")
+@cli_util.option('--tenant-id', required=True, help=u"""Tenant ID""")
+@cli_util.option('--time-usage-started', required=True, type=custom_types.CLI_DATETIME, help=u"""The usage start time.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--time-usage-ended', required=True, type=custom_types.CLI_DATETIME, help=u"""The usage end time.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@cli_util.option('--granularity', required=True, type=custom_types.CliCaseInsensitiveChoice(["HOURLY", "DAILY", "MONTHLY", "TOTAL"]), help=u"""The usage granularity. HOURLY - Hourly data aggregation. DAILY - Daily data aggregation. MONTHLY - Monthly data aggregation. TOTAL - Not yet supported.""")
+@cli_util.option('--query-type', type=custom_types.CliCaseInsensitiveChoice(["USAGE", "COST"]), help=u"""The query usage type. Usage - Query the usage data. Cost - Query the cost/billing data.""")
 @cli_util.option('--group-by', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Aggregate the result by. example:   `[\"service\"]`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--compartment-depth', type=click.FLOAT, help=u"""The depth level of the compartment.""")
+@cli_util.option('--compartment-depth', type=click.FLOAT, help=u"""The compartment depth level.""")
 @cli_util.option('--filter', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--page', help=u"""The page token representing the page at which to start retrieving results. This is usually retrieved from a previous list call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return.""")

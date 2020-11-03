@@ -133,7 +133,7 @@ def bulk_action_resource_type_collection_group():
     pass
 
 
-@click.command(cli_util.override('iam.customer_secret_key_group.command_name', 'customer-secret-key'), cls=CommandGroupWithAlias, help="""A `CustomerSecretKey` is an Oracle-provided key for using the Object Storage Service's [Amazon S3 compatible API]. A user can have up to two secret keys at a time.
+@click.command(cli_util.override('iam.customer_secret_key_group.command_name', 'customer-secret-key'), cls=CommandGroupWithAlias, help="""A `CustomerSecretKey` is an Oracle-provided key for using the Object Storage Service's [Amazon S3 compatible API]. The key consists of a secret key/access key pair. A user can have up to two secret keys at a time.
 
 **Note:** The secret key is always an Oracle-generated string; you can't change it to a string of your choice.
 
@@ -535,7 +535,7 @@ def bulk_delete_tags(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
     )
     if wait_for_state:
 
-        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+        if hasattr(client, 'get_tagging_work_request') and callable(getattr(client, 'get_tagging_work_request')):
             try:
                 wait_period_kwargs = {}
                 if max_wait_seconds is not None:
@@ -544,7 +544,7 @@ def bulk_delete_tags(ctx, from_json, wait_for_state, max_wait_seconds, wait_inte
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+                result = oci.wait_until(client, client.get_tagging_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
             except oci.exceptions.MaximumWaitTimeExceeded as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -654,7 +654,7 @@ def cascade_delete_tag_namespace(ctx, from_json, wait_for_state, max_wait_second
     )
     if wait_for_state:
 
-        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+        if hasattr(client, 'get_tagging_work_request') and callable(getattr(client, 'get_tagging_work_request')):
             try:
                 wait_period_kwargs = {}
                 if max_wait_seconds is not None:
@@ -663,7 +663,7 @@ def cascade_delete_tag_namespace(ctx, from_json, wait_for_state, max_wait_second
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+                result = oci.wait_until(client, client.get_tagging_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
             except oci.exceptions.MaximumWaitTimeExceeded as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the work request entered the specified state. Outputting last known resource state', file=sys.stderr)
@@ -810,7 +810,7 @@ def create_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     cli_util.render_response(result, ctx)
 
 
-@customer_secret_key_group.command(name=cli_util.override('iam.create_customer_secret_key.command_name', 'create'), help=u"""Creates a new secret key for the specified user. Secret keys are used for authentication with the Object Storage Service's Amazon S3 compatible API. For information, see [Managing User Credentials].
+@customer_secret_key_group.command(name=cli_util.override('iam.create_customer_secret_key.command_name', 'create'), help=u"""Creates a new secret key for the specified user. Secret keys are used for authentication with the Object Storage Service's Amazon S3 compatible API. The secret key consists of an Access Key/Secret Key pair. For information, see [Managing User Credentials].
 
 You must specify a *description* for the secret key (although it can be an empty string). It does not have to be unique, and you can change it anytime with [UpdateCustomerSecretKey].
 
@@ -2602,7 +2602,7 @@ def delete_tag(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
     )
     if wait_for_state:
 
-        if hasattr(client, 'get_work_request') and callable(getattr(client, 'get_work_request')):
+        if hasattr(client, 'get_tagging_work_request') and callable(getattr(client, 'get_tagging_work_request')):
             try:
                 wait_period_kwargs = {}
                 if max_wait_seconds is not None:
@@ -2611,7 +2611,7 @@ def delete_tag(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
                     wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
 
                 click.echo('Action completed. Waiting until the work request has entered state: {}'.format(wait_for_state), file=sys.stderr)
-                result = oci.wait_until(client, client.get_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
+                result = oci.wait_until(client, client.get_tagging_work_request(result.headers['opc-work-request-id']), 'status', wait_for_state, **wait_period_kwargs)
             except oci.exceptions.MaximumWaitTimeExceeded as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the work request entered the specified state. Please retrieve the work request to find its current state', file=sys.stderr)
