@@ -22,6 +22,22 @@ def dns_root_group():
     pass
 
 
+@click.command(cli_util.override('dns.resolver_group.command_name', 'resolver'), cls=CommandGroupWithAlias, help="""An OCI DNS resolver. If the resolver has an attached VCN then the VCN will attempt to answer queries based on the attached views in priority order. If the query does not match any of the attached views then the query will be evaluated against the default view. If the default view does not match then the rules will be evaluated in priority order. If no rules match the query then answers come from Internet DNS. A resolver may have at most 10 resolver endpoints.
+
+**Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
+@cli_util.help_option_group
+def resolver_group():
+    pass
+
+
+@click.command(cli_util.override('dns.view_group.command_name', 'view'), cls=CommandGroupWithAlias, help="""An OCI DNS view.
+
+**Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
+@cli_util.help_option_group
+def view_group():
+    pass
+
+
 @click.command(cli_util.override('dns.steering_policy_attachment_group.command_name', 'steering-policy-attachment'), cls=CommandGroupWithAlias, help="""An attachment between a steering policy and a domain. An attachment constructs DNS responses using its steering policy instead of the records at its defined domain. Only records of the policy's covered rtype are blocked at the domain. A domain can have a maximum of one attachment covering any given rtype.
 
 **Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
@@ -52,17 +68,19 @@ def rr_set_group():
     pass
 
 
-@click.command(cli_util.override('dns.record_collection_group.command_name', 'record-collection'), cls=CommandGroupWithAlias, help="""A collection of DNS resource records.""")
-@cli_util.help_option_group
-def record_collection_group():
-    pass
-
-
 @click.command(cli_util.override('dns.steering_policy_group.command_name', 'steering-policy'), cls=CommandGroupWithAlias, help="""A DNS steering policy.
 
 **Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
 @cli_util.help_option_group
 def steering_policy_group():
+    pass
+
+
+@click.command(cli_util.override('dns.resolver_endpoint_group.command_name', 'resolver-endpoint'), cls=CommandGroupWithAlias, help="""An OCI DNS resolver endpoint.
+
+**Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
+@cli_util.help_option_group
+def resolver_endpoint_group():
     pass
 
 
@@ -72,32 +90,62 @@ def records_group():
     pass
 
 
-@click.command(cli_util.override('dns.zones_group.command_name', 'zones'), cls=CommandGroupWithAlias, help="""""")
-@cli_util.help_option_group
-def zones_group():
-    pass
-
-
+dns_root_group.add_command(resolver_group)
+dns_root_group.add_command(view_group)
 dns_root_group.add_command(steering_policy_attachment_group)
 dns_root_group.add_command(zone_group)
 dns_root_group.add_command(tsig_key_group)
 dns_root_group.add_command(rr_set_group)
-dns_root_group.add_command(record_collection_group)
 dns_root_group.add_command(steering_policy_group)
+dns_root_group.add_command(resolver_endpoint_group)
 dns_root_group.add_command(records_group)
-dns_root_group.add_command(zones_group)
+
+
+@resolver_group.command(name=cli_util.override('dns.change_resolver_compartment.command_name', 'change-compartment'), help=u"""Moves a resolver into a different compartment along with its protected default view and any endpoints. Zones in the default view are not moved. \n[Command Reference](changeResolverCompartment)""")
+@cli_util.option('--resolver-id', required=True, help=u"""The OCID of the target resolver.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the resolver, along with its protected default view and resolver endpoints, should be moved.""")
+@cli_util.option('--if-match', help=u"""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
+@cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_resolver_compartment(ctx, from_json, resolver_id, compartment_id, if_match, scope):
+
+    if isinstance(resolver_id, six.string_types) and len(resolver_id.strip()) == 0:
+        raise click.UsageError('Parameter --resolver-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    if scope is not None:
+        kwargs['scope'] = scope
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('dns', 'dns', ctx)
+    result = client.change_resolver_compartment(
+        resolver_id=resolver_id,
+        change_resolver_compartment_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
 
 
 @steering_policy_group.command(name=cli_util.override('dns.change_steering_policy_compartment.command_name', 'change-compartment'), help=u"""Moves a steering policy into a different compartment. \n[Command Reference](changeSteeringPolicyCompartment)""")
 @cli_util.option('--steering-policy-id', required=True, help=u"""The OCID of the target steering policy.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the steering policy should be moved.""")
 @cli_util.option('--if-match', help=u"""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
+@cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def change_steering_policy_compartment(ctx, from_json, steering_policy_id, compartment_id, if_match):
+def change_steering_policy_compartment(ctx, from_json, steering_policy_id, compartment_id, if_match, scope):
 
     if isinstance(steering_policy_id, six.string_types) and len(steering_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --steering-policy-id cannot be whitespace or empty string')
@@ -105,6 +153,8 @@ def change_steering_policy_compartment(ctx, from_json, steering_policy_id, compa
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
+    if scope is not None:
+        kwargs['scope'] = scope
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
@@ -123,12 +173,13 @@ def change_steering_policy_compartment(ctx, from_json, steering_policy_id, compa
 @cli_util.option('--tsig-key-id', required=True, help=u"""The OCID of the target TSIG key.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the TSIG key should be moved.""")
 @cli_util.option('--if-match', help=u"""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
+@cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def change_tsig_key_compartment(ctx, from_json, tsig_key_id, compartment_id, if_match):
+def change_tsig_key_compartment(ctx, from_json, tsig_key_id, compartment_id, if_match, scope):
 
     if isinstance(tsig_key_id, six.string_types) and len(tsig_key_id.strip()) == 0:
         raise click.UsageError('Parameter --tsig-key-id cannot be whitespace or empty string')
@@ -136,6 +187,8 @@ def change_tsig_key_compartment(ctx, from_json, tsig_key_id, compartment_id, if_
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
+    if scope is not None:
+        kwargs['scope'] = scope
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
@@ -150,16 +203,53 @@ def change_tsig_key_compartment(ctx, from_json, tsig_key_id, compartment_id, if_
     cli_util.render_response(result, ctx)
 
 
-@zone_group.command(name=cli_util.override('dns.change_zone_compartment.command_name', 'change-compartment'), help=u"""Moves a zone into a different compartment. **Note:** All SteeringPolicyAttachment objects associated with this zone will also be moved into the provided compartment. \n[Command Reference](changeZoneCompartment)""")
-@cli_util.option('--zone-id', required=True, help=u"""The OCID of the target zone.""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the zone should be moved.""")
+@view_group.command(name=cli_util.override('dns.change_view_compartment.command_name', 'change-compartment'), help=u"""Moves a view into a different compartment. Protected views cannot have their compartment changed. \n[Command Reference](changeViewCompartment)""")
+@cli_util.option('--view-id', required=True, help=u"""The OCID of the target view.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the view should be moved.""")
 @cli_util.option('--if-match', help=u"""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
+@cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def change_zone_compartment(ctx, from_json, zone_id, compartment_id, if_match):
+def change_view_compartment(ctx, from_json, view_id, compartment_id, if_match, scope):
+
+    if isinstance(view_id, six.string_types) and len(view_id.strip()) == 0:
+        raise click.UsageError('Parameter --view-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    if scope is not None:
+        kwargs['scope'] = scope
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+
+    client = cli_util.build_client('dns', 'dns', ctx)
+    result = client.change_view_compartment(
+        view_id=view_id,
+        change_view_compartment_details=_details,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@zone_group.command(name=cli_util.override('dns.change_zone_compartment.command_name', 'change-compartment'), help=u"""Moves a zone into a different compartment. Protected zones cannot have their compartment changed.
+
+**Note:** All SteeringPolicyAttachment objects associated with this zone will also be moved into the provided compartment. \n[Command Reference](changeZoneCompartment)""")
+@cli_util.option('--zone-id', required=True, help=u"""The OCID of the target zone.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the compartment into which the zone should be moved.""")
+@cli_util.option('--if-match', help=u"""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
+@cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def change_zone_compartment(ctx, from_json, zone_id, compartment_id, if_match, scope):
 
     if isinstance(zone_id, six.string_types) and len(zone_id.strip()) == 0:
         raise click.UsageError('Parameter --zone-id cannot be whitespace or empty string')
@@ -167,6 +257,8 @@ def change_zone_compartment(ctx, from_json, zone_id, compartment_id, if_match):
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
+    if scope is not None:
+        kwargs['scope'] = scope
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
@@ -178,6 +270,156 @@ def change_zone_compartment(ctx, from_json, zone_id, compartment_id, if_match):
         change_zone_compartment_details=_details,
         **kwargs
     )
+    cli_util.render_response(result, ctx)
+
+
+@resolver_endpoint_group.command(name=cli_util.override('dns.create_resolver_endpoint.command_name', 'create'), help=u"""Creates a new resolver endpoint. \n[Command Reference](createResolverEndpoint)""")
+@cli_util.option('--resolver-id', required=True, help=u"""The OCID of the target resolver.""")
+@cli_util.option('--name', required=True, help=u"""The name of the resolver endpoint. Must be unique within the resolver.""")
+@cli_util.option('--is-forwarding', required=True, type=click.BOOL, help=u"""A Boolean flag indicating whether or not the resolver endpoint is for forwarding.""")
+@cli_util.option('--is-listening', required=True, type=click.BOOL, help=u"""A Boolean flag indicating whether or not the resolver endpoint is for listening.""")
+@cli_util.option('--endpoint-type', type=custom_types.CliCaseInsensitiveChoice(["VNIC"]), help=u"""The type of resolver endpoint. VNIC is currently the only supported type.""")
+@cli_util.option('--forwarding-address', help=u"""An IP address from which forwarded queries may be sent. For VNIC endpoints, this IP address must be part of the subnet and will be assigned by the system if unspecified when isForwarding is true.""")
+@cli_util.option('--listening-address', help=u"""An IP address to listen to queries on. For VNIC endpoints this IP address must be part of the subnet and will be assigned by the system if unspecified.""")
+@cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "DELETED", "DELETING", "FAILED", "UPDATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'dns', 'class': 'ResolverEndpoint'})
+@cli_util.wrap_exceptions
+def create_resolver_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, resolver_id, name, is_forwarding, is_listening, endpoint_type, forwarding_address, listening_address, scope):
+
+    if isinstance(resolver_id, six.string_types) and len(resolver_id.strip()) == 0:
+        raise click.UsageError('Parameter --resolver-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if scope is not None:
+        kwargs['scope'] = scope
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['name'] = name
+    _details['isForwarding'] = is_forwarding
+    _details['isListening'] = is_listening
+
+    if endpoint_type is not None:
+        _details['endpointType'] = endpoint_type
+
+    if forwarding_address is not None:
+        _details['forwardingAddress'] = forwarding_address
+
+    if listening_address is not None:
+        _details['listeningAddress'] = listening_address
+
+    client = cli_util.build_client('dns', 'dns', ctx)
+    result = client.create_resolver_endpoint(
+        resolver_id=resolver_id,
+        create_resolver_endpoint_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_resolver_endpoint') and callable(getattr(client, 'get_resolver_endpoint')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_resolver_endpoint(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@resolver_endpoint_group.command(name=cli_util.override('dns.create_resolver_endpoint_create_resolver_vnic_endpoint_details.command_name', 'create-resolver-endpoint-create-resolver-vnic-endpoint-details'), help=u"""Creates a new resolver endpoint. \n[Command Reference](createResolverEndpoint)""")
+@cli_util.option('--resolver-id', required=True, help=u"""The OCID of the target resolver.""")
+@cli_util.option('--name', required=True, help=u"""The name of the resolver endpoint. Must be unique within the resolver.""")
+@cli_util.option('--is-forwarding', required=True, type=click.BOOL, help=u"""A Boolean flag indicating whether or not the resolver endpoint is for forwarding.""")
+@cli_util.option('--is-listening', required=True, type=click.BOOL, help=u"""A Boolean flag indicating whether or not the resolver endpoint is for listening.""")
+@cli_util.option('--subnet-id', required=True, help=u"""The OCID of a subnet. Must be part of the VCN that the resolver is attached to.""")
+@cli_util.option('--forwarding-address', help=u"""An IP address from which forwarded queries may be sent. For VNIC endpoints, this IP address must be part of the subnet and will be assigned by the system if unspecified when isForwarding is true.""")
+@cli_util.option('--listening-address', help=u"""An IP address to listen to queries on. For VNIC endpoints this IP address must be part of the subnet and will be assigned by the system if unspecified.""")
+@cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of NSG OCIDs for the resolver endpoint.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "DELETED", "DELETING", "FAILED", "UPDATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'nsg-ids': {'module': 'dns', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'nsg-ids': {'module': 'dns', 'class': 'list[string]'}}, output_type={'module': 'dns', 'class': 'ResolverEndpoint'})
+@cli_util.wrap_exceptions
+def create_resolver_endpoint_create_resolver_vnic_endpoint_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, resolver_id, name, is_forwarding, is_listening, subnet_id, forwarding_address, listening_address, nsg_ids, scope):
+
+    if isinstance(resolver_id, six.string_types) and len(resolver_id.strip()) == 0:
+        raise click.UsageError('Parameter --resolver-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if scope is not None:
+        kwargs['scope'] = scope
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['name'] = name
+    _details['isForwarding'] = is_forwarding
+    _details['isListening'] = is_listening
+    _details['subnetId'] = subnet_id
+
+    if forwarding_address is not None:
+        _details['forwardingAddress'] = forwarding_address
+
+    if listening_address is not None:
+        _details['listeningAddress'] = listening_address
+
+    if nsg_ids is not None:
+        _details['nsgIds'] = cli_util.parse_json_parameter("nsg_ids", nsg_ids)
+
+    _details['endpointType'] = 'VNIC'
+
+    client = cli_util.build_client('dns', 'dns', ctx)
+    result = client.create_resolver_endpoint(
+        resolver_id=resolver_id,
+        create_resolver_endpoint_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_resolver_endpoint') and callable(getattr(client, 'get_resolver_endpoint')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_resolver_endpoint(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -223,6 +465,7 @@ This option is a JSON list with items of type SteeringPolicyAnswer.  For documen
  The first rule receives a shuffled list of all answers, and every other rule receives the list of answers emitted by the one preceding it. The last rule populates the response.
 
 This option is a JSON list with items of type SteeringPolicyRule.  For documentation on SteeringPolicyRule please see our API reference: https://docs.cloud.oracle.com/api/#/en/dns/20180115/datatypes/SteeringPolicyRule.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "DELETED", "DELETING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -231,9 +474,11 @@ This option is a JSON list with items of type SteeringPolicyRule.  For documenta
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'dns', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'dns', 'class': 'dict(str, dict(str, object))'}, 'answers': {'module': 'dns', 'class': 'list[SteeringPolicyAnswer]'}, 'rules': {'module': 'dns', 'class': 'list[SteeringPolicyRule]'}}, output_type={'module': 'dns', 'class': 'SteeringPolicy'})
 @cli_util.wrap_exceptions
-def create_steering_policy(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, template, ttl, health_check_monitor_id, freeform_tags, defined_tags, answers, rules):
+def create_steering_policy(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, template, ttl, health_check_monitor_id, freeform_tags, defined_tags, answers, rules, scope):
 
     kwargs = {}
+    if scope is not None:
+        kwargs['scope'] = scope
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
@@ -297,6 +542,7 @@ For the purposes of access control, the attachment is automatically placed into 
 @cli_util.option('--zone-id', required=True, help=u"""The OCID of the attached zone.""")
 @cli_util.option('--domain-name', required=True, help=u"""The attached domain within the attached zone.""")
 @cli_util.option('--display-name', help=u"""A user-friendly name for the steering policy attachment. Does not have to be unique and can be changed. Avoid entering confidential information.""")
+@cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -305,9 +551,11 @@ For the purposes of access control, the attachment is automatically placed into 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'dns', 'class': 'SteeringPolicyAttachment'})
 @cli_util.wrap_exceptions
-def create_steering_policy_attachment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, steering_policy_id, zone_id, domain_name, display_name):
+def create_steering_policy_attachment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, steering_policy_id, zone_id, domain_name, display_name, scope):
 
     kwargs = {}
+    if scope is not None:
+        kwargs['scope'] = scope
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
@@ -360,6 +608,7 @@ def create_steering_policy_attachment(ctx, from_json, wait_for_state, max_wait_s
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
  **Example:** `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -368,9 +617,11 @@ def create_steering_policy_attachment(ctx, from_json, wait_for_state, max_wait_s
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'dns', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'dns', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'dns', 'class': 'TsigKey'})
 @cli_util.wrap_exceptions
-def create_tsig_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, algorithm, name, compartment_id, secret, freeform_tags, defined_tags):
+def create_tsig_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, algorithm, name, compartment_id, secret, freeform_tags, defined_tags, scope):
 
     kwargs = {}
+    if scope is not None:
+        kwargs['scope'] = scope
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
@@ -416,7 +667,75 @@ def create_tsig_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
     cli_util.render_response(result, ctx)
 
 
-@zone_group.command(name=cli_util.override('dns.create_zone.command_name', 'create'), help=u"""Creates a new zone in the specified compartment. The `compartmentId` query parameter is required if the `Content-Type` header for the request is `text/dns`. \n[Command Reference](createZone)""")
+@view_group.command(name=cli_util.override('dns.create_view.command_name', 'create'), help=u"""Creates a new view in the specified compartment. \n[Command Reference](createView)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the owning compartment.""")
+@cli_util.option('--display-name', help=u"""The display name of the view.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+ **Example:** `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+ **Example:** `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED", "DELETING", "UPDATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'dns', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'dns', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'dns', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'dns', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'dns', 'class': 'View'})
+@cli_util.wrap_exceptions
+def create_view(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, display_name, freeform_tags, defined_tags, scope):
+
+    kwargs = {}
+    if scope is not None:
+        kwargs['scope'] = scope
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['compartmentId'] = compartment_id
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('dns', 'dns', ctx)
+    result = client.create_view(
+        create_view_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_view') and callable(getattr(client, 'get_view')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_view(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@zone_group.command(name=cli_util.override('dns.create_zone.command_name', 'create'), help=u"""Creates a new zone in the specified compartment. If the `Content-Type` header for the request is `text/dns`, the `compartmentId` query parameter is required. Additionally, for `text/dns`, the `scope` and `viewId` query parameters are required to create a private zone. \n[Command Reference](createZone)""")
 @cli_util.option('--name', required=True, help=u"""The name of the zone.""")
 @cli_util.option('--migration-source', type=custom_types.CliCaseInsensitiveChoice(["NONE", "DYNECT"]), help=u"""Discriminator that is used to determine whether to create a new zone (NONE) or to migrate an existing DynECT zone (DYNECT).""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
@@ -426,6 +745,8 @@ def create_tsig_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 
  **Example:** `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--compartment-id', help=u"""The OCID of the compartment the resource belongs to.""")
+@cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
+@cli_util.option('--view-id', help=u"""The OCID of the view the resource is associated with.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "DELETED", "DELETING", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -434,11 +755,15 @@ def create_tsig_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'dns', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'dns', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'dns', 'class': 'Zone'})
 @cli_util.wrap_exceptions
-def create_zone(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, migration_source, freeform_tags, defined_tags, compartment_id):
+def create_zone(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, migration_source, freeform_tags, defined_tags, compartment_id, scope, view_id):
 
     kwargs = {}
     if compartment_id is not None:
         kwargs['compartment_id'] = compartment_id
+    if scope is not None:
+        kwargs['scope'] = scope
+    if view_id is not None:
+        kwargs['view_id'] = view_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
@@ -485,7 +810,7 @@ def create_zone(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
     cli_util.render_response(result, ctx)
 
 
-@zone_group.command(name=cli_util.override('dns.create_zone_create_zone_details.command_name', 'create-zone-create-zone-details'), help=u"""Creates a new zone in the specified compartment. The `compartmentId` query parameter is required if the `Content-Type` header for the request is `text/dns`. \n[Command Reference](createZone)""")
+@zone_group.command(name=cli_util.override('dns.create_zone_create_zone_details.command_name', 'create-zone-create-zone-details'), help=u"""Creates a new zone in the specified compartment. If the `Content-Type` header for the request is `text/dns`, the `compartmentId` query parameter is required. Additionally, for `text/dns`, the `scope` and `viewId` query parameters are required to create a private zone. \n[Command Reference](createZone)""")
 @cli_util.option('--name', required=True, help=u"""The name of the zone.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
@@ -493,11 +818,13 @@ def create_zone(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
  **Example:** `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--zone-type', type=custom_types.CliCaseInsensitiveChoice(["PRIMARY", "SECONDARY"]), help=u"""The type of the zone. Must be either `PRIMARY` or `SECONDARY`.""")
+@cli_util.option('--zone-type', type=custom_types.CliCaseInsensitiveChoice(["PRIMARY", "SECONDARY"]), help=u"""The type of the zone. Must be either `PRIMARY` or `SECONDARY`. `SECONDARY` is only supported for GLOBAL zones.""")
 @cli_util.option('--external-masters', type=custom_types.CLI_COMPLEX_TYPE, help=u"""External master servers for the zone. `externalMasters` becomes a required parameter when the `zoneType` value is `SECONDARY`.
 
 This option is a JSON list with items of type ExternalMaster.  For documentation on ExternalMaster please see our API reference: https://docs.cloud.oracle.com/api/#/en/dns/20180115/datatypes/ExternalMaster.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--compartment-id', help=u"""The OCID of the compartment the resource belongs to.""")
+@cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
+@cli_util.option('--view-id', help=u"""The OCID of the view the resource is associated with.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "DELETED", "DELETING", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -506,11 +833,15 @@ This option is a JSON list with items of type ExternalMaster.  For documentation
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'dns', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'dns', 'class': 'dict(str, dict(str, object))'}, 'external-masters': {'module': 'dns', 'class': 'list[ExternalMaster]'}}, output_type={'module': 'dns', 'class': 'Zone'})
 @cli_util.wrap_exceptions
-def create_zone_create_zone_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, freeform_tags, defined_tags, zone_type, external_masters, compartment_id):
+def create_zone_create_zone_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, freeform_tags, defined_tags, zone_type, external_masters, compartment_id, scope, view_id):
 
     kwargs = {}
     if compartment_id is not None:
         kwargs['compartment_id'] = compartment_id
+    if scope is not None:
+        kwargs['scope'] = scope
+    if view_id is not None:
+        kwargs['view_id'] = view_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
@@ -525,6 +856,12 @@ def create_zone_create_zone_details(ctx, from_json, wait_for_state, max_wait_sec
 
     if zone_type is not None:
         _details['zoneType'] = zone_type
+
+    if view_id is not None:
+        _details['viewId'] = view_id
+
+    if scope is not None:
+        _details['scope'] = scope
 
     if external_masters is not None:
         _details['externalMasters'] = cli_util.parse_json_parameter("external_masters", external_masters)
@@ -562,7 +899,7 @@ def create_zone_create_zone_details(ctx, from_json, wait_for_state, max_wait_sec
     cli_util.render_response(result, ctx)
 
 
-@zone_group.command(name=cli_util.override('dns.create_zone_create_migrated_dynect_zone_details.command_name', 'create-zone-create-migrated-dynect-zone-details'), help=u"""Creates a new zone in the specified compartment. The `compartmentId` query parameter is required if the `Content-Type` header for the request is `text/dns`. \n[Command Reference](createZone)""")
+@zone_group.command(name=cli_util.override('dns.create_zone_create_migrated_dynect_zone_details.command_name', 'create-zone-create-migrated-dynect-zone-details'), help=u"""Creates a new zone in the specified compartment. If the `Content-Type` header for the request is `text/dns`, the `compartmentId` query parameter is required. Additionally, for `text/dns`, the `scope` and `viewId` query parameters are required to create a private zone. \n[Command Reference](createZone)""")
 @cli_util.option('--name', required=True, help=u"""The name of the zone.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
 
@@ -572,6 +909,8 @@ def create_zone_create_zone_details(ctx, from_json, wait_for_state, max_wait_sec
  **Example:** `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--dynect-migration-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--compartment-id', help=u"""The OCID of the compartment the resource belongs to.""")
+@cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
+@cli_util.option('--view-id', help=u"""The OCID of the view the resource is associated with.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "DELETED", "DELETING", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -580,11 +919,15 @@ def create_zone_create_zone_details(ctx, from_json, wait_for_state, max_wait_sec
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'dns', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'dns', 'class': 'dict(str, dict(str, object))'}, 'dynect-migration-details': {'module': 'dns', 'class': 'DynectMigrationDetails'}}, output_type={'module': 'dns', 'class': 'Zone'})
 @cli_util.wrap_exceptions
-def create_zone_create_migrated_dynect_zone_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, freeform_tags, defined_tags, dynect_migration_details, compartment_id):
+def create_zone_create_migrated_dynect_zone_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, name, freeform_tags, defined_tags, dynect_migration_details, compartment_id, scope, view_id):
 
     kwargs = {}
     if compartment_id is not None:
         kwargs['compartment_id'] = compartment_id
+    if scope is not None:
+        kwargs['scope'] = scope
+    if view_id is not None:
+        kwargs['view_id'] = view_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
@@ -638,6 +981,8 @@ def create_zone_create_migrated_dynect_zone_details(ctx, from_json, wait_for_sta
 @cli_util.option('--domain', required=True, help=u"""The target fully-qualified domain name (FQDN) within the target zone.""")
 @cli_util.option('--if-match', help=u"""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
 @cli_util.option('--if-unmodified-since', help=u"""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
+@cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
+@cli_util.option('--view-id', help=u"""The OCID of the view the resource is associated with.""")
 @cli_util.option('--compartment-id', help=u"""The OCID of the compartment the resource belongs to.""")
 @cli_util.confirm_delete_option
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -645,7 +990,7 @@ def create_zone_create_migrated_dynect_zone_details(ctx, from_json, wait_for_sta
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def delete_domain_records(ctx, from_json, zone_name_or_id, domain, if_match, if_unmodified_since, compartment_id):
+def delete_domain_records(ctx, from_json, zone_name_or_id, domain, if_match, if_unmodified_since, scope, view_id, compartment_id):
 
     if isinstance(zone_name_or_id, six.string_types) and len(zone_name_or_id.strip()) == 0:
         raise click.UsageError('Parameter --zone-name-or-id cannot be whitespace or empty string')
@@ -658,6 +1003,10 @@ def delete_domain_records(ctx, from_json, zone_name_or_id, domain, if_match, if_
         kwargs['if_match'] = if_match
     if if_unmodified_since is not None:
         kwargs['if_unmodified_since'] = if_unmodified_since
+    if scope is not None:
+        kwargs['scope'] = scope
+    if view_id is not None:
+        kwargs['view_id'] = view_id
     if compartment_id is not None:
         kwargs['compartment_id'] = compartment_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -670,6 +1019,43 @@ def delete_domain_records(ctx, from_json, zone_name_or_id, domain, if_match, if_
     cli_util.render_response(result, ctx)
 
 
+@resolver_endpoint_group.command(name=cli_util.override('dns.delete_resolver_endpoint.command_name', 'delete'), help=u"""Deletes the specified resolver endpoint. Note that attempting to delete a resolver endpoint in the DELETED lifecycle state will result in a 404 to be consistent with other operations of the API. Resolver endpoints may not be deleted if they are referenced by a resolver rule. \n[Command Reference](deleteResolverEndpoint)""")
+@cli_util.option('--resolver-id', required=True, help=u"""The OCID of the target resolver.""")
+@cli_util.option('--resolver-endpoint-name', required=True, help=u"""The name of the target resolver endpoint.""")
+@cli_util.option('--if-match', help=u"""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
+@cli_util.option('--if-unmodified-since', help=u"""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
+@cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
+@cli_util.confirm_delete_option
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_resolver_endpoint(ctx, from_json, resolver_id, resolver_endpoint_name, if_match, if_unmodified_since, scope):
+
+    if isinstance(resolver_id, six.string_types) and len(resolver_id.strip()) == 0:
+        raise click.UsageError('Parameter --resolver-id cannot be whitespace or empty string')
+
+    if isinstance(resolver_endpoint_name, six.string_types) and len(resolver_endpoint_name.strip()) == 0:
+        raise click.UsageError('Parameter --resolver-endpoint-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    if if_unmodified_since is not None:
+        kwargs['if_unmodified_since'] = if_unmodified_since
+    if scope is not None:
+        kwargs['scope'] = scope
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('dns', 'dns', ctx)
+    result = client.delete_resolver_endpoint(
+        resolver_id=resolver_id,
+        resolver_endpoint_name=resolver_endpoint_name,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @rr_set_group.command(name=cli_util.override('dns.delete_rr_set.command_name', 'delete'), help=u"""Deletes all records in the specified RRSet. \n[Command Reference](deleteRRSet)""")
 @cli_util.option('--zone-name-or-id', required=True, help=u"""The name or OCID of the target zone.""")
 @cli_util.option('--domain', required=True, help=u"""The target fully-qualified domain name (FQDN) within the target zone.""")
@@ -677,13 +1063,15 @@ def delete_domain_records(ctx, from_json, zone_name_or_id, domain, if_match, if_
 @cli_util.option('--if-match', help=u"""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
 @cli_util.option('--if-unmodified-since', help=u"""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
 @cli_util.option('--compartment-id', help=u"""The OCID of the compartment the resource belongs to.""")
+@cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
+@cli_util.option('--view-id', help=u"""The OCID of the view the resource is associated with.""")
 @cli_util.confirm_delete_option
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def delete_rr_set(ctx, from_json, zone_name_or_id, domain, rtype, if_match, if_unmodified_since, compartment_id):
+def delete_rr_set(ctx, from_json, zone_name_or_id, domain, rtype, if_match, if_unmodified_since, compartment_id, scope, view_id):
 
     if isinstance(zone_name_or_id, six.string_types) and len(zone_name_or_id.strip()) == 0:
         raise click.UsageError('Parameter --zone-name-or-id cannot be whitespace or empty string')
@@ -701,6 +1089,10 @@ def delete_rr_set(ctx, from_json, zone_name_or_id, domain, rtype, if_match, if_u
         kwargs['if_unmodified_since'] = if_unmodified_since
     if compartment_id is not None:
         kwargs['compartment_id'] = compartment_id
+    if scope is not None:
+        kwargs['scope'] = scope
+    if view_id is not None:
+        kwargs['view_id'] = view_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('dns', 'dns', ctx)
     result = client.delete_rr_set(
@@ -716,6 +1108,7 @@ def delete_rr_set(ctx, from_json, zone_name_or_id, domain, rtype, if_match, if_u
 @cli_util.option('--steering-policy-id', required=True, help=u"""The OCID of the target steering policy.""")
 @cli_util.option('--if-match', help=u"""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
 @cli_util.option('--if-unmodified-since', help=u"""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
+@cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "DELETED", "DELETING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -725,7 +1118,7 @@ def delete_rr_set(ctx, from_json, zone_name_or_id, domain, rtype, if_match, if_u
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def delete_steering_policy(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, steering_policy_id, if_match, if_unmodified_since):
+def delete_steering_policy(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, steering_policy_id, if_match, if_unmodified_since, scope):
 
     if isinstance(steering_policy_id, six.string_types) and len(steering_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --steering-policy-id cannot be whitespace or empty string')
@@ -735,6 +1128,8 @@ def delete_steering_policy(ctx, from_json, wait_for_state, max_wait_seconds, wai
         kwargs['if_match'] = if_match
     if if_unmodified_since is not None:
         kwargs['if_unmodified_since'] = if_unmodified_since
+    if scope is not None:
+        kwargs['scope'] = scope
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('dns', 'dns', ctx)
     result = client.delete_steering_policy(
@@ -783,6 +1178,7 @@ def delete_steering_policy(ctx, from_json, wait_for_state, max_wait_seconds, wai
 @cli_util.option('--steering-policy-attachment-id', required=True, help=u"""The OCID of the target steering policy attachment.""")
 @cli_util.option('--if-match', help=u"""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
 @cli_util.option('--if-unmodified-since', help=u"""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
+@cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -792,7 +1188,7 @@ def delete_steering_policy(ctx, from_json, wait_for_state, max_wait_seconds, wai
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def delete_steering_policy_attachment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, steering_policy_attachment_id, if_match, if_unmodified_since):
+def delete_steering_policy_attachment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, steering_policy_attachment_id, if_match, if_unmodified_since, scope):
 
     if isinstance(steering_policy_attachment_id, six.string_types) and len(steering_policy_attachment_id.strip()) == 0:
         raise click.UsageError('Parameter --steering-policy-attachment-id cannot be whitespace or empty string')
@@ -802,6 +1198,8 @@ def delete_steering_policy_attachment(ctx, from_json, wait_for_state, max_wait_s
         kwargs['if_match'] = if_match
     if if_unmodified_since is not None:
         kwargs['if_unmodified_since'] = if_unmodified_since
+    if scope is not None:
+        kwargs['scope'] = scope
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('dns', 'dns', ctx)
     result = client.delete_steering_policy_attachment(
@@ -850,6 +1248,7 @@ def delete_steering_policy_attachment(ctx, from_json, wait_for_state, max_wait_s
 @cli_util.option('--tsig-key-id', required=True, help=u"""The OCID of the target TSIG key.""")
 @cli_util.option('--if-match', help=u"""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
 @cli_util.option('--if-unmodified-since', help=u"""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
+@cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -859,7 +1258,7 @@ def delete_steering_policy_attachment(ctx, from_json, wait_for_state, max_wait_s
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def delete_tsig_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, tsig_key_id, if_match, if_unmodified_since):
+def delete_tsig_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, tsig_key_id, if_match, if_unmodified_since, scope):
 
     if isinstance(tsig_key_id, six.string_types) and len(tsig_key_id.strip()) == 0:
         raise click.UsageError('Parameter --tsig-key-id cannot be whitespace or empty string')
@@ -869,6 +1268,8 @@ def delete_tsig_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
         kwargs['if_match'] = if_match
     if if_unmodified_since is not None:
         kwargs['if_unmodified_since'] = if_unmodified_since
+    if scope is not None:
+        kwargs['scope'] = scope
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('dns', 'dns', ctx)
     result = client.delete_tsig_key(
@@ -913,10 +1314,82 @@ def delete_tsig_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
     cli_util.render_response(result, ctx)
 
 
-@zone_group.command(name=cli_util.override('dns.delete_zone.command_name', 'delete'), help=u"""Deletes the specified zone and all its steering policy attachments. A `204` response indicates that zone has been successfully deleted. \n[Command Reference](deleteZone)""")
+@view_group.command(name=cli_util.override('dns.delete_view.command_name', 'delete'), help=u"""Deletes the specified view. Note that attempting to delete a view in the DELETED lifecycleState will result in a 404 to be consistent with other operations of the API. Views can not be deleted if they are referenced by non-deleted zones or resolvers. Protected views cannot be deleted. \n[Command Reference](deleteView)""")
+@cli_util.option('--view-id', required=True, help=u"""The OCID of the target view.""")
+@cli_util.option('--if-match', help=u"""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
+@cli_util.option('--if-unmodified-since', help=u"""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
+@cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
+@cli_util.confirm_delete_option
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED", "DELETING", "UPDATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
+@cli_util.wrap_exceptions
+def delete_view(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, view_id, if_match, if_unmodified_since, scope):
+
+    if isinstance(view_id, six.string_types) and len(view_id.strip()) == 0:
+        raise click.UsageError('Parameter --view-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    if if_unmodified_since is not None:
+        kwargs['if_unmodified_since'] = if_unmodified_since
+    if scope is not None:
+        kwargs['scope'] = scope
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('dns', 'dns', ctx)
+    result = client.delete_view(
+        view_id=view_id,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_view') and callable(getattr(client, 'get_view')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                oci.wait_until(client, client.get_view(view_id), 'lifecycle_state', wait_for_state, succeed_on_not_found=True, **wait_period_kwargs)
+            except oci.exceptions.ServiceError as e:
+                # We make an initial service call so we can pass the result to oci.wait_until(), however if we are waiting on the
+                # outcome of a delete operation it is possible that the resource is already gone and so the initial service call
+                # will result in an exception that reflects a HTTP 404. In this case, we can exit with success (rather than raising
+                # the exception) since this would have been the behaviour in the waiter anyway (as for delete we provide the argument
+                # succeed_on_not_found=True to the waiter).
+                #
+                # Any non-404 should still result in the exception being thrown.
+                if e.status == 404:
+                    pass
+                else:
+                    raise
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Please retrieve the resource to find its current state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@zone_group.command(name=cli_util.override('dns.delete_zone.command_name', 'delete'), help=u"""Deletes the specified zone and all its steering policy attachments. A `204` response indicates that the zone has been successfully deleted. Protected zones cannot be deleted. \n[Command Reference](deleteZone)""")
 @cli_util.option('--zone-name-or-id', required=True, help=u"""The name or OCID of the target zone.""")
 @cli_util.option('--if-match', help=u"""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
 @cli_util.option('--if-unmodified-since', help=u"""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
+@cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
+@cli_util.option('--view-id', help=u"""The OCID of the view the resource is associated with.""")
 @cli_util.option('--compartment-id', help=u"""The OCID of the compartment the resource belongs to.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "DELETED", "DELETING", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -927,7 +1400,7 @@ def delete_tsig_key(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def delete_zone(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, zone_name_or_id, if_match, if_unmodified_since, compartment_id):
+def delete_zone(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, zone_name_or_id, if_match, if_unmodified_since, scope, view_id, compartment_id):
 
     if isinstance(zone_name_or_id, six.string_types) and len(zone_name_or_id.strip()) == 0:
         raise click.UsageError('Parameter --zone-name-or-id cannot be whitespace or empty string')
@@ -937,6 +1410,10 @@ def delete_zone(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
         kwargs['if_match'] = if_match
     if if_unmodified_since is not None:
         kwargs['if_unmodified_since'] = if_unmodified_since
+    if scope is not None:
+        kwargs['scope'] = scope
+    if view_id is not None:
+        kwargs['view_id'] = view_id
     if compartment_id is not None:
         kwargs['compartment_id'] = compartment_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -992,6 +1469,8 @@ def delete_zone(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @cli_util.option('--zone-version', help=u"""The version of the zone for which data is requested.""")
 @cli_util.option('--rtype', help=u"""Search by record type. Will match any record whose [type] (case-insensitive) equals the provided value.""")
+@cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
+@cli_util.option('--view-id', help=u"""The OCID of the view the resource is associated with.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["rtype", "ttl"]), help=u"""The field by which to sort records.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The order to sort the resources.""")
 @cli_util.option('--compartment-id', help=u"""The OCID of the compartment the resource belongs to.""")
@@ -1002,7 +1481,7 @@ def delete_zone(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'dns', 'class': 'RecordCollection'})
 @cli_util.wrap_exceptions
-def get_domain_records(ctx, from_json, all_pages, page_size, zone_name_or_id, domain, if_none_match, if_modified_since, limit, page, zone_version, rtype, sort_by, sort_order, compartment_id):
+def get_domain_records(ctx, from_json, all_pages, page_size, zone_name_or_id, domain, if_none_match, if_modified_since, limit, page, zone_version, rtype, scope, view_id, sort_by, sort_order, compartment_id):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -1026,6 +1505,10 @@ def get_domain_records(ctx, from_json, all_pages, page_size, zone_name_or_id, do
         kwargs['zone_version'] = zone_version
     if rtype is not None:
         kwargs['rtype'] = rtype
+    if scope is not None:
+        kwargs['scope'] = scope
+    if view_id is not None:
+        kwargs['view_id'] = view_id
     if sort_by is not None:
         kwargs['sort_by'] = sort_by
     if sort_order is not None:
@@ -1062,6 +1545,73 @@ def get_domain_records(ctx, from_json, all_pages, page_size, zone_name_or_id, do
     cli_util.render_response(result, ctx)
 
 
+@resolver_group.command(name=cli_util.override('dns.get_resolver.command_name', 'get'), help=u"""Get information about a specific resolver. Note that attempting to get a resolver in the DELETED lifecycleState will result in a 404 to be consistent with other operations of the API. \n[Command Reference](getResolver)""")
+@cli_util.option('--resolver-id', required=True, help=u"""The OCID of the target resolver.""")
+@cli_util.option('--if-modified-since', help=u"""The `If-Modified-Since` header field makes a GET or HEAD request method conditional on the selected representation's modification date being more recent than the date provided in the field-value.  Transfer of the selected representation's data is avoided if that data has not changed.""")
+@cli_util.option('--if-none-match', help=u"""The `If-None-Match` header field makes the request method conditional on the absence of any current representation of the target resource, when the field-value is `*`, or having a selected representation with an entity-tag that does not match any of those listed in the field-value.""")
+@cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'dns', 'class': 'Resolver'})
+@cli_util.wrap_exceptions
+def get_resolver(ctx, from_json, resolver_id, if_modified_since, if_none_match, scope):
+
+    if isinstance(resolver_id, six.string_types) and len(resolver_id.strip()) == 0:
+        raise click.UsageError('Parameter --resolver-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_modified_since is not None:
+        kwargs['if_modified_since'] = if_modified_since
+    if if_none_match is not None:
+        kwargs['if_none_match'] = if_none_match
+    if scope is not None:
+        kwargs['scope'] = scope
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('dns', 'dns', ctx)
+    result = client.get_resolver(
+        resolver_id=resolver_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@resolver_endpoint_group.command(name=cli_util.override('dns.get_resolver_endpoint.command_name', 'get'), help=u"""Get information about a specific resolver endpoint. Note that attempting to get a resolver endpoint in the DELETED lifecycle state will result in a 404 to be consistent with other operations of the API. \n[Command Reference](getResolverEndpoint)""")
+@cli_util.option('--resolver-id', required=True, help=u"""The OCID of the target resolver.""")
+@cli_util.option('--resolver-endpoint-name', required=True, help=u"""The name of the target resolver endpoint.""")
+@cli_util.option('--if-modified-since', help=u"""The `If-Modified-Since` header field makes a GET or HEAD request method conditional on the selected representation's modification date being more recent than the date provided in the field-value.  Transfer of the selected representation's data is avoided if that data has not changed.""")
+@cli_util.option('--if-none-match', help=u"""The `If-None-Match` header field makes the request method conditional on the absence of any current representation of the target resource, when the field-value is `*`, or having a selected representation with an entity-tag that does not match any of those listed in the field-value.""")
+@cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'dns', 'class': 'ResolverEndpoint'})
+@cli_util.wrap_exceptions
+def get_resolver_endpoint(ctx, from_json, resolver_id, resolver_endpoint_name, if_modified_since, if_none_match, scope):
+
+    if isinstance(resolver_id, six.string_types) and len(resolver_id.strip()) == 0:
+        raise click.UsageError('Parameter --resolver-id cannot be whitespace or empty string')
+
+    if isinstance(resolver_endpoint_name, six.string_types) and len(resolver_endpoint_name.strip()) == 0:
+        raise click.UsageError('Parameter --resolver-endpoint-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_modified_since is not None:
+        kwargs['if_modified_since'] = if_modified_since
+    if if_none_match is not None:
+        kwargs['if_none_match'] = if_none_match
+    if scope is not None:
+        kwargs['scope'] = scope
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('dns', 'dns', ctx)
+    result = client.get_resolver_endpoint(
+        resolver_id=resolver_id,
+        resolver_endpoint_name=resolver_endpoint_name,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
 @rr_set_group.command(name=cli_util.override('dns.get_rr_set.command_name', 'get'), help=u"""Gets a list of all records in the specified RRSet. The results are sorted by `recordHash` by default. \n[Command Reference](getRRSet)""")
 @cli_util.option('--zone-name-or-id', required=True, help=u"""The name or OCID of the target zone.""")
 @cli_util.option('--domain', required=True, help=u"""The target fully-qualified domain name (FQDN) within the target zone.""")
@@ -1072,6 +1622,8 @@ def get_domain_records(ctx, from_json, all_pages, page_size, zone_name_or_id, do
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @cli_util.option('--zone-version', help=u"""The version of the zone for which data is requested.""")
 @cli_util.option('--compartment-id', help=u"""The OCID of the compartment the resource belongs to.""")
+@cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
+@cli_util.option('--view-id', help=u"""The OCID of the view the resource is associated with.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1079,7 +1631,7 @@ def get_domain_records(ctx, from_json, all_pages, page_size, zone_name_or_id, do
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'dns', 'class': 'RRSet'})
 @cli_util.wrap_exceptions
-def get_rr_set(ctx, from_json, all_pages, page_size, zone_name_or_id, domain, rtype, if_none_match, if_modified_since, limit, page, zone_version, compartment_id):
+def get_rr_set(ctx, from_json, all_pages, page_size, zone_name_or_id, domain, rtype, if_none_match, if_modified_since, limit, page, zone_version, compartment_id, scope, view_id):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -1106,6 +1658,10 @@ def get_rr_set(ctx, from_json, all_pages, page_size, zone_name_or_id, domain, rt
         kwargs['zone_version'] = zone_version
     if compartment_id is not None:
         kwargs['compartment_id'] = compartment_id
+    if scope is not None:
+        kwargs['scope'] = scope
+    if view_id is not None:
+        kwargs['view_id'] = view_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('dns', 'dns', ctx)
     if all_pages:
@@ -1143,12 +1699,13 @@ def get_rr_set(ctx, from_json, all_pages, page_size, zone_name_or_id, domain, rt
 @cli_util.option('--steering-policy-id', required=True, help=u"""The OCID of the target steering policy.""")
 @cli_util.option('--if-none-match', help=u"""The `If-None-Match` header field makes the request method conditional on the absence of any current representation of the target resource, when the field-value is `*`, or having a selected representation with an entity-tag that does not match any of those listed in the field-value.""")
 @cli_util.option('--if-modified-since', help=u"""The `If-Modified-Since` header field makes a GET or HEAD request method conditional on the selected representation's modification date being more recent than the date provided in the field-value.  Transfer of the selected representation's data is avoided if that data has not changed.""")
+@cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'dns', 'class': 'SteeringPolicy'})
 @cli_util.wrap_exceptions
-def get_steering_policy(ctx, from_json, steering_policy_id, if_none_match, if_modified_since):
+def get_steering_policy(ctx, from_json, steering_policy_id, if_none_match, if_modified_since, scope):
 
     if isinstance(steering_policy_id, six.string_types) and len(steering_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --steering-policy-id cannot be whitespace or empty string')
@@ -1158,6 +1715,8 @@ def get_steering_policy(ctx, from_json, steering_policy_id, if_none_match, if_mo
         kwargs['if_none_match'] = if_none_match
     if if_modified_since is not None:
         kwargs['if_modified_since'] = if_modified_since
+    if scope is not None:
+        kwargs['scope'] = scope
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('dns', 'dns', ctx)
     result = client.get_steering_policy(
@@ -1171,12 +1730,13 @@ def get_steering_policy(ctx, from_json, steering_policy_id, if_none_match, if_mo
 @cli_util.option('--steering-policy-attachment-id', required=True, help=u"""The OCID of the target steering policy attachment.""")
 @cli_util.option('--if-none-match', help=u"""The `If-None-Match` header field makes the request method conditional on the absence of any current representation of the target resource, when the field-value is `*`, or having a selected representation with an entity-tag that does not match any of those listed in the field-value.""")
 @cli_util.option('--if-modified-since', help=u"""The `If-Modified-Since` header field makes a GET or HEAD request method conditional on the selected representation's modification date being more recent than the date provided in the field-value.  Transfer of the selected representation's data is avoided if that data has not changed.""")
+@cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'dns', 'class': 'SteeringPolicyAttachment'})
 @cli_util.wrap_exceptions
-def get_steering_policy_attachment(ctx, from_json, steering_policy_attachment_id, if_none_match, if_modified_since):
+def get_steering_policy_attachment(ctx, from_json, steering_policy_attachment_id, if_none_match, if_modified_since, scope):
 
     if isinstance(steering_policy_attachment_id, six.string_types) and len(steering_policy_attachment_id.strip()) == 0:
         raise click.UsageError('Parameter --steering-policy-attachment-id cannot be whitespace or empty string')
@@ -1186,6 +1746,8 @@ def get_steering_policy_attachment(ctx, from_json, steering_policy_attachment_id
         kwargs['if_none_match'] = if_none_match
     if if_modified_since is not None:
         kwargs['if_modified_since'] = if_modified_since
+    if scope is not None:
+        kwargs['scope'] = scope
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('dns', 'dns', ctx)
     result = client.get_steering_policy_attachment(
@@ -1199,12 +1761,13 @@ def get_steering_policy_attachment(ctx, from_json, steering_policy_attachment_id
 @cli_util.option('--tsig-key-id', required=True, help=u"""The OCID of the target TSIG key.""")
 @cli_util.option('--if-none-match', help=u"""The `If-None-Match` header field makes the request method conditional on the absence of any current representation of the target resource, when the field-value is `*`, or having a selected representation with an entity-tag that does not match any of those listed in the field-value.""")
 @cli_util.option('--if-modified-since', help=u"""The `If-Modified-Since` header field makes a GET or HEAD request method conditional on the selected representation's modification date being more recent than the date provided in the field-value.  Transfer of the selected representation's data is avoided if that data has not changed.""")
+@cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'dns', 'class': 'TsigKey'})
 @cli_util.wrap_exceptions
-def get_tsig_key(ctx, from_json, tsig_key_id, if_none_match, if_modified_since):
+def get_tsig_key(ctx, from_json, tsig_key_id, if_none_match, if_modified_since, scope):
 
     if isinstance(tsig_key_id, six.string_types) and len(tsig_key_id.strip()) == 0:
         raise click.UsageError('Parameter --tsig-key-id cannot be whitespace or empty string')
@@ -1214,6 +1777,8 @@ def get_tsig_key(ctx, from_json, tsig_key_id, if_none_match, if_modified_since):
         kwargs['if_none_match'] = if_none_match
     if if_modified_since is not None:
         kwargs['if_modified_since'] = if_modified_since
+    if scope is not None:
+        kwargs['scope'] = scope
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('dns', 'dns', ctx)
     result = client.get_tsig_key(
@@ -1223,17 +1788,50 @@ def get_tsig_key(ctx, from_json, tsig_key_id, if_none_match, if_modified_since):
     cli_util.render_response(result, ctx)
 
 
-@zones_group.command(name=cli_util.override('dns.get_zone.command_name', 'get'), help=u"""Gets information about the specified zone, including its creation date, zone type, and serial. \n[Command Reference](getZone)""")
+@view_group.command(name=cli_util.override('dns.get_view.command_name', 'get'), help=u"""Get information about a specific view. Note that attempting to get a view in the DELETED lifecycleState will result in a 404 to be consistent with other operations of the API. \n[Command Reference](getView)""")
+@cli_util.option('--view-id', required=True, help=u"""The OCID of the target view.""")
+@cli_util.option('--if-modified-since', help=u"""The `If-Modified-Since` header field makes a GET or HEAD request method conditional on the selected representation's modification date being more recent than the date provided in the field-value.  Transfer of the selected representation's data is avoided if that data has not changed.""")
+@cli_util.option('--if-none-match', help=u"""The `If-None-Match` header field makes the request method conditional on the absence of any current representation of the target resource, when the field-value is `*`, or having a selected representation with an entity-tag that does not match any of those listed in the field-value.""")
+@cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'dns', 'class': 'View'})
+@cli_util.wrap_exceptions
+def get_view(ctx, from_json, view_id, if_modified_since, if_none_match, scope):
+
+    if isinstance(view_id, six.string_types) and len(view_id.strip()) == 0:
+        raise click.UsageError('Parameter --view-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_modified_since is not None:
+        kwargs['if_modified_since'] = if_modified_since
+    if if_none_match is not None:
+        kwargs['if_none_match'] = if_none_match
+    if scope is not None:
+        kwargs['scope'] = scope
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('dns', 'dns', ctx)
+    result = client.get_view(
+        view_id=view_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@zone_group.command(name=cli_util.override('dns.get_zone.command_name', 'get'), help=u"""Gets information about the specified zone, including its creation date, zone type, and serial. \n[Command Reference](getZone)""")
 @cli_util.option('--zone-name-or-id', required=True, help=u"""The name or OCID of the target zone.""")
 @cli_util.option('--if-none-match', help=u"""The `If-None-Match` header field makes the request method conditional on the absence of any current representation of the target resource, when the field-value is `*`, or having a selected representation with an entity-tag that does not match any of those listed in the field-value.""")
 @cli_util.option('--if-modified-since', help=u"""The `If-Modified-Since` header field makes a GET or HEAD request method conditional on the selected representation's modification date being more recent than the date provided in the field-value.  Transfer of the selected representation's data is avoided if that data has not changed.""")
+@cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
+@cli_util.option('--view-id', help=u"""The OCID of the view the resource is associated with.""")
 @cli_util.option('--compartment-id', help=u"""The OCID of the compartment the resource belongs to.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'dns', 'class': 'Zone'})
 @cli_util.wrap_exceptions
-def get_zone(ctx, from_json, zone_name_or_id, if_none_match, if_modified_since, compartment_id):
+def get_zone(ctx, from_json, zone_name_or_id, if_none_match, if_modified_since, scope, view_id, compartment_id):
 
     if isinstance(zone_name_or_id, six.string_types) and len(zone_name_or_id.strip()) == 0:
         raise click.UsageError('Parameter --zone-name-or-id cannot be whitespace or empty string')
@@ -1243,6 +1841,10 @@ def get_zone(ctx, from_json, zone_name_or_id, if_none_match, if_modified_since, 
         kwargs['if_none_match'] = if_none_match
     if if_modified_since is not None:
         kwargs['if_modified_since'] = if_modified_since
+    if scope is not None:
+        kwargs['scope'] = scope
+    if view_id is not None:
+        kwargs['view_id'] = view_id
     if compartment_id is not None:
         kwargs['compartment_id'] = compartment_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -1267,6 +1869,8 @@ def get_zone(ctx, from_json, zone_name_or_id, if_none_match, if_modified_since, 
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["domain", "rtype", "ttl"]), help=u"""The field by which to sort records.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The order to sort the resources.""")
 @cli_util.option('--compartment-id', help=u"""The OCID of the compartment the resource belongs to.""")
+@cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
+@cli_util.option('--view-id', help=u"""The OCID of the view the resource is associated with.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1274,7 +1878,7 @@ def get_zone(ctx, from_json, zone_name_or_id, if_none_match, if_modified_since, 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'dns', 'class': 'RecordCollection'})
 @cli_util.wrap_exceptions
-def get_zone_records(ctx, from_json, all_pages, page_size, zone_name_or_id, if_none_match, if_modified_since, limit, page, zone_version, domain, domain_contains, rtype, sort_by, sort_order, compartment_id):
+def get_zone_records(ctx, from_json, all_pages, page_size, zone_name_or_id, if_none_match, if_modified_since, limit, page, zone_version, domain, domain_contains, rtype, sort_by, sort_order, compartment_id, scope, view_id):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -1305,6 +1909,10 @@ def get_zone_records(ctx, from_json, all_pages, page_size, zone_name_or_id, if_n
         kwargs['sort_order'] = sort_order
     if compartment_id is not None:
         kwargs['compartment_id'] = compartment_id
+    if scope is not None:
+        kwargs['scope'] = scope
+    if view_id is not None:
+        kwargs['view_id'] = view_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('dns', 'dns', ctx)
     if all_pages:
@@ -1332,6 +1940,138 @@ def get_zone_records(ctx, from_json, all_pages, page_size, zone_name_or_id, if_n
     cli_util.render_response(result, ctx)
 
 
+@resolver_endpoint_group.command(name=cli_util.override('dns.list_resolver_endpoints.command_name', 'list'), help=u"""Gets a list of all endpoints within a resolver. The collection can be filtered by name or lifecycle state. It can be sorted on creation time or name both in ASC or DESC order. Note that when no lifecycleState query parameter is provided that the collection does not include resolver endpoints in the DELETED lifecycle state to be consistent with other operations of the API. \n[Command Reference](listResolverEndpoints)""")
+@cli_util.option('--resolver-id', required=True, help=u"""The OCID of the target resolver.""")
+@cli_util.option('--name', help=u"""The name of a resource.""")
+@cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a page of the collection.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The order to sort the resources.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["name", "timeCreated"]), help=u"""The field by which to sort resolver endpoints.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "DELETED", "DELETING", "FAILED", "UPDATING"]), help=u"""The state of a resource.""")
+@cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'dns', 'class': 'list[ResolverEndpointSummary]'})
+@cli_util.wrap_exceptions
+def list_resolver_endpoints(ctx, from_json, all_pages, page_size, resolver_id, name, page, limit, sort_order, sort_by, lifecycle_state, scope):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(resolver_id, six.string_types) and len(resolver_id.strip()) == 0:
+        raise click.UsageError('Parameter --resolver-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if name is not None:
+        kwargs['name'] = name
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if scope is not None:
+        kwargs['scope'] = scope
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('dns', 'dns', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_resolver_endpoints,
+            resolver_id=resolver_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_resolver_endpoints,
+            limit,
+            page_size,
+            resolver_id=resolver_id,
+            **kwargs
+        )
+    else:
+        result = client.list_resolver_endpoints(
+            resolver_id=resolver_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@resolver_group.command(name=cli_util.override('dns.list_resolvers.command_name', 'list'), help=u"""Gets a list of all resolvers within a compartment. The collection can be filtered by display name, id, or lifecycle state. It can be sorted on creation time or displayName both in ASC or DESC order. Note that when no lifecycleState query parameter is provided that the collection does not include resolvers in the DELETED lifecycleState to be consistent with other operations of the API. \n[Command Reference](listResolvers)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment the resource belongs to.""")
+@cli_util.option('--display-name', help=u"""The displayName of a resource.""")
+@cli_util.option('--id', help=u"""The OCID of a resource.""")
+@cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a page of the collection.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The order to sort the resources.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["displayName", "timeCreated"]), help=u"""The field by which to sort resolvers.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "DELETED", "DELETING", "FAILED", "UPDATING"]), help=u"""The state of a resource.""")
+@cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'dns', 'class': 'list[ResolverSummary]'})
+@cli_util.wrap_exceptions
+def list_resolvers(ctx, from_json, all_pages, page_size, compartment_id, display_name, id, page, limit, sort_order, sort_by, lifecycle_state, scope):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if id is not None:
+        kwargs['id'] = id
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if scope is not None:
+        kwargs['scope'] = scope
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('dns', 'dns', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_resolvers,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_resolvers,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_resolvers(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
 @steering_policy_group.command(name=cli_util.override('dns.list_steering_policies.command_name', 'list'), help=u"""Gets a list of all steering policies in the specified compartment. \n[Command Reference](listSteeringPolicies)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment the resource belongs to.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a page of the collection.""")
@@ -1346,6 +2086,7 @@ def get_zone_records(ctx, from_json, all_pages, page_size, zone_name_or_id, if_n
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "DELETED", "DELETING"]), help=u"""The state of a resource.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["displayName", "timeCreated", "template"]), help=u"""The field by which to sort steering policies. If unspecified, defaults to `timeCreated`.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The order to sort the resources.""")
+@cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1353,7 +2094,7 @@ def get_zone_records(ctx, from_json, all_pages, page_size, zone_name_or_id, if_n
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'dns', 'class': 'list[SteeringPolicySummary]'})
 @cli_util.wrap_exceptions
-def list_steering_policies(ctx, from_json, all_pages, page_size, compartment_id, limit, page, id, display_name, display_name_contains, health_check_monitor_id, time_created_greater_than_or_equal_to, time_created_less_than, template, lifecycle_state, sort_by, sort_order):
+def list_steering_policies(ctx, from_json, all_pages, page_size, compartment_id, limit, page, id, display_name, display_name_contains, health_check_monitor_id, time_created_greater_than_or_equal_to, time_created_less_than, template, lifecycle_state, sort_by, sort_order, scope):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -1383,6 +2124,8 @@ def list_steering_policies(ctx, from_json, all_pages, page_size, compartment_id,
         kwargs['sort_by'] = sort_by
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
+    if scope is not None:
+        kwargs['scope'] = scope
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('dns', 'dns', ctx)
     if all_pages:
@@ -1425,6 +2168,7 @@ def list_steering_policies(ctx, from_json, all_pages, page_size, compartment_id,
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING"]), help=u"""The state of a resource.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["displayName", "timeCreated", "domainName"]), help=u"""The field by which to sort steering policy attachments. If unspecified, defaults to `timeCreated`.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The order to sort the resources.""")
+@cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1432,7 +2176,7 @@ def list_steering_policies(ctx, from_json, all_pages, page_size, compartment_id,
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'dns', 'class': 'list[SteeringPolicyAttachmentSummary]'})
 @cli_util.wrap_exceptions
-def list_steering_policy_attachments(ctx, from_json, all_pages, page_size, compartment_id, limit, page, id, display_name, steering_policy_id, zone_id, domain, domain_contains, time_created_greater_than_or_equal_to, time_created_less_than, lifecycle_state, sort_by, sort_order):
+def list_steering_policy_attachments(ctx, from_json, all_pages, page_size, compartment_id, limit, page, id, display_name, steering_policy_id, zone_id, domain, domain_contains, time_created_greater_than_or_equal_to, time_created_less_than, lifecycle_state, sort_by, sort_order, scope):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -1464,6 +2208,8 @@ def list_steering_policy_attachments(ctx, from_json, all_pages, page_size, compa
         kwargs['sort_by'] = sort_by
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
+    if scope is not None:
+        kwargs['scope'] = scope
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('dns', 'dns', ctx)
     if all_pages:
@@ -1500,6 +2246,7 @@ def list_steering_policy_attachments(ctx, from_json, all_pages, page_size, compa
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING"]), help=u"""The state of a resource.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["name", "timeCreated"]), help=u"""The field by which to sort TSIG keys. If unspecified, defaults to `timeCreated`.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The order to sort the resources.""")
+@cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1507,7 +2254,7 @@ def list_steering_policy_attachments(ctx, from_json, all_pages, page_size, compa
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'dns', 'class': 'list[TsigKeySummary]'})
 @cli_util.wrap_exceptions
-def list_tsig_keys(ctx, from_json, all_pages, page_size, compartment_id, limit, page, id, name, lifecycle_state, sort_by, sort_order):
+def list_tsig_keys(ctx, from_json, all_pages, page_size, compartment_id, limit, page, id, name, lifecycle_state, sort_by, sort_order, scope):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -1527,6 +2274,8 @@ def list_tsig_keys(ctx, from_json, all_pages, page_size, compartment_id, limit, 
         kwargs['sort_by'] = sort_by
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
+    if scope is not None:
+        kwargs['scope'] = scope
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('dns', 'dns', ctx)
     if all_pages:
@@ -1554,7 +2303,73 @@ def list_tsig_keys(ctx, from_json, all_pages, page_size, compartment_id, limit, 
     cli_util.render_response(result, ctx)
 
 
-@zones_group.command(name=cli_util.override('dns.list_zones.command_name', 'list'), help=u"""Gets a list of all zones in the specified compartment. The collection can be filtered by name, time created, and zone type. \n[Command Reference](listZones)""")
+@view_group.command(name=cli_util.override('dns.list_views.command_name', 'list'), help=u"""Gets a list of all views within a compartment. The collection can be filtered by display name, id, or lifecycle state. It can be sorted on creation time or displayName both in ASC or DESC order. Note that when no lifecycleState query parameter is provided that the collection does not include views in the DELETED lifecycleState to be consistent with other operations of the API. \n[Command Reference](listViews)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment the resource belongs to.""")
+@cli_util.option('--display-name', help=u"""The displayName of a resource.""")
+@cli_util.option('--id', help=u"""The OCID of a resource.""")
+@cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a page of the collection.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The order to sort the resources.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["displayName", "timeCreated"]), help=u"""The field by which to sort views.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED", "DELETING", "UPDATING"]), help=u"""The state of a resource.""")
+@cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'dns', 'class': 'list[ViewSummary]'})
+@cli_util.wrap_exceptions
+def list_views(ctx, from_json, all_pages, page_size, compartment_id, display_name, id, page, limit, sort_order, sort_by, lifecycle_state, scope):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    kwargs = {}
+    if display_name is not None:
+        kwargs['display_name'] = display_name
+    if id is not None:
+        kwargs['id'] = id
+    if page is not None:
+        kwargs['page'] = page
+    if limit is not None:
+        kwargs['limit'] = limit
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if scope is not None:
+        kwargs['scope'] = scope
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('dns', 'dns', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_views,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_views,
+            limit,
+            page_size,
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    else:
+        result = client.list_views(
+            compartment_id=compartment_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
+@zone_group.command(name=cli_util.override('dns.list_zones.command_name', 'list'), help=u"""Gets a list of all zones in the specified compartment. The collection can be filtered by name, time created, scope, associated view, and zone type. \n[Command Reference](listZones)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment the resource belongs to.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a page of the collection.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
@@ -1566,6 +2381,8 @@ def list_tsig_keys(ctx, from_json, all_pages, page_size, compartment_id, limit, 
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "DELETED", "DELETING", "FAILED"]), help=u"""The state of a resource.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["name", "zoneType", "timeCreated"]), help=u"""The field by which to sort zones.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The order to sort the resources.""")
+@cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
+@cli_util.option('--view-id', help=u"""The OCID of the view the resource is associated with.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1573,7 +2390,7 @@ def list_tsig_keys(ctx, from_json, all_pages, page_size, compartment_id, limit, 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'dns', 'class': 'list[ZoneSummary]'})
 @cli_util.wrap_exceptions
-def list_zones(ctx, from_json, all_pages, page_size, compartment_id, limit, page, name, name_contains, zone_type, time_created_greater_than_or_equal_to, time_created_less_than, lifecycle_state, sort_by, sort_order):
+def list_zones(ctx, from_json, all_pages, page_size, compartment_id, limit, page, name, name_contains, zone_type, time_created_greater_than_or_equal_to, time_created_less_than, lifecycle_state, sort_by, sort_order, scope, view_id):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -1599,6 +2416,10 @@ def list_zones(ctx, from_json, all_pages, page_size, compartment_id, limit, page
         kwargs['sort_by'] = sort_by
     if sort_order is not None:
         kwargs['sort_order'] = sort_order
+    if scope is not None:
+        kwargs['scope'] = scope
+    if view_id is not None:
+        kwargs['view_id'] = view_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('dns', 'dns', ctx)
     if all_pages:
@@ -1634,13 +2455,15 @@ def list_zones(ctx, from_json, all_pages, page_size, compartment_id, limit, page
 This option is a JSON list with items of type RecordOperation.  For documentation on RecordOperation please see our API reference: https://docs.cloud.oracle.com/api/#/en/dns/20180115/datatypes/RecordOperation.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
 @cli_util.option('--if-unmodified-since', help=u"""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
+@cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
+@cli_util.option('--view-id', help=u"""The OCID of the view the resource is associated with.""")
 @cli_util.option('--compartment-id', help=u"""The OCID of the compartment the resource belongs to.""")
 @json_skeleton_utils.get_cli_json_input_option({'items': {'module': 'dns', 'class': 'list[RecordOperation]'}})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'items': {'module': 'dns', 'class': 'list[RecordOperation]'}}, output_type={'module': 'dns', 'class': 'RecordCollection'})
 @cli_util.wrap_exceptions
-def patch_domain_records(ctx, from_json, zone_name_or_id, domain, items, if_match, if_unmodified_since, compartment_id):
+def patch_domain_records(ctx, from_json, zone_name_or_id, domain, items, if_match, if_unmodified_since, scope, view_id, compartment_id):
 
     if isinstance(zone_name_or_id, six.string_types) and len(zone_name_or_id.strip()) == 0:
         raise click.UsageError('Parameter --zone-name-or-id cannot be whitespace or empty string')
@@ -1653,6 +2476,10 @@ def patch_domain_records(ctx, from_json, zone_name_or_id, domain, items, if_matc
         kwargs['if_match'] = if_match
     if if_unmodified_since is not None:
         kwargs['if_unmodified_since'] = if_unmodified_since
+    if scope is not None:
+        kwargs['scope'] = scope
+    if view_id is not None:
+        kwargs['view_id'] = view_id
     if compartment_id is not None:
         kwargs['compartment_id'] = compartment_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -1681,13 +2508,15 @@ def patch_domain_records(ctx, from_json, zone_name_or_id, domain, items, if_matc
 This option is a JSON list with items of type RecordOperation.  For documentation on RecordOperation please see our API reference: https://docs.cloud.oracle.com/api/#/en/dns/20180115/datatypes/RecordOperation.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
 @cli_util.option('--if-unmodified-since', help=u"""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
+@cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
+@cli_util.option('--view-id', help=u"""The OCID of the view the resource is associated with.""")
 @cli_util.option('--compartment-id', help=u"""The OCID of the compartment the resource belongs to.""")
 @json_skeleton_utils.get_cli_json_input_option({'items': {'module': 'dns', 'class': 'list[RecordOperation]'}})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'items': {'module': 'dns', 'class': 'list[RecordOperation]'}}, output_type={'module': 'dns', 'class': 'RecordCollection'})
 @cli_util.wrap_exceptions
-def patch_rr_set(ctx, from_json, zone_name_or_id, domain, rtype, items, if_match, if_unmodified_since, compartment_id):
+def patch_rr_set(ctx, from_json, zone_name_or_id, domain, rtype, items, if_match, if_unmodified_since, scope, view_id, compartment_id):
 
     if isinstance(zone_name_or_id, six.string_types) and len(zone_name_or_id.strip()) == 0:
         raise click.UsageError('Parameter --zone-name-or-id cannot be whitespace or empty string')
@@ -1703,6 +2532,10 @@ def patch_rr_set(ctx, from_json, zone_name_or_id, domain, rtype, items, if_match
         kwargs['if_match'] = if_match
     if if_unmodified_since is not None:
         kwargs['if_unmodified_since'] = if_unmodified_since
+    if scope is not None:
+        kwargs['scope'] = scope
+    if view_id is not None:
+        kwargs['view_id'] = view_id
     if compartment_id is not None:
         kwargs['compartment_id'] = compartment_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -1730,13 +2563,15 @@ def patch_rr_set(ctx, from_json, zone_name_or_id, domain, rtype, items, if_match
 This option is a JSON list with items of type RecordOperation.  For documentation on RecordOperation please see our API reference: https://docs.cloud.oracle.com/api/#/en/dns/20180115/datatypes/RecordOperation.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
 @cli_util.option('--if-unmodified-since', help=u"""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
+@cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
+@cli_util.option('--view-id', help=u"""The OCID of the view the resource is associated with.""")
 @cli_util.option('--compartment-id', help=u"""The OCID of the compartment the resource belongs to.""")
 @json_skeleton_utils.get_cli_json_input_option({'items': {'module': 'dns', 'class': 'list[RecordOperation]'}})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'items': {'module': 'dns', 'class': 'list[RecordOperation]'}}, output_type={'module': 'dns', 'class': 'RecordCollection'})
 @cli_util.wrap_exceptions
-def patch_zone_records(ctx, from_json, zone_name_or_id, items, if_match, if_unmodified_since, compartment_id):
+def patch_zone_records(ctx, from_json, zone_name_or_id, items, if_match, if_unmodified_since, scope, view_id, compartment_id):
 
     if isinstance(zone_name_or_id, six.string_types) and len(zone_name_or_id.strip()) == 0:
         raise click.UsageError('Parameter --zone-name-or-id cannot be whitespace or empty string')
@@ -1746,6 +2581,10 @@ def patch_zone_records(ctx, from_json, zone_name_or_id, items, if_match, if_unmo
         kwargs['if_match'] = if_match
     if if_unmodified_since is not None:
         kwargs['if_unmodified_since'] = if_unmodified_since
+    if scope is not None:
+        kwargs['scope'] = scope
+    if view_id is not None:
+        kwargs['view_id'] = view_id
     if compartment_id is not None:
         kwargs['compartment_id'] = compartment_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -1772,6 +2611,8 @@ def patch_zone_records(ctx, from_json, zone_name_or_id, items, if_match, if_unmo
 This option is a JSON list with items of type RecordDetails.  For documentation on RecordDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/dns/20180115/datatypes/RecordDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
 @cli_util.option('--if-unmodified-since', help=u"""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
+@cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
+@cli_util.option('--view-id', help=u"""The OCID of the view the resource is associated with.""")
 @cli_util.option('--compartment-id', help=u"""The OCID of the compartment the resource belongs to.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @json_skeleton_utils.get_cli_json_input_option({'items': {'module': 'dns', 'class': 'list[RecordDetails]'}})
@@ -1779,7 +2620,7 @@ This option is a JSON list with items of type RecordDetails.  For documentation 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'items': {'module': 'dns', 'class': 'list[RecordDetails]'}}, output_type={'module': 'dns', 'class': 'RecordCollection'})
 @cli_util.wrap_exceptions
-def update_domain_records(ctx, from_json, force, zone_name_or_id, domain, items, if_match, if_unmodified_since, compartment_id):
+def update_domain_records(ctx, from_json, force, zone_name_or_id, domain, items, if_match, if_unmodified_since, scope, view_id, compartment_id):
 
     if isinstance(zone_name_or_id, six.string_types) and len(zone_name_or_id.strip()) == 0:
         raise click.UsageError('Parameter --zone-name-or-id cannot be whitespace or empty string')
@@ -1796,6 +2637,10 @@ def update_domain_records(ctx, from_json, force, zone_name_or_id, domain, items,
         kwargs['if_match'] = if_match
     if if_unmodified_since is not None:
         kwargs['if_unmodified_since'] = if_unmodified_since
+    if scope is not None:
+        kwargs['scope'] = scope
+    if view_id is not None:
+        kwargs['view_id'] = view_id
     if compartment_id is not None:
         kwargs['compartment_id'] = compartment_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -1815,7 +2660,248 @@ def update_domain_records(ctx, from_json, force, zone_name_or_id, domain, items,
     cli_util.render_response(result, ctx)
 
 
-@record_collection_group.command(name=cli_util.override('dns.update_rr_set.command_name', 'update-rr-set'), help=u"""Replaces records in the specified RRSet. \n[Command Reference](updateRRSet)""")
+@resolver_group.command(name=cli_util.override('dns.update_resolver.command_name', 'update'), help=u"""Updates the specified resolver with your new information. \n[Command Reference](updateResolver)""")
+@cli_util.option('--resolver-id', required=True, help=u"""The OCID of the target resolver.""")
+@cli_util.option('--display-name', help=u"""The display name of the resolver.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+ **Example:** `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+ **Example:** `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--attached-views', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The attached views. Views are evaluated in order.
+
+This option is a JSON list with items of type AttachedViewDetails.  For documentation on AttachedViewDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/dns/20180115/datatypes/AttachedViewDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--rules', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Rules for the resolver. Rules are evaluated in order.
+
+This option is a JSON list with items of type ResolverRuleDetails.  For documentation on ResolverRuleDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/dns/20180115/datatypes/ResolverRuleDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
+@cli_util.option('--if-unmodified-since', help=u"""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
+@cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "DELETED", "DELETING", "FAILED", "UPDATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'dns', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'dns', 'class': 'dict(str, dict(str, object))'}, 'attached-views': {'module': 'dns', 'class': 'list[AttachedViewDetails]'}, 'rules': {'module': 'dns', 'class': 'list[ResolverRuleDetails]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'dns', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'dns', 'class': 'dict(str, dict(str, object))'}, 'attached-views': {'module': 'dns', 'class': 'list[AttachedViewDetails]'}, 'rules': {'module': 'dns', 'class': 'list[ResolverRuleDetails]'}}, output_type={'module': 'dns', 'class': 'Resolver'})
+@cli_util.wrap_exceptions
+def update_resolver(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, resolver_id, display_name, freeform_tags, defined_tags, attached_views, rules, if_match, if_unmodified_since, scope):
+
+    if isinstance(resolver_id, six.string_types) and len(resolver_id.strip()) == 0:
+        raise click.UsageError('Parameter --resolver-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags or attached_views or rules:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags and attached-views and rules will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    if if_unmodified_since is not None:
+        kwargs['if_unmodified_since'] = if_unmodified_since
+    if scope is not None:
+        kwargs['scope'] = scope
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if attached_views is not None:
+        _details['attachedViews'] = cli_util.parse_json_parameter("attached_views", attached_views)
+
+    if rules is not None:
+        _details['rules'] = cli_util.parse_json_parameter("rules", rules)
+
+    client = cli_util.build_client('dns', 'dns', ctx)
+    result = client.update_resolver(
+        resolver_id=resolver_id,
+        update_resolver_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_resolver') and callable(getattr(client, 'get_resolver')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_resolver(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@resolver_endpoint_group.command(name=cli_util.override('dns.update_resolver_endpoint.command_name', 'update'), help=u"""Updates the specified resolver endpoint with your new information. \n[Command Reference](updateResolverEndpoint)""")
+@cli_util.option('--resolver-id', required=True, help=u"""The OCID of the target resolver.""")
+@cli_util.option('--resolver-endpoint-name', required=True, help=u"""The name of the target resolver endpoint.""")
+@cli_util.option('--endpoint-type', type=custom_types.CliCaseInsensitiveChoice(["VNIC"]), help=u"""The type of resolver endpoint. VNIC is currently the only supported type.""")
+@cli_util.option('--if-match', help=u"""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
+@cli_util.option('--if-unmodified-since', help=u"""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
+@cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "DELETED", "DELETING", "FAILED", "UPDATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'dns', 'class': 'ResolverEndpoint'})
+@cli_util.wrap_exceptions
+def update_resolver_endpoint(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, resolver_id, resolver_endpoint_name, endpoint_type, if_match, if_unmodified_since, scope):
+
+    if isinstance(resolver_id, six.string_types) and len(resolver_id.strip()) == 0:
+        raise click.UsageError('Parameter --resolver-id cannot be whitespace or empty string')
+
+    if isinstance(resolver_endpoint_name, six.string_types) and len(resolver_endpoint_name.strip()) == 0:
+        raise click.UsageError('Parameter --resolver-endpoint-name cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    if if_unmodified_since is not None:
+        kwargs['if_unmodified_since'] = if_unmodified_since
+    if scope is not None:
+        kwargs['scope'] = scope
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if endpoint_type is not None:
+        _details['endpointType'] = endpoint_type
+
+    client = cli_util.build_client('dns', 'dns', ctx)
+    result = client.update_resolver_endpoint(
+        resolver_id=resolver_id,
+        resolver_endpoint_name=resolver_endpoint_name,
+        update_resolver_endpoint_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_resolver_endpoint') and callable(getattr(client, 'get_resolver_endpoint')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_resolver_endpoint(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@resolver_endpoint_group.command(name=cli_util.override('dns.update_resolver_endpoint_update_resolver_vnic_endpoint_details.command_name', 'update-resolver-endpoint-update-resolver-vnic-endpoint-details'), help=u"""Updates the specified resolver endpoint with your new information. \n[Command Reference](updateResolverEndpoint)""")
+@cli_util.option('--resolver-id', required=True, help=u"""The OCID of the target resolver.""")
+@cli_util.option('--resolver-endpoint-name', required=True, help=u"""The name of the target resolver endpoint.""")
+@cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help=u"""An array of NSG OCIDs for the resolver endpoint.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
+@cli_util.option('--if-unmodified-since', help=u"""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
+@cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "DELETED", "DELETING", "FAILED", "UPDATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'nsg-ids': {'module': 'dns', 'class': 'list[string]'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'nsg-ids': {'module': 'dns', 'class': 'list[string]'}}, output_type={'module': 'dns', 'class': 'ResolverEndpoint'})
+@cli_util.wrap_exceptions
+def update_resolver_endpoint_update_resolver_vnic_endpoint_details(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, resolver_id, resolver_endpoint_name, nsg_ids, if_match, if_unmodified_since, scope):
+
+    if isinstance(resolver_id, six.string_types) and len(resolver_id.strip()) == 0:
+        raise click.UsageError('Parameter --resolver-id cannot be whitespace or empty string')
+
+    if isinstance(resolver_endpoint_name, six.string_types) and len(resolver_endpoint_name.strip()) == 0:
+        raise click.UsageError('Parameter --resolver-endpoint-name cannot be whitespace or empty string')
+    if not force:
+        if nsg_ids:
+            if not click.confirm("WARNING: Updates to nsg-ids will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    if if_unmodified_since is not None:
+        kwargs['if_unmodified_since'] = if_unmodified_since
+    if scope is not None:
+        kwargs['scope'] = scope
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if nsg_ids is not None:
+        _details['nsgIds'] = cli_util.parse_json_parameter("nsg_ids", nsg_ids)
+
+    _details['endpointType'] = 'VNIC'
+
+    client = cli_util.build_client('dns', 'dns', ctx)
+    result = client.update_resolver_endpoint(
+        resolver_id=resolver_id,
+        resolver_endpoint_name=resolver_endpoint_name,
+        update_resolver_endpoint_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_resolver_endpoint') and callable(getattr(client, 'get_resolver_endpoint')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_resolver_endpoint(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@rr_set_group.command(name=cli_util.override('dns.update_rr_set.command_name', 'update'), help=u"""Replaces records in the specified RRSet. \n[Command Reference](updateRRSet)""")
 @cli_util.option('--zone-name-or-id', required=True, help=u"""The name or OCID of the target zone.""")
 @cli_util.option('--domain', required=True, help=u"""The target fully-qualified domain name (FQDN) within the target zone.""")
 @cli_util.option('--rtype', required=True, help=u"""The type of the target RRSet within the target zone.""")
@@ -1824,6 +2910,8 @@ def update_domain_records(ctx, from_json, force, zone_name_or_id, domain, items,
 This option is a JSON list with items of type RecordDetails.  For documentation on RecordDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/dns/20180115/datatypes/RecordDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
 @cli_util.option('--if-unmodified-since', help=u"""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
+@cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
+@cli_util.option('--view-id', help=u"""The OCID of the view the resource is associated with.""")
 @cli_util.option('--compartment-id', help=u"""The OCID of the compartment the resource belongs to.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @json_skeleton_utils.get_cli_json_input_option({'items': {'module': 'dns', 'class': 'list[RecordDetails]'}})
@@ -1831,7 +2919,7 @@ This option is a JSON list with items of type RecordDetails.  For documentation 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'items': {'module': 'dns', 'class': 'list[RecordDetails]'}}, output_type={'module': 'dns', 'class': 'RecordCollection'})
 @cli_util.wrap_exceptions
-def update_rr_set(ctx, from_json, force, zone_name_or_id, domain, rtype, items, if_match, if_unmodified_since, compartment_id):
+def update_rr_set(ctx, from_json, force, zone_name_or_id, domain, rtype, items, if_match, if_unmodified_since, scope, view_id, compartment_id):
 
     if isinstance(zone_name_or_id, six.string_types) and len(zone_name_or_id.strip()) == 0:
         raise click.UsageError('Parameter --zone-name-or-id cannot be whitespace or empty string')
@@ -1851,6 +2939,10 @@ def update_rr_set(ctx, from_json, force, zone_name_or_id, domain, rtype, items, 
         kwargs['if_match'] = if_match
     if if_unmodified_since is not None:
         kwargs['if_unmodified_since'] = if_unmodified_since
+    if scope is not None:
+        kwargs['scope'] = scope
+    if view_id is not None:
+        kwargs['view_id'] = view_id
     if compartment_id is not None:
         kwargs['compartment_id'] = compartment_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -1915,6 +3007,7 @@ This option is a JSON list with items of type SteeringPolicyAnswer.  For documen
 This option is a JSON list with items of type SteeringPolicyRule.  For documentation on SteeringPolicyRule please see our API reference: https://docs.cloud.oracle.com/api/#/en/dns/20180115/datatypes/SteeringPolicyRule.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
 @cli_util.option('--if-unmodified-since', help=u"""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
+@cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "DELETED", "DELETING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -1924,7 +3017,7 @@ This option is a JSON list with items of type SteeringPolicyRule.  For documenta
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'dns', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'dns', 'class': 'dict(str, dict(str, object))'}, 'answers': {'module': 'dns', 'class': 'list[SteeringPolicyAnswer]'}, 'rules': {'module': 'dns', 'class': 'list[SteeringPolicyRule]'}}, output_type={'module': 'dns', 'class': 'SteeringPolicy'})
 @cli_util.wrap_exceptions
-def update_steering_policy(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, steering_policy_id, display_name, ttl, health_check_monitor_id, template, freeform_tags, defined_tags, answers, rules, if_match, if_unmodified_since):
+def update_steering_policy(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, steering_policy_id, display_name, ttl, health_check_monitor_id, template, freeform_tags, defined_tags, answers, rules, if_match, if_unmodified_since, scope):
 
     if isinstance(steering_policy_id, six.string_types) and len(steering_policy_id.strip()) == 0:
         raise click.UsageError('Parameter --steering-policy-id cannot be whitespace or empty string')
@@ -1938,6 +3031,8 @@ def update_steering_policy(ctx, from_json, force, wait_for_state, max_wait_secon
         kwargs['if_match'] = if_match
     if if_unmodified_since is not None:
         kwargs['if_unmodified_since'] = if_unmodified_since
+    if scope is not None:
+        kwargs['scope'] = scope
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
@@ -2003,6 +3098,7 @@ def update_steering_policy(ctx, from_json, force, wait_for_state, max_wait_secon
 @cli_util.option('--display-name', help=u"""A user-friendly name for the steering policy attachment. Does not have to be unique and can be changed. Avoid entering confidential information.""")
 @cli_util.option('--if-match', help=u"""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
 @cli_util.option('--if-unmodified-since', help=u"""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
+@cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -2011,7 +3107,7 @@ def update_steering_policy(ctx, from_json, force, wait_for_state, max_wait_secon
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'dns', 'class': 'SteeringPolicyAttachment'})
 @cli_util.wrap_exceptions
-def update_steering_policy_attachment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, steering_policy_attachment_id, display_name, if_match, if_unmodified_since):
+def update_steering_policy_attachment(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, steering_policy_attachment_id, display_name, if_match, if_unmodified_since, scope):
 
     if isinstance(steering_policy_attachment_id, six.string_types) and len(steering_policy_attachment_id.strip()) == 0:
         raise click.UsageError('Parameter --steering-policy-attachment-id cannot be whitespace or empty string')
@@ -2021,6 +3117,8 @@ def update_steering_policy_attachment(ctx, from_json, wait_for_state, max_wait_s
         kwargs['if_match'] = if_match
     if if_unmodified_since is not None:
         kwargs['if_unmodified_since'] = if_unmodified_since
+    if scope is not None:
+        kwargs['scope'] = scope
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
@@ -2070,6 +3168,7 @@ def update_steering_policy_attachment(ctx, from_json, wait_for_state, max_wait_s
  **Example:** `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
 @cli_util.option('--if-unmodified-since', help=u"""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
+@cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -2079,7 +3178,7 @@ def update_steering_policy_attachment(ctx, from_json, wait_for_state, max_wait_s
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'dns', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'dns', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'dns', 'class': 'TsigKey'})
 @cli_util.wrap_exceptions
-def update_tsig_key(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, tsig_key_id, freeform_tags, defined_tags, if_match, if_unmodified_since):
+def update_tsig_key(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, tsig_key_id, freeform_tags, defined_tags, if_match, if_unmodified_since, scope):
 
     if isinstance(tsig_key_id, six.string_types) and len(tsig_key_id.strip()) == 0:
         raise click.UsageError('Parameter --tsig-key-id cannot be whitespace or empty string')
@@ -2093,6 +3192,8 @@ def update_tsig_key(ctx, from_json, force, wait_for_state, max_wait_seconds, wai
         kwargs['if_match'] = if_match
     if if_unmodified_since is not None:
         kwargs['if_unmodified_since'] = if_unmodified_since
+    if scope is not None:
+        kwargs['scope'] = scope
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
@@ -2135,6 +3236,88 @@ def update_tsig_key(ctx, from_json, force, wait_for_state, max_wait_seconds, wai
     cli_util.render_response(result, ctx)
 
 
+@view_group.command(name=cli_util.override('dns.update_view.command_name', 'update'), help=u"""Updates the specified view with your new information. \n[Command Reference](updateView)""")
+@cli_util.option('--view-id', required=True, help=u"""The OCID of the target view.""")
+@cli_util.option('--display-name', help=u"""The display name of the view.""")
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
+
+ **Example:** `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
+
+ **Example:** `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
+@cli_util.option('--if-unmodified-since', help=u"""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
+@cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
+@cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "DELETED", "DELETING", "UPDATING"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'dns', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'dns', 'class': 'dict(str, dict(str, object))'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'dns', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'dns', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'dns', 'class': 'View'})
+@cli_util.wrap_exceptions
+def update_view(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, view_id, display_name, freeform_tags, defined_tags, if_match, if_unmodified_since, scope):
+
+    if isinstance(view_id, six.string_types) and len(view_id.strip()) == 0:
+        raise click.UsageError('Parameter --view-id cannot be whitespace or empty string')
+    if not force:
+        if freeform_tags or defined_tags:
+            if not click.confirm("WARNING: Updates to freeform-tags and defined-tags will replace any existing values. Are you sure you want to continue?"):
+                ctx.abort()
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    if if_unmodified_since is not None:
+        kwargs['if_unmodified_since'] = if_unmodified_since
+    if scope is not None:
+        kwargs['scope'] = scope
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+
+    if display_name is not None:
+        _details['displayName'] = display_name
+
+    if freeform_tags is not None:
+        _details['freeformTags'] = cli_util.parse_json_parameter("freeform_tags", freeform_tags)
+
+    if defined_tags is not None:
+        _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    client = cli_util.build_client('dns', 'dns', ctx)
+    result = client.update_view(
+        view_id=view_id,
+        update_view_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_view') and callable(getattr(client, 'get_view')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_view(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @zone_group.command(name=cli_util.override('dns.update_zone.command_name', 'update'), help=u"""Updates the specified secondary zone with your new external master server information. For more information about secondary zone, see [Manage DNS Service Zone]. \n[Command Reference](updateZone)""")
 @cli_util.option('--zone-name-or-id', required=True, help=u"""The name or OCID of the target zone.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags].
@@ -2148,6 +3331,8 @@ def update_tsig_key(ctx, from_json, force, wait_for_state, max_wait_seconds, wai
 This option is a JSON list with items of type ExternalMaster.  For documentation on ExternalMaster please see our API reference: https://docs.cloud.oracle.com/api/#/en/dns/20180115/datatypes/ExternalMaster.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
 @cli_util.option('--if-unmodified-since', help=u"""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
+@cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
+@cli_util.option('--view-id', help=u"""The OCID of the view the resource is associated with.""")
 @cli_util.option('--compartment-id', help=u"""The OCID of the compartment the resource belongs to.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "CREATING", "DELETED", "DELETING", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -2158,7 +3343,7 @@ This option is a JSON list with items of type ExternalMaster.  For documentation
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'dns', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'dns', 'class': 'dict(str, dict(str, object))'}, 'external-masters': {'module': 'dns', 'class': 'list[ExternalMaster]'}}, output_type={'module': 'dns', 'class': 'Zone'})
 @cli_util.wrap_exceptions
-def update_zone(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, zone_name_or_id, freeform_tags, defined_tags, external_masters, if_match, if_unmodified_since, compartment_id):
+def update_zone(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, zone_name_or_id, freeform_tags, defined_tags, external_masters, if_match, if_unmodified_since, scope, view_id, compartment_id):
 
     if isinstance(zone_name_or_id, six.string_types) and len(zone_name_or_id.strip()) == 0:
         raise click.UsageError('Parameter --zone-name-or-id cannot be whitespace or empty string')
@@ -2172,6 +3357,10 @@ def update_zone(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_in
         kwargs['if_match'] = if_match
     if if_unmodified_since is not None:
         kwargs['if_unmodified_since'] = if_unmodified_since
+    if scope is not None:
+        kwargs['scope'] = scope
+    if view_id is not None:
+        kwargs['view_id'] = view_id
     if compartment_id is not None:
         kwargs['compartment_id'] = compartment_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -2226,6 +3415,8 @@ def update_zone(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_in
 This option is a JSON list with items of type RecordDetails.  For documentation on RecordDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/dns/20180115/datatypes/RecordDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""The `If-Match` header field makes the request method conditional on the existence of at least one current representation of the target resource, when the field-value is `*`, or having a current representation of the target resource that has an entity-tag matching a member of the list of entity-tags provided in the field-value.""")
 @cli_util.option('--if-unmodified-since', help=u"""The `If-Unmodified-Since` header field makes the request method conditional on the selected representation's last modification date being earlier than or equal to the date provided in the field-value.  This field accomplishes the same purpose as If-Match for cases where the user agent does not have an entity-tag for the representation.""")
+@cli_util.option('--scope', type=custom_types.CliCaseInsensitiveChoice(["GLOBAL", "PRIVATE"]), help=u"""Specifies to operate only on resources that have a matching DNS scope.""")
+@cli_util.option('--view-id', help=u"""The OCID of the view the resource is associated with.""")
 @cli_util.option('--compartment-id', help=u"""The OCID of the compartment the resource belongs to.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @json_skeleton_utils.get_cli_json_input_option({'items': {'module': 'dns', 'class': 'list[RecordDetails]'}})
@@ -2233,7 +3424,7 @@ This option is a JSON list with items of type RecordDetails.  For documentation 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'items': {'module': 'dns', 'class': 'list[RecordDetails]'}}, output_type={'module': 'dns', 'class': 'RecordCollection'})
 @cli_util.wrap_exceptions
-def update_zone_records(ctx, from_json, force, zone_name_or_id, items, if_match, if_unmodified_since, compartment_id):
+def update_zone_records(ctx, from_json, force, zone_name_or_id, items, if_match, if_unmodified_since, scope, view_id, compartment_id):
 
     if isinstance(zone_name_or_id, six.string_types) and len(zone_name_or_id.strip()) == 0:
         raise click.UsageError('Parameter --zone-name-or-id cannot be whitespace or empty string')
@@ -2247,6 +3438,10 @@ def update_zone_records(ctx, from_json, force, zone_name_or_id, items, if_match,
         kwargs['if_match'] = if_match
     if if_unmodified_since is not None:
         kwargs['if_unmodified_since'] = if_unmodified_since
+    if scope is not None:
+        kwargs['scope'] = scope
+    if view_id is not None:
+        kwargs['view_id'] = view_id
     if compartment_id is not None:
         kwargs['compartment_id'] = compartment_id
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])

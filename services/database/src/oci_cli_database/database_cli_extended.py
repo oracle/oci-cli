@@ -165,6 +165,7 @@ cli_util.rename_command(database_cli, database_cli.autonomous_database_group, da
 @cli_util.option('--db-name', required=True, help="""The database name. It must begin with an alphabetic character and can contain a maximum of eight alphanumeric characters. Special characters are not permitted.""")
 @cli_util.option('--db-unique-name', required=False, help="""The database unique name. It must be greater than 3 characters, but at most 30 characters, begin with a letter, and contain only letters, numbers, and underscores. The first eight characters must also be unique within a Database Domain and within a Database System or VM Cluster. In addition, if it is not on a VM Cluster it might either be identical to the database name or prefixed by the datbase name and followed by an underscore.""")
 @cli_util.option('--db-version', required=True, help="""A valid Oracle database version. To get a list of supported versions, use the command 'oci db version list'.""")
+@cli_util.option('--tde-wallet-password', help="""The optional password to open the TDE wallet. The password must be at least nine characters and contain at least two uppercase, two lowercase, two numeric, and two special characters. The special characters must be _, #, or -.""")
 @cli_util.option('--db-workload', help="""Database workload type. Allowed values are: OLTP, DSS""")
 @cli_util.option('--ncharacter-set', help="""National character set for the database. The default is AL16UTF16. Allowed values are: AL16UTF16 or UTF8.""")
 @cli_util.option('--pdb-name', help="""Pluggable database name. It must begin with an alphabetic character and can contain a maximum of eight alphanumeric characters. Special characters are not permitted. Pluggable database should not be same as database name.""")
@@ -189,6 +190,9 @@ def launch_db_system_extended(ctx, **kwargs):
     create_database_details = {}
     if 'admin_password' in kwargs and kwargs['admin_password']:
         create_database_details['adminPassword'] = kwargs['admin_password']
+
+    if 'tde_wallet_password' in kwargs and kwargs['tde_wallet_password']:
+        create_database_details['tde_wallet_password'] = kwargs['tde_wallet_password']
 
     if 'character_set' in kwargs and kwargs['character_set']:
         create_database_details['characterSet'] = kwargs['character_set']
@@ -231,6 +235,7 @@ def launch_db_system_extended(ctx, **kwargs):
 
     # remove all of the kwargs that launch_db_system wont recognize
     del kwargs['admin_password']
+    del kwargs['tde_wallet_password']
     del kwargs['character_set']
     del kwargs['db_unique_name']
     del kwargs['db_name']
@@ -315,6 +320,7 @@ def launch_db_system_backup_extended(ctx, **kwargs):
 @cli_util.option('--character-set', help="""The character set for the database. The default is AL32UTF8. Allowed values are: AL32UTF8, AR8ADOS710, AR8ADOS720, AR8APTEC715, AR8ARABICMACS, AR8ASMO8X, AR8ISO8859P6, AR8MSWIN1256, AR8MUSSAD768, AR8NAFITHA711, AR8NAFITHA721, AR8SAKHR706, AR8SAKHR707, AZ8ISO8859P9E, BG8MSWIN, BG8PC437S, BLT8CP921, BLT8ISO8859P13, BLT8MSWIN1257, BLT8PC775, BN8BSCII, CDN8PC863, CEL8ISO8859P14, CL8ISO8859P5, CL8ISOIR111, CL8KOI8R, CL8KOI8U, CL8MACCYRILLICS, CL8MSWIN1251, EE8ISO8859P2, EE8MACCES, EE8MACCROATIANS, EE8MSWIN1250, EE8PC852, EL8DEC, EL8ISO8859P7, EL8MACGREEKS, EL8MSWIN1253, EL8PC437S, EL8PC851, EL8PC869, ET8MSWIN923, HU8ABMOD, HU8CWI2, IN8ISCII, IS8PC861, IW8ISO8859P8, IW8MACHEBREWS, IW8MSWIN1255, IW8PC1507, JA16EUC, JA16EUCTILDE, JA16SJIS, JA16SJISTILDE, JA16VMS, KO16KSC5601, KO16KSCCS, KO16MSWIN949, LA8ISO6937, LA8PASSPORT, LT8MSWIN921, LT8PC772, LT8PC774, LV8PC1117, LV8PC8LR, LV8RST104090, N8PC865, NE8ISO8859P10, NEE8ISO8859P4, RU8BESTA, RU8PC855, RU8PC866, SE8ISO8859P3, TH8MACTHAIS, TH8TISASCII, TR8DEC, TR8MACTURKISHS, TR8MSWIN1254, TR8PC857, US7ASCII, US8PC437, UTF8, VN8MSWIN1258, VN8VN3, WE8DEC, WE8DG, WE8ISO8859P1, WE8ISO8859P15, WE8ISO8859P9, WE8MACROMAN8S, WE8MSWIN1252, WE8NCR4970, WE8NEXTSTEP, WE8PC850, WE8PC858, WE8PC860, WE8ROMAN8, ZHS16CGB231280, ZHS16GBK, ZHT16BIG5, ZHT16CCDC, ZHT16DBT, ZHT16HKSCS, ZHT16MSWIN950, ZHT32EUC, ZHT32SOPS, ZHT32TRIS.""")
 @cli_util.option('--db-name', required=True, help="""The database name. It must begin with an alphabetic character and can contain a maximum of eight alphanumeric characters. Special characters are not permitted.""")
 @cli_util.option('--db-unique-name', required=False, help="""The database unique name. It must be greater than 3 characters, but at most 30 characters, begin with a letter, and contain only letters, numbers, and underscores. The first eight characters must also be unique within a Database Domain and within a Database System or VM Cluster. In addition, if it is not on a VM Cluster it might either be identical to the database name or prefixed by the datbase name and followed by an underscore.""")
+@cli_util.option('--tde-wallet-password', help="""The optional password to open the TDE wallet. The password must be at least nine characters and contain at least two uppercase, two lowercase, two numeric, and two special characters. The special characters must be _, #, or -.""")
 @cli_util.option('--db-workload', type=custom_types.CliCaseInsensitiveChoice(["OLTP", "DSS"]), help="""Database workload type. Allowed values are: OLTP, DSS""")
 @cli_util.option('--ncharacter-set', help="""National character set for the database. The default is AL16UTF16. Allowed values are: AL16UTF16 or UTF8.""")
 @cli_util.option('--pdb-name', help="""Pluggable database name. It must begin with an alphabetic character and can contain a maximum of eight alphanumeric characters. Special characters are not permitted. Pluggable database should not be same as database name.""")
@@ -350,6 +356,9 @@ def create_database(ctx, **kwargs):
     create_database_details = oci.database.models.CreateDatabaseDetails()
     if 'admin_password' in kwargs and kwargs['admin_password']:
         create_database_details.admin_password = kwargs['admin_password']
+
+    if 'tde_wallet_password' in kwargs and kwargs['tde_wallet_password']:
+        create_database_details.tde_wallet_password = kwargs['tde_wallet_password']
 
     if 'character_set' in kwargs and kwargs['character_set']:
         create_database_details.character_set = kwargs['character_set']
@@ -885,7 +894,7 @@ All Oracle Cloud Infrastructue resources, including Data Guard associations, get
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'DataGuardAssociation'})
 @cli_util.wrap_exceptions
-def create_data_guard_association_from_existing_db_system(ctx, from_json, database_id, creation_type, database_admin_password, protection_mode, transport_type, peer_db_system_id, peer_db_home_id):
+def create_data_guard_association_from_existing_db_system(ctx, from_json, database_id, creation_type, database_admin_password, protection_mode, transport_type, database_software_image_id, peer_db_system_id, peer_db_home_id):
     kwargs = {}
 
     details = {}
@@ -895,6 +904,8 @@ def create_data_guard_association_from_existing_db_system(ctx, from_json, databa
     details['transportType'] = transport_type
     details['peerDbSystemId'] = peer_db_system_id
 
+    if database_software_image_id is not None:
+        details['databaseSoftwareImageId'] = database_software_image_id
     if peer_db_home_id is not None:
         details['peerDbHomeId'] = peer_db_home_id
 
@@ -922,7 +933,7 @@ These subnets are used by the Oracle Clusterware private interconnect on the dat
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'DataGuardAssociation'})
 @cli_util.wrap_exceptions
-def create_data_guard_association_with_new_db_system(ctx, from_json, database_id, creation_type, database_admin_password, protection_mode, transport_type, availability_domain, display_name, hostname, shape, subnet_id):
+def create_data_guard_association_with_new_db_system(ctx, from_json, database_id, creation_type, database_admin_password, protection_mode, transport_type, availability_domain, display_name, hostname, shape, subnet_id, database_software_image_id):
     kwargs = {}
 
     details = {}
@@ -931,6 +942,8 @@ def create_data_guard_association_with_new_db_system(ctx, from_json, database_id
     details['protectionMode'] = protection_mode
     details['transportType'] = transport_type
 
+    if database_software_image_id is not None:
+        details['databaseSoftwareImageId'] = database_software_image_id
     if availability_domain is not None:
         details['availabilityDomain'] = availability_domain
     if display_name is not None:
@@ -962,7 +975,7 @@ All Oracle Cloud Infrastructure resources, including Data Guard associations, ge
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'DataGuardAssociation'})
 @cli_util.wrap_exceptions
-def create_data_guard_association_from_existing_vm_cluster(ctx, from_json, database_id, database_admin_password, protection_mode, transport_type, peer_vm_cluster_id, peer_db_home_id):
+def create_data_guard_association_from_existing_vm_cluster(ctx, from_json, database_id, database_admin_password, protection_mode, transport_type, database_software_image_id, peer_vm_cluster_id, peer_db_home_id):
 
     kwargs = {}
 
@@ -973,6 +986,8 @@ def create_data_guard_association_from_existing_vm_cluster(ctx, from_json, datab
     details['peerVmClusterId'] = peer_vm_cluster_id
     details['creationType'] = 'ExistingVmCluster'
 
+    if database_software_image_id is not None:
+        details['databaseSoftwareImageId'] = database_software_image_id
     if peer_db_home_id is not None:
         details['peerDbHomeId'] = peer_db_home_id
 
@@ -1429,3 +1444,87 @@ def update_okv_keystore(ctx, **kwargs):
     del kwargs['secret_id']
 
     ctx.invoke(database_cli.update_key_store_key_store_type_from_oracle_key_vault_details, **kwargs)
+
+
+# DEX-9562 Rename parameter name for create_autonomous_database
+@cli_util.copy_params_from_generated_command(database_cli.create_autonomous_database_create_autonomous_database_details, params_to_exclude=['is_access_control_enabled'])
+@cli_util.option('--is-acl-enabled', required=False, type=click.BOOL, help="""Indicates if the database-level access control is enabled. If disabled, database access is defined by the network security rules. If enabled, database access is restricted to the IP addresses defined by the rules specified with the `whitelistedIps` property. While specifying `whitelistedIps` rules is optional,  if database-level access control is enabled and no rules are specified, the database will become inaccessible. The rules can be added later using the `UpdateAutonomousDatabase` API operation or edit option in console. When creating a database clone, the desired access control setting should be specified. By default, database-level access control will be disabled for the clone.
+
+This property is applicable only to Autonomous Databases on the Exadata Cloud@Customer platform.""")
+@database_cli.autonomous_database_group.command(name='create', help=database_cli.create_autonomous_database_create_autonomous_database_details.help)
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'AutonomousDatabase'})
+@cli_util.wrap_exceptions
+def create_autonomous_database_create_autonomous_database_details(ctx, **kwargs):
+    if 'is_acl_enabled' in kwargs and kwargs['is_acl_enabled']:
+        kwargs['is_access_control_enabled'] = kwargs['is_acl_enabled']
+
+    del kwargs['is_acl_enabled']
+
+    ctx.invoke(database_cli.create_autonomous_database_create_autonomous_database_details, **kwargs)
+
+
+# Rename parameter name for create_autonomous_database_create_autonomous_database_clone_details
+@cli_util.copy_params_from_generated_command(database_cli.create_autonomous_database_create_autonomous_database_clone_details, params_to_exclude=['is_access_control_enabled'])
+@cli_util.option('--is-acl-enabled', required=False, type=click.BOOL, help="""Indicates if the database-level access control is enabled. If disabled, database access is defined by the network security rules. If enabled, database access is restricted to the IP addresses defined by the rules specified with the `whitelistedIps` property. While specifying `whitelistedIps` rules is optional,  if database-level access control is enabled and no rules are specified, the database will become inaccessible. The rules can be added later using the `UpdateAutonomousDatabase` API operation or edit option in console. When creating a database clone, the desired access control setting should be specified. By default, database-level access control will be disabled for the clone.
+
+This property is applicable only to Autonomous Databases on the Exadata Cloud@Customer platform.""")
+@database_cli.autonomous_database_group.command(name='create-from-clone', help=database_cli.create_autonomous_database_create_autonomous_database_clone_details.help)
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'AutonomousDatabase'})
+@cli_util.wrap_exceptions
+def create_autonomous_database_create_autonomous_database_clone_details(ctx, **kwargs):
+    if 'is_acl_enabled' in kwargs and kwargs['is_acl_enabled']:
+        kwargs['is_access_control_enabled'] = kwargs['is_acl_enabled']
+
+    del kwargs['is_acl_enabled']
+
+    ctx.invoke(database_cli.create_autonomous_database_create_autonomous_database_clone_details, **kwargs)
+
+
+# Rename parameter name for update_autonomous_database
+@cli_util.copy_params_from_generated_command(database_cli.update_autonomous_database, params_to_exclude=['is_access_control_enabled'])
+@cli_util.option('--is-acl-enabled', required=False, type=click.BOOL, help="""Indicates if the database-level access control is enabled. If disabled, database access is defined by the network security rules. If enabled, database access is restricted to the IP addresses defined by the rules specified with the `whitelistedIps` property. While specifying `whitelistedIps` rules is optional,  if database-level access control is enabled and no rules are specified, the database will become inaccessible. The rules can be added later using the `UpdateAutonomousDatabase` API operation or edit option in console. When creating a database clone, the desired access control setting should be specified. By default, database-level access control will be disabled for the clone.
+
+This property is applicable only to Autonomous Databases on the Exadata Cloud@Customer platform.""")
+@database_cli.autonomous_database_group.command(name='update', help=database_cli.update_autonomous_database.help)
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}}, output_type={'module': 'database', 'class': 'AutonomousDatabase'})
+@cli_util.wrap_exceptions
+def update_autonomous_database(ctx, **kwargs):
+    if 'is_acl_enabled' in kwargs and kwargs['is_acl_enabled']:
+        kwargs['is_access_control_enabled'] = kwargs['is_acl_enabled']
+
+    del kwargs['is_acl_enabled']
+
+    ctx.invoke(database_cli.update_autonomous_database, **kwargs)
+
+
+# Hide --is-access-control-enabled from following command
+@cli_util.copy_params_from_generated_command(database_cli.create_autonomous_database_create_refreshable_autonomous_database_clone_details, params_to_exclude=['is_access_control_enabled'])
+@database_cli.autonomous_database_group.command(name='create-refreshable-clone', help=database_cli.create_autonomous_database_create_refreshable_autonomous_database_clone_details.help)
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'AutonomousDatabase'})
+@cli_util.wrap_exceptions
+def create_autonomous_database_create_refreshable_autonomous_database_clone_details(ctx, **kwargs):
+    ctx.invoke(database_cli.create_autonomous_database_create_refreshable_autonomous_database_clone_details, **kwargs)
+
+
+# Hide --is-access-control-enabled from following command
+@cli_util.copy_params_from_generated_command(database_cli.create_autonomous_database_create_autonomous_database_from_backup_details, params_to_exclude=['is_access_control_enabled'])
+@database_cli.autonomous_database_group.command(name='create-from-backup-id', help=database_cli.create_autonomous_database_create_autonomous_database_from_backup_details.help)
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'AutonomousDatabase'})
+@cli_util.wrap_exceptions
+def create_autonomous_database_create_autonomous_database_from_backup_details(ctx, **kwargs):
+    ctx.invoke(database_cli.create_autonomous_database_create_autonomous_database_from_backup_details, **kwargs)
+
+
+# Hide --is-access-control-enabled from following command
+@cli_util.copy_params_from_generated_command(database_cli.create_autonomous_database_create_autonomous_database_from_backup_timestamp_details, params_to_exclude=['is_access_control_enabled'])
+@database_cli.autonomous_database_group.command(name='create-from-backup-timestamp', help=database_cli.create_autonomous_database_create_autonomous_database_from_backup_timestamp_details.help)
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'whitelisted-ips': {'module': 'database', 'class': 'list[string]'}, 'nsg-ids': {'module': 'database', 'class': 'list[string]'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'database', 'class': 'AutonomousDatabase'})
+@cli_util.wrap_exceptions
+def create_autonomous_database_create_autonomous_database_from_backup_timestamp_details(ctx, **kwargs):
+    ctx.invoke(database_cli.create_autonomous_database_create_autonomous_database_from_backup_timestamp_details, **kwargs)
