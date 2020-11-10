@@ -79,5 +79,6 @@ IGNORED_COMMANDS = [
     ['db', 'system', 'update'],
     ['lb', 'load-balancer', 'create'],
     ['network', 'private-endpoint', 'enable-reverse-connections'],
-    ['os', 'object', 'reencrypt']
+    ['os', 'object', 'reencrypt'],
+    ['dns', 'resolver', 'update']
 ]

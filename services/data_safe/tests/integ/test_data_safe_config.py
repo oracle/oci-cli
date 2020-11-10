@@ -15,6 +15,7 @@ def vcr_fixture(request):
         yield
 
 
+@pytest.mark.skip("DEXREQ-1731")
 def test_get(runner, config_file, config_profile):
     params = [
         'data-safe', 'configuration', 'get',

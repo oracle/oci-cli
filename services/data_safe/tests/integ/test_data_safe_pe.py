@@ -32,6 +32,7 @@ def vcr_fixture(request):
         yield
 
 
+@pytest.mark.skip("DEXREQ-1712")
 def test_crud(runner, config_file, config_profile):
     pe_id = _create_pe(config_file, config_profile, runner)
 
@@ -56,6 +57,7 @@ def test_crud_sync(runner, config_file, config_profile):
     _delete_pe(config_file, config_profile, pe_id, runner, is_async=False)
 
 
+@pytest.mark.skip("DEXREQ-1712")
 def test_create_error(runner, config_file, config_profile):
     _create_pe(config_file, config_profile, runner, completion_state=FAILED_STATE, private_ip="1.1.1.1.1", display_name="CLITest_Failed_PE")
 

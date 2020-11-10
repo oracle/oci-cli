@@ -284,6 +284,7 @@ def list_configurations(ctx, from_json, all_pages, page_size, compartment_id, co
 
 @shape_group.command(name=cli_util.override('mysqlaas.list_shapes.command_name', 'list'), help=u"""Gets a list of the shapes you can use to create a new MySQL DB System. The shape determines the resources allocated to the DB System: CPU cores and memory for VM shapes; CPU cores, memory and storage for non-VM (or bare metal) shapes. \n[Command Reference](listShapes)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
+@cli_util.option('--is-supported-for', type=custom_types.CliCaseInsensitiveChoice(["DBSYSTEM", "ANALYTICSCLUSTER"]), multiple=True, help=u"""Return shapes that are supported by the service feature.""")
 @cli_util.option('--availability-domain', help=u"""The name of the Availability Domain.""")
 @cli_util.option('--name', help=u"""Name""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
@@ -292,9 +293,11 @@ def list_configurations(ctx, from_json, all_pages, page_size, compartment_id, co
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'mysql', 'class': 'list[ShapeSummary]'})
 @cli_util.wrap_exceptions
-def list_shapes(ctx, from_json, all_pages, compartment_id, availability_domain, name):
+def list_shapes(ctx, from_json, all_pages, compartment_id, is_supported_for, availability_domain, name):
 
     kwargs = {}
+    if is_supported_for is not None and len(is_supported_for) > 0:
+        kwargs['is_supported_for'] = is_supported_for
     if availability_domain is not None:
         kwargs['availability_domain'] = availability_domain
     if name is not None:

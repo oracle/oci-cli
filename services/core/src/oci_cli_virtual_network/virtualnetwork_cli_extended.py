@@ -54,6 +54,9 @@ cli_util.rename_command(virtualnetwork_cli, virtualnetwork_cli.network_security_
 cli_util.rename_command(virtualnetwork_cli, virtualnetwork_cli.security_rule_group, virtualnetwork_cli.list_network_security_group_security_rules, "list")
 cli_util.rename_command(virtualnetwork_cli, virtualnetwork_cli.security_rule_group, virtualnetwork_cli.update_network_security_group_security_rules, "update")
 
+cli_util.rename_command(virtualnetwork_cli, virtualnetwork_cli.vcn_group, virtualnetwork_cli.add_vcn_cidr, "add-vcn-cidr")
+cli_util.rename_command(virtualnetwork_cli, virtualnetwork_cli.vcn_group, virtualnetwork_cli.remove_vcn_cidr, "remove-vcn-cidr")
+
 # help for oci network ip-sec-connection create --static-routes
 network_create_ip_sec_connection_static_routes_example = """'["10.0.0.0/16"]'"""
 network_create_ip_sec_connection_static_routes_help = """Static routes to the CPE. At least one route must be included. The CIDR must not be a multicast address or class E address. This must be provided in JSON format."""

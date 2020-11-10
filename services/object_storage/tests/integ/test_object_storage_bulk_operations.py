@@ -175,6 +175,8 @@ def test_normalize_object_name_path():
 @util.skip_while_rerecording
 def test_get_all_objects_in_bucket(vcr_fixture):
     download_folder = 'tests/temp/get_all_{}'.format(bulk_get_bucket_name)
+    result = invoke(['os', 'object', 'bulk-download', '--namespace', util.NAMESPACE, '--bucket-name', bulk_get_bucket_name, '--download-dir', download_folder, '--dry-run'])
+    assert len(os.listdir(download_folder)) == 0
     result = invoke(['os', 'object', 'bulk-download', '--namespace', util.NAMESPACE, '--bucket-name', bulk_get_bucket_name, '--download-dir', download_folder])
 
     # Ensure that content matches
@@ -296,6 +298,21 @@ def test_get_multipart(object_storage_client, test_id):
     util.create_large_file(os.path.join(large_file_root_dir, '6.bin'), 1)  # Creates a 1 MiB file for variety
     util.create_large_file(os.path.join(large_file_root_dir, '한글'), 1)  # Creates a 1 MiB file for variety
 
+    # check --dry-run with bulk-upload
+    invoke([
+        'os', 'object', 'bulk-upload',
+        '--namespace', util.NAMESPACE,
+        '--bucket-name', create_bucket_request.name,
+        '--src-dir', large_file_root_dir,
+        '--exclude', '6.bin',
+        '--dry-run'
+    ])
+    large_file_verify_dir = os.path.join('tests', 'temp', 'multipart_get_large_files_verify')
+    invoke(['os', 'object', 'bulk-download', '--namespace', util.NAMESPACE, '--bucket-name', create_bucket_request.name,
+            '--download-dir', large_file_verify_dir])
+    assert get_count_of_files_in_folder_and_subfolders(large_file_verify_dir) == 0
+    shutil.rmtree(large_file_verify_dir)
+    # --dry-run bulk-upload check ends
     invoke([
         'os', 'object', 'bulk-upload',
         '--namespace', util.NAMESPACE,

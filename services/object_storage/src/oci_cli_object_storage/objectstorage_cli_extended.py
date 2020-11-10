@@ -217,6 +217,11 @@ objectstorage_cli.os_root_group.short_help = "Object Storage Service"
 
 objectstorage_cli.object_group.commands.pop(objectstorage_cli.list_object_versions.name)
 
+cli_util.override_command_short_help_and_help(objectstorage_cli.get_bucket, u"""Gets the current representation of the given bucket in the given Object Storage namespace. \n[Command Reference](getBucket)
+
+Bucket  summary  includes  the  'namespace',  'name',  'compartmentId', 'createdBy', 'timeCreated', and 'etag' fields.""")
+cli_util.update_param_help(objectstorage_cli.get_bucket, 'fields', """This parameter can only include 'approximateCount' (approximate number of objects) and 'approximateSize' (total approximate size in bytes of all objects). For example '--fields approximateCount --fields approximateSize'.""", append=False)
+
 
 @objectstorage_cli.object_group.command(name='list-object-versions', help=u"""Lists the object versions in a bucket.
 
@@ -727,12 +732,13 @@ Specifying this flag will also allow for faster uploads as the CLI will not init
 """.format(INCLUDE_EXCLUDE_PATTERN))
 @cli_util.option('--encryption-key-file', type=click.File(mode='r'),
                  help="""A file containing the base64-encoded string of the AES-256 encryption key associated with the object.""")
+@cli_util.option('--dry-run', is_flag=True, help="""Prints the list of files to be uploaded.""")
 @json_skeleton_utils.get_cli_json_input_option({'metadata': {'module': 'object_storage', 'class': 'dict(str, str)'}})
 @help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'metadata': {'module': 'object_storage', 'class': 'dict(str, str)'}})
 @wrap_exceptions
-def object_bulk_put(ctx, from_json, namespace, bucket_name, src_dir, object_prefix, metadata, content_type, content_language, content_encoding, overwrite, no_overwrite, no_multipart, part_size, disable_parallel_uploads, parallel_upload_count, verify_checksum, include, exclude, encryption_key_file):
+def object_bulk_put(ctx, from_json, namespace, bucket_name, src_dir, object_prefix, metadata, content_type, content_language, content_encoding, overwrite, no_overwrite, no_multipart, part_size, disable_parallel_uploads, parallel_upload_count, verify_checksum, include, exclude, encryption_key_file, dry_run):
     """
     Uploads all files in a given directory and all subdirectories.
 
@@ -846,6 +852,9 @@ def object_bulk_put(ctx, from_json, namespace, bucket_name, src_dir, object_pref
             if file_filter_collection:
                 if file_filter_collection.get_action(full_file_path) == BaseFileFilterCollection.EXCLUDE:
                     continue
+            if dry_run:
+                print(full_file_path)
+                continue
 
             object_name = normalize_object_name_path_for_object_storage(full_file_path[len(expanded_directory):])
             if is_python2():
@@ -949,6 +958,8 @@ def object_bulk_put(ctx, from_json, namespace, bucket_name, src_dir, object_pref
 
                 if ctx.obj['debug']:
                     click.echo(u'Failed to upload {}'.format(object_name), file=sys.stderr)
+    if dry_run:
+        sys.exit(0)
 
     transfer_manager.wait_for_completion()
     reusable_progress_bar.render_finish()
@@ -1131,12 +1142,13 @@ def object_get(ctx, from_json, namespace, bucket_name, name, file, version_id, i
 """.format(INCLUDE_EXCLUDE_PATTERN))
 @cli_util.option('--encryption-key-file', type=click.File(mode='r'),
                  help="""A file containing the base64-encoded string of the AES-256 encryption key associated with the object.""")
+@cli_util.option('--dry-run', is_flag=True, help="""Prints the list of files to be downloaded.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @wrap_exceptions
-def object_bulk_get(ctx, from_json, namespace, bucket_name, prefix, delimiter, download_dir, overwrite, no_overwrite, include, exclude, parallel_operations_count, multipart_download_threshold, part_size, encryption_key_file):
+def object_bulk_get(ctx, from_json, namespace, bucket_name, prefix, delimiter, download_dir, overwrite, no_overwrite, include, exclude, parallel_operations_count, multipart_download_threshold, part_size, encryption_key_file, dry_run):
     """
     Downloads all objects which match the given prefix to a given directory.
 
@@ -1267,7 +1279,7 @@ def object_bulk_get(ctx, from_json, namespace, bucket_name, prefix, delimiter, d
                     output.add_skipped(object_name)
                     continue
 
-                if not overwrite:
+                if not overwrite and not dry_run:
                     confirm = click.prompt(u'WARNING: {} already exists. Are you sure you want to overwrite it? [y/N/yes to (a)ll]'.format(object_name), default='N', type=custom_types.CliCaseInsensitiveChoice(["Y", "N", "A"]))
                     if confirm == 'N':
                         output.add_skipped(object_name)
@@ -1282,7 +1294,10 @@ def object_bulk_get(ctx, from_json, namespace, bucket_name, prefix, delimiter, d
             }
             to_download.append(dl_obj)
             list_objects_response = None
-
+        if dry_run:
+            for obj in to_download:
+                click.echo(click.style("{}").format(obj['name']))
+            sys.exit(0)
         for obj in to_download:
             object_name = obj['name']
             object_size = obj['size']

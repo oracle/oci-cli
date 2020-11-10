@@ -6,6 +6,83 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.14.5 - 2020-11-10
+-------------------
+Added
+~~~~~
+* Support for --dry-run option for bulk-upload and bulk-download command in object storage service
+
+  * ``oci os object bulk-download --dry-run``
+  * ``oci os object bulk-upload --dry-run``
+
+* Support for creating a Data Guard association with a standby database from a database software image in the Database service
+
+  * ``oci db data-guard-association create from-existing-db-system --database-software-image-id``
+  * ``oci db data-guard-association create from-existing-vm-cluster --database-software-image-id``
+  * ``oci db data-guard-association create with-new-db-system --database-software-image-id``
+
+* Support for specifying a TDE wallet password when creating/updating a database or database system in the Database service
+
+  * ``oci db database create --tde-wallet-password``
+  * ``oci db system launch --tde-wallet-password``
+  * ``oci db database update --new-admin-password --new-tde-wallet-password --old-tde-wallet-password``
+
+* Support for private DNS resolvers, resolver endpoints, and views in the DNS service
+
+  * ``oci dns resolver``
+  * ``oci dns resolver-endpoint``
+  * ``oci dns view``
+
+* Support for analytics clusters (database accelerators) in the MySQL Database service
+
+  * ``oci mysql db-system analytics-cluster-memory-estimate generate``
+  * ``oci mysql db-system analytics-cluster-memory-estimate get``
+  * ``oci mysql db-system analytics-cluster``
+
+* Support for migrations to Java Cloud Service and Oracle Weblogic Server instances that use existing databases in the Application Migration service
+
+  * ``oci application-migration migration create --pre-created-target-database-type``
+
+* Support for Enabling Access Control Lists for Autonomous Databases on Exadata Cloud At Customer
+
+  * ``oci db autonomous-database create --is-acl-enabled``
+  * ``oci db autonomous-database create-from-clone --is-acl-enabled``
+  * ``oci db autonomous-database update --is-acl-enabled``
+
+* Support for getting a VCN and resolver association in the Networking service
+
+  * ``oci network vcn-dns-resolver-association get``
+
+* Support for specifying reserved IPs when creating load balancers in the Load Balancing service
+
+  * ``oci lb load-balancer create --reserved-ips``
+
+* Support for additional parameters when updating subnets and VLANs in the Networking service
+
+  * ``oci network vcn add``
+  * ``oci network vcn modify-vcn-cidr``
+  * ``oci network vcn remove``
+
+Changed
+~~~~~~~~
+
+* Create db-home requires either db-version or database-software-image-id
+
+  * ``oci db db-home create``
+
+* ``cidr-block`` parameter is now Optional for the following commands in the Network Service
+
+  * ``oci network subnet update --cidr-block``
+  * ``oci network vcn create --cidr-block``
+  * ``oci network vlan update --cidr-block``
+
+Fixed
+~~~~~~~
+
+* Incorrect help text for --fields parameter for following command in Object Storage Service
+
+  * ``oci os bucket get --fields``
+
 2.14.4 - 2020-11-03
 -------------------
 Added

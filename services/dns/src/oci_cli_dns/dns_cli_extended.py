@@ -67,9 +67,7 @@ dns_cli.zone_group.add_command(create_zone)
 dns_cli.zone_group.add_command(migrate_zone_from_dynect)
 
 dns_cli.dns_root_group.commands.pop(dns_cli.rr_set_group.name)
-dns_cli.dns_root_group.commands.pop(dns_cli.record_collection_group.name)
 dns_cli.dns_root_group.commands.pop(dns_cli.records_group.name)
-dns_cli.dns_root_group.commands.pop(dns_cli.zones_group.name)
 
 dns_cli.zone_group.add_command(dns_cli.get_zone)
 dns_cli.zone_group.add_command(dns_cli.list_zones)
