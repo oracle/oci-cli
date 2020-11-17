@@ -123,6 +123,18 @@ def gi_version_group():
     pass
 
 
+@click.command(cli_util.override('db.database_upgrade_history_entry_group.command_name', 'database-upgrade-history-entry'), cls=CommandGroupWithAlias, help="""The Database service supports the upgrade history of databases.
+
+To use any of the API operations, you must be authorized in an IAM policy. If you are not authorized, talk to an administrator. If you are an administrator who needs to write policies to give users access, see [Getting Started with Policies].
+
+For information about access control and compartments, see [Overview of the Identity Service].
+
+**Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
+@cli_util.help_option_group
+def database_upgrade_history_entry_group():
+    pass
+
+
 @click.command(cli_util.override('db.external_backup_job_group.command_name', 'external-backup-job'), cls=CommandGroupWithAlias, help="""Provides all the details that apply to an external backup job.""")
 @cli_util.help_option_group
 def external_backup_job_group():
@@ -291,6 +303,7 @@ db_root_group.add_command(autonomous_database_backup_group)
 db_root_group.add_command(db_home_group)
 db_root_group.add_command(autonomous_exadata_infrastructure_shape_group)
 db_root_group.add_command(gi_version_group)
+db_root_group.add_command(database_upgrade_history_entry_group)
 db_root_group.add_command(external_backup_job_group)
 db_root_group.add_command(autonomous_exadata_infrastructure_group)
 db_root_group.add_command(autonomous_container_database_dataguard_association_group)
@@ -866,6 +879,9 @@ def complete_external_backup_job(ctx, from_json, backup_id, tde_wallet_path, cf_
 @cli_util.option('--peer-autonomous-exadata-infrastructure-id', help=u"""The OCID of the peer Autonomous Exadata Infrastructure for Autonomous Data Guard.""")
 @cli_util.option('--peer-autonomous-container-database-display-name', help=u"""The display name for the peer Autonomous Container Database.""")
 @cli_util.option('--protection-mode', type=custom_types.CliCaseInsensitiveChoice(["MAXIMUM_AVAILABILITY", "MAXIMUM_PERFORMANCE"]), help=u"""The protection mode of this Autonomous Data Guard association. For more information, see [Oracle Data Guard Protection Modes] in the Oracle Data Guard documentation.""")
+@cli_util.option('--peer-autonomous-vm-cluster-id', help=u"""The [OCID] of the peer Autonomous VM cluster for Autonomous Data Guard. Required to enable Data Guard.""")
+@cli_util.option('--peer-autonomous-container-database-compartment-id', help=u"""The [OCID] of the compartment where the standby Autonomous Container Database will be created.""")
+@cli_util.option('--peer-autonomous-container-database-backup-config', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--autonomous-vm-cluster-id', help=u"""The OCID of the Autonomous VM Cluster.""")
 @cli_util.option('--compartment-id', help=u"""The [OCID] of the compartment containing the Autonomous Container Database.""")
 @cli_util.option('--maintenance-window-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -882,12 +898,12 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "TERMINATING", "TERMINATED", "FAILED", "BACKUP_IN_PROGRESS", "RESTORING", "RESTORE_FAILED", "RESTARTING", "MAINTENANCE_IN_PROGRESS", "ROLE_CHANGE_IN_PROGRESS"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'maintenance-window-details': {'module': 'database', 'class': 'MaintenanceWindow'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'backup-config': {'module': 'database', 'class': 'AutonomousContainerDatabaseBackupConfig'}})
+@json_skeleton_utils.get_cli_json_input_option({'peer-autonomous-container-database-backup-config': {'module': 'database', 'class': 'PeerAutonomousContainerDatabaseBackupConfig'}, 'maintenance-window-details': {'module': 'database', 'class': 'MaintenanceWindow'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'backup-config': {'module': 'database', 'class': 'AutonomousContainerDatabaseBackupConfig'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'maintenance-window-details': {'module': 'database', 'class': 'MaintenanceWindow'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'backup-config': {'module': 'database', 'class': 'AutonomousContainerDatabaseBackupConfig'}}, output_type={'module': 'database', 'class': 'AutonomousContainerDatabase'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'peer-autonomous-container-database-backup-config': {'module': 'database', 'class': 'PeerAutonomousContainerDatabaseBackupConfig'}, 'maintenance-window-details': {'module': 'database', 'class': 'MaintenanceWindow'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}, 'backup-config': {'module': 'database', 'class': 'AutonomousContainerDatabaseBackupConfig'}}, output_type={'module': 'database', 'class': 'AutonomousContainerDatabase'})
 @cli_util.wrap_exceptions
-def create_autonomous_container_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, patch_model, db_unique_name, service_level_agreement_type, autonomous_exadata_infrastructure_id, peer_autonomous_exadata_infrastructure_id, peer_autonomous_container_database_display_name, protection_mode, autonomous_vm_cluster_id, compartment_id, maintenance_window_details, standby_maintenance_buffer_in_days, freeform_tags, defined_tags, backup_config, kms_key_id, kms_key_version_id, vault_id, key_store_id):
+def create_autonomous_container_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, display_name, patch_model, db_unique_name, service_level_agreement_type, autonomous_exadata_infrastructure_id, peer_autonomous_exadata_infrastructure_id, peer_autonomous_container_database_display_name, protection_mode, peer_autonomous_vm_cluster_id, peer_autonomous_container_database_compartment_id, peer_autonomous_container_database_backup_config, autonomous_vm_cluster_id, compartment_id, maintenance_window_details, standby_maintenance_buffer_in_days, freeform_tags, defined_tags, backup_config, kms_key_id, kms_key_version_id, vault_id, key_store_id):
 
     kwargs = {}
 
@@ -912,6 +928,15 @@ def create_autonomous_container_database(ctx, from_json, wait_for_state, max_wai
 
     if protection_mode is not None:
         _details['protectionMode'] = protection_mode
+
+    if peer_autonomous_vm_cluster_id is not None:
+        _details['peerAutonomousVmClusterId'] = peer_autonomous_vm_cluster_id
+
+    if peer_autonomous_container_database_compartment_id is not None:
+        _details['peerAutonomousContainerDatabaseCompartmentId'] = peer_autonomous_container_database_compartment_id
+
+    if peer_autonomous_container_database_backup_config is not None:
+        _details['peerAutonomousContainerDatabaseBackupConfig'] = cli_util.parse_json_parameter("peer_autonomous_container_database_backup_config", peer_autonomous_container_database_backup_config)
 
     if autonomous_vm_cluster_id is not None:
         _details['autonomousVmClusterId'] = autonomous_vm_cluster_id
@@ -3001,7 +3026,7 @@ def create_data_guard_association_create_data_guard_association_to_existing_db_s
 @cli_util.option('--db-home-id', required=True, help=u"""The [OCID] of the Database Home.""")
 @cli_util.option('--source', required=True, type=custom_types.CliCaseInsensitiveChoice(["NONE", "DB_BACKUP"]), help=u"""The source of the database: Use `NONE` for creating a new database. Use `DB_BACKUP` for creating a new database by restoring from a backup. The default is `NONE`.""")
 @cli_util.option('--db-version', help=u"""A valid Oracle Database version. To get a list of supported versions, use the [ListDbVersions] operation.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "BACKUP_IN_PROGRESS", "TERMINATING", "TERMINATED", "RESTORE_FAILED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "BACKUP_IN_PROGRESS", "UPGRADING", "TERMINATING", "TERMINATED", "RESTORE_FAILED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -3056,7 +3081,7 @@ def create_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_inter
 @cli_util.option('--db-home-id', required=True, help=u"""The [OCID] of the Database Home.""")
 @cli_util.option('--database', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--db-version', help=u"""A valid Oracle Database version. To get a list of supported versions, use the [ListDbVersions] operation.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "BACKUP_IN_PROGRESS", "TERMINATING", "TERMINATED", "RESTORE_FAILED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "BACKUP_IN_PROGRESS", "UPGRADING", "TERMINATING", "TERMINATED", "RESTORE_FAILED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'database': {'module': 'database', 'class': 'CreateDatabaseDetails'}})
@@ -3113,7 +3138,7 @@ def create_database_create_new_database_details(ctx, from_json, wait_for_state, 
 @cli_util.option('--db-home-id', required=True, help=u"""The [OCID] of the Database Home.""")
 @cli_util.option('--database', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--db-version', help=u"""A valid Oracle Database version. To get a list of supported versions, use the [ListDbVersions] operation.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "BACKUP_IN_PROGRESS", "TERMINATING", "TERMINATED", "RESTORE_FAILED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "BACKUP_IN_PROGRESS", "UPGRADING", "TERMINATING", "TERMINATED", "RESTORE_FAILED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'database': {'module': 'database', 'class': 'CreateDatabaseFromBackupDetails'}})
@@ -4673,7 +4698,7 @@ If you previously used RMAN or dbcli to configure backups and then you switch to
 
 This parameter is used in multiple APIs. Refer to the API description for details on how the operation uses it.""")
 @cli_util.confirm_delete_option
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "BACKUP_IN_PROGRESS", "TERMINATING", "TERMINATED", "RESTORE_FAILED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "BACKUP_IN_PROGRESS", "UPGRADING", "TERMINATING", "TERMINATED", "RESTORE_FAILED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -6106,6 +6131,33 @@ def get_database_software_image(ctx, from_json, database_software_image_id):
     client = cli_util.build_client('database', 'database', ctx)
     result = client.get_database_software_image(
         database_software_image_id=database_software_image_id,
+        **kwargs
+    )
+    cli_util.render_response(result, ctx)
+
+
+@database_upgrade_history_entry_group.command(name=cli_util.override('db.get_database_upgrade_history_entry.command_name', 'get'), help=u"""gets the upgrade history for a specified database. \n[Command Reference](getDatabaseUpgradeHistoryEntry)""")
+@cli_util.option('--database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--upgrade-history-entry-id', required=True, help=u"""The database upgrade History [OCID].""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'DatabaseUpgradeHistoryEntry'})
+@cli_util.wrap_exceptions
+def get_database_upgrade_history_entry(ctx, from_json, database_id, upgrade_history_entry_id):
+
+    if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
+        raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
+
+    if isinstance(upgrade_history_entry_id, six.string_types) and len(upgrade_history_entry_id.strip()) == 0:
+        raise click.UsageError('Parameter --upgrade-history-entry-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database', 'database', ctx)
+    result = client.get_database_upgrade_history_entry(
+        database_id=database_id,
+        upgrade_history_entry_id=upgrade_history_entry_id,
         **kwargs
     )
     cli_util.render_response(result, ctx)
@@ -8708,6 +8760,7 @@ def list_data_guard_associations(ctx, from_json, all_pages, page_size, database_
 @cli_util.option('--display-name', help=u"""A filter to return only resources that match the entire display name given. The match is not case sensitive.""")
 @cli_util.option('--image-type', type=custom_types.CliCaseInsensitiveChoice(["GRID_IMAGE", "DATABASE_IMAGE"]), help=u"""A filter to return only resources that match the given image type exactly.""")
 @cli_util.option('--image-shape-family', type=custom_types.CliCaseInsensitiveChoice(["VM_BM_SHAPE", "EXADATA_SHAPE"]), help=u"""A filter to return only resources that match the given image shape family exactly.""")
+@cli_util.option('--is-upgrade-supported', type=click.BOOL, help=u"""If provided, filters the results to the set of database versions which are supported for Upgrade.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -8715,7 +8768,7 @@ def list_data_guard_associations(ctx, from_json, all_pages, page_size, database_
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'list[DatabaseSoftwareImageSummary]'})
 @cli_util.wrap_exceptions
-def list_database_software_images(ctx, from_json, all_pages, page_size, compartment_id, limit, page, sort_by, sort_order, lifecycle_state, display_name, image_type, image_shape_family):
+def list_database_software_images(ctx, from_json, all_pages, page_size, compartment_id, limit, page, sort_by, sort_order, lifecycle_state, display_name, image_type, image_shape_family, is_upgrade_supported):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -8737,6 +8790,8 @@ def list_database_software_images(ctx, from_json, all_pages, page_size, compartm
         kwargs['image_type'] = image_type
     if image_shape_family is not None:
         kwargs['image_shape_family'] = image_shape_family
+    if is_upgrade_supported is not None:
+        kwargs['is_upgrade_supported'] = is_upgrade_supported
     client = cli_util.build_client('database', 'database', ctx)
     if all_pages:
         if page_size:
@@ -8763,6 +8818,69 @@ def list_database_software_images(ctx, from_json, all_pages, page_size, compartm
     cli_util.render_response(result, ctx)
 
 
+@database_group.command(name=cli_util.override('db.list_database_upgrade_history_entries.command_name', 'list-database-upgrade-history-entries'), help=u"""gets the upgrade history for a specified database. \n[Command Reference](listDatabaseUpgradeHistoryEntries)""")
+@cli_util.option('--database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--upgrade-action', type=custom_types.CliCaseInsensitiveChoice(["PRECHECK", "UPGRADE", "ROLLBACK"]), help=u"""A filter to return only upgradeHistoryEntries that match the specified Upgrade Action.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["SUCCEEDED", "FAILED", "IN_PROGRESS"]), help=u"""A filter to return only upgradeHistoryEntries that match the given lifecycle state exactly.""")
+@cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["TIMESTARTED"]), help=u"""The field to sort by.  You can provide one sort order (`sortOrder`).  Default order for TIMECREATED is ascending.""")
+@cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
+@cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return per page.""")
+@cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
+@cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
+@cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'list[DatabaseUpgradeHistoryEntrySummary]'})
+@cli_util.wrap_exceptions
+def list_database_upgrade_history_entries(ctx, from_json, all_pages, page_size, database_id, upgrade_action, lifecycle_state, sort_by, sort_order, limit, page):
+
+    if all_pages and limit:
+        raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
+
+    if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
+        raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if upgrade_action is not None:
+        kwargs['upgrade_action'] = upgrade_action
+    if lifecycle_state is not None:
+        kwargs['lifecycle_state'] = lifecycle_state
+    if sort_by is not None:
+        kwargs['sort_by'] = sort_by
+    if sort_order is not None:
+        kwargs['sort_order'] = sort_order
+    if limit is not None:
+        kwargs['limit'] = limit
+    if page is not None:
+        kwargs['page'] = page
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+    client = cli_util.build_client('database', 'database', ctx)
+    if all_pages:
+        if page_size:
+            kwargs['limit'] = page_size
+
+        result = cli_util.list_call_get_all_results(
+            client.list_database_upgrade_history_entries,
+            database_id=database_id,
+            **kwargs
+        )
+    elif limit is not None:
+        result = cli_util.list_call_get_up_to_limit(
+            client.list_database_upgrade_history_entries,
+            limit,
+            page_size,
+            database_id=database_id,
+            **kwargs
+        )
+    else:
+        result = client.list_database_upgrade_history_entries(
+            database_id=database_id,
+            **kwargs
+        )
+    cli_util.render_response(result, ctx)
+
+
 @database_group.command(name=cli_util.override('db.list_databases.command_name', 'list'), help=u"""Gets a list of the databases in the specified Database Home. \n[Command Reference](listDatabases)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The compartment [OCID].""")
 @cli_util.option('--db-home-id', help=u"""A Database Home [OCID].""")
@@ -8771,7 +8889,7 @@ def list_database_software_images(ctx, from_json, all_pages, page_size, compartm
 @cli_util.option('--page', help=u"""The pagination token to continue listing from.""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["DBNAME", "TIMECREATED"]), help=u"""The field to sort by.  You can provide one sort order (`sortOrder`).  Default order for TIMECREATED is descending.  Default order for DBNAME is ascending. The DBNAME sort order is case sensitive.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`).""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "BACKUP_IN_PROGRESS", "TERMINATING", "TERMINATED", "RESTORE_FAILED", "FAILED"]), help=u"""A filter to return only resources that match the given lifecycle state exactly.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "BACKUP_IN_PROGRESS", "UPGRADING", "TERMINATING", "TERMINATED", "RESTORE_FAILED", "FAILED"]), help=u"""A filter to return only resources that match the given lifecycle state exactly.""")
 @cli_util.option('--db-name', help=u"""A filter to return only resources that match the entire database name given. The match is not case sensitive.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
@@ -9287,6 +9405,7 @@ def list_db_systems(ctx, from_json, all_pages, page_size, compartment_id, limit,
 @cli_util.option('--db-system-shape', help=u"""If provided, filters the results to the set of database versions which are supported for the given shape.""")
 @cli_util.option('--db-system-id', help=u"""The DB system [OCID]. If provided, filters the results to the set of database versions which are supported for the DB system.""")
 @cli_util.option('--storage-management', type=custom_types.CliCaseInsensitiveChoice(["ASM", "LVM"]), help=u"""The DB system storage management option. Used to list database versions available for that storage manager. Valid values are: * ASM - Automatic storage management * LVM - Logical volume management""")
+@cli_util.option('--is-upgrade-supported', type=click.BOOL, help=u"""If provided, filters the results to the set of database versions which are supported for Upgrade.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -9294,7 +9413,7 @@ def list_db_systems(ctx, from_json, all_pages, page_size, compartment_id, limit,
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'list[DbVersionSummary]'})
 @cli_util.wrap_exceptions
-def list_db_versions(ctx, from_json, all_pages, page_size, compartment_id, limit, page, db_system_shape, db_system_id, storage_management):
+def list_db_versions(ctx, from_json, all_pages, page_size, compartment_id, limit, page, db_system_shape, db_system_id, storage_management, is_upgrade_supported):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -9310,6 +9429,8 @@ def list_db_versions(ctx, from_json, all_pages, page_size, compartment_id, limit
         kwargs['db_system_id'] = db_system_id
     if storage_management is not None:
         kwargs['storage_management'] = storage_management
+    if is_upgrade_supported is not None:
+        kwargs['is_upgrade_supported'] = is_upgrade_supported
     client = cli_util.build_client('database', 'database', ctx)
     if all_pages:
         if page_size:
@@ -10195,7 +10316,7 @@ def restore_autonomous_database(ctx, from_json, wait_for_state, max_wait_seconds
 @cli_util.option('--timestamp', type=custom_types.CLI_DATETIME, help=u"""Restores to the timestamp specified.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--latest', type=click.BOOL, help=u"""Restores to the last known good state with the least possible data loss.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "BACKUP_IN_PROGRESS", "TERMINATING", "TERMINATED", "RESTORE_FAILED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "BACKUP_IN_PROGRESS", "UPGRADING", "TERMINATING", "TERMINATED", "RESTORE_FAILED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -11807,7 +11928,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
-@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "BACKUP_IN_PROGRESS", "TERMINATING", "TERMINATED", "RESTORE_FAILED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "BACKUP_IN_PROGRESS", "UPGRADING", "TERMINATING", "TERMINATED", "RESTORE_FAILED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
 @json_skeleton_utils.get_cli_json_input_option({'db-backup-config': {'module': 'database', 'class': 'DbBackupConfig'}, 'freeform-tags': {'module': 'database', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'database', 'class': 'dict(str, dict(str, object))'}})
@@ -12730,6 +12851,253 @@ def update_vm_cluster_network(ctx, from_json, force, wait_for_state, max_wait_se
 
                 click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
                 result = oci.wait_until(client, client.get_vm_cluster_network(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@database_group.command(name=cli_util.override('db.upgrade_database.command_name', 'upgrade'), help=u"""Upgrade the specified database. \n[Command Reference](upgradeDatabase)""")
+@cli_util.option('--database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--action', required=True, type=custom_types.CliCaseInsensitiveChoice(["PRECHECK", "UPGRADE", "ROLLBACK"]), help=u"""action for upgrading database.""")
+@cli_util.option('--database-upgrade-source-details', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "BACKUP_IN_PROGRESS", "UPGRADING", "TERMINATING", "TERMINATED", "RESTORE_FAILED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({'database-upgrade-source-details': {'module': 'database', 'class': 'DatabaseUpgradeSourceBase'}})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database-upgrade-source-details': {'module': 'database', 'class': 'DatabaseUpgradeSourceBase'}}, output_type={'module': 'database', 'class': 'Database'})
+@cli_util.wrap_exceptions
+def upgrade_database(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, action, database_upgrade_source_details, if_match):
+
+    if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
+        raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['action'] = action
+
+    if database_upgrade_source_details is not None:
+        _details['databaseUpgradeSourceDetails'] = cli_util.parse_json_parameter("database_upgrade_source_details", database_upgrade_source_details)
+
+    client = cli_util.build_client('database', 'database', ctx)
+    result = client.upgrade_database(
+        database_id=database_id,
+        upgrade_database_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_database') and callable(getattr(client, 'get_database')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_database(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@database_group.command(name=cli_util.override('db.upgrade_database_database_upgrade_with_db_home_details.command_name', 'upgrade-database-database-upgrade-with-db-home-details'), help=u"""Upgrade the specified database. \n[Command Reference](upgradeDatabase)""")
+@cli_util.option('--database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--action', required=True, type=custom_types.CliCaseInsensitiveChoice(["PRECHECK", "UPGRADE", "ROLLBACK"]), help=u"""action for upgrading database.""")
+@cli_util.option('--database-upgrade-source-details-db-home-id', required=True, help=u"""The [OCID] of the Database Home.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "BACKUP_IN_PROGRESS", "UPGRADING", "TERMINATING", "TERMINATED", "RESTORE_FAILED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'Database'})
+@cli_util.wrap_exceptions
+def upgrade_database_database_upgrade_with_db_home_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, action, database_upgrade_source_details_db_home_id, if_match):
+
+    if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
+        raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseUpgradeSourceDetails'] = {}
+    _details['action'] = action
+    _details['databaseUpgradeSourceDetails']['dbHomeId'] = database_upgrade_source_details_db_home_id
+
+    _details['databaseUpgradeSourceDetails']['source'] = 'DB_HOME'
+
+    client = cli_util.build_client('database', 'database', ctx)
+    result = client.upgrade_database(
+        database_id=database_id,
+        upgrade_database_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_database') and callable(getattr(client, 'get_database')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_database(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@database_group.command(name=cli_util.override('db.upgrade_database_database_upgrade_with_database_software_image_details.command_name', 'upgrade-database-database-upgrade-with-database-software-image-details'), help=u"""Upgrade the specified database. \n[Command Reference](upgradeDatabase)""")
+@cli_util.option('--database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--action', required=True, type=custom_types.CliCaseInsensitiveChoice(["PRECHECK", "UPGRADE", "ROLLBACK"]), help=u"""action for upgrading database.""")
+@cli_util.option('--database-upgrade-source-details-database-software-image-id', required=True, help=u"""the database software id used for upgrading the database.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "BACKUP_IN_PROGRESS", "UPGRADING", "TERMINATING", "TERMINATED", "RESTORE_FAILED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'Database'})
+@cli_util.wrap_exceptions
+def upgrade_database_database_upgrade_with_database_software_image_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, action, database_upgrade_source_details_database_software_image_id, if_match):
+
+    if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
+        raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseUpgradeSourceDetails'] = {}
+    _details['action'] = action
+    _details['databaseUpgradeSourceDetails']['databaseSoftwareImageId'] = database_upgrade_source_details_database_software_image_id
+
+    _details['databaseUpgradeSourceDetails']['source'] = 'DB_SOFTWARE_IMAGE'
+
+    client = cli_util.build_client('database', 'database', ctx)
+    result = client.upgrade_database(
+        database_id=database_id,
+        upgrade_database_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_database') and callable(getattr(client, 'get_database')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_database(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@database_group.command(name=cli_util.override('db.upgrade_database_database_upgrade_with_db_version_details.command_name', 'upgrade-database-database-upgrade-with-db-version-details'), help=u"""Upgrade the specified database. \n[Command Reference](upgradeDatabase)""")
+@cli_util.option('--database-id', required=True, help=u"""The database [OCID].""")
+@cli_util.option('--action', required=True, type=custom_types.CliCaseInsensitiveChoice(["PRECHECK", "UPGRADE", "ROLLBACK"]), help=u"""action for upgrading database.""")
+@cli_util.option('--database-upgrade-source-details-db-version', required=True, help=u"""A valid Oracle Database version. To get a list of supported versions, use the [ListDbVersions] operation.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["PROVISIONING", "AVAILABLE", "UPDATING", "BACKUP_IN_PROGRESS", "UPGRADING", "TERMINATING", "TERMINATED", "RESTORE_FAILED", "FAILED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'Database'})
+@cli_util.wrap_exceptions
+def upgrade_database_database_upgrade_with_db_version_details(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, database_id, action, database_upgrade_source_details_db_version, if_match):
+
+    if isinstance(database_id, six.string_types) and len(database_id.strip()) == 0:
+        raise click.UsageError('Parameter --database-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['databaseUpgradeSourceDetails'] = {}
+    _details['action'] = action
+    _details['databaseUpgradeSourceDetails']['dbVersion'] = database_upgrade_source_details_db_version
+
+    _details['databaseUpgradeSourceDetails']['source'] = 'DB_VERSION'
+
+    client = cli_util.build_client('database', 'database', ctx)
+    result = client.upgrade_database(
+        database_id=database_id,
+        upgrade_database_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_database') and callable(getattr(client, 'get_database')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_database(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
             except oci.exceptions.MaximumWaitTimeExceeded as e:
                 # If we fail, we should show an error, but we should still provide the information to the customer
                 click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)

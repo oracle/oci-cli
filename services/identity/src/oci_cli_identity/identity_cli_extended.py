@@ -113,6 +113,18 @@ identity_cli.list_tag_namespaces.short_help = 'List the tagNamespaces in a compa
 cli_util.rename_command(identity_cli, identity_cli.bulk_action_resource_type_collection_group, identity_cli.list_bulk_action_resource_types, "list")
 
 
+# Rename oci iam bulk-edit-tags-resource-type-collection list-bulk-edit-tags-resource-types -> oci iam bulk-edit-tags-resource-type-collection list
+cli_util.rename_command(identity_cli, identity_cli.bulk_edit_tags_resource_type_collection_group, identity_cli.list_bulk_edit_tags_resource_types, "list")
+
+# we are moving "oci iam bulk-edit-tags-resource-type-collection list" to "oci iam tag bulk-edit-tags-resource-type-collection list"
+identity_cli.iam_root_group.commands.pop(identity_cli.bulk_edit_tags_resource_type_collection_group.name)
+
+identity_cli.tag_group.add_command(identity_cli.bulk_edit_tags_resource_type_collection_group)
+
+# Rename oci iam tag bulk-edit-tags-resource-type-collection list -> oci iam tag bulk-edit-tags-resource-type list
+cli_util.rename_command(identity_cli, identity_cli.tag_group, identity_cli.bulk_edit_tags_resource_type_collection_group, "bulk-edit-tags-resource-type")
+
+
 @identity_cli.user_group.command(name='list-groups', help="""Lists the groups for which the specified user is a member. You must specify your tenancy's OCID as the value for the compartment ID (remember that the tenancy is simply the root compartment). See [Where to Get the Tenancy's OCID and User's OCID].""")
 @cli_util.option('--compartment-id', required=True, help="""The OCID of the compartment (remember that the tenancy is simply the root compartment).""")
 @cli_util.option('--user-id', required=True, help="""The OCID of the user.""")

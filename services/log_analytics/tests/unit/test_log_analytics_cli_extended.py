@@ -343,46 +343,46 @@ class TestLoganalyticsCliExtended(unittest.TestCase):
         assert 'Error: no such option: --log-analytics-entity-id' in result.output
 
     def test_validate_source_efds_changed_command(self):
-        result = util.invoke_command(['log-analytics', 'extended-fields-validation-result', 'validate-source-extended-field-details'])
+        result = util.invoke_command(['log-analytics', 'log-analytics-source', 'validate-source-extended-field-details'])
         assert 'No such command' in result.output
 
-        result = util.invoke_command(['log-analytics', 'extfields-validation', 'validate-source-extfield-details'])
-        assert """Usage: oci log-analytics extfields-validation validate-source-extfield-details""" in result.output
+        result = util.invoke_command(['log-analytics', 'source', 'validate-source-extfield-details'])
+        assert """Usage: oci log-analytics source validate-source-extfield-details""" in result.output
 
     def test_get_association_summary_changed_command(self):
-        result = util.invoke_command(['log-analytics', 'association-summary-report', 'get-association-summary'])
+        result = util.invoke_command(['log-analytics', 'log-analytics-association', 'get-association-summary'])
         assert 'No such command' in result.output
 
-        result = util.invoke_command(['log-analytics', 'assoc-summary', 'get-assoc-summary'])
-        assert """Usage: oci log-analytics assoc-summary get-assoc-summary""" in result.output
+        result = util.invoke_command(['log-analytics', 'assoc', 'get-assoc-summary'])
+        assert """Usage: oci log-analytics assoc get-assoc-summary""" in result.output
 
     def test_delete_associations_changed_command(self):
-        result = util.invoke_command(['log-analytics', 'error-details', 'delete-associations '])
+        result = util.invoke_command(['log-analytics', 'log-analytics-association', 'delete-associations '])
         assert 'No such command' in result.output
 
-        result = util.invoke_command(['log-analytics', 'assoc-delete', 'delete-assocs'])
-        assert """Usage: oci log-analytics assoc-delete delete-assocs""" in result.output
+        result = util.invoke_command(['log-analytics', 'assoc', 'delete-assocs'])
+        assert """Usage: oci log-analytics assoc delete-assocs""" in result.output
 
     def test_list_associated_entities_changed_command(self):
-        result = util.invoke_command(['log-analytics', 'log-analytics-associated-entity-collection', 'list-associated-entities'])
+        result = util.invoke_command(['log-analytics', 'log-analytics-association', 'list-associated-entities'])
         assert 'No such command' in result.output
 
-        result = util.invoke_command(['log-analytics', 'assoc-entities', 'list-associated-entities'])
-        assert """Usage: oci log-analytics assoc-entities list-associated-entities""" in result.output
+        result = util.invoke_command(['log-analytics', 'assoc', 'list-associated-entities'])
+        assert """Usage: oci log-analytics assoc list-associated-entities""" in result.output
 
     def test_list_entity_source_associations_changed_command(self):
-        result = util.invoke_command(['log-analytics', 'log-analytics-association-collection', 'list-entity-source-associations'])
+        result = util.invoke_command(['log-analytics', 'log-analytics-association', 'list-entity-source-associations'])
         assert 'No such command' in result.output
 
-        result = util.invoke_command(['log-analytics', 'assoc-collection', 'list-entity-source-assocs'])
-        assert """Usage: oci log-analytics assoc-collection list-entity-source-assocs""" in result.output
+        result = util.invoke_command(['log-analytics', 'assoc', 'list-entity-source-assocs'])
+        assert """Usage: oci log-analytics assoc list-entity-source-assocs""" in result.output
 
     def test_list_source_associations_changed_command(self):
-        result = util.invoke_command(['log-analytics', 'log-analytics-association-collection', 'list-source-associations'])
+        result = util.invoke_command(['log-analytics', 'log-analytics-association', 'list-source-associations'])
         assert 'No such command' in result.output
 
-        result = util.invoke_command(['log-analytics', 'assoc-collection', 'list-source-assocs'])
-        assert """Usage: oci log-analytics assoc-collection list-source-assocs""" in result.output
+        result = util.invoke_command(['log-analytics', 'assoc', 'list-source-assocs'])
+        assert """Usage: oci log-analytics assoc list-source-assocs""" in result.output
 
     def test_upsert_associations_changed_command(self):
         result = util.invoke_command(['log-analytics', 'log-analytics-association', 'upsert-associations'])
@@ -392,11 +392,11 @@ class TestLoganalyticsCliExtended(unittest.TestCase):
         assert """Usage: oci log-analytics assoc upsert-assocs""" in result.output
 
     def test_validate_association_parameters_changed_command(self):
-        result = util.invoke_command(['log-analytics', 'log-analytics-association-parameter-collection', 'validate-association-parameters'])
+        result = util.invoke_command(['log-analytics', 'log-analytics-association', 'validate-association-parameters'])
         assert 'No such command' in result.output
 
-        result = util.invoke_command(['log-analytics', 'assoc-params', 'validate-assoc-params'])
-        assert """Usage: oci log-analytics assoc-params validate-assoc-params""" in result.output
+        result = util.invoke_command(['log-analytics', 'assoc', 'validate-assoc-params'])
+        assert """Usage: oci log-analytics assoc validate-assoc-params""" in result.output
 
     def test_export_custom_content_changed_command(self):
         result = util.invoke_command(['log-analytics', 'binary', 'export-custom-content'])
@@ -413,11 +413,11 @@ class TestLoganalyticsCliExtended(unittest.TestCase):
         assert """Usage: oci log-analytics config-work-request get-config-work-request""" in result.output
 
     def test_list_config_work_requests_changed_command(self):
-        result = util.invoke_command(['log-analytics', 'log-analytics-config-work-request-collection', 'list-config-work-requests'])
+        result = util.invoke_command(['log-analytics', 'log-analytics-config-work-request', 'list-config-work-requests'])
         assert 'No such command' in result.output
 
-        result = util.invoke_command(['log-analytics', 'config-work-request-collection', 'list-config-work-requests'])
-        assert """Usage: oci log-analytics config-work-request-collection list-config-work-requests""" in result.output
+        result = util.invoke_command(['log-analytics', 'config-work-request', 'list-config-work-requests'])
+        assert """Usage: oci log-analytics config-work-request list-config-work-requests""" in result.output
 
     def test_get_field_changed_command(self):
         result = util.invoke_command(['log-analytics', 'log-analytics-field', 'get-field'])
@@ -450,11 +450,11 @@ class TestLoganalyticsCliExtended(unittest.TestCase):
         assert 'Error: no such option: --log-analytics-log-group-id' in result.output
 
     def test_list_associated_entities_removed_dname_param(self):
-        result = util.invoke_command(['log-analytics', 'assoc-entities', 'list-associated-entities', '--entity-type-display-name'])
+        result = util.invoke_command(['log-analytics', 'assoc', 'list-associated-entities', '--entity-type-display-name'])
         assert 'Error: no such option: --entity-type-display-name' in result.output
 
     def test_list_entity_source_assocs_removed_dname_param(self):
-        result = util.invoke_command(['log-analytics', 'assoc-collection', 'list-entity-source-assocs', '--entity-type-display-name'])
+        result = util.invoke_command(['log-analytics', 'assoc', 'list-entity-source-assocs', '--entity-type-display-name'])
         assert 'Error: no such option: --entity-type-display-name' in result.output
 
     def test_import_custom_content_removed_params(self):
@@ -508,17 +508,17 @@ class TestLoganalyticsCliExtended(unittest.TestCase):
         assert 'Error: no such option: --extended-field-definitions' in result.output
 
     def test_validate_source_efds_removed_params(self):
-        result = util.invoke_command(['log-analytics', 'extfields-validation', 'validate-source-extfield-details', '--association-count'])
+        result = util.invoke_command(['log-analytics', 'source', 'validate-source-extfield-details', '--association-count'])
         assert 'Error: no such option: --association-count' in result.output
 
-        result = util.invoke_command(['log-analytics', 'extfields-validation', 'validate-source-extfield-details', '--association-entity'])
+        result = util.invoke_command(['log-analytics', 'source', 'validate-source-extfield-details', '--association-entity'])
         assert 'Error: no such option: --association-entity' in result.output
 
-        result = util.invoke_command(['log-analytics', 'extfields-validation', 'validate-source-extfield-details', '--extended-field-definitions'])
+        result = util.invoke_command(['log-analytics', 'source', 'validate-source-extfield-details', '--extended-field-definitions'])
         assert 'Error: no such option: --extended-field-definitions' in result.output
 
-        result = util.invoke_command(['log-analytics', 'extfields-validation', 'validate-source-extfield-details', '--is-auto-association-enabled'])
+        result = util.invoke_command(['log-analytics', 'source', 'validate-source-extfield-details', '--is-auto-association-enabled'])
         assert 'Error: no such option: --is-auto-association-enabled' in result.output
 
-        result = util.invoke_command(['log-analytics', 'extfields-validation', 'validate-source-extfield-details', '--is-auto-association-override'])
+        result = util.invoke_command(['log-analytics', 'source', 'validate-source-extfield-details', '--is-auto-association-override'])
         assert 'Error: no such option: --is-auto-association-override' in result.output

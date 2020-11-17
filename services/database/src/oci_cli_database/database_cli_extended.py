@@ -63,6 +63,88 @@ database_cli.db_root_group.commands.pop(database_cli.backup_destination_summary_
 # Clone from Db System Rename for VM/BM
 cli_util.rename_command(database_cli, database_cli.db_system_group, database_cli.launch_db_system_launch_db_system_from_db_system_details, "launch-from-db-system")
 
+# Renaming Db Upgrade sub command and group
+cli_util.rename_command(database_cli, database_cli.database_group, database_cli.list_database_upgrade_history_entries, "list-upgrade-history")
+cli_util.rename_command(database_cli, database_cli.db_root_group, database_cli.database_upgrade_history_entry_group, "upgrade-history")
+
+
+# Removing the 3 generated polymorphic upgrade commands as we are redefining them
+database_cli.database_group.commands.pop(database_cli.upgrade_database_database_upgrade_with_database_software_image_details.name)
+database_cli.database_group.commands.pop(database_cli.upgrade_database_database_upgrade_with_db_version_details.name)
+database_cli.database_group.commands.pop(database_cli.upgrade_database_database_upgrade_with_db_home_details.name)
+
+
+# Rename the command upgrade_database_database_upgrade_with_database_software_image_details and the parameter database-upgrade-source-details-database-software-image-id to database-software-image-id
+@cli_util.copy_params_from_generated_command(database_cli.upgrade_database_database_upgrade_with_database_software_image_details, params_to_exclude=['database_upgrade_source_details_database_software_image_id'])
+@cli_util.option('--database-software-image-id', required=True, help=u"""the database software id used for upgrading the database.""")
+@database_cli.database_group.command(name='upgrade-with-database-software-image', help=database_cli.database_group.help)
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'Database'})
+@cli_util.wrap_exceptions
+def upgrade_database_database_upgrade_with_database_software_image_details_extended(ctx, **kwargs):
+    if 'database_software_image_id' in kwargs and kwargs['database_software_image_id']:
+        kwargs['database_upgrade_source_details_database_software_image_id'] = kwargs['database_software_image_id']
+
+    del kwargs['database_software_image_id']
+    ctx.invoke(database_cli.upgrade_database_database_upgrade_with_database_software_image_details, **kwargs)
+
+
+# Rename the command upgrade_database_database_upgrade_with_db_version_details and the parameter database-upgrade-source-details-db-version to db-version
+@cli_util.copy_params_from_generated_command(database_cli.upgrade_database_database_upgrade_with_db_version_details, params_to_exclude=['database_upgrade_source_details_db_version'])
+@cli_util.option('--db-version', required=True, help=u"""A valid Oracle Database version. To get a list of supported versions, use the [ListDbVersions] operation.""")
+@database_cli.database_group.command(name='upgrade-with-db-version', help=database_cli.database_group.help)
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'Database'})
+@cli_util.wrap_exceptions
+def upgrade_database_database_upgrade_with_db_version_details_extended(ctx, **kwargs):
+    if 'db_version' in kwargs and kwargs['db_version']:
+        kwargs['database_upgrade_source_details_db_version'] = kwargs['db_version']
+
+    del kwargs['db_version']
+    ctx.invoke(database_cli.upgrade_database_database_upgrade_with_db_version_details, **kwargs)
+
+
+# Rename the command upgrade_database_database_upgrade_with_db_home_details and the parameter database-upgrade-source-details-db-home-id to db-home-id
+@cli_util.copy_params_from_generated_command(database_cli.upgrade_database_database_upgrade_with_db_home_details, params_to_exclude=['database_upgrade_source_details_db_home_id'])
+@cli_util.option('--db-home-id', required=True, help=u"""The [OCID] of the Database Home.""")
+@database_cli.database_group.command(name='upgrade-with-db-home', help=database_cli.database_group.help)
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'Database'})
+@cli_util.wrap_exceptions
+def upgrade_database_database_upgrade_with_db_home_details_extended(ctx, **kwargs):
+    if 'db_home_id' in kwargs and kwargs['db_home_id']:
+        kwargs['database_upgrade_source_details_db_home_id'] = kwargs['db_home_id']
+
+    del kwargs['db_home_id']
+    ctx.invoke(database_cli.upgrade_database_database_upgrade_with_db_home_details, **kwargs)
+
+
+# Renaming the upgrade command to upgrade-rollback and removing parameters database_upgrade_source_details and action
+@cli_util.copy_params_from_generated_command(database_cli.upgrade_database, params_to_exclude=['database_upgrade_source_details', 'action'])
+@database_cli.database_group.command('upgrade-rollback', help=database_cli.database_group.help)
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'database-upgrade-source-details': {'module': 'database', 'class': 'DatabaseUpgradeSourceBase'}}, output_type={'module': 'database', 'class': 'Database'})
+@cli_util.wrap_exceptions
+def upgrade_database_extended(ctx, **kwargs):
+    kwargs['action'] = "ROLLBACK"
+    ctx.invoke(database_cli.upgrade_database, **kwargs)
+
+
+# Renaming the parameter upgrade-history-entry-id to upgrade-history-id
+@cli_util.copy_params_from_generated_command(database_cli.get_database_upgrade_history_entry, params_to_exclude=['upgrade_history_entry_id'])
+@cli_util.option('--upgrade-history-id', required=True, help=u"""The database upgrade History [OCID].""")
+@database_cli.database_upgrade_history_entry_group.command(name='get', help=database_cli.database_group.help)
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'database', 'class': 'DatabaseUpgradeHistoryEntry'})
+@cli_util.wrap_exceptions
+def get_database_upgrade_history_entry_extended(ctx, **kwargs):
+    if 'upgrade_history_id' in kwargs and kwargs['upgrade_history_id']:
+        kwargs['upgrade_history_entry_id'] = kwargs['upgrade_history_id']
+
+    del kwargs['upgrade_history_id']
+    ctx.invoke(database_cli.get_database_upgrade_history_entry, **kwargs)
+
+
 # OCPUs
 database_cli.exadata_infrastructure_group.add_command(database_cli.get_exadata_infrastructure_ocpus)
 database_cli.ocp_us_group.commands.pop(database_cli.get_exadata_infrastructure_ocpus.name)

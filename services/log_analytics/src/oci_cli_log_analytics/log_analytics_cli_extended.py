@@ -19,11 +19,12 @@ get_param(loganalytics_cli.parse_query, 'namespace_name').opts.extend(['--namesp
 get_param(loganalytics_cli.suggest, 'namespace_name').opts.extend(['--namespace', '-ns'])
 get_param(loganalytics_cli.get_query_result, 'namespace_name').opts.extend(['--namespace', '-ns'])
 
-cli_util.rename_command(loganalytics_cli, loganalytics_cli.query_group, loganalytics_cli.query, "search")
+cli_util.rename_command(loganalytics_cli, loganalytics_cli.query_details_group, loganalytics_cli.query, "search")
+cli_util.rename_command(loganalytics_cli, loganalytics_cli.query_details_group, loganalytics_cli.parse_query, "parse")
 
 
 @cli_util.copy_params_from_generated_command(loganalytics_cli.query, params_to_exclude=['time_filter', 'saved_search_id'])
-@loganalytics_cli.query_group.command(name='search', help=loganalytics_cli.query.help)
+@loganalytics_cli.query_details_group.command(name='search', help=loganalytics_cli.query.help)
 @cli_util.option('--time-start', type=custom_types.CLI_DATETIME, help="""Date-time for query to start matching results from. Start time must be less than end time otherwise it will result in error.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-end', type=custom_types.CLI_DATETIME, help="""Date-time for query to stop matching results to. End Time must be greater than or equal to start time otherwise it will result in error.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--timezone', help="""Time zone for query. Should use long time zone name e.g America/New_York to handle daylight savings properly.""")
@@ -50,11 +51,11 @@ def query_extended(ctx, **kwargs):
     ctx.invoke(loganalytics_cli.query, **kwargs)
 
 
-cli_util.rename_command(loganalytics_cli, loganalytics_cli.query_group, loganalytics_cli.export_query_result, "export")
+cli_util.rename_command(loganalytics_cli, loganalytics_cli.query_details_group, loganalytics_cli.export_query_result, "export")
 
 
 @cli_util.copy_params_from_generated_command(loganalytics_cli.export_query_result, params_to_exclude=['time_filter'])
-@loganalytics_cli.query_group.command(name='export', help=loganalytics_cli.export_query_result.help)
+@loganalytics_cli.query_details_group.command(name='export', help=loganalytics_cli.export_query_result.help)
 @cli_util.option('--time-start', type=custom_types.CLI_DATETIME, help="""Date-time for query to start matching results from. Start time must be less than end time otherwise it will result in error.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--time-end', type=custom_types.CLI_DATETIME, help="""Date-time for query to stop matching results to. End Time must be greater than or equal to start time otherwise it will result in error.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
 @cli_util.option('--timezone', help="""Time zone for query. Should use long time zone name e.g America/New_York to handle daylight savings properly.""")
@@ -81,6 +82,8 @@ def export_query_result_extended(ctx, **kwargs):
     ctx.invoke(loganalytics_cli.export_query_result, **kwargs)
 
 
+cli_util.rename_command(loganalytics_cli, loganalytics_cli.log_analytics_root_group,
+                        loganalytics_cli.query_details_group, "query")
 # query-work-request overrides
 cli_util.rename_command(loganalytics_cli, loganalytics_cli.query_work_request_group,
                         loganalytics_cli.put_query_work_request_background, "background")
@@ -442,15 +445,15 @@ cli_util.rename_command(loganalytics_cli, loganalytics_cli.log_analytics_root_gr
 
 # source commands
 cli_util.rename_command(loganalytics_cli, loganalytics_cli.log_analytics_root_group, loganalytics_cli.log_analytics_source_group, "source")
-cli_util.rename_command(loganalytics_cli, loganalytics_cli.log_analytics_root_group, loganalytics_cli.extended_fields_validation_result_group, "extfields-validation")
+# cli_util.rename_command(loganalytics_cli, loganalytics_cli.log_analytics_root_group, loganalytics_cli.extended_fields_validation_result_group, "extfields-validation")
 
 # Association commands
-cli_util.rename_command(loganalytics_cli, loganalytics_cli.log_analytics_root_group, loganalytics_cli.association_summary_report_group, "assoc-summary")
-cli_util.rename_command(loganalytics_cli, loganalytics_cli.log_analytics_root_group, loganalytics_cli.error_details_group, "assoc-delete")
-cli_util.rename_command(loganalytics_cli, loganalytics_cli.log_analytics_root_group, loganalytics_cli.log_analytics_associated_entity_collection_group, "assoc-entities")
-cli_util.rename_command(loganalytics_cli, loganalytics_cli.log_analytics_root_group, loganalytics_cli.log_analytics_association_collection_group, "assoc-collection")
+# cli_util.rename_command(loganalytics_cli, loganalytics_cli.log_analytics_root_group, loganalytics_cli.association_summary_report_group, "assoc-summary")
+# cli_util.rename_command(loganalytics_cli, loganalytics_cli.log_analytics_root_group, loganalytics_cli.error_details_group, "assoc-delete")
+# cli_util.rename_command(loganalytics_cli, loganalytics_cli.log_analytics_root_group, loganalytics_cli.log_analytics_associated_entity_collection_group, "assoc-entities")
+# cli_util.rename_command(loganalytics_cli, loganalytics_cli.log_analytics_root_group, loganalytics_cli.log_analytics_association_collection_group, "assoc-collection")
 cli_util.rename_command(loganalytics_cli, loganalytics_cli.log_analytics_root_group, loganalytics_cli.log_analytics_association_group, "assoc")
-cli_util.rename_command(loganalytics_cli, loganalytics_cli.log_analytics_root_group, loganalytics_cli.log_analytics_association_parameter_collection_group, "assoc-params")
+# cli_util.rename_command(loganalytics_cli, loganalytics_cli.log_analytics_root_group, loganalytics_cli.log_analytics_association_parameter_collection_group, "assoc-params")
 
 # lookup commands
 cli_util.rename_command(loganalytics_cli, loganalytics_cli.log_analytics_root_group, loganalytics_cli.log_analytics_lookup_group, "lookup")
@@ -461,7 +464,7 @@ cli_util.rename_command(loganalytics_cli, loganalytics_cli.log_analytics_root_gr
 
 # config-work-request commands
 cli_util.rename_command(loganalytics_cli, loganalytics_cli.log_analytics_root_group, loganalytics_cli.log_analytics_config_work_request_group, "config-work-request")
-cli_util.rename_command(loganalytics_cli, loganalytics_cli.log_analytics_root_group, loganalytics_cli.log_analytics_config_work_request_collection_group, "config-work-request-collection")
+# cli_util.rename_command(loganalytics_cli, loganalytics_cli.log_analytics_root_group, loganalytics_cli.log_analytics_config_work_request_collection_group, "config-work-request-collection")
 
 # #########################
 # Top Level Commands - End
@@ -472,19 +475,19 @@ cli_util.rename_command(loganalytics_cli, loganalytics_cli.log_analytics_root_gr
 # ###########################
 
 # get-association-summary -> get-assoc-summary
-cli_util.rename_command(loganalytics_cli, loganalytics_cli.association_summary_report_group, loganalytics_cli.get_association_summary, "get-assoc-summary")
+cli_util.rename_command(loganalytics_cli, loganalytics_cli.log_analytics_association_group, loganalytics_cli.get_association_summary, "get-assoc-summary")
 # delete-associations -> delete-assocs
-cli_util.rename_command(loganalytics_cli, loganalytics_cli.error_details_group, loganalytics_cli.delete_associations, "delete-assocs")
+cli_util.rename_command(loganalytics_cli, loganalytics_cli.log_analytics_association_group, loganalytics_cli.delete_associations, "delete-assocs")
 # upsert-associations -> upsert-assocs
 cli_util.rename_command(loganalytics_cli, loganalytics_cli.log_analytics_association_group, loganalytics_cli.upsert_associations, "upsert-assocs")
 # validate_source_extended_field_details -> validate-extfield-details
-cli_util.rename_command(loganalytics_cli, loganalytics_cli.extended_fields_validation_result_group, loganalytics_cli.validate_source_extended_field_details, "validate-source-extfield-details")
+cli_util.rename_command(loganalytics_cli, loganalytics_cli.log_analytics_source_group, loganalytics_cli.validate_source_extended_field_details, "validate-source-extfield-details")
 # list-entity-source-associations -> list-entity-source-assocs
-cli_util.rename_command(loganalytics_cli, loganalytics_cli.log_analytics_association_collection_group, loganalytics_cli.list_entity_source_associations, "list-entity-source-assocs")
+cli_util.rename_command(loganalytics_cli, loganalytics_cli.log_analytics_association_group, loganalytics_cli.list_entity_source_associations, "list-entity-source-assocs")
 # list-source-associations -> list-source-assocs
-cli_util.rename_command(loganalytics_cli, loganalytics_cli.log_analytics_association_collection_group, loganalytics_cli.list_source_associations, "list-source-assocs")
+cli_util.rename_command(loganalytics_cli, loganalytics_cli.log_analytics_association_group, loganalytics_cli.list_source_associations, "list-source-assocs")
 # validate-association-parameters -> validate-association-params
-cli_util.rename_command(loganalytics_cli, loganalytics_cli.log_analytics_association_parameter_collection_group, loganalytics_cli.validate_association_parameters, "validate-assoc-params")
+cli_util.rename_command(loganalytics_cli, loganalytics_cli.log_analytics_association_group, loganalytics_cli.validate_association_parameters, "validate-assoc-params")
 
 # #########################
 # Sub Level Commands - End
@@ -555,7 +558,7 @@ def delete_log_analytics_log_group_extended(ctx, **kwargs):
 
 # list_associated_entities param changes
 @cli_util.copy_params_from_generated_command(loganalytics_cli.list_associated_entities, params_to_exclude=['entity_type_display_name'])
-@loganalytics_cli.log_analytics_associated_entity_collection_group.command(name='list-associated-entities', help=loganalytics_cli.list_associated_entities.help)
+@loganalytics_cli.log_analytics_association_group.command(name='list-associated-entities', help=loganalytics_cli.list_associated_entities.help)
 @cli_util.option("--entity-type-name", help='''Entity Type Display Name''')
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'log_analytics', 'class': 'LogAnalyticsAssociatedEntityCollection'})
@@ -569,7 +572,7 @@ def list_associated_entities_extended(ctx, **kwargs):
 
 # list-entity-source-associations param changes
 @cli_util.copy_params_from_generated_command(loganalytics_cli.list_entity_source_associations, params_to_exclude=['entity_type_display_name'])
-@loganalytics_cli.log_analytics_association_collection_group.command(name='list-entity-source-assocs', help=loganalytics_cli.list_entity_source_associations.help)
+@loganalytics_cli.log_analytics_association_group.command(name='list-entity-source-assocs', help=loganalytics_cli.list_entity_source_associations.help)
 @cli_util.option("--entity-type-name", help='''Entity Type Display Name''')
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'log_analytics', 'class': 'LogAnalyticsAssociationCollection'})
@@ -731,7 +734,7 @@ def validate_source_extended(ctx, **kwargs):
 
 # validate_source_extended_field_details param changes
 @cli_util.copy_params_from_generated_command(loganalytics_cli.validate_source_extended_field_details, params_to_exclude=['association_count', 'association_entity', 'extended_field_definitions', 'is_auto_association_enabled', 'is_auto_association_override'])
-@loganalytics_cli.extended_fields_validation_result_group.command(name='validate-source-extfield-details', help=loganalytics_cli.validate_source_extended_field_details.help)
+@loganalytics_cli.log_analytics_source_group.command(name='validate-source-extfield-details', help=loganalytics_cli.validate_source_extended_field_details.help)
 @cli_util.option("--assoc-count", help='''Association count''')
 @cli_util.option("--assoc-entity", help='''Association entity''')
 @cli_util.option("--extfield-defs", help='''Extended Field Definitions''')
