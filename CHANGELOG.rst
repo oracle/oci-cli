@@ -6,6 +6,60 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.15.0 - 2020-11-17
+-------------------
+Added
+~~~~~
+* Support to bulk edit tags on resources in Identity and Access Management Service
+
+  * ``oci iam tag bulk-edit --bulk-edit-operations``
+
+* Support to retrieve bulk edit tags enabled resources in Identity and Access Management Service
+
+  * ``oci iam tag bulk-edit-tags-resource-type list``
+
+* New Options have been added to the following command in Database Service
+
+  * ``oci db autonomous-container-database create --peer-autonomous-vm-cluster-id --peer-autonomous-container-database-compartment-id --peer-autonomous-container-database-backup-config``
+
+* New Option has been added to the following commands in Database Service
+
+  * ``oci db database-software-image list --is-upgrade-supported``
+  * ``oci db version list --is-upgrade-supported``
+
+* Support for Database Upgrade in Database Service
+
+  * ``oci db database list-upgrade-history``
+  * ``oci db upgrade-history get``
+  * ``oci db database upgrade``
+  * ``oci db database upgrade-rollback``
+  * ``oci db database upgrade-with-database-software-image``
+  * ``oci db database upgrade-with-db-home``
+  * ``oci db database upgrade-with-db-version``
+
+
+Changed
+~~~~~~~
+* Added automatic retries for ``oci os object put`` (single part and multipart uploads) in case of certain errors. Retry will happen a maximum of 3 times and will have exponential backoff. To disable these retries, please use the `-—no-retry` flag
+* Removed the constraints about the accepted values for status in Work Requests list in Container Engine Service
+
+  * ``oci ce work-request list --status``
+
+* ID field is now optional for the below command in Management Dashboard Service
+
+  * ``oci management-dashboard saved-search create --id``
+
+* [Breaking] Following changes in the Log Analytics Service
+
+  * Moved commands under ``oci log-analytics error-details`` to be under ``oci log-analytics source`` in Log Analytics Service
+  * Moved commands under ``oci log-analytics extended-fields-validation-result`` to be under ``oci log-analytics source``  in Log Analytics Service
+  * Moved commands association* to assoc
+    * Example ``oci log-analytics log-analytics-association-collection list-source-associations`` to ``oci log-analytics assoc list-source-assocs``
+  * Moved commands estimate* and storage-work-request to storage
+    * Example ``oci log-analytics estimate-purge-data-size-result estimate-purge-data-size`` to ``oci log-analytics storage estimate-purge-data-size``
+    * Example ``oci log-analytics storage-work-request list`` to ``oci log-analytics storage list-storage-work-requests``
+
+
 2.14.5 - 2020-11-10
 -------------------
 Added
