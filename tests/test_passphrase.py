@@ -23,7 +23,7 @@ def passphrase_provider():
 
 
 def create_temp_private_key_file(password=None):
-    private_key = rsa.generate_private_key(public_exponent=66537, key_size=2048, backend=default_backend())
+    private_key = rsa.generate_private_key(public_exponent=65537, key_size=2048, backend=default_backend())
 
     if password:
         encryption_algorithm = serialization.BestAvailableEncryption(password.encode("ascii"))

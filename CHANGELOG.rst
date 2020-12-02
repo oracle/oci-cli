@@ -6,6 +6,63 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+2.16.0 - 2020-12-01
+-------------------
+Added
+~~~~~~~~
+* Support for calling Oracle Cloud Infrastructure services in the Santiago region (``--region sa-santiago-1``)
+
+* Support for Mysql Database Service Channels
+
+  * ``oci mysql channel``
+
+* Support for Data Safe on-prem-connector
+
+  * ``oci data-safe on-prem-connector``
+
+* Support for Availability Status and History of Management Agent
+
+  * ``oci management-agent agent list-availability-histories``
+
+* Backups now can be filtered by creation type in MySql Service
+
+  * ``oci mysql backup list --creation-type``
+
+Changed
+~~~~~~~
+
+* Upgraded versions for the following packages: arrow (0.14.7), cryptography (3.2.1), pyOpenSSL (19.1.0) and pycparser (2.20).
+
+* Added optional parameter ``--tenancy-name`` to ``oci session authenticate``
+
+* [Breaking] The command ``oci data-safe configuration get`` has been changed to ``oci data-safe service get`` in Data Safe Service
+
+* [Breaking] The parameter --compartment-id is now required for private endpoint list in Data Safe Service
+
+  * ``oci data-safe private-endpoint list --compartment-id``
+
+* [Breaking] The parameter --compartment-id is now required for work request list in Data Safe Service
+
+  * ``oci data-safe work-request list --compartment-id``
+
+* [Breaking] The parameter --is-enabled is now required for service enable in Data Safe Service
+
+  * ``oci data-safe service enable --is-enabled``
+
+* Help text improvements for blockchain platform in Blockchain Service
+
+  * ``oci blockchain blockchain-platform``
+
+* The parameter --variables is now optional for mysql configuration in MySql Service
+
+  * ``oci mysql configuration create --variables``
+
+* The parameter --configuration-id is now optional for the below commands in MySql Service
+
+  * ``oci mysql db-system clone --configuration-id``
+  * ``oci mysql db-system create --configuration-id``
+  * ``oci mysql db-system import --configuration-id``
+
 2.15.0 - 2020-11-17
 -------------------
 Added

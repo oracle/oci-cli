@@ -101,9 +101,9 @@ def update_data_safe_private_endpoint_extended(ctx, **kwargs):
 # To: oci data-safe service enable --compartment-id | -c, --defined-tags, --force, --freeform-tags, -? | -h | --help, --is-enabled
 
 
-cli_util.rename_command(datasafe_cli, datasafe_cli.data_safe_root_group, datasafe_cli.enable_data_safe_configuration_details_group, "service")
+cli_util.rename_command(datasafe_cli, datasafe_cli.data_safe_root_group, datasafe_cli.data_safe_configuration_group, "service")
 
-cli_util.rename_command(datasafe_cli, datasafe_cli.enable_data_safe_configuration_details_group, datasafe_cli.enable_data_safe_configuration, "enable")
+cli_util.rename_command(datasafe_cli, datasafe_cli.data_safe_configuration_group, datasafe_cli.enable_data_safe_configuration, "enable")
 
 
 # 7:

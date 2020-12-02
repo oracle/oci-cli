@@ -39,8 +39,8 @@ db_backups_root_group.add_command(backup_group)
 @cli_util.option('--description', help=u"""A user-supplied description for the backup.""")
 @cli_util.option('--backup-type', type=custom_types.CliCaseInsensitiveChoice(["FULL", "INCREMENTAL"]), help=u"""The type of backup.""")
 @cli_util.option('--retention-in-days', type=click.INT, help=u"""Number of days to retain this backup.""")
-@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Usage of predefined tag keys. These predefined keys are scoped to namespaces. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -193,6 +193,7 @@ def get_backup(ctx, from_json, backup_id, if_none_match):
 @cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "UPDATING", "DELETING", "DELETED", "FAILED"]), help=u"""Backup Lifecycle State""")
 @cli_util.option('--db-system-id', help=u"""The DB System [OCID].""")
 @cli_util.option('--display-name', help=u"""A filter to return only the resource matching the given display name exactly.""")
+@cli_util.option('--creation-type', type=custom_types.CliCaseInsensitiveChoice(["MANUAL", "AUTOMATIC"]), help=u"""Backup creationType""")
 @cli_util.option('--sort-by', type=custom_types.CliCaseInsensitiveChoice(["timeCreated", "timeUpdated", "displayName"]), help=u"""The field to sort by. Only one sort order may be provided. Time fields are default ordered as descending.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use (ASC or DESC).""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated list call. For information about pagination, see [List Pagination].""")
@@ -204,7 +205,7 @@ def get_backup(ctx, from_json, backup_id, if_none_match):
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'mysql', 'class': 'list[BackupSummary]'})
 @cli_util.wrap_exceptions
-def list_backups(ctx, from_json, all_pages, page_size, compartment_id, backup_id, lifecycle_state, db_system_id, display_name, sort_by, sort_order, limit, page):
+def list_backups(ctx, from_json, all_pages, page_size, compartment_id, backup_id, lifecycle_state, db_system_id, display_name, creation_type, sort_by, sort_order, limit, page):
 
     if all_pages and limit:
         raise click.UsageError('If you provide the --all option you cannot provide the --limit option')
@@ -218,6 +219,8 @@ def list_backups(ctx, from_json, all_pages, page_size, compartment_id, backup_id
         kwargs['db_system_id'] = db_system_id
     if display_name is not None:
         kwargs['display_name'] = display_name
+    if creation_type is not None:
+        kwargs['creation_type'] = creation_type
     if sort_by is not None:
         kwargs['sort_by'] = sort_by
     if sort_order is not None:
@@ -258,8 +261,8 @@ def list_backups(ctx, from_json, all_pages, page_size, compartment_id, backup_id
 @cli_util.option('--display-name', help=u"""A user-supplied display name for the backup.""")
 @cli_util.option('--description', help=u"""A user-supplied description for the backup.""")
 @cli_util.option('--retention-in-days', type=click.INT, help=u"""The number of days backups are retained.""")
-@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Usage of predefined tag keys. These predefined keys are scoped to namespaces. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Simple key-value pair that is applied without any predefined name, type or scope. Exists for cross-compatibility only. Example: `{\"bar-key\": \"value\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. Example: `{\"foo-namespace\": {\"bar-key\": \"value\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `If-Match` header to the value of the etag from a previous GET or POST response for that resource. The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'mysql', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'mysql', 'class': 'dict(str, dict(str, object))'}})

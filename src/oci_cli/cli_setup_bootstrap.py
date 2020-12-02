@@ -112,7 +112,7 @@ def bootstrap_oci_cli(ctx):
 """.format(config_file=config_location, profile=profile_name))
 
 
-def create_user_session(region=''):
+def create_user_session(region='', tenancy_name=None):
     if region == '':
         region = cli_setup.prompt_for_region()
 
@@ -152,6 +152,9 @@ def create_user_session(region=''):
         'public_key': public_key_jwk,
         'redirect_uri': 'http://localhost:{}'.format(BOOTSTRAP_SERVICE_PORT)
     }
+
+    if tenancy_name:
+        query['tenant'] = tenancy_name
 
     if region in regions.REGIONS_SHORT_NAMES:
         region = regions.REGIONS_SHORT_NAMES[region]

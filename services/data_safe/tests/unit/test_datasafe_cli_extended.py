@@ -74,12 +74,6 @@ class TestDataSafeCliChanges(unittest.TestCase):
         result = util.invoke_command(['data-safe', 'enable-data-safe-configuration-details'])
         assert 'Error: No such command ' in result.output
 
-    # Test 6.2:
-    def test_enable_data_safe_configuration_removed(self):
-        result = util.invoke_command(['data-safe', 'configuration', 'enable-data-safe-configuration'])
-        assert 'enable' in result.output
-        assert 'Error: No such command ' in result.output
-
     # Test 7:
     # From:  oci data-safe work-request-log-entry list-work-request-logs --work-request-id, --all, -? | -h | --help
     # To: oci data-safe work-request-log-entry list --work-request-id, --all, -? | -h | --help
